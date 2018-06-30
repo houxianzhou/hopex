@@ -1,30 +1,83 @@
-import fetch from 'dva/fetch';
+import axios from 'axios'
+import _ from 'lodash'
+import pathToRegexp from 'path-to-regexp'
+import { stringify } from 'qs'
+import { message as Message } from 'antd'
 
-function parseJSON(response) {
-  return response.json();
-}
+axios.defaults.timeout = 100000
+axios.defaults.withCredentials = true
+axios.defaults.crossDomain = true
+axios.defaults.maxContentLength = 20000000
 
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
+axios.interceptors.request.use((config) => {
+  return config
+}, (error) => {
+  return Promise.reject(error)
+})
+
+let interval = null
+
+
+function request(url = '', options = {}) {
+  const { method = 'get', formData = false, params, query, body, needLoop = false, needWatch = true, ...rest } = options
+  if (params) {
+    const toPath = pathToRegexp.compile(url)
+    url = toPath(params)
   }
+  const transform = formData ? {
+    transformRequest: [(data, headers) => {
+      headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      data = stringify(data)
+      return data
+    }]
+  } : {}
+  return axios({
+    ...{
+      headers: {},
+      method,
+      params: query,
+      data: body,
+      url,
+      baseURL: ''
+    },
+    ...transform,
+    ...rest
+  })
+    .then((res) => {
+      return res
+    })
+    .catch((error) => {
+      if (_.has(error, 'response.status')) {
+        switch (error.response.status) {
+          case 401:
+            return new Promise((resolve) => {
 
-  const error = new Error(response.statusText);
-  error.response = response;
-  throw error;
+            })
+          default:
+        }
+      }
+      if (needWatch) {
+        if (_.has(error, 'response.data.message')) {
+          Message.error(error.response.data.message)
+        } else {
+          if (method === 'get') {
+            Message.error('数据获取失败')
+          } else {
+            Message.error('操作失败')
+          }
+        }
+        console.log(url + '请求出错')
+      }
+      if (needLoop) {
+        clearTimeout(interval)
+        interval = setTimeout(() => {
+          return new Promise((resolve) => {
+            const result = request(url, options)
+            resolve(result)
+          })
+        }, 2000)
+      }
+    })
 }
 
-/**
- * Requests a URL, returning a promise.
- *
- * @param  {string} url       The URL we want to request
- * @param  {object} [options] The options we want to pass to "fetch"
- * @return {object}           An object containing either "data" or "err"
- */
-export default function request(url, options) {
-  return fetch(url, options)
-    .then(checkStatus)
-    .then(parseJSON)
-    .then(data => ({ data }))
-    .catch(err => ({ err }));
-}
+export default request

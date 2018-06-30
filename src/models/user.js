@@ -1,17 +1,17 @@
+import { getModelName } from '@utils/helper'
 
 export default {
-
-  namespace: 'example',
-
-  state: {},
-
+  namespace: 'user',
+  state: {
+    name: 'user'
+  },
   subscriptions: {
-    setup({ dispatch, history }) {  // eslint-disable-line
+    setup({ dispatch, history }) {
     },
   },
 
   effects: {
-    *fetch({ payload }, { call, put }) {  // eslint-disable-line
+    * fetch({ payload }, { call, put }) {
       yield put({ type: 'save' });
     },
   },
@@ -21,5 +21,4 @@ export default {
       return { ...state, ...action.payload };
     },
   },
-
-};
+}

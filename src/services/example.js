@@ -1,5 +1,10 @@
-import request from '../utils/request';
+import request from '@utils/request';
 
-export function query() {
-  return request('/api/users');
+export async function query() {
+  return await request('/api/users', {
+    method: 'post',
+    body: {
+      name: 'weixiaoyi'
+    }
+  });
 }
