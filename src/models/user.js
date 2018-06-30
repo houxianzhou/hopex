@@ -1,5 +1,3 @@
-import { getModelName } from '@utils/helper'
-
 export default {
   namespace: 'user',
   state: {

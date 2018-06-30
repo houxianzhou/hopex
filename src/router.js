@@ -1,8 +1,8 @@
 import React from 'react'
+import { Helmet } from "react-helmet";
 import { Router, Route, Switch } from 'dva/router'
 import pathToRegexp from 'path-to-regexp'
-import { default as BasicLayOut } from '@components/BasicLayOut'
-import { default as UserLayOut } from '@components/UserLayOut'
+import { BasicLayOut, UserLayOut } from '@components'
 import { default as routes } from '@common/routes'
 
 const getDynamicRoutes = (routes) => {
@@ -39,12 +39,14 @@ export default ({ history, app }) => {
     routesUser
   })
   return (
-    <Router history={history}>
-      <Switch>
-        <Route path="/user/(.*)?" render={(props) => (<UserLayOut {...getProps(props)} />)}/>
-        <Route path="/" render={(props) => (<BasicLayOut {...getProps(props)} />)}/>
-      </Switch>
-    </Router>
+    <>
+      <Router history={history}>
+        <Switch>
+          <Route path="/user/(.*)?" render={(props) => (<UserLayOut {...getProps(props)} />)}/>
+          <Route path="/" render={(props) => (<BasicLayOut {...getProps(props)} />)}/>
+        </Switch>
+      </Router>
+    </>
   )
 }
 

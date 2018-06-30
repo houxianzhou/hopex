@@ -18,14 +18,19 @@
     "immutable": "^3.8.2",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
+    "normalize.css": "^8.0.0",
     "path-to-regexp": "^2.2.1",
     "qs": "^6.5.2",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-helmet": "^5.2.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
     "babel-plugin-dva-hmr": "^0.3.2",
     "babel-plugin-import": "^1.8.0",
+    "babel-plugin-lodash": "^3.3.4",
     "eslint": "^4.14.0",
     "eslint-config-umi": "^0.1.1",
     "eslint-plugin-flowtype": "^2.34.1",

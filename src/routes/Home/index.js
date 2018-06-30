@@ -17,8 +17,13 @@ export default class View extends Component {
     console.log(this.props)
 
     return (
-      <div className={styles.normal}>
-        <h1 className={styles.title}>{name}</h1>
+      <div>
+        <ul>
+          <li>1</li>
+          <li>2</li>
+        </ul>
+        <a>ddd</a>
+        <h1>{name}</h1>
       </div>
     )
   }

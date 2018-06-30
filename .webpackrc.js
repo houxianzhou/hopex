@@ -1,12 +1,16 @@
 const path = require('path')
 export default {
   entry: 'src/index.js',
-  "extraBabelPlugins": [
-    ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }]
+  extraBabelPlugins: [
+    ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }],
+    ["lodash", { "id": ["async", "lodash-bound"] }]
   ],
+  // extraBabelPresets:[
+  //   ["@babel/env", { "targets": { "node": 6 } }]
+  // ],
   publicPath: '/',
   hash: true,
-  "alias": {
+  alias: {
     "@routes": path.resolve(__dirname, "./src/routes"),
     "@models": path.resolve(__dirname, "./src/models"),
     "@services": path.resolve(__dirname, "./src/services"),

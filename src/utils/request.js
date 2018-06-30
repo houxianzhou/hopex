@@ -1,5 +1,5 @@
 import axios from 'axios'
-import _ from 'lodash'
+import {_} from '@utils'
 import pathToRegexp from 'path-to-regexp'
 import { stringify } from 'qs'
 import { message as Message } from 'antd'
@@ -18,7 +18,7 @@ axios.interceptors.request.use((config) => {
 let interval = null
 
 
-function request(url = '', options = {}) {
+export function request(url = '', options = {}) {
   const { method = 'get', formData = false, params, query, body, needLoop = false, needWatch = true, ...rest } = options
   if (params) {
     const toPath = pathToRegexp.compile(url)
@@ -80,4 +80,4 @@ function request(url = '', options = {}) {
     })
 }
 
-export default request
+

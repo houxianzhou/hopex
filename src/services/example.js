@@ -1,4 +1,4 @@
-import request from '@utils/request';
+import {request} from '@utils'
 
 export async function query() {
   return await request('/api/users', {
@@ -6,5 +6,5 @@ export async function query() {
     body: {
       name: 'weixiaoyi'
     }
-  });
+  })
 }
