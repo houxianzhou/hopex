@@ -5,6 +5,11 @@ export default {
     ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }],
     ["lodash", { "id": ["async", "lodash-bound"] }]
   ],
+  "env": {
+    "development": {
+      "extraBabelPlugins": ["dva-hmr"]
+    }
+  },
   // extraBabelPresets:[
   //   ["@babel/env", { "targets": { "node": 6 } }]
   // ],
@@ -18,9 +23,9 @@ export default {
     "@utils": path.resolve(__dirname, "./src/utils"),
     "@assets": path.resolve(__dirname, "./src/assets"),
     "@constants": path.resolve(__dirname, "./src/constants"),
-    "@common": path.resolve(__dirname, "./src/common")
-    // "@mock": path.resolve(__dirname, "./mock"),
-    // "@constants": path.resolve(__dirname, "./src/constants"),
-    // "@roadhog": path.resolve(__dirname, "./roadhog")
-  }
+    "@common": path.resolve(__dirname, "./src/common"),
+    "@mock": path.resolve(__dirname, "./mock")
+  },
+  ignoreMomentLocale: true,
+  theme: './src/utils/lessvar.js'
 }

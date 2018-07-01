@@ -1,2 +1,3 @@
-export {default as BasicLayOut} from './BasicLayOut'
-export {default as UserLayOut} from './UserLayOut'
+export {default as BasicLayOut} from './LayOut/BasicLayOut'
+export {default as UserLayOut} from './LayOut/UserLayOut'
+export {default as Mixin} from './Mixin'

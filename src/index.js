@@ -5,7 +5,7 @@ import createHistory from 'history/createBrowserHistory'
 import zhCN from 'antd/lib/locale-provider/zh_CN'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
-import './index.css'
+import './index.less'
 
 moment.locale('zh-cn')
 // 1. Initialize

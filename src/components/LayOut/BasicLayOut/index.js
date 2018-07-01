@@ -12,10 +12,9 @@ export default class View extends Component {
     const {
       app, routesBasic
     } = this.props
-    // console.log(this.props)
     return (
       <div>
-        <div>basicLayout</div>
+        <div style={{ background: 'red' }}>头部</div>
         <Switch>
           <Redirect exact from="/" to='/home'/>
           {

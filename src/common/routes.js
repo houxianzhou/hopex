@@ -1,7 +1,7 @@
 export default [
   {
     path: '/',
-    model: ['user']
+    model: ['global/user']
   },
   {
     path: '/home',
