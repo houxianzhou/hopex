@@ -5,7 +5,11 @@ import { THEME } from '@constants'
 export default joinModel(modelExtend, {
   namespace: 'theme',
   state: {
-    theme: THEME.DARK
+    theme: THEME.DARK,
+    dragIndex: [
+      'LatestRecord'
+      // 'EntrustList',
+    ]
   },
   subscriptions: {
     setup({ dispatch, history }) {
