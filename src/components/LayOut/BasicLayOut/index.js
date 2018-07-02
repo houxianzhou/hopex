@@ -2,20 +2,30 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Route, Redirect, Switch } from 'dva/router'
 import dynamic from 'dva/dynamic'
+import { classNames, switchTheme } from '@utils'
 import Header from './Header'
+import Content from './Content'
+import * as styles from './index.less'
 
-@connect(({ loading, dispatch }) => ({
+@connect(({ theme, loading, dispatch }) => ({
   loading,
   dispatch,
+  model: theme
 }))
 export default class View extends Component {
   render() {
     const {
-      app, routesBasic
+      app, routesBasic, model: { theme }
     } = this.props
     return (
-      <div >
-          <Header />
+      <div className={
+        classNames(
+          styles.overbody,
+          switchTheme(theme) ? styles.dark : null
+        )
+      } >
+        <Header {...this.props} />
+        <Content >
           <Switch >
             <Redirect exact from="/" to='/home' />
             {
@@ -29,6 +39,7 @@ export default class View extends Component {
               })
             }
           </Switch >
+        </Content >
       </div >
     )
   }

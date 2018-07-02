@@ -1,14 +1,14 @@
 import React from 'react'
-import { Responsive, _ } from '@utils'
+import { Responsive, _, classNames } from '@utils'
 import { BREACKPOINT } from '@constants'
 
 const { MOBILE } = BREACKPOINT
 
 export default function (Props) {
-  const { minW, maxW, children, cN: className, style, notMatch, options = {} } = Props
+  const { minW, maxW, children, cN = {}, style, notMatch, comp: Comp = 'div', options = {} } = Props
   const result = {
     ...{
-      minWidth: 0,
+      minWidth: MOBILE,
       maxWidth: null
     },
     ...(minW ? { minWidth: _.isBoolean(minW) ? MOBILE : minW } : {}),
@@ -20,9 +20,24 @@ export default function (Props) {
       <Responsive {...result} >
         {(matches) => {
           if (matches) {
-            return <div className={className} style={style} >{children}</div >
+            return <Comp className={
+              classNames(
+                {
+                  'pc': true,
+                },
+                cN
+              )
+            } style={style} >{children}</Comp >
           } else {
-            return _.isUndefined(notMatch) ? <>{children}</> : <>{notMatch}</>
+            return _.isUndefined(notMatch) ? (
+              <Comp className={
+                classNames(
+                  {
+                    'mobile': true,
+                  }
+                )
+              } >{children}</Comp >
+            ) : <>{notMatch}</>
           }
         }}
       </Responsive >

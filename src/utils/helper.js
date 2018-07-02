@@ -5,5 +5,6 @@ export const lodash_helper = {
   isEmpty: _.isEmpty,
   isNull: _.isNull,
   isUndefined: _.isUndefined,
-  isBoolean: _.isBoolean
+  isBoolean: _.isBoolean,
+  cloneDeep: _.cloneDeep
 }

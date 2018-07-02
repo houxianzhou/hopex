@@ -7,11 +7,12 @@ import { default as routes } from '@common/routes'
 
 const getDynamicRoutes = (routes) => {
   return routes.map(item => {
-    const { path, model: models, route: component } = item
+    const { path, model: models, route: component, ...rest } = item
     return {
       path,
       models: models && models.length ? () => models.map(model => import(`@models/${model}`)) : undefined,
-      component: component ? () => import(`@routes/${component}`) : console.error('新增的路由必须有对应的组件')
+      component: component ? () => import(`@routes/${component}`) : console.error('新增的路由必须有对应的组件'),
+      ...rest
     }
   })
 }
@@ -40,12 +41,12 @@ export default ({ history, app }) => {
   })
   return (
     <>
-      <Router history={history}>
-        <Switch>
-          <Route path="/user/(.*)?" render={(props) => (<UserLayOut {...getProps(props)} />)}/>
-          <Route path="/" render={(props) => (<BasicLayOut {...getProps(props)} />)}/>
-        </Switch>
-      </Router>
+      <Router history={history} >
+        <Switch >
+          <Route path="/user/(.*)?" render={(props) => (<UserLayOut {...getProps(props)} />)} />
+          <Route path="/" render={(props) => (<BasicLayOut {...getProps(props)} />)} />
+        </Switch >
+      </Router >
     </>
   )
 }

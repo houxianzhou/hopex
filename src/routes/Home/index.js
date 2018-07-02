@@ -4,6 +4,7 @@ import { Mixin } from '@components'
 import Task1 from './task1'
 import styles from './index.less'
 
+
 // @connect(({ home: model, user, loading, dispatch }) => ({
 //   user,
 //   model
