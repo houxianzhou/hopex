@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'dva'
 import { _ } from '@utils'
 
@@ -14,7 +14,7 @@ const getMixinProps = (that = {}) => {
   modelName: 'user',
   loading, dispatch
 }))
-export default class View extends Component {
+export default class View extends React.Component {
   componentDidMount() {
     const { model: { userInfo } = {}, dispatch, modelName } = this.props
     const getCurrentUser = new Promise((resolve, reject) => {

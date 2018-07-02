@@ -1,6 +1,7 @@
 import { lodash_helper } from './helper'
 
 export { default as joinModel }  from 'dva-model-extend'
+export  Responsive from 'react-responsive'
 export { request } from './request'
 export const _ = lodash_helper
 

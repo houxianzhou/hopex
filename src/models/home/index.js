@@ -1,4 +1,4 @@
-import { query } from "@services/example";
+// import { query } from "@services/example";
 
 export default {
   namespace: 'home',
@@ -7,15 +7,15 @@ export default {
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      dispatch({
-        type: 'fetch'
-      })
+      // dispatch({
+      //   type: 'fetch'
+      // })
     },
   },
 
   effects: {
     * fetch({ payload }, { call, put }) {
-      const res = yield call(query)
+      // const res = yield call(query)
     },
   },
 
