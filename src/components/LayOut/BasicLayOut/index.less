@@ -9,24 +9,25 @@
   .header {
     display: flex;
     align-items: center;
-    height: 70px;
-    padding: 0 70px;
+    height: 60px;
+    padding: 0 60px;
     &.dark {
       background: @c_front_dark;
     }
     img {
-      margin-right: 50px;
+      margin-right: 45px;
     }
     ul.nav {
       margin-bottom: 0;
       list-style: none;
       display: flex;
+     align-items: center;
       font-size: 16px;
       li + li {
-        margin-left: 50px;
-        padding-bottom: 6px;
+        margin-left: 40px;
       }
       li.active {
+        padding-bottom: 6px;
         color: @c_active_yellow;
         border-bottom: 2px solid @c_active_yellow;
       }

@@ -8,11 +8,11 @@ export default class View extends Component {
   }
 
   getScroll = () => {
-    const { mouseWheel = true, scrollbar = true, getScroller, ...rest } = this.props
+    const { mouseWheel = true, scrollbar = true, probeType = 0, getScroller, ...rest } = this.props
     this.scroll = new BScroll(`.${this.uuid}`, {
       // tap: true,
       click: true,
-      probeType: 3,
+      probeType,
       scrollbar: scrollbar === 'fixed' ? {
         fade: false,
         interactive: true

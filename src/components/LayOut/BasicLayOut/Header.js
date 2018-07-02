@@ -25,7 +25,7 @@ export default class View extends Component {
               {
                 routesBasic.map(item => {
                   return (
-                    <li key={item.name} className={styles.active} >
+                    <li key={item.name} >
                       {item.name}
                     </li >
                   )

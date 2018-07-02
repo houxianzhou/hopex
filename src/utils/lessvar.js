@@ -7,5 +7,6 @@ export default {
   "@c_active_yellow": '#CAA96E',
   "@c_pannel_header_dark": '#1D222E',
   "@c_pannel_dark": '#292E39',
-  "@c_panel_light": '#454C5C'
+  "@c_panel_light": '#454C5C',
+  "@padding_panel":'0 20px 0 30px'
 }

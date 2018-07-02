@@ -2,11 +2,14 @@ import Scroller from '@components/Scroller'
 import * as styles from './ScrollPanel.less'
 
 export default function (Props) {
-  const { header, children } = Props
+  const { header, theader, children } = Props
   return (
     <div className={styles.outlines} >
       {
-        header ? (<div >头部</div >) : null
+        header ? (<div className={styles.header} style={{ height: 40 }} >头部</div >) : null
+      }
+      {
+        theader ? (<div className={styles.theader} style={{ height: 32 }} >表格头部</div >) : null
       }
       <Scroller scrollbar='fixed' >
         {children}

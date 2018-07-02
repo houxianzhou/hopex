@@ -14,13 +14,30 @@ export default class View extends Component {
   }
 
   render() {
+    const data = (new Array(100)).fill({
+      time: '17:28:23',
+      direaction: '买入',
+      price: '900',
+      count: '345'
+    })
     return (
       <div style={{
-        width: 300,
-        height: 200
+        width: 400,
+        height: 560
       }} >
-        <ScrollPannel >
-          <div style={{ height: 300 }} >ddd</div >
+        <ScrollPannel header theader >
+          <ul className={styles.record} >
+            {
+              data.map((item, index) => (
+                <li key={index}>
+                  <span >{item.time}</span >
+                  <span >{item.direaction}</span >
+                  <span >{item.price}</span >
+                  <span >{item.count}</span >
+                </li >
+              ))
+            }
+          </ul >
 
         </ScrollPannel >
       </div >
