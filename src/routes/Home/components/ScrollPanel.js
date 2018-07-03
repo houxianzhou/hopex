@@ -9,7 +9,7 @@ export default function (Props) {
         header ? (<div className={styles.header} style={{ height: 40 }} >头部</div >) : null
       }
       {
-        theader ? (<div className={styles.theader} style={{ height: 32 }} >表格头部</div >) : null
+        theader ? (<div className={styles.theader} style={{ height: 32 }} >{theader}</div >) : null
       }
       <Scroller scrollbar='fixed' style={style} >
         {children}

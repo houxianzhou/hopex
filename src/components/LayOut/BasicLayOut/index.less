@@ -1,3 +1,7 @@
+:global(.device) {
+  height: 100%;
+}
+
 .overbody {
   width: 100%;
   height: 100%;
@@ -7,7 +11,6 @@
   &.dark {
     background: @c_back_dark;
   }
-
   .header {
     display: flex;
     align-items: center;
@@ -35,22 +38,18 @@
       }
     }
   }
-  :global(.pc) {
-    .header {
-      // height: 30px;
-    }
-  }
-
-  :global(.mobile) {
-    .header {
-      height: 50px;
-    }
-  }
 
   .content {
     padding: 10px;
   }
 }
+
+//:global(.mobile) {
+//  .header {
+//    height: 30px;
+//  }
+//}
+
 
 
 

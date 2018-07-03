@@ -24,8 +24,18 @@ export default class View extends Component {
       <div style={{
         width: 400
       }} >
-        <ScrollPannel header theader style={{ height: 488 }} >
-          <ul className={styles.record} >
+        <ScrollPannel
+          header
+          theader={
+            <ul className={styles.record_theader} >
+              <li >ahha</li >
+              <li >ahha</li >
+              <li >ahha</li >
+              <li >ahha</li >
+            </ul >
+          }
+          style={{ height: 488 }} >
+          <ul className={styles.record_content} >
             {
               data.map((item, index) => (
                 <li key={index} >

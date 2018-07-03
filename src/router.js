@@ -40,14 +40,12 @@ export default ({ history, app }) => {
     routesUser
   })
   return (
-    <>
-      <Router history={history} >
-        <Switch >
-          <Route path="/user/(.*)?" render={(props) => (<UserLayOut {...getProps(props)} />)} />
-          <Route path="/" render={(props) => (<BasicLayOut {...getProps(props)} />)} />
-        </Switch >
-      </Router >
-    </>
+    <Router history={history} >
+      <Switch >
+        <Route path="/user/(.*)?" render={(props) => (<UserLayOut {...getProps(props)} />)} />
+        <Route path="/" render={(props) => (<BasicLayOut {...getProps(props)} />)} />
+      </Switch >
+    </Router >
   )
 }
 
