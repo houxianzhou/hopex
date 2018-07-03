@@ -22,14 +22,13 @@ export default class View extends Component {
     })
     return (
       <div style={{
-        width: 400,
-        height: 560
+        width: 400
       }} >
-        <ScrollPannel header theader >
+        <ScrollPannel header theader style={{ height: 488 }} >
           <ul className={styles.record} >
             {
               data.map((item, index) => (
-                <li key={index}>
+                <li key={index} >
                   <span >{item.time}</span >
                   <span >{item.direaction}</span >
                   <span >{item.price}</span >

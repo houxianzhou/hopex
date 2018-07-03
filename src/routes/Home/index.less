@@ -1,8 +1,15 @@
-ul.record{
+ul.record {
+  // height:500px;
   // color:red;
-  li{
-    padding:@padding_panel;
+  li {
+    font-size: 13px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    height: 26px;
+    padding: 0 50px 0 30px;
+    &:nth-child(2n+1){
+      background: @c_panel_light;
+    }
   }
 }

@@ -30,7 +30,7 @@ export default class View extends Component {
     this.uuid = _.uniqueId('container_')
     const { children, style = {} } = this.props
     return (
-      <div style={{ position: 'relative', width: '100%', height: '100%' }} >
+      <div style={{ ...{ position: 'relative', width: '100%', height: '100%' }, ...style }} >
         <div
           className={`${this.uuid}`}
           style={{
@@ -41,7 +41,7 @@ export default class View extends Component {
             top: '0'
           }}
         >
-          <div className="content" style={style} >
+          <div className="content" >
             {children}
           </div >
         </div >
