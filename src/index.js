@@ -1,8 +1,8 @@
 import "babel-polyfill"
 import 'normalize.css'
 import dva from 'dva'
-import createHistory from 'history/createBrowserHistory'
-import zhCN from 'antd/lib/locale-provider/zh_CN'
+// import createHistory from 'history/createBrowserHistory'
+// import zhCN from 'antd/lib/locale-provider/zh_CN'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 import './index.less'

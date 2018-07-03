@@ -1,5 +1,5 @@
 import React from 'react'
-import { Helmet } from "react-helmet";
+// import { Helmet } from "react-helmet";
 import { Router, Route, Switch } from 'dva/router'
 import pathToRegexp from 'path-to-regexp'
 import { BasicLayOut, UserLayOut } from '@components'
@@ -21,9 +21,9 @@ const classifyRoutes = (routes) => {
   const [routesBasic, routesUser] = [[], []]
   routes.map(item => {
     if (pathToRegexp(`/user/(.*)?`).exec(item.path)) {
-      routesUser.push(item)
+      return routesUser.push(item)
     } else {
-      routesBasic.push(item)
+      return routesBasic.push(item)
     }
   })
   return [routesBasic, routesUser]

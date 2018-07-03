@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { Router, Route, Redirect, Switch } from 'dva/router'
+import { Route,  Switch } from 'dva/router'
 import dynamic from 'dva/dynamic'
-import User from '@routes/User'
 
 @connect(({ loading, dispatch }) => ({
   loading,

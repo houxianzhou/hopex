@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { connect } from 'dva'
-import { Mixin } from '@components'
+// import { connect } from 'dva'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 import switch_render from '@assets/switch_render.png'
@@ -26,13 +25,13 @@ export default class View extends Component {
         style={{
           width: 400
         }}
-        className={styles.pannel}
+        className={styles.panel}
       >
         <ScrollPannel
           header={
             <div className={styles.record_header} >
               <span >最新成交</span >
-              <img src={switch_render} />
+              <img alt='switch' src={switch_render} />
             </div >
           }
           theader={
@@ -45,7 +44,10 @@ export default class View extends Component {
               </li >
             </ul >
           }
-          style={{ height: 488 }} >
+          scrollConfig={{
+            style: { height: 494 }
+          }}
+        >
           <ul className={styles.record_content} >
             {
               data.map((item, index) => (
