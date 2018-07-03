@@ -6,8 +6,9 @@ export default {
   "@c_like_white": '#D7DAEE',
   "@c_active_yellow": '#CAA96E',
   "@c_pannel_header_dark": '#1D222E',
-  "@c_pannel_theader_dark": '#232833',
-  "@c_pannel_dark": '#1D222E',
+  "@c_pannel_theader_color": '#6A7286',
+  "@c_pannel_dark": '#232833',
   "@c_panel_light": '#292E39',
+  "@c_pannel_border":'#454C5C',
   "@padding_panel":'0 20px 0 30px'
 }

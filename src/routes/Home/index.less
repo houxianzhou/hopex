@@ -1,3 +1,5 @@
+@pannel_li_height: 26px;
+
 .views {
   display: flex;
   :global {
@@ -8,7 +10,7 @@
 
 }
 
-.panel {
+.latestRecord {
   ul {
     width: 100%;
     li {
@@ -16,7 +18,6 @@
       display: flex;
       align-items: center;
       span {
-        // border: 1px solid red;
         width: 25%;
         display: inline-block;
       }
@@ -32,11 +33,10 @@
     li {
     }
   }
-
   ul.record_content {
     li {
       font-size: 13px;
-      height: 26px;
+      height: @pannel_li_height;
       padding: @padding_panel;
       &:nth-child(2n) {
         background: @c_pannel_dark;
@@ -45,3 +45,44 @@
   }
 }
 
+.ensureRecord {
+  font-size: 13px;
+  .theader {
+    color: @c_pannel_theader_color;
+    background: @c_pannel_dark;
+    height: 32px;
+  }
+  .center {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: @padding_panel;
+    padding-right: 27px;
+    height:43px;
+    background: @c_pannel_header_dark;
+    .left{
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+  ul {
+    height: 100%;
+    li {
+      height: @pannel_li_height;
+      display: flex;
+      align-items: center;
+      padding: @padding_panel;
+      span {
+        display: inline-block;
+        width: 33.3333%;
+        // border: 1px solid red;
+      }
+      &:nth-child(2n) {
+        background: @c_pannel_dark;
+      }
+    }
+  }
+  .top {
+
+  }
+}
