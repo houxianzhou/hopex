@@ -6,7 +6,7 @@ export default function (Props) {
   return (
     <div className={styles.outlines} >
       {
-        header ? (<div className={styles.header} style={{ height: 40 }} >头部</div >) : null
+        header ? (<div className={styles.header} style={{ height: 40 }} >{header}</div >) : null
       }
       {
         theader ? (<div className={styles.theader} style={{ height: 32 }} >{theader}</div >) : null

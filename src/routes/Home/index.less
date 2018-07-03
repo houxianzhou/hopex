@@ -1,16 +1,37 @@
-ul.record_theader {
-}
-
-ul.record_content {
-  li {
-    font-size: 13px;
+.pannel {
+  ul {
+    width: 100%;
+    li {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      span {
+        // border: 1px solid red;
+        width: 25%;
+        display: inline-block;
+      }
+    }
+  }
+  div.record_header{
+    width:100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 26px;
-    padding: 0 50px 0 30px;
-    &:nth-child(2n) {
-      background: @c_pannel_dark;
+  }
+  ul.record_theader {
+    li {
+    }
+  }
+
+  ul.record_content {
+    li {
+      font-size: 13px;
+      height: 26px;
+      padding: @padding_panel;
+      &:nth-child(2n) {
+        background: @c_pannel_dark;
+      }
     }
   }
 }
+
