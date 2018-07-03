@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 // import { connect } from 'dva'
+import { classNames } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 import switch_render from '@assets/switch_render.png'
@@ -9,10 +10,6 @@ import switch_render from '@assets/switch_render.png'
 //   model
 // }))
 export default class View extends Component {
-  componentDidMount() {
-    console.log('task1子组件')
-  }
-
   render() {
     const data = (new Array(100)).fill({
       time: '17:28:23',
@@ -25,9 +22,20 @@ export default class View extends Component {
         style={{
           width: 400
         }}
-        className={styles.panel}
+        className={
+          classNames(
+            {
+              view: true
+            },
+            styles.panel
+          )
+        }
       >
         <ScrollPannel
+          scrollConfig={{
+            style: { height: 494 },
+            scrollbar: true
+          }}
           header={
             <div className={styles.record_header} >
               <span >最新成交</span >
@@ -44,9 +52,6 @@ export default class View extends Component {
               </li >
             </ul >
           }
-          scrollConfig={{
-            style: { height: 494 }
-          }}
         >
           <ul className={styles.record_content} >
             {

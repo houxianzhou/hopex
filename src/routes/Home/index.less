@@ -1,3 +1,13 @@
+.views {
+  display: flex;
+  :global {
+    .view + .view {
+      margin-left: 10px;
+    }
+  }
+
+}
+
 .panel {
   ul {
     width: 100%;
@@ -12,8 +22,8 @@
       }
     }
   }
-  div.record_header{
-    width:100%;
+  div.record_header {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;

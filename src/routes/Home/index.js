@@ -2,10 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin } from '@components'
 import LatestRecord from './LatestRecord'
-// import styles from './index.less'
+import TradeChart from './TradeChart'
+import EnsureRecord from './EnsureRecord'
+import styles from './index.less'
 
 const Comp = {
-  LatestRecord
+  LatestRecord,
+  TradeChart,
+  EnsureRecord
 }
 @connect(({ home: model, theme, loading, dispatch }) => ({
   model,
@@ -25,9 +29,15 @@ export default class View extends Component {
     const { renderView } = this
     return (
       <Mixin {...{ that: this }}>
-        <div >
+        <div className={styles.views} >
           {
             renderView('LatestRecord')
+          }
+          {
+            renderView('TradeChart')
+          }
+          {
+            renderView('EnsureRecord')
           }
         </div >
       </Mixin >
