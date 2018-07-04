@@ -9,6 +9,7 @@ export default {
   "@c_pannel_theader_color": '#6A7286',
   "@c_pannel_dark": '#232833',
   "@c_panel_light": '#292E39',
-  "@c_pannel_border":'#454C5C',
-  "@padding_panel":'0 20px 0 30px'
+  "@c_pannel_border": '#454C5C',
+  "@padding_panel": '0 20px 0 30px',
+  "@border_radius": '4px'
 }

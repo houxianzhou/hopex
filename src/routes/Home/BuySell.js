@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
+import { InputNumber } from "@components"
 import { classNames } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
 
 export default class View extends Component {
-  renderInputItem = () => {
-    
-  }
+  renderInputItem = () => (
+    <InputNumber className={styles.input_number} />
+  )
 
   render() {
+    const { renderInputItem } = this
     return (
       <div
         style={{
@@ -33,8 +35,9 @@ export default class View extends Component {
           }
         >
           <div className={styles.content} >
-            ahhahah
-
+            {
+              renderInputItem()
+            }
           </div >
         </ScrollPannel >
       </div >
