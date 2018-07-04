@@ -1,4 +1,4 @@
-import Scroller from '@components/Scroller'
+import { Scroller } from '@components'
 import * as styles from './ScrollPanel.less'
 
 export default function (Props) {
@@ -13,7 +13,7 @@ export default function (Props) {
       }
       {
         scroller ? (
-          <Scroller scrollbar='fixed' {...scrollConfig}  >
+          <Scroller scrollbar='fixed' {...scrollConfig} >
             {children}
           </Scroller >
         ) : <>{children}</>

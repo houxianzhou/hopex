@@ -3,7 +3,7 @@ import { connect } from 'dva'
 import { Route, Redirect, Switch } from 'dva/router'
 import dynamic from 'dva/dynamic'
 import { classNames, switchTheme } from '@utils'
-import Responsive from '@components/Responsive'
+import { Scroller, Responsive } from '@components'
 import Header from './Header'
 import Content from './Content'
 import * as styles from './index.less'
@@ -26,22 +26,22 @@ export default class View extends Component {
             switchTheme(theme) ? styles.dark : null
           )
         } >
-          <Header {...this.props} />
-          <Content >
-            <Switch >
-              <Redirect exact from="/" to='/home' />
-              {
-                routesBasic.map(({ path, ...dynamics }) => {
-                  return (
-                    <Route key={path} path={path} exact component={dynamic({
-                      app,
-                      ...dynamics
-                    })} />
-                  )
-                })
-              }
-            </Switch >
-          </Content >
+            <Header {...this.props} />
+            <Content >
+              <Switch >
+                <Redirect exact from="/" to='/home' />
+                {
+                  routesBasic.map(({ path, ...dynamics }) => {
+                    return (
+                      <Route key={path} path={path} exact component={dynamic({
+                        app,
+                        ...dynamics
+                      })} />
+                    )
+                  })
+                }
+              </Switch >
+            </Content >
         </div >
       </Responsive >
     )

@@ -10,7 +10,7 @@ export default class View extends Component {
   componentDidMount() {
     const { model: { market }, dispatch, modelName } = this.props
     dispatch({
-      type:`${modelName}/getLatestRecord`
+      type: `${modelName}/getLatestRecord`
     })
   }
 
@@ -35,7 +35,7 @@ export default class View extends Component {
         <ScrollPannel
           scrollConfig={{
             style: { height: 494 },
-            scrollbar: true
+            scrollbar: true,
           }}
           header={
             <div className={styles.record_header} >

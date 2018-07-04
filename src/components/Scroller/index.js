@@ -13,13 +13,14 @@ export default class View extends Component {
       // tap: true,
       click: true,
       probeType,
+      stopPropagation: false,
       scrollbar: scrollbar === 'fixed' ? {
         fade: false,
         interactive: true
       } : (scrollbar || false),
       scrollY: true,
       mouseWheel,
-      ...rest,
+      ...rest
     })
     if (getScroller) {
       getScroller(this.scroll)

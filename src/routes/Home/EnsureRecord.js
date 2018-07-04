@@ -30,6 +30,9 @@ export default class View extends Component {
         }
       >
         <ScrollPannel
+          scrollConfig={{
+            mouseWheel: false
+          }}
           header={
             <div >
               <span >委托列表</span >

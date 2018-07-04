@@ -20,7 +20,11 @@ export default class View extends Component {
           )
         }
       >
-        <ScrollPannel >
+        <ScrollPannel
+          scrollConfig={{
+            mouseWheel: false
+          }}
+        >
 
         </ScrollPannel >
       </div >
