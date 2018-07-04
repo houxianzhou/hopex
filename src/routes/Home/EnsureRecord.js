@@ -20,9 +20,6 @@ export default class View extends Component {
     })
     return (
       <div
-        style={{
-          width: 400
-        }}
         className={
           classNames(
             {
@@ -58,7 +55,7 @@ export default class View extends Component {
                 {
                   dataTop.map((item, index) => (
                     <li key={index} >
-                      <span className={styles.top_price}>{item.price}</span >
+                      <span className={styles.top_price} >{item.price}</span >
                       <span >{item.count}</span >
                       <span >{item.total}</span >
                     </li >
@@ -70,7 +67,7 @@ export default class View extends Component {
             <div className={styles.center} >
               <div className={styles.left} >9334.5</div >
               <div className={styles.right} >
-                <img className={styles.ensure} src={ensure} />
+                <img alt='ensure' className={styles.ensure} src={ensure} />
                 90000.0/9200.0
               </div >
             </div >
@@ -92,7 +89,7 @@ export default class View extends Component {
                 {
                   dataDown.map((item, index) => (
                     <li key={index} >
-                      <span className={styles.down_price}>{item.price}</span >
+                      <span className={styles.down_price} >{item.price}</span >
                       <span >{item.count}</span >
                       <span >{item.total}</span >
                     </li >

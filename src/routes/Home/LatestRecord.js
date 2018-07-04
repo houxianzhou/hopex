@@ -8,7 +8,10 @@ import switch_render from '@assets/switch_render.png'
 
 export default class View extends Component {
   componentDidMount() {
-    const { model: { market } } = this.props
+    const { model: { market }, dispatch, modelName } = this.props
+    dispatch({
+      type:`${modelName}/getLatestRecord`
+    })
   }
 
   render() {
@@ -20,9 +23,6 @@ export default class View extends Component {
     })
     return (
       <div
-        style={{
-          width: 400
-        }}
         className={
           classNames(
             {

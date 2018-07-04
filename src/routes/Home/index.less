@@ -1,4 +1,5 @@
 @pannel_li_height: 26px;
+@view_width: 400px;
 
 .views {
   display: flex;
@@ -7,10 +8,14 @@
       margin-left: 10px;
     }
   }
+}
 
+.views + .views {
+  margin-top: 10px;
 }
 
 .latestRecord {
+  width: @view_width;
   ul {
     width: 100%;
     li {
@@ -46,6 +51,7 @@
 }
 
 .ensureRecord {
+  width: @view_width;
   font-size: 13px;
   .theader {
     color: @c_pannel_theader_color;

@@ -1,7 +1,8 @@
 export default function (Props) {
   const { data = {} } = Props
   return (
-    <textArea
+    <textarea
+      defaultValue={JSON.stringify(data)}
       rows={5}
       style={{
         width: '40%',
@@ -13,6 +14,6 @@ export default function (Props) {
         color: 'black',
         margin: 10,
         zIndex: 10000,
-      }} >{JSON.stringify(data)}</textArea >
+      }} />
   )
 }

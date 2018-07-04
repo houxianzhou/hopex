@@ -4,20 +4,25 @@ import { Mixin, ShowJsonTip } from '@components'
 import LatestRecord from './LatestRecord'
 import TradeChart from './TradeChart'
 import EnsureRecord from './EnsureRecord'
+import Purse from './Purse'
 import styles from './index.less'
 
 const Comp = {
   LatestRecord,
   TradeChart,
-  EnsureRecord
+  EnsureRecord,
+  Purse
 }
 @connect(({ home: model, theme, loading, dispatch }) => ({
   model,
-  theme
+  modelName: 'home',
+  theme,
+  loading,
+  dispatch
 }))
 export default class View extends Component {
   startInit() {
-    console.log('父组件')
+    // console.log('父组件')
   }
 
   renderView = (name) => {
@@ -40,6 +45,11 @@ export default class View extends Component {
           }
           {
             renderView('EnsureRecord')
+          }
+        </div >
+        <div className={styles.views}>
+          {
+            renderView('Purse')
           }
         </div >
 
