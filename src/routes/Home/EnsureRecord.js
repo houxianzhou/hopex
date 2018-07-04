@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, _ } from '@utils'
+import { classNames, _, dealInterval } from '@utils'
 import ensure from '@assets/ensure.png'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
@@ -11,11 +11,19 @@ export default class View extends Component {
   }
 
   startInit() {
+    this.getEnsureRecord()
+  }
+
+  getEnsureRecord() {
     const { model: {}, dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getEnsureRecord`,
     }).then(res => {
-      console.log(res)
+      if (res) {
+        dealInterval(() => {
+          this.getEnsureRecord()
+        })
+      }
     })
   }
 
@@ -32,13 +40,18 @@ export default class View extends Component {
       </div >
       <ul >
         {
-          data.map((item, index) => (
-            <li key={index} >
-              <span className={styles[`${name}_price`]} >{item.price}</span >
-              <span >{item.amount}</span >
-              <span >{item.total}</span >
-            </li >
-          ))
+          data.map((item, index) => {
+            const total = data.slice(0, index + 1).reduce((sum, next) => {
+              return sum + Number(next.amount)
+            }, 0)
+            return (
+              <li key={index} >
+                <span className={styles[`${name}_price`]} >{item.price}</span >
+                <span >{item.amount}</span >
+                <span >{total}</span >
+              </li >
+            )
+          })
         }
       </ul >
     </div >
