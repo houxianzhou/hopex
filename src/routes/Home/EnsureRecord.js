@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { classNames } from '@utils'
+import { classNames, _ } from '@utils'
 import ensure from '@assets/ensure.png'
 import ScrollPannel from './components/ScrollPanel'
-// import { connect } from 'dva'
 import styles from './index.less'
 
 
@@ -12,7 +11,7 @@ export default class View extends Component {
   }
 
   startInit() {
-    const { model: { market }, dispatch, modelName } = this.props
+    const { model: {}, dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getEnsureRecord`,
     }).then(res => {
@@ -47,16 +46,8 @@ export default class View extends Component {
 
   render() {
     const { renderList } = this
-    const dataTop = (new Array(8)).fill({
-      price: '9000.00',
-      amount: 128.763,
-      total: '7, 892, 394'
-    })
-    const dataDown = (new Array(8)).fill({
-      price: '9000.00',
-      amount: 128.763,
-      total: '7, 892, 394'
-    })
+    const { model: { ensure_records = {} } } = this.props
+    const [dataTop = [], dataDown = []] = [_.get(ensure_records, 'asks'), _.get(ensure_records, 'bids')]
     return (
       <div
         className={
@@ -80,7 +71,7 @@ export default class View extends Component {
         >
           <div className={styles.content} >
             {
-              renderList(dataTop, 'top')
+              renderList(dataTop.slice(0, 8), 'top')
             }
             <div className={styles.center} >
               <div className={styles.left} >9334.5</div >
@@ -90,7 +81,7 @@ export default class View extends Component {
               </div >
             </div >
             {
-              renderList(dataTop, 'down')
+              renderList(dataDown.slice(0, 8), 'down')
             }
           </div >
         </ScrollPannel >

@@ -55,6 +55,5 @@ export default joinModel(modelExtend, {
     },
   },
 
-  reducers: {
-  },
+  reducers: {},
 })

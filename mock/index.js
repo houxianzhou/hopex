@@ -1,3 +1,10 @@
+import { _ } from 'lodash'
+import helper from './helper'
+
+const { randomArrayMap, randomStr } = helper
+
+
+const randonStr = _.random(10, 10000) + ''
 export default {
   'Post /api/v1/order': (req, res) => {
     res.send(
@@ -92,18 +99,14 @@ export default {
           "userToken": "56"
         },
         "data": {
-          "asks": [
-            {
-              "price": "1",
-              "amount": "3536"
-            }
-          ],
-          "bids": [
-            {
-              "price": "0.001",
-              "amount": "3.5"
-            }
-          ]
+          "asks": randomArrayMap(100).map((item, index) => ({
+            "price": randomStr(),
+            "amount": randomStr()
+          })),
+          "bids": randomArrayMap(100).map((item, index) => ({
+            "price": randomStr(),
+            "amount": randomStr()
+          }))
         },
         "errCode": "0",
         "errStr": "success",
