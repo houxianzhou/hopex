@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { classNames } from '@utils'
+import ensure from '@assets/ensure.png'
 import ScrollPannel from './components/ScrollPanel'
 // import { connect } from 'dva'
 import styles from './index.less'
@@ -57,7 +58,7 @@ export default class View extends Component {
                 {
                   dataTop.map((item, index) => (
                     <li key={index} >
-                      <span >{item.price}</span >
+                      <span className={styles.top_price}>{item.price}</span >
                       <span >{item.count}</span >
                       <span >{item.total}</span >
                     </li >
@@ -68,7 +69,10 @@ export default class View extends Component {
             </div >
             <div className={styles.center} >
               <div className={styles.left} >9334.5</div >
-              <div className={styles.right} >90000.0/9200.0</div >
+              <div className={styles.right} >
+                <img className={styles.ensure} src={ensure} />
+                90000.0/9200.0
+              </div >
             </div >
             <div className={
               classNames(
@@ -88,7 +92,7 @@ export default class View extends Component {
                 {
                   dataDown.map((item, index) => (
                     <li key={index} >
-                      <span >{item.price}</span >
+                      <span className={styles.down_price}>{item.price}</span >
                       <span >{item.count}</span >
                       <span >{item.total}</span >
                     </li >

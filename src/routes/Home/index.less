@@ -58,11 +58,18 @@
     justify-content: space-between;
     padding: @padding_panel;
     padding-right: 27px;
-    height:43px;
+    height: 43px;
     background: @c_pannel_header_dark;
-    .left{
+    .left {
       font-size: 16px;
       font-weight: bold;
+    }
+    .right {
+      display: flex;
+      align-items: center;
+      .ensure {
+        margin-right: 10px;
+      }
     }
   }
   ul {
@@ -75,14 +82,16 @@
       span {
         display: inline-block;
         width: 33.3333%;
-        // border: 1px solid red;
+        &.top_price {
+          color: @_red;
+        }
+        &.down_price {
+          color: @_green;
+        }
       }
       &:nth-child(2n) {
         background: @c_pannel_dark;
       }
     }
-  }
-  .top {
-
   }
 }
