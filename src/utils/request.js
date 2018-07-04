@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {_} from '@utils'
+import { _ } from '@utils'
 import pathToRegexp from 'path-to-regexp'
 import { stringify } from 'qs'
 import { message as Message } from 'antd'
@@ -32,6 +32,8 @@ export function request(url = '', options = {}) {
     }]
   } : {}
   return axios({
+    // Content-Type: application/json;charset=UTF-8
+    // withCredentials:true,
     ...{
       headers: {},
       method,

@@ -5,11 +5,15 @@ import styles from './index.less'
 
 
 export default class View extends Component {
+  renderInputItem = () => {
+    
+  }
+
   render() {
     return (
       <div
         style={{
-          height: 344,
+          flexGrow: 1
         }}
         className={
           classNames(
@@ -28,6 +32,10 @@ export default class View extends Component {
             <div >钱包</div >
           }
         >
+          <div className={styles.content} >
+            ahhahah
+
+          </div >
         </ScrollPannel >
       </div >
     )

@@ -1,7 +1,7 @@
 import { request } from '@utils'
 import { API } from "@constants"
 
-const { PREFIX } = API
+const { PREFIX,USERIP } = API
 
 // 最新成交列表
 export async function getLatestRecord(payload) {
@@ -10,3 +10,13 @@ export async function getLatestRecord(payload) {
     body: payload
   })
 }
+
+// 委托列表
+export async function getEnsureRecord(payload) {
+  return await request(`${USERIP}/tc`, {
+    method: 'post',
+    body: payload
+  })
+}
+
+

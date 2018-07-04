@@ -76,5 +76,39 @@ export default {
         "ret": "0"
       }
     )
+  },
+  'Post /api/v1/tc': (req, res) => {
+    res.send(
+      {
+        "head": {
+          "method": "market.active_delegate",
+          "msgType": "response",
+          "packType": "1",
+          "lang": "cn",
+          "version": "1.0.0",
+          "timestamps": "1530699967.935828",
+          "serialNumber": "56",
+          "userId": "56",
+          "userToken": "56"
+        },
+        "data": {
+          "asks": [
+            {
+              "price": "1",
+              "amount": "3536"
+            }
+          ],
+          "bids": [
+            {
+              "price": "0.001",
+              "amount": "3.5"
+            }
+          ]
+        },
+        "errCode": "0",
+        "errStr": "success",
+        "ret": "0"
+      }
+    )
   }
 }

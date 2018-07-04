@@ -7,15 +7,54 @@ import styles from './index.less'
 
 
 export default class View extends Component {
+  componentDidMount() {
+    this.startInit()
+  }
+
+  startInit() {
+    const { model: { market }, dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getEnsureRecord`,
+    }).then(res => {
+      console.log(res)
+    })
+  }
+
+  renderList = (data, name) => (
+    <div >
+      <div className={styles.theader} >
+        <ul >
+          <li >
+            <span >价格</span >
+            <span >数量</span >
+            <span >累计数量(张)</span >
+          </li >
+        </ul >
+      </div >
+      <ul >
+        {
+          data.map((item, index) => (
+            <li key={index} >
+              <span className={styles[`${name}_price`]} >{item.price}</span >
+              <span >{item.amount}</span >
+              <span >{item.total}</span >
+            </li >
+          ))
+        }
+      </ul >
+    </div >
+  )
+
   render() {
+    const { renderList } = this
     const dataTop = (new Array(8)).fill({
       price: '9000.00',
-      count: 128.763,
+      amount: 128.763,
       total: '7, 892, 394'
     })
     const dataDown = (new Array(8)).fill({
       price: '9000.00',
-      count: 128.763,
+      amount: 128.763,
       total: '7, 892, 394'
     })
     return (
@@ -40,33 +79,9 @@ export default class View extends Component {
           }
         >
           <div className={styles.content} >
-            <div className={
-              classNames(
-                styles.top
-              )
-            } >
-              <div className={styles.theader} >
-                <ul >
-                  <li >
-                    <span >价格</span >
-                    <span >数量</span >
-                    <span >累计数量(张)</span >
-                  </li >
-                </ul >
-              </div >
-              <ul >
-                {
-                  dataTop.map((item, index) => (
-                    <li key={index} >
-                      <span className={styles.top_price} >{item.price}</span >
-                      <span >{item.count}</span >
-                      <span >{item.total}</span >
-                    </li >
-                  ))
-                }
-
-              </ul >
-            </div >
+            {
+              renderList(dataTop, 'top')
+            }
             <div className={styles.center} >
               <div className={styles.left} >9334.5</div >
               <div className={styles.right} >
@@ -74,32 +89,9 @@ export default class View extends Component {
                 90000.0/9200.0
               </div >
             </div >
-            <div className={
-              classNames(
-                styles.down
-              )
-            } >
-              <div className={styles.theader} >
-                <ul >
-                  <li >
-                    <span >价格</span >
-                    <span >数量</span >
-                    <span >累计数量(张)</span >
-                  </li >
-                </ul >
-              </div >
-              <ul >
-                {
-                  dataDown.map((item, index) => (
-                    <li key={index} >
-                      <span className={styles.down_price} >{item.price}</span >
-                      <span >{item.count}</span >
-                      <span >{item.total}</span >
-                    </li >
-                  ))
-                }
-              </ul >
-            </div >
+            {
+              renderList(dataTop, 'down')
+            }
           </div >
         </ScrollPannel >
       </div >
