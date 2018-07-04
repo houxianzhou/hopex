@@ -5,11 +5,12 @@ import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 import switch_render from '@assets/switch_render.png'
 
-// @connect(({ home: model, user, loading, dispatch }) => ({
-//   user,
-//   model
-// }))
+
 export default class View extends Component {
+  componentDidMount() {
+    const { model: { market } } = this.props
+  }
+
   render() {
     const data = (new Array(100)).fill({
       time: '17:28:23',

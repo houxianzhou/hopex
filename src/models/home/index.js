@@ -1,28 +1,24 @@
-// import { query } from "@services/example";
+import { joinModel } from '@utils'
+import modelExtend from '@models/modelExtend'
+import { getLatestRecord } from "@services/trade"
 
-export default {
+export default joinModel(modelExtend, {
   namespace: 'home',
   state: {
-    name: 'home'
+    name: 'home',
+    market: 'BTCBCH',// 合约
+
   },
   subscriptions: {
     setup({ dispatch, history }) {
-      // dispatch({
-      //   type: 'fetch'
-      // })
     },
   },
 
   effects: {
-    * fetch({ payload }, { call, put }) {
-      // const res = yield call(query)
+    * getLatestRecord({ payload }, { call, put }) {
+      const res = yield call(getLatestRecord)
     },
   },
 
-  reducers: {
-    save(state, action) {
-      return { ...state, ...action.payload };
-    },
-  },
-
-};
+  reducers: {},
+})

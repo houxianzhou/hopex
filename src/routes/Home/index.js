@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { Mixin } from '@components'
+import { Mixin, ShowJsonTip } from '@components'
 import LatestRecord from './LatestRecord'
 import TradeChart from './TradeChart'
 import EnsureRecord from './EnsureRecord'
@@ -21,14 +21,16 @@ export default class View extends Component {
   }
 
   renderView = (name) => {
+    const props = this.props
     const RenderItem = Comp[name]
-    return <RenderItem />
+    return <RenderItem {...props} />
   }
 
   render() {
     const { renderView } = this
     return (
       <Mixin {...{ that: this }}>
+        <ShowJsonTip data={this.props.model} ></ShowJsonTip >
         <div className={styles.views} >
           {
             renderView('LatestRecord')
@@ -40,6 +42,7 @@ export default class View extends Component {
             renderView('EnsureRecord')
           }
         </div >
+
       </Mixin >
     )
   }
