@@ -13,6 +13,7 @@ export default class View extends Component {
       // tap: true,
       click: true,
       probeType,
+      preventDefault: false,
       stopPropagation: false,
       scrollbar: scrollbar === 'fixed' ? {
         fade: false,

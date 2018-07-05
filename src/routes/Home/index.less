@@ -105,20 +105,119 @@
 .purse {
   width: @view_width;
   .content {
+    display: flex;
     color: @c_like_white;
     padding: 20px 32px;
-    .input_number {
-      width: 100%;
-      height: 40px;
-      border: 1px solid #353D4F;
-      background: #2A303C;
-      div {
-        padding: 15px;
-        color: white;
+    .area + .area {
+      margin-left: 40px;
+    }
+    .area {
+      flex-grow: 1;
+      .priceitem + .priceitem {
+        margin-top: 20px;
       }
-      input {
-        text-align: center;
-        outline: none;
+      .priceitem {
+        .priceinput {
+          display: flex;
+          .label {
+            vertical-align: text-bottom;
+            font-size: 13px;
+            min-width: 98px;
+            margin-right: 10px;
+            .label_desc {
+              opacity: .5
+            }
+          }
+          .input_number {
+            flex-grow: 1;
+            height: 40px;
+            border: 1px solid #353D4F;
+            background: #2A303C;
+            div {
+              line-height: 40px;
+              vertical-align: center;
+              // border: 1px solid red;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              // font-weight: bold;
+              padding: 15px;
+              font-size: 26px;
+              opacity: .5;
+              // color: white;
+            }
+            input {
+              text-align: center;
+              outline: none;
+            }
+          }
+        }
+        .introduction {
+          margin-top: 6px;
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+          .introduction_desc {
+
+          }
+          .introduction_price {
+            margin-left: 13px;
+            color: @c_active_yellow;
+          }
+        }
+      }
+      .ensuremoney {
+        margin-top: 20px;
+        :global(.ant-slider-with-marks) {
+          margin-bottom: 0;
+        }
+        :global(.ant-slider-rail) {
+          background: @c_obvious;
+        }
+        :global(.ant-slider-dot) {
+          width: 10px;
+          height: 10px;
+          top: -3px;
+        }
+        :global(.ant-slider-track) {
+          background: @c_active_yellow;
+        }
+        :global(.ant-slider-handle) {
+          border: 4px solid @c_active_yellow;
+        }
+        :global(.ant-slider-dot-active) {
+          border: none;
+          background: @c_active_yellow;
+        }
+        .description {
+          display: flex;
+          justify-content: space-between;
+          span {
+            &:nth-child(2n) {
+              margin-left: 20px;
+              color: @c_active_yellow;
+            }
+          }
+        }
+      }
+
+      .submit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        border-radius: @border_radius;
+        height: 40px;
+        margin-top: 30px;
+        span.text {
+          font-size: 16px;
+        }
+        span + span {
+          margin-left: 10px;
+        }
+        &.buy {
+          background-image: linear-gradient(90deg, #62A48C 0%, #579880 100%);
+        }
       }
     }
   }
