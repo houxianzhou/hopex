@@ -76,7 +76,7 @@ export default class View extends Component {
     </div >
   }
 
-  renderArea = (config) => {
+  renderArea = (config = {}) => {
     const { configPrice = {}, configAmount = {}, configEnsure = {}, configSubmit = {} } = config
     return (
       <div style={{}} className={styles.area} >
@@ -111,21 +111,42 @@ export default class View extends Component {
     const configEnsure = {
       label_buy: '买入保证金',
       label_buy_price: '1000',
-      label_sell: '卖出保证金',
+      label_sell: '可用金额',
       label_sell_price: '1000.0'
     }
-
     const configSubmit = {
       label_text: '买入',
       label_desc: '委托价值',
       label_price: '100.BTC',
       className: styles.buy
     }
-    const config = {
+    const configBuy = {
       configPrice,
       configAmount,
       configEnsure,
       configSubmit
+    }
+    const configSell = {
+      configPrice: {
+        ...configPrice,
+        ...{
+          intro_desc: '最低允许卖价',
+        }
+      },
+      configAmount,
+      configEnsure: {
+        ...configEnsure,
+        ...{
+          label_buy: '卖出保证金',
+        }
+      },
+      configSubmit: {
+        ...configSubmit,
+        ...{
+          label_text: '卖出',
+          className: styles.sell
+        }
+      }
     }
     return (
       <div
@@ -151,10 +172,10 @@ export default class View extends Component {
         >
           <div className={styles.content} >
             {
-              renderArea(config)
+              renderArea(configBuy)
             }
             {
-              renderArea(config)
+              renderArea(configSell)
             }
           </div >
         </ScrollPannel >
