@@ -47,7 +47,6 @@ export function request(url = '', options = {}) {
       return res
     })
     .catch((error) => {
-
       if (_.has(error, 'response.status')) {
         switch (error.response.status) {
           case 401:

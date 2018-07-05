@@ -7,7 +7,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   componentDidMount() {
-    this.startInit()
+    tradeWay:''
   }
 
   startInit() {

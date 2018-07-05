@@ -13,11 +13,28 @@ export async function getLatestRecord(payload) {
 
 // 委托列表
 export async function getEnsureRecord(payload) {
-  return await request(`${PREFIX}/tc`, {
+  return await request(`${USERIP}/tc`, {
     method: 'post',
     body: payload,
     needLoop: true,
     needWatch: false
+  })
+}
+
+// 下限价单
+export async function postLimitOrder(payload) {
+  return await request(`${PREFIX}/tc`, {
+    method: 'post',
+    body: payload
+  })
+}
+
+
+// 下市价单
+export async function postMarketOrder(payload) {
+  return await request(`${PREFIX}/tc`, {
+    method: 'post',
+    body: payload
   })
 }
 

@@ -10,5 +10,6 @@ export const lodash_helper = {
   isUndefined: _.isUndefined,
   isBoolean: _.isBoolean,
   cloneDeep: _.cloneDeep,
-  uniqueId: _.uniqueId
+  uniqueId: _.uniqueId,
+  isFunction: _.isFunction
 }

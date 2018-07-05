@@ -6,6 +6,7 @@ import TradeChart from './TradeChart'
 import EnsureRecord from './EnsureRecord'
 import Purse from './Purse'
 import BuySell from './BuySell'
+import CurrentContract from './CurrentContract'
 import styles from './index.less'
 
 const Comp = {
@@ -13,7 +14,8 @@ const Comp = {
   TradeChart,
   EnsureRecord,
   Purse,
-  BuySell
+  BuySell,
+  CurrentContract
 }
 @connect(({ home: model, theme, loading, dispatch }) => ({
   model,
@@ -44,6 +46,9 @@ export default class View extends Component {
           }
           {
             renderView('BuySell')
+          }
+          {
+            renderView('CurrentContract')
           }
         </div >
         <div className={styles.views} >
