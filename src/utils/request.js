@@ -44,6 +44,10 @@ export function request(url = '', options = {}) {
     ...rest
   })
     .then((res) => {
+      if (_.has(res, 'data.errCode') && _.get(res, 'data.errCode') !== '0') return Promise.reject({
+        errCode: res.data.errCode,
+        errMsg: res.data.errStr
+      })
       return res
     })
     .catch((error) => {
@@ -58,8 +62,8 @@ export function request(url = '', options = {}) {
       }
 
       if (needWatch) {
-        if (_.has(error, 'response.data.message')) {
-          Message.error(error.response.data.message)
+        if (_.has(error, 'errMsg')) {
+          Message.error(_.get(error, 'errMsg'))
         } else {
           if (method === 'get') {
             Message.error('数据获取失败')

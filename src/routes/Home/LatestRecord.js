@@ -7,12 +7,17 @@ import switch_render from '@assets/switch_render.png'
 
 
 export default class View extends Component {
-  // componentDidMount() {
-  //   const { model: { market }, dispatch, modelName } = this.props
-  //   dispatch({
-  //     type: `${modelName}/getLatestRecord`
-  //   })
-  // }
+  componentDidMount() {
+    // this.startInit()
+
+  }
+
+  startInit = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getLatestRecord`
+    })
+  }
 
   render() {
     const data = (new Array(100)).fill({

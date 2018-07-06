@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { classNames, _, dealInterval } from '@utils'
 import ensure from '@assets/ensure.png'
+import { ws } from "@components"
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
-
 export default class View extends Component {
   componentDidMount() {
-    tradeWay:''
+    this.startInit()
   }
 
   startInit() {
@@ -15,9 +15,12 @@ export default class View extends Component {
   }
 
   getEnsureRecord() {
-    const { model: {}, dispatch, modelName } = this.props
+    const { dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getEnsureRecord`,
+      payload: {
+        mode: 'http'
+      }
     }).then(res => {
       if (res) {
         dealInterval(() => {

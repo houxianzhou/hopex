@@ -9,24 +9,32 @@ export const _ = lodash_helper
 
 
 export const getRes = function (res) {
+  // console.log(res)
   if (res && res.data && res.data.data) {
-    return res.data.data
+    return {
+      head: _.get(res, 'data.head'),
+      data: _.get(res, 'data.data')
+    }
   }
   if (res && res.data && !res.data.data) {
-    return res.data
-  }
-  if (res && !res.data) {
-    return res
+    return {
+      head: _.get(res, 'data.head'),
+      data: _.get(res, 'data.data')
+    }
   }
   return {
     data: null,
+    head: null,
     code: (res && res.errcode) || '',
     msg: res && res.data && res.data.errormsg
   }
 }
 
-export const resOk = (res) => {
-  if (_.isNull(res.data)) {
+export const resOk = (res, method) => {
+  if (_.isNull(res.data) || _.isUndefined(res.data)) {
+    return false
+  }
+  if (method && res.head.method !== method) {
     return false
   }
   return true

@@ -1,5 +1,6 @@
 import { joinModel, getRes, resOk } from '@utils'
 import modelExtend from '@models/modelExtend'
+import { ws } from '@components'
 import { getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder } from "@services/trade"
 
 export default joinModel(modelExtend, {
@@ -20,38 +21,89 @@ export default joinModel(modelExtend, {
   },
 
   effects: {
-    * getLatestRecord({ payload }, { call, put }) {
-      const res = getRes(yield call(getLatestRecord))
-      if (resOk(res)) {
-        console.log(res)
+    * getLatestRecord({ payload = {} }, { call, put }) {
+      const { mode = 'ws' } = payload
+      if (mode === 'ws') {
+
+      } else {
+        const res = getRes(yield call(getLatestRecord, {
+          "head": {
+            "method": "order.finished",
+            "msgType": "request",
+            "packType": "1",
+            "lang": "cn",
+            "version": "1.0.0",
+            "timestamps": "1439261904",
+            "serialNumber": "57",
+            "userId": "1",
+            "userToken": "56"
+          },
+          "param": {
+            "market": "BTCUSD永续",
+            "side": "1",
+            "startTime": "1529501617",
+            "endTime": "1529501619",
+            "pageIndex": "1",
+            "pageSize": "100"
+          }
+        }))
+        if (resOk(res)) {
+          console.log('订单成功')
+        }
       }
     },
     // 委托列表
-    * getEnsureRecord({ payload }, { call, put }) {
-      const res = getRes(yield call(getEnsureRecord, {
-        "head": {
-          "method": "market.active_delegate",
-          "msgType": "request",
-          "packType": "1",
-          "lang": "cn",
-          "version": "1.0.0",
-          "timestamps": "1439261904",
-          "serialNumber": "56",
-          "userId": "56",
-          "userToken": "56"
-        },
-        "param": {
-          "market": "BTCUSD永续",//合约
-          "pageSize": "100",//不能大于101
-          "interval": "0"//固定值
+    * getEnsureRecord({ payload = {} }, { call, put }) {
+      const { mode = 'ws' } = payload
+      let method
+      if (mode === 'ws') {
+        ws.onConnect = function () {
+          ws.sendJson({
+            "head": {
+              "method": "server.ping",
+              "msgType": "wsrequest",
+              "packType": "1",
+              "lang": "cn",
+              "version": "1.0.0",
+              "timestamps": "1439261904",
+              "serialNumber": "1439261904",
+              "userId": "56",
+              "userToken": "56"
+            },
+            "param": {}
+          })
+          ws.onMessage = function (e) {
+            const msg = e.data
+            console.log(msg)
+          }
         }
-      }))
-      if (resOk(res)) {
-        yield put({
-          type: 'changeState',
-          payload: { ensure_records: res }
-        })
-        return res
+      } else {
+        method = "market.active_delegate"
+        const res = getRes(yield call(getEnsureRecord, {
+          "head": {
+            "method": method,
+            "msgType": "request",
+            "packType": "1",
+            "lang": "cn",
+            "version": "1.0.0",
+            "timestamps": "1439261904",
+            "serialNumber": "56",
+            "userId": "56",
+            "userToken": "56"
+          },
+          "param": {
+            "market": "BTCUSD永续", //合约
+            "pageSize": "100", //不能大于101
+            "interval": "0" //固定值
+          }
+        }))
+        if (resOk(res,method)) {
+          yield put({
+            type: 'changeState',
+            payload: { ensure_records: res.data }
+          })
+          return res
+        }
       }
     },
 
@@ -59,7 +111,6 @@ export default joinModel(modelExtend, {
     * postSideOrder({ payload = {} }, { call, put }) {
       const { side, method, price, amount } = payload
       const url = method === 'order.put_limit' ? postLimitOrder : postMarketOrder
-
       const res = getRes(yield call(url,
         {
           "head": {
@@ -68,7 +119,7 @@ export default joinModel(modelExtend, {
             "packType": "1",
             "lang": "cn",
             "version": "1.0.0",
-            "timestamps": "1439261904",
+            "timestamps": `${Date.now()}`,
             "serialNumber": "56",
             "userId": "56",
             "userToken": "56"
@@ -85,7 +136,6 @@ export default joinModel(modelExtend, {
         }
       ))
       if (resOk(res)) {
-        console.log(res)
         yield put({
           type: 'changeState',
           payload: { ensure_records: res }
