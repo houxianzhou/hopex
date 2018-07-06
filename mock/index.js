@@ -85,7 +85,6 @@ export default {
     )
   },
   'Post /api/v1/tc': (req, res) => {
-    // res.send(400)
     res.send(
       {
         "head": {

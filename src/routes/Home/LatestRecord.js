@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-// import { connect } from 'dva'
-import { classNames } from '@utils'
+import { classNames, dealInterval } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 import switch_render from '@assets/switch_render.png'
@@ -8,24 +7,32 @@ import switch_render from '@assets/switch_render.png'
 
 export default class View extends Component {
   componentDidMount() {
-    // this.startInit()
-
+    this.startInit()
   }
 
   startInit = () => {
+    this.getEnsureRecord()
+  }
+
+  getEnsureRecord() {
     const { dispatch, modelName } = this.props
     dispatch({
-      type: `${modelName}/getLatestRecord`
+      type: `${modelName}/getLatestRecord`,
+      payload: {
+        mode: 'http'
+      }
+    }).then((res) => {
+      if (res) {
+        dealInterval(() => {
+          this.getEnsureRecord()
+        })
+      }
     })
   }
 
   render() {
-    const data = (new Array(100)).fill({
-      time: '17:28:23',
-      direaction: '买入',
-      price: '90000.00',
-      count: '345,789'
-    })
+    const { model: { latest_records } } = this.props
+    const data = latest_records
     return (
       <div
         className={
@@ -63,10 +70,10 @@ export default class View extends Component {
             {
               data.map((item, index) => (
                 <li key={index} >
-                  <span >{item.time}</span >
-                  <span >{item.direaction}</span >
+                  <span >{'暂无'}</span >
+                  <span >{item.type === 'buy' ? '买入' : '卖出'}</span >
                   <span >{item.price}</span >
-                  <span >{item.count}</span >
+                  <span >{item.amount}</span >
                 </li >
               ))
             }

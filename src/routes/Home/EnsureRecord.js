@@ -63,7 +63,7 @@ export default class View extends Component {
   render() {
     const { renderList } = this
     const { model: { ensure_records = {} } } = this.props
-    const [dataTop = [], dataDown = []] = [_.get(ensure_records, 'asks'), _.get(ensure_records, 'bids')]
+    const [dataTop = [], dataDown = []] = [_.get(ensure_records, 'bids'), _.get(ensure_records, 'asks')]
     return (
       <div
         className={

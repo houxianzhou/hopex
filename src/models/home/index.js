@@ -6,7 +6,7 @@ import { getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder } fro
 export default joinModel(modelExtend, {
   namespace: 'home',
   state: {
-    market: 'BTCBCH',// 合约
+    market: 'BTCUSD永续',// 合约
     // 最新成交
     latest_pageIndex: '1',
     latest_pageSize: '19',
@@ -28,7 +28,7 @@ export default joinModel(modelExtend, {
       } else {
         const res = getRes(yield call(getLatestRecord, {
           "head": {
-            "method": "order.finished",
+            "method": "market.deals",
             "msgType": "request",
             "packType": "1",
             "lang": "cn",
@@ -40,22 +40,22 @@ export default joinModel(modelExtend, {
           },
           "param": {
             "market": "BTCUSD永续",
-            "side": "1",
-            "startTime": "1529501617",
-            "endTime": "1529501619",
-            "pageIndex": "1",
-            "pageSize": "100"
+            "pageSize": "3",
+            "lastId": "1"
           }
         }))
         if (resOk(res)) {
-          console.log('订单成功')
+          yield put({
+            type: 'changeState',
+            payload: { latest_records: res.data.records }
+          })
+          return res
         }
       }
     },
     // 委托列表
     * getEnsureRecord({ payload = {} }, { call, put }) {
       const { mode = 'ws' } = payload
-      let method
       if (mode === 'ws') {
         ws.onConnect = function () {
           ws.sendJson({
@@ -78,10 +78,9 @@ export default joinModel(modelExtend, {
           }
         }
       } else {
-        method = "market.active_delegate"
         const res = getRes(yield call(getEnsureRecord, {
           "head": {
-            "method": method,
+            "method": "market.active_delegate",
             "msgType": "request",
             "packType": "1",
             "lang": "cn",
@@ -97,7 +96,7 @@ export default joinModel(modelExtend, {
             "interval": "0" //固定值
           }
         }))
-        if (resOk(res,method)) {
+        if (resOk(res)) {
           yield put({
             type: 'changeState',
             payload: { ensure_records: res.data }
@@ -135,13 +134,13 @@ export default joinModel(modelExtend, {
           }
         }
       ))
-      if (resOk(res)) {
-        yield put({
-          type: 'changeState',
-          payload: { ensure_records: res }
-        })
-        return res
-      }
+      // if (resOk(res)) {
+      //   yield put({
+      //     type: 'changeState',
+      //     payload: { ensure_records: res }
+      //   })
+      //   return res
+      // }
     },
   },
 
