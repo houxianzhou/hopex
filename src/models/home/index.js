@@ -57,7 +57,7 @@ export default joinModel(modelExtend, {
 
     // 下单（限价/市价）
     * postSideOrder({ payload = {} }, { call, put }) {
-      const { side, method } = payload
+      const { side, method, price, amount } = payload
       const url = method === 'order.put_limit' ? postLimitOrder : postMarketOrder
 
       const res = getRes(yield call(url,
@@ -76,8 +76,8 @@ export default joinModel(modelExtend, {
           "param": {
             "market": "BTCUSD永续",//合约
             "side": side,//1:sell 2:buy
-            "amount": "111",//买卖数量
-            "price": "111",//价格
+            "amount": amount,//买卖数量
+            "price": price,//价格
             "takerFee": "0.01",
             "makerFee": "0.01",
             "source": "我是限价单测试"//备注

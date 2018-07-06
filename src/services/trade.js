@@ -13,7 +13,7 @@ export async function getLatestRecord(payload) {
 
 // 委托列表
 export async function getEnsureRecord(payload) {
-  return await request(`${USERIP}/tc`, {
+  return await request(`${PREFIX}/tc`, {
     method: 'post',
     body: payload,
     needLoop: true,

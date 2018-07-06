@@ -1,10 +1,11 @@
-import { classNames } from '@utils'
+import { classNames, Patterns } from '@utils'
 import * as styles from './InputNumber.less'
 
 export default function (Props) {
   const {
-    value, className = {}, style = {}
+    value, step = 10, max, min, onChange, className = {}, style = {}
   } = Props
+  const valueTrans = value
   return (
     <div
       style={style}
@@ -12,9 +13,29 @@ export default function (Props) {
         styles.input_number,
         className
       )} >
-      <div >-</div >
-      <input value={value} />
-      <div >+</div >
+      <div
+        onClick={
+          () => {
+            let re = Number(valueTrans) - step
+            if (re < 0) {
+              re = 0
+            }
+            onChange(re)
+          }
+        }
+      >-
+      </div >
+      <input value={valueTrans} onChange={(e) => {
+        if (Patterns.number.test(e.target.value)) {
+          onChange(e.target.value)
+        }
+      }} />
+      <div onClick={
+        () => {
+          onChange(Number(valueTrans) + step)
+        }
+      } >+
+      </div >
     </div >
   )
 }

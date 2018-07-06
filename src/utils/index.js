@@ -40,5 +40,9 @@ export const dealInterval = (func, interval = SPEED.DOWM) => {
   return setTimeout(func, interval)
 }
 
+export const Patterns = {
+  number: /^[0-9]*$/
+}
+
 
 

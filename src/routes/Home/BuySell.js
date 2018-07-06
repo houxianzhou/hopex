@@ -9,13 +9,20 @@ import styles from './index.less'
 export default class View extends Component {
   state = {
     orderChannel: 'order.put_limit',
-    price: null,
-    amount: null,
-    ensureMoney: null
+    buy: {
+      price: '',
+      amount: '',
+      ensureMoney: ''
+    },
+    sell: {
+      price: '',
+      amount: '',
+      ensureMoney: ''
+    }
   }
 
   renderInputItem = (config = {}) => {
-    const { label_name, label_desc, intro_desc, intro_price } = config
+    const { label_name, label_desc, intro_desc, intro_price, value, onChange } = config
     return (
       <div className={styles.priceitem} >
         <div className={styles.priceinput} >
@@ -23,12 +30,17 @@ export default class View extends Component {
             <div className={styles.label_name} >{label_name}</div >
             <div className={styles.label_desc} >{label_desc}</div >
           </div >
-          <InputNumber className={styles.input_number} />
+          <InputNumber className={styles.input_number} value={value} onChange={onChange} />
         </div >
-        <div className={styles.introduction} >
-          <div className={styles.introduction_desc} >{intro_desc}</div >
-          <div className={styles.introduction_price} >{intro_price}</div >
-        </div >
+        {
+          intro_desc && intro_price ? (
+            <div className={styles.introduction} >
+              <div className={styles.introduction_desc} >{intro_desc}</div >
+              <div className={styles.introduction_price} >{intro_price}</div >
+            </div >
+          ) : null
+        }
+
       </div >
     )
   }
@@ -37,14 +49,14 @@ export default class View extends Component {
     const { label_buy, label_buy_price, label_sell, label_sell_price } = config
     const marks = {
       0: '',
-      1: '',
-      2: '',
-      3: '',
-      4: ''
+      2000: '',
+      4000: '',
+      6000: '',
+      10000: '',
     };
     return (
       <div className={styles.ensuremoney} >
-        <Slider marks={marks} step={1} max={4} defaultValue={1} />
+        <Slider marks={marks} max={10000} defaultValue={1} />
         <div className={styles.description} >
           <div >
             <span >{label_buy}</span >
@@ -88,20 +100,20 @@ export default class View extends Component {
   }
 
   renderArea = (config = {}) => {
-    const { configPrice = {}, configAmount = {}, configEnsure = {}, configSubmit = {} } = config
+    const { configPrice = {}, configAmount = {}, configEnsure = {}, configSubmit = {}, ...rest } = config
     return (
       <div style={{}} className={styles.area} >
         {
-          this.renderInputItem(configPrice)
+          this.renderInputItem({ ...configPrice, ...rest })
         }
         {
-          this.renderInputItem(configAmount)
+          this.renderInputItem({ ...configAmount, ...rest })
         }
         {
-          this.renderEnsureMoney(configEnsure)
+          this.renderEnsureMoney({ ...configEnsure, ...rest })
         }
         {
-          this.renderSubmit(configSubmit)
+          this.renderSubmit({ ...configSubmit, ...rest })
         }
       </div >
     )
@@ -110,17 +122,37 @@ export default class View extends Component {
   render() {
     const { renderArea } = this
     const { dispatch, modelName } = this.props
+    const { orderChannel, buy, sell } = this.state
+
     // 限价或者市价
     const configPrice = {
-      label_name: '限价',
+      label_name: orderChannel === 'order.put_limit' ? '限价' : '市价',
       label_desc: '最小单位0.5USD',
       intro_desc: '最高允许买价',
-      intro_price: '10000.0'
+      intro_price: '10000.0',
+      value: buy.price,
+      onChange: (value) => {
+        this.setState({
+          buy: {
+            ...buy,
+            price: value
+          }
+        })
+      }
     }
     // 数量
     const configAmount = {
       label_name: '数量',
       label_desc: '最小单位1张',
+      value: buy.amount,
+      onChange: (value) => {
+        this.setState({
+          buy: {
+            ...buy,
+            amount: value
+          }
+        })
+      }
     }
     // 保证金
     const configEnsure = {
@@ -141,25 +173,52 @@ export default class View extends Component {
           type: `${modelName}/postSideOrder`,
           payload: {
             side: '1',
-            method: 'order.put_limit'
+            method: 'order.put_limit',
+            price: buy.price,
+            amount: buy.amount
           }
         })
       }
     }
     const configBuy = {
+      name: 'buy',
       configPrice,
       configAmount,
       configEnsure,
       configSubmit
     }
     const configSell = {
+      name: 'sell',
       configPrice: {
         ...configPrice,
         ...{
           intro_desc: '最低允许卖价',
+          value: sell.price,
+          onChange: (value) => {
+            this.setState({
+              sell: {
+                ...sell,
+                price: value
+              }
+            })
+          }
+
         }
       },
-      configAmount,
+      configAmount: {
+        ...configAmount,
+        ...{
+          value: sell.amount,
+          onChange: (value) => {
+            this.setState({
+              sell: {
+                ...sell,
+                amount: value
+              }
+            })
+          }
+        }
+      },
       configEnsure: {
         ...configEnsure,
         ...{
@@ -176,7 +235,9 @@ export default class View extends Component {
               type: `${modelName}/postSideOrder`,
               payload: {
                 side: '2',
-                method: 'order.put_limit'
+                method: 'order.put_limit',
+                price: sell.price,
+                amount: sell.amount
               }
             })
           }
