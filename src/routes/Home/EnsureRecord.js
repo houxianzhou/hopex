@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { classNames, _, dealInterval } from '@utils'
 import ensure from '@assets/ensure.png'
-import { ws } from "@components"
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
 export default class View extends Component {
   componentDidMount() {
-    this.startInit()
+    // this.startInit()
   }
 
   startInit() {
@@ -22,11 +21,9 @@ export default class View extends Component {
         mode: 'http'
       }
     }).then(res => {
-      if (res) {
-        dealInterval(() => {
-          this.getEnsureRecord()
-        })
-      }
+      dealInterval(() => {
+        this.getEnsureRecord()
+      })
     })
   }
 

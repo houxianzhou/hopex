@@ -2,7 +2,7 @@ import { request } from '@utils'
 import { API } from "@constants"
 
 const { PREFIX, USERIP } = API
-const MODE = USERIP
+const MODE = PREFIX
 
 // 最新成交列表
 export async function getLatestRecord(payload) {

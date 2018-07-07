@@ -4,15 +4,19 @@ import { _ } from '@utils'
 
 export default class View extends Component {
   componentDidMount() {
-    this.getScroll()
+    this.startInit()
   }
 
-  getScroll = () => {
-    const { mouseWheel = true, scrollbar = true, probeType = 0, getScroller, ...rest } = this.props
+  startInit = () => {
+    const {
+      mouseWheel = true, // 是否监听滚轮滚动，此属性影响着鼠标滚动时，最外层的scroll滚动条能否滚动
+      scrollbar = true, // 滚动条显示样式，是一直显示还是滚动时显示
+      getScroller,
+      ...rest
+    } = this.props
     this.scroll = new BScroll(`.${this.uuid}`, {
-      // tap: true,
       click: true,
-      probeType,
+      probeType: 0,
       preventDefault: false,
       stopPropagation: false,
       scrollbar: scrollbar === 'fixed' ? {
@@ -30,9 +34,9 @@ export default class View extends Component {
 
   render() {
     this.uuid = _.uniqueId('container_')
-    const { children, style = {} } = this.props
+    const { children, className = {}, style = {} } = this.props
     return (
-      <div style={{ ...{ position: 'relative', width: '100%', height: '100%' }, ...style }} >
+      <div className={className} style={{ ...{ position: 'relative', width: '100%', height: '100%' }, ...style }} >
         <div
           className={`${this.uuid}`}
           style={{

@@ -3,8 +3,6 @@ import helper from './helper'
 
 const { randomArrayMap, randomStr } = helper
 
-
-const randonStr = _.random(10, 10000) + ''
 export default {
   'Post /api/v1/order': (req, res) => {
     res.send(
@@ -85,33 +83,76 @@ export default {
     )
   },
   'Post /api/v1/tc': (req, res) => {
-    res.send(
-      {
-        "head": {
-          "method": "market.active_delegate",
-          "msgType": "response",
-          "packType": "1",
-          "lang": "cn",
-          "version": "1.0.0",
-          "timestamps": "1530699967.935828",
-          "serialNumber": "56",
-          "userId": "56",
-          "userToken": "56"
-        },
-        "data": {
-          "asks": randomArrayMap(100).map((item, index) => ({
-            "price": randomStr(),
-            "amount": randomStr()
-          })),
-          "bids": randomArrayMap(100).map((item, index) => ({
-            "price": randomStr(),
-            "amount": randomStr()
-          }))
-        },
-        "errCode": "0",
-        "errStr": "success",
-        "ret": "0"
+    let result
+    const method = _.get(req, 'body.head.method')
+    switch (method) {
+      // 委托列表
+      case 'market.active_delegate': {
+        result = {
+          "head": {
+            "method": "market.active_delegate",
+            "msgType": "response",
+            "packType": "1",
+            "lang": "cn",
+            "version": "1.0.0",
+            "timestamps": "1530699967.935828",
+            "serialNumber": "56",
+            "userId": "56",
+            "userToken": "56"
+          },
+          "data": {
+            "asks": randomArrayMap(100).map((item, index) => ({
+              "price": randomStr(),
+              "amount": randomStr()
+            })),
+            "bids": randomArrayMap(100).map((item, index) => ({
+              "price": randomStr(),
+              "amount": randomStr()
+            }))
+          },
+          "errCode": "0",
+          "errStr": "success",
+          "ret": "0"
+        }
       }
+        break
+      // 最近交易
+      case 'market.deals': {
+        result = {
+          "head": {
+            "method": "market.deals",
+            "msgType": "response",
+            "packType": "1",
+            "lang": "cn",
+            "version": "1.0.0",
+            "timestamps": "1530884374",
+            "serialNumber": "57",
+            "userId": "1",
+            "userToken": "56"
+          },
+          "data": {
+            "records": randomArrayMap(100).map((item, index) => (
+              {
+                "id": index,
+                "time": 1530869889.717263,
+                "price": randomStr(1, 1000, 10000),
+                "amount": randomStr(1, 100),
+                "type": ["buy", 'sell'][_.random(0, 1)]
+              }
+            ))
+          },
+          "errCode": "0",
+          "errStr": "success",
+          "ret": "0"
+        }
+      }
+        break
+      default:
+    }
+    res.send(
+      result
     )
   }
 }
+
+
