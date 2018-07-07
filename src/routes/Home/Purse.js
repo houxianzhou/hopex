@@ -8,9 +8,6 @@ export default class View extends Component {
   render() {
     return (
       <div
-        style={{
-          height: 344,
-        }}
         className={
           classNames(
             {

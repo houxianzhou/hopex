@@ -13,7 +13,7 @@ export default class View extends Component {
             {
               view: true
             },
-            styles.purse
+            styles.currentContract
           )
         }
       >

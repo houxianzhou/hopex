@@ -46,7 +46,7 @@ export default class View extends Component {
             renderView('LatestRecord')
           }
           {
-            renderView('BuySell')
+            renderView('TradeChart')
           }
 
           {
@@ -59,8 +59,9 @@ export default class View extends Component {
             renderView('Purse')
           }
           {
-            renderView('TradeChart')
+            renderView('BuySell')
           }
+
 
           {
             renderView('CurrentContract')

@@ -41,6 +41,7 @@ export default class View extends Component {
       >
         <div style={{
           padding: 10,
+          borderRadius:5,
           width: state.width,
           height: state.height,
           overflow: 'hidden',

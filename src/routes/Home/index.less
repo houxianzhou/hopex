@@ -7,6 +7,9 @@
     .view + .view {
       margin-left: 10px;
     }
+    .view{
+      flex-grow: 1;
+    }
   }
 }
 
@@ -15,7 +18,8 @@
 }
 
 .latestRecord {
-  width: @view_width;
+  max-width: @view_width;
+  height: 560px;
   ul {
     width: 100%;
     li {
@@ -50,8 +54,12 @@
   }
 }
 
+.tradeChart {
+
+}
+
 .ensureRecord {
-  width: @view_width;
+  max-width: @view_width;
   font-size: 13px;
   .theader {
     color: @c_pannel_theader_color;
@@ -103,7 +111,11 @@
 }
 
 .purse {
-  width: @view_width;
+  max-width: @view_width;
+  height: 344px;
+}
+
+.buySell {
   .content {
     display: flex;
     color: @c_like_white;
@@ -190,7 +202,7 @@
           background: @c_active_yellow;
         }
         .description {
-          vertical-align:middle;
+          vertical-align: middle;
           margin-top: 3px;
           display: flex;
           justify-content: space-between;
@@ -227,3 +239,9 @@
     }
   }
 }
+
+.currentContract{
+  max-width: @view_width;
+}
+
+

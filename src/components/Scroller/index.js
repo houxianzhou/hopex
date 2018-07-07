@@ -36,7 +36,8 @@ export default class View extends Component {
     this.uuid = _.uniqueId('container_')
     const { children, className = {}, style = {} } = this.props
     return (
-      <div className={className} style={{ ...{ position: 'relative', width: '100%', height: '100%' }, ...style }} >
+      <div className={className}
+           style={{ ...{ position: 'relative', width: '100%', height: '100%', flexGrow: 1 }, ...style }} >
         <div
           className={`${this.uuid}`}
           style={{

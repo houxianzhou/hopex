@@ -246,15 +246,12 @@ export default class View extends Component {
     }
     return (
       <div
-        style={{
-          flexGrow: 1
-        }}
         className={
           classNames(
             {
               view: true
             },
-            styles.purse
+            styles.buySell
           )
         }
       >

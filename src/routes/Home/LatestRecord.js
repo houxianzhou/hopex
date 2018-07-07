@@ -44,7 +44,6 @@ export default class View extends Component {
       >
         <ScrollPannel
           scrollConfig={{
-            style: { height: 494 },
             scrollbar: true,
           }}
           header={
