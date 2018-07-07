@@ -1,0 +1,23 @@
+
+.jsontip {
+  .varname {
+    display: flex;
+    padding: 5px;
+    flex-wrap: wrap;
+    .key + .key {
+      margin-left: 5px;
+    }
+    .key {
+      color: white;
+      border-radius: 5px;
+      margin-top: 10px;
+      padding: 5px 8px;
+      background: #000000;
+      &.active {
+        background: red;
+
+      }
+    }
+  }
+
+}

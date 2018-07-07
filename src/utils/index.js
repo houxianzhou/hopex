@@ -1,11 +1,13 @@
 import { SPEED } from '@constants'
 import { lodash_helper } from './helper'
 
+
 export { default as joinModel }  from 'dva-model-extend'
 export Responsive from 'react-responsive'
 export classNames from 'classnames'
 export { request } from './request'
 export const _ = lodash_helper
+export { localSave } from "./helper";
 
 
 export const getRes = function (res) {

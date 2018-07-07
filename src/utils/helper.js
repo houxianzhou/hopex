@@ -1,6 +1,9 @@
 import _ from 'lodash'
+import store from 'store'
 
 export const lodash_helper = {
+  isObjectLike: _.isObjectLike,
+  keys: _.keys,
   throttle: _.throttle,
   random: _.random,
   has: _.has,
@@ -12,6 +15,17 @@ export const lodash_helper = {
   cloneDeep: _.cloneDeep,
   uniqueId: _.uniqueId,
   isFunction: _.isFunction
+}
+
+export const localSave = {
+  get: (key) => {
+    return store.get(key)
+  },
+  set: (key, value) => {
+    store.set(key, value)
+  },
+  remove: store.remove,
+  clearAll: store.clearAll
 }
 
 
