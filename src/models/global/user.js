@@ -5,7 +5,10 @@ import modelExtend from '@models/modelExtend'
 export default joinModel(modelExtend, {
   namespace: 'user',
   state: {
-    userInfo: {}
+    userInfo: {
+      // userId: '56',
+      // userToken: "56",
+    }
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -18,7 +21,7 @@ export default joinModel(modelExtend, {
       if (resOk(res)) {
         yield put({
           type: 'changeState',
-          payload: res
+          payload: res.data
         })
         resolve(res)
       } else {

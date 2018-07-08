@@ -4,7 +4,10 @@ export default delay({
   'Get /api/user': (req, res) => {
     res.send(
       {
-        name: 'weixiaoyi'
+        userInfo: {
+          userId: '56',
+          userToken: "56",
+        }
       }
     )
   }

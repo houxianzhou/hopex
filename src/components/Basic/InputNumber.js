@@ -26,7 +26,7 @@ export default function (Props) {
       >-
       </div >
       <input value={valueTrans} onChange={(e) => {
-        if (Patterns.number.test(e.target.value)) {
+        if (Patterns.decimalNumber.test(e.target.value)) {
           onChange(e.target.value)
         }
       }} />

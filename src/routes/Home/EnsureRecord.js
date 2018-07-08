@@ -21,9 +21,9 @@ export default class View extends Component {
         mode: 'http'
       }
     }).then(res => {
-      dealInterval(() => {
-        this.getEnsureRecord()
-      })
+      // dealInterval(() => {
+      //   this.getEnsureRecord()
+      // })
     })
   }
 

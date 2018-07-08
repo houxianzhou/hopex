@@ -6,6 +6,7 @@ import { getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder } fro
 export default joinModel(modelExtend, {
   namespace: 'home',
   state: {
+    // 合约名称
     market: 'BTCUSD永续',// 合约
     // 最新成交
     latest_pageIndex: '1',
@@ -16,7 +17,11 @@ export default joinModel(modelExtend, {
     ensure_records: {}
   },
   subscriptions: {
+
     setup({ dispatch, history }) {
+      dispatch({
+        type: 'createRequestParams'
+      })
     },
   },
 
@@ -26,24 +31,22 @@ export default joinModel(modelExtend, {
       if (mode === 'ws') {
 
       } else {
-        const res = getRes(yield call(getLatestRecord, {
-          "head": {
-            "method": "market.deals",
-            "msgType": "request",
-            "packType": "1",
-            "lang": "cn",
-            "version": "1.0.0",
-            "timestamps": "1439261904",
-            "serialNumber": "57",
-            "userId": "1",
-            "userToken": "56"
-          },
-          "param": {
-            "market": "BTCUSD永续",
-            "pageSize": "3",
-            "lastId": "1"
+        const payload = yield put({
+          type: 'createRequestParams',
+          payload: {
+            "head": {
+              "method": "market.deals",
+              "msgType": "request",
+              "packType": "1",
+              "serialNumber": "57",
+            },
+            "param": {
+              "pageSize": "100",
+              "lastId": "1"
+            }
           }
-        }))
+        })
+        const res = getRes(yield call(getLatestRecord, payload))
         if (resOk(res)) {
           yield put({
             type: 'changeState',
@@ -78,24 +81,22 @@ export default joinModel(modelExtend, {
           }
         }
       } else {
-        const res = getRes(yield call(getEnsureRecord, {
-          "head": {
-            "method": "market.active_delegate",
-            "msgType": "request",
-            "packType": "1",
-            "lang": "cn",
-            "version": "1.0.0",
-            "timestamps": "1439261904",
-            "serialNumber": "56",
-            "userId": "56",
-            "userToken": "56"
-          },
-          "param": {
-            "market": "BTCUSD永续", //合约
-            "pageSize": "100", //不能大于101
-            "interval": "0" //固定值
+        const payload = yield put({
+          type: 'createRequestParams',
+          payload: {
+            "head": {
+              "method": "market.active_delegate",
+              "msgType": "request",
+              "packType": "1",
+              "serialNumber": "56",
+            },
+            "param": {
+              "pageSize": "100", //不能大于101
+              "interval": "0" //固定值
+            }
           }
-        }))
+        })
+        const res = getRes(yield call(getEnsureRecord, payload))
         if (resOk(res)) {
           yield put({
             type: 'changeState',

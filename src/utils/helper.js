@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import store from 'store'
+import { fromJS,  is } from 'immutable'
 
 export const lodash_helper = {
   maxBy: _.maxBy,
@@ -28,6 +29,11 @@ export const localSave = {
   },
   remove: store.remove,
   clearAll: store.clearAll
+}
+
+export const immutable = {
+  fromJS,
+  is,
 }
 
 

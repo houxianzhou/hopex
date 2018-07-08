@@ -1,4 +1,4 @@
-import { request } from '@utils'
+import { request, asyncPayload } from '@utils'
 import { API } from "@constants"
 
 const { PREFIX, USERIP } = API
@@ -6,19 +6,23 @@ const MODE = PREFIX
 
 // 最新成交列表
 export async function getLatestRecord(payload) {
-  return await request(`${MODE}/tc`, {
-    method: 'post',
-    body: payload
+  return asyncPayload(payload, (payload) => {
+    return request(`${MODE}/tc`, {
+      method: 'post',
+      body: payload
+    })
   })
 }
 
 // 委托列表
 export async function getEnsureRecord(payload) {
-  return await request(`${MODE}/tc`, {
-    method: 'post',
-    body: payload,
-    needLoop: true,
-    needWatch: false
+  return asyncPayload(payload, (payload) => {
+    return request(`${MODE}/tc`, {
+      method: 'post',
+      body: payload,
+      needLoop: true,
+      needWatch: false
+    })
   })
 }
 
