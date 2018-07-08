@@ -2,6 +2,7 @@ import _ from 'lodash'
 import store from 'store'
 
 export const lodash_helper = {
+  isArray: _.isArray,
   isObjectLike: _.isObjectLike,
   keys: _.keys,
   throttle: _.throttle,

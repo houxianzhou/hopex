@@ -17,21 +17,25 @@ const Comp = {
   BuySell,
   CurrentContract
 }
-
 @connect(({ home: model, theme, loading, dispatch }) => ({
   model,
   modelName: 'home',
   theme,
   loading,
-  dispatch
+  dispatch,
 }))
 export default class View extends Component {
-  startInit() {
-    // console.log('父组件')
+  constructor(props) {
+    super(props)
+    this.initStacks = []
+  }
+
+  startInit = () => {
+    this.initStacks.map(item => item && item())
   }
 
   renderView = (name) => {
-    const props = this.props
+    const props = { ...this.props, initStacks: this.initStacks }
     const RenderItem = Comp[name]
     return <RenderItem {...props} />
   }
@@ -39,7 +43,7 @@ export default class View extends Component {
   render() {
     const { renderView } = this
     return (
-      <Mixin {...{ that: this }}>
+      <Mixin.Parent that={this} >
         <ShowJsonTip data={this.props.model} ></ShowJsonTip >
         <div className={styles.views} >
           {
@@ -48,7 +52,6 @@ export default class View extends Component {
           {
             renderView('TradeChart')
           }
-
           {
             renderView('EnsureRecord')
           }
@@ -61,14 +64,12 @@ export default class View extends Component {
           {
             renderView('BuySell')
           }
-
-
           {
             renderView('CurrentContract')
           }
         </div >
 
-      </Mixin >
+      </Mixin.Parent >
     )
   }
 }

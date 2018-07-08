@@ -153,14 +153,15 @@ export default class View extends Component {
                 {/*</button >*/}
               </div >
             </div >
-          ) : <div
+          ) : (<div
             onClick={() => {
               this.changeState({
                 visible: true
               })
             }}
             style={{
-              position:'fixed',
+              zIndex:1000000,
+              position: 'fixed',
               height: 20,
               width: 20,
               display: 'flex',
@@ -168,12 +169,12 @@ export default class View extends Component {
               justifyContent: 'center',
               marginRight: 20,
               background: 'white',
-              borderRadius: 100,
+              borderRadius: 10,
               border: '5px solid black',
               color: 'white',
               padding: 5,
             }}
-          />
+          />)
         }
 
       </Draggable >

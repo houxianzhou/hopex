@@ -7,7 +7,7 @@
     .view + .view {
       margin-left: 10px;
     }
-    .view{
+    .view {
       flex-grow: 1;
     }
   }
@@ -61,10 +61,14 @@
 .ensureRecord {
   max-width: @view_width;
   font-size: 13px;
-  .theader {
-    color: @c_pannel_theader_color;
-    background: @c_pannel_dark;
-    height: 32px;
+  .content{
+    height:100%;
+  }
+  .top {
+    // background: red;
+  }
+  .down {
+    // background: blue;
   }
   .center {
     display: flex;
@@ -72,7 +76,7 @@
     justify-content: space-between;
     padding: @padding_panel;
     padding-right: 27px;
-    height: 43px;
+    height: 41px;
     background: @c_pannel_header_dark;
     .left {
       font-size: 16px;
@@ -85,6 +89,11 @@
         margin-right: 10px;
       }
     }
+  }
+  .theader {
+    color: @c_pannel_theader_color;
+    background: @c_pannel_dark;
+    height: 32px;
   }
   ul {
     height: 100%;
@@ -240,7 +249,7 @@
   }
 }
 
-.currentContract{
+.currentContract {
   max-width: @view_width;
 }
 

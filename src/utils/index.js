@@ -11,11 +11,15 @@ export { localSave } from "./helper";
 
 
 export const getRes = function (res) {
-  // console.log(res)
   if (res && res.data && res.data.data) {
     return {
       head: _.get(res, 'data.head'),
       data: _.get(res, 'data.data')
+    }
+  }
+  if (res && res.data && !res.data.data && !res.data.head) {
+    return {
+      data: _.get(res, 'data')
     }
   }
   if (res && res.data && !res.data.data) {

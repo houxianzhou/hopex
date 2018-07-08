@@ -8,7 +8,8 @@ export default joinModel(modelExtend, {
     userInfo: {}
   },
   subscriptions: {
-    setup({ dispatch, history }) {},
+    setup({ dispatch, history }) {
+    },
   },
 
   effects: {
