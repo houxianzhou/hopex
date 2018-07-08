@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { classNames, _, dealInterval } from '@utils'
+import { classNames, _, dealInterval, getPercent } from '@utils'
 import { Mixin } from "@components"
 import ensure from '@assets/ensure.png'
 import ScrollPannel from './components/ScrollPanel'
+import ColorChange from './components/ColorChange'
 import styles from './index.less'
 
+const [TOP, DOWN] = ['top', 'down']
 export default class View extends Component {
 
   startInit = () => {
@@ -30,9 +32,9 @@ export default class View extends Component {
       <div className={styles.theader} >
         <ul >
           <li >
-            <span >价格</span >
-            <span >数量</span >
-            <span >累计数量(张)</span >
+            <div >价格</div >
+            <div >数量</div >
+            <div >累计数量(张)</div >
           </li >
         </ul >
       </div >
@@ -42,11 +44,31 @@ export default class View extends Component {
             const total = data.slice(0, index + 1).reduce((sum, next) => {
               return sum + Number(next.amount)
             }, 0)
+            item.total = total
+            const [max1, max2, max3] = [
+              _.maxBy(data, (item) => Number(item.price)),
+              _.maxBy(data, 'amount'),
+              _.maxBy(data, 'total')
+            ]
+
+            const colorProps = {
+              total: data,
+              color: name === TOP ? 'rgba(175,86,91,.2)' : 'rgba(87,152,128,.2)'
+            }
             return (
               <li key={index} >
-                <span className={styles[`${name}_price`]} >{item.price}</span >
-                <span >{item.amount}</span >
-                <span >{total}</span >
+                <div className={styles[`${name}_price`]} >
+                  <ColorChange {...{
+                    percent: getPercent(item.price, max1.price, max1),
+                    data: item.price,
+                    ...colorProps
+                  }}>
+                    {item.price}
+                  </ColorChange >
+                </div >
+
+                <div >{item.amount}</div >
+                <div >{item.total}</div >
               </li >
             )
           })
@@ -83,7 +105,7 @@ export default class View extends Component {
           >
             <div className={styles.content} >
               {
-                renderList(dataTop.slice(0, 8), 'top')
+                renderList(dataTop.slice(0, 8), TOP)
               }
               <div className={styles.center} >
                 <div className={styles.left} >9334.5</div >
@@ -93,7 +115,7 @@ export default class View extends Component {
                 </div >
               </div >
               {
-                renderList(dataDown.slice(0, 8), 'down')
+                renderList(dataDown.slice(0, 8), DOWN)
               }
             </div >
           </ScrollPannel >

@@ -61,8 +61,8 @@
 .ensureRecord {
   max-width: @view_width;
   font-size: 13px;
-  .content{
-    height:100%;
+  .content {
+    height: 100%;
   }
   .top {
     // background: red;
@@ -102,9 +102,11 @@
       display: flex;
       align-items: center;
       padding: @padding_panel;
-      span {
-        display: inline-block;
+      div {
+        display: flex;
+        align-items: center;
         width: 33.3333%;
+        height: 100%;
         &.top_price {
           color: @_red;
         }
@@ -115,6 +117,7 @@
       &:nth-child(2n) {
         background: @c_pannel_dark;
       }
+
     }
   }
 }

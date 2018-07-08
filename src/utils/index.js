@@ -1,3 +1,4 @@
+import { fromJS, is } from 'immutable'
 import { SPEED } from '@constants'
 import { lodash_helper } from './helper'
 
@@ -56,6 +57,16 @@ export const dealInterval = (func, interval = SPEED.DOWM) => {
 
 export const Patterns = {
   number: /^[0-9]*$/
+}
+
+export const getPercent = (child, parent, item) => {
+  if (parent) {
+    return child / parent * 100 + '%'
+  }
+}
+
+export const isEqual = (obj1, obj2) => {
+  return is(fromJS(obj1), fromJS(obj2))
 }
 
 
