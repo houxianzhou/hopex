@@ -7,8 +7,8 @@ export const THEME = {
 }
 
 export const API = {
-  PREFIX: '/api/v1',
-  USERIP: 'http://192.168.70.131:10020/api/v1'
+  PREFIX: '/mock/api/v1',
+  USERIP: '/api/v1'
 }
 
 export const SPEED = {

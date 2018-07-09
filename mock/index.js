@@ -4,7 +4,7 @@ import helper from './helper'
 const { randomArrayMap, randomStr } = helper
 
 export default {
-  'Post /api/v1/order': (req, res) => {
+  'Post /mock/api/v1/order': (req, res) => {
     res.send(
       {
         "head": {
@@ -82,7 +82,7 @@ export default {
       }
     )
   },
-  'Post /api/v1/tc': (req, res) => {
+  'Post /mock/api/v1/tc': (req, res) => {
     let result
     const method = _.get(req, 'body.head.method')
     switch (method) {

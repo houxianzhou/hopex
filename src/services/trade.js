@@ -9,7 +9,9 @@ export async function getLatestRecord(payload) {
   return asyncPayload(payload, (payload) => {
     return request(`${MODE}/tc`, {
       method: 'post',
-      body: payload
+      body: payload,
+      needLoop: true,
+      needWatch: false
     })
   })
 }

@@ -13,8 +13,10 @@ export default {
   // extraBabelPresets:[
   //   ["@babel/env", { "targets": { "node": 6 } }]
   // ],
+  "html": {
+    "template": "./src/index.ejs"
+  },
   publicPath: '/',
-  hash: true,
   alias: {
     "@routes": path.resolve(__dirname, "./src/routes"),
     "@models": path.resolve(__dirname, "./src/models"),

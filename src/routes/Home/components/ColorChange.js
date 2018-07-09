@@ -11,7 +11,7 @@ export default class View extends Component {
     const { data, total } = prevProps
     const { data: currentData, total: currentTotal } = this.props
     if (!isEqual(total, currentTotal)) {
-      if (currentData !== data && Math.abs(currentData - data) > 3000) {
+      if (currentData !== data && Math.abs(currentData - data) > 0) {
         this.setState({
           percent: this.props.percent
         })

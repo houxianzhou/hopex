@@ -19,9 +19,9 @@ export default class View extends Component {
         mode: 'http'
       }
     }).then((res) => {
-      // dealInterval(() => {
-      //   this.getLatestRecord()
-      // })
+      dealInterval(() => {
+        this.getLatestRecord()
+      })
     })
   }
 
