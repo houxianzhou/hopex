@@ -1,6 +1,8 @@
 const path = require('path')
 export default {
-  entry: 'src/index.js',
+  entry: {
+    app: './src/index.js',
+  },
   extraBabelPlugins: [
     ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }],
     ["lodash", { "id": ["async", "lodash-bound"] }]
@@ -16,6 +18,7 @@ export default {
   "html": {
     "template": "./src/index.ejs"
   },
+  hash: true,
   publicPath: '/',
   alias: {
     "@routes": path.resolve(__dirname, "./src/routes"),
@@ -27,7 +30,10 @@ export default {
     "@constants": path.resolve(__dirname, "./src/constants"),
     "@common": path.resolve(__dirname, "./src/common"),
     "@mock": path.resolve(__dirname, "./mock"),
-    "@plugins": path.resolve(__dirname, "./plugins")
+    "@plugins": path.resolve(__dirname, "./src/plugins")
+  },
+  externals: {
+    jQuery: ''
   },
   ignoreMomentLocale: true,
   theme: './src/utils/lessvar.js'

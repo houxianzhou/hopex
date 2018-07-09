@@ -1,0 +1,142 @@
+body.chart-page {
+  background: black;
+}
+
+.onchart-tv-logo {
+  font-size: 12px;
+}
+
+.onchart-tv-logo .wrapper {
+  padding: 0;
+}
+
+.onchart-tv-logo .inner {
+  height: 24px;
+  line-height: 23px;
+  padding: 0 5px;
+}
+
+.onchart-tv-logo img {
+  width: 24px;
+  height: 18px;
+  top: 2px
+}
+
+.onchart-tv-logo.expanded .text {
+  width: auto;
+  padding-left: 24px;
+}
+
+.loading-indicator {
+  background-color: black;
+}
+
+.chart-page .chart-container {
+  border: 1px solid hsla(0, 0%, 100%, .08);
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  background-color: #262c39;
+  /* black; */
+}
+
+.tv-side-toolbar {
+  border-right: 1px solid hsla(0, 0%, 100%, .1);
+}
+
+.tv-close-panel.top {
+  display: none;
+}
+
+.tv-close-panel.left {
+  border: 1px solid hsla(0, 0%, 100%, .08);
+  background-color: hsla(0, 0%, 100%, .05);
+  left: 51px;
+}
+
+.pane-legend .pane-legend-line {
+  font-size: 12px !important;
+}
+
+.chart-controls-bar-buttons a:before {
+  border-left: 1px solid rgba(255, 255, 255, .08);
+}
+
+.favored-list-container span {
+  background: hsla(0, 0%, 100%, .05);
+  color: hsla(0, 0%, 100%, .8);
+  border-color: hsla(0, 0%, 100%, .08);
+  font-size: 12px;
+}
+
+.feature-no-touch .favored-list-container span:hover {
+  background: hsla(0, 0%, 100%, .05);
+  color: hsla(0, 0%, 100%, .8);
+}
+
+.bottom-widgetbar-content.backtesting .button,
+.header-chart-panel .button,
+.hotlist-controls .button,
+.symbol-edit-widget .button {
+  background: hsla(0, 0%, 100%, .05);
+  color: hsla(0, 0%, 100%, .8);
+  border-color: hsla(0, 0%, 100%, .08);
+  font-size: 12px;
+}
+
+.feature-no-touch .header-chart-panel .button:hover,
+.feature-no-touch .symbol-edit-widget .button:hover {
+  background: hsla(0, 0%, 100%, .05);
+  color: hsla(0, 0%, 100%, .8);
+}
+
+.feature-no-touch .header-chart-panel .button.disabled:active,
+.feature-touch .header-chart-panel .button.disabled:active,
+.header-chart-panel .button.disabled,
+.header-chart-panel .button.disabled.active {
+  background: hsla(0, 0%, 100%, .05) !important;
+  color: hsla(0, 0%, 100%, .8);
+  border-color: hsla(0, 0%, 100%, .08);
+}
+
+._tv-button,
+.layout-toggle-container ._tv-button,
+button._tv-button {
+  background: hsla(0, 0%, 100%, .05);
+  color: hsla(0, 0%, 100%, .8);
+  border-color: hsla(0, 0%, 100%, .08);
+  font-size: 12px;
+}
+
+.drawing-favorites-toolbar .tools-group .button,
+.feature-no-touch .tv-side-toolbar .tools-group .button:active,
+.feature-no-touch .tv-side-toolbar .tools-group .button:hover,
+.feature-touch .tv-side-toolbar .tools-group .button:active,
+.properties-toolbar .tools-group .button,
+.tv-side-toolbar .tools-group .button.active,
+.tv-side-toolbar .tools-group .button.selected {
+  background-color: hsla(0, 0%, 100%, .05);
+  border-color: hsla(0, 0%, 100%, .08);
+}
+
+.drawing-favorites-toolbar .tools-group .button.active,
+.feature-no-touch .drawing-favorites-toolbar .tools-group .button:active,
+.feature-no-touch .properties-toolbar .tools-group .button:active,
+.feature-no-touch .tv-side-toolbar .tools-group .button:active .side,
+.feature-no-touch .tv-side-toolbar .tools-group .button:not(.subgroup):active,
+.feature-touch .drawing-favorites-toolbar .tools-group .button:active,
+.feature-touch .properties-toolbar .tools-group .button:active,
+.feature-touch .tv-side-toolbar .tools-group .button:active .side,
+.feature-touch .tv-side-toolbar .tools-group .button:not(.subgroup):active,
+.properties-toolbar .tools-group .button.active,
+.tv-side-toolbar .tools-group .button.active .side,
+.tv-side-toolbar .tools-group .button.selected .main,
+.tv-side-toolbar .tools-group .button:not(.subgroup).active,
+.tv-side-toolbar .tools-group .button:not(.subgroup).selected {
+  background-color: hsla(0, 0%, 100%, .05);
+}
+
+.tv-side-toolbar .tools-group.bottom-delimiter:after,
+.tv-side-toolbar .tools-group:not(:first-child):not(.no-delimiter):before {
+  background: hsla(0, 0%, 100%, .1);
+}
