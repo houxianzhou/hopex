@@ -2,7 +2,7 @@ import { request, asyncPayload } from '@utils'
 import { API } from "@constants"
 
 const { PREFIX, USERIP } = API
-const MODE = PREFIX
+const MODE = USERIP
 
 // K线图
 export async function getKline(payload) {
