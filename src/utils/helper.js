@@ -1,8 +1,9 @@
 import _ from 'lodash'
 import store from 'store'
-import { fromJS,  is } from 'immutable'
+import { fromJS, is } from 'immutable'
 
 export const lodash_helper = {
+  debounce: _.debounce,
   maxBy: _.maxBy,
   isArray: _.isArray,
   isObjectLike: _.isObjectLike,

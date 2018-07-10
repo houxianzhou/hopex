@@ -346,6 +346,7 @@ Datafeeds.UDFCompatibleDatafeed.prototype.resolveSymbol = function (symbolName, 
 Datafeeds.UDFCompatibleDatafeed.prototype._historyURL = '/history';
 
 Datafeeds.UDFCompatibleDatafeed.prototype.getBars = function (symbolInfo, resolution, rangeStartDate, rangeEndDate, onDataCallback, onErrorCallback) {
+  console.log(rangeStartDate,rangeEndDate)
   //	timestamp sample: 1399939200
   if (rangeStartDate > 0 && (rangeStartDate + '').length > 10) {
     throw new Error(['Got a JS time instead of Unix one.', rangeStartDate, rangeEndDate]);
@@ -400,7 +401,8 @@ Datafeeds.UDFCompatibleDatafeed.prototype.getBars = function (symbolInfo, resolu
 
         bars.push(barValue);
       }
-      console.log(JSON.stringify(bars))
+      // console.log(JSON.stringify(bars))
+      console.log(bars)
 
       onDataCallback(bars, { noData: nodata, nextTime: data.nb || data.nextTime });
     })
