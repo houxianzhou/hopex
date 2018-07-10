@@ -48,7 +48,7 @@ export default class View extends Component {
             top: '0'
           }}
         >
-          <div className="content" >
+          <div className="content">
             {children}
           </div >
         </div >
