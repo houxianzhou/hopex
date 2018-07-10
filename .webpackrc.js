@@ -1,8 +1,6 @@
 const path = require('path')
 export default {
-  entry: {
-    app: './src/index.js',
-  },
+  entry: 'src/index.js',
   extraBabelPlugins: [
     ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }],
     ["lodash", { "id": ["async", "lodash-bound"] }]
@@ -31,9 +29,6 @@ export default {
     "@common": path.resolve(__dirname, "./src/common"),
     "@mock": path.resolve(__dirname, "./mock"),
     "@plugins": path.resolve(__dirname, "./src/plugins")
-  },
-  externals: {
-    jQuery: ''
   },
   ignoreMomentLocale: true,
   theme: './src/utils/lessvar.js'
