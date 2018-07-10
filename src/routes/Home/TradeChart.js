@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
-import { classNames, _ } from '@utils'
+import { classNames, _, localSave } from '@utils'
 import { Mixin } from "@components"
 import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
 
 export default class View extends Component {
+  componentDidMount() {
+    localSave.clearAll()
+  }
 
 
   startInit = () => {
+
     this.startKline()
     // this.getKline()
   }
@@ -20,32 +24,29 @@ export default class View extends Component {
     window.$ = $
     // console.log(TradingView, '-----------')
     new TradingView.widget({
-      width: '100%',
-      height: '100%',
+      theme:'Dark',
+
+      disabled_features: ["header_widget", "left_toolbar"],
+      library_path: '/',
       fullscreen: true,
       symbol: '股吧',
       interval: 'D',
       'container_id': 'tradeView',
+      overrides: {
+        "paneProperties.background": "#232833",
+        "paneProperties.vertGridProperties.color": "transparent",
+        "paneProperties.horzGridProperties.color": "transparent",
+        // "timeScale.rightOffset":"12"
+        "paneProperties.topMargin": "15",
+        "paneProperties.bottomMargin": "5",
+        "scalesProperties.backgroundColor" : "red"
+
+      },
+      loading_screen: { backgroundColor: "#232833" },
       //	BEWARE: no trailing slash is expected in feed URL
       datafeed: {
         onReady(callback) {
-          callback({
-            // 'exchanges': [
-            //   { 'value': '', 'name': 'All Exchanges', 'desc': '' },
-            //   {
-            //     'value': 'NasdaqNM',
-            //     'name': 'NasdaqNM',
-            //     'desc': 'NasdaqNM'
-            //   },
-            //   { 'value': 'NYSE', 'name': 'NYSE', 'desc': 'NYSE' },
-            //   {
-            //     'value': 'NCM',
-            //     'name': 'NCM',
-            //     'desc': 'NCM'
-            //   },
-            //   { 'value': 'NGM', 'name': 'NGM', 'desc': 'NGM' }
-            // ]
-          })
+          callback({})
         },
         searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
           console.log('2')
@@ -54,6 +55,7 @@ export default class View extends Component {
           onSymbolResolvedCallback({
             // "name": "weixiaoyi",
             "timezone": "Asia/Shanghai",
+
             description: 'haaaaaaa',
             "exchange": "交易所的略称", //交易所的略称
             // "exchange-traded": "NasdaqNM",
@@ -79,28 +81,21 @@ export default class View extends Component {
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
           const a = _.debounce(() => {
-            this.getKline().then((res) => {
-              console.log(res)
+            this.getKline().then((res = []) => {
+              const data = res.map(item => ({
+                time: Number(item[0]) * 1000,
+                open: Number(item[1]),
+                close: Number(item[2]),
+                high: Number(item[3]),
+                low: Number(item[4]),
+                volume: Number(item[5]),
+                price: Number(item[6]),
+                name: item[7]
+              }))
+              onHistoryCallback(data)
             })
-            onHistoryCallback([
-              {
-                "time": 1527872461000,
-                "close": 149.56,
-                "open": 148.82,
-                "high": 150.9,
-                "low": 148.57,
-                "volume": 10000
-              },
-              {
-                "time": 1530464461000,
-                "close": 149.56,
-                "open": 148.82,
-                "high": 150.9,
-                "low": 148.57,
-                "volume": 1000
-              }
-            ])
-          }, 3000)
+
+          }, 2000)
           a()
         },
         getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
@@ -147,32 +142,32 @@ export default class View extends Component {
   }
 
 
-  // componentDidMount() {
-  //   const TradingView = window.TradingView
-  //   const Datafeeds = window.Datafeeds
-  //   window.$ = $
-  //   console.log(TradingView, '-----------')
-  //   new TradingView.widget({
-  //     width: '100%',
-  //     height: '100%',
-  //     fullscreen: true,
-  //     symbol: 'AAPL',
-  //     interval: 'D',
-  //     'container_id': 'tradeView',
-  //     //	BEWARE: no trailing slash is expected in feed URL
-  //     datafeed: new Datafeeds.UDFCompatibleDatafeed('https://demo_feed.tradingview.com'),
-  //     // library_path: './static',
-  //     locale: 'en',
-  //     //	Regression Trend-related functionality is not implemented yet, so it's hidden for a while
-  //     drawings_access: { type: 'black', tools: [{ name: 'Regression Trend' }] },
-  //     disabled_features: ['use_localstorage_for_settings'],
-  //     enabled_features: ['study_templates'],
-  //     charts_storage_url: 'http://saveload.tradingview.com',
-  //     charts_storage_api_version: '1.1',
-  //     client_id: 'tradingview.com',
-  //     user_id: 'public_user_id'
-  //   });
-  // }
+// componentDidMount() {
+//   const TradingView = window.TradingView
+//   const Datafeeds = window.Datafeeds
+//   window.$ = $
+//   console.log(TradingView, '-----------')
+//   new TradingView.widget({
+//     width: '100%',
+//     height: '100%',
+//     fullscreen: true,
+//     symbol: 'AAPL',
+//     interval: 'D',
+//     'container_id': 'tradeView',
+//     //	BEWARE: no trailing slash is expected in feed URL
+//     datafeed: new Datafeeds.UDFCompatibleDatafeed('https://demo_feed.tradingview.com'),
+//     // library_path: './static',
+//     locale: 'en',
+//     //	Regression Trend-related functionality is not implemented yet, so it's hidden for a while
+//     drawings_access: { type: 'black', tools: [{ name: 'Regression Trend' }] },
+//     disabled_features: ['use_localstorage_for_settings'],
+//     enabled_features: ['study_templates'],
+//     charts_storage_url: 'http://saveload.tradingview.com',
+//     charts_storage_api_version: '1.1',
+//     client_id: 'tradingview.com',
+//     user_id: 'public_user_id'
+//   });
+// }
 
 
   render() {

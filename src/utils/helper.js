@@ -28,8 +28,12 @@ export const localSave = {
   set: (key, value) => {
     store.set(key, value)
   },
-  remove: store.remove,
-  clearAll: store.clearAll
+  remove: (key) => {
+    store.remove(key)
+  },
+  clearAll: () => {
+    store.clearAll()
+  }
 }
 
 export const immutable = {
