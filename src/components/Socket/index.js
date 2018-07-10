@@ -1,4 +1,4 @@
-const ws = new WebSocket('ws://192.168.70.131:10060')
+const ws = new WebSocket('ws://192.168.70.131/ws')
 
 ws.sendJson = (json) => {
   ws.send(JSON.stringify(json))

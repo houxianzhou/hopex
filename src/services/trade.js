@@ -1,8 +1,8 @@
 import { request, asyncPayload } from '@utils'
 import { API } from "@constants"
 
-const { PREFIX, USERIP } = API
-const MODE = USERIP
+const { MOCKIP, USERIP } = API
+const MODE = MOCKIP
 
 // K线图
 export async function getKline(payload) {

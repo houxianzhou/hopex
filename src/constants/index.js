@@ -7,7 +7,7 @@ export const THEME = {
 }
 
 export const API = {
-  PREFIX: '/mock/api/v1',
+  MOCKIP: '/mock/api/v1',
   USERIP: '/api/v1'
 }
 

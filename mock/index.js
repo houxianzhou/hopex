@@ -147,6 +147,80 @@ export default {
         }
       }
         break
+      case 'market.kline': {
+        result = {
+          "head": {
+            "method": "market.kline",
+            "userId": "56",
+            "userToken": "56",
+            "lang": "cn",
+            "request": "request",
+            "packType": "1",
+            "version": "1.0.0",
+            "timestamps": "1531224422109056",
+            "serialNumber": "57",
+            "msgType": "response"
+          },
+          "data": {
+            "records": [
+              [
+                "1530853200",
+                "1",
+                "1",
+                "1",
+                "1",
+                "5",
+                "5",
+                "BTCUSD永续"
+              ],
+              [
+                "1530939600",
+                "1",
+                "1",
+                "1",
+                "1",
+                "0",
+                "0",
+                "BTCUSD永续"
+              ],
+              [
+                "1531026000",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1",
+                "BTCUSD永续"
+              ],
+              [
+                "1531112400",
+                "1",
+                "2",
+                "2",
+                "1",
+                "3561",
+                "3562",
+                "BTCUSD永续"
+              ],
+              [
+                "1531198800",
+                "2",
+                "2",
+                "2",
+                "2",
+                "1",
+                "2",
+                "BTCUSD永续"
+              ]
+            ]
+          },
+          "errCode": "0",
+          "errStr": "success",
+          "ret": "0"
+        }
+      }
+        break
       default:
     }
     res.send(

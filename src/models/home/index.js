@@ -17,13 +17,12 @@ export default joinModel(modelExtend, {
     latest_pageTotal: null,
     latest_records: [],
     // 委托列表
-    ensure_records: {}
+    ensure_records: {},
+    // K线图
+    kline_records: []
   },
   subscriptions: {
-
-    setup({ dispatch, history }) {
-
-    },
+    setup({ dispatch, history }) {},
   },
 
   effects: {
@@ -119,20 +118,16 @@ export default joinModel(modelExtend, {
             },
             "param": {
               "market": "BTCBCH",
-              "startTime": "12345678",
-              "endTime": "12345699",
+              "startTime": "1514739660",
+              "endTime": "1541005260",
               "interval": "86400"
             }
           }
         })
         const res = getRes(yield call(getKline, payload))
-        // if (resOk(res)) {
-        //   yield put({
-        //     type: 'changeState',
-        //     payload: { ensure_records: res.data }
-        //   })
-        //   return res
-        // }
+        if (resOk(res)) {
+          return res.data.records
+        }
       }
     },
 

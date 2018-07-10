@@ -6,7 +6,15 @@ import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
 
 export default class View extends Component {
-  componentDidMount() {
+
+
+  startInit = () => {
+    this.startKline()
+    // this.getKline()
+  }
+
+  startKline = () => {
+    const { model, } = this.props
     const TradingView = window.TradingView
     const Datafeeds = window.Datafeeds
     window.$ = $
@@ -21,7 +29,6 @@ export default class View extends Component {
       //	BEWARE: no trailing slash is expected in feed URL
       datafeed: {
         onReady(callback) {
-          console.log('1')
           callback({
             // 'exchanges': [
             //   { 'value': '', 'name': 'All Exchanges', 'desc': '' },
@@ -42,8 +49,6 @@ export default class View extends Component {
         },
         searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
           console.log('2')
-          // onResultReadyCallback([
-          // ])
         },
         resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
           onSymbolResolvedCallback({
@@ -72,28 +77,29 @@ export default class View extends Component {
             // "data_status": "streaming" //数据状态码。状态显示在图表的右上角。streaming(实时)endofday(已收盘)pulsed(脉冲)
           })
         },
-        getBars(symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) {
-          //console.log(resolution)
+        getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
           const a = _.debounce(() => {
+            this.getKline().then((res) => {
+              console.log(res)
+            })
             onHistoryCallback([
-                {
-                  "time": 1527872461000,
-                  "close": 149.56,
-                  "open": 148.82,
-                  "high": 150.9,
-                  "low": 148.57,
-                  "volume": 10000
-                },
-                {
-                  "time": 1530464461000,
-                  "close": 149.56,
-                  "open": 148.82,
-                  "high": 150.9,
-                  "low": 148.57,
-                  "volume": 1000
-                }
-              ]
-            )
+              {
+                "time": 1527872461000,
+                "close": 149.56,
+                "open": 148.82,
+                "high": 150.9,
+                "low": 148.57,
+                "volume": 10000
+              },
+              {
+                "time": 1530464461000,
+                "close": 149.56,
+                "open": 148.82,
+                "high": 150.9,
+                "low": 148.57,
+                "volume": 1000
+              }
+            ])
           }, 3000)
           a()
         },
@@ -127,16 +133,12 @@ export default class View extends Component {
       //  charts_storage_api_version: '1.1',
       //  client_id: 'tradingview.com',
       //  user_id: 'public_user_id'
-    });
-  }
-
-  startInit = () => {
-    this.getKline()
+    })
   }
 
   getKline = () => {
     const { dispatch, modelName } = this.props
-    dispatch({
+    return dispatch({
       type: `${modelName}/getKline`,
       payload: {
         mode: 'http'
