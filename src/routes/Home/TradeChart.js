@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
 import { classNames, _ } from '@utils'
+import { Mixin } from "@components"
 import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
@@ -63,7 +63,7 @@ export default class View extends Component {
             "has_no_volume": false, //布尔表示商品是否拥有成交量数据
             has_empty_bars: true,
             "type": "stock",
-            "supported_resolutions": ["D", "2D", "3D", "W", "3W", "M", "6M"],// 分辨率选择器中启用一个分辨率数组
+            supported_resolutions: ['D', '1W', '1M'],// 分辨率选择器中启用一个分辨率数组
             // "ticker": "AAPL", // 品体系中此商品的唯一标识符
             // "base_name": ["AAPL"],
             // "legs": ["AAPL"],
@@ -73,6 +73,7 @@ export default class View extends Component {
           })
         },
         getBars(symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) {
+          //console.log(resolution)
           const a = _.debounce(() => {
             onHistoryCallback([
                 {
@@ -95,15 +96,13 @@ export default class View extends Component {
             )
           }, 3000)
           a()
-
-
         },
         getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
           // console.log(startDate)
           // onDataCallback()
         },
         subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
-          console.log('5')
+          // console.log('5')
           const a = _.debounce(() => {
             onRealtimeCallback({
                 "time": 1530464461000,
@@ -129,6 +128,20 @@ export default class View extends Component {
       //  client_id: 'tradingview.com',
       //  user_id: 'public_user_id'
     });
+  }
+
+  startInit = () => {
+    this.getKline()
+  }
+
+  getKline = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getKline`,
+      payload: {
+        mode: 'http'
+      }
+    })
   }
 
 
@@ -162,29 +175,31 @@ export default class View extends Component {
 
   render() {
     return (
-      <div
-        className={
-          classNames(
-            {
-              view: true
-            },
-            styles.tradeChart
-          )
-        }
-      >
-        <ScrollPannel
-          scrollConfig={{
-            mouseWheel: false
-          }}
+      <Mixin.Child that={this} >
+        <div
+          className={
+            classNames(
+              {
+                view: true
+              },
+              styles.tradeChart
+            )
+          }
         >
-          <div id='tradeView' style={{
-            width: '100%',
-            height: '100%',
-          }} >
-          </div >
+          <ScrollPannel
+            scrollConfig={{
+              mouseWheel: false
+            }}
+          >
+            <div id='tradeView' style={{
+              width: '100%',
+              height: '100%',
+            }} >
+            </div >
 
-        </ScrollPannel >
-      </div >
+          </ScrollPannel >
+        </div >
+      </Mixin.Child >
     )
   }
 }

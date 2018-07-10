@@ -4,6 +4,18 @@ import { API } from "@constants"
 const { PREFIX, USERIP } = API
 const MODE = PREFIX
 
+// K线图
+export async function getKline(payload) {
+  return asyncPayload(payload, (payload) => {
+    return request(`${MODE}/tc`, {
+      method: 'post',
+      body: payload,
+      needLoop: true,
+      needWatch: false
+    })
+  })
+}
+
 // 最新成交列表
 export async function getLatestRecord(payload) {
   return asyncPayload(payload, (payload) => {

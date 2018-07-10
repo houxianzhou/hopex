@@ -16,6 +16,8 @@ export default {
         result = result.setIn(['head', 'timestamps'], String(Date.now()))
           .setIn(['head', 'version'], String(version))
           .setIn(['head', 'lang'], String(lang))
+          .setIn(['head', 'request'], String("request"))
+          .setIn(['head', 'packType'], String("1"))
           .setIn(['head', 'userId'], String(userId))
           .setIn(['head', 'userToken'], String(userToken))
 

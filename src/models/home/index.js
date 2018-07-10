@@ -1,7 +1,10 @@
 import { joinModel, getRes, resOk } from '@utils'
 import modelExtend from '@models/modelExtend'
 import { ws } from '@components'
-import { getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder } from "@services/trade"
+import {
+  getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
+  getKline
+} from "@services/trade"
 
 export default joinModel(modelExtend, {
   namespace: 'home',
@@ -19,13 +22,12 @@ export default joinModel(modelExtend, {
   subscriptions: {
 
     setup({ dispatch, history }) {
-      dispatch({
-        type: 'createRequestParams'
-      })
+
     },
   },
 
   effects: {
+    // 最新成交列表
     * getLatestRecord({ payload = {} }, { call, put }) {
       const { mode = 'ws' } = payload
       if (mode === 'ws') {
@@ -36,8 +38,6 @@ export default joinModel(modelExtend, {
           payload: {
             "head": {
               "method": "market.deals",
-              "msgType": "request",
-              "packType": "1",
               "serialNumber": "57",
             },
             "param": {
@@ -86,8 +86,6 @@ export default joinModel(modelExtend, {
           payload: {
             "head": {
               "method": "market.active_delegate",
-              "msgType": "request",
-              "packType": "1",
               "serialNumber": "56",
             },
             "param": {
@@ -104,6 +102,37 @@ export default joinModel(modelExtend, {
           })
           return res
         }
+      }
+    },
+    //K线图
+    * getKline({ payload = {} }, { call, put }) {
+      const { mode = 'ws' } = payload
+      if (mode === 'ws') {
+
+      } else {
+        const payload = yield put({
+          type: 'createRequestParams',
+          payload: {
+            "head": {
+              "method": "market.kline",
+              "serialNumber": "57",
+            },
+            "param": {
+              "market": "BTCBCH",
+              "startTime": "12345678",
+              "endTime": "12345699",
+              "interval": "86400"
+            }
+          }
+        })
+        const res = getRes(yield call(getKline, payload))
+        // if (resOk(res)) {
+        //   yield put({
+        //     type: 'changeState',
+        //     payload: { ensure_records: res.data }
+        //   })
+        //   return res
+        // }
       }
     },
 
