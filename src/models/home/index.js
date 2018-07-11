@@ -24,7 +24,8 @@ export default joinModel(modelExtend, {
     maxPrice: null,
     minPrice: null,
     indexPrice: null,
-    latestPrice: null
+    latestPrice: null,
+    equitablePrice: null
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -121,9 +122,14 @@ export default joinModel(modelExtend, {
             bids: _.orderBy(formatNumber(_.get(res.data, 'bids'), ['price', 'amount']), ['price'], ['desc']),
             asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc'])
           }
+          const [bidsLast, asksFirst] = [result.bids[result.bids.length - 1], result.asks[0]]
           yield put({
             type: 'changeState',
-            payload: { ensure_records: result }
+            payload: {
+              ensure_records: result,
+              equitablePrice: (_.get(bidsLast, 'price') * _.get(asksFirst, 'amount')
+                + _.get(asksFirst, 'price') * _.get(bidsLast, 'amount')) / _.get(asksFirst, 'amount') + _.get(bidsLast, 'amount')
+            }
           })
           return res
         }

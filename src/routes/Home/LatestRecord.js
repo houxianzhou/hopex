@@ -64,10 +64,12 @@ export default class View extends Component {
             <ul className={styles.record_content} >
               {
                 data.map((item, index) => (
-                  <li key={index} >
+                  <li key={index} className={classNames(
+                    item.type === 'buy' ? styles.buy : styles.sell
+                  )} >
                     <span >{moment.formatHMS(String(item.time).split('.')[0] * 1000)}</span >
-                    <span >{item.type === 'buy' ? '买入' : '卖出'}</span >
-                    <span >{item.price}</span >
+                    <span className={styles.colorchange} >{item.type === 'buy' ? '买入' : '卖出'}</span >
+                    <span className={styles.colorchange} >{item.price}</span >
                     <span >{item.amount}</span >
                   </li >
                 ))
