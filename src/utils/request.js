@@ -4,7 +4,7 @@ import pathToRegexp from 'path-to-regexp'
 import { stringify } from 'qs'
 import { message as Message } from 'antd'
 
-axios.defaults.timeout = 100000
+axios.defaults.timeout = 10000
 axios.defaults.withCredentials = true
 axios.defaults.crossDomain = true
 axios.defaults.maxContentLength = 20000000

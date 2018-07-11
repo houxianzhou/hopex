@@ -23,7 +23,8 @@ export default joinModel(modelExtend, {
     // 加格指标
     maxPrice: null,
     minPrice: null,
-    indexPrice: null
+    indexPrice: null,
+    latestPrice: null
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -67,7 +68,10 @@ export default joinModel(modelExtend, {
         if (resOk(res)) {
           yield put({
             type: 'changeState',
-            payload: { latest_records: res.data.records }
+            payload: {
+              latest_records: res.data.records,
+              latestPrice: _.get(res.data.records[0], 'price')
+            }
           })
           return res
         }

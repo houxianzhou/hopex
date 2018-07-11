@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, dealInterval } from '@utils'
+import { classNames, dealInterval, moment } from '@utils'
 import switch_render from '@assets/switch_render.png'
 import { Mixin } from "@components"
 import ScrollPannel from './components/ScrollPanel'
@@ -8,7 +8,7 @@ import styles from './index.less'
 export default class View extends Component {
 
   startInit = () => {
-    // this.getLatestRecord()
+    this.getLatestRecord()
   }
 
   getLatestRecord = () => {
@@ -65,7 +65,7 @@ export default class View extends Component {
               {
                 data.map((item, index) => (
                   <li key={index} >
-                    <span >{'暂无'}</span >
+                    <span >{moment.formatHMS(String(item.time).split('.')[0] * 1000)}</span >
                     <span >{item.type === 'buy' ? '买入' : '卖出'}</span >
                     <span >{item.price}</span >
                     <span >{item.amount}</span >

@@ -1,11 +1,12 @@
 import { SPEED } from '@constants'
-import { lodash_helper, immutable } from './helper'
+import { lodash_helper, immutable, moment_helper } from './helper'
 
 export { default as joinModel }  from 'dva-model-extend'
 export Responsive from 'react-responsive'
 export classNames from 'classnames'
 export { request } from './request'
 export const _ = lodash_helper
+export const moment = moment_helper
 export { localSave } from "./helper"
 export const Imu = immutable
 

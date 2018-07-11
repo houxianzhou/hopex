@@ -200,7 +200,7 @@ export default class View extends Component {
 
 
   render() {
-    const { model: { market, maxPrice, minPrice, indexPrice } } = this.props
+    const { model: { market, maxPrice, minPrice, indexPrice, latestPrice } } = this.props
     return (
       <Mixin.Child that={this} >
         <div
@@ -219,8 +219,8 @@ export default class View extends Component {
             }}
           >
             <div style={{
-              flexDirection:'column',
-              display:'flex',
+              flexDirection: 'column',
+              display: 'flex',
               width: '100%',
               height: '100%',
             }} >
@@ -231,7 +231,7 @@ export default class View extends Component {
                       market ? (
                         <>
                           <div className={styles.marketname} >{market}</div >
-                          < div className={styles.latestprice} >9334.5</div >
+                          < div className={styles.latestprice} >{latestPrice}</div >
                           <div className={styles.compare} >13.45</div >
                         </>
                       ) : null
@@ -263,14 +263,14 @@ export default class View extends Component {
                   </div >
                 </div >
               </div >
-              <div className={styles.tradeview}>
+              <div className={styles.tradeview} >
                 <div id='tradeView' style={{
-                  position:'absolute',
-                  width:'100%',
-                  height:'100%'
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%'
                 }} >
                 </div >
-              </div>
+              </div >
 
             </div >
           </ScrollPannel >

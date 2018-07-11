@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import moment from 'moment'
 import store from 'store'
 import { fromJS, is } from 'immutable'
 
@@ -47,6 +48,15 @@ export const localSave = {
 export const immutable = {
   fromJS,
   is,
+}
+
+export const moment_helper = {
+  format: (tiem) => {
+
+  },
+  formatHMS: (time = Date.now()) => {
+    return moment(time).format('h:mm:ss')
+  }
 }
 
 
