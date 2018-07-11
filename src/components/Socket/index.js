@@ -1,3 +1,13 @@
+// class Ws {
+//   constructor(url) {
+//     this.ws = new WebSocket(url)
+//   }
+//
+//   sendJson = (json) => {
+//     this.ws.send(JSON.stringify(json))
+//   }
+// }
+
 const ws = new WebSocket('ws://192.168.70.131/ws')
 
 ws.sendJson = (json) => {

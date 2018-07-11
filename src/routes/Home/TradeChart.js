@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
-import { classNames, _, localSave } from '@utils'
-import { Mixin } from "@components"
+import { classNames, _, localSave, getRes, resOk } from '@utils'
+import { Mixin, ws } from "@components"
 import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
 
+
 export default class View extends Component {
   componentDidMount() {
     localSave.clearAll()
+    this.getImportParams()
   }
 
   startInit = () => {
     this.startKline()
-    // this.getKline()
   }
 
   startKline = () => {
@@ -22,9 +23,7 @@ export default class View extends Component {
     window.$ = $
     // console.log(TradingView, '-----------')
     new TradingView.widget({
-      theme:'Dark',
-
-      disabled_features: ["header_widget", "left_toolbar"],
+      disabled_features: ["left_toolbar", 'go_to_date'],
       library_path: '/',
       fullscreen: true,
       symbol: '股吧',
@@ -37,7 +36,7 @@ export default class View extends Component {
         // "timeScale.rightOffset":"12"
         "paneProperties.topMargin": "15",
         "paneProperties.bottomMargin": "5",
-        "scalesProperties.backgroundColor" : "red"
+        "scalesProperties.backgroundColor": "red"
 
       },
       loading_screen: { backgroundColor: "#232833" },
@@ -139,6 +138,37 @@ export default class View extends Component {
     })
   }
 
+  getImportParams = () => {
+    const { dispatch, modelName } = this.props
+    ws.onConnect = () => {
+      ws.sendJson({
+        "event": "subscribe",
+        "channel": "market",
+        "pair": "BTCUSD",
+        "type": 1
+      })
+    }
+    ws.onMessage = (e) => {
+      const res = getRes(e)
+      if (resOk(res)) {
+        const result = JSON.parse(res.data)
+        const { minPrice, maxPrice, price } = result
+        if (minPrice || maxPrice) {
+          dispatch({
+            type: `${modelName}/changeState`,
+            payload: {
+              maxPrice,
+              minPrice,
+              price
+            }
+          })
+        }
+      } else {
+        console.log('socket返回连接错误')
+      }
+    }
+  }
+
 
 // componentDidMount() {
 //   const TradingView = window.TradingView
@@ -169,6 +199,8 @@ export default class View extends Component {
 
 
   render() {
+
+
     return (
       <Mixin.Child that={this} >
         <div

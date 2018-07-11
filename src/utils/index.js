@@ -66,8 +66,12 @@ export const getPercent = (child, parent, item) => {
 }
 
 export const isEqual = (obj1, obj2) => {
-  const { fromJS, is } = Imu
-  return is(fromJS(obj1), fromJS(obj2))
+  if (_.isObjectLike(obj1) || _.isObjectLike(obj2)) {
+    const { fromJS, is } = Imu
+    return is(fromJS(obj1), fromJS(obj2))
+  } else {
+    return _.isEqual(obj1, obj2)
+  }
 }
 
 export const deepClone = (obj) => {

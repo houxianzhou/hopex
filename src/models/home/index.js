@@ -19,14 +19,31 @@ export default joinModel(modelExtend, {
     // 委托列表
     ensure_records: {},
     // K线图
-    kline_records: []
+    kline_records: [],
+    // 加格指标
+    maxPrice: null,
+    minPrice: null,
+    price: null
   },
   subscriptions: {
     setup({ dispatch, history }) {
+      dispatch({
+        type: 'startInit'
+      })
     },
   },
 
   effects: {
+    * startInit({ payload = {} }, { call, put }) {
+      // yield put({
+      //   type: 'getImportParams'
+      // })
+    },
+
+    // 重要参数
+    * getImportParams({ payload = {} }, { call, put }) {
+
+    },
     // 最新成交列表
     * getLatestRecord({ payload = {} }, { call, put }) {
       const { mode = 'ws' } = payload
@@ -60,26 +77,26 @@ export default joinModel(modelExtend, {
     * getEnsureRecord({ payload = {} }, { call, put }) {
       const { mode = 'ws' } = payload
       if (mode === 'ws') {
-        ws.onConnect = function () {
-          ws.sendJson({
-            "head": {
-              "method": "server.ping",
-              "msgType": "wsrequest",
-              "packType": "1",
-              "lang": "cn",
-              "version": "1.0.0",
-              "timestamps": "1439261904",
-              "serialNumber": "1439261904",
-              "userId": "56",
-              "userToken": "56"
-            },
-            "param": {}
-          })
-          ws.onMessage = function (e) {
-            const msg = e.data
-            console.log(msg)
-          }
-        }
+        // ws.onConnect = function () {
+        //   ws.sendJson({
+        //     "head": {
+        //       "method": "server.ping",
+        //       "msgType": "wsrequest",
+        //       "packType": "1",
+        //       "lang": "cn",
+        //       "version": "1.0.0",
+        //       "timestamps": "1439261904",
+        //       "serialNumber": "1439261904",
+        //       "userId": "56",
+        //       "userToken": "56"
+        //     },
+        //     "param": {}
+        //   })
+        //   ws.onMessage = function (e) {
+        //     const msg = e.data
+        //     console.log(msg)
+        //   }
+        // }
       } else {
         const payload = yield put({
           type: 'createRequestParams',
