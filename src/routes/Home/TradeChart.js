@@ -4,6 +4,7 @@ import { Mixin, ws } from "@components"
 import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
+import { formatNumber } from "../../utils";
 
 
 export default class View extends Component {
@@ -157,9 +158,9 @@ export default class View extends Component {
           dispatch({
             type: `${modelName}/changeState`,
             payload: {
-              maxPrice,
-              minPrice,
-              indexPrice: price
+              maxPrice: formatNumber(maxPrice, 2),
+              minPrice: formatNumber(minPrice, 2),
+              indexPrice: formatNumber(price, 2)
             }
           })
         }
@@ -199,8 +200,7 @@ export default class View extends Component {
 
 
   render() {
-
-
+    const { model: { market, maxPrice, minPrice, indexPrice } } = this.props
     return (
       <Mixin.Child that={this} >
         <div
@@ -218,12 +218,61 @@ export default class View extends Component {
               mouseWheel: false
             }}
           >
-            <div id='tradeView' style={{
+            <div style={{
+              flexDirection:'column',
+              display:'flex',
               width: '100%',
               height: '100%',
             }} >
-            </div >
+              <div className={styles.header} >
+                <div className={styles.content} >
+                  <div className={styles.left} >
+                    {
+                      market ? (
+                        <>
+                          <div className={styles.marketname} >{market}</div >
+                          < div className={styles.latestprice} >9334.5</div >
+                          <div className={styles.compare} >13.45</div >
+                        </>
+                      ) : null
+                    }
+                  </div >
+                  <div className={styles.right} >
+                    <ul >
+                      <li >
+                        <div className={styles.title} >现货价格指数</div >
+                        <div className={styles.desc} >{indexPrice}</div >
+                      </li >
+                      <li >
+                        <div className={styles.title} >合理价格</div >
+                        <div className={styles.desc} >暂无</div >
+                      </li >
+                      <li >
+                        <div className={`${styles.title}`} >24h最高</div >
+                        <div className={`${styles.desc} ${styles.maxprice}`} >{maxPrice}</div >
+                      </li >
+                      <li >
+                        <div className={styles.title} >24h最低</div >
+                        <div className={`${styles.desc} ${styles.lowprice}`} >{maxPrice}</div >
+                      </li >
+                      <li >
+                        <div className={styles.title} >24h交易额</div >
+                        <div className={styles.desc} >暂无</div >
+                      </li >
+                    </ul >
+                  </div >
+                </div >
+              </div >
+              <div className={styles.tradeview}>
+                <div id='tradeView' style={{
+                  position:'absolute',
+                  width:'100%',
+                  height:'100%'
+                }} >
+                </div >
+              </div>
 
+            </div >
           </ScrollPannel >
         </div >
       </Mixin.Child >

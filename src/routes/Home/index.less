@@ -61,6 +61,86 @@
   :global(.content) {
     height: 100% !important;
   }
+  .header {
+    .content {
+      padding: 15px 30px;
+      background: @c_pannel_dark;
+      height: 66px;
+      display: flex;
+      justify-content: space-between;
+      :global(div) {
+        display: flex;
+        align-items: center;
+      }
+      .left {
+        display: flex;
+        .marketname {
+          color: #FFFFFF;
+          font-size: 18px;
+        }
+        .latestprice {
+          margin-left: 8px;
+          font-size: 18px;
+          color: @_green;
+        }
+        .compare {
+          color: @_green;
+          margin-left: 20px;
+        }
+      }
+      .right {
+        display: flex;
+        align-items: center;
+        margin-right: 70px;
+        ul {
+          display: flex;
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          li + li {
+            margin-left: 51px;
+          }
+          li {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            div+div{
+              margin-top: 4px;
+            }
+            div {
+              //display: flex;
+              //justify-content: center;
+              width: 100%;
+              &.title {
+                font-size: 14px;
+                color: @c_pannel_theader_color;
+              }
+              &.desc {
+                min-height: 15px;
+                color: #FFFFFF;
+              }
+              &.maxprice {
+                color: @_green;
+              }
+              &.lowprice {
+                color: @_red;
+              }
+            }
+
+          }
+        }
+      }
+    }
+
+  }
+  .tradeview{
+    flex-grow: 1;
+    position:relative;
+  }
 }
 
 .ensureRecord {

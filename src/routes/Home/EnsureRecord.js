@@ -114,7 +114,7 @@ export default class View extends Component {
                 <div className={styles.left} >9334.5</div >
                 <div className={styles.right} >
                   <img alt='ensure' className={styles.ensure} src={ensure} />
-                  0/{formatNumber(indexPrice)}
+                  0/{indexPrice}
                 </div >
               </div >
               {
