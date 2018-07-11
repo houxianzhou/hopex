@@ -9,7 +9,7 @@ const HEIGHT = 300
 const OPACITY = 0.5
 export default class View extends Component {
   state = {
-    visible: _.isUndefined(_.get(localSave.get('jsontip'), 'visible')) ? true : _.get(localSave.get('jsontip'), 'visible'),
+    visible: _.isUndefined(_.get(localSave.get('jsontip'), 'visible')) ? false : _.get(localSave.get('jsontip'), 'visible'),
     x: _.get(localSave.get('jsontip'), 'x') || 0,
     y: _.get(localSave.get('jsontip'), 'y') || 0,
     width: _.get(localSave.get('jsontip'), 'width') || WIDTH,

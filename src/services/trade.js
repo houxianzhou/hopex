@@ -10,7 +10,7 @@ export async function getKline(payload) {
     return request(`${MODE}/tc`, {
       method: 'post',
       body: payload,
-      needLoop: true,
+      // needLoop: true,
       needWatch: false
     })
   })

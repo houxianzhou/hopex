@@ -1,4 +1,4 @@
-import { joinModel, getRes, resOk } from '@utils'
+import { joinModel, getRes, resOk, formatNumber, _ } from '@utils'
 import modelExtend from '@models/modelExtend'
 import { ws } from '@components'
 import {
@@ -22,7 +22,8 @@ export default joinModel(modelExtend, {
     kline_records: []
   },
   subscriptions: {
-    setup({ dispatch, history }) {},
+    setup({ dispatch, history }) {
+    },
   },
 
   effects: {
@@ -95,9 +96,13 @@ export default joinModel(modelExtend, {
         })
         const res = getRes(yield call(getEnsureRecord, payload))
         if (resOk(res)) {
+          const result = {
+            bids: _.orderBy(formatNumber(_.get(res.data, 'bids'), ['price', 'amount']), ['price'], ['desc']),
+            asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc'])
+          }
           yield put({
             type: 'changeState',
-            payload: { ensure_records: res.data }
+            payload: { ensure_records: result }
           })
           return res
         }

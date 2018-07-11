@@ -10,7 +10,7 @@ const [TOP, DOWN] = ['top', 'down']
 export default class View extends Component {
 
   startInit = () => {
-   // this.getEnsureRecord()
+    this.getEnsureRecord()
   }
 
   getEnsureRecord = () => {
@@ -42,11 +42,11 @@ export default class View extends Component {
         {
           data.map((item, index) => {
             const total = data.slice(0, index + 1).reduce((sum, next) => {
-              return sum + Number(next.amount)
+              return sum + next.amount
             }, 0)
             item.total = total
             const [max1, max2, max3] = [
-              _.maxBy(data, (item) => Number(item.price)),
+              _.maxBy(data, (item) => item.price),
               _.maxBy(data, 'amount'),
               _.maxBy(data, 'total')
             ]
@@ -80,7 +80,10 @@ export default class View extends Component {
   render() {
     const { renderList } = this
     const { model: { ensure_records = {} } } = this.props
-    const [dataTop = [], dataDown = []] = [_.get(ensure_records, 'bids'), _.get(ensure_records, 'asks')]
+    const [dataTop = [], dataDown = []] = [
+      _.get(ensure_records, 'bids')
+      , _.get(ensure_records, 'asks')
+    ]
     return (
       <Mixin.Child that={this} >
         <div

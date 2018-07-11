@@ -10,9 +10,7 @@ export default class View extends Component {
     localSave.clearAll()
   }
 
-
   startInit = () => {
-
     this.startKline()
     // this.getKline()
   }

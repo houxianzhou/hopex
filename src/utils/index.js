@@ -70,6 +70,11 @@ export const isEqual = (obj1, obj2) => {
   return is(fromJS(obj1), fromJS(obj2))
 }
 
+export const deepClone = (obj) => {
+  const { fromJS } = Imu
+  return fromJS(obj).toJS()
+}
+
 export const asyncPayload = (payload, func) => {
   if (payload.then) {
     return payload.then((res) => {
@@ -79,6 +84,34 @@ export const asyncPayload = (payload, func) => {
     return func(payload)
   }
 }
+
+
+const toFixed = (item = 0, tofixed = 0) => {
+  return _.toNumber(Number(item).toFixed(tofixed))
+}
+
+export const formatNumber = (obj1, propertys = [], tofixed = 2) => {
+  if (!_.isArray(propertys) && propertys.length) return obj1
+  const obj = deepClone(obj1)
+  if (_.isArray(obj)) {
+    return _.map(obj, (item) => {
+      if (_.isPlainObject(item)) {
+        for (let i = 0; i < propertys.length; i++) {
+          const key = propertys[i]
+          const value = _.get(item, [propertys[i]])
+          if (_.has(item, key)) {
+            _.set(item, [key], toFixed(value, tofixed))
+          }
+        }
+        return item
+      }
+      return item
+    })
+  }
+  return obj1
+}
+
+
 
 
 

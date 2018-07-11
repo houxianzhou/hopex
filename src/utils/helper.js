@@ -3,6 +3,10 @@ import store from 'store'
 import { fromJS, is } from 'immutable'
 
 export const lodash_helper = {
+  toNumber: _.toNumber,
+  isPlainObject: _.isPlainObject,
+  map: _.map,
+  orderBy: _.orderBy,
   debounce: _.debounce,
   maxBy: _.maxBy,
   isArray: _.isArray,
@@ -12,6 +16,7 @@ export const lodash_helper = {
   random: _.random,
   has: _.has,
   get: _.get,
+  set: _.set,
   isEmpty: _.isEmpty,
   isNull: _.isNull,
   isUndefined: _.isUndefined,
