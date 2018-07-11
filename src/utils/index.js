@@ -75,8 +75,12 @@ export const isEqual = (obj1, obj2) => {
 }
 
 export const deepClone = (obj) => {
-  const { fromJS } = Imu
-  return fromJS(obj).toJS()
+  if (_.isObjectLike(obj)) {
+    const { fromJS } = Imu
+    return fromJS(obj).toJS()
+  } else {
+    return obj
+  }
 }
 
 export const asyncPayload = (payload, func) => {
@@ -94,25 +98,31 @@ const toFixed = (item = 0, tofixed = 0) => {
   return _.toNumber(Number(item).toFixed(tofixed))
 }
 
-export const formatNumber = (obj1, propertys = [], tofixed = 2) => {
-  if (!_.isArray(propertys) && propertys.length) return obj1
-  const obj = deepClone(obj1)
-  if (_.isArray(obj)) {
-    return _.map(obj, (item) => {
-      if (_.isPlainObject(item)) {
-        for (let i = 0; i < propertys.length; i++) {
-          const key = propertys[i]
-          const value = _.get(item, [propertys[i]])
-          if (_.has(item, key)) {
-            _.set(item, [key], toFixed(value, tofixed))
+export const formatNumber = (prev, propertys = [], tofixed = 2) => {
+  const obj = deepClone(prev)
+  if (_.isObjectLike(obj)) {
+    if (!_.isArray(propertys) && propertys.length) return obj
+    if (_.isArray(obj)) {
+      return _.map(obj, (item) => {
+        if (_.isPlainObject(item)) {
+          for (let i = 0; i < propertys.length; i++) {
+            const key = propertys[i]
+            const value = _.get(item, [propertys[i]])
+            if (_.has(item, key)) {
+              _.set(item, [key], toFixed(value, tofixed))
+            }
           }
+          return item
         }
         return item
-      }
-      return item
-    })
+      })
+    }
+  } else if (_.isNumber(obj) || _.isString(obj)) {
+    const param = _.toNumber(arguments[1]) || tofixed
+    return toFixed(obj, param)
+  } else {
+    return obj
   }
-  return obj1
 }
 
 

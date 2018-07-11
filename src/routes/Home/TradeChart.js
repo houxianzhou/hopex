@@ -159,7 +159,7 @@ export default class View extends Component {
             payload: {
               maxPrice,
               minPrice,
-              price
+              indexPrice: price
             }
           })
         }

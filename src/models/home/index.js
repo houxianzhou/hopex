@@ -23,7 +23,7 @@ export default joinModel(modelExtend, {
     // 加格指标
     maxPrice: null,
     minPrice: null,
-    price: null
+    indexPrice: null
   },
   subscriptions: {
     setup({ dispatch, history }) {

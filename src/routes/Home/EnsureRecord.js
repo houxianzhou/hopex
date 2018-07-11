@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, _, dealInterval, getPercent } from '@utils'
+import { classNames, _, dealInterval, getPercent, formatNumber } from '@utils'
 import { Mixin } from "@components"
 import ensure from '@assets/ensure.png'
 import ScrollPannel from './components/ScrollPanel'
@@ -10,7 +10,7 @@ const [TOP, DOWN] = ['top', 'down']
 export default class View extends Component {
 
   startInit = () => {
-    // this.getEnsureRecord()
+    this.getEnsureRecord()
   }
 
   getEnsureRecord = () => {
@@ -79,7 +79,7 @@ export default class View extends Component {
 
   render() {
     const { renderList } = this
-    const { model: { ensure_records = {} } } = this.props
+    const { model: { ensure_records = {}, indexPrice } } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'bids')
       , _.get(ensure_records, 'asks')
@@ -114,7 +114,7 @@ export default class View extends Component {
                 <div className={styles.left} >9334.5</div >
                 <div className={styles.right} >
                   <img alt='ensure' className={styles.ensure} src={ensure} />
-                  90000.0/9200.0
+                  0/{formatNumber(indexPrice)}
                 </div >
               </div >
               {
