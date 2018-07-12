@@ -21,4 +21,4 @@ export default delay({
       }
     )
   }
-}, 300)
+}, 30)

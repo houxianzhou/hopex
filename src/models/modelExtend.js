@@ -9,7 +9,6 @@ export default {
           market: home.market
         }
       ))
-
       const { userInfo: { userId, userToken } = {}, version, lang, market } = model
       let result = Imu.fromJS(payload)
       if (_.get(payload, 'head')) {
@@ -26,6 +25,17 @@ export default {
         result = result.setIn(['param', 'market'], String(market))
       }
       return result.toJS()
+    },
+    * getPropsParams({ payload = {} }, { call, put, select }) {
+      // const model = yield select(({ home }) => (
+      //   {
+      //     numberToFixed: home.numberToFixed
+      //   }
+      // ))
+      // const { numberToFixed } = model
+      // return {
+      //   numberToFixed
+      // }
     }
   },
 

@@ -1,6 +1,5 @@
 import { joinModel, getRes, resOk, formatNumber, _ } from '@utils'
 import modelExtend from '@models/modelExtend'
-import { ws } from '@components'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline
@@ -11,10 +10,8 @@ export default joinModel(modelExtend, {
   state: {
     // 合约名称
     market: 'BTCUSD永续',// 合约
+    numberToFixed: 2, // 小数点位数
     // 最新成交
-    latest_pageIndex: '1',
-    latest_pageSize: '19',
-    latest_pageTotal: null,
     latest_records: [],
     // 委托列表
     ensure_records: {},
@@ -24,8 +21,9 @@ export default joinModel(modelExtend, {
     maxPrice: null,
     minPrice: null,
     indexPrice: null,
-    latestPrice: null,
-    equitablePrice: null
+
+    latestPrice: null, //计算出来的
+    equitablePrice: null // 计算出来的
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -48,118 +46,81 @@ export default joinModel(modelExtend, {
     },
     // 最新成交列表
     * getLatestRecord({ payload = {} }, { call, put }) {
-      const { mode = 'ws' } = payload
-      if (mode === 'ws') {
-
-      } else {
-        const payload = yield put({
-          type: 'createRequestParams',
+      const res = getRes(yield call(getLatestRecord, yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "market.deals",
+            "serialNumber": "57",
+          },
+          "param": {
+            "pageSize": "100",
+            "lastId": "1"
+          }
+        }
+      })))
+      if (resOk(res)) {
+        yield put({
+          type: 'changeState',
           payload: {
-            "head": {
-              "method": "market.deals",
-              "serialNumber": "57",
-            },
-            "param": {
-              "pageSize": "100",
-              "lastId": "1"
-            }
+            latest_records: res.data.records,
+            latestPrice: _.get(res.data.records[0], 'price')
           }
         })
-        const res = getRes(yield call(getLatestRecord, payload))
-        if (resOk(res)) {
-          yield put({
-            type: 'changeState',
-            payload: {
-              latest_records: res.data.records,
-              latestPrice: _.get(res.data.records[0], 'price')
-            }
-          })
-          return res
-        }
+        return res
       }
     },
     // 委托列表
     * getEnsureRecord({ payload = {} }, { call, put }) {
-      const { mode = 'ws' } = payload
-      if (mode === 'ws') {
-        // ws.onConnect = function () {
-        //   ws.sendJson({
-        //     "head": {
-        //       "method": "server.ping",
-        //       "msgType": "wsrequest",
-        //       "packType": "1",
-        //       "lang": "cn",
-        //       "version": "1.0.0",
-        //       "timestamps": "1439261904",
-        //       "serialNumber": "1439261904",
-        //       "userId": "56",
-        //       "userToken": "56"
-        //     },
-        //     "param": {}
-        //   })
-        //   ws.onMessage = function (e) {
-        //     const msg = e.data
-        //     console.log(msg)
-        //   }
-        // }
-      } else {
-        const payload = yield put({
-          type: 'createRequestParams',
+      const res = getRes(yield call(getEnsureRecord, yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "market.active_delegate",
+            "serialNumber": "56",
+          },
+          "param": {
+            "pageSize": "100", //不能大于101
+            "interval": "0" //固定值
+          }
+        }
+      })))
+      if (resOk(res)) {
+        const result = {
+          bids: _.orderBy(formatNumber(_.get(res.data, 'bids'), ['price', 'amount']), ['price'], ['desc']),
+          asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc'])
+        }
+        const [bidsLast, asksFirst] = [result.bids[result.bids.length - 1], result.asks[0]]
+        yield put({
+          type: 'changeState',
           payload: {
-            "head": {
-              "method": "market.active_delegate",
-              "serialNumber": "56",
-            },
-            "param": {
-              "pageSize": "100", //不能大于101
-              "interval": "0" //固定值
-            }
+            ensure_records: result,
+            equitablePrice: formatNumber((_.get(bidsLast, 'price') * _.get(asksFirst, 'amount')
+              + _.get(asksFirst, 'price') * _.get(bidsLast, 'amount')) / _.get(asksFirst, 'amount') + _.get(bidsLast, 'amount'))
           }
         })
-        const res = getRes(yield call(getEnsureRecord, payload))
-        if (resOk(res)) {
-          const result = {
-            bids: _.orderBy(formatNumber(_.get(res.data, 'bids'), ['price', 'amount']), ['price'], ['desc']),
-            asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc'])
-          }
-          const [bidsLast, asksFirst] = [result.bids[result.bids.length - 1], result.asks[0]]
-          yield put({
-            type: 'changeState',
-            payload: {
-              ensure_records: result,
-              equitablePrice: (_.get(bidsLast, 'price') * _.get(asksFirst, 'amount')
-                + _.get(asksFirst, 'price') * _.get(bidsLast, 'amount')) / _.get(asksFirst, 'amount') + _.get(bidsLast, 'amount')
-            }
-          })
-          return res
-        }
+        return res
       }
     },
     //K线图
     * getKline({ payload = {} }, { call, put }) {
-      const { mode = 'ws' } = payload
-      if (mode === 'ws') {
-
-      } else {
-        const payload = yield put({
-          type: 'createRequestParams',
-          payload: {
-            "head": {
-              "method": "market.kline",
-              "serialNumber": "57",
-            },
-            "param": {
-              "market": "BTCBCH",
-              "startTime": "1514739660",
-              "endTime": "1541005260",
-              "interval": "86400"
-            }
+      const res = getRes(yield call(getKline, yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "market.kline",
+            "serialNumber": "57",
+          },
+          "param": {
+            "market": "BTCBCH",
+            "startTime": "1514739660",
+            "endTime": "1541005260",
+            "interval": "86400"
           }
-        })
-        const res = getRes(yield call(getKline, payload))
-        if (resOk(res)) {
-          return res.data.records
         }
+      })))
+      if (resOk(res)) {
+        return res.data.records
       }
     },
 

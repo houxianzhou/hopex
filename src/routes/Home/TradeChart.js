@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { classNames, _, localSave, getRes, resOk } from '@utils'
-import { Mixin, ws } from "@components"
+import { classNames, _, localSave, getRes, resOk, formatNumber } from '@utils'
+import { Mixin } from "@components"
+import getSocket from '@services/socket'
 import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
-import { formatNumber } from "../../utils";
 
+const ws = getSocket('ws://192.168.70.131/ws')
 
 export default class View extends Component {
   componentDidMount() {
@@ -22,7 +23,6 @@ export default class View extends Component {
     const TradingView = window.TradingView
     const Datafeeds = window.Datafeeds
     window.$ = $
-    // console.log(TradingView, '-----------')
     new TradingView.widget({
       disabled_features: ["left_toolbar", 'go_to_date'],
       library_path: '/',
@@ -53,7 +53,6 @@ export default class View extends Component {
           onSymbolResolvedCallback({
             // "name": "weixiaoyi",
             "timezone": "Asia/Shanghai",
-
             description: 'haaaaaaa',
             "exchange": "交易所的略称", //交易所的略称
             // "exchange-traded": "NasdaqNM",
@@ -92,7 +91,6 @@ export default class View extends Component {
               }))
               onHistoryCallback(data)
             })
-
           }, 2000)
           a()
         },
@@ -171,34 +169,6 @@ export default class View extends Component {
   }
 
 
-// componentDidMount() {
-//   const TradingView = window.TradingView
-//   const Datafeeds = window.Datafeeds
-//   window.$ = $
-//   console.log(TradingView, '-----------')
-//   new TradingView.widget({
-//     width: '100%',
-//     height: '100%',
-//     fullscreen: true,
-//     symbol: 'AAPL',
-//     interval: 'D',
-//     'container_id': 'tradeView',
-//     //	BEWARE: no trailing slash is expected in feed URL
-//     datafeed: new Datafeeds.UDFCompatibleDatafeed('https://demo_feed.tradingview.com'),
-//     // library_path: './static',
-//     locale: 'en',
-//     //	Regression Trend-related functionality is not implemented yet, so it's hidden for a while
-//     drawings_access: { type: 'black', tools: [{ name: 'Regression Trend' }] },
-//     disabled_features: ['use_localstorage_for_settings'],
-//     enabled_features: ['study_templates'],
-//     charts_storage_url: 'http://saveload.tradingview.com',
-//     charts_storage_api_version: '1.1',
-//     client_id: 'tradingview.com',
-//     user_id: 'public_user_id'
-//   });
-// }
-
-
   render() {
     const { model: { market, maxPrice, minPrice, indexPrice, latestPrice } } = this.props
     return (
@@ -253,7 +223,7 @@ export default class View extends Component {
                       </li >
                       <li >
                         <div className={styles.title} >24h最低</div >
-                        <div className={`${styles.desc} ${styles.lowprice}`} >{maxPrice}</div >
+                        <div className={`${styles.desc} ${styles.lowprice}`} >{minPrice}</div >
                       </li >
                       <li >
                         <div className={styles.title} >24h交易额</div >
@@ -271,7 +241,6 @@ export default class View extends Component {
                 }} >
                 </div >
               </div >
-
             </div >
           </ScrollPannel >
         </div >

@@ -2,15 +2,18 @@ import React, { Component } from 'react'
 import { classNames, _, dealInterval, getPercent, formatNumber, } from '@utils'
 import { Mixin } from "@components"
 import ensure from '@assets/ensure.png'
+import getSocket from '@services/socket'
 import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
 import styles from './index.less'
 
+
 const [TOP, DOWN] = ['top', 'down']
+
 export default class View extends Component {
 
   startInit = () => {
-    this.getEnsureRecord()
+    // this.getEnsureRecord()
   }
 
   getEnsureRecord = () => {
@@ -79,7 +82,7 @@ export default class View extends Component {
 
   render() {
     const { renderList } = this
-    const { model: { ensure_records = [], latestPrice, indexPrice } } = this.props
+    const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice } } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'bids')
       , _.get(ensure_records, 'asks')
@@ -114,7 +117,7 @@ export default class View extends Component {
                 <div className={styles.left} >{latestPrice}</div >
                 <div className={styles.right} >
                   <img alt='ensure' className={styles.ensure} src={ensure} />
-                  0/{indexPrice}
+                  {equitablePrice}/{indexPrice}
                 </div >
               </div >
               {

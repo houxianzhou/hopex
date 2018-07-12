@@ -1,8 +1,14 @@
 import { request, asyncPayload } from '@utils'
 import { API } from "@constants"
 
+
 const { MOCKIP, USERIP } = API
 const MODE = MOCKIP
+
+// mock数据
+if (MODE === MOCKIP) {
+  require('./socketServer')
+}
 
 // K线图
 export async function getKline(payload) {
