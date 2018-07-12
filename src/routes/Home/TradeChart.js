@@ -6,17 +6,17 @@ import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
 
-const ws = getSocket('ws://192.168.70.131/ws')
-const ws2 = getSocket('ws://localhost:9000/ws')
+
+// const ws2 = getSocket('ws://localhost:9000/ws')
 
 export default class View extends Component {
   componentDidMount() {
     localSave.clearAll()
-    this.getImportParams()
   }
 
   startInit = () => {
     this.startKline()
+    this.getImportParams()
   }
 
   startKline = () => {
@@ -128,6 +128,7 @@ export default class View extends Component {
   }
 
   getImportParams = () => {
+    const ws = getSocket('ws://192.168.70.131/ws')
     const { dispatch, modelName } = this.props
     ws.onConnect = () => {
       ws.sendJson({
@@ -138,6 +139,7 @@ export default class View extends Component {
       })
     }
     ws.onMessage = (e) => {
+      console.log(e)
       const res = getRes(e)
       if (resOk(res)) {
         const result = JSON.parse(res.data)

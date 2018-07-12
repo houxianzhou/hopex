@@ -7,13 +7,12 @@ import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
 import styles from './index.less'
 
-
 const [TOP, DOWN] = ['top', 'down']
 
 export default class View extends Component {
 
   startInit = () => {
-    this.getEnsureRecord()
+    // this.getEnsureRecord()
   }
 
   getEnsureRecord = () => {
