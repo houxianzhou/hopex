@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { classNames, _, dealInterval, getPercent, formatNumber, } from '@utils'
 import { Mixin } from "@components"
 import ensure from '@assets/ensure.png'
-import getSocket from '@services/socket'
 import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
 import styles from './index.less'

@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import { classNames, _, localSave, getRes, resOk, formatNumber } from '@utils'
 import { Mixin } from "@components"
-import wss from '@services/socket'
+import wss from '@services/SocketClient'
 import { SOCKETURL } from '@constants'
 import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
-
-// const ws2 = getSocket('ws://localhost:9000/ws')
 
 export default class View extends Component {
   componentDidMount() {
@@ -20,10 +18,11 @@ export default class View extends Component {
   }
 
   startKline = () => {
-    const { model, } = this.props
+    const { model } = this.props
     const TradingView = window.TradingView
     const Datafeeds = window.Datafeeds
     window.$ = $
+    const ws = wss.getSocket('test')
     new TradingView.widget({
       disabled_features: ["left_toolbar", 'go_to_date'],
       library_path: '/',
@@ -42,40 +41,42 @@ export default class View extends Component {
 
       },
       loading_screen: { backgroundColor: "#232833" },
-      //	BEWARE: no trailing slash is expected in feed URL
       datafeed: {
         onReady(callback) {
-          callback({})
-        },
-        searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
-          console.log('2')
-        },
-        resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
-          onSymbolResolvedCallback({
-            // "name": "weixiaoyi",
-            "timezone": "Asia/Shanghai",
-            description: 'haaaaaaa',
-            "exchange": "交易所的略称", //交易所的略称
-            // "exchange-traded": "NasdaqNM",
-            // "exchange-listed": "NasdaqNM",
-            "minmov": 1,//最小波动
-            "pricescale": 100,//价格精
-            "minmov2": 0, //格式化复杂情况下的价格
-
-            "pointvalue": 1,
-            "session": "24x7",
-            "has_intraday": true, // 是否具有日内（分钟）历史数据
-            "has_no_volume": false, //布尔表示商品是否拥有成交量数据
-            has_empty_bars: true,
-            "type": "stock",
-            supported_resolutions: ['D', '1W', '1M'],// 分辨率选择器中启用一个分辨率数组
-            // "ticker": "AAPL", // 品体系中此商品的唯一标识符
-            // "base_name": ["AAPL"],
-            // "legs": ["AAPL"],
-            // "full_name": "NasdaqNM:AAPL",
-            // "pro_name": "NasdaqNM:AAPL",
-            // "data_status": "streaming" //数据状态码。状态显示在图表的右上角。streaming(实时)endofday(已收盘)pulsed(脉冲)
+          setTimeout(() => {
+            callback({})
           })
+        },
+        searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {},
+        resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
+          setTimeout(() => {
+            onSymbolResolvedCallback({
+              "name": "weixiaoyi",
+              "timezone": "Asia/Shanghai",
+              description: 'haaaaaaa',
+              "exchange": "交易所的略称", //交易所的略称
+              // "exchange-traded": "NasdaqNM",
+              // "exchange-listed": "NasdaqNM",
+              "minmov": 1,//最小波动
+              "pricescale": 100,//价格精
+              "minmov2": 0, //格式化复杂情况下的价格
+
+              "pointvalue": 1,
+              "session": "24x7",
+              "has_intraday": true, // 是否具有日内（分钟）历史数据
+              "has_no_volume": false, //布尔表示商品是否拥有成交量数据
+              has_empty_bars: true,
+              "type": "stock",
+              supported_resolutions: ['D', '1W', '1M'],// 分辨率选择器中启用一个分辨率数组
+              // "ticker": "AAPL", // 品体系中此商品的唯一标识符
+              // "base_name": ["AAPL"],
+              // "legs": ["AAPL"],
+              // "full_name": "NasdaqNM:AAPL",
+              // "pro_name": "NasdaqNM:AAPL",
+              // "data_status": "streaming" //数据状态码。状态显示在图表的右上角。streaming(实时)endofday(已收盘)pulsed(脉冲)
+            })
+          })
+
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
           const a = _.debounce(() => {
@@ -87,8 +88,8 @@ export default class View extends Component {
                 high: Number(item[3]),
                 low: Number(item[4]),
                 volume: Number(item[5]),
-                // price: Number(item[6]),
-                // name: item[7]
+                price: Number(item[6]),
+                name: item[7]
               }))
               onHistoryCallback(data)
             })
@@ -98,7 +99,6 @@ export default class View extends Component {
         getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
         },
         subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
-          // console.log('5')
           const a = _.debounce(() => {
             onRealtimeCallback({
                 "time": 1530464461000,
@@ -132,7 +132,6 @@ export default class View extends Component {
     const { dispatch, modelName } = this.props
     ws.onConnect(
       () => {
-        console.log('1111')
         ws.sendJson({
           "event": "subscribe",
           "channel": "market",
@@ -143,7 +142,6 @@ export default class View extends Component {
     )
     ws.onMessage(
       (e) => {
-        console.log('事件1')
         const res = getRes(e)
         if (resOk(res)) {
           const result = JSON.parse(res.data)
@@ -163,17 +161,6 @@ export default class View extends Component {
         }
       }
     )
-    this.getLater()
-  }
-
-  getLater = () => {
-    // const ws = wss.getSocket('kline')
-    // ws.onConnect(() => {
-    //   console.log('222')
-    // })
-    // ws.onMessage(() => {
-    //   console.log('事件2')
-    // })
   }
 
 
