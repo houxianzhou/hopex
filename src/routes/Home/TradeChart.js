@@ -7,6 +7,7 @@ import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
 
 const ws = getSocket('ws://192.168.70.131/ws')
+const ws2 = getSocket('ws://localhost:9000/ws')
 
 export default class View extends Component {
   componentDidMount() {
@@ -83,7 +84,7 @@ export default class View extends Component {
                 time: Number(item[0]) * 1000,
                 open: Number(item[1]),
                 close: Number(item[2]),
-                high:Number(item[3]),
+                high: Number(item[3]),
                 low: Number(item[4]),
                 volume: Number(item[5]),
                 // price: Number(item[6]),

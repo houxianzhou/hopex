@@ -172,7 +172,7 @@ export default class View extends Component {
         dispatch({
           type: `${modelName}/postSideOrder`,
           payload: {
-            side: '1',
+            side: '2',
             method: 'order.put_limit',
             price: buy.price,
             amount: buy.amount
@@ -234,7 +234,7 @@ export default class View extends Component {
             dispatch({
               type: `${modelName}/postSideOrder`,
               payload: {
-                side: '2',
+                side: '1',
                 method: 'order.put_limit',
                 price: sell.price,
                 amount: sell.amount

@@ -50,14 +50,14 @@
       &:nth-child(2n) {
         background: @c_pannel_dark;
       }
-      &.buy{
-        .colorchange{
-          color:@_green;
+      &.buy {
+        .colorchange {
+          color: @_green;
         }
       }
-      &.sell{
-        .colorchange{
-          color:@_red;
+      &.sell {
+        .colorchange {
+          color: @_red;
         }
       }
     }
@@ -118,7 +118,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            div+div{
+            div + div {
               margin-top: 4px;
             }
             div {
@@ -147,9 +147,9 @@
     }
 
   }
-  .tradeview{
+  .tradeview {
     flex-grow: 1;
-    position:relative;
+    position: relative;
   }
 }
 
@@ -192,6 +192,9 @@
   }
   ul {
     height: 100%;
+    &.top_area {
+      height: @pannel_li_height*8;
+    }
     li {
       height: @pannel_li_height;
       display: flex;

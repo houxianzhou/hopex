@@ -13,7 +13,7 @@ const [TOP, DOWN] = ['top', 'down']
 export default class View extends Component {
 
   startInit = () => {
-    // this.getEnsureRecord()
+    this.getEnsureRecord()
   }
 
   getEnsureRecord = () => {
@@ -41,7 +41,7 @@ export default class View extends Component {
           </li >
         </ul >
       </div >
-      <ul >
+      <ul className={ styles[`${name}_area`] } >
         {
           data.map((item, index) => {
             const total = data.slice(0, index + 1).reduce((sum, next) => {
@@ -84,8 +84,8 @@ export default class View extends Component {
     const { renderList } = this
     const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice } } = this.props
     const [dataTop = [], dataDown = []] = [
-      _.get(ensure_records, 'bids')
-      , _.get(ensure_records, 'asks')
+      _.get(ensure_records, 'asks')
+      , _.get(ensure_records, 'bids')
     ]
     return (
       <Mixin.Child that={this} >

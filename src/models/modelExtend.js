@@ -17,7 +17,7 @@ export default {
           .setIn(['head', 'lang'], String(lang))
           .setIn(['head', 'request'], String("request"))
           .setIn(['head', 'packType'], String("1"))
-          .setIn(['head', 'userId'], String(userId))
+          .setIn(['head', 'userId'], String(57))
           .setIn(['head', 'userToken'], String(userToken))
 
       }

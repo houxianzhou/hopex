@@ -87,8 +87,8 @@ export default joinModel(modelExtend, {
       })))
       if (resOk(res)) {
         const result = {
-          bids: _.orderBy(formatNumber(_.get(res.data, 'bids'), ['price', 'amount']), ['price'], ['desc']),
-          asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc'])
+          asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc']),
+          bids: _.orderBy(formatNumber(_.get(res.data, 'bids'), ['price', 'amount']), ['price'], ['desc'])
         }
         const [bidsLast, asksFirst] = [result.bids[result.bids.length - 1], result.asks[0]]
         yield put({
@@ -143,7 +143,7 @@ export default joinModel(modelExtend, {
           },
           "param": {
             "market": "BTCUSD永续",//合约
-            "side": side,//1:sell 2:buy
+            "side": side,// 1:sell 2:buy
             "amount": amount,//买卖数量
             "price": price,//价格
             "takerFee": "0.01",
