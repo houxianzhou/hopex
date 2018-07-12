@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { classNames, _, localSave, getRes, resOk, formatNumber } from '@utils'
 import { Mixin } from "@components"
-import getSocket from '@services/socket'
+import wss from '@services/socket'
+import { SOCKETURL } from '@constants'
 import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
-
 
 // const ws2 = getSocket('ws://localhost:9000/ws')
 
@@ -128,18 +128,20 @@ export default class View extends Component {
   }
 
   getImportParams = () => {
-    const ws = getSocket('ws://192.168.70.131/ws')
+    const ws = wss.getSocket('kline')
     const { dispatch, modelName } = this.props
-    ws.onConnect = () => {
-      ws.sendJson({
-        "event": "subscribe",
-        "channel": "market",
-        "pair": "BTCUSD",
-        "type": 1
-      })
-    }
+    ws.onConnect(
+      () => {
+        console.log('1111')
+        ws.sendJson({
+          "event": "subscribe",
+          "channel": "market",
+          "pair": "BTCUSD",
+          "type": 1
+        })
+      }
+    )
     ws.onMessage = (e) => {
-      console.log(e)
       const res = getRes(e)
       if (resOk(res)) {
         const result = JSON.parse(res.data)
@@ -158,6 +160,15 @@ export default class View extends Component {
         console.log('socket返回连接错误')
       }
     }
+    this.getLater()
+  }
+
+  getLater = () => {
+    // const ws = wss.getSocket('kline')
+    // ws.onConnect(() => {
+    //   console.log('222')
+    // })
+
   }
 
 

@@ -26,7 +26,7 @@ export class MixinParent extends React.Component {
     getCurrentUser.then(res => {
       this.startInit()
     }).catch((error) => {
-      console.log('用户信息获取失败或者startInit调用出错', error)
+      console.log('用户信息获取失败或者父startInit调用出错通常是由于子startInit调用出错', error)
     })
   }
 

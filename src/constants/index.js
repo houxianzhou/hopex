@@ -16,3 +16,8 @@ export const SPEED = {
   MIDDLE: 1000,
   DOWM: 2000
 }
+
+export const SOCKETURL = {
+  kline: 'ws://192.168.70.131/ws',
+  test: 'ws://localhost:9000/ws'
+}

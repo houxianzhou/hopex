@@ -1,5 +1,6 @@
 import { Server } from 'mock-socket'
 import { _ } from '@utils'
+import { SOCKETURL } from '@constants'
 
 const INTERVAL = 1000
 
@@ -26,11 +27,10 @@ class MockServer {
       this.socket.send(JSON.stringify(obj))
     }
   }
-
 }
 
-const mockServer1 = new MockServer('ws://192.168.70.131/ws')
-const mockServer2 = new Server('ws://localhost:9000/ws')
+const mockServer1 = new MockServer(SOCKETURL.kline)
+const mockServer2 = new Server(SOCKETURL.test)
 
 mockServer1.onConnection = () => {
   setInterval(() => {
