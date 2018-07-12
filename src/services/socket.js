@@ -2,7 +2,7 @@ import { _ } from '@utils'
 
 class Ws {
   constructor(url) {
-    this.ws = new WebSocket(url)
+    this.ws = new window.ReconnectingWebSocket(url, null, { debug: true, reconnectInterval: 800 })
     this.ws.onopen = () => {
       console.log('ws连接已开启.....')
       if (this.onConnect) this.onConnect()
@@ -15,6 +15,7 @@ class Ws {
       if (this.onClose) this.onClose()
     }
     this.ws.onerror = (e) => {
+      console.log('错误', e)
     }
   }
 

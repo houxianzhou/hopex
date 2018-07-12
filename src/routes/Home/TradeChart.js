@@ -83,11 +83,11 @@ export default class View extends Component {
                 time: Number(item[0]) * 1000,
                 open: Number(item[1]),
                 close: Number(item[2]),
-                high: Number(item[3]),
+                high:Number(item[3]),
                 low: Number(item[4]),
                 volume: Number(item[5]),
-                price: Number(item[6]),
-                name: item[7]
+                // price: Number(item[6]),
+                // name: item[7]
               }))
               onHistoryCallback(data)
             })
@@ -95,8 +95,6 @@ export default class View extends Component {
           a()
         },
         getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
-          // console.log(startDate)
-          // onDataCallback()
         },
         subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
           // console.log('5')
@@ -114,16 +112,7 @@ export default class View extends Component {
           a()
         }
       },
-      // library_path: './static',
       locale: 'zh',
-      //	Regression Trend-related functionality is not implemented yet, so it's hidden for a while
-      // drawings_access: { type: 'black', tools: [{ name: 'Regression Trend' }] },
-      // disabled_features: ['use_localstorage_for_settings'],
-      // enabled_features: ['study_templates'],
-      // charts_storage_url: 'http://saveload.tradingview.com',
-      //  charts_storage_api_version: '1.1',
-      //  client_id: 'tradingview.com',
-      //  user_id: 'public_user_id'
     })
   }
 
