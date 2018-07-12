@@ -141,25 +141,28 @@ export default class View extends Component {
         })
       }
     )
-    ws.onMessage = (e) => {
-      const res = getRes(e)
-      if (resOk(res)) {
-        const result = JSON.parse(res.data)
-        const { minPrice, maxPrice, price } = result
-        if (minPrice || maxPrice) {
-          dispatch({
-            type: `${modelName}/changeState`,
-            payload: {
-              maxPrice: formatNumber(maxPrice, 2),
-              minPrice: formatNumber(minPrice, 2),
-              indexPrice: formatNumber(price, 2)
-            }
-          })
+    ws.onMessage(
+      (e) => {
+        console.log('事件1')
+        const res = getRes(e)
+        if (resOk(res)) {
+          const result = JSON.parse(res.data)
+          const { minPrice, maxPrice, price } = result
+          if (minPrice || maxPrice) {
+            dispatch({
+              type: `${modelName}/changeState`,
+              payload: {
+                maxPrice: formatNumber(maxPrice, 2),
+                minPrice: formatNumber(minPrice, 2),
+                indexPrice: formatNumber(price, 2)
+              }
+            })
+          }
+        } else {
+          console.log('socket返回连接错误')
         }
-      } else {
-        console.log('socket返回连接错误')
       }
-    }
+    )
     this.getLater()
   }
 
@@ -168,7 +171,9 @@ export default class View extends Component {
     // ws.onConnect(() => {
     //   console.log('222')
     // })
-
+    // ws.onMessage(() => {
+    //   console.log('事件2')
+    // })
   }
 
 

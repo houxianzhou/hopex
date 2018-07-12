@@ -11,7 +11,7 @@ class Ws {
       this.onConnectLists.forEach(item => item())
     }
     this.ws.onmessage = (e) => {
-      this.onMessagesLists.forEach(item => item())
+      this.onMessagesLists.forEach(item => item(e))
     }
     this.ws.onclose = function () {
       console.log(`${url}连接已关闭...`)
