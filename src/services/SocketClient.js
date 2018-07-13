@@ -14,8 +14,9 @@ class Ws {
     this.ws.onmessage = (e) => {
       this.onMessagesLists.forEach(item => item(e))
       this.promiseFunsLists.forEach(([resolve, func], index) => {
-        if (func(e)) {
-          resolve(e)
+        const result = func(e)
+        if (!!result) {
+          resolve(result)
           this.promiseFunsLists.splice(index, 1)
         }
       })

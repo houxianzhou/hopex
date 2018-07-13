@@ -14,7 +14,7 @@ export default class View extends Component {
 
   startInit = () => {
     this.startKline()
-    this.getImportParams()
+    // this.getImportParams()
   }
 
   startKline = () => {
@@ -78,8 +78,31 @@ export default class View extends Component {
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
           const a = _.debounce(() => {
-            this.getKline().then((res = []) => {
-              const data = res.map(item => ({
+            // console.log('2')
+            ws1.sendJsonPromise({
+              "head": {
+                "method": "kline.query",
+                "msgType": "request",
+                "packType": "1",
+                "lang": "cn",
+                "version": "1.0.0",
+                "timestamps": "1439261904",
+                "serialNumber": "57"
+              },
+              "param": {
+                "market": "BTCUSD永续",
+                "startTime": "1483203600",
+                "endTime": "1546275600",
+                "interval": "86400"
+              }
+            }, (e) => {
+              const res = getRes(e)
+              if (resOk(res)) {
+                const result = formatJson(res.data)
+                return result.data.data.records
+              }
+            }).then((result = []) => {
+              const data = result.map(item => ({
                 time: Number(item[0]) * 1000,
                 open: Number(item[1]),
                 close: Number(item[2]),
@@ -89,15 +112,15 @@ export default class View extends Component {
                 price: Number(item[6]),
                 name: item[7]
               }))
-              onHistoryCallback([])
+              onHistoryCallback(data, true)
             })
-
           }, 2000)
           a()
         },
         getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
         },
         subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
+          // console.log('hhhhhh')
           const a = _.debounce(() => {
             onRealtimeCallback({
                 "time": 1530464461000,
@@ -114,40 +137,33 @@ export default class View extends Component {
       },
       locale: 'zh',
     })
-    ws1.onConnect(() => {
-      ws1.sendJsonPromise({
-        "head": {
-          "method": "kline.query",
-          "msgType": "request",
-          "packType": "1",
-          "lang": "cn",
-          "version": "1.0.0",
-          "timestamps": "1439261904",
-          "serialNumber": "57"
-        },
-        "param": {
-          "market": "BTCUSD永续",
-          "startTime": "1",
-          "endTime": "12345699",
-          "interval": "86400"
-        }
-      }, (e)=>{
-        const res = getRes(e)
-        console.log(res)
-        if (resOk(res)) {
-          return true
-        }
-      }).then((e) => {
-        console.log(e,'---------')
-      })
-    })
-    ws1.onMessage((e) => {
-      const res = getRes(e)
-      if (resOk(res)) {
-        // const result = formatJson(res.data)
-        // console.log(result)
-      }
-    })
+    // ws1.onConnect(() => {
+    //   ws1.sendJsonPromise({
+    //     "head": {
+    //       "method": "kline.query",
+    //       "msgType": "request",
+    //       "packType": "1",
+    //       "lang": "cn",
+    //       "version": "1.0.0",
+    //       "timestamps": "1439261904",
+    //       "serialNumber": "57"
+    //     },
+    //     "param": {
+    //       "market": "BTCUSD永续",
+    //       "startTime": "1",
+    //       "endTime": "12345699",
+    //       "interval": "86400"
+    //     }
+    //   }, (e) => {
+    //     const res = getRes(e)
+    //     console.log(res)
+    //     if (resOk(res)) {
+    //       return true
+    //     }
+    //   }).then((e) => {
+    //     console.log(e, '---------')
+    //   })
+    // })
 
   }
 
