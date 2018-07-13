@@ -14,7 +14,7 @@ class MockServer {
         this.onConnection(socket)
       }
       socket.on('message', (e) => {
-        if (this.onMessge) this.onMessge(e)
+        if (this.onMessage) this.onMessage(e)
       })
       socket.on('close', () => {
         if (this.onClose) this.onClose()
@@ -45,8 +45,39 @@ mockServer2.onConnection = () => {
 }
 
 mockServer1.onConnection = () => {
-  mockServer1.sendJson({
-    name:'ahahah'
-  })
+
+}
+mockServer1.onMessage = (e) => {
+  const { head: { method }, param } = JSON.parse(e)
+  if (method === 'kline.query') {
+    mockServer1.sendJson({
+      "head": {
+        "method": "kline.query",
+        "msgType": "response",
+        "packType": "1",
+        "lang": "cn",
+        "version": "1.0.0",
+        "timestamps": "1530075450",
+        "serialNumber": "57"
+      },
+      "data": {
+        "records": [
+          [
+            "1529424000",//时间戳
+            "80",//开市值
+            "80",//闭市值
+            "80",//最高价
+            "80",//最低价
+            "2723",//成交量
+            "217840",//成交额
+            "BTCBCH"//合约名称
+          ]
+        ]
+      },
+      "errCode": "0",
+      "errStr": "success",
+      "ret": "0"
+    })
+  }
 }
 

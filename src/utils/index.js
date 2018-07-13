@@ -126,6 +126,10 @@ export const formatNumber = (prev, propertys = [], tofixed = 2) => {
   }
 }
 
+export const formatJson = (string) => {
+  return JSON.parse(string.replace(/\s+/g, ''))
+}
+
 
 
 

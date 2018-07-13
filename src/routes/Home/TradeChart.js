@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, _, localSave, getRes, resOk, formatNumber } from '@utils'
+import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson } from '@utils'
 import { Mixin } from "@components"
 import wss from '@services/SocketClient'
 import { SOCKETURL } from '@constants'
@@ -23,25 +23,6 @@ export default class View extends Component {
     const Datafeeds = window.Datafeeds
     window.$ = $
     const ws1 = wss.getSocket('ws1')
-    ws1.onConnect(() => {
-      ws1.sendJson({
-        "head": {
-          "method": "kline.query",
-          "msgType": "request",
-          "packType": "1",
-          "lang": "cn",
-          "version": "1.0.0",
-          "timestamps": "1439261904",
-          "serialNumber": "57"
-        },
-        "param": {
-          "market": "BTCUSD永续",
-          "startTime": "1",
-          "endTime": "12345699",
-          "interval": "86400"
-        }
-      })
-    })
     new TradingView.widget({
       disabled_features: ["left_toolbar", 'go_to_date'],
       library_path: '/',
@@ -53,11 +34,9 @@ export default class View extends Component {
         "paneProperties.background": "#232833",
         "paneProperties.vertGridProperties.color": "transparent",
         "paneProperties.horzGridProperties.color": "transparent",
-        // "timeScale.rightOffset":"12"
         "paneProperties.topMargin": "15",
         "paneProperties.bottomMargin": "5",
         "scalesProperties.backgroundColor": "red"
-
       },
       loading_screen: { backgroundColor: "#232833" },
       datafeed: {
@@ -69,15 +48,6 @@ export default class View extends Component {
         searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
         },
         resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
-          ws1.onMessage((e) => {
-            const res = getRes(e)
-            if (resOk(res)) {
-              console.log(res)
-              // const result = JSON.parse(res)
-              // console.log(result)
-            }
-          })
-
           setTimeout(() => {
             onSymbolResolvedCallback({
               "name": "weixiaoyi",
@@ -107,22 +77,23 @@ export default class View extends Component {
           })
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
-          // const a = _.debounce(() => {
-          //   this.getKline().then((res = []) => {
-          //     const data = res.map(item => ({
-          //       time: Number(item[0]) * 1000,
-          //       open: Number(item[1]),
-          //       close: Number(item[2]),
-          //       high: Number(item[3]),
-          //       low: Number(item[4]),
-          //       volume: Number(item[5]),
-          //       price: Number(item[6]),
-          //       name: item[7]
-          //     }))
-          //     onHistoryCallback(data)
-          //   })
-          // }, 2000)
-          // a()
+          const a = _.debounce(() => {
+            this.getKline().then((res = []) => {
+              const data = res.map(item => ({
+                time: Number(item[0]) * 1000,
+                open: Number(item[1]),
+                close: Number(item[2]),
+                high: Number(item[3]),
+                low: Number(item[4]),
+                volume: Number(item[5]),
+                price: Number(item[6]),
+                name: item[7]
+              }))
+              onHistoryCallback([])
+            })
+
+          }, 2000)
+          a()
         },
         getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
         },
@@ -143,6 +114,41 @@ export default class View extends Component {
       },
       locale: 'zh',
     })
+    ws1.onConnect(() => {
+      ws1.sendJsonPromise({
+        "head": {
+          "method": "kline.query",
+          "msgType": "request",
+          "packType": "1",
+          "lang": "cn",
+          "version": "1.0.0",
+          "timestamps": "1439261904",
+          "serialNumber": "57"
+        },
+        "param": {
+          "market": "BTCUSD永续",
+          "startTime": "1",
+          "endTime": "12345699",
+          "interval": "86400"
+        }
+      }, (e)=>{
+        const res = getRes(e)
+        console.log(res)
+        if (resOk(res)) {
+          return true
+        }
+      }).then((e) => {
+        console.log(e,'---------')
+      })
+    })
+    ws1.onMessage((e) => {
+      const res = getRes(e)
+      if (resOk(res)) {
+        // const result = formatJson(res.data)
+        // console.log(result)
+      }
+    })
+
   }
 
   getKline = () => {
@@ -172,7 +178,7 @@ export default class View extends Component {
       (e) => {
         const res = getRes(e)
         if (resOk(res)) {
-          const result = JSON.parse(res.data)
+          const result = formatJson(res.data)
           const { minPrice, maxPrice, price } = result
           if (minPrice || maxPrice) {
             dispatch({

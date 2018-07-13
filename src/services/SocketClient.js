@@ -6,12 +6,19 @@ class Ws {
     this.ws = new window.ReconnectingWebSocket(url, null, { debug: true, reconnectInterval: 800 })
     this.onConnectLists = []
     this.onMessagesLists = []
+    this.promiseFunsLists = []
     this.ws.onopen = () => {
       console.log(`${url}连接已开启.....`)
       this.onConnectLists.forEach(item => item())
     }
     this.ws.onmessage = (e) => {
       this.onMessagesLists.forEach(item => item(e))
+      this.promiseFunsLists.forEach(([resolve, func], index) => {
+        if (func(e)) {
+          resolve(e)
+          this.promiseFunsLists.splice(index, 1)
+        }
+      })
     }
     this.ws.onclose = function () {
       console.log(`${url}连接已关闭...`)
@@ -32,6 +39,13 @@ class Ws {
 
   sendJson = (json) => {
     this.ws.send(JSON.stringify(json))
+  }
+
+  sendJsonPromise = (json, func) => {
+    return new Promise((resolve) => {
+      this.sendJson(json)
+      this.promiseFunsLists.push([resolve, func])
+    })
   }
 }
 
