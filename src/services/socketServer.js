@@ -29,12 +29,12 @@ class MockServer {
   }
 }
 
-const mockServer1 = new MockServer(SOCKETURL.kline)
-const mockServer2 = new Server(SOCKETURL.test)
+const mockServer2 = new MockServer(SOCKETURL.ws2)
+const mockServer1 = new MockServer(SOCKETURL.ws1)
 
-mockServer1.onConnection = () => {
+mockServer2.onConnection = () => {
   setInterval(() => {
-    mockServer1.sendJson({
+    mockServer2.sendJson({
       "price": _.random(1000, 10000),
       "minPrice": _.random(1000, 10000),
       "maxPrice": _.random(1000, 10000),
@@ -42,5 +42,11 @@ mockServer1.onConnection = () => {
       "pair": "BTCUSD"
     })
   }, 1000)
+}
+
+mockServer1.onConnection = () => {
+  mockServer1.sendJson({
+    name:'ahahah'
+  })
 }
 

@@ -18,6 +18,6 @@ export const SPEED = {
 }
 
 export const SOCKETURL = {
-  kline: 'ws://192.168.70.131/ws',
-  test: 'ws://localhost:9000/ws'
+  ws1: 'ws://192.168.70.131:10060/tcws',
+  ws2: 'ws://192.168.70.131/ws'
 }

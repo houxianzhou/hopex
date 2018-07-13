@@ -22,7 +22,26 @@ export default class View extends Component {
     const TradingView = window.TradingView
     const Datafeeds = window.Datafeeds
     window.$ = $
-    // const ws = wss.getSocket('test')
+    const ws1 = wss.getSocket('ws1')
+    ws1.onConnect(() => {
+      ws1.sendJson({
+        "head": {
+          "method": "kline.query",
+          "msgType": "request",
+          "packType": "1",
+          "lang": "cn",
+          "version": "1.0.0",
+          "timestamps": "1439261904",
+          "serialNumber": "57"
+        },
+        "param": {
+          "market": "BTCUSD永续",
+          "startTime": "1",
+          "endTime": "12345699",
+          "interval": "86400"
+        }
+      })
+    })
     new TradingView.widget({
       disabled_features: ["left_toolbar", 'go_to_date'],
       library_path: '/',
@@ -47,8 +66,18 @@ export default class View extends Component {
             callback({})
           })
         },
-        searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {},
+        searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
+        },
         resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
+          ws1.onMessage((e) => {
+            const res = getRes(e)
+            if (resOk(res)) {
+              console.log(res)
+              // const result = JSON.parse(res)
+              // console.log(result)
+            }
+          })
+
           setTimeout(() => {
             onSymbolResolvedCallback({
               "name": "weixiaoyi",
@@ -76,25 +105,24 @@ export default class View extends Component {
               // "data_status": "streaming" //数据状态码。状态显示在图表的右上角。streaming(实时)endofday(已收盘)pulsed(脉冲)
             })
           })
-
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
-          const a = _.debounce(() => {
-            this.getKline().then((res = []) => {
-              const data = res.map(item => ({
-                time: Number(item[0]) * 1000,
-                open: Number(item[1]),
-                close: Number(item[2]),
-                high: Number(item[3]),
-                low: Number(item[4]),
-                volume: Number(item[5]),
-                price: Number(item[6]),
-                name: item[7]
-              }))
-              onHistoryCallback(data)
-            })
-          }, 2000)
-          a()
+          // const a = _.debounce(() => {
+          //   this.getKline().then((res = []) => {
+          //     const data = res.map(item => ({
+          //       time: Number(item[0]) * 1000,
+          //       open: Number(item[1]),
+          //       close: Number(item[2]),
+          //       high: Number(item[3]),
+          //       low: Number(item[4]),
+          //       volume: Number(item[5]),
+          //       price: Number(item[6]),
+          //       name: item[7]
+          //     }))
+          //     onHistoryCallback(data)
+          //   })
+          // }, 2000)
+          // a()
         },
         getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
         },
@@ -128,11 +156,11 @@ export default class View extends Component {
   }
 
   getImportParams = () => {
-    const ws = wss.getSocket('kline')
+    const ws2 = wss.getSocket('ws2')
     const { dispatch, modelName } = this.props
-    ws.onConnect(
+    ws2.onConnect(
       () => {
-        ws.sendJson({
+        ws2.sendJson({
           "event": "subscribe",
           "channel": "market",
           "pair": "BTCUSD",
@@ -140,7 +168,7 @@ export default class View extends Component {
         })
       }
     )
-    ws.onMessage(
+    ws2.onMessage(
       (e) => {
         const res = getRes(e)
         if (resOk(res)) {
