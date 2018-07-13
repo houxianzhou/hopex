@@ -22,7 +22,7 @@ export default class View extends Component {
     const TradingView = window.TradingView
     const Datafeeds = window.Datafeeds
     window.$ = $
-    const ws = wss.getSocket('test')
+    // const ws = wss.getSocket('test')
     new TradingView.widget({
       disabled_features: ["left_toolbar", 'go_to_date'],
       library_path: '/',
