@@ -1,9 +1,11 @@
-import { joinModel, getRes, resOk, formatNumber, _ } from '@utils'
+import { joinModel, getRes, resOk, formatNumber, _, formatJson } from '@utils'
+import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline
 } from "@services/trade"
+
 
 export default joinModel(modelExtend, {
   namespace: 'home',
@@ -32,7 +34,8 @@ export default joinModel(modelExtend, {
   },
 
   effects: {
-    * startInit({ payload = {} }, { call, put }) {},
+    * startInit({ payload = {} }, { call, put }) {
+    },
 
     // 最新成交列表
     * getLatestRecord({ payload = {} }, { call, put }) {
@@ -90,26 +93,35 @@ export default joinModel(modelExtend, {
         return res
       }
     },
+
     //K线图
     * getKline({ payload = {} }, { call, put }) {
-      const res = getRes(yield call(getKline, yield put({
+      const { startTime, endTime } = payload
+      const ws1 = wss.getSocket('ws1')
+      return ws1.sendJsonPromise(yield put({
         type: 'createRequestParams',
         payload: {
           "head": {
-            "method": "market.kline",
-            "serialNumber": "57",
+            "method": "kline.query",
           },
           "param": {
-            "market": "BTCBCH",
-            "startTime": "1514739660",
-            "endTime": "1541005260",
+            "startTime": startTime,
+            "endTime": endTime,
             "interval": "86400"
           }
         }
-      })))
-      if (resOk(res)) {
-        return res.data.records
-      }
+      }), (e) => {
+        const res = getRes(e)
+        if (resOk(res)) {
+          const res = getRes(e)
+          if (resOk(res)) {
+            const result = formatJson(res.data)
+            if (_.get(result, 'data.head.method') === 'kline.query') {
+              return _.get(result, 'data.data.records')
+            }
+          }
+        }
+      })
     },
 
     // 下单（限价/市价）
@@ -140,13 +152,6 @@ export default joinModel(modelExtend, {
           }
         }
       ))
-      // if (resOk(res)) {
-      //   yield put({
-      //     type: 'changeState',
-      //     payload: { ensure_records: res }
-      //   })
-      //   return res
-      // }
     },
   },
 

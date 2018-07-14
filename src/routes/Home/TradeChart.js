@@ -18,7 +18,7 @@ export default class View extends Component {
   }
 
   startKline = () => {
-    const { model } = this.props
+    const { model, dispatch, modelName } = this.props
     const TradingView = window.TradingView
     const Datafeeds = window.Datafeeds
     window.$ = $
@@ -71,29 +71,11 @@ export default class View extends Component {
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
           const [startTime, endTime] = [Math.min(from, to) * 1000, Math.max(from, to) * 1000]
-          ws1.sendJsonPromise({
-            "head": {
-              "method": "kline.query",
-              "msgType": "request",
-              "packType": "1",
-              "lang": "cn",
-              "version": "1.0.0",
-              "timestamps": "1439261904",
-              "serialNumber": "57"
-            },
-            "param": {
-              "market": "BTCUSD永续",
-              "startTime": startTime,
-              "endTime": endTime,
-              "interval": "86400"
-            }
-          }, (e) => {
-            const res = getRes(e)
-            if (resOk(res)) {
-              const result = formatJson(res.data)
-              if (_.get(result, 'data.head.method') === 'kline.query') {
-                return _.get(result, 'data.data.records')
-              }
+          dispatch({
+            type: `${modelName}/getKline`,
+            payload: {
+              startTime,
+              endTime
             }
           }).then((result = []) => {
             const data = result.map(item => ({
@@ -127,16 +109,6 @@ export default class View extends Component {
         }
       },
       locale: 'zh',
-    })
-  }
-
-  getKline = () => {
-    const { dispatch, modelName } = this.props
-    return dispatch({
-      type: `${modelName}/getKline`,
-      payload: {
-        mode: 'http'
-      }
     })
   }
 

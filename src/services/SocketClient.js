@@ -70,9 +70,15 @@ class Ws {
     this.ws.close(4000, 'selfClose')
   }
 
-  sendJson = (json) => {
+  sendJson = async (json) => {
+    let data
+    if (json.then) {
+      data = await json.then(res => res)
+    } else {
+      data = json
+    }
     if (this.isReadyState()) {
-      this.ws.send(JSON.stringify(json))
+      this.ws.send(JSON.stringify(data))
       return true
     } else {
       console.log(this.ws.readyState, '当前websocket连接状态不正常')
