@@ -27,15 +27,14 @@ const Comp = {
 export default class View extends Component {
   constructor(props) {
     super(props)
-    this.initStacks = []
   }
 
   startInit = () => {
-    this.initStacks.map(item => item && item())
+    this.childInitStacks.map(item => item && item())
   }
 
   renderView = (name) => {
-    const props = { ...this.props, initStacks: this.initStacks }
+    const props = { ...this.props, that: this }
     const RenderItem = Comp[name]
     return <RenderItem {...props} />
   }
@@ -68,7 +67,6 @@ export default class View extends Component {
             renderView('CurrentContract')
           }
         </div >
-
       </Mixin.Parent >
     )
   }

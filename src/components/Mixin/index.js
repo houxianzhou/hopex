@@ -13,8 +13,8 @@ export class MixinParent extends React.Component {
     const { model: { userInfo } = {}, dispatch, modelName } = this.props
     const getCurrentUser = new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve({"userInfo":{"userId":"56","userToken":"56"}})
-      },200)
+        resolve({ "userInfo": { "userId": "56", "userToken": "56" } })
+      }, 200)
       // if (_.isEmpty(userInfo)) {
       //   return dispatch({
       //     type: `${modelName}/getCurrentUser`,
@@ -52,15 +52,21 @@ export class MixinParent extends React.Component {
 }
 
 export class MixinChild extends React.Component {
+  constructor(props) {
+    super(props)
+    const { that = {} } = this.props
+    if (!that.props.that.childInitStacks) that.props.that.childInitStacks = []
+  }
+
   componentDidMount() {
     this.startInit()
   }
 
   startInit = () => {
     const { that = {} } = this.props
-    const [startInit, initStacks] = [_.get(that, 'startInit'), _.get(that, 'props.initStacks')]
-    if (_.isFunction(startInit) && _.isArray(initStacks)) {
-      initStacks.push(startInit)
+    const [startInit, childInitStacks] = [_.get(that, 'startInit'), _.get(that, 'props.that.childInitStacks')]
+    if (_.isFunction(startInit) && _.isArray(childInitStacks)) {
+      childInitStacks.push(startInit)
     }
   }
 
