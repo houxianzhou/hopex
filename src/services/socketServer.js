@@ -1,5 +1,5 @@
 import { Server } from 'mock-socket'
-import { _ } from '@utils'
+import { _, moment } from '@utils'
 import { SOCKETURL } from '@constants'
 
 const INTERVAL = 1000
@@ -30,27 +30,14 @@ class MockServer {
 }
 
 
-// const mockServer2 = new MockServer(SOCKETURL.ws2)
-
-
-// mockServer2.onConnection = () => {
-//   setInterval(() => {
-//     mockServer2.sendJson({
-//       "price": _.random(1000, 10000),
-//       "minPrice": _.random(1000, 10000),
-//       "maxPrice": _.random(1000, 10000),
-//       "chanId": 204,
-//       "pair": "BTCUSD"
-//     })
-//   }, 1000)
-// }
-
-
 const mockServer1 = new MockServer(SOCKETURL.ws1)
-
 mockServer1.onMessage = (e) => {
-  const { head: { method }, param } = JSON.parse(e)
+  const message = JSON.parse(e)
+  const { head: { method } = {} } = message
   if (method === 'kline.query') {
+    const { param: { startTime, endTime } = {} } = message
+    // console.log(moment.format(startTime), '------', moment.format(endTime))
+    const periods = moment.getdays(startTime, endTime)
     mockServer1.sendJson(
       {
         "isTrusted": false,
@@ -65,16 +52,14 @@ mockServer1.onMessage = (e) => {
             "serialNumber": "57"
           },
           "data": {
-            "records": [
-              ["1530853200", "1", "1", "1", "1", "5", "5", "BTCUSD永续"],
-              ["1530939600", "1", "1", "1", "1", "0", "0", "BTCUSD永续"],
-              ["1531026000", "1", "1", "1", "1", "1", "1", "BTCUSD永续"],
-              ["1531112400", "1", "2", "2", "1", "3561", "3562", "BTCUSD永续"],
-              ["1531198800", "2", "2", "2", "2", "1", "2", "BTCUSD永续"],
-              ["1531285200", "2", "2", "2", "2", "0", "0", "BTCUSD永续"],
-              ["1531371600", "2", "2", "2", "2", "0", "0", "BTCUSD永续"],
-              ["1531458000", "2", "200", "200", "1", "888279", "98595765", "BTCUSD永续"]
-            ]
+            "records": periods.map(item => {
+              const h = 160 + _.random(30, 40)
+              const o = h - _.random(10, 20)
+              const c = o - _.random(10, 30)
+              const l = c - _.random(10, 20)
+              const v = _.random(100, 3000)
+              return [item / 1000, o, c, h, l, v, 6, 'BTCUSD永续']
+            })
           },
           "errCode": "0",
           "errStr": "success",
@@ -84,5 +69,20 @@ mockServer1.onMessage = (e) => {
     )
   }
 }
-console.log(mockServer1)
+
+
+// const mockServer2 = new MockServer(SOCKETURL.ws2)
+
+
+// mockServer2.onConnection = () => {
+//   setInterval(() => {
+//     mockServer2.sendJson({
+//       "price": _.random(1000, 10000),
+//       "minPrice": _.random(1000, 10000),
+//       "maxPrice": _.random(1000, 10000),
+//       "chanId": 204,
+//       "pair": "BTCUSD"
+//     })
+//   }, 1000)
+// }
 

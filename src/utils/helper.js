@@ -51,11 +51,19 @@ export const immutable = {
 }
 
 export const moment_helper = {
-  format: (tiem) => {
-
+  format: (time = Date.now(), format = 'YYYY-MM-DD') => {
+    return moment(time).format(format)
   },
   formatHMS: (time = Date.now()) => {
     return moment(time).format('h:mm:ss')
+  },
+  getdays: (startTime, endTime, isInclude = false) => {
+    const days = Math.ceil(moment.duration(endTime - startTime).asDays())
+    const daysArray = []
+    for (let i = 0; i < days - 2; i++) {
+      daysArray.push(startTime + (i + 1) * 1 * 24 * 60 * 60 * 1000)
+    }
+    return daysArray
   }
 }
 

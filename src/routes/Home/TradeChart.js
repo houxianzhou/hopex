@@ -77,8 +77,8 @@ export default class View extends Component {
           })
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
+          const [startTime, endTime] = [Math.min(from, to) * 1000, Math.max(from, to) * 1000]
           const a = _.debounce(() => {
-            // console.log('2')
             ws1.sendJsonPromise({
               "head": {
                 "method": "kline.query",
@@ -91,8 +91,8 @@ export default class View extends Component {
               },
               "param": {
                 "market": "BTCUSD永续",
-                "startTime": "1483203600",
-                "endTime": "1546275600",
+                "startTime": startTime,
+                "endTime": endTime,
                 "interval": "86400"
               }
             }, (e) => {
@@ -120,7 +120,6 @@ export default class View extends Component {
         getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
         },
         subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
-          // console.log('hhhhhh')
           const a = _.debounce(() => {
             onRealtimeCallback({
                 "time": 1530464461000,
