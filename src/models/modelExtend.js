@@ -17,9 +17,9 @@ export default {
           .setIn(['head', 'lang'], String(lang))
           .setIn(['head', 'request'], String("request"))
           .setIn(['head', 'packType'], String("1"))
-          .setIn(['head', 'userId'], String(57))
+          .setIn(['head', 'serialNumber'], String(_.uniqueId()))
+          .setIn(['head', 'userId'], String(userId))
           .setIn(['head', 'userToken'], String(userToken))
-
       }
       if (_.get(payload, 'param')) {
         result = result.setIn(['param', 'market'], String(market))

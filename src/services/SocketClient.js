@@ -6,18 +6,23 @@ class Ws {
     this.ws = new WebSocket(url) // window.ReconnectingWebSocket(url, null, { debug: true, reconnectInterval: 0 })
     this.onConnectLists = []
     this.onMessagesLists = []
-    this.promiseFunsLists = []
+    this.onConnectPromiseLists = []
+    this.sendJsonPromiseLists = []
     this.ws.onopen = () => {
       console.log(`${url}连接开启.....`)
       this.onConnectLists.forEach(item => item())
+      this.onConnectPromiseLists.forEach((resolve, index) => {
+        resolve()
+        this.onConnectPromiseLists.splice(index, 1)
+      })
     }
     this.ws.onmessage = (e) => {
       this.onMessagesLists.forEach(item => item(e))
-      this.promiseFunsLists.forEach(([resolve, func], index) => {
+      this.sendJsonPromiseLists.forEach(([resolve, func], index) => {
         const result = func(e)
         if (!!result) {
           resolve(result)
-          this.promiseFunsLists.splice(index, 1)
+          this.sendJsonPromiseLists.splice(index, 1)
         }
       })
     }
@@ -31,6 +36,11 @@ class Ws {
     }
   }
 
+  isReadyState = () => {
+    return this.ws.readyState === 1
+  }
+
+
   reConnect = (e) => {
     if (e.type === 'close' || e.type === 'error') {
       if (_.get(e, 'reason') === 'selfClose') return console.log('主动断开不再重新连接')
@@ -42,6 +52,16 @@ class Ws {
     this.onConnectLists.push(func)
   }
 
+  onConnectPromise = () => {
+    return new Promise((resolve) => {
+      if (this.isReadyState()) {
+        return resolve()
+      } else {
+        this.onConnectPromiseLists.push(resolve)
+      }
+    })
+  }
+
   onMessage = (func) => {
     this.onMessagesLists.push(func)
   }
@@ -51,7 +71,7 @@ class Ws {
   }
 
   sendJson = (json) => {
-    if (this.ws.readyState === 1) {
+    if (this.isReadyState()) {
       this.ws.send(JSON.stringify(json))
       return true
     } else {
@@ -60,13 +80,17 @@ class Ws {
   }
 
   sendJsonPromise = (json, func) => {
-    return new Promise((resolve, reject) => {
-      if (this.sendJson(json)) {
-        this.promiseFunsLists.push([resolve, func])
-      } else {
-        reject('sendJson方法遇到异常')
-      }
-    })
+    if (_.isFunction(func)) {
+      return new Promise((resolve, reject) => {
+        if (this.sendJson(json)) {
+          this.sendJsonPromiseLists.push([resolve, func])
+        } else {
+          reject('sendJson方法遇到异常')
+        }
+      })
+    } else {
+      console.log('用来在message中验证结果正确性的判断方法必不可少')
+    }
   }
 }
 

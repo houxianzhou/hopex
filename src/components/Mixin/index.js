@@ -12,19 +12,16 @@ export class MixinParent extends React.Component {
   componentDidMount() {
     const { model: { userInfo } = {}, dispatch, modelName } = this.props
     const getCurrentUser = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({ "userInfo": { "userId": "56", "userToken": "56" } })
-      }, 200)
-      // if (_.isEmpty(userInfo)) {
-      //   return dispatch({
-      //     type: `${modelName}/getCurrentUser`,
-      //     payload: {
-      //       resolve, reject
-      //     }
-      //   })
-      // } else {
-      //   return resolve(userInfo)
-      // }
+      if (_.isEmpty(userInfo)) {
+        return dispatch({
+          type: `${modelName}/getCurrentUser`,
+          payload: {
+            resolve, reject
+          }
+        })
+      } else {
+        return resolve(userInfo)
+      }
     })
     getCurrentUser.then(res => {
       this.startInit()

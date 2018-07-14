@@ -15,15 +15,13 @@ export default joinModel(modelExtend, {
     latest_records: [],
     // 委托列表
     ensure_records: {},
-    // K线图
-    kline_records: [],
-    // 加格指标
-    maxPrice: null,
-    minPrice: null,
-    indexPrice: null,
+    // 价格指标
+    maxPrice: null, // 24h最高
+    minPrice: null, // 24最低
+    indexPrice: null, // 现货价格指数
 
-    latestPrice: null, //计算出来的
-    equitablePrice: null // 计算出来的
+    latestPrice: null, //计算出来的，最新交易价格
+    equitablePrice: null // 计算出来的，合理价格
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -34,16 +32,8 @@ export default joinModel(modelExtend, {
   },
 
   effects: {
-    * startInit({ payload = {} }, { call, put }) {
-      // yield put({
-      //   type: 'getImportParams'
-      // })
-    },
+    * startInit({ payload = {} }, { call, put }) {},
 
-    // 重要参数
-    * getImportParams({ payload = {} }, { call, put }) {
-
-    },
     // 最新成交列表
     * getLatestRecord({ payload = {} }, { call, put }) {
       const res = getRes(yield call(getLatestRecord, yield put({
@@ -51,7 +41,6 @@ export default joinModel(modelExtend, {
         payload: {
           "head": {
             "method": "market.deals",
-            "serialNumber": "57",
           },
           "param": {
             "pageSize": "100",
@@ -77,7 +66,6 @@ export default joinModel(modelExtend, {
         payload: {
           "head": {
             "method": "market.active_delegate",
-            "serialNumber": "56",
           },
           "param": {
             "pageSize": "100", //不能大于101

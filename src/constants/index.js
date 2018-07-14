@@ -18,6 +18,7 @@ export const SPEED = {
 }
 
 export const SOCKETURL = {
-  ws1: 'ws://192.168.70.131:10060/tcws',
+  ws1: 'ws://loclahost/test',
+  // ws1: 'ws://192.168.70.131:10060/tcws',
   ws2: 'ws://192.168.70.131/ws'
 }

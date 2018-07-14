@@ -14,7 +14,7 @@ export default class View extends Component {
 
   startInit = () => {
     this.startKline()
-    // this.getImportParams()
+    this.getImportParams()
   }
 
   startKline = () => {
@@ -48,7 +48,7 @@ export default class View extends Component {
         searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
         },
         resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
-          setTimeout(() => {
+          ws1.onConnectPromise().then(() => {
             onSymbolResolvedCallback({
               "name": "weixiaoyi",
               "timezone": "Asia/Shanghai",
@@ -57,7 +57,6 @@ export default class View extends Component {
               "minmov": 1,//最小波动
               "pricescale": 100,//价格精
               "minmov2": 0, //格式化复杂情况下的价格
-
               "pointvalue": 1,
               "session": "24x7",
               "has_intraday": true, // 是否具有日内（分钟）历史数据
@@ -92,7 +91,9 @@ export default class View extends Component {
             const res = getRes(e)
             if (resOk(res)) {
               const result = formatJson(res.data)
-              return result.data.data.records
+              if (_.get(result, 'data.head.method') === 'kline.query') {
+                return _.get(result, 'data.data.records')
+              }
             }
           }).then((result = []) => {
             const data = result.map(item => ({
@@ -107,10 +108,6 @@ export default class View extends Component {
             }))
             onHistoryCallback(data, { noData: true })
           })
-          const a = _.debounce(() => {
-
-          }, 2000)
-          a()
         },
         getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
         },
@@ -131,34 +128,6 @@ export default class View extends Component {
       },
       locale: 'zh',
     })
-    // ws1.onConnect(() => {
-    //   ws1.sendJsonPromise({
-    //     "head": {
-    //       "method": "kline.query",
-    //       "msgType": "request",
-    //       "packType": "1",
-    //       "lang": "cn",
-    //       "version": "1.0.0",
-    //       "timestamps": "1439261904",
-    //       "serialNumber": "57"
-    //     },
-    //     "param": {
-    //       "market": "BTCUSD永续",
-    //       "startTime": "1",
-    //       "endTime": "12345699",
-    //       "interval": "86400"
-    //     }
-    //   }, (e) => {
-    //     const res = getRes(e)
-    //     console.log(res)
-    //     if (resOk(res)) {
-    //       return true
-    //     }
-    //   }).then((e) => {
-    //     console.log(e, '---------')
-    //   })
-    // })
-
   }
 
   getKline = () => {

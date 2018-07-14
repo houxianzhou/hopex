@@ -17,7 +17,8 @@ export default joinModel(modelExtend, {
 
   effects: {
     * getCurrentUser({ payload: { resolve, reject } }, { call, put }) {
-      const res = getRes(yield call(getCurrentUser))
+      const res = { data: { "userInfo": { "userId": "56", "userToken": "56" } } }
+      // getRes(yield call(getCurrentUser))
       if (resOk(res)) {
         yield put({
           type: 'changeState',
