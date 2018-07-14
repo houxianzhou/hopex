@@ -96,8 +96,8 @@ export default joinModel(modelExtend, {
 
     //K线图
     * getKline({ payload = {} }, { call, put }) {
-      const { startTime, endTime } = payload
       const ws1 = wss.getSocket('ws1')
+      const { startTime, endTime } = payload
       return ws1.sendJsonPromise(yield put({
         type: 'createRequestParams',
         payload: {

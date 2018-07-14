@@ -19,9 +19,6 @@ class MockServer {
       socket.on('close', () => {
         if (this.onClose) this.onClose()
       })
-      // setTimeout(()=>{
-      //   socket.close()
-      // },3000)
     })
   }
 

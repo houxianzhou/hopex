@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson } from '@utils'
 import { Mixin } from "@components"
 import wss from '@services/SocketClient'
-import { SOCKETURL } from '@constants'
 import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
