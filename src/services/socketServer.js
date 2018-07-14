@@ -30,10 +30,12 @@ class MockServer {
 }
 
 
+let times = 0
 const mockServer1 = new MockServer(SOCKETURL.ws1)
 mockServer1.onMessage = (e) => {
   const message = JSON.parse(e)
   const { head: { method } = {} } = message
+
   if (method === 'kline.query') {
     const { param: { startTime, endTime } = {} } = message
     // console.log(moment.format(startTime), '------', moment.format(endTime))
@@ -52,7 +54,7 @@ mockServer1.onMessage = (e) => {
             "serialNumber": "57"
           },
           "data": {
-            "records": periods.map(item => {
+            "records": times++ > 2 ? [] : periods.map(item => {
               const h = 160 + _.random(30, 40)
               const o = h - _.random(10, 20)
               const c = o - _.random(10, 30)
@@ -71,18 +73,16 @@ mockServer1.onMessage = (e) => {
 }
 
 
-// const mockServer2 = new MockServer(SOCKETURL.ws2)
-
-
-// mockServer2.onConnection = () => {
-//   setInterval(() => {
-//     mockServer2.sendJson({
-//       "price": _.random(1000, 10000),
-//       "minPrice": _.random(1000, 10000),
-//       "maxPrice": _.random(1000, 10000),
-//       "chanId": 204,
-//       "pair": "BTCUSD"
-//     })
-//   }, 1000)
-// }
+const mockServer2 = new MockServer(SOCKETURL.ws2)
+mockServer2.onConnection = () => {
+  setInterval(() => {
+    mockServer2.sendJson({
+      "price": _.random(1000, 10000),
+      "minPrice": _.random(1000, 10000),
+      "maxPrice": _.random(1000, 10000),
+      "chanId": 204,
+      "pair": "BTCUSD"
+    })
+  }, 1000)
+}
 

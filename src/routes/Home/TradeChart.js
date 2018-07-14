@@ -78,60 +78,61 @@ export default class View extends Component {
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
           const [startTime, endTime] = [Math.min(from, to) * 1000, Math.max(from, to) * 1000]
+          ws1.sendJsonPromise({
+            "head": {
+              "method": "kline.query",
+              "msgType": "request",
+              "packType": "1",
+              "lang": "cn",
+              "version": "1.0.0",
+              "timestamps": "1439261904",
+              "serialNumber": "57"
+            },
+            "param": {
+              "market": "BTCUSD永续",
+              "startTime": startTime,
+              "endTime": endTime,
+              "interval": "86400"
+            }
+          }, (e) => {
+            const res = getRes(e)
+            if (resOk(res)) {
+              const result = formatJson(res.data)
+              return result.data.data.records
+            }
+          }).then((result = []) => {
+            const data = result.map(item => ({
+              time: Number(item[0]) * 1000,
+              open: Number(item[1]),
+              close: Number(item[2]),
+              high: Number(item[3]),
+              low: Number(item[4]),
+              volume: Number(item[5]),
+              price: Number(item[6]),
+              name: item[7]
+            }))
+            onHistoryCallback(data, { noData: true })
+          })
           const a = _.debounce(() => {
-            ws1.sendJsonPromise({
-              "head": {
-                "method": "kline.query",
-                "msgType": "request",
-                "packType": "1",
-                "lang": "cn",
-                "version": "1.0.0",
-                "timestamps": "1439261904",
-                "serialNumber": "57"
-              },
-              "param": {
-                "market": "BTCUSD永续",
-                "startTime": startTime,
-                "endTime": endTime,
-                "interval": "86400"
-              }
-            }, (e) => {
-              const res = getRes(e)
-              if (resOk(res)) {
-                const result = formatJson(res.data)
-                return result.data.data.records
-              }
-            }).then((result = []) => {
-              const data = result.map(item => ({
-                time: Number(item[0]) * 1000,
-                open: Number(item[1]),
-                close: Number(item[2]),
-                high: Number(item[3]),
-                low: Number(item[4]),
-                volume: Number(item[5]),
-                price: Number(item[6]),
-                name: item[7]
-              }))
-              onHistoryCallback(data, true)
-            })
+
           }, 2000)
           a()
         },
         getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
         },
         subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
-          const a = _.debounce(() => {
-            onRealtimeCallback({
-                "time": 1530464461000,
-                "close": 149.56,
-                "open": _.random(100, 500),
-                "high": 150.9,
-                "low": 148.57,
-                "volume": 1000
-              }
-            )
-          }, 1000)
-          a()
+          // const a = _.debounce(() => {
+          //   onRealtimeCallback({
+          //       "time": 1530464461000,
+          //       "close": 149.56,
+          //       "open": _.random(100, 500),
+          //       "high": 150.9,
+          //       "low": 148.57,
+          //       "volume": 1000
+          //     }
+          //   )
+          // }, 1000)
+          // a()
         }
       },
       locale: 'zh',
