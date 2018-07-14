@@ -3,12 +3,12 @@ import { SOCKETURL } from '@constants'
 
 class Ws {
   constructor(url) {
-    this.ws = new window.ReconnectingWebSocket(url, null, { debug: true, reconnectInterval: 800 })
+    this.ws = new WebSocket(url) // window.ReconnectingWebSocket(url, null, { debug: true, reconnectInterval: 0 })
     this.onConnectLists = []
     this.onMessagesLists = []
     this.promiseFunsLists = []
     this.ws.onopen = () => {
-      console.log(`${url}连接已开启.....`)
+      console.log(`${url}连接开启.....`)
       this.onConnectLists.forEach(item => item())
     }
     this.ws.onmessage = (e) => {
@@ -21,12 +21,20 @@ class Ws {
         }
       })
     }
-    this.ws.onclose = function () {
-      console.log(`${url}连接已关闭...`)
-      if (this.onClose) this.onClose()
+    this.ws.onclose = (e) => {
+      console.log(`${url}连接关闭...`, e)
+      this.reConnect(e)
     }
     this.ws.onerror = (e) => {
-      console.log(`${url}错误`, e)
+      console.log(`${url}连接错误`, e)
+      // 连接错误自动会促发连接关闭，这里不需要再次连接
+    }
+  }
+
+  reConnect = (e) => {
+    if (e.type === 'close' || e.type === 'error') {
+      if (_.get(e, 'reason') === 'selfClose') return console.log('主动断开不再重新连接')
+      if (this.suddenDead) this.suddenDead()
     }
   }
 
@@ -38,21 +46,34 @@ class Ws {
     this.onMessagesLists.push(func)
   }
 
+  close = () => {
+    this.ws.close(4000, 'selfClose')
+  }
+
   sendJson = (json) => {
-    this.ws.send(JSON.stringify(json))
+    if (this.ws.readyState === 1) {
+      this.ws.send(JSON.stringify(json))
+      return true
+    } else {
+      console.log(this.ws.readyState, '当前websocket连接状态不正常')
+    }
   }
 
   sendJsonPromise = (json, func) => {
-    return new Promise((resolve) => {
-      this.sendJson(json)
-      this.promiseFunsLists.push([resolve, func])
+    return new Promise((resolve, reject) => {
+      if (this.sendJson(json)) {
+        this.promiseFunsLists.push([resolve, func])
+      } else {
+        reject('sendJson方法遇到异常')
+      }
     })
   }
 }
 
 class Wss {
-  constructor() {
+  constructor(reconnectInterval = 1000) {
     this.sockets = {}
+    this.reconnectInterval = reconnectInterval
   }
 
   getSocket = (name) => {
@@ -60,6 +81,12 @@ class Wss {
     if (url) {
       if (!_.get(this.sockets, [url])) {
         const ws = new Ws(url)
+        ws.suddenDead = () => {
+          delete this.sockets[url]
+          setTimeout(() => {
+            this.getSocket(name)
+          }, this.reconnectInterval)
+        }
         this.sockets[url] = ws
         return ws
       }

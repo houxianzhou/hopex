@@ -54,8 +54,6 @@ export default class View extends Component {
               "timezone": "Asia/Shanghai",
               description: 'haaaaaaa',
               "exchange": "交易所的略称", //交易所的略称
-              // "exchange-traded": "NasdaqNM",
-              // "exchange-listed": "NasdaqNM",
               "minmov": 1,//最小波动
               "pricescale": 100,//价格精
               "minmov2": 0, //格式化复杂情况下的价格
@@ -68,11 +66,7 @@ export default class View extends Component {
               "type": "stock",
               supported_resolutions: ['D', '1W', '1M'],// 分辨率选择器中启用一个分辨率数组
               // "ticker": "AAPL", // 品体系中此商品的唯一标识符
-              // "base_name": ["AAPL"],
-              // "legs": ["AAPL"],
-              // "full_name": "NasdaqNM:AAPL",
-              // "pro_name": "NasdaqNM:AAPL",
-              // "data_status": "streaming" //数据状态码。状态显示在图表的右上角。streaming(实时)endofday(已收盘)pulsed(脉冲)
+              "data_status": "streaming" //数据状态码。状态显示在图表的右上角。streaming(实时)endofday(已收盘)pulsed(脉冲)
             })
           })
         },
