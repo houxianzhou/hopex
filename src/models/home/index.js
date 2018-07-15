@@ -103,14 +103,15 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
+          head: {
             "method": "kline.query",
           },
-          "param": {
+          param: {
             "startTime": startTime,
             "endTime": endTime,
             "interval": "86400"
-          }
+          },
+          power: [1]
         }
       })))
       return ws1.sendJsonPromise(repayload, (e) => {

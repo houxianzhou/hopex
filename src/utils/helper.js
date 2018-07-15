@@ -47,7 +47,7 @@ export const localSave = {
 
 export const immutable = {
   fromJS,
-  is,
+  is
 }
 
 export const moment_helper = {

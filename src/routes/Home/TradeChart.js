@@ -13,7 +13,7 @@ export default class View extends Component {
 
   startInit = () => {
     this.startKline()
-    this.getImportParams()
+    this.getImportantPrice()
   }
 
   startKline = () => {
@@ -111,7 +111,7 @@ export default class View extends Component {
     })
   }
 
-  getImportParams = () => {
+  getImportantPrice = () => {
     const ws2 = wss.getSocket('ws2')
     const { dispatch, modelName } = this.props
     ws2.onConnectPromise().then(() => {
@@ -135,8 +135,6 @@ export default class View extends Component {
               }
             })
           }
-        } else {
-          console.log('socket返回连接错误')
         }
       }
     )
