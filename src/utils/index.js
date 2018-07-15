@@ -84,14 +84,12 @@ export const deepClone = (obj) => {
   }
 }
 
-export const asyncPayload = (payload, func) => {
+export const asyncPayload = async (payload, func) => {
+  let res
   if (payload.then) {
-    return payload.then((res) => {
-      return func(res)
-    })
-  } else {
-    return func(payload)
+    res = await payload.then(res => res)
   }
+  return func ? func(res) : res
 }
 
 

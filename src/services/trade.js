@@ -10,39 +10,23 @@ if (MODE === MOCKIP) {
   require('./socketServer')
 }
 
-// K线图
-export async function getKline(payload) {
-  return asyncPayload(payload, (payload) => {
-    return request(`${MODE}/tc`, {
-      method: 'post',
-      body: payload,
-      // needLoop: true,
-      needWatch: false
-    })
-  })
-}
-
 // 最新成交列表
 export async function getLatestRecord(payload) {
-  return asyncPayload(payload, (payload) => {
-    return request(`${MODE}/tc`, {
-      method: 'post',
-      body: payload,
-      needLoop: true,
-      needWatch: false
-    })
+  return request(`${MODE}/tc`, {
+    method: 'post',
+    body: payload,
+    needLoop: true,
+    needWatch: false
   })
 }
 
 // 委托列表
 export async function getEnsureRecord(payload) {
-  return asyncPayload(payload, (payload) => {
-    return request(`${MODE}/tc`, {
-      method: 'post',
-      body: payload,
-      needLoop: true,
-      needWatch: false
-    })
+  return request(`${MODE}/tc`, {
+    method: 'post',
+    body: payload,
+    needLoop: true,
+    needWatch: false
   })
 }
 

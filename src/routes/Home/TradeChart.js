@@ -114,16 +114,11 @@ export default class View extends Component {
   getImportParams = () => {
     const ws2 = wss.getSocket('ws2')
     const { dispatch, modelName } = this.props
-    ws2.onConnect(
-      () => {
-        ws2.sendJson({
-          "event": "subscribe",
-          "channel": "market",
-          "pair": "BTCUSD",
-          "type": 1
-        })
-      }
-    )
+    ws2.onConnectPromise().then(() => {
+      dispatch({
+        type: `${modelName}/getImportantPrice`
+      })
+    })
     ws2.onMessage(
       (e) => {
         const res = getRes(e)

@@ -1,4 +1,4 @@
-import { joinModel, getRes, resOk, formatNumber, _, formatJson } from '@utils'
+import { joinModel, getRes, resOk, formatNumber, _, formatJson, asyncPayload } from '@utils'
 import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
 import {
@@ -39,7 +39,7 @@ export default joinModel(modelExtend, {
 
     // 最新成交列表
     * getLatestRecord({ payload = {} }, { call, put }) {
-      const res = getRes(yield call(getLatestRecord, yield put({
+      const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
           "head": {
@@ -51,6 +51,7 @@ export default joinModel(modelExtend, {
           }
         }
       })))
+      const res = getRes(yield call(getLatestRecord, repayload))
       if (resOk(res)) {
         yield put({
           type: 'changeState',
@@ -64,7 +65,7 @@ export default joinModel(modelExtend, {
     },
     // 委托列表
     * getEnsureRecord({ payload = {} }, { call, put }) {
-      const res = getRes(yield call(getEnsureRecord, yield put({
+      const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
           "head": {
@@ -76,6 +77,7 @@ export default joinModel(modelExtend, {
           }
         }
       })))
+      const res = getRes(yield call(getEnsureRecord, repayload))
       if (resOk(res)) {
         const result = {
           asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc']),
@@ -98,7 +100,7 @@ export default joinModel(modelExtend, {
     * getKline({ payload = {} }, { call, put }) {
       const ws1 = wss.getSocket('ws1')
       const { startTime, endTime } = payload
-      return ws1.sendJsonPromise(yield put({
+      const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
           "head": {
@@ -110,18 +112,31 @@ export default joinModel(modelExtend, {
             "interval": "86400"
           }
         }
-      }), (e) => {
+      })))
+      return ws1.sendJsonPromise(repayload, (e) => {
         const res = getRes(e)
         if (resOk(res)) {
-          const res = getRes(e)
-          if (resOk(res)) {
-            const result = formatJson(res.data)
-            if (_.get(result, 'data.head.method') === 'kline.query') {
-              return _.get(result, 'data.data.records')
-            }
+          const result = formatJson(res.data)
+          if (_.get(result, 'data.head.method') === 'kline.query') {
+            return _.get(result, 'data.data.records')
           }
         }
       })
+    },
+
+    //现货价格指数，24最高，24h最低
+    * getImportantPrice({ payload = {} }, { call, put }) {
+      const ws2 = wss.getSocket('ws2')
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "event": "subscribe",
+          "channel": "market",
+          "pair": "BTCUSD",
+          "type": 1
+        }
+      })))
+      return ws2.sendJson(repayload)
     },
 
     // 下单（限价/市价）

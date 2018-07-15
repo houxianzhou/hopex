@@ -1,4 +1,4 @@
-import { _ } from '@utils'
+import { _, asyncPayload } from '@utils'
 import { SOCKETURL } from '@constants'
 
 class Ws {
@@ -28,7 +28,7 @@ class Ws {
     }
     this.ws.onclose = (e) => {
       console.log(`${url}连接关闭...`, e)
-      this.reConnect(e)
+      this.repeatConnect(e)
     }
     this.ws.onerror = (e) => {
       console.log(`${url}连接错误`, e)
@@ -41,7 +41,7 @@ class Ws {
   }
 
 
-  reConnect = (e) => {
+  repeatConnect = (e) => {
     if (e.type === 'close' || e.type === 'error') {
       if (_.get(e, 'reason') === 'selfClose') return console.log('主动断开不再重新连接')
       if (this.suddenDead) this.suddenDead()
@@ -49,7 +49,7 @@ class Ws {
   }
 
   onConnect = (func) => {
-    this.onConnectLists.push(func)
+    if(_.isFunction(func)) this.onConnectLists.push(func)
   }
 
   onConnectPromise = () => {
@@ -63,22 +63,16 @@ class Ws {
   }
 
   onMessage = (func) => {
-    this.onMessagesLists.push(func)
+    if(_.isFunction(func)) this.onMessagesLists.push(func)
   }
 
   close = () => {
     this.ws.close(4000, 'selfClose')
   }
 
-  sendJson = async (json) => {
-    let data
-    if (json.then) {
-      data = await json.then(res => res)
-    } else {
-      data = json
-    }
+  sendJson = (json) => {
     if (this.isReadyState()) {
-      this.ws.send(JSON.stringify(data))
+      this.ws.send(JSON.stringify(json))
       return true
     } else {
       console.log(this.ws.readyState, '当前websocket连接状态不正常')
