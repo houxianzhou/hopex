@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, ShowJsonTip } from '@components'
+import { isEqual } from '@utils'
 import LatestRecord from './LatestRecord'
 import TradeChart from './TradeChart'
 import EnsureRecord from './EnsureRecord'
@@ -27,6 +28,15 @@ const Comp = {
 export default class View extends Component {
   constructor(props) {
     super(props)
+  }
+
+  componentDidUpdate(prevProps) {
+    const { model: { market: prevMarket } } = prevProps
+    const { model: { market } } = this.props
+    if (!isEqual(prevMarket, market)) {
+      console.log(market)
+      this.startInit()
+    }
   }
 
   startInit = () => {

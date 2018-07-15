@@ -19,8 +19,8 @@ export default class View extends Component {
   startKline = () => {
     const { model, dispatch, modelName } = this.props
     const TradingView = window.TradingView
-    const Datafeeds = window.Datafeeds
-    window.$ = $
+    // const Datafeeds = window.Datafeeds
+    // window.$ = $
     const ws1 = wss.getSocket('ws1')
     new TradingView.widget({
       disabled_features: ["left_toolbar", 'go_to_date'],
@@ -119,8 +119,9 @@ export default class View extends Component {
         type: `${modelName}/getImportantPrice`
       })
     })
-    ws2.onMessage(
-      (e) => {
+    ws2.listen({
+      name: 'getImportantPrice',
+      subscribe: (e) => {
         const res = getRes(e)
         if (resOk(res)) {
           const result = formatJson(res.data)
@@ -136,8 +137,11 @@ export default class View extends Component {
             })
           }
         }
+      },
+      unsubscribe: () => {
+
       }
-    )
+    })
   }
 
 

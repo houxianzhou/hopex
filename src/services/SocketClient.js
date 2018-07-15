@@ -4,20 +4,21 @@ import { SOCKETURL } from '@constants'
 class Ws {
   constructor(url) {
     this.ws = new WebSocket(url) // window.ReconnectingWebSocket(url, null, { debug: true, reconnectInterval: 0 })
-    this.onConnectLists = []
-    this.onMessagesLists = []
     this.onConnectPromiseLists = []
     this.sendJsonPromiseLists = []
+    this.listeners = []
     this.ws.onopen = () => {
       console.log(`${url}连接开启.....`)
-      this.onConnectLists.forEach(item => item())
       this.onConnectPromiseLists.forEach((resolve, index) => {
         resolve()
         this.onConnectPromiseLists.splice(index, 1)
       })
+      if (_.keys(this.onConnectPromiseLists).length) {
+        console.error('Ws设计错误,onConnectPromiseLists有剩余的为执行完')
+      }
     }
     this.ws.onmessage = (e) => {
-      this.onMessagesLists.forEach(item => item(e))
+      this.listeners.forEach(item => item.subscribe(e))
       this.sendJsonPromiseLists.forEach(([resolve, func], index) => {
         const result = func(e)
         if (!!result) {
@@ -40,16 +41,11 @@ class Ws {
     return this.ws.readyState === 1
   }
 
-
   repeatConnect = (e) => {
     if (e.type === 'close' || e.type === 'error') {
       if (_.get(e, 'reason') === 'selfClose') return console.log('主动断开不再重新连接')
       if (this.suddenDead) this.suddenDead()
     }
-  }
-
-  onConnect = (func) => {
-    if(_.isFunction(func)) this.onConnectLists.push(func)
   }
 
   onConnectPromise = () => {
@@ -62,8 +58,12 @@ class Ws {
     })
   }
 
-  onMessage = (func) => {
-    if(_.isFunction(func)) this.onMessagesLists.push(func)
+  listen = (obj = {}) => {
+    if (_.has(obj, 'name') && _.has(obj, 'subscribe') && _.has(obj, 'unsubscribe')) {
+      this.listeners.push(obj)
+    } else {
+      console.log('取消订阅的函数必须包含name属性、subscribe属性、unsubscribe属性')
+    }
   }
 
   close = () => {
@@ -97,17 +97,22 @@ class Ws {
 class Wss {
   constructor(reconnectInterval = 1000) {
     this.sockets = {}
+    this.interval = null
     this.reconnectInterval = reconnectInterval
   }
 
   getSocket = (name) => {
+    if (_.keys(this.sockets).length > 2) {
+      console.error('wss设计错误,长度超过了2')
+    }
     const url = _.get(SOCKETURL, [name])
     if (url) {
       if (!_.get(this.sockets, [url])) {
         const ws = new Ws(url)
         ws.suddenDead = () => {
           delete this.sockets[url]
-          setTimeout(() => {
+          clearTimeout(this.interval)
+          this.interval = setTimeout(() => {
             this.getSocket(name)
           }, this.reconnectInterval)
         }

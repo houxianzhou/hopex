@@ -7,6 +7,7 @@ const INTERVAL = 1000
 class MockServer {
   constructor(url, interval) {
     this.interval = interval || INTERVAL
+    this.subScribes = []
     this.server = new Server(url)
     this.server.on('connection', socket => {
       this.socket = socket
@@ -19,6 +20,14 @@ class MockServer {
       socket.on('close', () => {
         if (this.onClose) this.onClose()
       })
+
+      setInterval(() => {
+        this.subScribes.forEach((item = {}) => {
+          if (_.isFunction(item.func)) {
+            item.func()
+          }
+        })
+      }, 2000)
     })
   }
 
@@ -27,12 +36,21 @@ class MockServer {
       this.socket.send(JSON.stringify(obj))
     }
   }
+
+  subScribe = (obj) => {
+    if (_.has(obj, 'name') && _.has(obj, 'func')) {
+      this.subScribes.push(obj)
+    } else {
+      console.log('订阅的对象必须包含name属性和func属性')
+    }
+  }
 }
 
 let times = 0
 const mockServer1 = new MockServer(SOCKETURL.ws1)
 mockServer1.onMessage = (e) => {
   const message = JSON.parse(e)
+  // console.log(message, '-------------服务端响应订阅')
   const { head: { method } = {} } = message
   switch (method) {
     case 'kline.query': {
@@ -81,15 +99,18 @@ mockServer2.onMessage = (e) => {
   const { channel } = message
   switch (channel) {
     case 'market': {
-      setInterval(() => {
-        mockServer2.sendJson({
-          "price": _.random(1000, 10000),
-          "minPrice": _.random(1000, 10000),
-          "maxPrice": _.random(1000, 10000),
-          "chanId": 204,
-          "pair": "BTCUSD"
-        })
-      }, 1000)
+      mockServer2.subScribe({
+        name: 'importantPrice',
+        func: () => {
+          mockServer2.sendJson({
+            "price": _.random(1000, 10000),
+            "minPrice": _.random(1000, 10000),
+            "maxPrice": _.random(1000, 10000),
+            "chanId": 204,
+            "pair": "BTCUSD"
+          })
+        }
+      })
     }
       break
     default:

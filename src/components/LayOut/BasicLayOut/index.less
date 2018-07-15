@@ -28,10 +28,35 @@
       display: flex;
       align-items: center;
       font-size: 16px;
-      li + li {
+      li.navli + li.navli {
         margin-left: 50px;
       }
-      li.active {
+      li.navli {
+        position: relative;
+        .dropdown {
+          position: absolute;
+          z-index: 1;
+          display: block;
+          padding-top: 5px;
+          ul {
+            width: 200px;
+            background: white;
+            border-radius: 4px;
+            color: black;
+            li {
+              &:hover {
+                color: white;
+                background: red;
+              }
+              padding: 3px 20px;
+            }
+          }
+        }
+        &:hover {
+
+        }
+      }
+      li.navli.active {
         padding-bottom: 6px;
         color: @c_active_yellow;
         border-bottom: 2px solid @c_active_yellow;

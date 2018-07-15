@@ -10,6 +10,17 @@ import {
 export default joinModel(modelExtend, {
   namespace: 'home',
   state: {
+    marketList: [
+      {
+        name: 'BTCUSD永续',
+      },
+      {
+        name: '合约2'
+      },
+      {
+        name: '合约3'
+      }
+    ],
     // 合约名称
     market: 'BTCUSD永续',// 合约
     numberToFixed: 2, // 小数点位数
