@@ -22,7 +22,7 @@ export default class View extends Component {
     // const Datafeeds = window.Datafeeds
     // window.$ = $
     const ws1 = wss.getSocket('ws1')
-    new TradingView.widget({
+    const chart = new TradingView.widget({
       disabled_features: ["left_toolbar", 'go_to_date'],
       library_path: '/',
       fullscreen: true,
@@ -70,6 +70,7 @@ export default class View extends Component {
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
           const [startTime, endTime] = [String(Math.min(from, to)), String(Math.max(from, to))]
+          console.log('1')
           dispatch({
             type: `${modelName}/getKline`,
             payload: {
@@ -93,6 +94,7 @@ export default class View extends Component {
         getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
         },
         subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
+          console.log('2')
           // const a = _.debounce(() => {
           //   onRealtimeCallback({
           //       "time": 1530464461000,
@@ -105,10 +107,18 @@ export default class View extends Component {
           //   )
           // }, 1000)
           // a()
+        },
+        unsubscribeBars(subscriberUID) {
+
         }
       },
       locale: 'zh',
     })
+    // setInterval(() => {
+    //   chart.setSymbol('weixhhh', 1000, () => {
+    //     console.log('daole')
+    //   })
+    // }, 3000)
   }
 
   getImportantPrice = () => {
