@@ -229,7 +229,7 @@
   max-width: @view_width;
   height: 344px;
   .content {
-    padding: 20px 40px;
+    padding: 20px 30px;
     .top {
       div {
         display: flex;
@@ -257,11 +257,11 @@
       display: flex;
       > div {
         flex-grow: 1;
-        >div+div{
+        > div + div {
           margin-top: 20px;
         }
         > div {
-          div+div{
+          div + div {
             margin-top: 8px;
           }
           div {
@@ -279,6 +279,17 @@
           }
         }
 
+      }
+    }
+  }
+}
+
+.position {
+  height: 500px;
+  ul{
+    li{
+      &:nth-child(2n+1) {
+        background: @c_panel_light;
       }
     }
   }

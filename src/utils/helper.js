@@ -4,6 +4,7 @@ import store from 'store'
 import { fromJS, is } from 'immutable'
 
 export const lodash_helper = {
+  toPairs: _.toPairs,
   isEqual: _.isEqual,
   toNumber: _.toNumber,
   isPlainObject: _.isPlainObject,

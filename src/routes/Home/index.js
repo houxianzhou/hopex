@@ -8,6 +8,7 @@ import EnsureRecord from './EnsureRecord'
 import Purse from './Purse'
 import BuySell from './BuySell'
 import CurrentContract from './CurrentContract'
+import Position from './Position'
 import styles from './index.less'
 
 const Comp = {
@@ -16,7 +17,8 @@ const Comp = {
   EnsureRecord,
   Purse,
   BuySell,
-  CurrentContract
+  CurrentContract,
+  Position
 }
 @connect(({ home: model, theme, loading, dispatch }) => ({
   model,
@@ -54,6 +56,11 @@ export default class View extends Component {
     return (
       <Mixin.Parent that={this} >
         <ShowJsonTip data={this.props.model} ></ShowJsonTip >
+        <div className={styles.views} >
+          {
+            renderView('Position')
+          }
+        </div >
         <div className={styles.views} >
           {
             renderView('Purse')
