@@ -33,38 +33,35 @@ export default class View extends Component {
               <div className={styles.percent} >500.00%</div >
             </div >
             <div className={styles.down} >
-              <ul >
-                <li >
-                  <div >
-                    <div >钱包余额</div >
-                    <div >67813.243</div >
-                  </div >
-                  <div >
-                    <div >总权益</div >
-                    <div >4.587</div >
-                  </div >
-                </li >
-                <li >
-                  <div >
-                    <div >钱包余额</div >
-                    <div >67813.243</div >
-                  </div >
-                  <div >
-                    <div >总权益</div >
-                    <div >4.587</div >
-                  </div >
-                </li >
-                <li >
-                  <div >
-                    <div >钱包余额</div >
-                    <div >67813.243</div >
-                  </div >
-                  <div >
-                    <div >总权益</div >
-                    <div >4.587</div >
-                  </div >
-                </li >
-              </ul >
+              <div >
+                <div >
+                  <div >钱包余额</div >
+                  <div >67813.243</div >
+                </div >
+                <div >
+                  <div >委托占用保证金</div >
+                  <div >67813.243</div >
+                </div >
+                <div >
+                  <div >提现冻结金额</div >
+                  <div >67813.243</div >
+                </div >
+              </div >
+              <div >
+                <div >
+                  <div >总权益</div >
+                  <div >4.587</div >
+                </div >
+
+                <div >
+                  <div >持仓占用保证金</div >
+                  <div >4.587</div >
+                </div >
+                <div >
+                  <div >总权益</div >
+                  <div >4.587</div >
+                </div >
+              </div >
             </div >
           </div >
         </ScrollPannel >
