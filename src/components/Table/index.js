@@ -1,4 +1,5 @@
 import { _, classNames } from '@utils'
+import { Scroller } from '@components'
 import * as styles from './index.less'
 
 export default function (Props) {
@@ -65,47 +66,55 @@ export default function (Props) {
         styles.table
       )
     } >
-      <table >
-        {
-          renderCols()
-        }
-        <thead >
-        <tr >
+      <div >
+        <table >
           {
-            head.map(item => (
-              <th key={item.name} >{item.name}</th >
-            ))
+            renderCols()
           }
-        </tr >
-        </thead >
-      </table >
-      <table >
-        {
-          renderCols()
-        }
-        <tbody >
-        {
-          data.map((item = {}, index) => {
-            return (
-              <tr key={index} >
-                {
-                  head.map((item2 = {}, index2) => {
-                    const key = item2.dataIndex
-                    let value = item[key]
-                    if (_.isFunction(item2.render)) {
-                      value = item2.render(value, item)
-                    }
-                    return (
-                      <td key={index2} style={{ border: '1px solid red' }} >{value}</td >
-                    )
-                  })
-                }
-              </tr >
-            )
-          })
-        }
-        </tbody >
-      </table >
+          <thead >
+          <tr >
+            {
+              head.map(item => (
+                <th key={item.name} >{item.name}</th >
+              ))
+            }
+          </tr >
+          </thead >
+        </table >
+      </div >
+      <div className={styles.tbody} >
+        <div className={styles.scroller} >
+          <Scroller >
+            <table style={{ height: 800, border: '2px solid blue' }} >
+              {
+                renderCols()
+              }
+              <tbody >
+              {
+                data.map((item = {}, index) => {
+                  return (
+                    <tr key={index} >
+                      {
+                        head.map((item2 = {}, index2) => {
+                          const key = item2.dataIndex
+                          let value = item[key]
+                          if (_.isFunction(item2.render)) {
+                            value = item2.render(value, item)
+                          }
+                          return (
+                            <td key={index2} style={{ border: '1px solid red' }} >{value}</td >
+                          )
+                        })
+                      }
+                    </tr >
+                  )
+                })
+              }
+              </tbody >
+            </table >
+          </Scroller >
+        </div >
+      </div >
     </div >
   )
 }
