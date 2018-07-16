@@ -35,24 +35,29 @@
         position: relative;
         .dropdown {
           position: absolute;
-          z-index: 1;
-          display: block;
-          padding-top: 5px;
-          ul {
-            width: 200px;
-            background: white;
-            border-radius: 4px;
-            color: black;
-            li {
-              &:hover {
-                color: white;
-                background: red;
+          display: none;
+        }
+
+        &:hover {
+          .dropdown {
+            position: absolute;
+            z-index: 1;
+            display: block;
+            padding-top: 5px;
+            ul {
+              width: 200px;
+              background: white;
+              border-radius: 4px;
+              color: black;
+              li {
+                &:hover {
+                  color: white;
+                  background: red;
+                }
+                padding: 3px 20px;
               }
-              padding: 3px 20px;
             }
           }
-        }
-        &:hover {
 
         }
       }

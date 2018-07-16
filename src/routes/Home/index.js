@@ -56,6 +56,17 @@ export default class View extends Component {
         <ShowJsonTip data={this.props.model} ></ShowJsonTip >
         <div className={styles.views} >
           {
+            renderView('Purse')
+          }
+          {
+            renderView('BuySell')
+          }
+          {
+            renderView('CurrentContract')
+          }
+        </div >
+        <div className={styles.views} >
+          {
             renderView('LatestRecord')
           }
           {
@@ -66,17 +77,7 @@ export default class View extends Component {
           }
 
         </div >
-        <div className={styles.views} >
-          {
-            renderView('Purse')
-          }
-          {
-            renderView('BuySell')
-          }
-          {
-            renderView('CurrentContract')
-          }
-        </div >
+
       </Mixin.Parent >
     )
   }

@@ -47,8 +47,8 @@
       font-size: 13px;
       height: @pannel_li_height;
       padding: @padding_panel;
-      &:nth-child(2n) {
-        background: @c_pannel_dark;
+      &:nth-child(2n+1) {
+        background: @c_panel_light;
       }
       &.buy {
         .colorchange {
@@ -119,7 +119,7 @@
             justify-content: center;
             align-items: center;
             div + div {
-              margin-top: 4px;
+              margin-top: 8px;
             }
             div {
               //display: flex;
@@ -189,6 +189,12 @@
     color: @c_pannel_theader_color;
     background: @c_pannel_dark;
     height: 32px;
+    ul {
+      li {
+        background: @c_pannel_dark !important;
+        height: 100%;
+      }
+    }
   }
   ul {
     height: 100%;
@@ -212,10 +218,9 @@
           color: @_green;
         }
       }
-      &:nth-child(2n) {
-        background: @c_pannel_dark;
+      &:nth-child(2n+1) {
+        background: @c_panel_light;
       }
-
     }
   }
 }
@@ -223,6 +228,61 @@
 .purse {
   max-width: @view_width;
   height: 344px;
+  .content {
+    padding: 20px 40px;
+    .top {
+      div {
+        display: flex;
+        align-items: center;
+        color: @_green;
+        display: flex;
+        font-size: 18px;
+        justify-content: center;
+        &.tip {
+          color: @c_like_white;
+          font-size: 12px;
+          opacity: .7;
+        }
+        &.number {
+          margin-top: 14px;
+          font-size: 28px;
+        }
+        &.percent {
+          margin-top: 8px;
+        }
+      }
+    }
+    .down {
+      ul {
+        margin-top: 30px;
+        li + li {
+          margin-top: 20px;
+        }
+        li {
+          display: flex;
+          > div {
+            flex-grow: 1;
+            div + div {
+              margin-top: 8px;
+            }
+            div {
+              display: flex;
+              align-items: center;
+              &:nth-child(2n+1) {
+                font-size: 13px;
+                color: @c_like_white;
+                opacity: .7;
+              }
+              &:nth-child(2n) {
+                font-size: 14px;
+                color: @c_active_yellow !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .buySell {
@@ -242,6 +302,9 @@
         .priceinput {
           display: flex;
           .label {
+            div + div {
+              margin-top: 10px;
+            }
             vertical-align: text-bottom;
             font-size: 13px;
             min-width: 98px;
@@ -275,7 +338,7 @@
           }
         }
         .introduction {
-          margin-top: 6px;
+          margin-top: 10px;
           width: 100%;
           display: flex;
           justify-content: flex-end;
@@ -313,7 +376,7 @@
         }
         .description {
           vertical-align: middle;
-          margin-top: 3px;
+          margin-top: 8px;
           display: flex;
           justify-content: space-between;
           span {

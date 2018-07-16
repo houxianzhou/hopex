@@ -4,7 +4,7 @@ export default {
   "@c_back_dark": '#2F3646',
   "@c_front_dark": '#232833',
   "@c_like_white": '#D7DAEE',
-  "@c_active_yellow": '#CAA96E',
+  "@c_active_yellow": '#E2B96F',  //'#CAA96E',
   "@c_pannel_header_dark": '#1D222E',
   "@c_pannel_theader_color": '#6A7286',
   "@c_pannel_dark": '#232833',

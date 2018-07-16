@@ -39,7 +39,10 @@ export default class View extends Component {
           </li >
         </ul >
       </div >
-      <ul className={styles[`${name}_area`]} >
+      <ul className={classNames(
+        styles[`${name}_area`],
+        styles.area
+      )} >
         {
           data.map((item, index) => {
             const total = data.slice(0, index + 1).reduce((sum, next) => {

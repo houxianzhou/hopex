@@ -23,7 +23,7 @@ export default class View extends Component {
         fade: false,
         interactive: true
       } : (scrollbar || false),
-      scrollY: true,
+      scrollY: !!scrollbar || false,
       mouseWheel,
       ...rest
     })
@@ -48,7 +48,7 @@ export default class View extends Component {
             top: '0'
           }}
         >
-          <div className="content">
+          <div className="content" >
             {children}
           </div >
         </div >
