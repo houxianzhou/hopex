@@ -16,10 +16,10 @@ export default class View extends Component {
         )
       } style={style} >
         {
-          header ? (<div className={styles.header} style={{ height: 40 }} >{header}</div >) : null
+          header ? (<div className={styles.header} >{header}</div >) : null
         }
         {
-          theader ? (<div className={styles.theader} style={{ height: 32 }} >{theader}</div >) : null
+          theader ? (<div className={styles.theader} >{theader}</div >) : null
         }
         {
           scroller ? (

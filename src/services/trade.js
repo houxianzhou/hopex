@@ -3,7 +3,7 @@ import { API } from "@constants"
 
 
 const { MOCKIP, USERIP } = API
-const MODE = USERIP
+const MODE = MOCKIP
 
 // mock数据
 if (MODE === MOCKIP) {

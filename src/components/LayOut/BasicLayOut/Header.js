@@ -19,7 +19,7 @@ export default class View extends Component {
       <div className={
         classNames(
           styles.header,
-          switchTheme(theme) ? styles.dark : styles.light
+          switchTheme(theme) ? styles.dark : styles.dark//styles.light
         )
       } >
         <img alt='logo' src={logo} />
