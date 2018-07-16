@@ -118,19 +118,19 @@ export default joinModel(modelExtend, {
             "method": "kline.query",
           },
           param: {
-            "startTime": startTime,
+            "startTime": startTime ,
             "endTime": endTime,
             "interval": "86400"
           },
-          power: [1]
+          power: [0]
         }
       })))
       return ws1.sendJsonPromise(repayload, (e) => {
         const res = getRes(e)
         if (resOk(res)) {
           const result = formatJson(res.data)
-          if (_.get(result, 'data.head.method') === 'kline.query') {
-            return _.get(result, 'data.data.records')
+          if (_.get(result, 'head.method') === 'kline.query') {
+            return _.get(result, 'data.records')
           }
         }
       })

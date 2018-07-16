@@ -13,7 +13,7 @@ export default class View extends Component {
 
   startInit = () => {
     this.startKline()
-    this.getImportantPrice()
+    // this.getImportantPrice()
   }
 
   startKline = () => {
@@ -69,7 +69,7 @@ export default class View extends Component {
           })
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
-          const [startTime, endTime] = [Math.min(from, to) * 1000, Math.max(from, to) * 1000]
+          const [startTime, endTime] = [String(Math.min(from, to)), String(Math.max(from, to))]
           dispatch({
             type: `${modelName}/getKline`,
             payload: {

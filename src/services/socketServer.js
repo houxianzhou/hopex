@@ -56,34 +56,32 @@ mockServer1.onMessage = (e) => {
     case 'kline.query': {
       const { param: { startTime, endTime } = {} } = message
       // console.log(moment.format(startTime), '------', moment.format(endTime))
-      const periods = moment.getdays(startTime, endTime)
+      const periods = moment.getdays(startTime * 1000, endTime * 1000)
       mockServer1.sendJson(
         {
           "isTrusted": false,
+          "head": {
+            "method": "kline.query",
+            "msgType": "response",
+            "packType": "1",
+            "lang": "cn",
+            "version": "1.0.0",
+            "timestamps": "1531480173066302",
+            "serialNumber": "57"
+          },
           "data": {
-            "head": {
-              "method": "kline.query",
-              "msgType": "response",
-              "packType": "1",
-              "lang": "cn",
-              "version": "1.0.0",
-              "timestamps": "1531480173066302",
-              "serialNumber": "57"
-            },
-            "data": {
-              "records": times++ > 2 ? [] : periods.map(item => {
-                const h = 160 + _.random(30, 40)
-                const o = h - _.random(10, 20)
-                const c = o - _.random(10, 30)
-                const l = c - _.random(10, 20)
-                const v = _.random(100, 3000)
-                return [item / 1000, o, c, h, l, v, 6, 'BTCUSD永续']
-              })
-            },
-            "errCode": "0",
-            "errStr": "success",
-            "ret": "0"
-          }
+            "records": times++ > 2 ? [] : periods.map(item => {
+              const h = 160 + _.random(30, 40)
+              const o = h - _.random(10, 20)
+              const c = o - _.random(10, 30)
+              const l = c - _.random(10, 20)
+              const v = _.random(100, 3000)
+              return [item / 1000, o, c, h, l, v, 6, 'BTCUSD永续']
+            })
+          },
+          "errCode": "0",
+          "errStr": "success",
+          "ret": "0"
         }
       )
     }
