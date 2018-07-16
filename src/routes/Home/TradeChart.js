@@ -8,12 +8,12 @@ import * as styles from './index.less'
 
 export default class View extends Component {
   componentDidMount() {
-    localSave.clearAll()
+    // localSave.clearAll()
   }
 
   startInit = () => {
-    this.startKline()
-    // this.getImportantPrice()
+    // this.startKline()
+    this.getImportantPrice()
   }
 
   startKline = () => {
@@ -126,13 +126,13 @@ export default class View extends Component {
         if (resOk(res)) {
           const result = formatJson(res.data)
           const { minPrice, maxPrice, price } = result
-          if (minPrice || maxPrice) {
+          if (minPrice || maxPrice || price) {
             dispatch({
               type: `${modelName}/changeState`,
               payload: {
-                maxPrice: formatNumber(maxPrice, 2),
-                minPrice: formatNumber(minPrice, 2),
-                indexPrice: formatNumber(price, 2)
+                ...maxPrice ? { maxPrice: formatNumber(maxPrice, 4) } : {},
+                ...minPrice ? { minPrice: formatNumber(minPrice, 4) } : {},
+                ...price ? { indexPrice: formatNumber(price, 4) } : {}
               }
             })
           }
@@ -140,6 +140,9 @@ export default class View extends Component {
       },
       unsubscribe: () => {
 
+      },
+      restart: () => {
+        this.getImportantPrice()
       }
     })
   }

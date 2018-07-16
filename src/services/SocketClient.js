@@ -18,7 +18,7 @@ class Ws {
       }
     }
     this.ws.onmessage = (e) => {
-      this.listeners.forEach(item => item.subscribe(e))
+      this.listeners.forEach(item => item.subscribe && item.subscribe(e))
       this.sendJsonPromiseLists.forEach(([resolve, func], index) => {
         const result = func(e)
         if (!!result) {
@@ -59,10 +59,10 @@ class Ws {
   }
 
   listen = (obj = {}) => {
-    if (_.has(obj, 'name') && _.has(obj, 'subscribe') && _.has(obj, 'unsubscribe')) {
+    if (_.has(obj, 'name') && _.has(obj, 'subscribe') && _.has(obj, 'unsubscribe') && _.has(obj, 'restart')) {
       this.listeners.push(obj)
     } else {
-      console.log('取消订阅的函数必须包含name属性、subscribe属性、unsubscribe属性')
+      console.log('取消订阅的函数必须包含name属性、subscribe属性、unsubscribe属性、restart属性')
     }
   }
 
@@ -114,6 +114,7 @@ class Wss {
           clearTimeout(this.interval)
           this.interval = setTimeout(() => {
             this.getSocket(name)
+            ws.listeners.forEach(item => item.restart && item.restart())
           }, this.reconnectInterval)
         }
         this.sockets[url] = ws

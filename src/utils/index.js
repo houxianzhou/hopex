@@ -97,7 +97,8 @@ const toFixed = (item = 0, tofixed = 0) => {
   return _.toNumber(Number(item).toFixed(tofixed))
 }
 
-export const formatNumber = (prev, propertys = [], tofixed = 2) => {
+export const formatNumber = (...params) => {
+  const [prev, propertys = [], tofixed = 2] = params
   const obj = deepClone(prev)
   if (_.isObjectLike(obj)) {
     if (!_.isArray(propertys) && propertys.length) return obj
@@ -117,7 +118,7 @@ export const formatNumber = (prev, propertys = [], tofixed = 2) => {
       })
     }
   } else if (_.isNumber(obj) || _.isString(obj)) {
-    const param = _.toNumber(arguments[1]) || tofixed
+    const param = params[1] || tofixed
     return toFixed(obj, param)
   } else {
     return obj
