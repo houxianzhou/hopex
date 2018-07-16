@@ -1,4 +1,5 @@
-import { _ } from '@utils'
+import { _, classNames } from '@utils'
+import * as styles from './index.less'
 
 export default function (Props) {
   const {
@@ -6,14 +7,30 @@ export default function (Props) {
       {
         name: '姓名',
         dataIndex: 'name',
+        width: 200,
+        render: (value, data) => {
+          return value
+        }
       },
       {
         name: '年龄',
         dataIndex: 'age',
+        width: 200,
       },
       {
         name: '性别',
         dataIndex: 'sex',
+        width: 200,
+      },
+      {
+        name: '操作',
+        render: (value, item) => {
+          return (
+            <button onClick={() => {
+              alert(JSON.stringify(item))
+            }} >点击</button >
+          )
+        }
       }
     ],
     data = [
@@ -27,38 +44,68 @@ export default function (Props) {
         age: 45,
         name: 'wangyifan',
       }
-    ]
+    ],
+    className = {}
   } = Props
-  return (
-    <table >
-      <thead >
-      <tr >
-        {
-          head.map(item => (
-            <th key={item.name} >{item.name}</th >
-          ))
-        }
-      </tr >
-      </thead >
-      <tbody >
+  const renderCols = () => (
+    <colgroup >
       {
-        data.map((item = {}, index) => {
-          return (
-            <tr key={index} >
-              {
-                head.map((item2 = {}, index2) => {
-                  const key = item2.dataIndex
-                  return (
-                    <td key={index2} style={{ border: '1px solid red' }} >{item[key]}</td >
-                  )
-                })
-              }
-            </tr >
-          )
-        })
+        head.map(item => (
+          <col key={item.name} style={
+            item.width ? { width: item.width, minWidth: item.width } : {}
+          } />
+        ))
       }
-      </tbody >
-
-    </table >
+    </colgroup >
+  )
+  return (
+    <div className={
+      classNames(
+        className,
+        styles.table
+      )
+    } >
+      <table >
+        {
+          renderCols()
+        }
+        <thead >
+        <tr >
+          {
+            head.map(item => (
+              <th key={item.name} >{item.name}</th >
+            ))
+          }
+        </tr >
+        </thead >
+      </table >
+      <table >
+        {
+          renderCols()
+        }
+        <tbody >
+        {
+          data.map((item = {}, index) => {
+            return (
+              <tr key={index} >
+                {
+                  head.map((item2 = {}, index2) => {
+                    const key = item2.dataIndex
+                    let value = item[key]
+                    if (_.isFunction(item2.render)) {
+                      value = item2.render(value, item)
+                    }
+                    return (
+                      <td key={index2} style={{ border: '1px solid red' }} >{value}</td >
+                    )
+                  })
+                }
+              </tr >
+            )
+          })
+        }
+        </tbody >
+      </table >
+    </div >
   )
 }

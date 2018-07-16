@@ -173,9 +173,7 @@ export default class View extends Component {
           }
         >
           <ScrollPannel
-            scrollConfig={{
-              mouseWheel: false
-            }}
+            scroller={false}
           >
             <div style={{
               flexDirection: 'column',

@@ -19,15 +19,12 @@ export default class View extends Component {
         }
       >
         <ScrollPannel
-          scrollConfig={{
-            mouseWheel: false,
-            scrollbar: false
-          }}
+          scroller={false}
           header={
             <div >当前持仓</div >
           }
         >
-          <Table></Table>
+          <Table className={styles.table} >等等</Table >
 
         </ScrollPannel >
       </div >

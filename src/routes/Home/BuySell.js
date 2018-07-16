@@ -256,9 +256,7 @@ export default class View extends Component {
         }
       >
         <ScrollPannel
-          scrollConfig={{
-            mouseWheel: false
-          }}
+          scroller={false}
           header={
             <div >交易</div >
           }
