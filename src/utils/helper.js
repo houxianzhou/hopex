@@ -15,6 +15,7 @@ export const lodash_helper = {
   isArray: _.isArray,
   isObjectLike: _.isObjectLike,
   keys: _.keys,
+  values: _.values,
   throttle: _.throttle,
   random: _.random,
   has: _.has,

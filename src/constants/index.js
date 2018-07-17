@@ -19,7 +19,7 @@ export const SPEED = {
 
 export const SOCKETURL = {
   ws1: 'ws://192.168.70.131:10060/tcws',
-  ws2: 'ws://192.168.70.131/ws'
+  ws2: 'ws://192.168.70.131/ws/test'
 }
 
 // 接口权限

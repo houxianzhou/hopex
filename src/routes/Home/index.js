@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, ShowJsonTip } from '@components'
 import { isEqual } from '@utils'
+import wss from '@services/SocketClient'
 import LatestRecord from './LatestRecord'
 import TradeChart from './TradeChart'
 import EnsureRecord from './EnsureRecord'
@@ -37,8 +38,10 @@ export default class View extends Component {
     const { model: { market: prevMarket } } = prevProps
     const { model: { market } } = this.props
     if (!isEqual(prevMarket, market)) {
-      console.log(market)
-      this.startInit()
+      wss.closeAll()
+      // setTimeout(() => {
+      //   this.startInit()
+      // }, 500)
     }
   }
 
@@ -56,7 +59,7 @@ export default class View extends Component {
     const { renderView } = this
     return (
       <Mixin.Parent that={this} >
-        <ShowJsonTip data={{...this.props.model,...this.props.user}} ></ShowJsonTip >
+        <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >
         <div className={styles.views} >
           {
             renderView('Position')

@@ -122,11 +122,17 @@ export default class View extends Component {
   }
 
   getImportantPrice = () => {
+    let chanId
     const ws2 = wss.getSocket('ws2')
     const { dispatch, modelName } = this.props
     ws2.onConnectPromise().then(() => {
       dispatch({
-        type: `${modelName}/getImportantPrice`
+        type: `${modelName}/getImportantPrice`,
+        payload: {
+          method: 'sub'
+        }
+      }).then(res => {
+        chanId = res
       })
     })
     ws2.listen({
@@ -149,7 +155,15 @@ export default class View extends Component {
         }
       },
       unsubscribe: () => {
-
+        if (chanId) {
+          dispatch({
+            type: `${modelName}/getImportantPrice`,
+            payload: {
+              method: 'unsub',
+              chanId
+            }
+          })
+        }
       },
       restart: () => {
         this.getImportantPrice()

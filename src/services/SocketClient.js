@@ -125,6 +125,10 @@ class Wss {
       console.log('socket路径未找到通常由于name错误')
     }
   }
+
+  closeAll = () => {
+    _.values(this.sockets).forEach((item = {}) => item.listeners.forEach(item => item.unsubscribe && item.unsubscribe()))
+  }
 }
 
 

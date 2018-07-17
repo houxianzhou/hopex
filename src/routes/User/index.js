@@ -33,7 +33,6 @@ export default class View extends Component {
     const { email, password } = this.state
     return (
       <div >
-
         <form >
           <input type='text' value={email} onChange={(e) => {
             this.changeState({

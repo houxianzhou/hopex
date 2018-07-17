@@ -89,6 +89,7 @@ export default joinModel(modelExtend, {
         }
       })))
       const res = getRes(yield call(getEnsureRecord, repayload))
+
       if (resOk(res)) {
         const result = {
           asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc']),
@@ -118,7 +119,7 @@ export default joinModel(modelExtend, {
             "method": "kline.query",
           },
           param: {
-            "startTime": startTime ,
+            "startTime": startTime,
             "endTime": endTime,
             "interval": "86400"
           },
@@ -138,17 +139,33 @@ export default joinModel(modelExtend, {
 
     //现货价格指数，24最高，24h最低
     * getImportantPrice({ payload = {} }, { call, put }) {
+      const { method } = payload
       const ws2 = wss.getSocket('ws2')
-      const repayload = yield (asyncPayload(yield put({
-        type: 'createRequestParams',
-        payload: {
-          "event": "subscribe",
-          "channel": "market",
-          "pair": "BTCUSD",
-          "type": 1
+      if (method === 'sub') {
+        const repayload = yield (asyncPayload(yield put({
+          type: 'createRequestParams',
+          payload: {
+            "event": "subscribe",
+            "channel": "market",
+            "pair": "BTCUSD",
+            "type": 1
+          }
+        })))
+        return ws2.sendJsonPromise(repayload, (e) => {
+          const res = getRes(e)
+          if (resOk(res)) {
+            const result = formatJson(res.data)
+            return result.chanId
+          }
+        }).then(res => res)
+      } else {
+        const { chanId } = payload
+        const repayload = {
+          "event": "unsubscribe",
+          "chanId": chanId
         }
-      })))
-      return ws2.sendJson(repayload)
+        ws2.sendJson(repayload)
+      }
     },
 
     // 下单（限价/市价）
