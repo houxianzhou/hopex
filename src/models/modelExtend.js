@@ -20,7 +20,7 @@ export default {
           market: home.market
         }
       ))
-      const { userInfo: { userId, userToken } = {}, version, lang, market } = model
+      const { userInfo: { userId, token: userToken } = {}, version, lang, market } = model
       let result = Imu.fromJS(payload)
       const reset = resetIn(result)
       if (_.has(payload, 'head')) {

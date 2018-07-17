@@ -20,8 +20,9 @@ const Comp = {
   CurrentContract,
   Position
 }
-@connect(({ home: model, theme, loading, dispatch }) => ({
+@connect(({ home: model, user, theme, loading, dispatch }) => ({
   model,
+  user,
   modelName: 'home',
   theme,
   loading,
@@ -55,7 +56,7 @@ export default class View extends Component {
     const { renderView } = this
     return (
       <Mixin.Parent that={this} >
-        <ShowJsonTip data={this.props.model} ></ShowJsonTip >
+        <ShowJsonTip data={{...this.props.model,...this.props.user}} ></ShowJsonTip >
         <div className={styles.views} >
           {
             renderView('Position')

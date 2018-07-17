@@ -160,7 +160,7 @@ export default class View extends Component {
               })
             }}
             style={{
-              zIndex:1000000,
+              zIndex: 1000000,
               position: 'fixed',
               height: 20,
               width: 20,

@@ -1,20 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { NavLink } from 'dva/router'
-import { classNames, switchTheme } from '@utils'
+import { NavLink, routerRedux } from 'dva/router'
+import { classNames, switchTheme, _ } from '@utils'
 import logo from '@assets/logo.png'
 import * as styles from './index.less'
 
-@connect(({ home, theme, loading, dispatch }) => ({
+@connect(({ home, user, theme, loading, dispatch }) => ({
   home,
   modelName1: 'home',
+  modelName2: 'user',
   theme,
+  user,
   loading,
   dispatch,
 }))
 export default class View extends Component {
   render() {
-    const { home: { marketList = [] } = {}, theme, modelName1, dispatch, routesBasic } = this.props
+    const { home: { marketList = [] } = {}, user: { userInfo }, theme, modelName1, modelName2, dispatch, routesBasic } = this.props
     return (
       <div className={
         classNames(
@@ -77,7 +79,21 @@ export default class View extends Component {
         <div
           className={styles.right}
         >
-          登录
+          {_.isEmpty(userInfo) ? (
+            <span
+              onClick={() => {
+                dispatch(routerRedux.push('/user/login'))
+              }}
+            >登录</span >
+          ) : (
+            <span
+              onClick={() => {
+                dispatch({
+                  type: `${modelName2}/doLoginOut`,
+                })
+              }}
+            >退出</span >
+          )}
         </div >
       </div >
     )

@@ -33,7 +33,9 @@ export function request(url = '', options = {}) {
   } : {}
   return axios({
     ...{
-      headers: {},
+      headers: {
+        Authorization: 'user.YNUG5HOAOL4AG6X24V34.web'
+      },
       method,
       params: query,
       data: body,
@@ -44,7 +46,7 @@ export function request(url = '', options = {}) {
     ...rest
   })
     .then((res) => {
-      if (_.has(res, 'data.errCode') && _.get(res, 'data.errCode') !== '0') return Promise.reject({
+      if (_.has(res, 'data.errCode') && !_.isNull(_.get(res, 'data.errCode') && _.get(res, 'data.errCode') !== '0')) return Promise.reject({
         errCode: res.data.errCode,
         errMsg: res.data.errStr
       })
