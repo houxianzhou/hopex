@@ -82,10 +82,10 @@ export default function (Props) {
           </thead >
         </table >
       </div >
-      <div className={styles.tbody} >
+      <div className={styles.scrollercontainer} >
         <div className={styles.scroller} >
           <Scroller >
-            <table style={{ height: 800, border: '2px solid blue' }} >
+            <table >
               {
                 renderCols()
               }
@@ -102,7 +102,7 @@ export default function (Props) {
                             value = item2.render(value, item)
                           }
                           return (
-                            <td key={index2} style={{ border: '1px solid red' }} >{value}</td >
+                            <td key={index2} >{value}</td >
                           )
                         })
                       }
