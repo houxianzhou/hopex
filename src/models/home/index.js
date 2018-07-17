@@ -142,6 +142,7 @@ export default joinModel(modelExtend, {
       const { method } = payload
       const ws2 = wss.getSocket('ws2')
       if (method === 'sub') {
+        // 订阅三个价格
         const repayload = yield (asyncPayload(yield put({
           type: 'createRequestParams',
           payload: {
@@ -158,13 +159,23 @@ export default joinModel(modelExtend, {
             return result.chanId
           }
         }).then(res => res)
-      } else {
+      } else if (method === 'unsub') {
+        // 取消订阅三个价格
         const { chanId } = payload
         const repayload = {
           "event": "unsubscribe",
-          "chanId": chanId
+          chanId
         }
-        ws2.sendJson(repayload)
+        return ws2.sendJsonPromise(repayload, (e) => {
+          const res = getRes(e)
+          if (resOk(res)) {
+            const result = formatJson(res.data)
+            if (_.get(result, 'event') === 'unsubscribed'
+              && _.get(result, 'status') === 'OK') {
+              return true
+            }
+          }
+        }).then(res => res)
       }
     },
 
@@ -194,7 +205,6 @@ export default joinModel(modelExtend, {
           }
         }
       }
-
     },
 
     // 下单（限价/市价）

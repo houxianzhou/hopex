@@ -127,7 +127,28 @@ class Wss {
   }
 
   closeAll = () => {
-    _.values(this.sockets).forEach((item = {}) => item.listeners.forEach(item => item.unsubscribe && item.unsubscribe()))
+    let i = 0
+    const promiseAll = []
+    return new Promise((resolve, reject) => {
+      _.values(this.sockets).forEach((item = {}) => item.listeners.forEach((item) => {
+        if (item.unsubscribe) {
+          promiseAll.push(item.unsubscribe)
+        }
+      }))
+      promiseAll.forEach(item => {
+        const result = item()
+        if (!result.then) {
+          reject('发现某些unsubscribe不是promise,会导致无法判断所有的socket是否取消订阅')
+        } else {
+          result.then(() => {
+            i++
+            if (i === promiseAll.length) {
+              resolve()
+            }
+          })
+        }
+      })
+    })
   }
 }
 

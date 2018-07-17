@@ -44,12 +44,16 @@ class MockServer {
       console.log('订阅的对象必须包含name属性和func属性')
     }
   }
+
+  clearStacks = () => {
+    this.subScribes = []
+  }
 }
 
 let times = 0
 const mockServer1 = new MockServer(SOCKETURL.ws1)
 mockServer1.onMessage = (e) => {
-  if(!e) return
+  if (!e) return
   const message = JSON.parse(e)
   // console.log(message, '-------------服务端响应订阅')
   const { head: { method } = {} } = message
@@ -94,26 +98,37 @@ mockServer1.onMessage = (e) => {
 
 const mockServer2 = new MockServer(SOCKETURL.ws2)
 mockServer2.onMessage = (e) => {
-  if(!e) return
+  if (!e) return
   const message = JSON.parse(e)
-  const { channel } = message
-  switch (channel) {
-    case 'market': {
-      mockServer2.subScribe({
-        name: 'importantPrice',
-        func: () => {
-          mockServer2.sendJson({
-            "price": _.random(1000, 10000),
-            "minPrice": _.random(1000, 10000),
-            "maxPrice": _.random(1000, 10000),
-            "chanId": 204,
-            "pair": "BTCUSD"
-          })
-        }
-      })
+  const { channel, event, chanId } = message
+  if (event === 'subscribe') {
+    switch (channel) {
+      case 'market': {
+        mockServer2.subScribe({
+          name: 'importantPrice',
+          func: () => {
+            mockServer2.sendJson({
+              "price": _.random(1000, 10000),
+              "minPrice": _.random(1000, 10000),
+              "maxPrice": _.random(1000, 10000),
+              "chanId": 204,
+              "pair": "BTCUSD"
+            })
+          }
+        })
+      }
+        break
+      default:
     }
-      break
-    default:
+  } else {
+    setTimeout(() => {
+      mockServer2.clearStacks()
+      mockServer2.sendJson({
+        "event": "unsubscribed",
+        "status": "OK",
+        "chanId": chanId
+      })
+    }, 2000)
   }
 }
 

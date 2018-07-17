@@ -38,7 +38,9 @@ export default class View extends Component {
     const { model: { market: prevMarket } } = prevProps
     const { model: { market } } = this.props
     if (!isEqual(prevMarket, market)) {
-      wss.closeAll()
+      wss.closeAll().then(() => {
+        console.log('promise全部结束')
+      })
       // setTimeout(() => {
       //   this.startInit()
       // }, 500)

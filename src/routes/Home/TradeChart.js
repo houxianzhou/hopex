@@ -156,13 +156,13 @@ export default class View extends Component {
       },
       unsubscribe: () => {
         if (chanId) {
-          dispatch({
+          return dispatch({
             type: `${modelName}/getImportantPrice`,
             payload: {
               method: 'unsub',
               chanId
             }
-          })
+          }).then(res => console.log('getImportantPrice 三个价格取消订阅'))
         }
       },
       restart: () => {
