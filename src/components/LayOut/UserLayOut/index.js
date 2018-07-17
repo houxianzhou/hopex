@@ -14,7 +14,6 @@ export default class View extends Component {
     } = this.props
     return (
       <div>
-        <div>userLayout</div>
         <Switch>
           {
             routesUser.map(({ path, ...dynamics }) => {

@@ -24,4 +24,9 @@ export default [
     path: '/question',
     route: 'User'
   },
+  {
+    name: '登录',
+    path: '/user/login',
+    route: 'User'
+  },
 ]

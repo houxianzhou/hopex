@@ -19,54 +19,65 @@
     &.dark {
       background: @c_front_dark;
     }
-    img {
-      margin-right: 50px;
-    }
-    ul.nav {
-      margin-bottom: 0;
-      list-style: none;
+    > div {
       display: flex;
-      align-items: center;
-      font-size: 16px;
-      li.navli + li.navli {
-        margin-left: 50px;
-      }
-      li.navli {
-        position: relative;
-        .dropdown {
-          position: absolute;
-          display: none;
+      flex-grow: 1;
+      &.left {
+        img {
+          margin-right: 50px;
         }
+        ul.nav {
+          margin-bottom: 0;
+          list-style: none;
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          li.navli + li.navli {
+            margin-left: 50px;
+          }
+          li.navli {
+            position: relative;
+            .dropdown {
+              position: absolute;
+              display: none;
+            }
 
-        &:hover {
-          .dropdown {
-            position: absolute;
-            z-index: 1;
-            display: block;
-            padding-top: 5px;
-            ul {
-              width: 200px;
-              background: white;
-              border-radius: 4px;
-              color: black;
-              li {
-                &:hover {
-                  color: white;
-                  background: red;
+            &:hover {
+              .dropdown {
+                position: absolute;
+                z-index: 1;
+                display: block;
+                padding-top: 5px;
+                ul {
+                  width: 200px;
+                  background: white;
+                  border-radius: 4px;
+                  color: black;
+                  li {
+                    &:hover {
+                      color: white;
+                      background: red;
+                    }
+                    padding: 3px 20px;
+                  }
                 }
-                padding: 3px 20px;
               }
+
             }
           }
-
+          li.navli.active {
+            padding-bottom: 6px;
+            color: @c_active_yellow;
+            border-bottom: 2px solid @c_active_yellow;
+          }
         }
       }
-      li.navli.active {
-        padding-bottom: 6px;
-        color: @c_active_yellow;
-        border-bottom: 2px solid @c_active_yellow;
+      &.right {
+        display: flex;
+        justify-content: flex-end;
       }
     }
+
   }
 
   .content {
