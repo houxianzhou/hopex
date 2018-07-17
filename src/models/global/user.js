@@ -41,6 +41,7 @@ export default joinModel(modelExtend, {
       }
     },
     * doLoginOut({ payload = {} }, { call, put, select }) {
+      const res = getRes(yield call(doLoginOut))
       yield put({
         type: 'changeState',
         payload: {
@@ -48,7 +49,6 @@ export default joinModel(modelExtend, {
         }
       })
       localSave.remove('userInfo')
-      const res = getRes(yield call(doLoginOut))
     },
     * getCurrentUser({ payload: { resolve, reject } }, { call, put }) {
       // const res = { data: { "userInfo": { "userId": "56", "userToken": "56" } } }

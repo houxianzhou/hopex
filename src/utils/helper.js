@@ -43,6 +43,9 @@ export const localSave = {
   },
   clearAll: () => {
     store.clearAll()
+  },
+  getUserInfo: () => {
+    return store.get('userInfo')
   }
 }
 

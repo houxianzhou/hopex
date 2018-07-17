@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { _ } from '@utils'
+import { _, localSave } from '@utils'
 import pathToRegexp from 'path-to-regexp'
 import { stringify } from 'qs'
 import { message as Message } from 'antd'
@@ -31,10 +31,11 @@ export function request(url = '', options = {}) {
       return data
     }]
   } : {}
+  const token = _.get(localSave.getUserInfo(), 'userInfo.userToken')
   return axios({
     ...{
       headers: {
-        Authorization: 'user.YNUG5HOAOL4AG6X24V34.web'
+        ...(token ? { Authorization: token } : {})
       },
       method,
       params: query,
