@@ -171,7 +171,8 @@ export default joinModel(modelExtend, {
           if (resOk(res)) {
             const result = formatJson(res.data)
             if (_.get(result, 'event') === 'unsubscribed'
-              && _.get(result, 'status') === 'OK') {
+              && _.get(result, 'status') === 'OK'
+              && _.get(result, 'chanId') === chanId) {
               return true
             }
           }
