@@ -1,51 +1,11 @@
-import { _, classNames } from '@utils'
+import { _, classNames, getPercent } from '@utils'
 import { Scroller } from '@components'
 import * as styles from './index.less'
 
 export default function (Props) {
   const {
-    head = [
-      {
-        name: '姓名',
-        dataIndex: 'name',
-        width: 200,
-        render: (value, data) => {
-          return value
-        }
-      },
-      {
-        name: '年龄',
-        dataIndex: 'age',
-        width: 200,
-      },
-      {
-        name: '性别',
-        dataIndex: 'sex',
-        width: 200,
-      },
-      {
-        name: '操作',
-        render: (value, item) => {
-          return (
-            <button onClick={() => {
-              alert(JSON.stringify(item))
-            }} >点击</button >
-          )
-        }
-      }
-    ],
-    data = [
-      {
-        sex: '男',
-        age: 20,
-        name: 'weixiaoyi',
-      },
-      {
-        sex: '女',
-        age: 45,
-        name: 'wangyifan',
-      }
-    ],
+    head = [],
+    data = [],
     className = {}
   } = Props
   const renderCols = () => (
@@ -53,11 +13,20 @@ export default function (Props) {
       {
         head.map(item => (
           <col key={item.name} style={
-            item.width ? { width: item.width, minWidth: item.width } : {}
+            item.width ? { width: item.width, minWidth: item.width } : {
+              width: getPercent(1, head.length),
+              minWidth: getPercent(1, head.length)
+            }
           } />
         ))
       }
     </colgroup >
+  )
+
+  const getTdhProps = (className) => (
+    {
+      className
+    }
   )
   return (
     <div className={
@@ -75,7 +44,7 @@ export default function (Props) {
           <tr >
             {
               head.map(item => (
-                <th key={item.name} >{item.name}</th >
+                <th key={item.name} {...getTdhProps(item.className)} >{item.name}</th >
               ))
             }
           </tr >
@@ -102,7 +71,7 @@ export default function (Props) {
                             value = item2.render(value, item)
                           }
                           return (
-                            <td key={index2} >{value}</td >
+                            <td key={index2} {...getTdhProps(item2.className)}>{value}</td >
                           )
                         })
                       }

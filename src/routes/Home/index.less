@@ -1,5 +1,6 @@
 @pannel_li_height: 26px;
 @view_width: 400px;
+@padding_li_left: 30px;
 
 .views {
   display: flex;
@@ -17,13 +18,31 @@
   margin-top: 10px;
 }
 
-.table{
-  th{
-
+.table {
+  table {
+  }
+  tr {
+    height: 40px;
+    th:first-child, td:first-child {
+      padding: 0 @padding_li_left;
+    }
+  }
+  thead {
+    tr {
+      color: #6A7286;
+    }
+  }
+  tbody {
+    tr {
+      &:nth-child(2n+1) {
+        background: @c_panel_light;
+      }
+    }
   }
 }
 
 .latestRecord {
+  min-width: @view_width;
   max-width: @view_width;
   height: 560px;
   ul {
@@ -233,6 +252,7 @@
 }
 
 .purse {
+  min-width: @view_width;
   max-width: @view_width;
   height: 344px;
   .content {
@@ -292,14 +312,7 @@
 }
 
 .position {
-  height: 300px;
-  ul{
-    li{
-      &:nth-child(2n+1) {
-        background: @c_panel_light;
-      }
-    }
-  }
+  height: 242px;
 }
 
 .buySell {
@@ -431,6 +444,7 @@
 }
 
 .currentContract {
+  min-width: @view_width;
   max-width: @view_width;
 }
 

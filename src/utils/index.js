@@ -60,7 +60,7 @@ export const Patterns = {
   decimalNumber: /^[0-9|\.]*$/
 }
 
-export const getPercent = (child, parent, item) => {
+export const getPercent = (child = 1, parent = 1) => {
   if (parent) {
     return child / parent * 100 + '%'
   }
