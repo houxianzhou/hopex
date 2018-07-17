@@ -31,7 +31,7 @@ export function request(url = '', options = {}) {
       return data
     }]
   } : {}
-  const token = _.get(localSave.getUserInfo(), 'userInfo.userToken')
+  const token = _.get(localSave.getUserInfo(), 'userToken')
   return axios({
     ...{
       headers: {

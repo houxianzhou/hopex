@@ -1,9 +1,9 @@
-import { joinModel, getRes, resOk, formatNumber, _, formatJson, asyncPayload } from '@utils'
+import { joinModel, getRes, resOk, formatNumber, _, formatJson, asyncPayload, hasPower } from '@utils'
 import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
-  getKline
+  getKline, getPurseAssetList
 } from "@services/trade"
 
 
@@ -168,6 +168,35 @@ export default joinModel(modelExtend, {
       }
     },
 
+    //钱包列表 asset.list
+    * getPurseAssetList({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "asset.list"
+          },
+          "param": {},
+          power: [1]
+        }
+      })))
+      if (hasPower(repayload.head)) {
+        const res = getRes(yield call(getPurseAssetList, repayload))
+        if (resOk(res)) {
+          const result = _.get(res, 'data.assetList')
+          if (result) {
+            yield put({
+              type: 'changeState',
+              payload: {
+                assetList: result
+              }
+            })
+          }
+        }
+      }
+
+    },
+
     // 下单（限价/市价）
     * postSideOrder({ payload = {} }, { call, put }) {
       const { side, method, price, amount } = payload
@@ -197,6 +226,8 @@ export default joinModel(modelExtend, {
         }
       ))
     },
+
+
   },
 
   reducers: {},

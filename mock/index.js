@@ -109,10 +109,7 @@ export default {
               "price": randomStr(),
               "amount": randomStr()
             }))
-          },
-          "errCode": "0",
-          "errStr": "success",
-          "ret": "0"
+          }
         }
       }
         break
@@ -140,13 +137,11 @@ export default {
                 "type": ["buy", 'sell'][_.random(0, 1)]
               }
             ))
-          },
-          "errCode": "0",
-          "errStr": "success",
-          "ret": "0"
+          }
         }
       }
         break
+      //K线图
       case 'market.kline': {
         result = {
           "head": {
@@ -184,11 +179,43 @@ export default {
                 // "BTCUSD永续"
               ]
             ]
-          },
-          "errCode": "0",
-          "errStr": "success",
-          "ret": "0"
+          }
         }
+      }
+      case 'asset.list': {
+        result = {
+          "head": {
+            "method": "asset.list",
+            "msgType": "response",
+            "packType": "1",
+            "lang": "cn",
+            "version": "1.0.0",
+            "timestamps": "1531831009606561",
+            "serialNumber": "56",
+            "userId": "56",
+            "userToken": "56"
+          },
+          "data": {
+            "assetList": [
+              {
+                "name": "BTC",
+                "precShow": "8",
+                "precSave": "12"
+              },
+              {
+                "name": "ETH",
+                "precShow": "8",
+                "precSave": "12"
+              },
+              {
+                "name": "USDT",
+                "precShow": "8",
+                "precSave": "12"
+              }
+            ]
+          }
+        }
+
       }
         break
       default:

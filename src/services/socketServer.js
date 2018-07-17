@@ -49,6 +49,7 @@ class MockServer {
 let times = 0
 const mockServer1 = new MockServer(SOCKETURL.ws1)
 mockServer1.onMessage = (e) => {
+  if(!e) return
   const message = JSON.parse(e)
   // console.log(message, '-------------服务端响应订阅')
   const { head: { method } = {} } = message
@@ -93,6 +94,7 @@ mockServer1.onMessage = (e) => {
 
 const mockServer2 = new MockServer(SOCKETURL.ws2)
 mockServer2.onMessage = (e) => {
+  if(!e) return
   const message = JSON.parse(e)
   const { channel } = message
   switch (channel) {

@@ -128,6 +128,14 @@ export const formatJson = (string) => {
   return JSON.parse(string.replace(/\s+/g, ''))
 }
 
+export const hasPower = (obj = {}) => {
+  if (_.get(obj, 'userId') && _.get(obj, 'userToken')) {
+    return true
+  }
+  console.log('无法获取到userId,userToken，无权限调用接口')
+  return false
+}
+
 
 
 

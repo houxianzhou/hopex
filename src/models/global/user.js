@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router'
 import { getCurrentUser, doLogin, doLoginOut } from '@services/user'
-import { getRes, resOk, joinModel, localSave, asyncPayload } from '@utils'
+import { _, getRes, resOk, joinModel, localSave, asyncPayload } from '@utils'
 import modelExtend from '@models/modelExtend'
 
 export default joinModel(modelExtend, {
@@ -26,14 +26,14 @@ export default joinModel(modelExtend, {
           // 谷歌二次验证
         } else {
           const payload = {
-            userInfo: {
-              userId,
-              userToken: token
-            }
+            userId,
+            userToken: token
           }
           yield put({
             type: 'changeState',
-            payload: payload
+            payload: {
+              userInfo: payload
+            }
           })
           localSave.set('userInfo', payload)
           yield put(routerRedux.push('/home'))

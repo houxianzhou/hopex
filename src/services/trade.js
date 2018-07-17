@@ -30,6 +30,14 @@ export async function getEnsureRecord(payload) {
   })
 }
 
+// 查询用户钱包里面所有的结算货币(相关属性)
+export async function getPurseAssetList(payload) {
+  return request(`${MODE}/tc`, {
+    method: 'post',
+    body: payload
+  })
+}
+
 // 下限价单
 export async function postLimitOrder(payload) {
   return await request(`${MODE}/tc`, {
