@@ -59,17 +59,8 @@ export default {
     changeState(state, { payload }) {
       return { ...state, ...payload }
     },
-    // 改变合同的操作
-    changeContractState(state, { payload }) {
-      const name = payload
-      const filterOne = state.marketList.filter(item => item.name === payload)[0] || {}
-      const map = {
-        market: filterOne.name
-      }
-      return {
-        ...state,
-        ...map
-      }
+    clearState(state, { payload }) {
+      return {}
     }
   }
 }

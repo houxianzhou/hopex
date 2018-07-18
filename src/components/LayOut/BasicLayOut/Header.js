@@ -43,9 +43,12 @@ export default class View extends Component {
                                 <li
                                   key={item.name}
                                   onClick={() => {
+                                    const filterOne = marketList.filter(one => one.name === item.name)[0] || {}
                                     dispatch({
-                                      type: `${modelName1}/changeContractState`,
-                                      payload: item.name
+                                      type: `${modelName1}/changeState`,
+                                      payload: {
+                                        market: filterOne.name
+                                      }
                                     })
                                   }}
                                 >

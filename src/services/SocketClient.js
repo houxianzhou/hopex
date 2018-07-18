@@ -127,6 +127,7 @@ class Wss {
   }
 
   closeAll = () => {
+
     let i = 0
     const promiseAll = []
     return new Promise((resolve, reject) => {
@@ -135,19 +136,23 @@ class Wss {
           promiseAll.push(item.unsubscribe)
         }
       }))
-      promiseAll.forEach(item => {
-        const result = item()
-        if (!result.then) {
-          reject('发现某些unsubscribe不是promise,会导致无法判断所有的socket是否取消订阅')
-        } else {
-          result.then(() => {
-            i++
-            if (i === promiseAll.length) {
-              resolve()
-            }
-          })
-        }
-      })
+      if (promiseAll.length) {
+        promiseAll.forEach(item => {
+          const result = item()
+          if (!result.then) {
+            reject('发现某些unsubscribe不是promise,会导致无法判断所有的socket是否取消订阅')
+          } else {
+            result.then(() => {
+              i++
+              if (i === promiseAll.length) {
+                resolve()
+              }
+            })
+          }
+        })
+      } else {
+        resolve()
+      }
     })
   }
 }

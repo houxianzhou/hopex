@@ -8,16 +8,13 @@ import styles from './index.less'
 export default class View extends Component {
 
   startInit = () => {
-    // this.getLatestRecord()
+    this.getLatestRecord()
   }
 
   getLatestRecord = () => {
     const { dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getLatestRecord`,
-      payload: {
-        mode: 'http'
-      }
     }).then((res) => {
       dealInterval(() => {
         this.getLatestRecord()
@@ -26,7 +23,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { latest_records } } = this.props
+    const { model: { latest_records = [] } } = this.props
     const data = latest_records
     return (
       <Mixin.Child that={this} >

@@ -13,7 +13,7 @@ export default class View extends Component {
 
   startInit = () => {
     // this.startKline()
-    this.getImportantPrice()
+    // this.getImportantPrice()
   }
 
   startKline = () => {
@@ -174,7 +174,7 @@ export default class View extends Component {
 
 
   render() {
-    const { model: { market, maxPrice, minPrice, indexPrice, latestPrice } } = this.props
+    const { model: { market = '', maxPrice, minPrice, indexPrice, latestPrice } } = this.props
     return (
       <Mixin.Child that={this} >
         <div

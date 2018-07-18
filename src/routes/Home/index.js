@@ -36,14 +36,17 @@ export default class View extends Component {
 
   componentDidUpdate(prevProps) {
     const { model: { market: prevMarket } } = prevProps
-    const { model: { market } } = this.props
+    const { model: { market }, dispatch, modelName } = this.props
     if (!isEqual(prevMarket, market)) {
       wss.closeAll().then(() => {
+        dispatch({
+          type: `${modelName}/clearState`,
+        })
         console.log('promise全部结束')
+        setTimeout(() => {
+          this.startInit()
+        }, 2000)
       })
-      // setTimeout(() => {
-      //   this.startInit()
-      // }, 500)
     }
   }
 
