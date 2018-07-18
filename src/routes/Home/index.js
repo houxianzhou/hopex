@@ -30,14 +30,11 @@ const Comp = {
   dispatch,
 }))
 export default class View extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   componentDidUpdate(prevProps) {
     const { model: { market: prevMarket } } = prevProps
     const { model: { market }, dispatch, modelName } = this.props
-    if (!isEqual(prevMarket, market)) {
+    if (!isEqual(prevMarket, market) && market) {
       wss.closeAll().then(() => {
         dispatch({
           type: `${modelName}/clearState`,

@@ -27,6 +27,11 @@ export default [
   {
     name: '登录',
     path: '/user/login',
-    route: 'User'
+    route: 'User/Login'
+  },
+  {
+    name: '注册',
+    path: '/user/register',
+    route: 'User/Register'
   },
 ]

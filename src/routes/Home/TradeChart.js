@@ -22,103 +22,108 @@ export default class View extends Component {
     // const Datafeeds = window.Datafeeds
     // window.$ = $
     const ws1 = wss.getSocket('ws1')
-    const chart = new TradingView.widget({
-      disabled_features: ["left_toolbar", 'go_to_date'],
-      library_path: '/',
-      fullscreen: true,
-      symbol: '股吧',
-      interval: 'D',
-      'container_id': 'tradeView',
-      overrides: {
-        "paneProperties.background": "#232833",
-        "paneProperties.vertGridProperties.color": "transparent",
-        "paneProperties.horzGridProperties.color": "transparent",
-        "paneProperties.topMargin": "15",
-        "paneProperties.bottomMargin": "5",
-        "scalesProperties.backgroundColor": "red"
-      },
-      loading_screen: { backgroundColor: "#232833" },
-      datafeed: {
-        onReady(callback) {
-          setTimeout(() => {
-            callback({})
-          })
+    if (true) {
+      this.chart = new TradingView.widget({
+        disabled_features: ["left_toolbar", 'go_to_date', 'use_localstorage_for_settings', 'save_chart_properties_to_local_storage'],
+        library_path: '/',
+        fullscreen: true,
+        symbol: '股吧',
+        interval: 'D',
+        'container_id': 'tradeView',
+        overrides: {
+          "paneProperties.background": "#232833",
+          "paneProperties.vertGridProperties.color": "transparent",
+          "paneProperties.horzGridProperties.color": "transparent",
+          "paneProperties.topMargin": "15",
+          "paneProperties.bottomMargin": "5",
+          "scalesProperties.backgroundColor": "red"
         },
-        searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
-        },
-        resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
-          ws1.onConnectPromise().then(() => {
-            onSymbolResolvedCallback({
-              "name": "weixiaoyi",
-              "timezone": "Asia/Shanghai",
-              description: 'haaaaaaa',
-              "exchange": "交易所的略称", //交易所的略称
-              "minmov": 1,//最小波动
-              "pricescale": 100,//价格精
-              "minmov2": 0, //格式化复杂情况下的价格
-              "pointvalue": 1,
-              "session": "24x7",
-              "has_intraday": true, // 是否具有日内（分钟）历史数据
-              "has_no_volume": false, //布尔表示商品是否拥有成交量数据
-              has_empty_bars: true,
-              "type": "stock",
-              supported_resolutions: ['D', '1W', '1M'],// 分辨率选择器中启用一个分辨率数组
-              // "ticker": "AAPL", // 品体系中此商品的唯一标识符
-              "data_status": "streaming" //数据状态码。状态显示在图表的右上角。streaming(实时)endofday(已收盘)pulsed(脉冲)
+        loading_screen: { backgroundColor: "#232833" },
+        datafeed: {
+          onReady(callback) {
+            setTimeout(() => {
+              callback({})
             })
-          })
-        },
-        getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
-          const [startTime, endTime] = [String(Math.min(from, to)), String(Math.max(from, to))]
-          console.log('1')
-          dispatch({
-            type: `${modelName}/getKline`,
-            payload: {
-              startTime,
-              endTime
-            }
-          }).then((result = []) => {
-            const data = result.map(item => ({
-              time: Number(item[0]) * 1000,
-              open: Number(item[1]),
-              close: Number(item[2]),
-              high: Number(item[3]),
-              low: Number(item[4]),
-              volume: Number(item[5]),
-              price: Number(item[6]),
-              name: item[7]
-            }))
-            onHistoryCallback(data, { noData: true })
-          })
-        },
-        getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
-        },
-        subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
-          console.log('2')
-          // const a = _.debounce(() => {
-          //   onRealtimeCallback({
-          //       "time": 1530464461000,
-          //       "close": 149.56,
-          //       "open": _.random(100, 500),
-          //       "high": 150.9,
-          //       "low": 148.57,
-          //       "volume": 1000
-          //     }
-          //   )
-          // }, 1000)
-          // a()
-        },
-        unsubscribeBars(subscriberUID) {
+          },
+          searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
+          },
+          resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
+            ws1.onConnectPromise().then(() => {
+              onSymbolResolvedCallback({
+                "name": "weixiaoyi",
+                "timezone": "Asia/Shanghai",
+                description: 'haaaaaaa',
+                "exchange": "交易所的略称", //交易所的略称
+                "minmov": 1,//最小波动
+                "pricescale": 100,//价格精
+                "minmov2": 0, //格式化复杂情况下的价格
+                "pointvalue": 1,
+                "session": "24x7",
+                "has_intraday": true, // 是否具有日内（分钟）历史数据
+                "has_no_volume": false, //布尔表示商品是否拥有成交量数据
+                has_empty_bars: true,
+                "type": "stock",
+                supported_resolutions: ['D', '1W', '1M'],// 分辨率选择器中启用一个分辨率数组
+                // "ticker": "AAPL", // 品体系中此商品的唯一标识符
+                "data_status": "streaming" //数据状态码。状态显示在图表的右上角。streaming(实时)endofday(已收盘)pulsed(脉冲)
+              })
+            })
+          },
+          getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
+            const [startTime, endTime] = [String(Math.min(from, to)), String(Math.max(from, to))]
+            console.log('1')
+            dispatch({
+              type: `${modelName}/getKline`,
+              payload: {
+                startTime,
+                endTime
+              }
+            }).then((result = []) => {
+              const data = result.map(item => ({
+                time: Number(item[0]) * 1000,
+                open: Number(item[1]),
+                close: Number(item[2]),
+                high: Number(item[3]),
+                low: Number(item[4]),
+                volume: Number(item[5]),
+                price: Number(item[6]),
+                name: item[7]
+              }))
+              onHistoryCallback(data, { noData: true })
+            })
+          },
+          getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
+          },
+          subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
+            console.log('2')
+            // const a = _.debounce(() => {
+            //   onRealtimeCallback({
+            //       "time": 1530464461000,
+            //       "close": 149.56,
+            //       "open": _.random(100, 500),
+            //       "high": 150.9,
+            //       "low": 148.57,
+            //       "volume": 1000
+            //     }
+            //   )
+            // }, 1000)
+            // a()
+          },
+          unsubscribeBars(subscriberUID) {
 
-        }
-      },
-      locale: 'zh',
-    })
-    // setInterval(() => {
-    //   chart.setSymbol('weixhhh', 1000, () => {
-    //     console.log('daole')
-    //   })
-    // }, 3000)
+          }
+        },
+        locale: 'zh',
+      })
+    } else {
+      this.chart.chart().setSymbol('', 1000, () => {
+        console.log('daole')
+      })
+    }
+  }
+
+  componentWillMount() {
+    this.chart && this.chart.remove()
   }
 
   getImportantPrice = () => {

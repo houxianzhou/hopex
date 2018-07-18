@@ -10,8 +10,8 @@ import styles from './index.less'
 }))
 export default class View extends Component {
   state = {
-    email: '2278095567@qq.com',
-    password: '888888'
+    email: 'xiaoyi.wei@bcsystech.com',
+    password: '8888888'
   }
 
   changeState = (payload = {}) => {
@@ -30,6 +30,7 @@ export default class View extends Component {
   }
 
   render() {
+    const { dispatch, modelName } = this.props
     const { email, password } = this.state
     return (
       <div >
@@ -49,6 +50,19 @@ export default class View extends Component {
             this.login()
           }} >
             登录
+          </button >
+          <button onClick={(e) => {
+            e.preventDefault()
+            dispatch({
+              type: `${modelName}/doVertifyLogin`,
+              payload: {
+                userId: '3',
+                googleCode: '174823',
+                loginType:'web'
+              }
+            })
+          }} >
+            二次验证登录
           </button >
         </form >
         <ShowJsonTip data={this.props.model} />
