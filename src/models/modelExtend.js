@@ -12,7 +12,7 @@ const resetIn = (imuObj) => {
 export default {
   effects: {
     * createRequestParams({ payload = {} }, { call, put, select }) {
-      const { power = [] } = payload
+      const { power = [], powerMsg = '' } = payload
       const needPower = power[0] === POWER.private
       const model = yield select(({ user, theme, home }) => (
         {
@@ -20,41 +20,38 @@ export default {
           market: home.market
         }
       ))
-      const { userInfo: { userId, userToken } = {}, version, lang, market } = model
+      const { userInfo, userInfo: { userId, userToken } = {}, version, lang, market } = model
       delete payload.power
       let result = Imu.fromJS(payload)
       const reset = resetIn(result)
-      if (_.has(payload, 'head')) {
-        result = reset(['head', 'timestamps'], String(Date.now()))
-        result = reset(['head', 'version'], String('1.0'))
-        result = reset(['head', 'lang'], String(lang))
-        result = reset(['head', 'request'], String("request"))
-        result = reset(['head', 'packType'], String("1"))
-        result = reset(['head', 'serialNumber'], String(_.uniqueId()))
-        if (needPower) {
-          result = reset(['head', 'userId'], userId)
-          result = reset(['head', 'userToken'], userToken)
+      if (needPower && _.isEmpty(userInfo)) {
+        console.log(`${powerMsg} | 无法获取到userId,userToken，无权限调用接口`)
+        return false
+      } else {
+        if (_.has(payload, 'head')) {
+          result = reset(['head', 'timestamps'], String(Date.now()))
+          result = reset(['head', 'version'], String('1.0'))
+          result = reset(['head', 'lang'], String(lang))
+          result = reset(['head', 'request'], String("request"))
+          result = reset(['head', 'packType'], String("1"))
+          result = reset(['head', 'serialNumber'], String(_.uniqueId()))
+          if (needPower) {
+            result = reset(['head', 'userId'], userId)
+            result = reset(['head', 'userToken'], userToken)
+          }
         }
+        if (_.has(payload, 'param')) {
+          result = reset(['param', 'market'], String(market))
+        }
+        result = result.map((value) => {
+          if (value === 'replaceWith_market') return String(market)
+          return value
+        })
+        return result.toJS()
       }
-      if (_.has(payload, 'param')) {
-        result = reset(['param', 'market'], String(market))
-      }
-      result = result.map((value) => {
-        if (value === 'replaceWith_market') return String(market)
-        return value
-      })
-      return result.toJS()
     },
     * getPropsParams({ payload = {} }, { call, put, select }) {
-      // const model = yield select(({ home }) => (
-      //   {
-      //     numberToFixed: home.numberToFixed
-      //   }
-      // ))
-      // const { numberToFixed } = model
-      // return {
-      //   numberToFixed
-      // }
+      // 未启用
     }
   },
 

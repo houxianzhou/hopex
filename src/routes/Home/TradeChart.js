@@ -12,7 +12,7 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    this.startKline()
+    // this.startKline()
     this.getImportantPrice()
   }
 
@@ -132,6 +132,7 @@ export default class View extends Component {
           method: 'sub'
         }
       }).then(res => {
+        console.log('getImportantPrice订阅成功')
         chanId = res
       })
     })
@@ -162,7 +163,7 @@ export default class View extends Component {
               method: 'unsub',
               chanId
             }
-          }).then(res => console.log('getImportantPrice 三个价格取消订阅'))
+          }).then(res => console.log('getImportantPrice 取消订阅成功'))
         }
       },
       restart: () => {

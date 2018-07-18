@@ -1,4 +1,4 @@
-import { joinModel, getRes, resOk, formatNumber, _, formatJson, asyncPayload, hasPower } from '@utils'
+import { joinModel, getRes, resOk, formatNumber, _, formatJson, asyncPayload } from '@utils'
 import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
 import {
@@ -189,10 +189,11 @@ export default joinModel(modelExtend, {
             "method": "asset.list"
           },
           "param": {},
+          powerMsg: '钱包列表 asset.list',
           power: [1]
         }
       })))
-      if (hasPower(repayload.head)) {
+      if (repayload) {
         const res = getRes(yield call(getPurseAssetList, repayload))
         if (resOk(res)) {
           const result = _.get(res, 'data.assetList')
