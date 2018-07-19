@@ -217,6 +217,65 @@ export default {
         }
 
       }
+      // 合约列表
+      case 'market.list': {
+        result = {
+          "head": {
+            "method": "market.list",
+            "timestamps": "1531990274810079",
+            "version": "1.0",
+            "lang": "cn",
+            "request": "request",
+            "packType": "1",
+            "serialNumber": "5",
+            "msgType": "response"
+          },
+          "data": {
+            "records": [
+              {
+                "name": "BTCUSDT永续",
+                "direction": "2",
+                "marketType": "2",
+                "minVaryPrice": "0.50000000",
+                "minDealAmount": "1",
+                "varyRange": "1 2 4 8",
+                "keepBailRate": "0.01000000",
+                "levelages": "[{\"id\":1,\"settingId\":1,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-17 18:39:28\",\"creator\":1},{\"id\":2,\"settingId\":1,\"initialMarginRate\":20.0000000000,\"leverage\":5.0000000000,\"createdTime\":\"2018-07-17 18:39:28\",\"creator\":1},{\"id\":3,\"settingId\":1,\"initialMarginRate\":5.0000000000,\"leverage\":20.0000000000,\"createdTime\":\"2018-07-17 18:39:28\",\"creator\":1}]",
+                "showPrec": "8",
+                "dealMoney": "BTC"
+              },
+              {
+                "name": "ETHBTC永续",
+                "direction": "1",
+                "marketType": "2",
+                "minVaryPrice": "0.10000000",
+                "minDealAmount": "1",
+                "varyRange": "1 2 4 8",
+                "keepBailRate": "1.00000000",
+                "levelages": "[{\"id\":4,\"settingId\":2,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-17 18:53:58\",\"creator\":1},{\"id\":5,\"settingId\":2,\"initialMarginRate\":5.0000000000,\"leverage\":20.0000000000,\"createdTime\":\"2018-07-17 18:53:58\",\"creator\":1}]",
+                "showPrec": "8",
+                "dealMoney": "BTC"
+              },
+              {
+                "name": "XRPETH永续",
+                "direction": "2",
+                "marketType": "2",
+                "minVaryPrice": "1.00000000",
+                "minDealAmount": "1",
+                "varyRange": "1 2 4 6 8",
+                "keepBailRate": "1.00000000",
+                "levelages": "[{\"id\":8,\"settingId\":4,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-19 09:53:51\",\"creator\":1},{\"id\":9,\"settingId\":4,\"initialMarginRate\":20.0000000000,\"leverage\":5.0000000000,\"createdTime\":\"2018-07-19 09:53:51\",\"creator\":1}]",
+                "showPrec": "4",
+                "dealMoney": "XRP"
+              }
+            ]
+          },
+          "errCode": "0",
+          "errStr": "success",
+          "ret": "0"
+        }
+
+      }
         break
       default:
     }

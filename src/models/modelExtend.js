@@ -22,6 +22,7 @@ export default {
       ))
       const { userInfo, userInfo: { userId, userToken } = {}, version, lang, market } = model
       delete payload.power
+      delete payload.powerMsg
       let result = Imu.fromJS(payload)
       const reset = resetIn(result)
       if (needPower && _.isEmpty(userInfo)) {
@@ -36,8 +37,8 @@ export default {
           result = reset(['head', 'packType'], String("1"))
           result = reset(['head', 'serialNumber'], String(_.uniqueId()))
           if (needPower) {
-            result = reset(['head', 'userId'], userId)
-            result = reset(['head', 'userToken'], userToken)
+            result = reset(['head', 'userId'], String(userId))
+            result = reset(['head', 'userToken'], String(userToken))
           }
         }
         if (_.has(payload, 'param')) {

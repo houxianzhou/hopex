@@ -48,7 +48,15 @@ export default class View extends Component {
   }
 
   startInit = () => {
+    this.getAllMarkets()
     this.childInitStacks.map(item => item && item())
+  }
+
+  getAllMarkets = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getAllMarkets`
+    })
   }
 
   renderView = (name) => {

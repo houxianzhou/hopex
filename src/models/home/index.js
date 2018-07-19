@@ -209,38 +209,59 @@ export default joinModel(modelExtend, {
       }
     },
 
+    //合约列表 market.list
+    * getAllMarkets({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "market.list"
+          },
+          "param": {},
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getPurseAssetList, repayload))
+        if (resOk(res)) {
+          const result = _.get(res, 'data.records')
+          result.map(item => {
+            item.levelages=formatJson(item.levelages)
+          })
+          if (result) {
+            yield put({
+              type: 'changeState',
+              payload: {
+                marketList: result
+              }
+            })
+          }
+        }
+      }
+    },
+
     // 下单（限价/市价）
     * postSideOrder({ payload = {} }, { call, put }) {
       const { side, method, price, amount } = payload
       const url = method === 'order.put_limit' ? postLimitOrder : postMarketOrder
-      const res = getRes(yield call(url,
-        {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
           "head": {
-            "method": method,
-            "msgType": "request",
-            "packType": "1",
-            "lang": "cn",
-            "version": "1.0.0",
-            "timestamps": `${Date.now()}`,
-            "serialNumber": "56",
-            "userId": "56",
-            "userToken": "56"
+            "method": method
           },
           "param": {
-            "market": "BTCUSD永续",//合约
             "side": side,// 1:sell 2:buy
             "amount": amount,//买卖数量
             "price": price,//价格
-            "takerFee": "0.01",
-            "makerFee": "0.01",
-            "source": "我是限价单测试"//备注
-          }
+            // "takerFee": "0.01",
+            // "makerFee": "0.01",
+          },
+          powerMsg: '钱包列表 asset.list',
+          power: [1]
         }
-      ))
+      })))
+      const res = getRes(yield call(url, repayload))
     },
-
-
   },
-
   reducers: {},
 })

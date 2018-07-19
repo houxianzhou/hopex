@@ -3,7 +3,7 @@ import { API } from "@constants"
 
 
 const { MOCKIP, USERIP } = API
-const MODE = MOCKIP
+const MODE =  USERIP
 
 // mock数据
 if (MODE === MOCKIP) {
@@ -32,6 +32,14 @@ export async function getEnsureRecord(payload) {
 
 // 查询用户钱包里面所有的结算货币(相关属性)
 export async function getPurseAssetList(payload) {
+  return request(`${MODE}/tc`, {
+    method: 'post',
+    body: payload
+  })
+}
+
+// 获取所有的合约列表
+export async function getAllMarkets(payload) {
   return request(`${MODE}/tc`, {
     method: 'post',
     body: payload
