@@ -30,7 +30,7 @@ export default joinModel(modelExtend, {
     * doLogin({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doLogin, {
         param: {
-          ...payload, loginType: "web", version: '1.0'
+          ...payload, loginType: "web"
         }
       }))
       if (resOk(res)) {
@@ -54,10 +54,10 @@ export default joinModel(modelExtend, {
       }
     },
     * doVertifyLogin({ payload = {} }, { call, put, select }) {
-      const res = getRes(yield call(doVertifyLogin,payload))
+      const res = getRes(yield call(doVertifyLogin, payload))
     },
     * doLoginOut({ payload = {} }, { call, put, select }) {
-      const res = getRes(yield call(doLoginOut))
+      yield (doLoginOut())
       yield put({
         type: 'changeState',
         payload: {
@@ -65,6 +65,8 @@ export default joinModel(modelExtend, {
         }
       })
       localSave.remove('userInfo')
+      //
+
     },
     * doRegister({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doRegister, {

@@ -13,7 +13,7 @@ export default class View extends Component {
 
   startInit = () => {
     this.startKline()
-    // this.getImportantPrice()
+    //this.getImportantPrice()
   }
 
   startKline = () => {
@@ -22,7 +22,7 @@ export default class View extends Component {
     // const Datafeeds = window.Datafeeds
     // window.$ = $
     const ws1 = wss.getSocket('ws1')
-    if (true) {
+    if (!this.chart) {
       this.chart = new TradingView.widget({
         disabled_features: ["left_toolbar", 'go_to_date', 'use_localstorage_for_settings', 'save_chart_properties_to_local_storage'],
         library_path: '/',
@@ -94,9 +94,9 @@ export default class View extends Component {
           getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
           },
           subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
-            dispatch({
-              type: `${modelName}/getKlineAddMore`
-            })
+            // dispatch({
+            //   type: `${modelName}/getKlineAddMore`
+            // })
             // ws1.onConnectPromise().then(() => {
             //   dispatch({
             //     type: `${modelName}/getImportantPrice`,
@@ -130,13 +130,13 @@ export default class View extends Component {
         locale: 'zh',
       })
     } else {
-      // this.chart.chart().setSymbol('', 1000, () => {
-      //   console.log('daole')
-      // })
+      this.chart.chart().setSymbol('', 1000, () => {
+        console.log('chart重新渲染')
+      })
     }
   }
 
-  componentWillMount() {
+  componentWillUnmount() {
     this.chart && this.chart.remove()
   }
 

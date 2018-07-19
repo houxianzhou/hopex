@@ -264,13 +264,22 @@ export default class View extends Component {
           header={
             <div >
               <span
+                style={{
+                  color: this.state.orderChannel === 'order.put_limit' ? 'green' : null
+                }}
                 onClick={() => {
                   this.changeState({
                     orderChannel: 'order.put_limit',
                   })
                 }}
-              >现价</span >
+              >
+                现价
+              </span >
               <span
+                style={{
+                  marginLeft:5,
+                  color: this.state.orderChannel === 'order.put_market' ? 'green' : null
+                }}
                 onClick={() => {
                   this.changeState({
                     orderChannel: 'order.put_market',
