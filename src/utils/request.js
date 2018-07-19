@@ -47,10 +47,10 @@ export function request(url = '', options = {}) {
     ...rest
   })
     .then((res) => {
-      if (_.has(res, 'data.errCode') && !_.isNull(_.get(res, 'data.errCode')) && _.get(res, 'data.errCode') !== '0') return Promise.reject({
-        errCode: res.data.errCode,
-        errMsg: res.data.errStr
-      })
+      // if (_.has(res, 'data.errCode') && !_.isNull(_.get(res, 'data.errCode')) && _.get(res, 'data.errCode') !== '0') return Promise.reject({
+      //   errCode: res.data.errCode,
+      //   errMsg: res.data.errStr
+      // })
       return res
     })
     .catch((error) => {

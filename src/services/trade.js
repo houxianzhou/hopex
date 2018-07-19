@@ -12,7 +12,7 @@ if (MODE === MOCKIP) {
 
 // 最新成交列表
 export async function getLatestRecord(payload) {
-  return request(`${MODE}/tc`, {
+  return request(`${MODE}`, {
     method: 'post',
     body: payload,
     needLoop: true,
@@ -22,7 +22,7 @@ export async function getLatestRecord(payload) {
 
 // 委托列表
 export async function getEnsureRecord(payload) {
-  return request(`${MODE}/tc`, {
+  return request(`${MODE}`, {
     method: 'post',
     body: payload,
     needLoop: true,
@@ -32,7 +32,7 @@ export async function getEnsureRecord(payload) {
 
 // 查询用户钱包里面所有的结算货币(相关属性)
 export async function getPurseAssetList(payload) {
-  return request(`${MODE}/tc`, {
+  return request(`${MODE}`, {
     method: 'post',
     body: payload
   })
@@ -40,7 +40,7 @@ export async function getPurseAssetList(payload) {
 
 // 获取所有的合约列表
 export async function getAllMarkets(payload) {
-  return request(`${MODE}/tc`, {
+  return request(`${MODE}`, {
     method: 'post',
     body: payload
   })
@@ -48,7 +48,7 @@ export async function getAllMarkets(payload) {
 
 // 下限价单
 export async function postLimitOrder(payload) {
-  return await request(`${MODE}/tc`, {
+  return await request(`${MODE}`, {
     method: 'post',
     body: payload
   })
@@ -57,7 +57,7 @@ export async function postLimitOrder(payload) {
 
 // 下市价单
 export async function postMarketOrder(payload) {
-  return await request(`${MODE}/tc`, {
+  return await request(`${MODE}`, {
     method: 'post',
     body: payload
   })

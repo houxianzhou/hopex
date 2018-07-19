@@ -21,6 +21,10 @@ export default class View extends Component {
     }
   }
 
+  changeState = (payload) => {
+    this.setState(payload)
+  }
+
   renderInputItem = (config = {}) => {
     const { label_name, label_desc, intro_desc, intro_price, value, onChange } = config
     return (
@@ -173,7 +177,7 @@ export default class View extends Component {
           type: `${modelName}/postSideOrder`,
           payload: {
             side: '2',
-            method: 'order.put_limit',
+            method: this.state.orderChannel,
             price: buy.price,
             amount: buy.amount
           }
@@ -235,7 +239,7 @@ export default class View extends Component {
               type: `${modelName}/postSideOrder`,
               payload: {
                 side: '1',
-                method: 'order.put_limit',
+                method: this.state.orderChannel,
                 price: sell.price,
                 amount: sell.amount
               }
@@ -258,7 +262,24 @@ export default class View extends Component {
         <ScrollPannel
           scroller={false}
           header={
-            <div >交易</div >
+            <div >
+              <span
+                onClick={() => {
+                  this.changeState({
+                    orderChannel: 'order.put_limit',
+                  })
+                }}
+              >现价</span >
+              <span
+                onClick={() => {
+                  this.changeState({
+                    orderChannel: 'order.put_market',
+                  })
+                }}
+              >
+                市价
+              </span >
+            </div >
           }
         >
           <div className={styles.content} >

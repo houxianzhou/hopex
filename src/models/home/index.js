@@ -10,25 +10,12 @@ import {
 export default joinModel(modelExtend, {
   namespace: 'home',
   state: {
-    marketList: [
-      {
-        name: 'BTCUSD永续',
-      },
-      {
-        name: '合约2'
-      },
-      {
-        name: '合约3'
-      }
-    ],
-    // 合约名称
-    market: 'BTCUSD永续',// 合约
+    marketList: [], // 合约列表
+    market: '',// 当前合约名称
     numberToFixed: 2, // 小数点位数
-    // 最新成交
-    latest_records: [],
-    // 委托列表
-    ensure_records: {},
-    // 价格指标
+    latest_records: [],// 最新成交
+    ensure_records: {},// 委托列表
+
     maxPrice: null, // 24h最高
     minPrice: null, // 24最低
     indexPrice: null, // 现货价格指数
@@ -45,7 +32,7 @@ export default joinModel(modelExtend, {
   },
 
   effects: {
-    * startInit({ payload = {} }, { call, put }) {
+    * startInit({ payload = {}, own }, { call, put }) {
     },
 
     // 最新成交列表
@@ -108,8 +95,8 @@ export default joinModel(modelExtend, {
       }
     },
 
-    //K线图
-    * getKline({ payload = {} }, { call, put }) {
+    //K线图全量查询
+    * getKlineAllList({ payload = {} }, { call, put }) {
       const ws1 = wss.getSocket('ws1')
       const { startTime, endTime } = payload
       const repayload = yield (asyncPayload(yield put({
@@ -122,8 +109,7 @@ export default joinModel(modelExtend, {
             "startTime": startTime,
             "endTime": endTime,
             "interval": "86400"
-          },
-          power: [0]
+          }
         }
       })))
       return ws1.sendJsonPromise(repayload, (e) => {
@@ -135,6 +121,23 @@ export default joinModel(modelExtend, {
           }
         }
       })
+    },
+
+    //K线图增量订阅
+    * getKlineAddMore({ payload = {} }, { call, put }) {
+      const ws1 = wss.getSocket('ws1')
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {
+            "method": "kline.subscribe"
+          },
+          param: {
+            "interval": "86400"
+          }
+        }
+      })))
+      ws1.sendJson(repayload)
     },
 
     //现货价格指数，24最高，24h最低
@@ -220,21 +223,27 @@ export default joinModel(modelExtend, {
           "param": {},
         }
       })))
-      if (repayload) {
-        const res = getRes(yield call(getPurseAssetList, repayload))
-        if (resOk(res)) {
-          const result = _.get(res, 'data.records')
-          result.map(item => {
-            item.levelages=formatJson(item.levelages)
+      const res = getRes(yield call(getPurseAssetList, repayload))
+      if (resOk(res)) {
+        const result = _.get(res, 'data.records')
+        result.map(item => {
+          item.levelages = formatJson(item.levelages)
+        })
+        if (result) {
+          const filterOne = result[0]
+          yield put({
+            type: 'changeState',
+            payload: {
+              marketList: result
+            }
           })
-          if (result) {
-            yield put({
-              type: 'changeState',
-              payload: {
-                marketList: result
-              }
-            })
-          }
+          yield put({
+            type: 'changeState',
+            payload: {
+              market: filterOne.name
+            }
+          })
+          return result
         }
       }
     },
@@ -253,15 +262,31 @@ export default joinModel(modelExtend, {
             "side": side,// 1:sell 2:buy
             "amount": amount,//买卖数量
             "price": price,//价格
-            // "takerFee": "0.01",
-            // "makerFee": "0.01",
+            "takerFee": "0.01",
+            "makerFee": "0.01",
+            "source": url === postLimitOrder ? '我是现价测试单' : '我是市价测试单'//备注
           },
-          powerMsg: '钱包列表 asset.list',
+          powerMsg: '下单',
           power: [1]
         }
       })))
-      const res = getRes(yield call(url, repayload))
+      if (repayload) {
+        const res = getRes(yield call(url, repayload))
+      }
     },
   },
-  reducers: {},
+  reducers: {
+    clearState(state, { payload }) {
+      return {
+        ...state,
+        latest_records: [],
+        ensure_records: {},
+        maxPrice: null, // 24h最高
+        minPrice: null, // 24最低
+        indexPrice: null, // 现货价格指数
+        latestPrice: null, //计算出来的，最新交易价格
+        equitablePrice: null // 计算出来的，合理价格
+      }
+    }
+  },
 })

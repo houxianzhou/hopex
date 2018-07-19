@@ -8,7 +8,7 @@ export const THEME = {
 
 export const API = {
   MOCKIP: '/mock/api/v1',
-  USERIP: '/api/v1'
+  USERIP: '/v1/trade'
 }
 
 export const SPEED = {

@@ -13,7 +13,7 @@ export default class View extends Component {
 
   startInit = () => {
     this.startKline()
-    this.getImportantPrice()
+    // this.getImportantPrice()
   }
 
   startKline = () => {
@@ -71,9 +71,8 @@ export default class View extends Component {
           },
           getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
             const [startTime, endTime] = [String(Math.min(from, to)), String(Math.max(from, to))]
-            console.log('1')
             dispatch({
-              type: `${modelName}/getKline`,
+              type: `${modelName}/getKlineAllList`,
               payload: {
                 startTime,
                 endTime
@@ -95,7 +94,22 @@ export default class View extends Component {
           getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
           },
           subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
-            console.log('2')
+            dispatch({
+              type: `${modelName}/getKlineAddMore`
+            })
+            // ws1.onConnectPromise().then(() => {
+            //   dispatch({
+            //     type: `${modelName}/getImportantPrice`,
+            //     payload: {
+            //       method: 'sub'
+            //     }
+            //   }).then(res => {
+            //     console.log('getImportantPrice订阅成功')
+            //     chanId = res
+            //   })
+            // })
+
+            // console.log('2')
             // const a = _.debounce(() => {
             //   onRealtimeCallback({
             //       "time": 1530464461000,
@@ -116,9 +130,9 @@ export default class View extends Component {
         locale: 'zh',
       })
     } else {
-      this.chart.chart().setSymbol('', 1000, () => {
-        console.log('daole')
-      })
+      // this.chart.chart().setSymbol('', 1000, () => {
+      //   console.log('daole')
+      // })
     }
   }
 

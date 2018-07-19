@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, ShowJsonTip } from '@components'
-import { isEqual } from '@utils'
+import { isEqual, _ } from '@utils'
 import wss from '@services/SocketClient'
 import LatestRecord from './LatestRecord'
 import TradeChart from './TradeChart'
@@ -34,29 +34,33 @@ export default class View extends Component {
   componentDidUpdate(prevProps) {
     const { model: { market: prevMarket } } = prevProps
     const { model: { market }, dispatch, modelName } = this.props
-    if (!isEqual(prevMarket, market) && market) {
+    if (!isEqual(prevMarket, market) && market && prevMarket) {
       wss.closeAll().then(() => {
-        dispatch({
-          type: `${modelName}/clearState`,
-        })
-        console.log('promise全部结束')
+        // dispatch({
+        //   type: `${modelName}/clearState`,
+        // })
         setTimeout(() => {
           this.startInit()
-        }, 2000)
+        }, 500)
       })
     }
   }
 
   startInit = () => {
-    this.getAllMarkets()
-    this.childInitStacks.map(item => item && item())
+    this.getAllMarkets().then(() => {
+      this.childInitStacks.map(item => item && item())
+    })
   }
 
   getAllMarkets = () => {
-    const { dispatch, modelName } = this.props
-    dispatch({
-      type: `${modelName}/getAllMarkets`
-    })
+    const { dispatch, modelName, model: { marketList = [] } } = this.props
+    if (_.isEmpty(marketList)) {
+      return dispatch({
+        type: `${modelName}/getAllMarkets`,
+        payload: {}
+      })
+    }
+    return Promise.resolve()
   }
 
   renderView = (name) => {
