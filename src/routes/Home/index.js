@@ -34,9 +34,9 @@ const Comp = {
 export default class View extends Component {
 
   componentDidUpdate(prevProps) {
-    const { model: { market: prevMarket } } = prevProps
-    const { model: { market }, dispatch, modelName } = this.props
-    if (!isEqual(prevMarket, market) && market && prevMarket) {
+    const { model: { marketCode: prevMarketCode } } = prevProps
+    const { model: { marketCode }, dispatch, modelName } = this.props
+    if (!isEqual(prevMarketCode, marketCode) && marketCode && prevMarketCode) {
       wss.closeAll().then(() => {
         // dispatch({
         //   type: `${modelName}/clearState`,

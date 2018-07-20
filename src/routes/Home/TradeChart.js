@@ -193,7 +193,7 @@ export default class View extends Component {
 
 
   render() {
-    const { model: { market = '', maxPrice, minPrice, indexPrice, latestPrice } } = this.props
+    const { model: { marketName = '', maxPrice, minPrice, indexPrice, latestPrice } } = this.props
     return (
       <Mixin.Child that={this} >
         <div
@@ -219,9 +219,9 @@ export default class View extends Component {
                 <div className={styles.content} >
                   <div className={styles.left} >
                     {
-                      market ? (
+                      marketName ? (
                         <>
-                          <div className={styles.marketname} >{market}</div >
+                          <div className={styles.marketname} >{marketName}</div >
                           < div className={styles.latestprice} >{latestPrice}</div >
                           <div className={styles.compare} >13.45</div >
                         </>

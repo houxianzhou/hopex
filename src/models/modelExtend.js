@@ -17,10 +17,10 @@ export default {
       const model = yield select(({ user, theme, home }) => (
         {
           ...user, ...theme,
-          market: home.market
+          marketCode: home.marketCode
         }
       ))
-      const { userInfo, userInfo: { userId, userToken } = {}, version, lang, market } = model
+      const { userInfo, userInfo: { userId, userToken } = {}, version, lang, marketCode } = model
       delete payload.power
       delete payload.powerMsg
       let result = Imu.fromJS(payload)
@@ -42,10 +42,10 @@ export default {
           }
         }
         if (_.has(payload, 'param')) {
-          result = reset(['param', 'market'], String(market))
+          result = reset(['param', 'market'], String(marketCode))
         }
         result = result.map((value) => {
-          if (value === 'replaceWith_market') return String(market)
+          if (value === 'replaceWith_market') return String(marketCode)
           return value
         })
         return result.toJS()

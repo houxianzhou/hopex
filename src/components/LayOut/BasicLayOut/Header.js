@@ -29,30 +29,31 @@ export default class View extends Component {
           <img alt='logo' src={logo} />
           <ul className={styles.nav} >
             {
-              routesBasic.map(item => {
+              routesBasic.map((item,index) => {
                 let renderItem = null
                 switch (item.name) {
                   case '合约交易': {
                     renderItem = (
-                      <li key={item.name} className={styles.navli} >
+                      <li key={index} className={styles.navli} >
                         合约交易
                         <div className={styles.dropdown} >
                           <ul >
                             {
-                              marketList.map(item => (
+                              marketList.map((item, index) => (
                                 <li
-                                  key={item.name}
+                                  key={index}
                                   onClick={() => {
-                                    const filterOne = marketList.filter(one => one.name === item.name)[0] || {}
+                                    const filterOne = marketList.filter(one => one.marketName === item.marketName)[0] || {}
                                     dispatch({
                                       type: `${modelName1}/changeState`,
                                       payload: {
-                                        market: filterOne.name
+                                        marketName: filterOne.marketName,
+                                        marketCode: filterOne.marketCode
                                       }
                                     })
                                   }}
                                 >
-                                  {item.name}
+                                  {item.marketName}
                                 </li >
                               ))
                             }

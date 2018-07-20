@@ -11,7 +11,8 @@ export default joinModel(modelExtend, {
   namespace: 'home',
   state: {
     marketList: [], // 合约列表
-    market: '',// 当前合约名称
+    marketName: '', //当前合约名称
+    marketCode: '', //当前合约code
     numberToFixed: 2, // 小数点位数
     latest_records: [],// 最新成交
     ensure_records: {},// 委托列表
@@ -112,7 +113,6 @@ export default joinModel(modelExtend, {
           }
         }
       })))
-      console.log(repayload)
       return ws1.sendJsonPromise(repayload, (e) => {
         const res = getRes(e)
         if (resOk(res)) {
@@ -241,7 +241,8 @@ export default joinModel(modelExtend, {
           yield put({
             type: 'changeState',
             payload: {
-              market: filterOne.name
+              marketName: filterOne.marketName,
+              marketCode: filterOne.marketCode
             }
           })
           return result
