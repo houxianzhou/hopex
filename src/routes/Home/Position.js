@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames } from '@utils'
+import { classNames, dealInterval } from '@utils'
 import { Table, Mixin } from '@components'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
@@ -14,70 +14,74 @@ export default class View extends Component {
     const { dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getPosition`
+    }).then(() => {
+      dealInterval(() => {
+        this.getPosition()
+      })
     })
   }
 
   render() {
+    const { model: { positionList = [] } } = this.props
     const head = [
       {
         name: '合约',
-        dataIndex: 'name',
+        dataIndex: 'market',
         // className: styles.red
         //width: '30%',
       },
       {
         name: '当前价格',
-        dataIndex: 'age',
+        dataIndex: 'no',
         //width: 200,
       },
       {
         name: '当前合理价格',
-        dataIndex: 'sex',
+        dataIndex: 'averagePrice',
         //width: 400,
       },
       {
         name: '杠杆倍数',
-        dataIndex: 'work',
+        dataIndex: 'leverage',
         //width: '30%',
       },
       {
         name: '数量(张)',
-        dataIndex: 'work',
+        dataIndex: 'amount',
         //width: '30%',
       },
       {
         name: '开仓均价',
-        dataIndex: 'work',
+        dataIndex: 'averagePrice',
         //width: '30%',
       },
       {
         name: '持续占用保证金',
-        dataIndex: 'work',
+        dataIndex: 'positionMoney',
         //width: '30%',
       },
       {
         name: '维持保证金',
-        dataIndex: 'work',
+        dataIndex: 'keepMoney',
         //width: '30%',
       },
       {
         name: '强平价格',
-        dataIndex: 'work',
+        dataIndex: 'overPrice',
         //width: '30%',
       },
       {
         name: '浮动盈亏(收益率)',
-        dataIndex: 'work',
+        dataIndex: 'floatProfit',
         //width: '30%',
       },
       {
         name: '操作',
         dataIndex: 'work',
-        //width: '30%',
       },
 
     ]
-    let data = []
+    let data = positionList
     data = data.length > 4 ? data : data.concat((new Array(4 - data.length)).fill({}))
     const tableProp = {
       head, data

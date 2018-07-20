@@ -182,7 +182,7 @@ export default {
           }
         }
       }
-      break
+        break
       case 'asset.list': {
         result = {
           "head": {
@@ -218,7 +218,7 @@ export default {
         }
 
       }
-      break
+        break
       // 合约列表
       case 'market.list': {
         result = {
@@ -298,6 +298,38 @@ export default {
           "ret": "0"
         }
 
+      }
+        break
+      case 'user.position': {
+        result = {
+          "head": {
+            "method": "user.position",
+            "msgType": "response",
+            "packType": "1",
+            "lang": "cn",
+            "version": "1.0.0",
+            "timestamps": "1439261904",
+            "serialNumber": "56",
+            "userId": "56",
+            "userToken": "56"
+          },
+          "data": {
+            "positionList": [
+              {
+                "market": "BTCUSD",//合约名称
+                "leverage": "10.00",//杠杆倍数
+                "amount": "1000",//持仓数量(张)
+                "averagePrice": "1111",//均价
+                "positionMoney": "1111",//持仓占用保证金
+                "keepMoney": "1111",//维持保证金
+                "overPrice": "1111",//强平价格
+                "floatProfit": "11111"//浮动盈亏
+              }],
+            "errCode": "0",
+            "errStr": "success",
+            "ret": "0"
+          }
+        }
       }
         break
       default:

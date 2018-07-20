@@ -29,6 +29,7 @@ export default joinModel(modelExtend, {
     minDealAmount: null, //最小交易量
 
     personalEnsures: [],//个人委托列表
+    positionList: [],//个人持仓列表
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -263,7 +264,7 @@ export default joinModel(modelExtend, {
             "method": "user.position"
           },
           "param": {
-            "marketList": ["BTCUSD", "ETHBTC"],
+            "marketList": [],
             "pageIndex": "0",//页码
             "pageSize": "100"//每页数量
           },
@@ -274,7 +275,16 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(getPosition, repayload))
         if (resOk(res)) {
-          console.log(res)
+          const result = _.get(res, 'data.positionList')
+          if (result) {
+            yield put({
+              type: 'changeState',
+              payload: {
+                positionList: result
+              }
+            })
+            return result
+          }
         }
       }
     },
@@ -391,6 +401,7 @@ export default joinModel(modelExtend, {
       })))
       if (repayload) {
         const res = getRes(yield call(url, repayload))
+
       }
     },
   },
