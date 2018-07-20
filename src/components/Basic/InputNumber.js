@@ -3,9 +3,10 @@ import * as styles from './InputNumber.less'
 
 export default function (Props) {
   const {
-    value, step = 10, max, min, onChange, className = {}, style = {}
+    value, step = 10,  max, min, onChange, className = {}, style = {}
   } = Props
   const valueTrans = value
+  const stepTrans=Number(step)
   return (
     <div
       style={style}
@@ -16,7 +17,7 @@ export default function (Props) {
       <div
         onClick={
           () => {
-            let re = Number(valueTrans) - step
+            let re = Number(valueTrans) - stepTrans
             if (re < 0) {
               re = 0
             }
@@ -32,7 +33,7 @@ export default function (Props) {
       }} />
       <div onClick={
         () => {
-          onChange(Number(valueTrans) + step)
+          onChange(Number(valueTrans) + stepTrans)
         }
       } >+
       </div >

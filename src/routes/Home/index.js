@@ -76,7 +76,6 @@ export default class View extends Component {
   render() {
     const { renderView } = this
     const { user: { userInfo } } = this.props
-    console.log(_.isEmpty(userInfo))
     return (
       <Mixin.Parent that={this} >
         <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >

@@ -255,6 +255,18 @@
   min-width: @view_width;
   max-width: @view_width;
   height: 344px;
+  .purseheader{
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    ul{
+      display: flex;
+      li+li{
+        margin-left: 10px;
+      }
+    }
+  }
   .content {
     padding: 20px 30px;
     .top {

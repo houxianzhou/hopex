@@ -25,6 +25,9 @@ export default joinModel(modelExtend, {
     latestPrice: null, //计算出来的，最新交易价格
     equitablePrice: null, // 计算出来的，合理价格
 
+    minVaryPrice: null, //最小变动价位
+    minDealAmount: null, //最小交易量
+
     personalEnsures: [],//个人委托列表
   },
   subscriptions: {
@@ -242,11 +245,8 @@ export default joinModel(modelExtend, {
             }
           })
           yield put({
-            type: 'changeState',
-            payload: {
-              marketName: filterOne.marketName,
-              marketCode: filterOne.marketCode
-            }
+            type: 'getCurrentMarket',
+            payload: filterOne
           })
           return result
         }
@@ -379,6 +379,17 @@ export default joinModel(modelExtend, {
         indexPrice: null, // 现货价格指数
         latestPrice: null, //计算出来的，最新交易价格
         equitablePrice: null // 计算出来的，合理价格
+      }
+    },
+    getCurrentMarket(state, { payload = {} }) {
+      const filterOne = state.marketList.filter(one => one.marketName === payload.marketName)[0] || {}
+      console.log(filterOne)
+      return {
+        ...state,
+        marketName: filterOne.marketName,
+        marketCode: filterOne.marketCode,
+        minVaryPrice: filterOne.minVaryPrice,
+        minDealAmount: filterOne.minDealAmount
       }
     }
   },

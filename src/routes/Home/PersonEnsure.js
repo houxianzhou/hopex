@@ -7,7 +7,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-    this.getPersonalEnsure()
+   // this.getPersonalEnsure()
   }
 
   getPersonalEnsure = () => {
@@ -15,9 +15,9 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/getPersonalEnsure`
     }).then((res) => {
-        // dealInterval(() => {
-        //   this.getPersonalEnsure()
-        // })
+        dealInterval(() => {
+          this.getPersonalEnsure()
+        })
       }
     )
   }

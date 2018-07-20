@@ -29,7 +29,7 @@ export default class View extends Component {
           <img alt='logo' src={logo} />
           <ul className={styles.nav} >
             {
-              routesBasic.map((item,index) => {
+              routesBasic.map((item, index) => {
                 let renderItem = null
                 switch (item.name) {
                   case '合约交易': {
@@ -43,13 +43,9 @@ export default class View extends Component {
                                 <li
                                   key={index}
                                   onClick={() => {
-                                    const filterOne = marketList.filter(one => one.marketName === item.marketName)[0] || {}
                                     dispatch({
                                       type: `${modelName1}/changeState`,
-                                      payload: {
-                                        marketName: filterOne.marketName,
-                                        marketCode: filterOne.marketCode
-                                      }
+                                      payload: item
                                     })
                                   }}
                                 >

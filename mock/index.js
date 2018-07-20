@@ -4,7 +4,7 @@ import helper from './helper'
 const { randomArrayMap, randomStr } = helper
 
 export default {
-  'Post /mock/api/v1/order': (req, res) => {
+  'Post /mock/v1/trade': (req, res) => {
     res.send(
       {
         "head": {
@@ -82,7 +82,7 @@ export default {
       }
     )
   },
-  'Post /mock/api/v1/tc': (req, res) => {
+  'Post /mock/v1/trade': (req, res) => {
     let result
     const method = _.get(req, 'body.head.method')
     switch (method) {
@@ -182,6 +182,7 @@ export default {
           }
         }
       }
+      break
       case 'asset.list': {
         result = {
           "head": {
@@ -217,23 +218,26 @@ export default {
         }
 
       }
+      break
       // 合约列表
       case 'market.list': {
         result = {
           "head": {
             "method": "market.list",
-            "timestamps": "1531990274810079",
-            "version": "1.0",
-            "lang": "cn",
-            "request": "request",
+            "msgType": "response",
             "packType": "1",
-            "serialNumber": "5",
-            "msgType": "response"
+            "lang": "cn",
+            "version": "1.0.0",
+            "timestamps": "1532052617857700",
+            "serialNumber": "56",
+            "userId": "56",
+            "userToken": "56"
           },
           "data": {
             "records": [
               {
-                "name": "BTCUSDT永续",
+                "marketCode": "BTCUSDT",
+                "marketName": "BTCUSDT永续",
                 "direction": "2",
                 "marketType": "2",
                 "minVaryPrice": "0.50000000",
@@ -242,22 +246,26 @@ export default {
                 "keepBailRate": "0.01000000",
                 "levelages": "[{\"id\":1,\"settingId\":1,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-17 18:39:28\",\"creator\":1},{\"id\":2,\"settingId\":1,\"initialMarginRate\":20.0000000000,\"leverage\":5.0000000000,\"createdTime\":\"2018-07-17 18:39:28\",\"creator\":1},{\"id\":3,\"settingId\":1,\"initialMarginRate\":5.0000000000,\"leverage\":20.0000000000,\"createdTime\":\"2018-07-17 18:39:28\",\"creator\":1}]",
                 "showPrec": "8",
-                "dealMoney": "BTC"
+                "dealMoney": "BTC",
+                "marketValue": "1.00000000"
               },
               {
-                "name": "ETHBTC永续",
-                "direction": "1",
-                "marketType": "2",
-                "minVaryPrice": "0.10000000",
-                "minDealAmount": "1",
-                "varyRange": "1 2 4 8",
-                "keepBailRate": "1.00000000",
-                "levelages": "[{\"id\":4,\"settingId\":2,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-17 18:53:58\",\"creator\":1},{\"id\":5,\"settingId\":2,\"initialMarginRate\":5.0000000000,\"leverage\":20.0000000000,\"createdTime\":\"2018-07-17 18:53:58\",\"creator\":1}]",
-                "showPrec": "8",
-                "dealMoney": "BTC"
+                "marketCode": "ETHBTC",//合约代码
+                "marketName": "ETHBTC永续",//合约显示名称
+                "direction": "1",//方向
+                "marketType": "2",//合约类型
+                "minVaryPrice": "0.10000000",//最小变动价位
+                "minDealAmount": "1",//最小交易量
+                "varyRange": "1 2 4 8",//价格变动范围
+                "keepBailRate": "1.00000000",//维持保证金率
+                "levelages": "[{\"id\":4,\"settingId\":2,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-17 18:53:58\",\"creator\":1},{\"id\":5,\"settingId\":2,\"initialMarginRate\":5.0000000000,\"leverage\":20.0000000000,\"createdTime\":\"2018-07-17 18:53:58\",\"creator\":1}]",//合约杠杆
+                "showPrec": "8",//合理价格等显示位数
+                "dealMoney": "BTC",//结算货币
+                "marketValue": "1.00000000"//合约价值
               },
               {
-                "name": "XRPETH永续",
+                "marketCode": "XRPETH",
+                "marketName": "XRPETH永续",
                 "direction": "2",
                 "marketType": "2",
                 "minVaryPrice": "1.00000000",
@@ -266,7 +274,22 @@ export default {
                 "keepBailRate": "1.00000000",
                 "levelages": "[{\"id\":8,\"settingId\":4,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-19 09:53:51\",\"creator\":1},{\"id\":9,\"settingId\":4,\"initialMarginRate\":20.0000000000,\"leverage\":5.0000000000,\"createdTime\":\"2018-07-19 09:53:51\",\"creator\":1}]",
                 "showPrec": "4",
-                "dealMoney": "XRP"
+                "dealMoney": "XRP",
+                "marketValue": "1.00000000"
+              },
+              {
+                "marketCode": "EOSBTC",
+                "marketName": "EOSBTC永续",
+                "direction": "1",
+                "marketType": "2",
+                "minVaryPrice": "1.00000000",
+                "minDealAmount": "1",
+                "varyRange": "1 3 44",
+                "keepBailRate": "1.00000000",
+                "levelages": "[{\"id\":3,\"settingId\":3,\"initialMarginRate\":111.0000000000,\"leverage\":0.9000000000,\"createdTime\":\"2018-07-19 20:46:44\",\"creator\":1}]",
+                "showPrec": "8",
+                "dealMoney": "BTC",
+                "marketValue": "1.00000000"
               }
             ]
           },

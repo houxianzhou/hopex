@@ -7,7 +7,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-    // this.getPurseAssetList()
+     this.getPurseAssetList()
   }
 
   getPurseAssetList = () => {
@@ -18,6 +18,7 @@ export default class View extends Component {
   }
 
   render() {
+    const { model: { assetList = [] } } = this.props
     return (
       <Mixin.Child that={this} >
         <div
@@ -33,7 +34,16 @@ export default class View extends Component {
           <ScrollPannel
             scroller={false}
             header={
-              <div >钱包</div >
+              <div className={styles.purseheader} >
+                <div >钱包</div >
+                <div >
+                  <ul >
+                    {
+                      assetList.map((item,index) => <li key={index}>{item.name}</li>)
+                    }
+                  </ul >
+                </div >
+              </div >
             }
           >
             <div className={styles.content} >

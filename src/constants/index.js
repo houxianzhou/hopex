@@ -7,7 +7,7 @@ export const THEME = {
 }
 
 export const API = {
-  MOCKIP: '/mock/api/v1',
+  MOCKIP: '/mock/v1/trade',
   USERIP: '/v1/trade'
 }
 

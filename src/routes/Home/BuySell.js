@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Slider } from 'antd'
 import { InputNumber } from "@components"
-import { classNames, _ } from '@utils'
+import { classNames, _, formatNumber } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -26,7 +26,7 @@ export default class View extends Component {
   }
 
   renderInputItem = (config = {}) => {
-    const { label_name, label_desc, intro_desc, intro_price, value, onChange } = config
+    const { label_name, label_desc, intro_desc, intro_price, value, onChange, step } = config
     return (
       <div className={styles.priceitem} >
         <div className={styles.priceinput} >
@@ -34,7 +34,7 @@ export default class View extends Component {
             <div className={styles.label_name} >{label_name}</div >
             <div className={styles.label_desc} >{label_desc}</div >
           </div >
-          <InputNumber className={styles.input_number} value={value} onChange={onChange} />
+          <InputNumber className={styles.input_number} value={value} step={step} onChange={onChange} />
         </div >
         {
           intro_desc && intro_price ? (
@@ -125,13 +125,13 @@ export default class View extends Component {
 
   render() {
     const { renderArea } = this
-    const { dispatch, modelName } = this.props
+    const { dispatch, modelName, model: { minVaryPrice = '', minDealAmount = '' } } = this.props
     const { orderChannel, buy, sell } = this.state
 
     // 限价或者市价
     const configPrice = {
       label_name: orderChannel === 'order.put_limit' ? '限价' : '市价',
-      label_desc: '最小单位0.5USD',
+      label_desc: `最小单位${formatNumber(minVaryPrice, 2)}USD`,
       intro_desc: '最高允许买价',
       intro_price: '10000.0',
       value: buy.price,
@@ -142,12 +142,13 @@ export default class View extends Component {
             price: value
           }
         })
-      }
+      },
+      step: minVaryPrice
     }
     // 数量
     const configAmount = {
       label_name: '数量',
-      label_desc: '最小单位1张',
+      label_desc: `最小单位${formatNumber(minDealAmount, 2)}张`,
       value: buy.amount,
       onChange: (value) => {
         this.setState({
@@ -156,7 +157,8 @@ export default class View extends Component {
             amount: value
           }
         })
-      }
+      },
+      step:minDealAmount
     }
     // 保证金
     const configEnsure = {
@@ -277,7 +279,7 @@ export default class View extends Component {
               </span >
               <span
                 style={{
-                  marginLeft:5,
+                  marginLeft: 5,
                   color: this.state.orderChannel === 'order.put_market' ? 'green' : null
                 }}
                 onClick={() => {
