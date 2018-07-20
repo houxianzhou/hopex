@@ -1,3 +1,4 @@
+import qs from 'qs'
 import { SPEED } from '@constants'
 import { lodash_helper, immutable, moment_helper } from './helper'
 
@@ -125,7 +126,7 @@ export const formatNumber = (...params) => {
 }
 
 export const formatJson = (string) => {
-  if(_.isObjectLike(string)) return string
+  if (_.isObjectLike(string)) return string
   return JSON.parse(string.replace(/\s+/g, ''))
 }
 
@@ -136,6 +137,10 @@ export const formatJson = (string) => {
 //   console.log('无法获取到userId,userToken，无权限调用接口')
 //   return false
 // }
+
+export const parsePathSearch = (search = '') => {
+  return qs.parse(search, { ignoreQueryPrefix: true })
+}
 
 
 

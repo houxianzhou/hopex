@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, ShowJsonTip } from '@components'
-import { isEqual, _ } from '@utils'
+import { isEqual, _, parsePathSearch } from '@utils'
 import wss from '@services/SocketClient'
 import LatestRecord from './LatestRecord'
 import TradeChart from './TradeChart'
@@ -57,11 +57,13 @@ export default class View extends Component {
   }
 
   getAllMarkets = () => {
-    const { dispatch, modelName, model: { marketList = [] } } = this.props
+    const { dispatch, modelName, model: { marketList = [] }, location: { search } } = this.props
     if (_.isEmpty(marketList)) {
       return dispatch({
         type: `${modelName}/getAllMarkets`,
-        payload: {}
+        payload: {
+          search: parsePathSearch(search).marketCode
+        }
       })
     }
     return Promise.resolve()

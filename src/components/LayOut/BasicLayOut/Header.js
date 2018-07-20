@@ -16,7 +16,7 @@ import * as styles from './index.less'
 }))
 export default class View extends Component {
   render() {
-    const { home: { marketList = [] } = {}, user: { userInfo }, theme, modelName1, modelName2, dispatch, routesBasic } = this.props
+    const { home: { marketList = [] } = {}, user: { userInfo }, theme, modelName1, modelName2, dispatch, routesBasic, history } = this.props
     return (
       <div className={
         classNames(
@@ -47,6 +47,9 @@ export default class View extends Component {
                                       type: `${modelName1}/changeState`,
                                       payload: item
                                     })
+                                    history.replace({
+                                      search: `?marketCode=${item.marketCode}`,
+                                    });
                                   }}
                                 >
                                   {item.marketName}

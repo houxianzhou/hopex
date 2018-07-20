@@ -237,7 +237,8 @@ export default joinModel(modelExtend, {
           item.levelages = formatJson(item.levelages)
         })
         if (result) {
-          const filterOne = result[0]
+          const { search } = payload
+          const filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
           yield put({
             type: 'changeState',
             payload: {
@@ -383,7 +384,6 @@ export default joinModel(modelExtend, {
     },
     getCurrentMarket(state, { payload = {} }) {
       const filterOne = state.marketList.filter(one => one.marketName === payload.marketName)[0] || {}
-      console.log(filterOne)
       return {
         ...state,
         marketName: filterOne.marketName,
