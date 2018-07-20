@@ -10,6 +10,7 @@ import Purse from './Purse'
 import BuySell from './BuySell'
 import CurrentContract from './CurrentContract'
 import Position from './Position'
+import PersonEnsure from './PersonEnsure'
 import styles from './index.less'
 
 const Comp = {
@@ -19,7 +20,8 @@ const Comp = {
   Purse,
   BuySell,
   CurrentContract,
-  Position
+  Position,
+  PersonEnsure
 }
 @connect(({ home: model, user, theme, loading, dispatch }) => ({
   model,
@@ -77,6 +79,11 @@ export default class View extends Component {
         <div className={styles.views} >
           {
             renderView('Position')
+          }
+        </div >
+        <div className={styles.views} >
+          {
+            renderView('PersonEnsure')
           }
         </div >
         <div className={styles.views} >

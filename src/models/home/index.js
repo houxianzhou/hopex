@@ -112,6 +112,7 @@ export default joinModel(modelExtend, {
           }
         }
       })))
+      console.log(repayload)
       return ws1.sendJsonPromise(repayload, (e) => {
         const res = getRes(e)
         if (resOk(res)) {
@@ -244,6 +245,49 @@ export default joinModel(modelExtend, {
             }
           })
           return result
+        }
+      }
+    },
+
+    //个人合约列表 查询用户的所有活跃委托
+    * getPersonalEnsure({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "order.user_active_delegate"
+          },
+          "param": {
+            "pageIndex": "0",//页码
+            "pageSize": "100"//每页数量
+          },
+          power: [1],
+          powerMsg: '个人合约列表'
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getPurseAssetList, repayload))
+        if (resOk(res)) {
+          const result = _.get(res, 'data.records')
+          result.map(item => {
+            item.levelages = formatJson(item.levelages)
+          })
+          if (result) {
+            const filterOne = result[0]
+            yield put({
+              type: 'changeState',
+              payload: {
+                marketList: result
+              }
+            })
+            yield put({
+              type: 'changeState',
+              payload: {
+                market: filterOne.name
+              }
+            })
+            return result
+          }
         }
       }
     },

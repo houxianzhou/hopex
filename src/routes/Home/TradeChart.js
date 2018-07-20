@@ -130,8 +130,8 @@ export default class View extends Component {
         locale: 'zh',
       })
     } else {
-      this.chart.chart().setSymbol('', 1000, () => {
-        console.log('chart重新渲染')
+      this.chart.setSymbol('股吧2', 100, () => {
+        return true
       })
     }
   }
