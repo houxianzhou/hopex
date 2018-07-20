@@ -111,8 +111,6 @@ export default class View extends Component {
             renderView('CurrentContract')
           }
         </div >
-
-
         {
           isLogin ? (
             <div className={styles.views} >
@@ -131,7 +129,6 @@ export default class View extends Component {
             </div >
           ) : null
         }
-
       </Mixin.Parent >
     )
   }

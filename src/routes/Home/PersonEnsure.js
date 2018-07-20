@@ -15,9 +15,9 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/getPersonalEnsure`
     }).then((res) => {
-        dealInterval(() => {
-          this.getPersonalEnsure()
-        })
+        // dealInterval(() => {
+        //   this.getPersonalEnsure()
+        // })
       }
     )
   }

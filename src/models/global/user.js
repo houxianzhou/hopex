@@ -38,18 +38,22 @@ export default joinModel(modelExtend, {
         if (enabledTwoFactories) {
           // 谷歌二次验证
         } else {
-          const payload = {
-            userId,
-            userToken: token
-          }
-          yield put({
-            type: 'changeState',
-            payload: {
-              userInfo: payload
+          if (token && userId) {
+            const payload = {
+              userId,
+              userToken: token
             }
-          })
-          localSave.set('userInfo', payload)
-          yield put(routerRedux.push('/home'))
+            yield put({
+              type: 'changeState',
+              payload: {
+                userInfo: payload
+              }
+            })
+            localSave.set('userInfo', payload)
+            yield put(routerRedux.push('/home'))
+          } else {
+
+          }
         }
       }
     },
