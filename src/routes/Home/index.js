@@ -87,27 +87,19 @@ export default class View extends Component {
         {/*renderView('RecentRecord')*/}
         {/*}*/}
         {/*</div >*/}
-        {
-          isLogin ? (
-            <div className={styles.views} >
-              {
-                renderView('PersonEnsure')
-              }
-            </div >
-          ) : null
-        }
-
-        {
-          isLogin ? (
-            <div className={styles.views} >
-              {
-                renderView('Position')
-              }
-            </div >
-          ) : null
-        }
 
 
+        <div className={styles.views} >
+          {
+            renderView('LatestRecord')
+          }
+          {
+            renderView('TradeChart')
+          }
+          {
+            renderView('EnsureRecord')
+          }
+        </div >
         <div className={styles.views} >
           {
             renderView('Purse')
@@ -119,18 +111,26 @@ export default class View extends Component {
             renderView('CurrentContract')
           }
         </div >
-        <div className={styles.views} >
-          {
-            renderView('LatestRecord')
-          }
-          {
-            renderView('TradeChart')
-          }
-          {
-            renderView('EnsureRecord')
-          }
 
-        </div >
+
+        {
+          isLogin ? (
+            <div className={styles.views} >
+              {
+                renderView('Position')
+              }
+            </div >
+          ) : null
+        }
+        {
+          isLogin ? (
+            <div className={styles.views} >
+              {
+                renderView('PersonEnsure')
+              }
+            </div >
+          ) : null
+        }
 
       </Mixin.Parent >
     )
