@@ -46,6 +46,14 @@ export async function getAllMarkets(payload) {
   })
 }
 
+// 获取所有的个人持仓列表
+export async function getPosition(payload) {
+  return request(`${MODE}`, {
+    method: 'post',
+    body: payload
+  })
+}
+
 // 获取所有的个人合约列表
 export async function getPersonalEnsure(payload) {
   return request(`${MODE}`, {

@@ -7,7 +7,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-   // this.getPersonalEnsure()
+    this.getPersonalEnsure()
   }
 
   getPersonalEnsure = () => {
@@ -15,9 +15,9 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/getPersonalEnsure`
     }).then((res) => {
-        dealInterval(() => {
-          this.getPersonalEnsure()
-        })
+        // dealInterval(() => {
+        //   this.getPersonalEnsure()
+        // })
       }
     )
   }
@@ -33,8 +33,8 @@ export default class View extends Component {
         name: '类型',
         dataIndex: 'type',
         render: (value, record) => {
-          if (value === '1') return '限价单'
-          if (value === '2') return '市价单'
+          const side = record.side === '1' ? '卖出' : (record.side ? '买入' : null)
+          return <span>{side}</span>
         }
       },
       {

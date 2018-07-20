@@ -1,17 +1,28 @@
 import React, { Component } from 'react'
 import { classNames } from '@utils'
-import { Table } from '@components'
+import { Table, Mixin } from '@components'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
 
 export default class View extends Component {
+  startInit = () => {
+    this.getPosition()
+  }
+
+  getPosition = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getPosition`
+    })
+  }
+
   render() {
     const head = [
       {
         name: '合约',
         dataIndex: 'name',
-       // className: styles.red
+        // className: styles.red
         //width: '30%',
       },
       {
@@ -84,26 +95,28 @@ export default class View extends Component {
       head, data
     }
     return (
-      <div
-        className={
-          classNames(
-            {
-              view: true
-            },
-            styles.position
-          )
-        }
-      >
-        <ScrollPannel
-          scroller={false}
-          header={
-            <div >当前持仓</div >
+      <Mixin.Child that={this} >
+        <div
+          className={
+            classNames(
+              {
+                view: true
+              },
+              styles.position
+            )
           }
         >
-          <Table className={styles.table} {...tableProp}>等等</Table >
+          <ScrollPannel
+            scroller={false}
+            header={
+              <div >当前持仓</div >
+            }
+          >
+            <Table className={styles.table} {...tableProp}>等等</Table >
 
-        </ScrollPannel >
-      </div >
+          </ScrollPannel >
+        </div >
+      </Mixin.Child >
     )
   }
 }

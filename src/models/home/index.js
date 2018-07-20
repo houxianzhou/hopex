@@ -3,7 +3,7 @@ import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
-  getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure
+  getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure, getPosition
 } from "@services/trade"
 
 
@@ -254,6 +254,31 @@ export default joinModel(modelExtend, {
       }
     },
 
+    //个人持仓列表
+    * getPosition({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "user.position"
+          },
+          "param": {
+            "marketList": ["BTCUSD", "ETHBTC"],
+            "pageIndex": "0",//页码
+            "pageSize": "100"//每页数量
+          },
+          power: [1],
+          powerMsg: '个人持仓列表'
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getPosition, repayload))
+        if (resOk(res)) {
+          console.log(res)
+        }
+      }
+    },
+
     //个人合约列表 查询用户的所有活跃委托
     * getPersonalEnsure({ payload = {} }, { call, put }) {
       const repayload = yield (asyncPayload(yield put({
@@ -322,7 +347,7 @@ export default joinModel(modelExtend, {
             "pageSize": "100"//每页数量
           },
           power: [1],
-          powerMsg: '个人合约列表'
+          powerMsg: '最近十条'
         }
       })))
       if (repayload) {
@@ -373,13 +398,24 @@ export default joinModel(modelExtend, {
     clearState(state, { payload }) {
       return {
         ...state,
-        latest_records: [],
-        ensure_records: {},
+        marketName: '', //当前合约名称
+        marketCode: '', //当前合约code
+        numberToFixed: 2, // 小数点位数
+
+        latest_records: [],// 最新成交
+        ensure_records: {},// 委托列表
+
         maxPrice: null, // 24h最高
         minPrice: null, // 24最低
         indexPrice: null, // 现货价格指数
+
         latestPrice: null, //计算出来的，最新交易价格
-        equitablePrice: null // 计算出来的，合理价格
+        equitablePrice: null, // 计算出来的，合理价格
+
+        minVaryPrice: null, //最小变动价位
+        minDealAmount: null, //最小交易量
+
+        personalEnsures: [],//个人委托列表
       }
     },
     getCurrentMarket(state, { payload = {} }) {

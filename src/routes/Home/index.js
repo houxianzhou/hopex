@@ -40,9 +40,9 @@ export default class View extends Component {
     const { model: { marketCode }, dispatch, modelName } = this.props
     if (!isEqual(prevMarketCode, marketCode) && marketCode && prevMarketCode) {
       wss.closeAll().then(() => {
-        // dispatch({
-        //   type: `${modelName}/clearState`,
-        // })
+        dispatch({
+          type: `${modelName}/clearState`,
+        })
         setTimeout(() => {
           this.startInit()
         }, 500)
@@ -78,6 +78,7 @@ export default class View extends Component {
   render() {
     const { renderView } = this
     const { user: { userInfo } } = this.props
+    const isLogin = !_.isEmpty(userInfo)
     return (
       <Mixin.Parent that={this} >
         <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >
@@ -86,16 +87,26 @@ export default class View extends Component {
         {/*renderView('RecentRecord')*/}
         {/*}*/}
         {/*</div >*/}
-        <div className={styles.views} >
-          {
-            _.isEmpty(userInfo) ? null : renderView('PersonEnsure')
-          }
-        </div >
-        <div className={styles.views} >
-          {
-            renderView('Position')
-          }
-        </div >
+        {
+          isLogin ? (
+            <div className={styles.views} >
+              {
+                renderView('PersonEnsure')
+              }
+            </div >
+          ) : null
+        }
+
+        {
+          isLogin ? (
+            <div className={styles.views} >
+              {
+                renderView('Position')
+              }
+            </div >
+          ) : null
+        }
+
 
         <div className={styles.views} >
           {
