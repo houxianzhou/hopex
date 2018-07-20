@@ -11,6 +11,7 @@ import BuySell from './BuySell'
 import CurrentContract from './CurrentContract'
 import Position from './Position'
 import PersonEnsure from './PersonEnsure'
+import RecentRecord from './RecentRecord'
 import styles from './index.less'
 
 const Comp = {
@@ -21,7 +22,8 @@ const Comp = {
   BuySell,
   CurrentContract,
   Position,
-  PersonEnsure
+  PersonEnsure,
+  RecentRecord
 }
 @connect(({ home: model, user, theme, loading, dispatch }) => ({
   model,
@@ -73,12 +75,19 @@ export default class View extends Component {
 
   render() {
     const { renderView } = this
+    const { user: { userInfo } } = this.props
+    console.log(_.isEmpty(userInfo))
     return (
       <Mixin.Parent that={this} >
         <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >
+        {/*<div className={styles.views} >*/}
+        {/*{*/}
+        {/*renderView('RecentRecord')*/}
+        {/*}*/}
+        {/*</div >*/}
         <div className={styles.views} >
           {
-            renderView('PersonEnsure')
+            _.isEmpty(userInfo) ? null : renderView('PersonEnsure')
           }
         </div >
         <div className={styles.views} >

@@ -7,7 +7,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-    this.getPersonalEnsure()
+    // this.getPersonalEnsure()
   }
 
   getPersonalEnsure = () => {
@@ -23,7 +23,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { personalEnsures, userInfo }, dispatch, modelName } = this.props
+    const { model: { personalEnsures } } = this.props
     const head = [
       {
         name: '合约',
@@ -85,19 +85,8 @@ export default class View extends Component {
       },
       {
         name: '操作',
-        dataIndex: 'orderId',
-        render: (value, record) => {
-          return value ? <span onClick={() => {
-            dispatch({
-              type: `${modelName}/doCancelPersonEnsure`,
-              payload: {
-                market: record.market,
-                orderId: record.orderId
-              }
-            })
-          }
-          } ><a >撤销</a ></span > : null
-        }
+        dataIndex: 'work',
+        //width: '30%',
       },
 
     ]
@@ -121,7 +110,12 @@ export default class View extends Component {
           <ScrollPannel
             scroller={false}
             header={
-              <div >活跃委托</div >
+              <div style={{}}>
+                <span >最近10条委托历史  </span >
+                <span >最近10条交割历史  </span >
+                <span >最近10条强平历史  </span >
+                <span >最近10条自动减仓历史  </span >
+              </div>
             }
           >
             <Table className={styles.table} {...tableProp}>等等</Table >

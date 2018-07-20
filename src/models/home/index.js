@@ -3,7 +3,7 @@ import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
-  getKline, getPurseAssetList, getPersonalEnsure
+  getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure
 } from "@services/trade"
 
 
@@ -281,6 +281,62 @@ export default joinModel(modelExtend, {
               }
             })
           }
+          return res
+        }
+      }
+    },
+
+    //撤销委托订单 order cancel(撤单)
+    * doCancelPersonEnsure({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "order.cancel",
+          },
+          "param": {
+            ...payload
+          },
+          power: [1],
+          powerMsg: '撤销个人委托订单'
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(doCancelPersonEnsure, repayload))
+        if (resOk(res)) {
+          console.log(res)
+        }
+      }
+    },
+
+    * getRecentTenHistory({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "order.user_active_delegate"
+          },
+          "param": {
+            "pageIndex": "0",//页码
+            "pageSize": "100"//每页数量
+          },
+          power: [1],
+          powerMsg: '个人合约列表'
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getPersonalEnsure, repayload))
+        if (resOk(res)) {
+          const result = _.get(res, 'data.records')
+          if (result) {
+            yield put({
+              type: 'changeState',
+              payload: {
+                personalEnsures: result
+              }
+            })
+          }
+          return res
         }
       }
     },

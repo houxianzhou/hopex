@@ -54,6 +54,14 @@ export async function getPersonalEnsure(payload) {
   })
 }
 
+// 撤单
+export async function doCancelPersonEnsure(payload) {
+  return request(`${MODE}`, {
+    method: 'post',
+    body: payload
+  })
+}
+
 // 下限价单
 export async function postLimitOrder(payload) {
   return await request(`${MODE}`, {

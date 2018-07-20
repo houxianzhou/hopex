@@ -57,7 +57,7 @@ export default joinModel(modelExtend, {
       const res = getRes(yield call(doVertifyLogin, payload))
     },
     * doLoginOut({ payload = {} }, { call, put, select }) {
-      yield (doLoginOut())
+      // yield (doLoginOut())
       yield put({
         type: 'changeState',
         payload: {
