@@ -23,6 +23,7 @@ export const lodash_helper = {
   set: _.set,
   isEmpty: _.isEmpty,
   isNull: _.isNull,
+  isNaN: _.isNaN,
   isUndefined: _.isUndefined,
   isBoolean: _.isBoolean,
   isNumber: _.isNumber,

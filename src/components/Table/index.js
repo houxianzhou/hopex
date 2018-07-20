@@ -70,6 +70,7 @@ export default function (Props) {
                           if (_.isFunction(item2.render)) {
                             value = item2.render(value, item)
                           }
+                          value = !_.isNaN(value) && !_.isUndefined(value) ? value : ''
                           return (
                             <td key={index2} {...getTdhProps(item2.className)}>{value}</td >
                           )

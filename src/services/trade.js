@@ -46,6 +46,14 @@ export async function getAllMarkets(payload) {
   })
 }
 
+// 获取所有的个人合约列表
+export async function getPersonalEnsure(payload) {
+  return request(`${MODE}`, {
+    method: 'post',
+    body: payload
+  })
+}
+
 // 下限价单
 export async function postLimitOrder(payload) {
   return await request(`${MODE}`, {

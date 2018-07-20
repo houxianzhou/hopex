@@ -78,14 +78,15 @@ export default class View extends Component {
         <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >
         <div className={styles.views} >
           {
-            renderView('Position')
+            renderView('PersonEnsure')
           }
         </div >
         <div className={styles.views} >
           {
-            renderView('PersonEnsure')
+            renderView('Position')
           }
         </div >
+
         <div className={styles.views} >
           {
             renderView('Purse')

@@ -3,7 +3,7 @@ import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
-  getKline, getPurseAssetList
+  getKline, getPurseAssetList, getPersonalEnsure
 } from "@services/trade"
 
 
@@ -14,6 +14,7 @@ export default joinModel(modelExtend, {
     marketName: '', //当前合约名称
     marketCode: '', //当前合约code
     numberToFixed: 2, // 小数点位数
+
     latest_records: [],// 最新成交
     ensure_records: {},// 委托列表
 
@@ -22,7 +23,9 @@ export default joinModel(modelExtend, {
     indexPrice: null, // 现货价格指数
 
     latestPrice: null, //计算出来的，最新交易价格
-    equitablePrice: null // 计算出来的，合理价格
+    equitablePrice: null, // 计算出来的，合理价格
+
+    personalEnsures: [],//个人委托列表
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -267,27 +270,16 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getPurseAssetList, repayload))
+        const res = getRes(yield call(getPersonalEnsure, repayload))
         if (resOk(res)) {
           const result = _.get(res, 'data.records')
-          result.map(item => {
-            item.levelages = formatJson(item.levelages)
-          })
           if (result) {
-            const filterOne = result[0]
             yield put({
               type: 'changeState',
               payload: {
-                marketList: result
+                personalEnsures: result
               }
             })
-            yield put({
-              type: 'changeState',
-              payload: {
-                market: filterOne.name
-              }
-            })
-            return result
           }
         }
       }
