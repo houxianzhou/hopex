@@ -77,20 +77,8 @@ export default class View extends Component {
       },
 
     ]
-    let data = [
-      {
-        name: '1',
-        age: '1',
-        sex: '1',
-        work: '1'
-      }
-    ]
-    data = data.length > 4 ? data : data.concat((new Array(4 - data.length)).fill({
-      name: '',
-      age: '',
-      sex: '',
-      work: ''
-    }))
+    let data = []
+    data = data.length > 4 ? data : data.concat((new Array(4 - data.length)).fill({}))
     const tableProp = {
       head, data
     }
