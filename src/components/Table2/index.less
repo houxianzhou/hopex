@@ -1,8 +1,8 @@
 .tableContainer {
   width: 100%;
   height: 100%;
-  background: red;
   .table {
+    position: relative;
     width: 100%;
     height: 100%;
     display: flex;
@@ -10,7 +10,13 @@
     .tr {
       display: flex;
     }
+    .td, .th {
+      flex-shrink: 1;
+      flex-grow: 1;
+    }
     .thead {
+      background: red;
+      position: relative;
       .tr {
         .th {
 
@@ -18,9 +24,10 @@
       }
     }
     .tbody {
+      background: #52c41a;
       .tr {
         .td {
-          background: #52c41a;
+
         }
       }
     }

@@ -16,7 +16,7 @@ export default class View extends Component {
     } = this.props
     this.scroll = new BScroll(`.${this.uuid}`, {
       click: true,
-      probeType: 0,
+      probeType: 3,
       preventDefault: mouseWheel,
       stopPropagation: false,
       scrollbar: scrollbar === 'fixed' ? {
@@ -24,6 +24,7 @@ export default class View extends Component {
         interactive: true
       } : (scrollbar || false),
       scrollY: !!scrollbar || false,
+      scrollX: true,
       mouseWheel,
       ...rest
     })
@@ -34,7 +35,7 @@ export default class View extends Component {
 
   render() {
     this.uuid = _.uniqueId('container_')
-    const { children } = this.props
+    const { children, scroll = {} } = this.props
     return (
       <div
         style={{ position: 'relative', width: '100%', height: '100%' }} >
@@ -45,10 +46,11 @@ export default class View extends Component {
             width: '100%',
             overflow: 'hidden',
             position: 'absolute',
-            top: '0'
+            top: 0,
+            left: 0
           }}
         >
-          <div className="content" >
+          <div className="content" style={{ width: scroll.x }} >
             {children}
           </div >
         </div >

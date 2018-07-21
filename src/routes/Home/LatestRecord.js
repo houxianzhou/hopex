@@ -24,14 +24,19 @@ export default class View extends Component {
 
   render() {
     const { model: { latest_records = [] } } = this.props
-    const head = [
+    const columns = [
       {
         title: '时间',
         dataIndex: 'time',
+        width: 200,
+        render: (value, record, index) => {
+          return index
+        }
       },
       {
         title: '价格',
         dataIndex: 'price',
+        width: 200,
       },
       {
         title: '数量',
@@ -40,12 +45,16 @@ export default class View extends Component {
       {
         title: '类型',
         dataIndex: 'type',
+        width: 400,
       }
     ]
-    const data = latest_records
+    const dataSource = latest_records
     const tableProps = {
-      head,
-      data
+      columns,
+      dataSource,
+      scroll: {
+         x: 830,
+      }
     }
     return (
       <Mixin.Child that={this} >
