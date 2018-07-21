@@ -28,31 +28,31 @@ export default class View extends Component {
       {
         title: '时间',
         dataIndex: 'time',
+        width: '30%',
         render: (value, record, index) => {
-          return index
+          return moment.formatHMS(String(value).split('.')[0] * 1000)
         }
+      },
+      {
+        title: '类型',
+        dataIndex: 'type',
       },
       {
         title: '价格',
         dataIndex: 'price',
       },
       {
-        title: '数量',
+        title: '数量(张)',
         dataIndex: 'amount',
       },
-      {
-        title: '类型',
-        dataIndex: 'type',
-      }
+
     ]
     const dataSource = latest_records
     const tableProps = {
       className: styles.tableContainer,
       columns,
       dataSource,
-      scroll: {
-        // x: 830,
-      }
+      scroll: {}
     }
     return (
       <Mixin.Child that={this} >

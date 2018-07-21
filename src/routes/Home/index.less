@@ -21,19 +21,20 @@
 .tableContainer {
   :global {
     .table {
+
+    }
+    .tr {
+      padding: 0 @padding_li_left;
+    }
+    .thead {
       .tr {
-        padding: 0 @padding_li_left;
+        height: 32px;
       }
-      .thead {
-        .tr {
-          height: 32px;
-        }
-      }
-      .tbody {
-        .tr {
-          &:nth-child(2n+1) {
-            background: @c_panel_light;
-          }
+    }
+    .tbody {
+      .tr {
+        &:nth-child(2n+1) {
+          background: @c_panel_light;
         }
       }
     }
@@ -44,48 +45,59 @@
   min-width: @view_width;
   max-width: @view_width;
   height: 560px;
-  ul {
-    width: 100%;
-    li {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      span {
-        width: 25%;
-        display: inline-block;
+  :global {
+    .thead {
+      .tr {
+      }
+    }
+    .tbody {
+      .tr {
+        height: 26px;
       }
     }
   }
-  div.record_header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  ul.record_theader {
-    li {
-    }
-  }
-  ul.record_content {
-    li {
-      font-size: 13px;
-      height: @pannel_li_height;
-      padding: @padding_panel;
-      &:nth-child(2n+1) {
-        background: @c_panel_light;
-      }
-      &.buy {
-        .colorchange {
-          color: @_green;
-        }
-      }
-      &.sell {
-        .colorchange {
-          color: @_red;
-        }
-      }
-    }
-  }
+  //ul {
+  //  width: 100%;
+  //  li {
+  //    width: 100%;
+  //    display: flex;
+  //    align-items: center;
+  //    span {
+  //      width: 25%;
+  //      display: inline-block;
+  //    }
+  //  }
+  //}
+  //div.record_header {
+  //  width: 100%;
+  //  display: flex;
+  //  align-items: center;
+  //  justify-content: space-between;
+  //}
+  //ul.record_theader {
+  //  li {
+  //  }
+  //}
+  //ul.record_content {
+  //  li {
+  //    font-size: 13px;
+  //    height: @pannel_li_height;
+  //    padding: @padding_panel;
+  //    &:nth-child(2n+1) {
+  //      background: @c_panel_light;
+  //    }
+  //    &.buy {
+  //      .colorchange {
+  //        color: @_green;
+  //      }
+  //    }
+  //    &.sell {
+  //      .colorchange {
+  //        color: @_red;
+  //      }
+  //    }
+  //  }
+  //}
 }
 
 .tradeChart {
