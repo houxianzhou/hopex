@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { classNames, dealInterval, _ } from '@utils'
 import { Table, Mixin } from '@components'
+import { SCROLLX} from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
 
 export default class View extends Component {
   startInit = () => {
-    this.getPosition()
+    // this.getPosition()
   }
 
   getPosition = () => {
@@ -27,53 +28,42 @@ export default class View extends Component {
       {
         title: '合约',
         dataIndex: 'market',
-        // className: styles.red
-        //width: '30%',
       },
       {
         title: '当前价格',
         dataIndex: 'no',
-        //width: 200,
       },
       {
         title: '当前合理价格',
         dataIndex: 'averagePrice',
-        //width: 400,
       },
       {
         title: '杠杆倍数',
         dataIndex: 'leverage',
-        //width: '30%',
       },
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        //width: '30%',
       },
       {
         title: '开仓均价',
         dataIndex: 'averagePrice',
-        //width: '30%',
       },
       {
         title: '持续占用保证金',
         dataIndex: 'positionMoney',
-        //width: '30%',
       },
       {
         title: '维持保证金',
         dataIndex: 'keepMoney',
-        //width: '30%',
       },
       {
         title: '强平价格',
         dataIndex: 'overPrice',
-        //width: '30%',
       },
       {
         title: '浮动盈亏(收益率)',
         dataIndex: 'floatProfit',
-        //width: '30%',
       },
       {
         title: '操作',
@@ -87,7 +77,7 @@ export default class View extends Component {
       columns,
       dataSource: _.merge((new Array(4)).fill(), dataSource),
       scroll: {
-        x: 1400
+        x: SCROLLX.X
       }
     }
     return (

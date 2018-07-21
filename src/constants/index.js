@@ -28,3 +28,8 @@ export const POWER = {
   private: 1,
   public: 0
 }
+
+// better-scroll横向滚动条出现时机
+export const SCROLLX = {
+  X: 1400
+}

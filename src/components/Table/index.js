@@ -103,7 +103,7 @@ export default class View extends Component {
                               if (_.isFunction(item2.render)) {
                                 value = item2.render(value, item, index)
                               }
-                              if (_.isObject(value)) {
+                              if (_.isObject(value) && !_.has(value, '$$typeof')) {
                                 result = value.value
                                 className = value.className
                               } else {

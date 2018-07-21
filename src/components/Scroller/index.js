@@ -17,7 +17,7 @@ export default class View extends Component {
     this.scroll = new BScroll(`.${this.uuid}`, {
       click: true,
       probeType: 3,
-      preventDefault: mouseWheel,
+      // preventDefault: mouseWheel,
       stopPropagation: false,
       scrollbar: scrollbar === 'fixed' ? {
         fade: false,
@@ -25,7 +25,7 @@ export default class View extends Component {
       } : (scrollbar || false),
       scrollY: !!scrollbar || false,
       scrollX: true,
-      bounce: false,
+      // bounce: false,
       mouseWheel,
       ...rest
     })

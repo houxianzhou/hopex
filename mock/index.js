@@ -331,6 +331,48 @@ export default {
         }
       }
         break
+      case 'order.user_active_delegate': {
+        result = {
+          "head": {
+            "method": "order.user_active_delegate",
+            "userId": "3",
+            "userToken": "user.QC5LTHR6HOUZINUCE4YI.web",
+            "lang": "cn",
+            "request": "request",
+            "packType": "1",
+            "version": "1.0",
+            "timestamps": "1532175227023967",
+            "serialNumber": "49",
+            "msgType": "response"
+          },
+          "data": {
+            "pageIndex": "0",
+            "pageSize": "100",
+            "total": "3",
+            "records": (new Array(6)).fill({
+              "orderId": "19298",
+              "market": "BTCUSDT",
+              "source": "我是现价测试单",
+              "type": "1",
+              "side": "2",
+              "userId": "3",
+              "ctime": "1532082876.271102",
+              "mtime": "1532082876.271102",
+              "price": "0.5",
+              "amount": "2",
+              "taker_fee": "0.01",
+              "maker_fee": "0.01",
+              "left": "2",
+              "deal_stock": "0",
+              "deal_money": "0",
+              "deal_fee": "0"
+            })
+          },
+          "errCode": "0",
+          "errStr": "success",
+          "ret": "0"
+        }
+      }
       default:
     }
     res.send(
