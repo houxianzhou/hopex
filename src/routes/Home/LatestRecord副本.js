@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { classNames, dealInterval, moment } from '@utils'
 import switch_render from '@assets/switch_render.png'
-import { Mixin, Table2 } from "@components"
+import { Mixin } from "@components"
 import ScrollPannel from './components/ScrollPanel2'
 import styles from './index.less'
 
 export default class View extends Component {
 
   startInit = () => {
-    this.getLatestRecord()
+      this.getLatestRecord()
   }
 
   getLatestRecord = () => {
@@ -24,29 +24,7 @@ export default class View extends Component {
 
   render() {
     const { model: { latest_records = [] } } = this.props
-    const head = [
-      {
-        title: '时间',
-        dataIndex: 'time',
-      },
-      {
-        title: '价格',
-        dataIndex: 'price',
-      },
-      {
-        title: '数量',
-        dataIndex: 'amount',
-      },
-      {
-        title: '类型',
-        dataIndex: 'type',
-      }
-    ]
     const data = latest_records
-    const tableProps = {
-      head,
-      data
-    }
     return (
       <Mixin.Child that={this} >
         <div
@@ -60,16 +38,41 @@ export default class View extends Component {
           }
         >
           <ScrollPannel
+            scrollConfig={{
+              scrollbar: true,
+            }}
             header={
               <div className={styles.record_header} >
                 <span >最新成交</span >
                 <img alt='switch' src={switch_render} />
               </div >
             }
+            theader={
+              <ul className={styles.record_theader} >
+                <li >
+                  <span >时间</span >
+                  <span >方向</span >
+                  <span >价格</span >
+                  <span >数量(张)</span >
+                </li >
+              </ul >
+            }
           >
-            <Table2 {...tableProps}>
-              ffff
-            </Table2 >
+            <ul className={styles.record_content} >
+              {
+                data.map((item, index) => (
+                  <li key={index} className={classNames(
+                    item.type === 'buy' ? styles.buy : styles.sell
+                  )} >
+                    <span >{moment.formatHMS(String(item.time).split('.')[0] * 1000)}</span >
+                    <span className={styles.colorchange} >{item.type === 'buy' ? '买入' : '卖出'}</span >
+                    <span className={styles.colorchange} >{item.price}</span >
+                    <span >{item.amount}</span >
+                  </li >
+                ))
+              }
+            </ul >
+
           </ScrollPannel >
         </div >
       </Mixin.Child >

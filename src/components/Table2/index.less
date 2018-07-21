@@ -1,0 +1,39 @@
+.tableContainer {
+  width: 100%;
+  height: 100%;
+  background: red;
+  .table {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .tr {
+      display: flex;
+    }
+    .thead {
+      .tr {
+        .th {
+
+        }
+      }
+    }
+    .tbody {
+      .tr {
+        .td {
+          background: #52c41a;
+        }
+      }
+    }
+    ._scrollerTableContainer {
+      position: relative;
+      flex-grow: 1;
+      ._scrollerTable {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: blue;
+      }
+    }
+  }
+}
+
