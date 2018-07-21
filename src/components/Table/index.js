@@ -101,7 +101,7 @@ export default class View extends Component {
                               value = ''
                             } else {
                               if (_.isFunction(item2.render)) {
-                                value = item2.render(value, item, index)
+                                value = item2.render(value, item, index, dataSource)
                               }
                               if (_.isObject(value) && !_.has(value, '$$typeof')) {
                                 result = value.value

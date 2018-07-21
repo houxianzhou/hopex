@@ -162,15 +162,30 @@
   max-width: @view_width;
   min-width: @view_width;
   font-size: 13px;
+  :global {
+    .tbody {
+      .tr {
+        .td {
+          &.buy {
+            color: @_green;
+          }
+          &.sell {
+            color: @_red;
+          }
+        }
+      }
+    }
+  }
   .content {
+    display: flex;
+    flex-direction: column;
     height: 100%;
   }
-  .top {
-    // background: red;
+  .top, .down {
+    height:0;
+    flex-grow: 1;
   }
-  .down {
-    // background: blue;
-  }
+
   .center {
     display: flex;
     align-items: center;
@@ -188,44 +203,6 @@
       align-items: center;
       .ensure {
         margin-right: 10px;
-      }
-    }
-  }
-  .theader {
-    color: @c_pannel_theader_color;
-    background: @c_pannel_dark;
-    height: 32px;
-    ul {
-      li {
-        background: @c_pannel_dark !important;
-        height: 100%;
-      }
-    }
-  }
-  ul {
-    height: 100%;
-    &.top_area {
-      height: @pannel_li_height*8;
-    }
-    li {
-      height: @pannel_li_height;
-      display: flex;
-      align-items: center;
-      padding: @padding_panel;
-      div {
-        display: flex;
-        align-items: center;
-        width: 33.3333%;
-        height: 100%;
-        &.top_price {
-          color: @_red;
-        }
-        &.down_price {
-          color: @_green;
-        }
-      }
-      &:nth-child(2n+1) {
-        background: @c_panel_light;
       }
     }
   }
@@ -322,7 +299,7 @@
   }
 }
 
-.PersonEnsure{
+.PersonEnsure {
   height: 242px;
   :global {
     .thead {

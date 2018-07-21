@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { classNames, _, dealInterval, getPercent, formatNumber, } from '@utils'
-import { Mixin } from "@components"
+import { Mixin, Table } from "@components"
 import ensure from '@assets/ensure.png'
 import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
@@ -11,7 +11,7 @@ const [TOP, DOWN] = ['top', 'down']
 export default class View extends Component {
 
   startInit = () => {
-    // this.getEnsureRecord()
+    this.getEnsureRecord()
   }
 
   getEnsureRecord = () => {
@@ -28,66 +28,63 @@ export default class View extends Component {
     })
   }
 
-  renderList = (data, name) => (
-    <div className={styles[name]} >
-      <div className={styles.theader} >
-        <ul >
-          <li >
-            <div >价格</div >
-            <div >数量</div >
-            <div >累计数量(张)</div >
-          </li >
-        </ul >
-      </div >
-      <ul className={classNames(
-        styles[`${name}_area`],
-        styles.area
-      )} >
-        {
-          data.map((item, index) => {
-            const total = data.slice(0, index + 1).reduce((sum, next) => {
-              return sum + next.amount
-            }, 0)
-            item.total = total
-            const [max1, max2, max3] = [
-              _.maxBy(data, (item) => item.price),
-              _.maxBy(data, 'amount'),
-              _.maxBy(data, 'total')
-            ]
-
-            const colorProps = {
-              total: data,
-              color: name === TOP ? 'rgba(175,86,91,.2)' : 'rgba(87,152,128,.2)'
-            }
-            return (
-              <li key={index} >
-                <div className={styles[`${name}_price`]} >
-                  <ColorChange {...{
-                    percent: getPercent(item.price, max1.price, max1),
-                    data: item.price,
-                    ...colorProps
-                  }}>
-                    {item.price}
-                  </ColorChange >
-                </div >
-
-                <div >{item.amount}</div >
-                <div >{item.total}</div >
-              </li >
-            )
-          })
-        }
-      </ul >
-    </div >
-  )
-
   render() {
-    const { renderList } = this
     const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice } } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'asks')
       , _.get(ensure_records, 'bids')
     ]
+
+    const columns = [
+      {
+        title: '价格',
+        dataIndex: 'price',
+        render: (value, record) => {
+          return record.type === 'sell' ? {
+            value,
+            className: 'sell'
+          } : {
+            value,
+            className: 'buy'
+          }
+        }
+      },
+      {
+        title: '数量',
+        dataIndex: 'amount'
+      },
+      {
+        title: '累计数量(张)',
+        dataIndex: 'amount',
+        render: (value, record, index, dataSource) => {
+          const total = dataSource.slice(0, index + 1).reduce((sum, next) => {
+            return sum + next.amount
+          }, 0)
+          return total
+        }
+      }
+    ]
+
+    const tableProps = {
+      className: styles.tableContainer,
+      columns,
+
+    }
+    const tableTopProps = {
+      ...tableProps,
+      dataSource: dataTop.slice(0, 8).map(item => {
+        item.type = 'sell'
+        return item
+      })
+    }
+
+    const tableDownProps = {
+      ...tableProps,
+      dataSource: dataDown.slice(0, 8).map(item => {
+        item.type = 'buy'
+        return item
+      })
+    }
     return (
       <Mixin.Child that={this} >
         <div
@@ -101,19 +98,17 @@ export default class View extends Component {
           }
         >
           <ScrollPannel
-            scrollConfig={{
-              mouseWheel: false
-            }}
             header={
               <div >
                 <span >委托列表</span >
               </div >
             }
           >
+
             <div className={styles.content} >
-              {
-                renderList(dataTop.slice(0, 8), TOP)
-              }
+              <div className={styles.top} >
+                <Table {...tableTopProps} />
+              </div >
               <div className={styles.center} >
                 <div className={styles.left} >{latestPrice}</div >
                 <div className={styles.right} >
@@ -121,9 +116,9 @@ export default class View extends Component {
                   {equitablePrice}/{indexPrice}
                 </div >
               </div >
-              {
-                renderList(dataDown.slice(0, 8), DOWN)
-              }
+              <div className={styles.down} >
+                <Table {...tableDownProps} />
+              </div >
             </div >
           </ScrollPannel >
         </div >
