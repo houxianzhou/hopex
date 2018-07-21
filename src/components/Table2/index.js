@@ -10,7 +10,6 @@ const createElement = (_className) => {
       <div className={
         classNames(
           { [_className]: true },
-          // styles[_className],
           className
         )
       } style={style} >{children}</div >

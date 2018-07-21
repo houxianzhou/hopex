@@ -15,7 +15,7 @@ export default class View extends Component {
     const { dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getLatestRecord`,
-    }).then((res) => {
+    }).then(() => {
       dealInterval(() => {
         this.getLatestRecord()
       })
@@ -29,14 +29,14 @@ export default class View extends Component {
         title: '时间',
         dataIndex: 'time',
         width: '30%',
-        render: (value, record) => {
+        render: (value) => {
           return moment.formatHMSFromSeconds(value)
         }
       },
       {
         title: '类型',
         dataIndex: 'type',
-        render: (value, record) => value === 'buy' ? {
+        render: (value) => value === 'buy' ? {
           value: '买入',
           className: 'buy'
         } : {
@@ -60,7 +60,7 @@ export default class View extends Component {
         dataIndex: 'amount',
       },
     ]
-    const dataSource = []//latest_records
+    const dataSource = latest_records
     const tableProps = {
       className: styles.tableContainer,
       columns,
@@ -87,9 +87,7 @@ export default class View extends Component {
               </div >
             }
           >
-            <Table2 {...tableProps}>
-              ffff
-            </Table2 >
+            <Table2 {...tableProps} />
           </ScrollPannel >
         </div >
       </Mixin.Child >
