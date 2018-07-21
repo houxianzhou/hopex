@@ -11,13 +11,14 @@ export default delay({
       }
     )
   },
-  'Get /api/user': (req, res) => {
+  'Post /mock/api/v1.0/User/Login': (req, res) => {
     res.send(
       {
-        userInfo: {
-          userId: '56',
-          userToken: "56",
+        data:{
+          userId: 'mockId',
+          token: "mockToken",
         }
+
       }
     )
   }
