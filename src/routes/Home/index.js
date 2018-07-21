@@ -87,6 +87,15 @@ export default class View extends Component {
         {/*renderView('RecentRecord')*/}
         {/*}*/}
         {/*</div >*/}
+        {
+          isLogin ? (
+            <div className={styles.views} >
+              {
+                renderView('Position')
+              }
+            </div >
+          ) : null
+        }
 
 
         <div className={styles.views} >
@@ -111,15 +120,7 @@ export default class View extends Component {
             renderView('CurrentContract')
           }
         </div >
-        {
-          isLogin ? (
-            <div className={styles.views} >
-              {
-                renderView('Position')
-              }
-            </div >
-          ) : null
-        }
+
         {
           isLogin ? (
             <div className={styles.views} >

@@ -25,6 +25,7 @@ export default class View extends Component {
       } : (scrollbar || false),
       scrollY: !!scrollbar || false,
       scrollX: true,
+      bounce: false,
       mouseWheel,
       ...rest
     })
@@ -50,7 +51,7 @@ export default class View extends Component {
             left: 0
           }}
         >
-          <div className="content" style={{ width: scroll.x }} >
+          <div className="content" style={{ minWidth: scroll.x }} >
             {children}
           </div >
         </div >

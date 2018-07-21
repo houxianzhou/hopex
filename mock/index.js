@@ -314,17 +314,16 @@ export default {
             "userToken": "56"
           },
           "data": {
-            "positionList": [
-              {
-                "market": "BTCUSD",//合约名称
-                "leverage": "10.00",//杠杆倍数
-                "amount": "1000",//持仓数量(张)
-                "averagePrice": "1111",//均价
-                "positionMoney": "1111",//持仓占用保证金
-                "keepMoney": "1111",//维持保证金
-                "overPrice": "1111",//强平价格
-                "floatProfit": "11111"//浮动盈亏
-              }],
+            "positionList": (new Array(6)).fill({
+              "market": "BTCUSD",//合约名称
+              "leverage": "10.00",//杠杆倍数
+              "amount": "1000",//持仓数量(张)
+              "averagePrice": "1111",//均价
+              "positionMoney": "1111",//持仓占用保证金
+              "keepMoney": "1111",//维持保证金
+              "overPrice": "1111",//强平价格
+              "floatProfit": "11111"//浮动盈亏
+            }),
             "errCode": "0",
             "errStr": "success",
             "ret": "0"

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { classNames, dealInterval, moment } from '@utils'
 import switch_render from '@assets/switch_render.png'
 import { Mixin } from "@components"
-import ScrollPannel from './components/ScrollPanel2'
+import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
 export default class View extends Component {

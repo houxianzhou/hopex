@@ -6,24 +6,30 @@ import * as styles from './ScrollPanel.less'
 export default class View extends Component {
 
   render() {
-    const { header, children, className = {}, style = {} } = this.props
+    const { header, theader, scroller = true, children, className = {}, style = {}, scrollConfig = {} } = this.props
 
     return (
       <div className={
         classNames(
-          styles.scrollPannel,
+          styles.scrollpannel,
           className
         )
       } style={style} >
         {
           header ? (<div className={styles.header} >{header}</div >) : null
         }
-        <div className={styles.scrollPannelContainer} >
-          <div className={styles.scrollPannelContent} >
-            {children}
-          </div >
-        </div >
+        {
+          theader ? (<div className={styles.theader} >{theader}</div >) : null
+        }
+        {
+          scroller ? (
+            <Scroller scrollbar='fixed' {...scrollConfig}  >
+              {children}
+            </Scroller >
+          ) : <>{children}</>
+        }
       </div >
     )
   }
+
 }

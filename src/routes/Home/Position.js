@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, dealInterval } from '@utils'
+import { classNames, dealInterval, _ } from '@utils'
 import { Table, Mixin } from '@components'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
@@ -7,7 +7,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-    // this.getPosition()
+    this.getPosition()
   }
 
   getPosition = () => {
@@ -23,68 +23,72 @@ export default class View extends Component {
 
   render() {
     const { model: { positionList = [] } } = this.props
-    const head = [
+    const columns = [
       {
-        name: '合约',
+        title: '合约',
         dataIndex: 'market',
         // className: styles.red
         //width: '30%',
       },
       {
-        name: '当前价格',
+        title: '当前价格',
         dataIndex: 'no',
         //width: 200,
       },
       {
-        name: '当前合理价格',
+        title: '当前合理价格',
         dataIndex: 'averagePrice',
         //width: 400,
       },
       {
-        name: '杠杆倍数',
+        title: '杠杆倍数',
         dataIndex: 'leverage',
         //width: '30%',
       },
       {
-        name: '数量(张)',
+        title: '数量(张)',
         dataIndex: 'amount',
         //width: '30%',
       },
       {
-        name: '开仓均价',
+        title: '开仓均价',
         dataIndex: 'averagePrice',
         //width: '30%',
       },
       {
-        name: '持续占用保证金',
+        title: '持续占用保证金',
         dataIndex: 'positionMoney',
         //width: '30%',
       },
       {
-        name: '维持保证金',
+        title: '维持保证金',
         dataIndex: 'keepMoney',
         //width: '30%',
       },
       {
-        name: '强平价格',
+        title: '强平价格',
         dataIndex: 'overPrice',
         //width: '30%',
       },
       {
-        name: '浮动盈亏(收益率)',
+        title: '浮动盈亏(收益率)',
         dataIndex: 'floatProfit',
         //width: '30%',
       },
       {
-        name: '操作',
+        title: '操作',
         dataIndex: 'work',
       },
 
     ]
-    let data = positionList
-    data = data.length > 4 ? data : data.concat((new Array(4 - data.length)).fill({}))
+    const dataSource = positionList
     const tableProp = {
-      head, data
+      className: styles.tableContainer,
+      columns,
+      dataSource: _.merge((new Array(4)).fill(), dataSource),
+      scroll: {
+        x: 1400
+      }
     }
     return (
       <Mixin.Child that={this} >
@@ -99,12 +103,11 @@ export default class View extends Component {
           }
         >
           <ScrollPannel
-            scroller={false}
             header={
               <div >当前持仓</div >
             }
           >
-            <Table className={styles.table} {...tableProp}>等等</Table >
+            <Table {...tableProp} />
 
           </ScrollPannel >
         </div >

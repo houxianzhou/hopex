@@ -35,6 +35,7 @@
     }
     .tbody {
       .tr {
+        height: 26px;
         &:nth-child(2n+1) {
           background: @c_panel_light;
         }
@@ -304,6 +305,21 @@
 
 .position {
   height: 242px;
+  :global {
+    .thead {
+      .tr {
+        height: 40px;
+      }
+    }
+    .tbody {
+      .tr {
+        height: 40px;
+        .td {
+
+        }
+      }
+    }
+  }
 }
 
 .buySell {

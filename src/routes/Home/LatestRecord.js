@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { classNames, dealInterval, moment, _ } from '@utils'
 import switch_render from '@assets/switch_render.png'
-import { Mixin, Table2 } from "@components"
-import ScrollPannel from './components/ScrollPanel2'
+import { Mixin, Table } from "@components"
+import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
 export default class View extends Component {
 
   startInit = () => {
-    this.getLatestRecord()
+    // this.getLatestRecord()
   }
 
   getLatestRecord = () => {
@@ -87,7 +87,7 @@ export default class View extends Component {
               </div >
             }
           >
-            <Table2 {...tableProps} />
+            <Table {...tableProps} />
           </ScrollPannel >
         </div >
       </Mixin.Child >
