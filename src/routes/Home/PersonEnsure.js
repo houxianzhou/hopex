@@ -8,7 +8,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-    // this.getPersonalEnsure()
+    this.getPersonalEnsure()
   }
 
   getPersonalEnsure = () => {
@@ -72,12 +72,14 @@ export default class View extends Component {
       },
       {
         title: '状态',
+        width:100,
         dataIndex: 'amount',
         // render: (value, record) => value && value === record.left ? '等待成交' : (value ? '部分成交' : null)
       },
       {
         title: '操作',
         dataIndex: 'amount',
+        width:150,
         render: (value, record) => {
           return (
             <span onClick={() => {

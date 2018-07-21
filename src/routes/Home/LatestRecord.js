@@ -8,7 +8,7 @@ import styles from './index.less'
 export default class View extends Component {
 
   startInit = () => {
-    // this.getLatestRecord()
+     this.getLatestRecord()
   }
 
   getLatestRecord = () => {

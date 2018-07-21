@@ -8,7 +8,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-    // this.getPosition()
+    this.getPosition()
   }
 
   getPosition = () => {
@@ -67,6 +67,7 @@ export default class View extends Component {
       },
       {
         title: '操作',
+        width:250,
         dataIndex: 'work',
       },
 
