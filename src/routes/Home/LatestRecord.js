@@ -28,7 +28,6 @@ export default class View extends Component {
       {
         title: '时间',
         dataIndex: 'time',
-        width: 200,
         render: (value, record, index) => {
           return index
         }
@@ -36,7 +35,6 @@ export default class View extends Component {
       {
         title: '价格',
         dataIndex: 'price',
-        width: 200,
       },
       {
         title: '数量',
@@ -45,15 +43,15 @@ export default class View extends Component {
       {
         title: '类型',
         dataIndex: 'type',
-        width: 400,
       }
     ]
     const dataSource = latest_records
     const tableProps = {
+      className: styles.tableContainer,
       columns,
       dataSource,
       scroll: {
-         x: 830,
+        // x: 830,
       }
     }
     return (

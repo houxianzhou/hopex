@@ -18,24 +18,23 @@
   margin-top: 10px;
 }
 
-.table {
-  table {
-  }
-  tr {
-    height: 40px;
-    th:first-child, td:first-child {
-      padding: 0 @padding_li_left;
-    }
-  }
-  thead {
-    tr {
-      color: #6A7286;
-    }
-  }
-  tbody {
-    tr {
-      &:nth-child(2n+1) {
-        background: @c_panel_light;
+.tableContainer {
+  :global {
+    .table {
+      .tr {
+        padding: 0 @padding_li_left;
+      }
+      .thead {
+        .tr {
+          height: 32px;
+        }
+      }
+      .tbody {
+        .tr {
+          &:nth-child(2n+1) {
+            background: @c_panel_light;
+          }
+        }
       }
     }
   }
@@ -255,14 +254,14 @@
   min-width: @view_width;
   max-width: @view_width;
   height: 344px;
-  .purseheader{
-    width:100%;
+  .purseheader {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    ul{
+    ul {
       display: flex;
-      li+li{
+      li + li {
         margin-left: 10px;
       }
     }

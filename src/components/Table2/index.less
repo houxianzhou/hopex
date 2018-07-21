@@ -1,45 +1,39 @@
 .tableContainer {
   width: 100%;
   height: 100%;
-  .table {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    .tr {
+  :global {
+    .table {
+      position: relative;
+      width: 100%;
+      height: 100%;
       display: flex;
-    }
-    .td, .th {
-      flex-shrink: 1;
-      flex-grow: 1;
-    }
-    .thead {
-      background: red;
-      position: relative;
+      flex-direction: column;
       .tr {
-        .th {
-
-        }
+        display: flex;
       }
-    }
-    .tbody {
-      background: #52c41a;
-      .tr {
-        .td {
-
-        }
-      }
-    }
-    ._scrollerTableContainer {
-      position: relative;
-      flex-grow: 1;
-      ._scrollerTable {
-        width: 100%;
+      .td, .th {
+        display: flex;
+        align-items: center;
         height: 100%;
-        position: absolute;
-        background: blue;
+        flex-shrink: 1;
+        flex-grow: 1;
       }
+      .thead {
+        position: relative;
+      }
+      .tbody {
+        // background: #52c41a;
+      }
+    }
+  }
+  ._scrollerTableContainer {
+    position: relative;
+    flex-grow: 1;
+    ._scrollerTable {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      // background: blue;
     }
   }
 }

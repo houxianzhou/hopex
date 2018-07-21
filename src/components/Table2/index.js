@@ -9,7 +9,8 @@ const createElement = (_className) => {
     return (
       <div className={
         classNames(
-          styles[_className],
+          { [_className]: true },
+          // styles[_className],
           className
         )
       } style={style} >{children}</div >
@@ -80,7 +81,6 @@ export default class View extends Component {
             }
           </Tr >
           </Thead >
-
           <div className={styles._scrollerTableContainer} >
             <div className={styles._scrollerTable} >
               <Scroller {...scrollerConfig}>
