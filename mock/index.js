@@ -101,11 +101,11 @@ export default {
             "userToken": "56"
           },
           "data": {
-            "asks": randomArrayMap(100).map((item, index) => ({
+            "asks": randomArrayMap(3).map((item, index) => ({
               "price": randomStr(),
               "amount": randomStr()
             })),
-            "bids": randomArrayMap(100).map((item, index) => ({
+            "bids": randomArrayMap(3).map((item, index) => ({
               "price": randomStr(),
               "amount": randomStr()
             }))

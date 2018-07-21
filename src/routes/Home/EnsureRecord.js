@@ -6,8 +6,6 @@ import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
 import styles from './index.less'
 
-const [TOP, DOWN] = ['top', 'down']
-
 export default class View extends Component {
 
   startInit = () => {
@@ -57,8 +55,8 @@ export default class View extends Component {
         title: '累计数量(张)',
         dataIndex: 'amount',
         render: (value, record, index, dataSource) => {
-          const total = dataSource.slice(0, index + 1).reduce((sum, next) => {
-            return sum + next.amount
+          const total = dataSource.slice(0, index + 1).reduce((sum = 0, next = {}) => {
+            return sum + (next.amount || 0)
           }, 0)
           return total
         }
@@ -68,23 +66,27 @@ export default class View extends Component {
     const tableProps = {
       className: styles.tableContainer,
       columns,
-
     }
+
     const tableTopProps = {
       ...tableProps,
-      dataSource: dataTop.slice(0, 8).map(item => {
+      dataSource: dataTop.length > 8 ? _.merge((new Array(8)).fill(), dataTop.slice(0, 8).map(item => {
         item.type = 'sell'
         return item
-      })
+      })) : (new Array(8 - dataTop.length)).fill().concat(dataTop.slice(0, 8).map(item => {
+        item.type = 'sell'
+        return item
+      }))
     }
 
     const tableDownProps = {
       ...tableProps,
-      dataSource: dataDown.slice(0, 8).map(item => {
+      dataSource: _.merge((new Array(8)).fill(), dataDown.slice(0, 8).map(item => {
         item.type = 'buy'
         return item
-      })
+      }))
     }
+
     return (
       <Mixin.Child that={this} >
         <div
@@ -104,7 +106,6 @@ export default class View extends Component {
               </div >
             }
           >
-
             <div className={styles.content} >
               <div className={styles.top} >
                 <Table {...tableTopProps} />

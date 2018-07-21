@@ -93,12 +93,12 @@ export default class View extends Component {
                       <Tr key={index} >
                         {
                           columns.map((item2 = {}, index2) => {
-                            let result
+                            let result = ''
                             let className
                             const key = item2.dataIndex
                             let value = item[key]
                             if (_.isNaN(value) || _.isUndefined(value)) {
-                              value = ''
+                              result = ''
                             } else {
                               if (_.isFunction(item2.render)) {
                                 value = item2.render(value, item, index, dataSource)
