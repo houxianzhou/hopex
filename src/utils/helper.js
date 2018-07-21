@@ -13,6 +13,7 @@ export const lodash_helper = {
   debounce: _.debounce,
   maxBy: _.maxBy,
   isArray: _.isArray,
+  isObject: _.isObject,
   isObjectLike: _.isObjectLike,
   keys: _.keys,
   values: _.values,
@@ -62,6 +63,9 @@ export const moment_helper = {
   },
   formatHMS: (time = Date.now()) => {
     return moment(time).format('h:mm:ss')
+  },
+  formatHMSFromSeconds: (time) => {
+    return moment_helper.formatHMS(String(time).split('.')[0] * 1000)
   },
   getdays: (startTime, endTime, isInclude = false) => {
     const days = Math.ceil(moment.duration(endTime - startTime).asDays())

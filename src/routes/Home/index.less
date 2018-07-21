@@ -1,6 +1,7 @@
 @pannel_li_height: 26px;
 @view_width: 400px;
 @padding_li_left: 30px;
+@header1: 32px;
 
 .views {
   display: flex;
@@ -28,7 +29,8 @@
     }
     .thead {
       .tr {
-        height: 32px;
+        color: @c_pannel_theader_color;
+        height: @header1;
       }
     }
     .tbody {
@@ -53,6 +55,14 @@
     .tbody {
       .tr {
         height: 26px;
+        .td {
+          &.buy {
+            color: @_green;
+          }
+          &.sell{
+            color: @_red;
+          }
+        }
       }
     }
   }

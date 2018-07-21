@@ -29,13 +29,20 @@ export default class View extends Component {
         title: '时间',
         dataIndex: 'time',
         width: '30%',
-        render: (value, record, index) => {
-          return moment.formatHMS(String(value).split('.')[0] * 1000)
+        render: (value, record) => {
+          return moment.formatHMSFromSeconds(value)
         }
       },
       {
         title: '类型',
         dataIndex: 'type',
+        render: (value, record) => value === 'buy' ? {
+          value: '买入',
+          className: 'buy'
+        } : {
+          value: '卖出',
+          className: 'sell'
+        }
       },
       {
         title: '价格',
@@ -45,7 +52,6 @@ export default class View extends Component {
         title: '数量(张)',
         dataIndex: 'amount',
       },
-
     ]
     const dataSource = latest_records
     const tableProps = {

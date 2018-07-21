@@ -54,7 +54,10 @@ export default class View extends Component {
       const style = item.width ? { width: item.width, minWidth: item.width } : {
         width: getPercent(1, columns.length),
       }
-      return { style }
+      return {
+        style,
+        className: item.className
+      }
     }
 
 
@@ -91,14 +94,26 @@ export default class View extends Component {
                       <Tr key={index} >
                         {
                           columns.map((item2 = {}, index2) => {
+                            let result
+                            let className
                             const key = item2.dataIndex
                             let value = item[key]
                             if (_.isFunction(item2.render)) {
                               value = item2.render(value, item, index)
                             }
-                            value = !_.isNaN(value) && !_.isUndefined(value) ? value : ''
+                            if (_.isObject(value)) {
+                              result = value.value
+                              className = value.className
+                            } else {
+                              result = !_.isNaN(value) && !_.isUndefined(value) ? value : ''
+                            }
                             return (
-                              <Td key={index2} {...getTdThProp(item2)}>{value}</Td >
+                              <Td key={index2} {...getTdThProp(item2)} className={
+                                classNames(
+                                  item2.className,
+                                  className
+                                )
+                              } >{result}</Td >
                             )
                           })
                         }
