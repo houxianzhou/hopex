@@ -13,6 +13,7 @@ export const lodash_helper = {
   debounce: _.debounce,
   maxBy: _.maxBy,
   isArray: _.isArray,
+  merge: _.merge,
   isObject: _.isObject,
   isObjectLike: _.isObjectLike,
   keys: _.keys,

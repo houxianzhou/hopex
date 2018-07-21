@@ -98,14 +98,18 @@ export default class View extends Component {
                             let className
                             const key = item2.dataIndex
                             let value = item[key]
-                            if (_.isFunction(item2.render)) {
-                              value = item2.render(value, item, index)
-                            }
-                            if (_.isObject(value)) {
-                              result = value.value
-                              className = value.className
+                            if (_.isNaN(value) || _.isUndefined(value)) {
+                              value = ''
                             } else {
-                              result = !_.isNaN(value) && !_.isUndefined(value) ? value : ''
+                              if (_.isFunction(item2.render)) {
+                                value = item2.render(value, item, index)
+                              }
+                              if (_.isObject(value)) {
+                                result = value.value
+                                className = value.className
+                              } else {
+                                result = value
+                              }
                             }
                             return (
                               <Td key={index2} {...getTdThProp(item2)} className={

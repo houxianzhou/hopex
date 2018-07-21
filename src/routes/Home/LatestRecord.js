@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, dealInterval, moment } from '@utils'
+import { classNames, dealInterval, moment, _ } from '@utils'
 import switch_render from '@assets/switch_render.png'
 import { Mixin, Table2 } from "@components"
 import ScrollPannel from './components/ScrollPanel2'
@@ -47,17 +47,24 @@ export default class View extends Component {
       {
         title: '价格',
         dataIndex: 'price',
+        render: (value, record) => record.type === 'buy' ? {
+          value,
+          className: 'buy'
+        } : {
+          value,
+          className: 'sell'
+        }
       },
       {
         title: '数量(张)',
         dataIndex: 'amount',
       },
     ]
-    const dataSource = latest_records
+    const dataSource = []//latest_records
     const tableProps = {
       className: styles.tableContainer,
       columns,
-      dataSource,
+      dataSource: _.merge((new Array(18)).fill(), dataSource),
       scroll: {}
     }
     return (
