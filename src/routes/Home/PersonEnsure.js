@@ -11,14 +11,17 @@ export default class View extends Component {
     this.getPersonalEnsure()
   }
 
-  getPersonalEnsure = () => {
+  getPersonalEnsure = (payload = {}) => {
+    const { callback } = payload
     const { dispatch, modelName } = this.props
     dispatch({
-      type: `${modelName}/getPersonalEnsure`
+      type: `${modelName}/getPersonalEnsure`,
+      payload
     }).then((res) => {
-        dealInterval(() => {
-          this.getPersonalEnsure()
-        })
+        if (callback) return callback()
+        // dealInterval(() => {
+        //   this.getPersonalEnsure(payload)
+        // })
       }
     )
   }
@@ -33,12 +36,12 @@ export default class View extends Component {
       {
         title: '类型',
         dataIndex: 'type',
-        //render: (value, record) => record.side === '1' ? '卖出' : '买入'
+        render: (value, record) => record.side === '1' ? '卖出' : '买入'
       },
       {
         title: '杠杆倍数',
         dataIndex: 'sex',
-        // render: (value, record) => ''
+        render: (value, record) => ''
       },
       {
         title: '数量(张)',
@@ -51,7 +54,7 @@ export default class View extends Component {
       {
         title: '成交数量(张)',
         dataIndex: 'amount',
-       // render: (value, record) => value - record.left
+        render: (value, record) => value - record.left
       },
       {
         title: '成交均价',
@@ -72,14 +75,14 @@ export default class View extends Component {
       },
       {
         title: '状态',
-        width:100,
+        width: 100,
         dataIndex: 'amount',
         // render: (value, record) => value && value === record.left ? '等待成交' : (value ? '部分成交' : null)
       },
       {
         title: '操作',
         dataIndex: 'amount',
-        width:150,
+        width: 150,
         render: (value, record) => {
           return (
             <span onClick={() => {
@@ -103,7 +106,10 @@ export default class View extends Component {
       dataSource: _.merge((new Array(4)).fill(), dataSource),
       scroll: {
         x: SCROLLX.X
-      }
+      },
+      // loadingMore: (callback) => {
+      //   this.getPersonalEnsure({callback})
+      // }
     }
     return (
       <Mixin.Child that={this} >

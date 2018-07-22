@@ -29,6 +29,8 @@ export default joinModel(modelExtend, {
     minDealAmount: null, //最小交易量
 
     personalEnsures: [],//个人委托列表
+    personalEnsures_PageIndex: null,
+
     positionList: [],//个人持仓列表
   },
   subscriptions: {
@@ -290,7 +292,8 @@ export default joinModel(modelExtend, {
     },
 
     //个人合约列表 查询用户的所有活跃委托
-    * getPersonalEnsure({ payload = {} }, { call, put }) {
+    * getPersonalEnsure({ payload = {} }, { call, put, select }) {
+      const { pageIndex = 1, pageSize = 10, callback } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
@@ -298,8 +301,8 @@ export default joinModel(modelExtend, {
             "method": "order.user_active_delegate"
           },
           "param": {
-            "pageIndex": "0",//页码
-            "pageSize": "100"//每页数量
+            "pageIndex": String(pageIndex), //页码
+            "pageSize": String(pageSize) //每页数量
           },
           power: [1],
           powerMsg: '个人合约列表'
@@ -308,12 +311,14 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(getPersonalEnsure, repayload))
         if (resOk(res)) {
-          const result = _.get(res, 'data.records')
+          const [result, pageIndex] = [_.get(res, 'data.records'), _.get(res, 'data.pageIndex')]
+          const personalEnsures = yield select(({ home: { personalEnsures } }) => personalEnsures)
           if (result) {
             yield put({
               type: 'changeState',
               payload: {
-                personalEnsures: result
+                personalEnsures: callback ? [...result, ...personalEnsures] : result,
+                personalEnsures_PageIndex: pageIndex
               }
             })
           }

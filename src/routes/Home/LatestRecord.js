@@ -8,7 +8,7 @@ import styles from './index.less'
 export default class View extends Component {
 
   startInit = () => {
-     this.getLatestRecord()
+    // this.getLatestRecord()
   }
 
   getLatestRecord = () => {
@@ -65,7 +65,7 @@ export default class View extends Component {
       className: styles.tableContainer,
       columns,
       dataSource: _.merge((new Array(18)).fill(), dataSource),
-      scroll: {}
+      scroll: {},
     }
     return (
       <Mixin.Child that={this} >

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { _, classNames, getPercent } from '@utils'
+import { _, classNames, getPercent, isEqual } from '@utils'
 import { Scroller } from '@components'
 import * as styles from './index.less'
 
@@ -32,9 +32,19 @@ export default class View extends Component {
     loading: false
   }
 
+  componentDidUpdate(prevProps) {
+    const { dataSource: prevDataSource } = prevProps
+    const { dataSource } = this.props
+    if (!isEqual(prevDataSource, dataSource) && dataSource) {
+      this.changeState()
+    }
+  }
+
   changeState = (payload) => {
     this.setState(payload)
-    this.scroller && this.scroller.refresh()
+    setTimeout(() => {
+      this.scroller && this.scroller.refresh()
+    }, 0)
   }
 
   getScroller = (scroller) => {
@@ -45,24 +55,27 @@ export default class View extends Component {
       this.changeState()
     }
     scroller.on('scroll', ({ x, y }) => {
-      const { maxScrollY } = scroller
+      const { maxScrollY, movingDirectionY } = scroller
       if (prevX !== x) {
         this.changeState({ x })
         prevX = x
       }
       if (loadingMore && _.isFunction(loadingMore)) {
-        if (y - maxScrollY < 10 && !this.state.loading) {
+        if (y - maxScrollY < 3 && movingDirectionY === 1 && !this.state.loading && !this.interval) {
           this.interval && clearTimeout(this.interval)
           this.changeState({
             loading: true
           })
-          loadingMore(() => {
-            this.interval = setTimeout(() => {
+          this.interval = setTimeout(() => {
+            loadingMore(() => {
               this.changeState({
                 loading: false
               })
-            }, 2000)
-          })
+              setTimeout(() => {
+                 this.interval = null
+              }, 700)
+            })
+          }, 100)
         }
       }
     })
@@ -155,7 +168,7 @@ export default class View extends Component {
                 }
                 </Tbody >
                 {
-                  loading ? (<div >加载中</div >) : null
+                  loading ? (<div className={styles.loadingmore}>加载更多......</div >) : null
                 }
 
               </Scroller >
