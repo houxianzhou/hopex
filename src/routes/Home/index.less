@@ -22,7 +22,8 @@
 
 .tableContainer {
   :global {
-    .table {}
+    .table {
+    }
     .tr {
       padding: 0 @padding_li_left;
     }
@@ -46,7 +47,7 @@
   }
 }
 
-.expandetableContainer{
+.expandetableContainer {
   :global {
     .tr {
       padding: 0 @padding_li_left;
@@ -84,6 +85,7 @@
   :global(iframe) {
     height: 100% !important;
   }
+
   :global(.content) {
     height: 100% !important;
   }
@@ -162,6 +164,26 @@
       }
     }
 
+  }
+  .intervalbuttons {
+    padding: 0px 30px;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    ul {
+      display: flex;
+      li + li {
+        margin-left: 5px;
+      }
+      li {
+        width: 30px;
+        height: 30px;
+        background: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
   }
   .tradeview {
     flex-grow: 1;

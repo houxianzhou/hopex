@@ -8,11 +8,11 @@ import * as styles from './index.less'
 
 export default class View extends Component {
   componentDidMount() {
-    // localSave.clearAll()
+    localSave.clearAll()
   }
 
   startInit = () => {
-    // this.startKline()
+    this.startKline()
     // this.getImportantPrice()
   }
 
@@ -24,11 +24,28 @@ export default class View extends Component {
     const ws1 = wss.getSocket('ws1')
     if (!this.chart) {
       this.chart = new TradingView.widget({
-        disabled_features: ["left_toolbar", 'go_to_date', 'use_localstorage_for_settings', 'save_chart_properties_to_local_storage'],
+        disabled_features: [
+          // "left_toolbar",
+          // 'go_to_date',
+          // 'use_localstorage_for_settings',
+          // 'save_chart_properties_to_local_storage',
+          // 'header_widget',
+          // 'edit_buttons_in_legend',
+          // 'context_menus',
+          // 'main_series_scale_menu',
+          // 'adaptive_logo',
+          // 'show_logo_on_all_charts',
+          // 'display_market_status',
+          // 'remove_library_container_border',
+          // 'chart_property_page_style',
+          // 'control_bar',
+          // 'timeframes_toolbar',
+          // 'chart_property_page_background'
+        ],
         library_path: '/',
         fullscreen: true,
         symbol: '股吧',
-        interval: 'D',
+        // interval: 'D',
         'container_id': 'tradeView',
         overrides: {
           "paneProperties.background": "#232833",
@@ -63,13 +80,14 @@ export default class View extends Component {
                 "has_no_volume": false, //布尔表示商品是否拥有成交量数据
                 has_empty_bars: true,
                 "type": "stock",
-                supported_resolutions: ['D', '1W', '1M'],// 分辨率选择器中启用一个分辨率数组
+                // supported_resolutions: ['D', '1W', '1M'],// 分辨率选择器中启用一个分辨率数组
                 // "ticker": "AAPL", // 品体系中此商品的唯一标识符
                 "data_status": "streaming" //数据状态码。状态显示在图表的右上角。streaming(实时)endofday(已收盘)pulsed(脉冲)
               })
             })
           },
           getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
+            console.log(resolution)
             const [startTime, endTime] = [String(Math.min(from, to)), String(Math.max(from, to))]
             dispatch({
               type: `${modelName}/getKlineAllList`,
@@ -128,6 +146,9 @@ export default class View extends Component {
           }
         },
         locale: 'zh',
+      })
+      this.chart.onChartReady(function() {
+        // this.chart().createStudy('MACD', false, false, [14, 30, "close", 9])
       })
     } else {
       this.chart.setSymbol('股吧2', 100, () => {
@@ -253,6 +274,12 @@ export default class View extends Component {
                     </ul >
                   </div >
                 </div >
+              </div >
+              <div className={styles.intervalbuttons} >
+                <ul >
+                  <li >1</li >
+                  <li >1</li >
+                </ul >
               </div >
               <div className={styles.tradeview} >
                 <div id='tradeView' style={{
