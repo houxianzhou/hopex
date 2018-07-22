@@ -5,14 +5,16 @@ import * as styles from './index.less'
 
 const createElement = (_className) => {
   return (Props) => {
-    const { className, style, children } = Props
+    const { className, style, children, onClick } = Props
     return (
       <div className={
         classNames(
           { [_className]: true },
           className
         )
-      } style={style} >{children}</div >
+      } style={style} onClick={(e) => {
+        _.isFunction(onClick) && onClick(e)
+      }} >{children}</div >
     )
   }
 }
@@ -27,6 +29,7 @@ const [Table, Thead, Tbody, Tr, Th, Td] = [
 ]
 
 export default class View extends Component {
+
   state = {
     x: 0,
     loading: false
@@ -89,6 +92,7 @@ export default class View extends Component {
       columns = [],
       dataSource = [],
       expandedRowRender,
+      onClickRow,
       scroll = {}
     } = this.props
 
@@ -105,7 +109,7 @@ export default class View extends Component {
 
     const scrollerConfig = {
       getScroller: this.getScroller,
-      ...scroll
+      scroll
     }
 
     const { loading } = this.state
@@ -134,11 +138,16 @@ export default class View extends Component {
                   dataSource.map((item = {}, index) => {
                     return (
                       <React.Fragment key={index} >
-                        <Tr className={
-                          classNames(
-                            index % 2 === 0 ? 'even' : 'odd'
-                          )
-                        } >
+                        <Tr
+                          className={
+                            classNames(
+                              index % 2 === 0 ? 'even' : 'odd'
+                            )
+                          }
+                          onClick={(e) => {
+                            _.isFunction(onClickRow) && onClickRow(item, e)
+                          }}
+                        >
                           {
                             columns.map((item2 = {}, index2) => {
                               let result = ''

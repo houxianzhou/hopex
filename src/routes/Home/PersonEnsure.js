@@ -86,7 +86,8 @@ export default class View extends Component {
         render: (value, record) => {
           return (
             <>
-              <span onClick={() => {
+              <span onClick={(e) => {
+                e.stopPropagation()
                 dispatch({
                   type: `${modelName}/doCancelPersonEnsure`,
                   payload: {
@@ -98,7 +99,8 @@ export default class View extends Component {
               } >
               <a >撤销</a >
             </span >
-              <span onClick={() => {
+              <span onClick={(e) => {
+                e.stopPropagation()
                 dispatch({
                   type: `${modelName}/getPersonEnsureDetail`,
                   payload: {
@@ -119,13 +121,16 @@ export default class View extends Component {
       className: styles.tableContainer,
       columns,
       dataSource: _.merge((new Array(4)).fill(), dataSource),
+      onClickRow: (item) => {
+        // console.log(item)
+      },
       expandedRowRender: (record = {}) => {
         const { expand = [] } = record
         const columns = [
           {
             title: '成交时间',
             dataIndex: 'ctime',
-            width:100,
+            width: 100,
           },
           {
             title: '手续费',

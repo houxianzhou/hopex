@@ -1,4 +1,4 @@
-import { joinModel, getRes, resOk, formatNumber, _, formatJson, asyncPayload } from '@utils'
+import { joinModel, getRes, resOk, formatNumber, _, formatJson, asyncPayload, deepClone } from '@utils'
 import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
 import {
@@ -388,15 +388,8 @@ export default joinModel(modelExtend, {
         if (resOk(res)) {
           const { orderId } = payload
           const personalEnsures = yield select(({ home: { personalEnsures } }) => personalEnsures)
-          const result = personalEnsures.map(item => {
-            if (item.orderId === orderId) {
-              return {
-                ...item,
-                expand: res.data.details
-              }
-            }
-            return item
-          })
+          const result = deepClone(personalEnsures)
+          result.filter(item => item.orderId === orderId)[0].expand = res.data.details
           yield put({
             type: 'changeState',
             payload: {

@@ -12,6 +12,7 @@ export default class View extends Component {
       mouseWheel = true, // 是否监听滚轮滚动，此属性影响着鼠标滚动时，最外层的scroll滚动条能否滚动
       scrollbar = true, // 滚动条显示样式，是一直显示还是滚动时显示
       getScroller,
+      scroll,//作为覆盖默认配置项传入，
       ...rest
     } = this.props
     this.scroll = new BScroll(`.${this.uuid}`, {
@@ -27,6 +28,7 @@ export default class View extends Component {
       scrollX: true,
       // bounce: false,
       mouseWheel,
+      ...scroll,
       ...rest
     })
     if (getScroller) {
