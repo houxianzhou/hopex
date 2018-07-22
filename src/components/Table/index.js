@@ -28,14 +28,43 @@ const [Table, Thead, Tbody, Tr, Th, Td] = [
 
 export default class View extends Component {
   state = {
-    x: 0
+    x: 0,
+    loading: false
+  }
+
+  changeState = (payload) => {
+    this.setState(payload)
+    this.scroller && this.scroller.refresh()
   }
 
   getScroller = (scroller) => {
-    scroller.on('scroll', (pos) => {
-      this.setState({
-        x: pos.x
-      })
+    const { loadingMore } = this.props
+    if (!this.scroller && scroller) this.scroller = scroller
+    let prevX = 0
+    window.onresize = () => {
+      this.changeState()
+    }
+    scroller.on('scroll', ({ x, y }) => {
+      const { maxScrollY } = scroller
+      if (prevX !== x) {
+        this.changeState({ x })
+        prevX = x
+      }
+      if (loadingMore && _.isFunction(loadingMore)) {
+        if (y - maxScrollY < 10 && !this.state.loading) {
+          this.interval && clearTimeout(this.interval)
+          this.changeState({
+            loading: true
+          })
+          loadingMore(() => {
+            this.interval = setTimeout(() => {
+              this.changeState({
+                loading: false
+              })
+            }, 2000)
+          })
+        }
+      }
     })
   }
 
@@ -65,7 +94,7 @@ export default class View extends Component {
       scroll
     }
 
-
+    const { loading } = this.state
     return (
       <div className={
         classNames(
@@ -125,6 +154,10 @@ export default class View extends Component {
                   })
                 }
                 </Tbody >
+                {
+                  loading ? (<div >加载中</div >) : null
+                }
+
               </Scroller >
             </div >
           </div >
