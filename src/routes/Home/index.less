@@ -2,6 +2,7 @@
 @view_width: 400px;
 @padding_li_left: 30px;
 @header1: 32px;
+@header2: 40px;
 
 .views {
   display: flex;
@@ -21,9 +22,7 @@
 
 .tableContainer {
   :global {
-    .table {
-
-    }
+    .table {}
     .tr {
       padding: 0 @padding_li_left;
     }
@@ -36,10 +35,22 @@
     .tbody {
       .tr {
         height: 26px;
-        &:nth-child(2n+1) {
+        //&:nth-child(2n+1) {
+        //  background: @c_panel_light;
+        //}
+        &.even {
           background: @c_panel_light;
         }
       }
+    }
+  }
+}
+
+.expandetableContainer{
+  :global {
+    .tr {
+      padding: 0 @padding_li_left;
+      background: @c_pannel_header_dark !important;
     }
   }
 }
@@ -182,7 +193,7 @@
     height: 100%;
   }
   .top, .down {
-    height:0;
+    height: 0;
     flex-grow: 1;
   }
 
@@ -304,12 +315,12 @@
   :global {
     .thead {
       .tr {
-        height: 40px;
+        height: @header2;
       }
     }
     .tbody {
       .tr {
-        height: 40px;
+        height: @header2;
         .td {
 
         }

@@ -72,7 +72,7 @@ export default class View extends Component {
                 loading: false
               })
               setTimeout(() => {
-                 this.interval = null
+                this.interval = null
               }, 700)
             })
           }, 100)
@@ -88,6 +88,7 @@ export default class View extends Component {
       children,
       columns = [],
       dataSource = [],
+      expandedRowRender,
       scroll = {}
     } = this.props
 
@@ -104,7 +105,7 @@ export default class View extends Component {
 
     const scrollerConfig = {
       getScroller: this.getScroller,
-      scroll
+      ...scroll
     }
 
     const { loading } = this.state
@@ -132,43 +133,52 @@ export default class View extends Component {
                 {
                   dataSource.map((item = {}, index) => {
                     return (
-                      <Tr key={index} >
-                        {
-                          columns.map((item2 = {}, index2) => {
-                            let result = ''
-                            let className
-                            const key = item2.dataIndex
-                            let value = item[key]
-                            if (_.isNaN(value) || _.isUndefined(value)) {
-                              result = ''
-                            } else {
-                              if (_.isFunction(item2.render)) {
-                                value = item2.render(value, item, index, dataSource)
-                              }
-                              if (_.isObject(value) && !_.has(value, '$$typeof')) {
-                                result = value.value
-                                className = value.className
+                      <React.Fragment key={index} >
+                        <Tr className={
+                          classNames(
+                            index % 2 === 0 ? 'even' : 'odd'
+                          )
+                        } >
+                          {
+                            columns.map((item2 = {}, index2) => {
+                              let result = ''
+                              let className
+                              const key = item2.dataIndex
+                              let value = item[key]
+                              if (_.isNaN(value) || _.isUndefined(value)) {
+                                result = ''
                               } else {
-                                result = value
+                                if (_.isFunction(item2.render)) {
+                                  value = item2.render(value, item, index, dataSource)
+                                }
+                                if (_.isObject(value) && !_.has(value, '$$typeof')) {
+                                  result = value.value
+                                  className = value.className
+                                } else {
+                                  result = value
+                                }
                               }
-                            }
-                            return (
-                              <Td key={index2} {...getTdThProp(item2)} className={
-                                classNames(
-                                  item2.className,
-                                  className
-                                )
-                              } >{result}</Td >
-                            )
-                          })
+                              return (
+                                <Td key={index2} {...getTdThProp(item2)} className={
+                                  classNames(
+                                    item2.className,
+                                    className
+                                  )
+                                } >{result}</Td >
+                              )
+                            })
+                          }
+                        </Tr >
+                        {
+                          expandedRowRender && _.isFunction(expandedRowRender) ? expandedRowRender(item) : null
                         }
-                      </Tr >
+                      </React.Fragment >
                     )
                   })
                 }
                 </Tbody >
                 {
-                  loading ? (<div className={styles.loadingmore}>加载更多......</div >) : null
+                  loading ? (<div className={styles.loadingmore} >加载更多......</div >) : null
                 }
 
               </Scroller >

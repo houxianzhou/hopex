@@ -3,7 +3,8 @@ import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
-  getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure, getPosition
+  getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
+  getPosition, getPersonEnsureDetail
 } from "@services/trade"
 
 
@@ -346,6 +347,62 @@ export default joinModel(modelExtend, {
         const res = getRes(yield call(doCancelPersonEnsure, repayload))
         if (resOk(res)) {
           console.log(res)
+        }
+      }
+    },
+
+    //查看委托订单明细 订单明细
+    * getPersonEnsureDetail({ payload = {} }, { call, put, select }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "order.detail",
+          },
+          "param": {
+            ...payload
+          },
+          power: [1],
+          powerMsg: '查看委托订单明细'
+        }
+      })))
+      if (repayload) {
+        const res = getRes({
+          data: {
+            details: [
+              {
+                ctime: '2018-09-19 12:10:14',
+                takefee: '100'
+              },
+              {
+                ctime: '2018-09-19 12:10:14',
+                takefee: '100'
+              },
+              {
+                ctime: '2018-09-19 12:10:14',
+                takefee: '100'
+              }
+            ]
+          }
+        })
+        if (resOk(res)) {
+          const { orderId } = payload
+          const personalEnsures = yield select(({ home: { personalEnsures } }) => personalEnsures)
+          const result = personalEnsures.map(item => {
+            if (item.orderId === orderId) {
+              return {
+                ...item,
+                expand: res.data.details
+              }
+            }
+            return item
+          })
+          yield put({
+            type: 'changeState',
+            payload: {
+              personalEnsures: result,
+            }
+          })
         }
       }
     },

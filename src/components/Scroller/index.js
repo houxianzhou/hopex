@@ -18,7 +18,7 @@ export default class View extends Component {
       click: true,
       probeType: 3,
       // preventDefault: mouseWheel,
-      stopPropagation: false,
+      stopPropagation: true,
       scrollbar: scrollbar === 'fixed' ? {
         fade: false,
         interactive: true

@@ -85,16 +85,31 @@ export default class View extends Component {
         width: 150,
         render: (value, record) => {
           return (
-            <span onClick={() => {
-              dispatch({
-                type: `${modelName}/doCancelPersonEnsure`,
-                payload: {
-                  market: record.market,
-                  orderId: record.orderId
-                }
-              })
-            }
-            } ><a >撤销</a ></span >
+            <>
+              <span onClick={() => {
+                dispatch({
+                  type: `${modelName}/doCancelPersonEnsure`,
+                  payload: {
+                    market: record.market,
+                    orderId: record.orderId
+                  }
+                })
+              }
+              } >
+              <a >撤销</a >
+            </span >
+              <span onClick={() => {
+                dispatch({
+                  type: `${modelName}/getPersonEnsureDetail`,
+                  payload: {
+                    market: record.market,
+                    orderId: record.orderId
+                  }
+                })
+              }} >
+              <a >成交明细</a >
+            </span >
+            </>
           )
         }
       },
@@ -104,6 +119,32 @@ export default class View extends Component {
       className: styles.tableContainer,
       columns,
       dataSource: _.merge((new Array(4)).fill(), dataSource),
+      expandedRowRender: (record = {}) => {
+        const { expand = [] } = record
+        const columns = [
+          {
+            title: '成交时间',
+            dataIndex: 'ctime',
+            width:100,
+          },
+          {
+            title: '手续费',
+            dataIndex: 'takefee',
+          },
+        ]
+        return expand.length ? (
+          <div style={{ height: (40 * 3) }} >
+            <Table
+              className={styles.expandetableContainer}
+              columns={columns}
+              dataSource={expand}
+              scroll={{
+                bounce: false
+              }}
+            />
+          </div >
+        ) : null
+      },
       scroll: {
         x: SCROLLX.X
       },
