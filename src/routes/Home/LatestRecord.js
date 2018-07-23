@@ -47,7 +47,7 @@ export default class View extends Component {
       {
         title: '价格',
         dataIndex: 'price',
-        render: (value, record) => record.type === 'buy' ? {
+        render: (value, record) => record.type === '2'|| record.type === '买' ? {
           value,
           className: 'buy'
         } : {
