@@ -23,8 +23,11 @@ export default joinModel(modelExtend, {
     minPrice: null, // 24最低
     indexPrice: null, // 现货价格指数
 
-    latestPrice: null, //计算出来的，最新交易价格
+    latestPrice: null, //直接从最新成交列表拿的，最新交易价格
+    latestPriceTrend: 1,//1||0合理趋势，比上次大为1小就是0
+
     equitablePrice: null, // 计算出来的，合理价格
+
 
     minVaryPrice: null, //最小变动价位
     minDealAmount: null, //最小交易量

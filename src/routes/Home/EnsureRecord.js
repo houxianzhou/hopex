@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { classNames, _, dealInterval, getPercent, formatNumber, } from '@utils'
+import { classNames, _, dealInterval, getPercent, formatNumber, isEqual } from '@utils'
 import { Mixin, Table } from "@components"
 import ensure from '@assets/ensure.png'
+import arrow_down from '@assets/arrow_down.png'
+import arrow_top from '@assets/arrow_top.png'
 import { COLORS } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
@@ -10,6 +12,20 @@ import styles from './index.less'
 let max = null
 
 export default class View extends Component {
+
+  componentDidUpdate(prevProps) {
+    const { model: { latestPrice: prevLatestPrice } } = prevProps
+    const { model: { latestPrice }, dispatch, modelName } = this.props
+    if (!isEqual(prevLatestPrice, latestPrice)) {
+      const result = latestPrice > prevLatestPrice ? 1 : 0
+      dispatch({
+        type: `${modelName}/changeState`,
+        payload: {
+          latestPriceTrend: result
+        }
+      })
+    }
+  }
 
   startInit = () => {
     this.getEnsureRecord()
@@ -23,14 +39,14 @@ export default class View extends Component {
         mode: 'http'
       }
     }).then(res => {
-      // dealInterval(() => {
-      //   this.getEnsureRecord()
-      // })
+      dealInterval(() => {
+        this.getEnsureRecord()
+      })
     })
   }
 
   render() {
-    const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice }, dispatch, modelName } = this.props
+    const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice, latestPriceTrend }, dispatch, modelName } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'asks')
       , _.get(ensure_records, 'bids')
@@ -134,10 +150,19 @@ export default class View extends Component {
                 <Table {...tableTopProps} />
               </div >
               <div className={styles.center} >
-                <div className={styles.left} >{latestPrice}</div >
+                <div className={styles.left} >
+                  {latestPrice}
+                  {
+                    latestPriceTrend ? (
+                      <img alt='top' src={arrow_top} />
+                    ) : (
+                      <img alt='down' src={arrow_down} />
+                    )
+                  }
+                </div >
                 <div className={styles.right} >
                   <img alt='ensure' className={styles.ensure} src={ensure} />
-                  {equitablePrice}/{indexPrice}
+                  {equitablePrice || null}/{indexPrice}
                 </div >
               </div >
               <div className={styles.down} >
