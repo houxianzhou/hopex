@@ -52,7 +52,24 @@ export default class View extends Component {
       },
       {
         title: '数量',
-        dataIndex: 'amount'
+        dataIndex: 'amount',
+        render: (value, record, index, dataSource) => {
+          return (
+            <ColorChange
+              color={'rgba(218,115,115,.2)'}
+              data={{
+                dataIndex: record.price,
+                dataValue: value
+              }}
+              total={dataSource.map((item = {}) => ({
+                dataIndex: item.price,
+                dataValue: item.amount
+              }))}
+            >
+              {value}
+            </ColorChange >
+          )
+        }
       },
       {
         title: '累计数量(张)',
