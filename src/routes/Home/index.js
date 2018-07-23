@@ -100,6 +100,18 @@ export default class View extends Component {
           }
         </div >
 
+        <div className={styles.views} >
+          {
+            renderView('Purse')
+          }
+          {
+            renderView('BuySell')
+          }
+          {
+            renderView('CurrentContract')
+          }
+        </div >
+
         {
           isLogin ? (
             <div className={styles.views} >
@@ -121,17 +133,7 @@ export default class View extends Component {
 
 
 
-        <div className={styles.views} >
-          {
-            renderView('Purse')
-          }
-          {
-            renderView('BuySell')
-          }
-          {
-            renderView('CurrentContract')
-          }
-        </div >
+
 
 
       </Mixin.Parent >

@@ -93,13 +93,13 @@ export default joinModel(modelExtend, {
           asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc']),
           bids: _.orderBy(formatNumber(_.get(res.data, 'bids'), ['price', 'amount']), ['price'], ['desc'])
         }
-        const [bidsLast, asksFirst] = [result.bids[result.bids.length - 1], result.asks[0]]
+        const [asksLast, bidsFirst] = [result.asks[result.asks.length > 8 ? 7 : result.asks.length - 1], result.bids[0]]
         yield put({
           type: 'changeState',
           payload: {
             ensure_records: result,
-            equitablePrice: formatNumber((_.get(bidsLast, 'price') * _.get(asksFirst, 'amount')
-              + _.get(asksFirst, 'price') * _.get(bidsLast, 'amount')) / _.get(asksFirst, 'amount') + _.get(bidsLast, 'amount'))
+            equitablePrice: formatNumber((_.get(asksLast, 'price') * _.get(bidsFirst, 'amount')
+              + _.get(bidsFirst, 'price') * _.get(asksLast, 'amount')) / (_.get(asksLast, 'amount') + _.get(bidsFirst, 'amount')))
           }
         })
         return res

@@ -60,9 +60,11 @@ export const Patterns = {
   decimalNumber: /^[0-9|\.]*$/
 }
 
-export const getPercent = (child = 1, parent = 1) => {
+export const getPercent = (child = 1, parent = 1, min = 0) => {
   if (parent) {
-    return child / parent * 100 + '%'
+    let value = child / parent
+    value = value > min ? value : min
+    return value * 100 + '%'
   }
 }
 

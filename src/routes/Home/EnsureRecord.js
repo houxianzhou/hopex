@@ -23,14 +23,14 @@ export default class View extends Component {
         mode: 'http'
       }
     }).then(res => {
-      dealInterval(() => {
-        this.getEnsureRecord()
-      })
+      // dealInterval(() => {
+      //   this.getEnsureRecord()
+      // })
     })
   }
 
   render() {
-    const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice } } = this.props
+    const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice }, dispatch, modelName } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'asks')
       , _.get(ensure_records, 'bids')
@@ -76,7 +76,7 @@ export default class View extends Component {
         dataIndex: 'sum',
         render: (value, record, index, dataSource) => {
           return <ColorChange color={record.type === 'sell' ? COLORS.redOpacity : COLORS.greenOpacity}
-                              percent={getPercent(value, max.sum)} >
+                              percent={getPercent(value, max.sum, 0.02)} >
             {value}
           </ColorChange >
         }
