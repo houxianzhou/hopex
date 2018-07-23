@@ -155,7 +155,7 @@ export default class View extends Component {
                               const key = item2.dataIndex
                               let value = item[key]
                               if (_.isNaN(value) || _.isUndefined(value)) {
-                                result = ''
+                                result = '--'
                               } else {
                                 if (_.isFunction(item2.render)) {
                                   value = item2.render(value, item, index, dataSource)

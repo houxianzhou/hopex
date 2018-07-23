@@ -82,7 +82,7 @@ export default class View extends Component {
                 dataValue: item.amount
               }))}
             >
-              {value}
+              {value || '--'}
             </ColorChange >
           )
         }
