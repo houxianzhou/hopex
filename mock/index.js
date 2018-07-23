@@ -102,11 +102,11 @@ export default {
           },
           "data": {
             "asks": randomArrayMap(3).map((item, index) => ({
-              "price": randomStr(),
+              "price": index,
               "amount": randomStr()
             })),
             "bids": randomArrayMap(3).map((item, index) => ({
-              "price": randomStr(),
+              "price": index,
               "amount": randomStr()
             }))
           }
