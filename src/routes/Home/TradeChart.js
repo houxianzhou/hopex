@@ -8,7 +8,7 @@ import * as styles from './index.less'
 
 export default class View extends Component {
   componentDidMount() {
-    localSave.clearAll()
+    // localSave.clearAll()
   }
 
   startInit = () => {

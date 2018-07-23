@@ -1,7 +1,7 @@
 import { request } from '@utils'
-const prefix='/mock'
+const prefix=''
 export async function getCurrentUser() {
-  return await request(`${prefix}/mock/api/user`)
+  return await request(`${prefix}/api/user`)
 }
 
 export async function doLogin(payload) {
