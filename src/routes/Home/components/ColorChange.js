@@ -46,8 +46,6 @@ export default class ColorChange extends Component {
         })
       }
     }
-
-
   }
 
   render() {
