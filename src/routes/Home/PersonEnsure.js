@@ -8,7 +8,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-    //this.getPersonalEnsure()
+    this.getPersonalEnsure()
   }
 
   getPersonalEnsure = (payload = {}) => {
@@ -19,9 +19,9 @@ export default class View extends Component {
       payload
     }).then((res) => {
         if (callback) return callback()
-        // dealInterval(() => {
-        //   this.getPersonalEnsure(payload)
-        // })
+        dealInterval(() => {
+          this.getPersonalEnsure(payload)
+        })
       }
     )
   }

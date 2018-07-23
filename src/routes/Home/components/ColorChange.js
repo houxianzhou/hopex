@@ -3,7 +3,7 @@ import { classNames, isEqual, _ } from '@utils'
 import { COLORS } from '@constants'
 import * as styles from './ColorChange.less'
 
-export default class View extends Component {
+export default class ColorChange extends Component {
   state = {
     percent: 0,
     color: null
@@ -15,12 +15,23 @@ export default class View extends Component {
     const prevDataValue = (prevTotal.filter(item => item.dataIndex === data.dataIndex)[0] || {}).dataValue
     const dataValue = data.dataValue
 
-    if (_.isNil(prevDataValue)) {
+    const colorCancel = () => {
+      clearTimeout(this.interval)
+      this.interval = setTimeout(() => {
+        this.setState({
+          percent: '0',
+          color: null
+        })
+      }, 100)
+    }
+
+    if (_.isNil(prevDataValue) && !_.isEmpty(data)) {
       setTimeout(() => {
         this.setState({
           percent: '100%',
           color: COLORS.yellowOpacity
         })
+        colorCancel()
       })
     }
 
@@ -31,17 +42,12 @@ export default class View extends Component {
             percent: '100%',
             color: Number(dataValue) > Number(prevDataValue) ? COLORS.greenOpacity : COLORS.redOpacity
           })
+          colorCancel()
         })
       }
     }
 
-    clearTimeout(this.interval)
-    this.interval = setTimeout(() => {
-      this.setState({
-        percent: '0',
-        color: null
-      })
-    }, 200)
+
   }
 
   render() {

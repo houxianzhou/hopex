@@ -14,7 +14,7 @@ export const API = {
 
 export const SPEED = {
   TOP: 0,
-  MIDDLE: 1000,
+  MIDDLE: 10,
   DOWM: 2000
 }
 

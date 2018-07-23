@@ -7,7 +7,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-    // this.getPurseAssetList()
+     this.getPurseAssetList()
   }
 
   getPurseAssetList = () => {

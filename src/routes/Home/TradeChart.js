@@ -8,11 +8,11 @@ import * as styles from './index.less'
 
 export default class View extends Component {
   componentDidMount() {
-    // localSave.clearAll()
+    localSave.clearAll()
   }
 
   startInit = () => {
-    // this.startKline()
+    this.startKline()
     // this.getImportantPrice()
   }
 
@@ -25,22 +25,22 @@ export default class View extends Component {
     if (!this.chart) {
       this.chart = new TradingView.widget({
         disabled_features: [
-          // "left_toolbar",
-          // 'go_to_date',
-          // 'use_localstorage_for_settings',
-          // 'save_chart_properties_to_local_storage',
-          // 'header_widget',
-          // 'edit_buttons_in_legend',
-          // 'context_menus',
-          // 'main_series_scale_menu',
-          // 'adaptive_logo',
-          // 'show_logo_on_all_charts',
-          // 'display_market_status',
-          // 'remove_library_container_border',
-          // 'chart_property_page_style',
-          // 'control_bar',
-          // 'timeframes_toolbar',
-          // 'chart_property_page_background'
+          "left_toolbar",
+          'go_to_date',
+          'use_localstorage_for_settings',
+          'save_chart_properties_to_local_storage',
+          'header_widget',
+          'edit_buttons_in_legend',
+          'context_menus',
+          'main_series_scale_menu',
+          'adaptive_logo',
+          'show_logo_on_all_charts',
+          'display_market_status',
+          'remove_library_container_border',
+          'chart_property_page_style',
+          'control_bar',
+          'timeframes_toolbar',
+          'chart_property_page_background'
         ],
         library_path: '/',
         fullscreen: true,
@@ -147,9 +147,9 @@ export default class View extends Component {
         },
         locale: 'zh',
       })
-      this.chart.onChartReady(function() {
-        // this.chart().createStudy('MACD', false, false, [14, 30, "close", 9])
-      })
+      // this.chart.onChartReady(function() {
+      //   // this.chart().createStudy('MACD', false, false, [14, 30, "close", 9])
+      // })
     } else {
       this.chart.setSymbol('股吧2', 100, () => {
         return true
