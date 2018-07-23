@@ -6,6 +6,8 @@ import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
 import styles from './index.less'
 
+let max = null
+
 export default class View extends Component {
 
   startInit = () => {
@@ -33,6 +35,7 @@ export default class View extends Component {
       , _.get(ensure_records, 'bids')
     ]
 
+
     const columns = [
       {
         title: '价格',
@@ -53,39 +56,41 @@ export default class View extends Component {
       },
       {
         title: '累计数量(张)',
-        dataIndex: 'amount',
+        dataIndex: 'sum',
         render: (value, record, index, dataSource) => {
-          const total = dataSource.slice(0, index + 1).reduce((sum = 0, next = {}) => {
-            return sum + (next.amount || 0)
-          }, 0)
-          return total
+          return <ColorChange color={'rgba(218,115,115,.2)'} percent={getPercent(value, max.sum)} >
+            {value}
+          </ColorChange >
         }
       }
     ]
+
 
     const tableProps = {
       className: styles.tableContainer,
       columns,
     }
 
+
     const tableTopProps = {
       ...tableProps,
-      dataSource: dataTop.length > 8 ? _.merge((new Array(8)).fill(), dataTop.slice(0, 8).map(item => {
+      dataSource: (new Array((8 - dataTop.length) > 0 ? (8 - dataTop.length) : 0)).fill().concat(dataTop.slice(0, 8).map((item, index) => {
         item.type = 'sell'
-        return item
-      })) : (new Array(8 - dataTop.length)).fill().concat(dataTop.slice(0, 8).map(item => {
-        item.type = 'sell'
+        item.sum = _.sumBy(dataTop.slice(index, 8), ({ amount } = 0) => amount)
         return item
       }))
     }
 
     const tableDownProps = {
       ...tableProps,
-      dataSource: _.merge((new Array(8)).fill(), dataDown.slice(0, 8).map(item => {
+      dataSource: _.merge((new Array(8)).fill(), dataDown.slice(0, 8).map((item, index) => {
         item.type = 'buy'
+        item.sum = _.sumBy(dataDown.slice(0, index + 1), ({ amount } = 0) => amount)
         return item
       }))
     }
+
+    max = _.maxBy([...tableTopProps.dataSource, ...tableDownProps.dataSource], ({ sum } = {}) => sum)
 
     return (
       <Mixin.Child that={this} >

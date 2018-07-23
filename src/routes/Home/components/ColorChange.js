@@ -24,7 +24,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { color = '', style = {}, children } = this.props
+    const { color = '', percent = '100%', style = {}, children } = this.props
     return (
       <div style={
         {
@@ -41,7 +41,8 @@ export default class View extends Component {
         <div style={{
           position: 'absolute',
           left: -5,
-          width: this.state.percent,
+          width: percent,
+          height:'90%',
           background: color,
         }} >
         </div >

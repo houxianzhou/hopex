@@ -36,7 +36,7 @@ export default class View extends Component {
       {
         title: '类型',
         dataIndex: 'type',
-        render: (value) => value === 'buy' ? {
+        render: (value) => value === '2' || value === '买' ? {
           value: '买入',
           className: 'buy'
         } : {
