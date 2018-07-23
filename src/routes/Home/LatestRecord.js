@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { classNames, dealInterval, moment, _ } from '@utils'
 import switch_render from '@assets/switch_render.png'
 import { Mixin, Table } from "@components"
+import arrow_down from '@assets/arrow_down.png'
+import arrow_top from '@assets/arrow_top.png'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -47,12 +49,20 @@ export default class View extends Component {
       {
         title: '价格',
         dataIndex: 'price',
-        render: (value, record) => record.type === '2'|| record.type === '买' ? {
-          value,
-          className: 'buy'
-        } : {
-          value,
-          className: 'sell'
+        render: (value, record, index, dataSource) => {
+          const style = { marginLeft: 7 }
+          const next = dataSource[index + 1] || {}
+          const img = value > next.price ? (
+            <img style={style} alt='top' src={arrow_top} />) : (value < next.price ? (
+            <img style={style} alt='down' src={arrow_down} />) : null)
+          const result = <span >{value}{img}</span >
+          return record.type === '2' || record.type === '买' ? {
+            value: result,
+            className: 'buy'
+          } : {
+            value: result,
+            className: 'sell'
+          }
         }
       },
       {

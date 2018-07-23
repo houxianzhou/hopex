@@ -134,7 +134,7 @@ export default {
                 "time": 1530869889.717263,
                 "price": randomStr(1, 1000, 10000),
                 "amount": randomStr(1, 100),
-                "type": ["buy", 'sell'][_.random(0, 1)]
+                "type": ["2", '1'][_.random(0, 1)]
               }
             ))
           }
