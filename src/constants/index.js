@@ -33,3 +33,11 @@ export const POWER = {
 export const SCROLLX = {
   X: 1400
 }
+
+export const COLORS = {
+  green: 'rgba(86,188,157,1)',
+  red: 'rgba(218,115,115,1)',
+  greenOpacity: 'rgba(86,188,157,.2)',
+  redOpacity: 'rgba(218,115,115,.2)',
+  yellowOpacity:'rgba(226,185,111,.2)'
+}

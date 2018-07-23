@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { classNames, isEqual, _ } from '@utils'
+import { COLORS } from '@constants'
 import * as styles from './ColorChange.less'
 
 export default class View extends Component {
@@ -14,19 +15,22 @@ export default class View extends Component {
     const prevDataValue = (prevTotal.filter(item => item.dataIndex === data.dataIndex)[0] || {}).dataValue
     const dataValue = data.dataValue
 
-    if (_.isUndefined(prevDataValue) || _.isNull(prevDataValue)) {
+    if (_.isNil(prevDataValue)) {
       setTimeout(() => {
         this.setState({
           percent: '100%',
-          color: 'rgba(226,185,111,.2)'
+          color: COLORS.yellowOpacity
         })
       })
     }
 
     if (!_.isEmpty(data) && !_.isEmpty(total)) {
-      if (prevDataValue && !isEqual(prevDataValue, dataValue)) {
-        this.setState({
-          percent: '100%'
+      if (!_.isNil(prevDataValue) && !isEqual(prevDataValue, dataValue)) {
+        setTimeout(() => {
+          this.setState({
+            percent: '100%',
+            color: Number(dataValue) > Number(prevDataValue) ? COLORS.greenOpacity : COLORS.redOpacity
+          })
         })
       }
     }
@@ -41,7 +45,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { color = '', style = {}, percent, children } = this.props
+    const { color, style = {}, percent, children } = this.props
     return (
       <div style={
         {
@@ -60,7 +64,7 @@ export default class View extends Component {
           left: -5,
           width: percent || this.state.percent,
           height: '90%',
-          background: this.state.color || color,
+          background: color || this.state.color,
         }} >
         </div >
         {children}

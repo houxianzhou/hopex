@@ -24,6 +24,7 @@ export const lodash_helper = {
   has: _.has,
   get: _.get,
   set: _.set,
+  isNil: _.isNil,
   isEmpty: _.isEmpty,
   isNull: _.isNull,
   isNaN: _.isNaN,

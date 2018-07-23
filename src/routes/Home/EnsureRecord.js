@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { classNames, _, dealInterval, getPercent, formatNumber, } from '@utils'
 import { Mixin, Table } from "@components"
 import ensure from '@assets/ensure.png'
+import { COLORS } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
 import styles from './index.less'
@@ -56,7 +57,6 @@ export default class View extends Component {
         render: (value, record, index, dataSource) => {
           return (
             <ColorChange
-              color={'rgba(218,115,115,.2)'}
               data={{
                 dataIndex: record.price,
                 dataValue: value
@@ -75,7 +75,8 @@ export default class View extends Component {
         title: '累计数量(张)',
         dataIndex: 'sum',
         render: (value, record, index, dataSource) => {
-          return <ColorChange color={'rgba(218,115,115,.2)'} percent={getPercent(value, max.sum)} >
+          return <ColorChange color={record.type === 'sell' ? COLORS.redOpacity : COLORS.greenOpacity}
+                              percent={getPercent(value, max.sum)} >
             {value}
           </ColorChange >
         }

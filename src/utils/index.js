@@ -38,7 +38,7 @@ export const getRes = function (res) {
 }
 
 export const resOk = (res, method) => {
-  if (_.isNull(res.data) || _.isUndefined(res.data)) {
+  if (_.isNil(res.data)) {
     return false
   }
   // if (method && res.head.method !== method) {
