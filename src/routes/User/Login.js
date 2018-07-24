@@ -104,7 +104,7 @@ export default class View extends Component {
                 登录
                 <span onClick={(e)=>{
                   e.preventDefault()
-                  this.changeState(person1)
+                  this.changeState(person2)
                 }}>2</span>
               </button >
               <div >
