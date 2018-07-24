@@ -47,6 +47,10 @@ export function request(url = '', options = {}) {
     ...rest
   })
     .then((res) => {
+      if (_.get(res, 'data.ret') !== '0') {
+        console.log(res)
+        return Promise.reject({ response:res })
+      }
       return res
     })
     .catch((error) => {
@@ -62,8 +66,8 @@ export function request(url = '', options = {}) {
 
 
       if (needWatch) {
-        if (_.has(error, 'response.data.errMsg')||_.has(error, 'response.data.errStr')) {
-          Message.error(_.get(error, 'response.data.errMsg')||_.get(error, 'response.data.errStr'))
+        if (_.has(error, 'response.data.errMsg') || _.has(error, 'response.data.errStr')) {
+          Message.error(_.get(error, 'response.data.errMsg') || _.get(error, 'response.data.errStr'))
         } else {
           if (method === 'get') {
             Message.error('数据获取失败')
