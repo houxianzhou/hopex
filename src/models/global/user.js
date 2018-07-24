@@ -35,14 +35,15 @@ export default joinModel(modelExtend, {
         }
       }))
       if (resOk(res)) {
-        const { enabledTwoFactories, token, userId } = res.data
+        const { enabledTwoFactories, token, userId, email } = res.data
         if (enabledTwoFactories) {
           // 谷歌二次验证
         } else {
           if (token && userId) {
             const payload = {
               userId,
-              userToken: token
+              userToken: token,
+              email
             }
             yield put({
               type: 'changeState',

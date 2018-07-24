@@ -284,7 +284,6 @@ export default joinModel(modelExtend, {
       })))
       if (repayload) {
         const res = getRes(yield call(getPosition, repayload))
-        console.log(res)
         if (resOk(res)) {
           const result = _.get(res, 'data.positionList')
           if (result) {

@@ -21,7 +21,7 @@ let index = 0
 }))
 export default class View extends Component {
   render() {
-    const { home: { marketList = [] } = {}, user: { userInfo }, theme, modelName1, modelName2, dispatch, routesBasic, history } = this.props
+    const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } }, theme, modelName1, modelName2, dispatch, routesBasic, history } = this.props
 
     return (
       <div className={
@@ -100,7 +100,10 @@ export default class View extends Component {
             </li >
             <li >
               <img alt='account' src={account} />
-              <span >2278095567@qq.com</span >
+              {
+                email ? (<span >{email}</span >) : null
+              }
+
             </li >
             <li >
               {_.isEmpty(userInfo) ? (

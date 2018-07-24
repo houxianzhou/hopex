@@ -28,7 +28,7 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    //this.getEnsureRecord()
+    this.getEnsureRecord()
   }
 
   getEnsureRecord = () => {

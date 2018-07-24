@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ShowJsonTip } from '@components'
+import { classNames, _ } from '@utils'
 import logo2 from '@assets/logo2.png'
 import emailpng from '@assets/email.png'
 import passwordpng from '@assets/password.png'
@@ -63,7 +64,7 @@ export default class View extends Component {
                 value={email}
                 onChange={(e) => {
                   this.changeState({
-                    name: e.target.value
+                    email: e.target.value
                   })
                 }}
 
@@ -82,27 +83,31 @@ export default class View extends Component {
                 }}
 
                 iconPrefix={(
-                  <img alt='email' src={emailpng} />
+                  <img alt='password' src={passwordpng} />
                 )}
               />
-              <input />
-              <button onClick={(e) => {
-                e.preventDefault()
-                this.login()
-              }} >
+              <button
+                className={classNames(
+                  styles.loginbutton,
+                  email && password ? styles.permit : styles.notpermit
+                )}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.preventDefault()
+                  this.login()
+                }} >
+                <span
+                  onClick={(e)=>{
+                    e.preventDefault()
+                    this.changeState(person1)
+                  }}>1</span>
                 登录
+                <span onClick={(e)=>{
+                  e.preventDefault()
+                  this.changeState(person1)
+                }}>2</span>
               </button >
               <div >
-          <span onClick={() => {
-            this.changeState({
-              ...person1
-            })
-          }} >用户1</span >
-                <span onClick={() => {
-                  this.changeState({
-                    ...person2
-                  })
-                }} >用户2</span >
               </div >
               {/*<button onClick={(e) => {*/}
               {/*e.preventDefault()*/}
