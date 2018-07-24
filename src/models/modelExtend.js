@@ -53,6 +53,25 @@ export default {
     },
     * getPropsParams({ payload = {} }, { call, put, select }) {
       // 未启用
+    },
+    * openModal({ payload = {} }, { call, put, select }) {
+      const { name } = payload
+      yield put({
+        type: 'modal/changeState',
+        payload: {
+          name,
+          state: true
+        }
+      })
+    },
+    * closeModal({ payload = {} }, { call, put, select }) {
+      yield put({
+        type: 'modal/changeState',
+        payload: {
+          name: '',
+          state: false
+        }
+      })
     }
   },
 
@@ -62,6 +81,6 @@ export default {
     },
     clearState(state, { payload }) {
       return {}
-    }
+    },
   }
 }

@@ -12,10 +12,12 @@ import { ROOT } from '@constants'
 }))
 export default class View extends Component {
   render() {
-    const { children, model: { state } } = this.props
+    const { children, model: { state }, onAfterOpen, style = {} } = this.props
     return (
       <Modal
-        isOpen={true}
+        style={style}
+        onAfterOpen={onAfterOpen}
+        isOpen={state}
       >
         {children}
       </Modal >

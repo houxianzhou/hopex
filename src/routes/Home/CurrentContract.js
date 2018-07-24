@@ -7,7 +7,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   render() {
-    const { model: { marketName } } = this.props
+    const { model: { marketName }, dispatch, modelName } = this.props
     const colors = [
       '#52AA64', '#52AA64', '#8CB152', '#8CB152', '#CABA70', '#CABA70', '#D69555', '#D69555', '#D47D5A', ' #D47D5A'
     ]
@@ -37,8 +37,15 @@ export default class View extends Component {
               <div className={styles.top} >
                 <div className={styles.desc} >
                   <div >杠杆倍数</div >
-                  <div className={styles.edit} >编辑</div >
-                  <Modal>ddddd</Modal>
+                  <div
+                    className={styles.edit}
+                    onClick={() => {
+                      dispatch({
+                        type: `${modelName}/openModal`
+                      })
+                    }}
+                  >编辑
+                  </div >
                 </div >
                 <div className={styles.number} >
                   50
@@ -55,13 +62,19 @@ export default class View extends Component {
                     ))
                   }
                 </ul >
-
               </div >
             </div >
           </ScrollPannel >
+          <RenderModal />
         </div >
       </Mixin.Child >
     )
   }
+}
+
+const RenderModal = (Props) => {
+  return (
+    <Modal >hahahah</Modal >
+  )
 }
 
