@@ -47,8 +47,7 @@ export function request(url = '', options = {}) {
     ...rest
   })
     .then((res) => {
-      if (_.get(res, 'data.ret') !== '0') {
-        console.log(res)
+      if (String(_.get(res, 'data.ret')) !== '0') {
         return Promise.reject({ response:res })
       }
       return res
