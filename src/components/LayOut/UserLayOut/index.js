@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Route,  Switch } from 'dva/router'
 import dynamic from 'dva/dynamic'
+import * as styles from './index.less'
 
 @connect(({ loading, dispatch }) => ({
   loading,
@@ -13,7 +14,7 @@ export default class View extends Component {
       app, routesUser,
     } = this.props
     return (
-      <div>
+      <div className={styles.overbody}>
         <Switch>
           {
             routesUser.map(({ path, ...dynamics }) => {

@@ -1,0 +1,56 @@
+::-webkit-input-placeholder { /* WebKit browsers */
+  color: #CCCCCC;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #CCCCCC;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #CCCCCC;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: #CCCCCC;
+}
+
+.input + .input {
+  margin-top: 40px;
+}
+
+.input {
+  background: white;
+  :global {
+    .content {
+      display: flex;
+      padding: 10px 0;
+      border-bottom: 1px solid #EBEBEB;
+      .left {
+        padding: 0 20px;
+        border-right: 1px solid #EBEBEB;
+        img {
+          height: 22px;
+        }
+      }
+      .right {
+        display: flex;
+        flex-grow: 1;
+        input {
+          text-align: center;
+          padding: 0 5px;
+          border: none;
+          outline: none;
+          flex-grow: 1;
+        }
+      }
+      input {
+        font-size: 16px;
+      }
+    }
+    .desc {
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+    }
+  }
+}

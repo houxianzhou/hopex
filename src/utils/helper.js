@@ -5,6 +5,7 @@ import { fromJS, is } from 'immutable'
 
 export const lodash_helper = {
   sumBy: _.sumBy,
+  mapKeys:_.mapKeys,
   toPairs: _.toPairs,
   isEqual: _.isEqual,
   toNumber: _.toNumber,

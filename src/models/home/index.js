@@ -239,7 +239,11 @@ export default joinModel(modelExtend, {
       })))
       const res = getRes(yield call(getPurseAssetList, repayload))
       if (resOk(res)) {
-        const result = _.get(res, 'data.records')
+        const result = []
+        _.mapKeys((_.get(res, 'data') || {}), (v = [], k = '') => {
+          v.forEach(item => item.sortType = k)
+          result.push(...v)
+        })
         result.map(item => {
           item.levelages = formatJson(item.levelages)
         })
@@ -280,6 +284,7 @@ export default joinModel(modelExtend, {
       })))
       if (repayload) {
         const res = getRes(yield call(getPosition, repayload))
+        console.log(res)
         if (resOk(res)) {
           const result = _.get(res, 'data.positionList')
           if (result) {
