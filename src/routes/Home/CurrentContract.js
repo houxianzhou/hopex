@@ -65,7 +65,7 @@ export default class View extends Component {
               </div >
             </div >
           </ScrollPannel >
-          <RenderModal />
+          <RenderModal {...this.props} />
         </div >
       </Mixin.Child >
     )
@@ -73,8 +73,12 @@ export default class View extends Component {
 }
 
 const RenderModal = (Props) => {
+  const props = {
+    ...Props,
+    title: '设置杠杆倍数'
+  }
   return (
-    <MainModal >hahahah</MainModal >
+    <MainModal {...props}>hahahah</MainModal >
   )
 }
 
