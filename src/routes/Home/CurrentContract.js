@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Mixin, Modal } from "@components"
+import { Mixin } from "@components"
 import { classNames } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
+import MainModal from './components/MainModal'
 import styles from './index.less'
 
 
@@ -51,7 +52,6 @@ export default class View extends Component {
                   50
                   <span >倍</span >
                 </div >
-
               </div >
               <div className={styles.down} >
                 <div >自动减仓队列</div >
@@ -74,7 +74,7 @@ export default class View extends Component {
 
 const RenderModal = (Props) => {
   return (
-    <Modal >hahahah</Modal >
+    <MainModal >hahahah</MainModal >
   )
 }
 
