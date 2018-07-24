@@ -1,9 +1,8 @@
 import { request, asyncPayload } from '@utils'
 import { API } from "@constants"
 
-
 const { MOCKIP, USERIP, USERIP2 } = API
-const MODE =  USERIP2
+const MODE =  MOCKIP
 
 // mock数据
 if (MODE === MOCKIP) {

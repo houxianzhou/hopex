@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Mixin } from "@components"
+import { Mixin, Modal } from "@components"
 import { classNames } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
@@ -37,7 +37,8 @@ export default class View extends Component {
               <div className={styles.top} >
                 <div className={styles.desc} >
                   <div >杠杆倍数</div >
-                  <div >编辑</div >
+                  <div className={styles.edit} >编辑</div >
+                  <Modal>ddddd</Modal>
                 </div >
                 <div className={styles.number} >
                   50

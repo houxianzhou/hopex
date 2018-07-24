@@ -1,3 +1,5 @@
+export const ROOT='#root'
+
 export const BREACKPOINT = {
   MOBILE: 780
 }

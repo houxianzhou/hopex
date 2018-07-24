@@ -1,7 +1,7 @@
 export default [
   {
     path: '/',
-    model: ['global/user', 'global/theme']
+    model: ['global/user', 'global/theme', 'global/modal']
   },
   {
     name: '合约交易',

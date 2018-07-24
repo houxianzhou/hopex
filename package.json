@@ -30,6 +30,7 @@
     "react-dom": "^16.2.0",
     "react-draggable": "^3.0.5",
     "react-helmet": "^5.2.0",
+    "react-modal": "^3.5.1",
     "react-responsive": "^4.1.0",
     "reconnecting-websocket": "^4.0.0-rc5",
     "socket-client": "^1.0.0",
