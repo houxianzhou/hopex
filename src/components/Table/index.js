@@ -47,7 +47,7 @@ export default class View extends Component {
     this.setState(payload)
     setTimeout(() => {
       this.scroller && this.scroller.refresh()
-    }, 0)
+    }, 10)
   }
 
   getScroller = (scroller) => {

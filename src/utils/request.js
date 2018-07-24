@@ -60,9 +60,10 @@ export function request(url = '', options = {}) {
         }
       }
 
+
       if (needWatch) {
-        if (_.has(error, 'errMsg')) {
-          Message.error(_.get(error, 'errMsg'))
+        if (_.has(error, 'response.data.errMsg')||_.has(error, 'response.data.errStr')) {
+          Message.error(_.get(error, 'response.data.errMsg')||_.get(error, 'response.data.errStr'))
         } else {
           if (method === 'get') {
             Message.error('数据获取失败')

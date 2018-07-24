@@ -119,8 +119,9 @@
       .right {
         display: flex;
         align-items: center;
-        margin-right: 70px;
+        // margin-right: 70px;
         ul {
+          // background: red;
           display: flex;
           margin: 0;
           padding: 0;
@@ -140,8 +141,6 @@
               margin-top: 8px;
             }
             div {
-              //display: flex;
-              //justify-content: center;
               width: 100%;
               &.title {
                 font-size: 14px;
@@ -158,7 +157,6 @@
                 color: @_red;
               }
             }
-
           }
         }
       }
@@ -173,12 +171,13 @@
     ul {
       display: flex;
       li + li {
-        margin-left: 5px;
+        margin-left: 20px;
       }
       li {
+        color: @c_pannel_theader_color;
         width: 30px;
         height: 30px;
-        background: black;
+        //  background: black;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -198,8 +197,8 @@
   :global {
     .tbody {
       .tr {
-        .td+.td{
-          padding:0 3px;
+        .td + .td {
+          padding: 0 3px;
         }
         .td {
 
@@ -236,7 +235,7 @@
       align-items: center;
       font-size: 16px;
       font-weight: bold;
-      img{
+      img {
         display: inline-block;
         height: 100%;
         margin-left: 10px;

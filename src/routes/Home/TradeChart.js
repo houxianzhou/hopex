@@ -17,7 +17,7 @@ export default class View extends Component {
   }
 
   startKline = () => {
-    const { model, dispatch, modelName } = this.props
+    const { model: { marketCode }, dispatch, modelName } = this.props
     const TradingView = window.TradingView
     // const Datafeeds = window.Datafeeds
     // window.$ = $
@@ -44,7 +44,7 @@ export default class View extends Component {
         ],
         library_path: '/',
         fullscreen: true,
-        symbol: '股吧',
+        symbol: marketCode,
         // interval: 'D',
         'container_id': 'tradeView',
         overrides: {
@@ -67,10 +67,10 @@ export default class View extends Component {
           resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
             ws1.onConnectPromise().then(() => {
               onSymbolResolvedCallback({
-                "name": "weixiaoyi",
+                "name": "",
                 "timezone": "Asia/Shanghai",
-                description: 'haaaaaaa',
-                "exchange": "交易所的略称", //交易所的略称
+                description: '',
+                "exchange": "", //交易所的略称
                 "minmov": 1,//最小波动
                 "pricescale": 100,//价格精
                 "minmov2": 0, //格式化复杂情况下的价格
@@ -215,6 +215,10 @@ export default class View extends Component {
 
   render() {
     const { model: { marketName = '', maxPrice, minPrice, indexPrice, latestPrice } } = this.props
+    const intervals = [
+      { name: '1min' }, { name: '5min' }, { name: '15min' }, { name: '30min' },
+      { name: '1hour' }, { name: '4hour' }, { name: '1day' }, { name: '5day' }, { name: '1week' }, { name: '1mon' }
+    ]
     return (
       <Mixin.Child that={this} >
         <div
@@ -277,8 +281,11 @@ export default class View extends Component {
               </div >
               <div className={styles.intervalbuttons} >
                 <ul >
-                  <li >1</li >
-                  <li >1</li >
+                  {
+                    intervals.map((item, index) => (
+                      <li key={index} >{item.name}</li >
+                    ))
+                  }
                 </ul >
               </div >
               <div className={styles.tradeview} >
