@@ -130,7 +130,7 @@
             margin-left: 51px;
           }
           li {
-            white-space:nowrap;
+            white-space: nowrap;
             margin: 0;
             padding: 0;
             height: 100%;
@@ -269,7 +269,7 @@
     }
   }
   .content {
-    padding: 20px 30px;
+    padding: 20px 53px 20px @padding_li_left;
     .top {
       div {
         display: flex;
@@ -295,8 +295,8 @@
     .down {
       margin-top: 30px;
       display: flex;
+      justify-content: space-between;
       > div {
-        flex-grow: 1;
         > div + div {
           margin-top: 20px;
         }
@@ -493,6 +493,60 @@
 .currentContract {
   min-width: @view_width;
   max-width: @view_width;
+  .header {
+    span {
+      color: @c_active_yellow;
+      margin-left: 10px;
+    }
+  }
+  .content {
+    padding: 0 @padding_li_left;
+    > div {
+      padding-top: 22px;
+    }
+    .top {
+      display: flex;
+      flex-direction: column;
+      height: 123px;
+      border-bottom: 1px solid rgba(215, 218, 238, .04);
+      .desc {
+        display: flex;
+        justify-content: space-between;
+      }
+      .number {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        color: @c_active_yellow;
+        span {
+          margin-left: 10px;
+          top: 5px;
+          position: relative;
+          font-size: 12px;
+          color: rgba(215, 218, 238, .7);
+        }
+      }
+    }
+    .down {
+      padding-top: 30px;
+      > div {
+        color: rgba(215, 218, 238, .7);
+        margin-bottom: 10px;
+      }
+      ul {
+        display: flex;
+        li+li{
+          margin-left: 4px;
+        }
+        li {
+          width: 10px;
+          height: 20px;
+        }
+      }
+    }
+  }
 }
 
 
