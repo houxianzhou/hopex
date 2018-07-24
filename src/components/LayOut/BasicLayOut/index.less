@@ -15,15 +15,19 @@
     display: flex;
     align-items: center;
     height: 70px;
-    padding: 0 70px;
+    padding: 0 3.6%;
     &.dark {
       background: @c_front_dark;
     }
     > div {
       display: flex;
       flex-grow: 1;
+      align-items: center;
+      height: 100%;
       &.left {
+        // background: red;
         img {
+          height: 31px;
           margin-right: 50px;
         }
         ul.nav {
@@ -56,7 +60,7 @@
                   li {
                     &:hover {
                       color: white;
-                      background: red;
+                      // background: red;
                     }
                     padding: 3px 20px;
                   }
@@ -75,6 +79,24 @@
       &.right {
         display: flex;
         justify-content: flex-end;
+        // background: blue;
+        ul {
+          // background: red;
+          display: flex;
+          align-items: center;
+          height:100%;
+          li+li{
+            border-left:1px solid rgba(255,255,255,.2);
+          }
+          li {
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            span{
+              margin-left: 13px;
+            }
+          }
+        }
       }
     }
 

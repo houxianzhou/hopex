@@ -19,7 +19,8 @@ import modelExtend from '@models/modelExtend'
 export default joinModel(modelExtend, {
   namespace: 'user',
   state: {
-    userInfo: localSave.get('userInfo') || {}
+    userInfo: localSave.get('userInfo') || {},
+    isOnlie: true
   },
   subscriptions: {
     setup({ dispatch, history }) {

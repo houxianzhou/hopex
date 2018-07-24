@@ -44,7 +44,7 @@ export default class View extends Component {
         ],
         library_path: '/',
         fullscreen: true,
-        symbol: marketCode,
+        ...marketCode ? { symbol: marketCode } : {},
         // interval: 'D',
         'container_id': 'tradeView',
         overrides: {
@@ -87,7 +87,6 @@ export default class View extends Component {
             })
           },
           getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
-            console.log(resolution)
             const [startTime, endTime] = [String(Math.min(from, to)), String(Math.max(from, to))]
             dispatch({
               type: `${modelName}/getKlineAllList`,
@@ -151,7 +150,7 @@ export default class View extends Component {
       //   // this.chart().createStudy('MACD', false, false, [14, 30, "close", 9])
       // })
     } else {
-      this.chart.setSymbol('股吧2', 100, () => {
+      this.chart.setSymbol(marketCode, 100, () => {
         return true
       })
     }

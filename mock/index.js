@@ -377,7 +377,12 @@ export default {
       default:
     }
     res.send(
-      result
+      {
+        ...result,
+        "errCode": "0",
+        "errStr": "success",
+        "ret": "0"
+      }
     )
   }
 }

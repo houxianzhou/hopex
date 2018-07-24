@@ -75,7 +75,7 @@ mockServer1.onMessage = (e) => {
             "serialNumber": "57"
           },
           "data": {
-            "records": times++ > 2 ? [] : periods.map(item => {
+            "records": periods.map(item => {
               const h = 160 + _.random(30, 40)
               const o = h - _.random(10, 20)
               const c = o - _.random(10, 30)

@@ -3,8 +3,13 @@ import { connect } from 'dva'
 import { NavLink, routerRedux } from 'dva/router'
 import { classNames, switchTheme, _ } from '@utils'
 import logo from '@assets/logo.png'
+import account from '@assets/account.png'
+import help from '@assets/help.png'
+import notice from '@assets/notice.png'
+import network from '@assets/network.png'
 import * as styles from './index.less'
 
+let index = 0
 @connect(({ home, user, theme, loading, dispatch }) => ({
   home,
   modelName1: 'home',
@@ -17,6 +22,7 @@ import * as styles from './index.less'
 export default class View extends Component {
   render() {
     const { home: { marketList = [] } = {}, user: { userInfo }, theme, modelName1, modelName2, dispatch, routesBasic, history } = this.props
+
     return (
       <div className={
         classNames(
@@ -82,21 +88,39 @@ export default class View extends Component {
         <div
           className={styles.right}
         >
-          {_.isEmpty(userInfo) ? (
-            <span
-              onClick={() => {
-                dispatch(routerRedux.push('/user/login'))
-              }}
-            >登录</span >
-          ) : (
-            <span
-              onClick={() => {
-                dispatch({
-                  type: `${modelName2}/doLoginOut`,
-                })
-              }}
-            >退出</span >
-          )}
+          <ul >
+            <li >
+              <img alt='network' src={network} />
+            </li >
+            <li >
+              <img alt='notice' src={notice} />
+            </li >
+            <li >
+              <img alt='help' src={help} />
+            </li >
+            <li >
+              <img alt='account' src={account} />
+              <span >2278095567@qq.com</span >
+            </li >
+            <li >
+              {_.isEmpty(userInfo) ? (
+                <span
+                  onClick={() => {
+                    dispatch(routerRedux.push('/user/login'))
+                  }}
+                >登录</span >
+              ) : (
+                <span
+                  onClick={() => {
+                    dispatch({
+                      type: `${modelName2}/doLoginOut`,
+                    })
+                  }}
+                >退出</span >
+              )}
+            </li >
+          </ul >
+
         </div >
       </div >
     )
