@@ -28,7 +28,7 @@ const [Table, Thead, Tbody, Tr, Th, Td] = [
   createElement('td'),
 ]
 
-export default class View extends Component {
+export default class TableMe extends Component {
 
   state = {
     x: 0,
@@ -41,6 +41,10 @@ export default class View extends Component {
     if (!isEqual(prevDataSource, dataSource) && dataSource) {
       this.changeState()
     }
+  }
+
+  componentWillUnmount() {
+    window.onresize = null
   }
 
   changeState = (payload) => {
@@ -155,7 +159,7 @@ export default class View extends Component {
                               const key = item2.dataIndex
                               let value = item[key]
                               if (_.isNaN(value) || _.isUndefined(value)) {
-                                result = (<span style={{opacity:.5}}>--</span>)
+                                result = (<span style={{ opacity: .5 }} >--</span >)
                               } else {
                                 if (_.isFunction(item2.render)) {
                                   value = item2.render(value, item, index, dataSource)
