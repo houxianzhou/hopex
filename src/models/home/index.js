@@ -32,6 +32,9 @@ export default joinModel(modelExtend, {
 
     minVaryPrice: null, //最小变动价位
     minDealAmount: null, //最小交易量
+    keepBailRate: null,//维持保证金率
+    levelages: [],//杠杆
+
 
     personalEnsures: [],//个人委托列表
     personalEnsures_PageIndex: null,
@@ -127,7 +130,7 @@ export default joinModel(modelExtend, {
           }
         }
       })))
-      console.log(repayload,'repayload')
+      console.log(repayload, 'repayload')
       return ws1.sendJsonPromise(repayload, (e) => {
         const res = getRes(e)
         if (resOk(res)) {
@@ -482,6 +485,11 @@ export default joinModel(modelExtend, {
         minPrice: null, // 24最低
         indexPrice: null, // 现货价格指数
 
+        minVaryPrice: null, //最小变动价位
+        minDealAmount: null, //最小交易量
+        keepBailRate: null,//维持保证金率
+        levelages: [],//杠杆
+
         latestPrice: null, //计算出来的，最新交易价格
         equitablePrice: null, // 计算出来的，合理价格
 
@@ -495,7 +503,9 @@ export default joinModel(modelExtend, {
         marketName: filterOne.marketName,
         marketCode: filterOne.marketCode,
         minVaryPrice: filterOne.minVaryPrice,
-        minDealAmount: filterOne.minDealAmount
+        minDealAmount: filterOne.minDealAmount,
+        keepBailRate: filterOne.keepBailRate,
+        levelages: filterOne.levelages
       }
     }
   },
