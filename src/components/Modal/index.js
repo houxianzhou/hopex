@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { default as RModal } from 'react-modal'
 import Modal from 'react-modal'
 import { ROOT } from '@constants'
 
@@ -47,4 +46,4 @@ export default class View extends Component {
   }
 }
 
-RModal.setAppElement(ROOT)
+Modal.setAppElement(ROOT)
