@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Slider, { Range } from 'rc-slider'
 import { Mixin } from "@components"
 import { classNames } from '@utils'
+import grayangle from '@assets/grayangle.png'
+import activeangle from '@assets/activeangle.png'
 import ScrollPannel from './components/ScrollPanel'
 import MainModal from './components/MainModal'
 import styles from './index.less'
@@ -88,15 +90,65 @@ const RenderModal = (Props) => {
     3: '3',
   }
 
+  const list = [
+    {
+      num: '2',
+      initialMarginRate: '2%',
+      leverage: '1%'
+    }, {
+      num: '2',
+      initialMarginRate: '2%',
+      leverage: '1%'
+    }, {
+      num: '2',
+      initialMarginRate: '2%',
+      leverage: '1%'
+    }
+  ]
+
 
   return (
     <MainModal {...props} className={styles.currentContract_modal} >
       <div className={styles.content} >
-        <div>
-          <div>当前倍数</div>
-        </div>
-        <Slider marks={marks} min={0} max={20} defaultValue={3} included={false} step={null} />
+        <div className={styles.top} >
+          <div className={styles.current} >当前倍数</div >
+          <div className={styles.number}>50<span >倍</span ></div >
+        </div >
+        <div className={styles.middle} >
+          <Slider marks={marks} min={0} max={20} defaultValue={3} included={false} step={null} />
+        </div >
+        <div className={styles.down} >
+          <ul >
+            <li key={0} >
+              <div >杠杆倍数</div >
+              <div >起始保证金率</div >
+              <div >维持保证金率</div >
+            </li >
+            {
+              list.map((item, index) => {
+                return (
+                  <li key={index + 1} >
+                    <div className={styles.symbol} >
+                      <div>
+                        当前值
+                      </div>
+                      <img src={grayangle} />
+                    </div >
+                    <div >50</div >
+                    <div >2%</div >
+                    <div >1%</div >
+                  </li >
+                )
+              })
+            }
+          </ul >
+        </div >
+
       </div >
+      <div className={styles.buttons}>
+        <div>取消</div>
+        <div className={styles.confirm}>确定</div>
+      </div>
     </MainModal >
   )
 }

@@ -22,10 +22,10 @@ export default class View extends Component {
       <Modal
         style={{
           overlay: {
-
             background: style.background || 'rgba(0,0,0,.4)',
           },
           content: {
+            background: 'unset',
             width: style.width || 500,
             border: 'none',
             padding: 0,

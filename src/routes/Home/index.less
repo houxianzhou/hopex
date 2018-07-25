@@ -410,7 +410,8 @@
               vertical-align: center;
               display: flex;
               align-items: center;
-              justify-content: center;padding: 15px;
+              justify-content: center;
+              padding: 15px;
               font-size: 26px;
               opacity: .5;
             }
@@ -558,13 +559,104 @@
   }
 }
 
+// 模态框
 .currentContract_modal {
   .content {
-    border: 1px solid red;
     padding: 0 35px;
     height: 100%;
+    .top {
+      padding-top: 37px;
+      > div {
+        display: flex;
+        justify-content: center;
+      }
+      .current {
+        color: @c_like_white_05;
+        margin-bottom: 9px;
+      }
+      .number {
+        color: @c_active_yellow;
+        font-size: 38px;
+        span {
+          position: relative;
+          top: 20px;
+          left: 3px;
+          font-size: 14px;
+          color: #FFFFFF;
+          vertical-align: baseline;
+        }
+      }
+    }
+    .middle {
+      margin-top: 40px;
+      margin-bottom: 105px;
+    }
+    .down {
+      margin-bottom: 60px;
+      ul {
+        position: relative;
+        display: flex;
+        li {
+          &:first-child {
+            div {
+              width: unset;
+              padding: 15px;
+              color: @c_like_white_05;
+            }
+          }
+          > div {
+            &.symbol {
+              display: unset;
+              border: unset;
+              height: unset;
+              position: absolute;
+              top: -50px;
+              text-align: center;
+              div {
+                color: @c_like_white_05;
+                font-size: 12px;
+                margin-bottom: 6px;
+              }
+              * {
+                text-align: center;
+              }
+            }
+            color: #FFFFFF;
+            width: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            border: 1px solid #1D222E;
+            min-width: 60px;
+          }
+        }
+      }
+    }
   }
 }
+
+// 模态框公共部分
+.buttons {
+  border: 1px solid #1D222E;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  > div {
+    height:30px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    &.confirm {
+      border-left: 1px solid @c_pannel_header_dark;
+      color: @c_active_yellow;
+    }
+  }
+}
+
+
 
 
 

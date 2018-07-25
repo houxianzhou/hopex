@@ -6,6 +6,7 @@ export default {
   "@c_front_dark": '#232833',
   "@c_like_white": '#D7DAEE',
   "@c_like_white_07": 'rgba(215,218,238,.7)',
+  "@c_like_white_05": 'rgba(215,218,238,.5)',
   "@c_active_yellow": '#E2B96F',  //'#CAA96E',
   "@c_pannel_header_dark": '#1D222E',
   "@c_pannel_theader_color": '#6A7286',

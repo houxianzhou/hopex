@@ -1,6 +1,6 @@
 import { Modal } from "@components"
 import { classNames } from '@utils'
-import arrow_down from '@assets/arrow_down.png'
+import close from '@assets/close.png'
 import * as styles from './MainModal.less'
 
 export default function (Props) {
@@ -22,7 +22,8 @@ export default function (Props) {
                 type: `${modelName}/closeModal`
               })
             }}
-          >×
+          >
+            <img alt='close' src={close} />
           </div >
         </div >
         <div className='content' >
