@@ -263,6 +263,8 @@ export default joinModel(modelExtend, {
           })
           return result
         }
+      }else{
+        return Promise.reject('合约列表获取失败')
       }
     },
 

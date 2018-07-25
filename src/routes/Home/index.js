@@ -51,7 +51,7 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    this.getAllMarkets().then(() => {
+    this.getAllMarkets().then((res) => {
       this.childInitStacks.map(item => item && item())
     })
   }
