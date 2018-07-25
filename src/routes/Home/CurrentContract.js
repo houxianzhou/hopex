@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Slider } from 'antd'
 import { Mixin } from "@components"
 import { classNames } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
@@ -77,8 +78,24 @@ const RenderModal = (Props) => {
     ...Props,
     title: '设置杠杆倍数'
   }
+
+  const marks = {
+    0: '0°C',
+    26: '26°C',
+    37: '37°C',
+    100: {
+      style: {
+        color: '#f50',
+      },
+      label: <strong>100°C</strong>,
+    },
+  };
   return (
-    <MainModal {...props}>hahahah</MainModal >
+    <MainModal {...props}>
+      <div className={styles.modal}>
+        <Slider marks={marks} step={null} defaultValue={37} />
+      </div>
+    </MainModal >
   )
 }
 

@@ -26,8 +26,7 @@ export default function (Props) {
           </div >
         </div >
         <div className='content' >
-          <div style={{ height: 300 }} ></div >
-
+          {children}
         </div >
       </div >
     </Modal >
