@@ -83,7 +83,7 @@ class RenderModal extends Component {
 
   render() {
     const props = {
-      ...this.Props,
+      ...this.props,
       title: '设置杠杆倍数'
     }
 
