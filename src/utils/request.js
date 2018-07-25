@@ -67,6 +67,7 @@ export function request(url = '', options = {}) {
 
       if (needWatch) {
         if (_.get(error, 'response.data.ret') === '3') {
+          // token失效
           localSave.remove('userInfo')
         } else {
           if (_.has(error, 'response.data.errMsg') || _.has(error, 'response.data.errStr')) {

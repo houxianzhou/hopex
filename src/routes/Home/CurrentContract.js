@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import Slider, { Range } from 'rc-slider'
-import { Mixin } from "@components"
+import { COLORS } from '@constants'
+import { Mixin, Slider } from "@components"
 import { classNames, getPercent, formatNumber, _ } from '@utils'
 import grayangle from '@assets/grayangle.png'
 import activeangle from '@assets/activeangle.png'
 import ScrollPannel from './components/ScrollPanel'
 import MainModal from './components/MainModal'
 import styles from './index.less'
-import 'rc-slider/assets/index.css'
 
 
 export default class View extends Component {
@@ -99,7 +98,28 @@ class RenderModal extends Component {
       min: _.min(_.keys(marks).map(item => Number(item))) || 0,
       max: _.max(_.keys(marks).map(item => Number(item))) || 0,
       included: false,
-      step: null
+      step: null,
+      dotStyle: {
+        width: '1px',
+        marginLeft: 'unset',
+        backgroundColor: COLORS.yellow,
+        border: 'none',
+        bottom: 0
+      },
+      railStyle: {
+        height: '1px',
+        backgroundColor: COLORS.yellow,
+      },
+      handleStyle: {
+        marginTop: '-10px',
+        width: '20px',
+        height: '20px',
+        border: 'solid 6px white',
+        backgroundColor: COLORS.yellow
+      },
+      onChange:(v)=>{
+        console.log(v)
+      }
     }
 
 
@@ -111,7 +131,7 @@ class RenderModal extends Component {
             <div className={styles.number} >50<span >倍</span ></div >
           </div >
           <div className={styles.middle} >
-            <Slider  {...marksProps}  />
+            <Slider {...marksProps} />
           </div >
           <div className={styles.down} >
             <ul >
@@ -147,8 +167,6 @@ class RenderModal extends Component {
         </div >
       </MainModal >
     )
-
   }
-
 }
 

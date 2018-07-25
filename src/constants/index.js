@@ -1,4 +1,4 @@
-export const ROOT='#root'
+export const ROOT = '#root'
 
 export const BREACKPOINT = {
   MOBILE: 780
@@ -12,8 +12,8 @@ export const API = {
   MOCKIP: '/mock/v1/trade',
   USERIP: '/v1/trade',
   USERIP2: '/api/v1/tc',
-  UserIp3:'/api/v1/quote',
-  UserIp4:'/api/v1/trade'
+  UserIp3: '/api/v1/quote',
+  UserIp4: '/api/v1/trade'
 }
 
 export const SPEED = {
@@ -41,7 +41,8 @@ export const SCROLLX = {
 export const COLORS = {
   green: 'rgba(86,188,157,1)',
   red: 'rgba(218,115,115,1)',
+  yellow: '#E2B96F',
   greenOpacity: 'rgba(86,188,157,.2)',
   redOpacity: 'rgba(218,115,115,.2)',
-  yellowOpacity:'rgba(226,185,111,.2)'
+  yellowOpacity: 'rgba(226,185,111,.2)'
 }

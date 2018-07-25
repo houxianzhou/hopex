@@ -130,7 +130,6 @@ export default joinModel(modelExtend, {
           }
         }
       })))
-      console.log(repayload, 'repayload')
       return ws1.sendJsonPromise(repayload, (e) => {
         const res = getRes(e)
         if (resOk(res)) {
