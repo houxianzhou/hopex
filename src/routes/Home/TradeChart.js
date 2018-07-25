@@ -12,8 +12,8 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    // this.startKline()
-    // this.getImportantPrice()
+    this.startKline()
+    this.getImportantPrice()
   }
 
   startKline = () => {

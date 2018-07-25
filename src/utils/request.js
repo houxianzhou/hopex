@@ -66,13 +66,18 @@ export function request(url = '', options = {}) {
 
 
       if (needWatch) {
-        if (_.has(error, 'response.data.errMsg') || _.has(error, 'response.data.errStr')) {
-          Message.error(_.get(error, 'response.data.errMsg') || _.get(error, 'response.data.errStr'))
+        if (_.get(error, 'response.data.ret') === '3') {
+          localSave.remove('userInfo')
         } else {
-          if (method === 'get') {
-            Message.error('数据获取失败')
+          if (_.has(error, 'response.data.errMsg') || _.has(error, 'response.data.errStr')) {
+            const message = _.get(error, 'response.data.errMsg') || _.get(error, 'response.data.errStr')
+            Message.error(message)
           } else {
-            Message.error('操作失败')
+            if (method === 'get') {
+              Message.error('数据获取失败')
+            } else {
+              Message.error('操作失败')
+            }
           }
         }
         console.log(url + '请求出错')
