@@ -1,17 +1,19 @@
 import { request, asyncPayload } from '@utils'
 import { API } from "@constants"
 
-const { MOCKIP, USERIP, USERIP2 } = API
-const MODE =  MOCKIP
+let { MOCKIP, USERIP, USERIP2, UserIp3, UserIp4 } = API
+const MODE = 'mock1'
 
 // mock数据
-if (MODE === MOCKIP) {
+if (MODE === 'mock') {
+  UserIp3 = `/mock${UserIp3}`
+  UserIp4 = `/mock${UserIp4}`
   require('./socketServer')
 }
 
 // 最新成交列表
 export async function getLatestRecord(payload) {
-  return request(`${MODE}`, {
+  return request(`${UserIp3}/market.deals`, {
     method: 'post',
     body: payload,
     needLoop: true,
@@ -21,7 +23,7 @@ export async function getLatestRecord(payload) {
 
 // 委托列表
 export async function getEnsureRecord(payload) {
-  return request(`${MODE}`, {
+  return request(`${UserIp3}/market.active_delegate`, {
     method: 'post',
     body: payload,
     needLoop: true,
@@ -39,7 +41,7 @@ export async function getPurseAssetList(payload) {
 
 // 获取所有的合约列表
 export async function getAllMarkets(payload) {
-  return request(`${MODE}`, {
+  return request(`${UserIp3}/market.list`, {
     method: 'post',
     body: payload
   })
@@ -47,7 +49,7 @@ export async function getAllMarkets(payload) {
 
 // 获取所有的个人持仓列表
 export async function getPosition(payload) {
-  return request(`${MODE}`, {
+  return request(`${UserIp4}/user.position`, {
     method: 'post',
     body: payload
   })
@@ -55,7 +57,7 @@ export async function getPosition(payload) {
 
 // 获取所有的个人合约列表
 export async function getPersonalEnsure(payload) {
-  return request(`${MODE}`, {
+  return request(`${UserIp4}/order.user_active_delegate`, {
     method: 'post',
     body: payload
   })
@@ -63,7 +65,7 @@ export async function getPersonalEnsure(payload) {
 
 // 撤单
 export async function doCancelPersonEnsure(payload) {
-  return request(`${MODE}`, {
+  return request(`${UserIp4}/order.cancel`, {
     method: 'post',
     body: payload
   })
@@ -71,7 +73,7 @@ export async function doCancelPersonEnsure(payload) {
 
 // 下限价单
 export async function postLimitOrder(payload) {
-  return await request(`${MODE}`, {
+  return await request(`${UserIp4}/order.put_limit`, {
     method: 'post',
     body: payload
   })

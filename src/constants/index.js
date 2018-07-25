@@ -11,7 +11,9 @@ export const THEME = {
 export const API = {
   MOCKIP: '/mock/v1/trade',
   USERIP: '/v1/trade',
-  USERIP2: '/api/v1/tc'
+  USERIP2: '/api/v1/tc',
+  UserIp3:'/api/v1/quote',
+  UserIp4:'/api/v1/trade'
 }
 
 export const SPEED = {

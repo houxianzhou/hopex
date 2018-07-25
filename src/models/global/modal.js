@@ -5,7 +5,7 @@ export default joinModel(modelExtend, {
   namespace: 'modal',
   state: {
     name: '',
-    state: true,
+    state: false,
   },
 
   effects: {

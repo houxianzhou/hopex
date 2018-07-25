@@ -33,7 +33,7 @@ export default {
           result = reset(['head', 'timestamps'], String(Date.now()))
           result = reset(['head', 'version'], String('1.0'))
           result = reset(['head', 'lang'], String(lang))
-          result = reset(['head', 'request'], String("request"))
+          result = reset(['head', 'msgType'], String("request"))
           result = reset(['head', 'packType'], String("1"))
           result = reset(['head', 'serialNumber'], String(_.uniqueId()))
           if (needPower) {

@@ -1,10 +1,11 @@
+import { message as Message } from 'antd'
 import { joinModel, getRes, resOk, formatNumber, _, formatJson, asyncPayload, deepClone } from '@utils'
 import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
-  getPosition, getPersonEnsureDetail
+  getPosition, getPersonEnsureDetail,getAllMarkets
 } from "@services/trade"
 
 
@@ -237,7 +238,7 @@ export default joinModel(modelExtend, {
           "param": {},
         }
       })))
-      const res = getRes(yield call(getPurseAssetList, repayload))
+      const res = getRes(yield call(getAllMarkets, repayload))
       if (resOk(res)) {
         const result = []
         _.mapKeys((_.get(res, 'data') || {}), (v = [], k = '') => {
@@ -353,7 +354,7 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(doCancelPersonEnsure, repayload))
         if (resOk(res)) {
-          console.log(res)
+          Message.success('撤销成功')
         }
       }
     },
