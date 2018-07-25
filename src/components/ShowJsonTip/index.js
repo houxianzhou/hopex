@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Draggable from 'react-draggable';
-import { Slider } from 'antd';
+import { Slider } from '@components'
 import { _, localSave, classNames } from '@utils'
 import * as styles from './index.less'
 
@@ -86,14 +86,14 @@ export default class View extends Component {
                     }} >
                   </div >
                   <div >宽度，高度，透明度</div >
-                  <Slider value={state.width} style={{ width: 100, marginLeft: 20 }} min={WIDTH} max={1300}
+                  <Slider value={state.width} style={{ width: 100, marginLeft: 20 }} step={10} min={WIDTH} max={1300}
                           onChange={(value) => {
                             this.changeState({
                               width: Number(value)
                             })
                           }}
                   />
-                  <Slider value={state.height} style={{ width: 100, marginLeft: 20 }} min={50} max={800}
+                  <Slider value={state.height} style={{ width: 100, marginLeft: 20 }} step={10} min={50} max={800}
                           onChange={(value) => {
                             this.changeState({
                               height: Number(value)

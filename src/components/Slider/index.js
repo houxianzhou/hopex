@@ -7,10 +7,12 @@ export default class View extends Component {
   render() {
     const {
       min = 0, max = 100, step = null, included = false, marks = {}, onChange,
-      dotStyle, railStyle, handleStyle
+      dotStyle, railStyle, handleStyle, trackStyle, activeDotStyle, value, style = {}
     } = this.props
 
     const props = {
+      onChange,
+      ...value ? { value } : {},
       marks,
       min,
       max,
@@ -18,10 +20,18 @@ export default class View extends Component {
       step,
       dotStyle,
       railStyle,
-      handleStyle
+      handleStyle,
+      // 后面两个当开启includetrue时有效
+      trackStyle,
+      activeDotStyle
     }
     return (
-      <Slider  {...props} onChange={onChange} />
+      <div style={{
+        width: '100%',
+        ...style
+      }} >
+        <Slider  {...props}  />
+      </div >
     )
   }
 }

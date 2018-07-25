@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Slider } from 'antd'
-import { InputNumber } from "@components"
+import { InputNumber, Slider } from "@components"
+import { COLORS } from '@constants'
 import { classNames, _, formatNumber } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
@@ -57,10 +57,43 @@ export default class View extends Component {
       4000: '',
       6000: '',
       10000: '',
-    };
+    }
+    const props = {
+      marks: marks,
+      max: 10000,
+      defaultValue: 1,
+      step: 1,
+      included: true,
+      dotStyle: {
+        marginLeft: 'unset',
+        backgroundColor: 'rgba(53,61,79,1)',
+        border: 'none',
+        bottom: '-1px',
+      },
+      railStyle: {
+        height: '3px',
+        backgroundColor: 'rgba(53,61,79,1)',
+      },
+      handleStyle: {
+        marginTop: '-6px',
+        marginLeft: '-4px',
+        width: '14px',
+        height: '14px',
+        border: `solid 4px ${COLORS.yellow}`,
+        backgroundColor: 'white'
+      },
+      trackStyle: {
+        height: '3px',
+        width: '100px',
+        backgroundColor: COLORS.yellow
+      },
+      activeDotStyle: {
+        backgroundColor: COLORS.yellow
+      }
+    }
     return (
       <div className={styles.ensuremoney} >
-        <Slider marks={marks} max={10000} defaultValue={1} />
+        <Slider  {...props} />
         <div className={styles.description} >
           <div >
             <span >{label_buy}</span >
@@ -158,7 +191,7 @@ export default class View extends Component {
           }
         })
       },
-      step:minDealAmount
+      step: minDealAmount
     }
     // 保证金
     const configEnsure = {

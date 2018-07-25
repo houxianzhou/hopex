@@ -88,17 +88,7 @@ export default class View extends Component {
         {/*}*/}
         {/*</div >*/}
 
-        <div className={styles.views} >
-          {
-            renderView('LatestRecord')
-          }
-          {
-            renderView('TradeChart')
-          }
-          {
-            renderView('EnsureRecord')
-          }
-        </div >
+
 
         <div className={styles.views} >
           {
@@ -109,6 +99,18 @@ export default class View extends Component {
           }
           {
             renderView('CurrentContract')
+          }
+        </div >
+
+        <div className={styles.views} >
+          {
+            renderView('LatestRecord')
+          }
+          {
+            renderView('TradeChart')
+          }
+          {
+            renderView('EnsureRecord')
           }
         </div >
 
