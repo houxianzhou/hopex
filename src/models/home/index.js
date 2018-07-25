@@ -5,7 +5,7 @@ import modelExtend from '@models/modelExtend'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
-  getPosition, getPersonEnsureDetail,getAllMarkets
+  getPosition, getPersonEnsureDetail, getAllMarkets
 } from "@services/trade"
 
 
@@ -127,6 +127,7 @@ export default joinModel(modelExtend, {
           }
         }
       })))
+      console.log(repayload,'repayload')
       return ws1.sendJsonPromise(repayload, (e) => {
         const res = getRes(e)
         if (resOk(res)) {
@@ -263,7 +264,7 @@ export default joinModel(modelExtend, {
           })
           return result
         }
-      }else{
+      } else {
         return Promise.reject('合约列表获取失败')
       }
     },
@@ -474,10 +475,6 @@ export default joinModel(modelExtend, {
     clearState(state, { payload }) {
       return {
         ...state,
-        marketName: '', //当前合约名称
-        marketCode: '', //当前合约code
-        numberToFixed: 2, // 小数点位数
-
         latest_records: [],// 最新成交
         ensure_records: {},// 委托列表
 
@@ -487,9 +484,6 @@ export default joinModel(modelExtend, {
 
         latestPrice: null, //计算出来的，最新交易价格
         equitablePrice: null, // 计算出来的，合理价格
-
-        minVaryPrice: null, //最小变动价位
-        minDealAmount: null, //最小交易量
 
         personalEnsures: [],//个人委托列表
       }

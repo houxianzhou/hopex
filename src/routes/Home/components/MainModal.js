@@ -9,8 +9,8 @@ export default function (Props) {
     <Modal >
       <div className={
         classNames(
-          className,
-          styles.mainmodal
+          styles.mainmodal,
+          className
         )
       } >
         <div className='header' >

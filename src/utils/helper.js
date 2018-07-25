@@ -4,8 +4,9 @@ import store from 'store'
 import { fromJS, is } from 'immutable'
 
 export const lodash_helper = {
+  remove: _.remove,
   sumBy: _.sumBy,
-  mapKeys:_.mapKeys,
+  mapKeys: _.mapKeys,
   toPairs: _.toPairs,
   isEqual: _.isEqual,
   toNumber: _.toNumber,

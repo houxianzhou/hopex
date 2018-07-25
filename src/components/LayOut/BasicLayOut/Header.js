@@ -50,12 +50,12 @@ export default class View extends Component {
                                   key={index}
                                   onClick={() => {
                                     dispatch({
-                                      type: `${modelName1}/changeState`,
+                                      type: `${modelName1}/getCurrentMarket`,
                                       payload: item
                                     })
-                                    history.replace({
-                                      search: `?marketCode=${item.marketCode}`,
-                                    });
+                                    // history.replace({
+                                    //   search: `?marketCode=${item.marketCode}`,
+                                    // });
                                   }}
                                 >
                                   {item.marketName}

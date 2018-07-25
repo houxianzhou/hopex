@@ -9,6 +9,7 @@ import { _ } from '@utils'
   loading, dispatch
 }))
 export class MixinParent extends React.Component {
+
   componentDidMount() {
     const { model: { userInfo } = {}, dispatch, modelName } = this.props
     const getCurrentUser = new Promise((resolve, reject) => {

@@ -10,7 +10,7 @@ import styles from './index.less'
 export default class View extends Component {
 
   startInit = () => {
-    // this.getLatestRecord()
+     this.getLatestRecord()
   }
 
   getLatestRecord = () => {
@@ -18,9 +18,9 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/getLatestRecord`,
     }).then(() => {
-      dealInterval(() => {
-        this.getLatestRecord()
-      })
+      // dealInterval(() => {
+      //   this.getLatestRecord()
+      // })
     })
   }
 

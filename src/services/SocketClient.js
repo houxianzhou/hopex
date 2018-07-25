@@ -60,6 +60,7 @@ class Ws {
 
   listen = (obj = {}) => {
     if (_.has(obj, 'name') && _.has(obj, 'subscribe') && _.has(obj, 'unsubscribe') && _.has(obj, 'restart')) {
+      _.remove(this.listeners, item => item.name === obj.name)
       this.listeners.push(obj)
     } else {
       console.log('取消订阅的函数必须包含name属性、subscribe属性、unsubscribe属性、restart属性')

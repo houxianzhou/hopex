@@ -12,8 +12,8 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    this.startKline()
-    this.getImportantPrice()
+    // this.startKline()
+    // this.getImportantPrice()
   }
 
   startKline = () => {
@@ -65,7 +65,9 @@ export default class View extends Component {
           searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
           },
           resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
+            console.log('000000000')
             ws1.onConnectPromise().then(() => {
+              console.log('111111111111')
               onSymbolResolvedCallback({
                 "name": "",
                 "timezone": "Asia/Shanghai",
@@ -95,6 +97,7 @@ export default class View extends Component {
                 endTime
               }
             }).then((result = []) => {
+              console.log(result,'-----redult')
               const data = result.map(item => ({
                 time: Number(item[0]) * 1000,
                 open: Number(item[1]),
@@ -151,6 +154,7 @@ export default class View extends Component {
       // })
     } else {
       this.chart.setSymbol(marketCode, 100, () => {
+        console.log('hhhhhhhhhhhhhhhhhh')
         return true
       })
     }

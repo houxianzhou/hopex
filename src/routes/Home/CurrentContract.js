@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Slider } from 'antd'
+import Slider, { Range } from 'rc-slider'
 import { Mixin } from "@components"
 import { classNames } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
 import MainModal from './components/MainModal'
 import styles from './index.less'
+import 'rc-slider/assets/index.css'
 
 
 export default class View extends Component {
@@ -79,22 +80,23 @@ const RenderModal = (Props) => {
     title: '设置杠杆倍数'
   }
 
+
   const marks = {
-    0: '0°C',
-    26: '26°C',
-    37: '37°C',
-    100: {
-      style: {
-        color: '#f50',
-      },
-      label: <strong>100°C</strong>,
-    },
-  };
+    0: '0',
+    1: '1',
+    2: '2',
+    3: '3',
+  }
+
+
   return (
-    <MainModal {...props}>
-      <div className={styles.modal}>
-        <Slider marks={marks} step={null} defaultValue={37} />
-      </div>
+    <MainModal {...props} className={styles.currentContract_modal} >
+      <div className={styles.content} >
+        <div>
+          <div>当前倍数</div>
+        </div>
+        <Slider marks={marks} min={0} max={20} defaultValue={3} included={false} step={null} />
+      </div >
     </MainModal >
   )
 }
