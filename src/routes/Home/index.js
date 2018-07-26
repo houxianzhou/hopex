@@ -109,7 +109,6 @@ export default class View extends Component {
         </div >
 
 
-
         {
           isLogin ? (
             <div className={styles.views} >
@@ -129,11 +128,15 @@ export default class View extends Component {
           ) : null
         }
 
-        <div className={styles.views} >
-          {
-            renderView('RecentRecord')
-          }
-        </div >
+        {
+          isLogin ? (
+            <div className={styles.views} >
+              {
+                renderView('RecentRecord')
+              }
+            </div >
+          ) : null
+        }
 
       </Mixin.Parent >
     )
