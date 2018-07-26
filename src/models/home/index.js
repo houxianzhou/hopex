@@ -484,10 +484,10 @@ export default joinModel(modelExtend, {
         minPrice: null, // 24最低
         indexPrice: null, // 现货价格指数
 
-        minVaryPrice: null, //最小变动价位
-        minDealAmount: null, //最小交易量
-        keepBailRate: null,//维持保证金率
-        levelages: [],//杠杆
+        // minVaryPrice: null, //最小变动价位
+        // minDealAmount: null, //最小交易量
+        // keepBailRate: null,//维持保证金率
+        // levelages: [],//杠杆
 
         latestPrice: null, //计算出来的，最新交易价格
         equitablePrice: null, // 计算出来的，合理价格
