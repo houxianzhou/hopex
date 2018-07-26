@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, dealInterval, moment, _ } from '@utils'
+import { classNames, dealInterval, moment, _, formatNumber } from '@utils'
 import switch_render from '@assets/switch_render.png'
 import { Mixin, Table } from "@components"
 import arrow_down from '@assets/arrow_down.png'
@@ -10,7 +10,7 @@ import styles from './index.less'
 export default class View extends Component {
 
   startInit = () => {
-     this.getLatestRecord()
+    this.getLatestRecord()
   }
 
   getLatestRecord = () => {
@@ -30,7 +30,7 @@ export default class View extends Component {
       {
         title: '时间',
         dataIndex: 'time',
-        width: '30%',
+        width: '25%',
         render: (value) => {
           return moment.formatHMSFromSeconds(value)
         }
@@ -38,6 +38,7 @@ export default class View extends Component {
       {
         title: '类型',
         dataIndex: 'type',
+        width: '20%',
         render: (value) => value === '2' || value === '买' ? {
           value: '买入',
           className: 'buy'
@@ -49,13 +50,14 @@ export default class View extends Component {
       {
         title: '价格',
         dataIndex: 'price',
+        width: '35%',
         render: (value, record, index, dataSource) => {
           const style = { marginLeft: 7 }
           const next = dataSource[index + 1] || {}
           const img = value > next.price ? (
             <img style={style} alt='top' src={arrow_top} />) : (value < next.price ? (
             <img style={style} alt='down' src={arrow_down} />) : null)
-          const result = <span >{value}{img}</span >
+          const result = <span >{formatNumber(value, 'p')}{img}</span >
           return record.type === '2' || record.type === '买' ? {
             value: result,
             className: 'buy'

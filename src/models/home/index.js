@@ -106,7 +106,7 @@ export default joinModel(modelExtend, {
           payload: {
             ensure_records: result,
             equitablePrice: formatNumber((_.get(asksLast, 'price') * _.get(bidsFirst, 'amount')
-              + _.get(bidsFirst, 'price') * _.get(asksLast, 'amount')) / (_.get(asksLast, 'amount') + _.get(bidsFirst, 'amount')))
+              + _.get(bidsFirst, 'price') * _.get(asksLast, 'amount')) / (_.get(asksLast, 'amount') + _.get(bidsFirst, 'amount')), 'p')
           }
         })
         return res

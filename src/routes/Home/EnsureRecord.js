@@ -58,11 +58,12 @@ export default class View extends Component {
         title: '价格',
         dataIndex: 'price',
         render: (value, record) => {
+          let v = formatNumber(value, 'p')
           return record.type === 'sell' ? {
-            value,
+            value: v,
             className: 'sell'
           } : {
-            value,
+            value: v,
             className: 'buy'
           }
         }

@@ -46,3 +46,8 @@ export const COLORS = {
   redOpacity: 'rgba(218,115,115,.2)',
   yellowOpacity: 'rgba(226,185,111,.2)'
 }
+
+
+export const NUMBER = {
+  accuracy: 4,// 价格小数精确位数
+}

@@ -178,7 +178,7 @@ export default {
           "userId": "3",
           "ctime": "1532082876.271102",
           "mtime": "1532082876.271102",
-          "price": "0.5",
+          "price": "6",
           "amount": "2",
           "taker_fee": "0.01",
           "maker_fee": "0.01",

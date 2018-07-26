@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, moment, dealInterval, _ } from '@utils'
+import { classNames, moment, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin } from '@components'
 import { SCROLLX } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
@@ -50,6 +50,7 @@ export default class View extends Component {
       {
         title: '委托价格',
         dataIndex: 'price',
+        render: (value) => formatNumber(value, 4)
       },
       {
         title: '成交数量(张)',
@@ -59,6 +60,7 @@ export default class View extends Component {
       {
         title: '成交均价',
         dataIndex: 'work',
+        render: (v) => formatNumber(v, 'p')
       },
       {
         title: '委托占用保证金',
@@ -67,17 +69,18 @@ export default class View extends Component {
       {
         title: '手续费',
         dataIndex: 'taker_fee',
+        render: (v) => formatNumber(v, 'p')
       },
       {
         title: '委托时间',
         dataIndex: 'ctime',
-        // render: (value) => value ? moment.formatHMS(String(value).split('.')[0] * 1000) : null
+         render: (value) => moment.formatHMSFromSeconds(value)
       },
       {
         title: '状态',
         width: 100,
         dataIndex: 'amount',
-        // render: (value, record) => value && value === record.left ? '等待成交' : (value ? '部分成交' : null)
+        render: (value, record) => value && value === record.left ? '等待成交' : (value ? '部分成交' : null)
       },
       {
         title: '操作',

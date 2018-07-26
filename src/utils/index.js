@@ -1,6 +1,8 @@
 import qs from 'qs'
+import { Decimal } from 'decimal.js'
 import { SPEED } from '@constants'
 import { lodash_helper, immutable, moment_helper } from './helper'
+
 
 export { default as joinModel }  from 'dva-model-extend'
 export Responsive from 'react-responsive'
@@ -95,12 +97,17 @@ export const asyncPayload = async (payload, func) => {
 }
 
 
-const toFixed = (item = 0, tofixed = 0) => {
-  return _.toNumber(Number(item).toFixed(tofixed))
+const toFixed = (item = 0, tofixed) => {
+  if (!tofixed) {
+    return _.toNumber(Number(item))
+  } else {
+    return (new Decimal(item)).toFixed(tofixed)
+  }
 }
 
+
 export const formatNumber = (...params) => {
-  const [prev, propertys = [], tofixed = 2] = params
+  const [prev, propertys = [], tofixed] = params
   const obj = deepClone(prev)
   if (_.isObjectLike(obj)) {
     if (!_.isArray(propertys) && propertys.length) return obj
@@ -120,7 +127,8 @@ export const formatNumber = (...params) => {
       })
     }
   } else if (_.isNumber(obj) || _.isString(obj)) {
-    const param = params[1] || tofixed
+    let param = params[1] || tofixed
+    if (param === 'p' || param === 'price') param = 4
     return toFixed(obj, param)
   } else {
     return obj

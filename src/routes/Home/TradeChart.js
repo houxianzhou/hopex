@@ -13,7 +13,7 @@ export default class View extends Component {
 
   startInit = () => {
     this.startKline()
-    this.getImportantPrice()
+     this.getImportantPrice()
   }
 
   startKline = () => {

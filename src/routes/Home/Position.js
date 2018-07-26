@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { classNames, dealInterval, _ } from '@utils'
+import { classNames, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin } from '@components'
-import { SCROLLX} from '@constants'
+import { SCROLLX } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -32,10 +32,12 @@ export default class View extends Component {
       {
         title: '当前价格',
         dataIndex: 'no',
+        render: (v) => formatNumber(v, 'p')
       },
       {
         title: '当前合理价格',
         dataIndex: 'averagePrice',
+        render: (v) => formatNumber(v, 'p')
       },
       {
         title: '杠杆倍数',
@@ -48,26 +50,31 @@ export default class View extends Component {
       {
         title: '开仓均价',
         dataIndex: 'averagePrice',
+        render: (v) => formatNumber(v, 'p')
       },
       {
         title: '持续占用保证金',
         dataIndex: 'positionMoney',
+        render: (v) => formatNumber(v, 'p')
       },
       {
         title: '维持保证金',
         dataIndex: 'keepMoney',
+        render: (v) => formatNumber(v, 'p')
       },
       {
         title: '强平价格',
         dataIndex: 'overPrice',
+        render: (v) => formatNumber(v, 'p')
       },
       {
         title: '浮动盈亏(收益率)',
         dataIndex: 'floatProfit',
+        render: (v) => formatNumber(v, 'p')
       },
       {
         title: '操作',
-        width:250,
+        width: 250,
         dataIndex: 'work',
       },
 
