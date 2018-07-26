@@ -8,7 +8,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-    this.getPosition()
+     this.getPosition()
   }
 
   getPosition = () => {
@@ -53,7 +53,7 @@ export default class View extends Component {
         render: (v) => formatNumber(v, 'p')
       },
       {
-        title: '持续占用保证金',
+        title: '持仓占用保证金',
         dataIndex: 'positionMoney',
         render: (v) => formatNumber(v, 'p')
       },

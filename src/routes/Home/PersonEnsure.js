@@ -8,7 +8,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-    this.getPersonalEnsure()
+   this.getPersonalEnsure()
   }
 
   getPersonalEnsure = (payload = {}) => {
@@ -40,8 +40,8 @@ export default class View extends Component {
       },
       {
         title: '杠杆倍数',
-        dataIndex: 'sex',
-        render: (value, record) => ''
+        dataIndex: 'leverage',
+        render: (value, record) => value
       },
       {
         title: '数量(张)',

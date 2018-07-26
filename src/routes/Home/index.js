@@ -82,14 +82,6 @@ export default class View extends Component {
     return (
       <Mixin.Parent that={this} >
         <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >
-        {/*<div className={styles.views} >*/}
-        {/*{*/}
-        {/*renderView('RecentRecord')*/}
-        {/*}*/}
-        {/*</div >*/}
-
-
-
 
 
         <div className={styles.views} >
@@ -118,8 +110,6 @@ export default class View extends Component {
 
 
 
-
-
         {
           isLogin ? (
             <div className={styles.views} >
@@ -139,10 +129,11 @@ export default class View extends Component {
           ) : null
         }
 
-
-
-
-
+        <div className={styles.views} >
+          {
+            renderView('RecentRecord')
+          }
+        </div >
 
       </Mixin.Parent >
     )

@@ -337,18 +337,8 @@
 .position {
   height: 242px;
   :global {
-    .thead {
-      .tr {
-        height: 40px;
-      }
-    }
-    .tbody {
-      .tr {
-        height: 40px;
-        .td {
-
-        }
-      }
+    .tr {
+      height: 40px !important;
     }
   }
 }
@@ -356,18 +346,8 @@
 .PersonEnsure {
   height: 242px;
   :global {
-    .thead {
-      .tr {
-        height: @header2;
-      }
-    }
-    .tbody {
-      .tr {
-        height: @header2;
-        .td {
-
-        }
-      }
+    .tr {
+      height: @header2 !important;
     }
   }
 }
@@ -521,8 +501,6 @@
     }
     .middle {
 
-
-
     }
     .down {
       padding-top: 30px;
@@ -540,6 +518,25 @@
           height: 20px;
         }
       }
+    }
+  }
+}
+
+.recentRecord {
+  height: 242px;
+  :global {
+    .tr {
+      height: @header2 !important;
+    }
+  }
+  .header {
+    height: 100%;
+  }
+  .recentrecord_tab {
+    display: flex;
+    align-items: center;
+    li + li {
+      margin-left: 70px;
     }
   }
 }
@@ -639,6 +636,24 @@
       color: @c_active_yellow;
     }
   }
+}
+
+// tab公共部分
+.tab {
+  height: 100%;
+  :global {
+    li {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      color: @c_like_white_05;
+      &.active {
+        color: @c_active_yellow;
+        border-bottom: 2px solid @c_active_yellow;
+      }
+    }
+  }
+
 }
 
 

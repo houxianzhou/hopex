@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import { classNames, moment, dealInterval } from '@utils'
+import { classNames, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin } from '@components'
+import { SCROLLX } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
 
 export default class View extends Component {
+  state = {
+    activeLi: 0
+  }
   startInit = () => {
     //this.getPersonalEnsure()
   }
@@ -15,85 +19,83 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/getPersonalEnsure`
     }).then((res) => {
-        // dealInterval(() => {
-        //   this.getPersonalEnsure()
-        // })
+        dealInterval(() => {
+          this.getPersonalEnsure()
+        })
       }
     )
   }
 
+  changeState = (payload) => {
+    this.setState(payload)
+  }
+
   render() {
-    const { model: { personalEnsures } } = this.props
-    const head = [
+    const { state, changeState } = this
+    const { model: { positionList = [] } } = this.props
+    const columns = [
       {
-        name: '合约',
+        title: '合约',
         dataIndex: 'market',
       },
       {
-        name: '类型',
-        dataIndex: 'type',
-        render: (value, record) => {
-          if (value === '1') return '限价单'
-          if (value === '2') return '市价单'
-        }
+        title: '当前价格',
+        dataIndex: 'no',
+        render: (v) => formatNumber(v, 'p')
       },
       {
-        name: '杠杆倍数',
-        dataIndex: 'sex',
-        render: (value, record) => ''
+        title: '当前合理价格',
+        dataIndex: 'averagePrice',
+        render: (v) => formatNumber(v, 'p')
       },
       {
-        name: '数量(张)',
+        title: '杠杆倍数',
+        dataIndex: 'leverage',
+      },
+      {
+        title: '数量(张)',
         dataIndex: 'amount',
       },
       {
-        name: '委托价格',
-        dataIndex: 'price',
-        //width: '30%',
+        title: '开仓均价',
+        dataIndex: 'averagePrice',
+        render: (v) => formatNumber(v, 'p')
       },
       {
-        name: '成交数量(张)',
-        dataIndex: 'amount',
-        render: (value, record) => {
-          return value - record.left
-        }
+        title: '持续占用保证金',
+        dataIndex: 'positionMoney',
+        render: (v) => formatNumber(v, 'p')
       },
       {
-        name: '成交均价',
+        title: '维持保证金',
+        dataIndex: 'keepMoney',
+        render: (v) => formatNumber(v, 'p')
+      },
+      {
+        title: '强平价格',
+        dataIndex: 'overPrice',
+        render: (v) => formatNumber(v, 'p')
+      },
+      {
+        title: '浮动盈亏(收益率)',
+        dataIndex: 'floatProfit',
+        render: (v) => formatNumber(v, 'p')
+      },
+      {
+        title: '操作',
+        width: 250,
         dataIndex: 'work',
-        //width: '30%',
-      },
-      {
-        name: '委托占用保证金',
-        dataIndex: 'work',
-        //width: '30%',
-      },
-      {
-        name: '手续费',
-        dataIndex: 'taker_fee',
-        //width: '30%',
-      },
-      {
-        name: '委托时间',
-        dataIndex: 'ctime',
-        render: (value) => value ? moment.formatHMS(String(value).split('.')[0] * 1000) : null
-      },
-      {
-        name: '状态',
-        dataIndex: 'amount',
-        render: (value, record) => value && value === record.left ? '等待成交' : (value ? '部分成交' : null)
-      },
-      {
-        name: '操作',
-        dataIndex: 'work',
-        //width: '30%',
       },
 
     ]
-    let data = personalEnsures
-    data = data.length > 4 ? data : data.concat((new Array(4 - data.length)).fill({}))
+    const dataSource = []
     const tableProp = {
-      head, data
+      className: styles.tableContainer,
+      columns,
+      dataSource: _.merge((new Array(4)).fill(), dataSource),
+      scroll: {
+        x: SCROLLX.X
+      }
     }
     return (
       <Mixin.Child that={this} >
@@ -103,23 +105,41 @@ export default class View extends Component {
               {
                 view: true
               },
-              styles.position
+              styles.recentRecord
             )
           }
         >
           <ScrollPannel
-            scroller={false}
             header={
-              <div style={{}}>
-                <span >最近10条委托历史  </span >
-                <span >最近10条交割历史  </span >
-                <span >最近10条强平历史  </span >
-                <span >最近10条自动减仓历史  </span >
-              </div>
+              <div className={styles.header} >
+                <ul className={classNames(
+                  styles.tab,
+                  styles.recentrecord_tab
+                )} >
+                  {
+                    ['最近10条委托历史', '最近10条交割历史', '最近10条强平历史', '最近10条自动减仓历史'].map((item, index) => {
+                      return (
+                        <li
+                          key={index}
+                          className={classNames(
+                            {
+                              'active': state.activeLi === index
+                            }
+                          )}
+                          onClick={() => {
+                            changeState({
+                              activeLi:index
+                            })
+                          }}
+                        >{item}</li >
+                      )
+                    })
+                  }
+                </ul >
+              </div >
             }
           >
-            <Table className={styles.table} {...tableProp}>等等</Table >
-
+            <Table {...tableProp} />
           </ScrollPannel >
         </div >
       </Mixin.Child >
