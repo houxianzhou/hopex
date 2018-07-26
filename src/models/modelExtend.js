@@ -1,5 +1,7 @@
+import { routerRedux } from 'dva/router'
 import { Imu, _ } from '@utils'
 import { POWER } from "@constants"
+
 
 const resetIn = (imuObj) => {
   return (propertys = [], value) => {
@@ -72,6 +74,17 @@ export default {
           state: false
         }
       })
+    },
+    * routerGo({ payload = {} }, { call, put, select }) {
+      let repayload
+      if (_.isObjectLike(payload)) {
+        repayload = payload
+      } else {
+        repayload = {
+          pathname: payload
+        }
+      }
+      yield put(routerRedux.push(repayload))
     }
   },
 

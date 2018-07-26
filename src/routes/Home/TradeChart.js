@@ -23,8 +23,8 @@ export default class View extends Component {
     // window.$ = $
     const ws1 = wss.getSocket('ws1')
     if (true) {
-      if(this.chart) this.chart.remove()
-      this.chart = new TradingView.widget({
+      if (this.chart) this.chart.remove()
+      const chart = new TradingView.widget({
         disabled_features: [
           "left_toolbar",
           'go_to_date',
@@ -147,9 +147,11 @@ export default class View extends Component {
         },
         locale: 'zh',
       })
-      // this.chart.onChartReady(function() {
-      //   // this.chart().createStudy('MACD', false, false, [14, 30, "close", 9])
-      // })
+
+      chart.onChartReady(function () {
+        this.chart = chart
+        // this.chart().createStudy('MACD', false, false, [14, 30, "close", 9])
+      })
     }
   }
 

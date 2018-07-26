@@ -44,7 +44,6 @@ export default class View extends Component {
       email: '2278095567@qq.com',
       password: '8888888'
     }
-    const { dispatch, modelName } = this.props
     const { email, password } = this.state
     return (
       <Structure >
@@ -97,18 +96,16 @@ export default class View extends Component {
                   this.login()
                 }} >
                 <span
-                  onClick={(e)=>{
+                  onClick={(e) => {
                     e.preventDefault()
                     this.changeState(person1)
-                  }}>1</span>
+                  }} >1</span >
                 登录
-                <span onClick={(e)=>{
+                <span onClick={(e) => {
                   e.preventDefault()
                   this.changeState(person2)
-                }}>2</span>
+                }} >2</span >
               </button >
-              <div >
-              </div >
               {/*<button onClick={(e) => {*/}
               {/*e.preventDefault()*/}
               {/*dispatch({*/}
@@ -123,10 +120,13 @@ export default class View extends Component {
               {/*二次验证登录*/}
               {/*</button >*/}
             </form >
+            <div className={styles.othermethod} >
+              <div >忘记密码</div >
+              <div className={styles.registerentery}>注册</div >
+            </div >
           </div >
         </div >
       </Structure >
-
     )
   }
 }

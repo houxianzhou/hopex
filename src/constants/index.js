@@ -51,3 +51,8 @@ export const COLORS = {
 export const NUMBER = {
   accuracy: 4,// 价格小数精确位数
 }
+
+export const PATH = {
+  login: '/user/login',
+  home: '/home'
+}

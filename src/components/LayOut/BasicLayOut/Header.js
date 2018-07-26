@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { NavLink, routerRedux } from 'dva/router'
+import { NavLink } from 'dva/router'
 import { classNames, switchTheme, _ } from '@utils'
+import { PATH } from '@constants'
 import logo from '@assets/logo.png'
 import account from '@assets/account.png'
 import help from '@assets/help.png'
@@ -103,13 +104,15 @@ export default class View extends Component {
               {
                 email ? (<span >{email}</span >) : null
               }
-
             </li >
             <li >
               {_.isEmpty(userInfo) ? (
                 <span
                   onClick={() => {
-                    dispatch(routerRedux.push('/user/login'))
+                    dispatch({
+                      type: `${modelName2}/routerGo`,
+                      payload: PATH.login
+                    })
                   }}
                 >登录</span >
               ) : (
@@ -123,7 +126,6 @@ export default class View extends Component {
               )}
             </li >
           </ul >
-
         </div >
       </div >
     )

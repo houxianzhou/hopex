@@ -5,7 +5,6 @@ import facebook from '@assets/Facebook.png'
 import ins from '@assets/ins.png'
 import telegram from '@assets/telegram.png'
 import twitter from '@assets/Twitter.png'
-import { NavLink, routerRedux } from 'dva/router'
 import { classNames, _ } from '@utils'
 
 import * as styles from './index.less'
@@ -66,10 +65,9 @@ export default class View extends Component {
                 <li >帮助中心</li >
               </ul >
             </div >
-
           </div >
         </div >
-        <div className={styles.down} >Copyright. All rights reserve</div >
+        <div className={styles.down} >©Copyright.All Rights Reserved.</div >
       </div >
     )
   }

@@ -14,6 +14,7 @@ import {
   doDisbaleGoogleVertify
 } from '@services/user'
 import { _, getRes, resOk, joinModel, localSave, asyncPayload } from '@utils'
+import { PATH } from '@constants'
 import modelExtend from '@models/modelExtend'
 
 export default joinModel(modelExtend, {
@@ -52,7 +53,10 @@ export default joinModel(modelExtend, {
               }
             })
             localSave.set('userInfo', payload)
-            yield put(routerRedux.push('/home'))
+            yield put({
+              type: 'routerGo',
+              payload: PATH.home
+            })
           } else {
 
           }

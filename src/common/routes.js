@@ -1,3 +1,5 @@
+import { PATH } from '@constants'
+
 export default [
   {
     path: '/',
@@ -26,7 +28,7 @@ export default [
   },
   {
     name: '登录',
-    path: '/user/login',
+    path: PATH.login,
     route: 'User/Login'
   },
   {
