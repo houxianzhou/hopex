@@ -90,17 +90,7 @@ export default class View extends Component {
 
 
 
-        <div className={styles.views} >
-          {
-            renderView('Purse')
-          }
-          {
-            renderView('BuySell')
-          }
-          {
-            renderView('CurrentContract')
-          }
-        </div >
+
 
         <div className={styles.views} >
           {
@@ -111,6 +101,18 @@ export default class View extends Component {
           }
           {
             renderView('EnsureRecord')
+          }
+        </div >
+
+        <div className={styles.views} >
+          {
+            renderView('Purse')
+          }
+          {
+            renderView('BuySell')
+          }
+          {
+            renderView('CurrentContract')
           }
         </div >
 
