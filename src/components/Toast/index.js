@@ -13,6 +13,7 @@ class Toast {
   }
 
   renderElement = (id, element) => {
+    clearTimeout(this.interval)
     const target = document.getElementById(id)
     if (!target) {
       const toast = document.createElement('div')
@@ -22,16 +23,15 @@ class Toast {
       return toast
     } else {
       target.parentNode.removeChild(target)
-      this.renderElement(id, element)
+      return this.renderElement(id, element)
     }
   }
 
 
   tip = () => {
     const toast = this.renderElement('tip', (
-      <div style={{ position: 'fixed', top: 100, height: 200, width: 200, background: 'blue' }} >ahhahahahahah</div >
+      <div className={styles.toast_tip} >ahhahahahahah</div >
     ))
-    clearTimeout(this.interval);
     this.interval = setTimeout(() => {
       toast.parentNode.removeChild(toast)
     }, 2000)

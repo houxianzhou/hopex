@@ -1,13 +1,16 @@
 import { request } from '@utils'
-const prefix=''
+
+const prefix = ''
+
 export async function getCurrentUser() {
   return await request(`${prefix}/api/user`)
 }
 
-export async function doLogin(payload) {
+export async function doLogin(payload, errHandler) {
   return await request(`${prefix}/api/v1.0/User/Login`, {
     method: 'post',
-    body: payload
+    body: payload,
+    errHandler,
   })
 }
 
@@ -54,7 +57,7 @@ export async function doSendEmailCode(payload) {
 //这一步修改密码完成
 export async function doResetPassword(payload) {
   return await request('/api/v1.0/User/ResetPassword', {
-    method:'post',
+    method: 'post',
     body: payload
   })
 }

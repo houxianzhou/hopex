@@ -127,10 +127,10 @@ export default class View extends Component {
               <div
                 className={styles.registerentery}
                 onClick={() => {
-                  // dispatch({
-                  //   type: `${modelName}/routerGo`,
-                  //   payload: '/user/register'
-                  // })
+                  dispatch({
+                    type: `${modelName}/routerGo`,
+                    payload: '/user/register'
+                  })
                 }}
               >注册
               </div >

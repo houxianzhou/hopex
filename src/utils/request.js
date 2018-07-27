@@ -19,7 +19,7 @@ let interval = null
 
 
 export function request(url = '', options = {}) {
-  const { method = 'get', formData = false, params, query, body, needLoop = false, needWatch = true, ...rest } = options
+  const { method = 'get', formData = false, params, query, body, needLoop = false, needWatch = true, errHandler, ...rest } = options
   if (params) {
     const toPath = pathToRegexp.compile(url)
     url = toPath(params)
@@ -54,6 +54,7 @@ export function request(url = '', options = {}) {
       return res
     })
     .catch((error) => {
+
       if (_.has(error, 'response.status')) {
         switch (error.response.status) {
           case 401:
@@ -64,26 +65,32 @@ export function request(url = '', options = {}) {
         }
       }
 
-
       if (needWatch) {
         if (_.get(error, 'response.data.ret') === '3') {
           // token失效
           localSave.remove('userInfo')
         } else {
-          if (_.has(error, 'response.data.errMsg') || _.has(error, 'response.data.errStr')) {
-            const message = _.get(error, 'response.data.errMsg') || _.get(error, 'response.data.errStr')
-            Message.error(message)
+          if (errHandler) {
+            // 需要单独的错误处理器
+            const err = _.get(error, 'response.data')
+            err ? errHandler(err) : errHandler(error)
           } else {
-            if (method === 'get') {
-              Message.error('数据获取失败')
+            if (_.has(error, 'response.data.errMsg') || _.has(error, 'response.data.errStr')) {
+              const message = _.get(error, 'response.data.errMsg') || _.get(error, 'response.data.errStr')
+              Message.error(message)
             } else {
-              Message.error('操作失败')
+              if (method === 'get') {
+                Message.error('数据获取失败')
+              } else {
+                Message.error('操作失败')
+              }
             }
           }
         }
         console.log(url + '请求出错')
       }
       if (needLoop) {
+        // 发生错误需要重新请求
         clearTimeout(interval)
         interval = setTimeout(() => {
           return new Promise((resolve) => {

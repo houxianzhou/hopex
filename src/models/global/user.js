@@ -13,6 +13,7 @@ import {
   doDisbaleGoogleVertify
 } from '@services/user'
 import { _, getRes, resOk, joinModel, localSave, asyncPayload } from '@utils'
+import { Toast } from '@components'
 import { PATH } from '@constants'
 import modelExtend from '@models/modelExtend'
 
@@ -30,10 +31,15 @@ export default joinModel(modelExtend, {
   effects: {
     * doLogin({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doLogin, {
-        param: {
-          ...payload, loginType: "pcweb"
+          param: {
+            ...payload, loginType: "pcweb"
+          },
+        },
+        (err) => {
+          Toast.tip(err)
+          console.log(err)
         }
-      }))
+      ))
       if (resOk(res)) {
         const { enabledTwoFactories, token, userId, email } = res.data
         if (enabledTwoFactories) {
