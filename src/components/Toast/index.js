@@ -9,7 +9,7 @@ import * as styles from './index.less'
 class Toast {
   constructor() {
     this.interval = null
-    this.renderElement(_.uniqueId('message'), <ToastContainer className='hahahah' />)
+    this.renderElement(_.uniqueId('message'), <ToastContainer />)
   }
 
   renderElement = (id, element) => {
@@ -28,9 +28,11 @@ class Toast {
   }
 
 
-  tip = () => {
+  tip = (content = 'tip提示') => {
     const toast = this.renderElement('tip', (
-      <div className={styles.toast_tip} >ahhahahahahah</div >
+      <div className={styles.toast_tip} >
+        <div className={styles.content} >{content}</div >
+      </div >
     ))
     this.interval = setTimeout(() => {
       toast.parentNode.removeChild(toast)

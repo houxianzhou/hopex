@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ShowJsonTip } from '@components'
 import { classNames, _ } from '@utils'
+import { PATH } from '@constants'
 import logo2 from '@assets/logo2.png'
 import emailpng from '@assets/email.png'
 import passwordpng from '@assets/password.png'
@@ -129,7 +130,7 @@ export default class View extends Component {
                 onClick={() => {
                   dispatch({
                     type: `${modelName}/routerGo`,
-                    payload: '/user/register'
+                    payload: PATH.register
                   })
                 }}
               >注册

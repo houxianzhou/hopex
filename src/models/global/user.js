@@ -36,8 +36,7 @@ export default joinModel(modelExtend, {
           },
         },
         (err) => {
-          Toast.tip(err)
-          console.log(err)
+          Toast.tip(err.errStr)
         }
       ))
       if (resOk(res)) {
