@@ -256,12 +256,17 @@ export default {
     })
   },
 
-
-  'Post /mock/api/v1/trade/market.leverage_select': (req, res) => {
+  // 查询用户杠杆
+  'Post /mock/api/v1/trade/market.leverage_set': (req, res) => {
     res.send({
       "data": { "leverage": 20.0 },
       ...other
     })
+  },
+
+  // 设置杠杆
+  'Post /mock/api/v1/trade/market.leverage_select': (req, res) => {
+    res.send({"ret":"6","errCode":"6","errStr":"user trade amount not zero"})
   },
 
 
