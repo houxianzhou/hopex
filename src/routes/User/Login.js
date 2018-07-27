@@ -46,6 +46,7 @@ export default class View extends Component {
       email: '2278095567@qq.com',
       password: '8888888'
     }
+    const { changeState } = this
     const { email, password } = this.state
     const { dispatch, modelName } = this.props
     return (
@@ -65,8 +66,14 @@ export default class View extends Component {
                 placeholder={'请填写邮箱'}
                 value={email}
                 onChange={(e) => {
-                  this.changeState({
+                  changeState({
                     email: e.target.value
+                  })
+                }}
+
+                onClear={() => {
+                  changeState({
+                    email: ''
                   })
                 }}
 
@@ -79,10 +86,17 @@ export default class View extends Component {
                 placeholder={'请填写密码'}
                 value={password}
                 onChange={(e) => {
-                  this.changeState({
+                  changeState({
                     password: e.target.value
                   })
                 }}
+
+                onClear={() => {
+                  changeState({
+                    password: ''
+                  })
+                }}
+
 
                 iconPrefix={(
                   <img alt='password' src={passwordpng} />
@@ -101,12 +115,12 @@ export default class View extends Component {
                 <span
                   onClick={(e) => {
                     e.preventDefault()
-                    this.changeState(person1)
+                    changeState(person1)
                   }} >1</span >
                 登录
                 <span onClick={(e) => {
                   e.preventDefault()
-                  this.changeState(person2)
+                  changeState(person2)
                 }} >2</span >
               </button >
               {/*<button onClick={(e) => {*/}

@@ -3,6 +3,7 @@ import {
   doLogin,
   doVertifyLogin,
   doLoginOut,
+  getAllCountryCode,
   doRegister,
   doRegisterVerify,
   doEmailExists,
@@ -81,6 +82,12 @@ export default joinModel(modelExtend, {
       localSave.remove('userInfo')
       //
 
+    },
+    * getAllCountryCode({ payload = {} }, { call, put, select }) {
+      const res = getRes(yield call(getAllCountryCode))
+      if(resOk){
+        return _.get(res,'data')
+      }
     },
     * doRegister({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doRegister, {

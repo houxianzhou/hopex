@@ -5,7 +5,7 @@ import * as styles from './Input.less'
 
 
 export default function (Props) {
-  const { iconPrefix, iconPost, placeholder, value, onChange, type = 'text', msg = false } = Props
+  const { iconPrefix, iconPost, placeholder, value, onChange, onClear, onClick, type = 'text', msg = false } = Props
   return (
     <div className={styles.input} >
       <div className='content' >
@@ -14,19 +14,26 @@ export default function (Props) {
             {iconPrefix}
           </div >) : null
         }
-        <div className='right' >
-          <input
-            type={type}
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-          />
+        <div className='right' onClick={onClick} >
+          {
+            type === 'div' ? (
+              <div className='inputdiv' >{value}</div >
+            ) : (
+              <input
+                type={type}
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+              />
+            )
+          }
+
           {
             iconPost ? (
-              <div className='iconpostfix' >后拽</div >
+              iconPost
             ) : (
               value ? (
-                <img src={clearpng} />
+                <img src={clearpng} onClick={onClear} />
               ) : null
             )
           }
@@ -35,8 +42,6 @@ export default function (Props) {
       {
         msg ? (<div className='desc' >消息提示</div >) : null
       }
-
-
     </div >
   )
 }
