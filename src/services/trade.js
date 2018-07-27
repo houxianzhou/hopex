@@ -80,6 +80,23 @@ export async function postLimitOrder(payload) {
 }
 
 
+// 查询杠杆倍数
+export async function getLeverage(payload) {
+  return await request(`${UserIp4}/market.leverage_select`, {
+    method: 'post',
+    body: payload
+  })
+}
+
+// 更新杠杆倍数
+export async function doUpdateLeverage(payload) {
+  return await request(`${UserIp4}/market.leverage_set`, {
+    method: 'post',
+    body: payload
+  })
+}
+
+
 // 下市价单
 export async function postMarketOrder(payload) {
   return await request(`${MODE}`, {

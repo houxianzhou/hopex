@@ -211,6 +211,7 @@ export default class View extends Component {
   }
 
 
+
   render() {
     const { model: { marketName = '', maxPrice, minPrice, indexPrice, latestPrice } } = this.props
     const intervals = [

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, dealInterval, _, formatNumber } from '@utils'
+import { classNames, dealInterval, _, formatNumber, getPercent } from '@utils'
 import { Table, Mixin } from '@components'
 import { SCROLLX } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
@@ -8,7 +8,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-     this.getPosition()
+    this.getPosition()
   }
 
   getPosition = () => {
@@ -23,7 +23,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { positionList = [] } } = this.props
+    const { model: { positionList = [], dealMoney } } = this.props
     const columns = [
       {
         title: '合约',
@@ -31,7 +31,7 @@ export default class View extends Component {
       },
       {
         title: '当前价格',
-        dataIndex: 'no',
+        dataIndex: 'lastPrice',
         render: (v) => formatNumber(v, 'p')
       },
       {
@@ -70,7 +70,7 @@ export default class View extends Component {
       {
         title: '浮动盈亏(收益率)',
         dataIndex: 'floatProfit',
-        render: (v) => formatNumber(v, 'p')
+        render: (v, record) => `${formatNumber(v, 'p')}${dealMoney}` + `(${(formatNumber(record.profitRate * 100, 'p'))}%)`
       },
       {
         title: '操作',

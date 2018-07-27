@@ -5,7 +5,7 @@ import modelExtend from '@models/modelExtend'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
-  getPosition, getPersonEnsureDetail, getAllMarkets
+  getPosition, getPersonEnsureDetail, getAllMarkets, getLeverage, doUpdateLeverage
 } from "@services/trade"
 
 
@@ -29,12 +29,12 @@ export default joinModel(modelExtend, {
 
     equitablePrice: null, // 计算出来的，合理价格
 
-
     minVaryPrice: null, //最小变动价位
     minDealAmount: null, //最小交易量
     keepBailRate: null,//维持保证金率
-    levelages: [],//杠杆
-
+    levelages: [],//当前合约杠杆列表
+    dealMoney: null,//结算货币
+    leverage: null, //当前用户的杠杆
 
     personalEnsures: [],//个人委托列表
     personalEnsures_PageIndex: null,
@@ -156,6 +156,59 @@ export default joinModel(modelExtend, {
         }
       })))
       ws1.sendJson(repayload)
+    },
+
+
+    * getLeverage({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {
+            "method": "market.leverage_select"
+          },
+          param: {},
+          powerMsg: '查询杠杆倍数',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getLeverage, repayload))
+        if (resOk(res)) {
+          const result = _.get(res, 'data.leverage')
+          yield put({
+            type: 'changeState',
+            payload: {
+              leverage: result
+            }
+          })
+        }
+      }
+    },
+
+    * doUpdateLeverage({ payload = {} }, { call, put, select }) {
+      const { leverage } = payload
+
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {
+            "method": "market.leverage_set"
+          },
+          param: {
+            leverage
+          },
+          powerMsg: '更新合约对应的杠杆倍数',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(doUpdateLeverage, repayload))
+        if (resOk(res)) {
+          return res
+        }else{
+          return Promise.reject('修改杠杆失败')
+        }
+      }
     },
 
     //现货价格指数，24最高，24h最低
@@ -504,7 +557,8 @@ export default joinModel(modelExtend, {
         minVaryPrice: filterOne.minVaryPrice,
         minDealAmount: filterOne.minDealAmount,
         keepBailRate: filterOne.keepBailRate,
-        levelages: filterOne.levelages
+        levelages: filterOne.levelages,
+        dealMoney: filterOne.dealMoney
       }
     }
   },

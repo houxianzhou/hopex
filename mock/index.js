@@ -257,6 +257,14 @@ export default {
   },
 
 
+  'Post /mock/api/v1/trade/market.leverage_select': (req, res) => {
+    res.send({
+      "data": { "leverage": 20.0 },
+      ...other
+    })
+  },
+
+
   'Post /mock/v1/trade': (req, res) => {
     let result
     const method = _.get(req, 'body.head.method')

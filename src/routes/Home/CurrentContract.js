@@ -10,8 +10,20 @@ import styles from './index.less'
 
 
 export default class View extends Component {
+
+  startInit = () => {
+    this.getLeverage()
+  }
+
+  getLeverage = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getLeverage`
+    })
+  }
+
   render() {
-    const { model: { marketName }, dispatch, modelName } = this.props
+    const { model: { marketName, leverage, }, dispatch, modelName } = this.props
     const colors = [
       '#52AA64', '#52AA64', '#8CB152', '#8CB152', '#CABA70', '#CABA70', '#D69555', '#D69555', '#D47D5A', ' #D47D5A'
     ]
@@ -52,7 +64,7 @@ export default class View extends Component {
                   </div >
                 </div >
                 <div className={styles.number} >
-                  50
+                  {leverage}
                   <span >倍</span >
                 </div >
               </div >
@@ -86,8 +98,8 @@ class RenderModal extends Component {
       title: '设置杠杆倍数'
     }
 
-
-    const { model: { levelages = [], keepBailRate }, } = this.props
+    const { model: { levelages = [], keepBailRate, leverage, }, dispatch, modelName } = this.props
+    const { currentValue } = this.state
     const marks = levelages.reduce((sum, next = {}) => {
       const leverage = next.leverage
       sum[leverage] = String(leverage)
@@ -95,6 +107,7 @@ class RenderModal extends Component {
     }, {})
     const marksProps = {
       marks,
+      defaultValue: leverage,
       min: _.min(_.keys(marks).map(item => Number(item))) || 0,
       max: _.max(_.keys(marks).map(item => Number(item))) || 0,
       included: false,
@@ -117,8 +130,10 @@ class RenderModal extends Component {
         border: 'solid 6px white',
         backgroundColor: COLORS.yellow
       },
-      onChange:(v)=>{
-        console.log(v)
+      onChange: (v) => {
+        this.setState({
+          currentValue: v
+        })
       }
     }
 
@@ -128,7 +143,7 @@ class RenderModal extends Component {
         <div className={styles.content} >
           <div className={styles.top} >
             <div className={styles.current} >当前倍数</div >
-            <div className={styles.number} >50<span >倍</span ></div >
+            <div className={styles.number} >{leverage}<span >倍</span ></div >
           </div >
           <div className={styles.middle} >
             <Slider {...marksProps} />
@@ -144,12 +159,27 @@ class RenderModal extends Component {
                 levelages.map((item, index) => {
                   return (
                     <li key={index + 1} >
-                      <div className={styles.symbol} >
-                        <div >
-                          当前值
-                        </div >
-                        <img src={grayangle} />
-                      </div >
+                      {
+                        String(item.leverage) === String(leverage) ? (
+                          <div className={styles.symbol} >
+                            <div >
+                              当前值
+                            </div >
+                            <img src={grayangle} />
+                          </div >
+                        ) : null
+                      }
+                      {
+                        currentValue && String(currentValue) !== String(leverage) && String(item.leverage) === String(currentValue) ? (
+                          <div className={styles.symbol} >
+                            <div >
+                              新值
+                            </div >
+                            <img src={activeangle} />
+                          </div >
+                        ) : null
+                      }
+
                       <div >{item.leverage}</div >
                       <div >{getPercent(Number(1), Number(item.leverage))}</div >
                       <div >{formatNumber(keepBailRate, 2)}</div >
@@ -162,8 +192,38 @@ class RenderModal extends Component {
 
         </div >
         <div className={styles.buttons} >
-          <div >取消</div >
-          <div className={styles.confirm} >确定</div >
+          <div
+            onClick={() => {
+              dispatch({
+                type: `${modelName}/closeModal`,
+              })
+            }}
+          >
+            取消
+          </div >
+          <div
+            className={styles.confirm}
+            onClick={() => {
+              let promise = null
+              if (currentValue === leverage || !currentValue) {
+                promise = Promise.resolve()
+              } else {
+                promise = dispatch({
+                  type: `${modelName}/doUpdateLeverage`,
+                  payload: {
+                    leverage: currentValue
+                  }
+                })
+              }
+              promise.then(res => {
+                dispatch({
+                  type: `${modelName}/closeModal`,
+                })
+              })
+            }}
+          >
+            确定
+          </div >
         </div >
       </MainModal >
     )

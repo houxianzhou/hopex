@@ -6,7 +6,7 @@ import 'rc-slider/assets/index.css'
 export default class View extends Component {
   render() {
     const {
-      min = 0, max = 100, step = null, included = false, marks = {}, onChange,
+      min = 0, max = 100, step = null, included = false, marks = {}, onChange, defaultValue,
       dotStyle, railStyle, handleStyle, trackStyle, activeDotStyle, value, style = {}
     } = this.props
 
@@ -14,6 +14,7 @@ export default class View extends Component {
       onChange,
       ...value ? { value } : {},
       marks,
+      defaultValue,
       min,
       max,
       included,
