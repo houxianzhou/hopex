@@ -26,14 +26,18 @@
       padding: 10px 0;
       border-bottom: 1px solid #EBEBEB;
       .left {
-        padding: 0 20px;
+        display: flex;
+        justify-content: center;
+        width:75px;
         border-right: 1px solid #EBEBEB;
         img {
           height: 22px;
         }
       }
       .right {
+        position: relative;
         display: flex;
+        align-items: center;
         flex-grow: 1;
         padding-right: 60px;
         input {
@@ -43,6 +47,10 @@
           border: none;
           outline: none;
           flex-grow: 1;
+        }
+        img {
+          position: absolute;
+          right: 25px;
         }
       }
     }

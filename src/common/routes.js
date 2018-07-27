@@ -7,7 +7,7 @@ export default [
   },
   {
     name: '合约交易',
-    path: '/home',
+    path: PATH.home,
     model: ['home/index'],
     route: 'Home'
   },
@@ -33,7 +33,7 @@ export default [
   },
   {
     name: '注册',
-    path: '/user/register',
+    path: PATH.register,
     route: 'User/Register'
   },
 ]

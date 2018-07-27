@@ -23,6 +23,7 @@ export default class View extends Component {
   changeState = (payload = {}) => {
     this.setState(payload)
   }
+
   login = () => {
     const { email, password } = this.state
     const { dispatch, modelName } = this.props
@@ -45,6 +46,7 @@ export default class View extends Component {
       password: '8888888'
     }
     const { email, password } = this.state
+    const { dispatch, modelName } = this.props
     return (
       <Structure >
         <div className={styles.login} >
@@ -122,7 +124,16 @@ export default class View extends Component {
             </form >
             <div className={styles.othermethod} >
               <div >忘记密码</div >
-              <div className={styles.registerentery}>注册</div >
+              <div
+                className={styles.registerentery}
+                onClick={() => {
+                  // dispatch({
+                  //   type: `${modelName}/routerGo`,
+                  //   payload: '/user/register'
+                  // })
+                }}
+              >注册
+              </div >
             </div >
           </div >
         </div >

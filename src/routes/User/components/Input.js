@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { classNames, _ } from '@utils'
+import clearpng from '@assets/clear.png'
 import * as styles from './Input.less'
 
 
@@ -23,7 +24,11 @@ export default function (Props) {
           {
             iconPost ? (
               <div className='iconpostfix' >后拽</div >
-            ) : null
+            ) : (
+              value ? (
+                <img src={clearpng} />
+              ) : null
+            )
           }
         </div >
       </div >

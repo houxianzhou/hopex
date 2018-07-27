@@ -54,5 +54,6 @@ export const NUMBER = {
 
 export const PATH = {
   login: '/user/login',
-  home: '/home'
+  home: '/home',
+  register:'/user/register'
 }

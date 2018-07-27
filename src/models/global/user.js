@@ -1,4 +1,3 @@
-import { routerRedux } from 'dva/router'
 import {
   getCurrentUser,
   doLogin,
@@ -32,7 +31,7 @@ export default joinModel(modelExtend, {
     * doLogin({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doLogin, {
         param: {
-          ...payload, loginType: "web"
+          ...payload, loginType: "pcweb"
         }
       }))
       if (resOk(res)) {
