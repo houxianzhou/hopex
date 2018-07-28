@@ -70,9 +70,9 @@ export default joinModel(modelExtend, {
     },
     * doVertifyLogin({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doVertifyLogin, payload))
+
     },
     * doLoginOut({ payload = {} }, { call, put, select }) {
-      // yield (doLoginOut())
       yield put({
         type: 'changeState',
         payload: {
@@ -80,26 +80,22 @@ export default joinModel(modelExtend, {
         }
       })
       localSave.remove('userInfo')
-      //
-
     },
     * getAllCountryCode({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(getAllCountryCode))
-      if(resOk(res)){
-        return _.get(res,'data')
+      if (resOk(res)) {
+        return _.get(res, 'data')
       }
     },
     * doRegister({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doRegister, {
         param: payload
+      }, (err) => {
+        Toast.tip(err.errStr)
       }))
-      // {"data":"","ret":0,"errCode":null,"errStr":null}
-      // yield put({
-      //   type: 'changeState',
-      //   payload: {
-      //     userInfo: {}
-      //   }
-      // })
+      if (resOk(res)) {
+        return res
+      }
     },
     * doRegisterVerify({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doRegisterVerify, payload))

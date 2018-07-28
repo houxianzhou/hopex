@@ -103,7 +103,7 @@ export default class View extends Component {
               />
               <button
                 className={classNames(
-                  styles.loginbutton,
+                  styles.formbutton,
                   email && password ? styles.permit : styles.notpermit
                 )}
                 onClick={(e) => {

@@ -33,13 +33,15 @@ export default function (Props) {
           </div >
           {
             iconPost || onClear ? (
-              <div className='iconPostcontainer' style={{ width: 60, minWidth: 60 }} >
+              <div className='iconPostcontainer' style={!iconPost ? {
+                width: 60, minWidth: 60
+              } : {}} >
                 {
                   iconPost ? (
                     iconPost
                   ) : (
                     value && onClear ? (
-                      <img src={clearpng} onClick={onClear} />
+                      <img src={clearpng} onClick={onClear} style={{ cursor: 'pointer' }} />
                     ) : null
                   )
                 }

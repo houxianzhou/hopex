@@ -25,15 +25,17 @@ export async function doVertifyLogin(payload) {
   })
 }
 
+// 注册前获取所有的国家
 export async function getAllCountryCode(payload) {
   return await request(`${prefix}/api/v1.0/Country`)
 }
 
 // 注册,这一步做完拿到注册码
-export async function doRegister(payload) {
-  return await request('/api/v1.0/User/Regist', {
+export async function doRegister(payload, errHandler) {
+  return await request(`${prefix}/api/v1.0/User/Regist`, {
     method: 'post',
-    body: payload
+    body: payload,
+    errHandler
   })
 }
 

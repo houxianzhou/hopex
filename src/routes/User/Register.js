@@ -9,6 +9,7 @@ import emailpng from '@assets/email.png'
 import passwordpng from '@assets/password.png'
 import countrypng from '@assets/country.png'
 import pulldownpng from '@assets/pulldown.png'
+import selectpng from '@assets/select.png'
 import styles from './index.less'
 
 @connect(({ user: model, loading, dispatch }) => ({
@@ -22,17 +23,17 @@ export default class View extends Component {
   }
 
   state = {
-    countryCodeList: [],
-    countryCodeListIsOpen: false,
-    country: {},
-    agentId: 1,
+    countryList: [],
+    page: 1,
+    timeInterval: null,
+
+    countryCode: 'CN',
+    agentId: null,
     password: '8888888',
     channel: 'appstore',
     userType: 'Normal',
     packType: 'pcweb',
-
-
-    email: 'xiaoyi.wei@bcsystech.com',
+    email: '18353268994@qq.com',
     verificationCode: '081955',
     newPassword: '8888888'
   }
@@ -45,135 +46,235 @@ export default class View extends Component {
     }).then(res => {
       if (res) {
         this.changeState({
-          countryCodeList: res
+          countryList: res
         })
       }
     })
+  }
 
+  countDown = () => {
+    if (!this.state.timeInterval) {
+      this.changeState({
+        timeInterval: 60
+      })
+    }
+    this.interval = setTimeout(() => {
+      const next = this.state.timeInterval - 1
+      this.changeState({
+        timeInterval: next
+      })
+      if (!next) {
+        clearTimeout(this.interval)
+      } else {
+        this.countDown()
+      }
+    }, 1000)
   }
 
   changeState = (payload = {}) => {
     this.setState(payload)
   }
 
-
   render() {
-    const { changeState } = this
+    const { changeState, countDown } = this
     const {
-      countryCodeListIsOpen,
-      countryCodeList,
-      country, password, agentId, channel, userType, packType, email, verificationCode, newPassword
+      page, countryList, timeInterval,
+      countryCode, password, agentId, channel, userType, packType, email, verificationCode, newPassword
     } = this.state
     const { dispatch, modelName } = this.props
 
     return (
       <Structure >
         <div className={styles.register} >
-          <div className={styles.top} ></div >
-          <div className={styles.center} >
-            <form >
-              <Input
-                type='text'
-                placeholder={'请填写邮箱'}
-                value={email}
-                onChange={(e) => {
-                  changeState({
-                    email: e.target.value
-                  })
-                }}
-                onClear={() => {
-                  changeState({
-                    email: ''
-                  })
-                }}
-                iconPrefix={(
-                  <img alt='email' src={emailpng} />
-                )}
-              />
-              <Input
-                type='password'
-                placeholder={'请填写密码'}
-                value={password}
-                onChange={(e) => {
-                  changeState({
-                    password: e.target.value
-                  })
-                }}
+          {
+            page === 1 ? (
+              <div className={styles.page1} >
+                <div className={styles.top} >
+                  注册
+                </div >
+                <div className={styles.center} >
+                  <form >
+                    <Input
+                      type='text'
+                      placeholder={'请填写邮箱'}
+                      value={email}
+                      onChange={(e) => {
+                        changeState({
+                          email: e.target.value
+                        })
+                      }}
+                      onClear={() => {
+                        changeState({
+                          email: ''
+                        })
+                      }}
+                      iconPrefix={(
+                        <img alt='email' src={emailpng} />
+                      )}
+                    />
+                    <Input
+                      type='password'
+                      placeholder={'请填写密码'}
+                      value={password}
+                      onChange={(e) => {
+                        changeState({
+                          password: e.target.value
+                        })
+                      }}
 
-                onClear={() => {
-                  changeState({
-                    password: ''
-                  })
-                }}
+                      onClear={() => {
+                        changeState({
+                          password: ''
+                        })
+                      }}
 
-                iconPrefix={(
-                  <img alt='password' src={passwordpng} />
-                )}
-              />
-              <Input
-                iconPrefix={(
-                  <img style={{ height: 26 }} alt='country' src={countrypng} />
-                )}
-              >
-                <Select
-                  value={_.isEmpty(country) ? countryCodeList.filter(item => item.code === 'CN')[0] : country}
-                  onChange={(option) => changeState({ country: option })}
-                  options={countryCodeList}
-                  placeholder={'请选择国家'}
-                  getOptionLabel={(option) => option.name}
-                  getOptionValue={(option) => option.code}
-                  DropdownIndicator={(
-                    <div style={{ width: 60 }} >
-                      <img alt='pulldown' src={pulldownpng} />
+                      iconPrefix={(
+                        <img alt='password' src={passwordpng} />
+                      )}
+                    />
+                    <Input
+                      iconPrefix={(
+                        <img style={{ height: 26 }} alt='country' src={countrypng} />
+                      )}
+                    >
+                      <Select
+                        value={countryList.filter(item => item.code === countryCode)[0]}
+                        onChange={(option) => changeState({ countryCode: option.code })}
+                        options={countryList}
+                        placeholder={'请选择国家'}
+                        getOptionLabel={(option) => option.name}
+                        getOptionValue={(option) => option.code}
+                        DropdownIndicator={(
+                          <div style={{ width: 60 }} >
+                            <img alt='pulldown' src={pulldownpng} />
+                          </div >
+                        )}
+                        styles={{
+                          menu: {
+                            paddingRight: 20,
+                          },
+                          menuList: {
+                            width: '90%'
+                          },
+                          option: {
+                            borderBottom: '1px solid #EBEBEB',
+                          }
+                        }}
+                      />
+                    </Input >
+                    <div className={styles.acceptence} >
+                      <div className={styles.select}
+                           onClick={() => {
+                             changeState({
+                               agentId: agentId ? null : 1
+                             })
+                           }}
+                           style={{ border: '1px solid #EBEBEB' }}
+                      >
+                        {
+                          agentId ? (<img alt='select' src={selectpng} />) : null
+                        }
+                      </div >
+                      <div >接受<span >服务条款</span ></div >
                     </div >
-                  )}
-                  styles={{
-                    menu: {
-                      paddingRight: 20,
-                    },
-                    menuList: {
-                      width: '90%'
-                    },
-                    option: {
-                      borderBottom: '1px solid #EBEBEB',
-                    }
-                  }}
-                />
-              </Input >
 
-              <button
-                className={classNames(
-                  styles.loginbutton,
-                  email && password ? styles.permit : styles.notpermit
-                )}
-                onClick={(e) => {
-                  e.preventDefault()
-                  dispatch({
-                    type: `${modelName}/doRegister`,
-                    payload: {
-                      countryCode: country.code, password, agentId, channel, userType, packType, email
-                    }
-                  })
-                }}
-              >
-                注册
-              </button >
-              {/*<button onClick={(e) => {*/}
-              {/*e.preventDefault()*/}
-              {/*dispatch({*/}
-              {/*type: `${modelName}/doVertifyLogin`,*/}
-              {/*payload: {*/}
-              {/*userId: '3',*/}
-              {/*googleCode: '174823',*/}
-              {/*loginType: 'web'*/}
-              {/*}*/}
-              {/*})*/}
-              {/*}} >*/}
-              {/*二次验证登录*/}
-              {/*</button >*/}
-            </form >
-          </div >
+                    <button
+                      className={classNames(
+                        styles.formbutton,
+                        email && password && agentId ? styles.permit : styles.notpermit
+                      )}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        dispatch({
+                          type: `${modelName}/doRegister`,
+                          payload: {
+                            countryCode, password, agentId, channel, userType, packType, email
+                          }
+                        }).then(res => {
+                          if (res) {
+                            changeState({
+                              page: 2
+                            })
+                            countDown()
+                          }
+                        })
+                      }}
+                    >
+                      注册
+                    </button >
+                  </form >
+                </div >
+              </div >
+            ) : (
+              <div className={styles.page2} >
+                <div className={styles.top} >
+                  邮箱验证码
+                </div >
+                <div className={styles.center} >
+                  <form >
+                    <Input
+                      type='text'
+                      placeholder={'请输入验证码'}
+                      value={verificationCode}
+                      onChange={(e) => {
+                        changeState({
+                          verificationCode: e.target.value
+                        })
+                      }}
+                      iconPrefix={(
+                        <img alt='email' src={emailpng} />
+                      )}
+                      iconPost={(
+                        <div className={styles.resend}
+                             onClick={() => {
+                               if (!timeInterval) this.countDown()
+                             }}
+                        >
+                          {
+                            timeInterval ? (
+                              <span >重新发送({timeInterval})</span >
+                            ) : '点击发送'
+                          }
+                        </div >
+                      )}
+                    />
+                    <button
+                      className={classNames(
+                        styles.formbutton,
+                        email && verificationCode ? styles.permit : styles.notpermit
+                      )}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        dispatch({
+                          type: `${modelName}/doRegisterVerify`,
+                          payload: {
+                            verificationCode, email
+                          }
+                        })
+                      }}
+                    >
+                      注册
+                    </button >
+                  </form >
+                </div >
+              </div >
+            )
+          }
         </div >
+
+        {/*<button onClick={(e) => {*/}
+        {/*e.preventDefault()*/}
+        {/*dispatch({*/}
+        {/*type: `${modelName}/doVertifyLogin`,*/}
+        {/*payload: {*/}
+        {/*userId: '3',*/}
+        {/*googleCode: '174823',*/}
+        {/*loginType: 'web'*/}
+        {/*}*/}
+        {/*})*/}
+        {/*}} >*/}
+        {/*二次验证登录*/}
+        {/*</button >*/}
 
         {/*<div >*/}
         {/*<div >*/}

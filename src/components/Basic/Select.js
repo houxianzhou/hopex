@@ -20,6 +20,7 @@ export default class View extends Component {
           },
           IndicatorSeparator: () => IndicatorSeparator
         }}
+        // menuIsOpen={true}
         isSearchable={false}
         autoFocus={false}
         defaultValue={defaultValue}
@@ -52,7 +53,7 @@ export default class View extends Component {
             ...styles.valueContainer
           }),
           menu: () => ({
-            background: 'white',
+            background: 'transparent',
             zIndex: 3,
             width: '100%',
             position: 'absolute',
@@ -62,6 +63,7 @@ export default class View extends Component {
             ...styles.menu
           }),
           menuList: () => ({
+            background: 'white',
             width: '100%',
             maxHeight: 300,
             overflowY: 'auto',
