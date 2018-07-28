@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ToastContainer, toast } from 'react-toastify'
-import { ShowJsonTip } from '@components'
+import { ShowJsonTip, Select, Input } from '@components'
 import { classNames, _ } from '@utils'
 import Toast from '@components/Toast'
 import { default as Structure } from './components/Structure'
-import { default as Input } from './components/Input'
 import emailpng from '@assets/email.png'
 import passwordpng from '@assets/password.png'
 import countrypng from '@assets/country.png'
@@ -53,6 +52,7 @@ export default class View extends Component {
 
     return (
       <Structure >
+
         <div className={styles.register} >
           <div className={styles.top} ></div >
           <div className={styles.center} >
@@ -95,8 +95,9 @@ export default class View extends Component {
                   <img alt='password' src={passwordpng} />
                 )}
               />
+
               <Input
-                type='div'
+                type='other'
                 placeholder={'请选择国家'}
                 value={country.name}
 
@@ -104,9 +105,11 @@ export default class View extends Component {
                   dispatch({
                     type: `${modelName}/getAllCountryCode`
                   }).then(res => {
-                    changeState({
-                      countryCodeList: res
-                    })
+                    if (res) {
+                      changeState({
+                        countryCodeList: res
+                      })
+                    }
                   })
                   changeState({
                     countryCodeListIsOpen: !countryCodeListIsOpen
@@ -150,7 +153,7 @@ export default class View extends Component {
                   dispatch({
                     type: `${modelName}/doRegister`,
                     payload: {
-                      countryCode:country.code, password, agentId, channel, userType, packType, email
+                      countryCode: country.code, password, agentId, channel, userType, packType, email
                     }
                   })
                 }}

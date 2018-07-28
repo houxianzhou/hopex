@@ -85,7 +85,7 @@ export default joinModel(modelExtend, {
     },
     * getAllCountryCode({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(getAllCountryCode))
-      if(resOk){
+      if(resOk(res)){
         return _.get(res,'data')
       }
     },

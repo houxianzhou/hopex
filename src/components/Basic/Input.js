@@ -16,7 +16,7 @@ export default function (Props) {
         }
         <div className='right' onClick={onClick} >
           {
-            type === 'div' ? (
+            type === 'other' ? (
               <div className='inputdiv' >{value}</div >
             ) : (
               <input
@@ -32,7 +32,7 @@ export default function (Props) {
             iconPost ? (
               iconPost
             ) : (
-              value ? (
+              value && onClear ? (
                 <img src={clearpng} onClick={onClear} />
               ) : null
             )

@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { ShowJsonTip } from '@components'
+import { ShowJsonTip, Input } from '@components'
 import { classNames, _ } from '@utils'
 import { PATH } from '@constants'
 import logo2 from '@assets/logo2.png'
 import emailpng from '@assets/email.png'
 import passwordpng from '@assets/password.png'
 import { default as Structure } from './components/Structure'
-import { default as Input } from './components/Input'
 import styles from './index.less'
 
 @connect(({ user: model, loading, dispatch }) => ({
