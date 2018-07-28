@@ -9,6 +9,7 @@ import {
   doEmailExists,
   doResetPassword,
   doSendEmailCode,
+  doVertifyCode,
   doEnableGoogleVertify,
   GetEnableGoogleVertifyCode,
   doDisbaleGoogleVertify
@@ -123,14 +124,28 @@ export default joinModel(modelExtend, {
       // {"data":"","ret":0,"errCode":null,"errStr":null}
     },
     * doSendEmailCode({ payload = {} }, { call, put, select }) {
-      const res = getRes(yield call(doSendEmailCode, payload))
+      const res = getRes(yield call(doSendEmailCode, payload,(err) => {
+        Toast.tip(err.errStr)
+      }))
       // {"data":"","ret":0,"errCode":null,"errStr":null}
+    },
+    * doVertifyCode({ payload = {} }, { call, put, select }) {
+      const res = getRes(yield call(doVertifyCode, payload, (err) => {
+        Toast.tip(err.errStr)
+      }))
+      if (resOk(res)) {
+        return res
+      }
     },
     * doResetPassword({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doResetPassword, {
         param: payload
+      }, (err) => {
+        Toast.tip(err.errStr)
       }))
-      // {"data":"","ret":0,"errCode":null,"errStr":null}
+      if (resOk(res)) {
+        Toast.tip('重置密码成功，请登录')
+      }
     },
 
     * GetEnableGoogleVertifyCode({ payload = {} }, { call, put, select }) {

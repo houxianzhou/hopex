@@ -47,7 +47,7 @@
   height: 100%;
   .top {
     font-size: 34px;
-    color: #E2B96F;
+    color: @c_active_yellow;
   }
   .page1 {
     .top {
@@ -93,6 +93,50 @@
     }
   }
 
+}
+
+.forgetPassword {
+  width: 100%;
+  height: 100%;
+  .top {
+    font-size: 34px;
+    color: @c_active_yellow;
+  }
+  .page1 {
+    .top {
+      margin-bottom: 120px;
+    }
+  }
+  .page2 {
+    .top {
+      .desc {
+        margin-top: 20px;
+        margin-bottom: 60px;
+        color: #999999;
+        font-size: 14px;
+        span {
+          color: #F54B22;
+          margin-right: 6px;
+        }
+      }
+    }
+    .info {
+      margin-bottom: 40px;
+      .name {
+        font-size: 18px;
+        color: #333333;
+        margin-bottom: 8px;
+      }
+      .email {
+        font-size: 14px;
+        color: #999999;
+      }
+    }
+    .resend {
+      color: @c_active_yellow;
+      font-size: 16px;
+    }
+  }
 }
 
 .formbutton {

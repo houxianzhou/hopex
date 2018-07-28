@@ -665,4 +665,12 @@ export default delay({
       }
     )
   },
+  'Get /mock/api/v1.0/User/EmailExists': (req, res) => {
+    res.send(
+      {
+        data: true,
+        ...other
+      }
+    )
+  },
 }, 300)

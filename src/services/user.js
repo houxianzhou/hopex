@@ -48,24 +48,35 @@ export async function doRegisterVerify(payload, errHandler) {
 }
 
 // 修改密码前检测密码是否已经被注册
-export async function doEmailExists(payload) {
-  return await request('/api/v1.0/User/EmailExists', {
-    query: payload
+export async function doEmailExists(payload, errHandler) {
+  return await request(`${prefix}/api/v1.0/User/EmailExists`, {
+    query: payload,
+    errHandler
   })
 }
 
 // 修改密码前发送邮箱验证码,  激活前发送验证码到邮箱这个系统自动调用
-export async function doSendEmailCode(payload) {
+export async function doSendEmailCode(payload, errHandler) {
   return await request('/api/v1.0/User/SendEmailToResetPassword', {
-    query: payload
+    query: payload,
+    errHandler
+  })
+}
+
+//验证接受到的验证码单独一个接口
+export async function doVertifyCode(payload, errHandler) {
+  return await request('/api/v1.0/User/ResetPwdEmailVerify', {
+    query: payload,
+    errHandler
   })
 }
 
 //这一步修改密码完成
-export async function doResetPassword(payload) {
+export async function doResetPassword(payload, errHandler) {
   return await request('/api/v1.0/User/ResetPassword', {
     method: 'post',
-    body: payload
+    body: payload,
+    errHandler
   })
 }
 
