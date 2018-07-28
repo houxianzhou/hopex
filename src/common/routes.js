@@ -36,4 +36,9 @@ export default [
     path: PATH.register,
     route: 'User/Register'
   },
+  {
+    name: '忘记密码',
+    path: PATH.forgetPassword,
+    route: 'User/ForgetPassword'
+  },
 ]

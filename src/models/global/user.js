@@ -106,10 +106,20 @@ export default joinModel(modelExtend, {
           Toast.tip('注册成功，请登录')
         }
       }
-      // {"data":"","ret":0,"errCode":null,"errStr":null}
     },
     * doEmailExists({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doEmailExists, payload))
+      if (resOk(res)) {
+        const result = _.get(res, 'data')
+        console.log(res)
+        if (_.isBoolean(result)) {
+          if (result) {
+            return result
+          } else {
+            Toast.tip('邮箱未注册')
+          }
+        }
+      }
       // {"data":"","ret":0,"errCode":null,"errStr":null}
     },
     * doSendEmailCode({ payload = {} }, { call, put, select }) {

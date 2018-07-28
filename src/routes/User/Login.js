@@ -96,7 +96,6 @@ export default class View extends Component {
                   })
                 }}
 
-
                 iconPrefix={(
                   <img alt='password' src={passwordpng} />
                 )}
@@ -137,8 +136,17 @@ export default class View extends Component {
               {/*</button >*/}
             </form >
             <div className={styles.othermethod} >
-              <div >忘记密码</div >
               <div
+                style={{cursor:'pointer'}}
+                onClick={() => {
+                  dispatch({
+                    type: `${modelName}/routerGo`,
+                    payload: PATH.forgetPassword
+                  })
+                }}
+              >忘记密码</div >
+              <div
+                style={{cursor:'pointer'}}
                 className={styles.registerentery}
                 onClick={() => {
                   dispatch({
