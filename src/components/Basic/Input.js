@@ -3,9 +3,11 @@ import { classNames, _ } from '@utils'
 import clearpng from '@assets/clear.png'
 import * as styles from './Input.less'
 
-
 export default function (Props) {
-  const { iconPrefix, iconPost, placeholder, value, onChange, onClear, onClick, type = 'text', msg = false } = Props
+  const {
+    iconPrefix, iconPost, placeholder, value,
+    onChange, onClear, type = 'text', msg = false, children,
+  } = Props
   return (
     <div className={styles.input} >
       <div className='content' >
@@ -14,28 +16,35 @@ export default function (Props) {
             {iconPrefix}
           </div >) : null
         }
-        <div className='right' onClick={onClick} >
+        <div className='right' >
+          <div className='inputcontainer' >
+            {
+              children ? (
+                children
+              ) : (
+                <input
+                  type={type}
+                  placeholder={placeholder}
+                  value={value}
+                  onChange={onChange}
+                />
+              )
+            }
+          </div >
           {
-            type === 'other' ? (
-              <div className='inputdiv' >{value}</div >
-            ) : (
-              <input
-                type={type}
-                placeholder={placeholder}
-                value={value}
-                onChange={onChange}
-              />
-            )
-          }
-
-          {
-            iconPost ? (
-              iconPost
-            ) : (
-              value && onClear ? (
-                <img src={clearpng} onClick={onClear} />
-              ) : null
-            )
+            iconPost || onClear ? (
+              <div className='iconPostcontainer' style={{ width: 60, minWidth: 60 }} >
+                {
+                  iconPost ? (
+                    iconPost
+                  ) : (
+                    value && onClear ? (
+                      <img src={clearpng} onClick={onClear} />
+                    ) : null
+                  )
+                }
+              </div >
+            ) : null
           }
         </div >
       </div >

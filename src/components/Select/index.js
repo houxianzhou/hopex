@@ -3,76 +3,77 @@ import Select, { components } from 'react-select'
 
 export default class View extends Component {
   render() {
+    const {
+      DropdownIndicator, IndicatorSeparator = null, placeholder = 'placeholder',
+      getOptionLabel = (option) => option.label, getOptionValue = (option) => option.value,
+      options = [], defaultValue = {}, value = {}, onChange, styles = {},
+
+    } = this.props
     return (
       <Select
-        options={[
-          { value: 'chocolate', label: 'Chocolate' },
-          { value: 'strawberry', label: 'Strawberry' },
-          { value: 'vanilla1', label: 'Vanilla1' },
-          { value: 'vanilla2', label: 'Vanilla2' },
-          { value: 'vanilla3', label: 'Vanilla3' },
-          { value: 'vanilla4', label: 'Vanilla4' }
-        ]}
+        options={options}
         components={{
           DropdownIndicator: (props) => {
-            return (<components.DropdownIndicator {...props}>
-              hahah
+            return (<components.DropdownIndicator {...props} styles={{ padding: 0 }} >
+              {DropdownIndicator}
             </components.DropdownIndicator >)
           },
-          IndicatorSeparator: () => null
+          IndicatorSeparator: () => IndicatorSeparator
         }}
-        inputValue={''}
-        value={{ value: 'chocolate', label: 'Chocolate' }}
+        // inputValue={''}
+        isSearchable={false}
         autoFocus={false}
-        // isDisabled={true}
-        menuIsOpen={true}
-        placeholder={'hahahah'}
-        getOptionLabel={
-          (option)=>option.label
-        }
-        getOptionValue={
-          (option)=>option.value
-        }
+        defaultValue={defaultValue}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        getOptionLabel={getOptionLabel}
+        getOptionValue={getOptionValue}
         styles={{
           container: () => ({
+            width: '100%',
             position: 'relative',
-            // background: 'black',
-          }),
-          valueContainer:()=>({
-            position: 'relative',
-            width:'100%',
-            display:'flex',
-            justifyContent:'center'
-            // background:'black'
+            ...styles.container
           }),
           control: () => (
             {
               display: 'flex',
-              background: 'red',
-              textAlign:'center'
             }
           ),
+          dropdownIndicator: () => ({
+            padding: 0,
+            textAlign: 'center',
+            ...styles.dropdownIndicator
+          }),
+          valueContainer: () => ({
+            position: 'relative',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            ...styles.valueContainer
+          }),
           menu: () => ({
-            display:'flex',
-            justifyContent:'flex-end',
-
-            // maxHeight:300,
-            // overflowY: 'auto',
-            border: '1px solid red'
+            background: 'white',
+            zIndex: 3,
+            width: '100%',
+            position: 'absolute',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            paddingRight: 0,
+            ...styles.menu
           }),
           menuList: () => ({
-            width:'100%',
-
-            maxHeight:300,
-            overflowY:'auto',
-            border: '1px solid black'
+            width: '100%',
+            maxHeight: 300,
+            overflowY: 'auto',
+            boxShadow: '-1px 1px 5px #949494',
+            ...styles.menuList
           }),
-
-          option: (styles, { data, isDisabled, isFocused, isSelected }) => ({
+          option: (_, { data, isDisabled, isFocused, isSelected }) => ({
             textAlign: 'center',
-            borderBottom: '1px solid blue',
-            color: 'blue',
+            borderBottom: '1px solid black',
             padding: 20,
+            ...styles.option
           }),
         }} />
     )

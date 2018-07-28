@@ -17,13 +17,16 @@ import styles from './index.less'
   dispatch
 }))
 export default class View extends Component {
+  componentDidMount() {
+    this.getAllCountryCode()
+
+  }
+
+
   state = {
     countryCodeList: [],
     countryCodeListIsOpen: false,
-    country: {
-      code: '',
-      name: ''
-    },
+    country: {},
     agentId: 1,
     password: '8888888',
     channel: 'appstore',
@@ -34,6 +37,21 @@ export default class View extends Component {
     email: 'xiaoyi.wei@bcsystech.com',
     verificationCode: '081955',
     newPassword: '8888888'
+  }
+
+
+  getAllCountryCode = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getAllCountryCode`
+    }).then(res => {
+      if (res) {
+        this.changeState({
+          countryCodeList: res
+        })
+      }
+    })
+
   }
 
   changeState = (payload = {}) => {
@@ -52,7 +70,6 @@ export default class View extends Component {
 
     return (
       <Structure >
-
         <div className={styles.register} >
           <div className={styles.top} ></div >
           <div className={styles.center} >
@@ -95,54 +112,38 @@ export default class View extends Component {
                   <img alt='password' src={passwordpng} />
                 )}
               />
-
               <Input
-                type='other'
-                placeholder={'请选择国家'}
-                value={country.name}
-
-                onClick={() => {
-                  dispatch({
-                    type: `${modelName}/getAllCountryCode`
-                  }).then(res => {
-                    if (res) {
-                      changeState({
-                        countryCodeList: res
-                      })
-                    }
-                  })
-                  changeState({
-                    countryCodeListIsOpen: !countryCodeListIsOpen
-                  })
-                }}
-
-
                 iconPrefix={(
                   <img style={{ height: 26 }} alt='country' src={countrypng} />
                 )}
+              >
+                <Select
+                  noOptionsMessage={() => '暂无数据'}
+                  value={_.isEmpty(country) ? countryCodeList.filter(item => item.code === 'CN')[0] : country}
+                  onChange={(option) => changeState({ country: option })}
+                  options={countryCodeList}
+                  placeholder={'请选择国家'}
+                  getOptionLabel={(option) => option.name}
+                  getOptionValue={(option) => option.code}
+                  DropdownIndicator={(
+                    <div style={{ width: 60 }} >
+                      <img alt='pulldown' src={pulldownpng} />
+                    </div >
+                  )}
+                  styles={{
+                    menu: {
+                      paddingRight: 20,
+                    },
+                    menuList: {
+                      width: '90%'
+                    },
+                    option: {
+                      borderBottom: '1px solid #EBEBEB',
+                    }
+                  }}
+                />
+              </Input >
 
-                iconPost={(
-                  <div className={styles.select} >
-                    <img alt='country' src={pulldownpng} />
-                    <ul className={styles.countrys} >
-                      {
-                        countryCodeListIsOpen ? countryCodeList.map((item = {}, index) => (
-                          <li
-                            key={index}
-                            onClick={() => {
-                              changeState({
-                                country: item
-                              })
-                            }}
-                          >
-                            {item.name}
-                          </li >
-                        )) : null
-                      }
-                    </ul >
-                  </div >
-                )}
-              />
               <button
                 className={classNames(
                   styles.loginbutton,
