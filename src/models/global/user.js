@@ -98,7 +98,14 @@ export default joinModel(modelExtend, {
       }
     },
     * doRegisterVerify({ payload = {} }, { call, put, select }) {
-      const res = getRes(yield call(doRegisterVerify, payload))
+      const res = getRes(yield call(doRegisterVerify, payload, (err) => {
+        Toast.tip(err.errStr)
+      }))
+      if (resOk(res)) {
+        if (res) {
+          Toast.tip('注册成功，请登录')
+        }
+      }
       // {"data":"","ret":0,"errCode":null,"errStr":null}
     },
     * doEmailExists({ payload = {} }, { call, put, select }) {

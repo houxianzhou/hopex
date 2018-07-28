@@ -657,4 +657,12 @@ export default delay({
       }
     )
   },
+  'Get /mock/api/v1.0/User/RegistActive': (req, res) => {
+    res.send(
+      {
+        data: '',
+        ...other
+      }
+    )
+  },
 }, 300)

@@ -45,10 +45,12 @@
 .register {
   width: 100%;
   height: 100%;
+  .top {
+    font-size: 34px;
+    color: #E2B96F;
+  }
   .page1 {
     .top {
-      font-size: 34px;
-      color: #E2B96F;
       margin-bottom: 120px;
     }
     .acceptence {
@@ -69,8 +71,23 @@
     }
   }
   .page2 {
+    .top {
+      margin-bottom: 94px;
+    }
+    .desc {
+      margin-bottom: 44px;
+      .name {
+        font-size: 18px;
+        color: #333333;
+        margin-bottom: 9px;
+      }
+      .email {
+        color: #999999;
+        font-size: 14px;
+      }
+    }
     .resend {
-      padding:0 20px;
+      padding: 0 20px;
       color: @c_active_yellow;
       font-size: 16px;
     }
@@ -98,6 +115,7 @@
 }
 
 .notpermit {
+  pointer-events: none;
   background-image: linear-gradient(90deg, #EFEFEF 0%, #ECECEC 100%);
 }
 

@@ -3,13 +3,13 @@ import { connect } from 'dva'
 import { ToastContainer, toast } from 'react-toastify'
 import { ShowJsonTip, Select, Input } from '@components'
 import { classNames, _ } from '@utils'
-import Toast from '@components/Toast'
 import { default as Structure } from './components/Structure'
 import emailpng from '@assets/email.png'
 import passwordpng from '@assets/password.png'
 import countrypng from '@assets/country.png'
 import pulldownpng from '@assets/pulldown.png'
 import selectpng from '@assets/select.png'
+import vertifycodepng from '@assets/vertifycode.png'
 import styles from './index.less'
 
 @connect(({ user: model, loading, dispatch }) => ({
@@ -22,6 +22,10 @@ export default class View extends Component {
     this.getAllCountryCode()
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.interval)
+  }
+
   state = {
     countryList: [],
     page: 1,
@@ -29,13 +33,12 @@ export default class View extends Component {
 
     countryCode: 'CN',
     agentId: null,
-    password: '8888888',
+    password: '',
     channel: 'appstore',
     userType: 'Normal',
     packType: 'pcweb',
-    email: '18353268994@qq.com',
-    verificationCode: '081955',
-    newPassword: '8888888'
+    email: '',
+    verificationCode: '',
   }
 
 
@@ -177,7 +180,6 @@ export default class View extends Component {
                       </div >
                       <div >接受<span >服务条款</span ></div >
                     </div >
-
                     <button
                       className={classNames(
                         styles.formbutton,
@@ -210,6 +212,10 @@ export default class View extends Component {
                 <div className={styles.top} >
                   邮箱验证码
                 </div >
+                <div className={styles.desc}>
+                  <div className={styles.name}>邮箱</div >
+                  <div className={styles.email}>{email}</div >
+                </div >
                 <div className={styles.center} >
                   <form >
                     <Input
@@ -222,7 +228,7 @@ export default class View extends Component {
                         })
                       }}
                       iconPrefix={(
-                        <img alt='email' src={emailpng} />
+                        <img alt='vertifycode' src={vertifycodepng} />
                       )}
                       iconPost={(
                         <div className={styles.resend}

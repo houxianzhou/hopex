@@ -40,9 +40,10 @@ export async function doRegister(payload, errHandler) {
 }
 
 // 这一步注册完成
-export async function doRegisterVerify(payload) {
-  return await request('/api/v1.0/User/RegistActive', {
-    query: payload
+export async function doRegisterVerify(payload, errHandler) {
+  return await request(`${prefix}/api/v1.0/User/RegistActive`, {
+    query: payload,
+    errHandler
   })
 }
 
