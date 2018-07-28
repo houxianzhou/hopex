@@ -16,6 +16,10 @@ import styles from './index.less'
 }))
 export default class View extends Component {
 
+  componentWillUnmount() {
+    clearTimeout(this.interval)
+  }
+
   state = {
     page: 1,
     timeInterval: null,
