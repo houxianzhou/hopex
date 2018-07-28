@@ -6,12 +6,12 @@ export default class View extends Component {
     const {
       DropdownIndicator, IndicatorSeparator = null, placeholder = 'placeholder',
       getOptionLabel = (option) => option.label, getOptionValue = (option) => option.value,
-      options = [], defaultValue = {}, value = {}, onChange, styles = {},
-
+      options = [], defaultValue = {}, value = {}, onChange, styles = {}, noOptionsMessage = () => '暂无数据'
     } = this.props
     return (
       <Select
         options={options}
+        noOptionsMessage={noOptionsMessage}
         components={{
           DropdownIndicator: (props) => {
             return (<components.DropdownIndicator {...props} styles={{ padding: 0 }} >
@@ -20,7 +20,6 @@ export default class View extends Component {
           },
           IndicatorSeparator: () => IndicatorSeparator
         }}
-        // inputValue={''}
         isSearchable={false}
         autoFocus={false}
         defaultValue={defaultValue}

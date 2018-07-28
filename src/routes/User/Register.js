@@ -19,9 +19,7 @@ import styles from './index.less'
 export default class View extends Component {
   componentDidMount() {
     this.getAllCountryCode()
-
   }
-
 
   state = {
     countryCodeList: [],
@@ -118,7 +116,6 @@ export default class View extends Component {
                 )}
               >
                 <Select
-                  noOptionsMessage={() => '暂无数据'}
                   value={_.isEmpty(country) ? countryCodeList.filter(item => item.code === 'CN')[0] : country}
                   onChange={(option) => changeState({ country: option })}
                   options={countryCodeList}
