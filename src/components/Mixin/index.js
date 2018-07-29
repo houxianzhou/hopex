@@ -32,6 +32,7 @@ export class MixinParent extends React.Component {
     })
   }
 
+
   startInit = () => {
     const { that = {} } = this.props
     const { startInit } = that
@@ -61,11 +62,29 @@ export class MixinChild extends React.Component {
     this.startInit()
   }
 
+  componentWillUnmount() {
+    this.startUnMount()
+  }
+
   startInit = () => {
     const { that = {} } = this.props
     const [startInit, childInitStacks] = [_.get(that, 'startInit'), _.get(that, 'props.that.childInitStacks')]
     if (_.isFunction(startInit) && _.isArray(childInitStacks)) {
+      childInitStacks.push(this.startUnMount)
       childInitStacks.push(startInit)
+    }
+    console.log(childInitStacks.length)
+  }
+
+  startUnMount = () => {
+    const { that = {} } = this.props
+    if (that.interval) {
+      if (_.isArray(that.interval)) {
+        that.interval.map(item => clearTimeout(item))
+      } else {
+        clearTimeout(that.interval)
+      }
+      that.interval = null
     }
   }
 

@@ -8,7 +8,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-   this.getPersonalEnsure()
+    //this.getPersonalEnsure()
   }
 
   getPersonalEnsure = (payload = {}) => {
@@ -19,7 +19,7 @@ export default class View extends Component {
       payload
     }).then((res) => {
         if (callback) return callback()
-        dealInterval(() => {
+        this.interval = dealInterval(() => {
           this.getPersonalEnsure(payload)
         })
       }
@@ -74,7 +74,7 @@ export default class View extends Component {
       {
         title: '委托时间',
         dataIndex: 'ctime',
-         render: (value) => moment.formatHMSFromSeconds(value)
+        render: (value) => moment.formatHMSFromSeconds(value)
       },
       {
         title: '状态',

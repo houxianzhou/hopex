@@ -28,7 +28,7 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    this.getEnsureRecord()
+    // this.getEnsureRecord()
   }
 
   getEnsureRecord = () => {
@@ -39,7 +39,7 @@ export default class View extends Component {
         mode: 'http'
       }
     }).then(res => {
-      dealInterval(() => {
+      this.interval = dealInterval(() => {
         this.getEnsureRecord()
       })
     })

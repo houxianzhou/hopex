@@ -12,7 +12,7 @@ import styles from './index.less'
 export default class View extends Component {
 
   startInit = () => {
-    this.getLeverage()
+    // this.getLeverage()
   }
 
   getLeverage = () => {

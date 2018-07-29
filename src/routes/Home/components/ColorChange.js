@@ -22,30 +22,30 @@ export default class ColorChange extends Component {
           percent: '0',
           color: null
         })
-      }, 100)
+      }, 200)
     }
 
     if (_.isNil(prevDataValue) && !_.isEmpty(data)) {
-      setTimeout(() => {
-        this.setState({
-          percent: '100%',
-          color: COLORS.yellowOpacity
-        })
-        colorCancel()
+      this.setState({
+        percent: '100%',
+        color: COLORS.yellowOpacity
       })
+      colorCancel()
     }
 
     if (!_.isEmpty(data) && !_.isEmpty(total)) {
       if (!_.isNil(prevDataValue) && !isEqual(prevDataValue, dataValue)) {
-        setTimeout(() => {
-          this.setState({
-            percent: '100%',
-            color: Number(dataValue) > Number(prevDataValue) ? COLORS.greenOpacity : COLORS.redOpacity
-          })
-          colorCancel()
+        this.setState({
+          percent: '100%',
+          color: Number(dataValue) > Number(prevDataValue) ? COLORS.greenOpacity : COLORS.redOpacity
         })
+        colorCancel()
       }
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.interval)
   }
 
   render() {

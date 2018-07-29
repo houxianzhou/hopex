@@ -18,7 +18,7 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/getLatestRecord`,
     }).then(() => {
-      dealInterval(() => {
+      this.interval = dealInterval(() => {
         this.getLatestRecord()
       })
     })
