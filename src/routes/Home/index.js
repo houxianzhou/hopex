@@ -43,9 +43,7 @@ export default class View extends Component {
         dispatch({
           type: `${modelName}/clearState`,
         })
-        setTimeout(() => {
-          this.startInit()
-        }, 500)
+        this.startInit()
       })
     }
   }
