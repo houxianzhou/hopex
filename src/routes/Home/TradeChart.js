@@ -12,8 +12,8 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    //this.startKline()
-    //this.getImportantPrice()
+   //  this.startKline()
+    this.getImportantPrice()
   }
 
   startKline = () => {
@@ -23,7 +23,7 @@ export default class View extends Component {
     // window.$ = $
     const ws1 = wss.getSocket('ws1')
     if (true) {
-      if (this.chart) this.chart.remove()
+      // if (this.chart) this.chart.remove()
       const chart = new TradingView.widget({
         disabled_features: [
           "left_toolbar",
@@ -177,6 +177,7 @@ export default class View extends Component {
     ws2.listen({
       name: 'getImportantPrice',
       subscribe: (e) => {
+        if (e && e.data) e.data = formatJson(e.data)
         const res = getRes(e)
         if (resOk(res)) {
           const result = formatJson(res.data)
@@ -209,7 +210,6 @@ export default class View extends Component {
       }
     })
   }
-
 
 
   render() {

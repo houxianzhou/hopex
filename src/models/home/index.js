@@ -131,11 +131,13 @@ export default joinModel(modelExtend, {
         }
       })))
       return ws1.sendJsonPromise(repayload, (e) => {
+        if (e && e.data) {
+          e.data = formatJson(e.data)
+        }
         const res = getRes(e)
         if (resOk(res)) {
-          const result = formatJson(res.data)
-          if (_.get(result, 'head.method') === 'kline.query') {
-            return _.get(result, 'data.records')
+          if (_.get(res, 'head.method') === 'kline.query') {
+            return _.get(res, 'data.records')
           }
         }
       })
@@ -205,7 +207,7 @@ export default joinModel(modelExtend, {
         const res = getRes(yield call(doUpdateLeverage, repayload))
         if (resOk(res)) {
           return res
-        }else{
+        } else {
           return Promise.reject('修改杠杆失败')
         }
       }
@@ -232,7 +234,9 @@ export default joinModel(modelExtend, {
             const result = formatJson(res.data)
             return result.chanId
           }
-        }).then(res => res)
+        }).then(res => {
+          return res
+        })
       } else if (method === 'unsub') {
         // 取消订阅三个价格
         const { chanId } = payload

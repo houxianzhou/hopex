@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, ShowJsonTip } from '@components'
-import { isEqual, _, parsePathSearch } from '@utils'
+import { isEqual, _, parsePathSearch, dealInterval } from '@utils'
 import wss from '@services/SocketClient'
 import LatestRecord from './LatestRecord'
 import TradeChart from './TradeChart'
@@ -39,12 +39,20 @@ export default class View extends Component {
     const { model: { marketCode: prevMarketCode } } = prevProps
     const { model: { marketCode }, dispatch, modelName } = this.props
     if (!isEqual(prevMarketCode, marketCode) && marketCode && prevMarketCode) {
-      wss.closeAll().then(() => {
-        dispatch({
-          type: `${modelName}/clearState`,
-        })
-        this.startInit()
-      })
+      _.throttle(
+        () => {
+          wss.closeAll().then((res) => {
+            this.startInit()
+            dispatch({
+              type: `${modelName}/clearState`,
+            })
+          }).catch((err) => {
+            console.log('关闭失败')
+          })
+        }, 1000
+      )
+
+
     }
   }
 

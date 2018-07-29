@@ -121,7 +121,8 @@ mockServer2.onMessage = (e) => {
       default:
     }
   } else {
-    setTimeout(() => {
+    clearTimeout(mockServer2.interval)
+    mockServer2.interval = setTimeout(() => {
       mockServer2.clearStacks()
       mockServer2.sendJson({
         "event": "unsubscribed",

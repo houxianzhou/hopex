@@ -14,21 +14,10 @@ export { localSave } from "./helper"
 export const Imu = immutable
 
 export const getRes = function (res) {
-  if (res && res.data && !_.isNil(res.data.data)) {
+  if (res) {
     return {
-      head: _.get(res, 'data.head'),
-      data: _.get(res, 'data.data')
-    }
-  }
-  if (res && res.data && !_.isNil(res.data.data) && !_.isNil(res.data.head)) {
-    return {
-      data: _.get(res, 'data')
-    }
-  }
-  if (res && res.data && !_.isNil(res.data.data)) {
-    return {
-      head: _.get(res, 'data.head'),
-      data: _.get(res, 'data.data')
+      head: _.get(res, 'data.head') || _.get(res, 'head') || {},
+      data: _.get(res, 'data.data') || _.get(res, 'data') || res
     }
   }
   return {
