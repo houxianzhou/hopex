@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { InputNumber, Slider } from "@components"
 import { COLORS } from '@constants'
 import { classNames, _, formatNumber } from '@utils'
+import { PATH } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -50,6 +51,7 @@ export default class View extends Component {
   }
 
   renderEnsureMoney = (config = {}) => {
+    const { isLogin } = this.props
     const { label_buy, label_buy_price, label_sell, label_sell_price } = config
     const marks = {
       0: '',
@@ -64,6 +66,7 @@ export default class View extends Component {
       defaultValue: 1,
       step: 1,
       included: true,
+      disabled: isLogin ? false : true,
       dotStyle: {
         marginLeft: 'unset',
         backgroundColor: 'rgba(53,61,79,1)',
@@ -75,8 +78,9 @@ export default class View extends Component {
         backgroundColor: 'rgba(53,61,79,1)',
       },
       handleStyle: {
+        display: isLogin ? '' : 'none',
         marginTop: '-6px',
-        marginLeft: '-4px',
+        marginLeft: '-3px',
         width: '14px',
         height: '14px',
         border: `solid 4px ${COLORS.yellow}`,
@@ -88,7 +92,7 @@ export default class View extends Component {
         backgroundColor: COLORS.yellow
       },
       activeDotStyle: {
-        backgroundColor: COLORS.yellow
+        backgroundColor: isLogin ? COLORS.yellow : 'rgba(53,61,79,1)'
       }
     }
     return (
@@ -109,30 +113,56 @@ export default class View extends Component {
 
   renderSubmit = (config = {}) => {
     const { label_text, label_desc, label_price, className = {}, onSubmit } = config
+    const { isLogin, dispatch, modelName } = this.props
     return <div
       className={classNames(
         styles.submit,
+        isLogin ? styles.haslogin : styles.notlogin,
         className
       )}
       onClick={() => {
         if (_.isFunction(onSubmit)) onSubmit()
       }}
     >
-      <span className={styles.text} >
+      {
+        isLogin ? (
+          <>
+            <span className={styles.text} >
         {
           label_text
         }
       </span >
-      <span >
+            <span >
         {
           label_desc
         }
       </span >
-      <span >
+            <span >
         {
           label_price
         }
       </span >
+          </>
+        ) : (
+          <>
+            <div onClick={() => {
+              dispatch({
+                type: `${modelName}/routerGo`,
+                payload: PATH.login
+              })
+            }} >登录
+            </div >
+            <div className={styles.center} >或</div >
+            <div onClick={()=>{
+              dispatch({
+                type: `${modelName}/routerGo`,
+                payload: PATH.register
+              })
+            }} >注册</div >
+          </>
+        )
+      }
+
     </div >
   }
 

@@ -76,8 +76,13 @@ export default class View extends Component {
     return Promise.resolve()
   }
 
+  isLogin = () => {
+    const { user: { userInfo } } = this.props
+    return !_.isEmpty(userInfo)
+  }
+
   renderView = (name) => {
-    const props = { ...this.props, that: this }
+    const props = { ...this.props, isLogin: this.isLogin(), that: this }
     const RenderItem = Comp[name]
     return <RenderItem {...props} />
   }
@@ -85,7 +90,7 @@ export default class View extends Component {
   render() {
     const { renderView } = this
     const { user: { userInfo } } = this.props
-    const isLogin = !_.isEmpty(userInfo)
+    const isLogin = this.isLogin()
     return (
       <Mixin.Parent that={this} >
         <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >
