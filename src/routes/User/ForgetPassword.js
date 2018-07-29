@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ToastContainer, toast } from 'react-toastify'
-import { ShowJsonTip, Select, Input } from '@components'
+import { ShowJsonTip, Select, Input, CountDown } from '@components'
 import { classNames, _ } from '@utils'
 import { default as Structure } from './components/Structure'
 import emailpng from '@assets/email.png'
@@ -16,39 +16,13 @@ import styles from './index.less'
 }))
 export default class View extends Component {
 
-  componentWillUnmount() {
-    clearTimeout(this.interval)
-  }
-
   state = {
-    page: 1,
-    timeInterval: null,
-
+    page: 2,
     email: '',
     password: '',
     newPassword: '',
     verificationCode: '',
   }
-
-  countDown = () => {
-    if (!this.state.timeInterval) {
-      this.changeState({
-        timeInterval: 60
-      })
-    }
-    this.interval = setTimeout(() => {
-      const next = this.state.timeInterval - 1
-      this.changeState({
-        timeInterval: next
-      })
-      if (!next) {
-        clearTimeout(this.interval)
-      } else {
-        this.countDown()
-      }
-    }, 1000)
-  }
-
 
   changeState = (payload = {}) => {
     this.setState(payload)
@@ -57,7 +31,7 @@ export default class View extends Component {
   render() {
     const { changeState } = this
     const {
-      page, timeInterval, email, verificationCode, password, newPassword
+      page, email, verificationCode, password, newPassword
     } = this.state
     const { dispatch, modelName } = this.props
 
@@ -142,20 +116,13 @@ export default class View extends Component {
                         <img alt='vertifycode' src={vertifycodepng} />
                       )}
                       iconPost={(
-                        <div className={styles.resend}
-                             onClick={() => {
-                               dispatch({
-                                 type: `${modelName}/doSendEmailCode`,
-                                 payload: { email }
-                               })
-                               if (!timeInterval) this.countDown()
-                             }}
-                        >
-                          {
-                            timeInterval ? (
-                              <span >重新发送({timeInterval})</span >
-                            ) : '点击发送'
-                          }
+                        <div className={styles.resend} >
+                          <CountDown auto onClick={() => {
+                            dispatch({
+                              type: `${modelName}/doSendEmailCode`,
+                              payload: { email }
+                            })
+                          }} />
                         </div >
                       )}
                     />

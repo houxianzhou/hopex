@@ -5,6 +5,7 @@ import {
   doLoginOut,
   getAllCountryCode,
   doRegister,
+  doSendRegistVerificationCode,
   doRegisterVerify,
   doEmailExists,
   doResetPassword,
@@ -98,6 +99,14 @@ export default joinModel(modelExtend, {
         return res
       }
     },
+    * doSendRegistVerificationCode({ payload = {} }, { call, put, select }) {
+      const res = getRes(yield call(doSendRegistVerificationCode, payload, (err) => {
+        Toast.tip(err.errStr)
+      }))
+      if (resOk(res)) {
+        return res
+      }
+    },
     * doRegisterVerify({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doRegisterVerify, payload, (err) => {
         Toast.tip(err.errStr)
@@ -124,7 +133,7 @@ export default joinModel(modelExtend, {
       // {"data":"","ret":0,"errCode":null,"errStr":null}
     },
     * doSendEmailCode({ payload = {} }, { call, put, select }) {
-      const res = getRes(yield call(doSendEmailCode, payload,(err) => {
+      const res = getRes(yield call(doSendEmailCode, payload, (err) => {
         Toast.tip(err.errStr)
       }))
       // {"data":"","ret":0,"errCode":null,"errStr":null}

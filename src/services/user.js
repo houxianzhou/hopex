@@ -30,7 +30,7 @@ export async function getAllCountryCode(payload) {
   return await request(`${prefix}/api/v1.0/Country`)
 }
 
-// 注册,这一步做完拿到注册码
+// 注册,填写信息
 export async function doRegister(payload, errHandler) {
   return await request(`${prefix}/api/v1.0/User/Regist`, {
     method: 'post',
@@ -38,6 +38,15 @@ export async function doRegister(payload, errHandler) {
     errHandler
   })
 }
+
+// 注册，拿到注册短信码
+export async function doSendRegistVerificationCode(payload, errHandler) {
+  return await request(`${prefix}/api/v1.0/User/SendRegistVerificationCode`, {
+    query: payload,
+    errHandler
+  })
+}
+
 
 // 这一步注册完成
 export async function doRegisterVerify(payload, errHandler) {

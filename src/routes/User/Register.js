@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ToastContainer, toast } from 'react-toastify'
-import { ShowJsonTip, Select, Input } from '@components'
+import { ShowJsonTip, Select, Input, CountDown } from '@components'
 import { classNames, _ } from '@utils'
 import { default as Structure } from './components/Structure'
 import emailpng from '@assets/email.png'
@@ -22,14 +22,9 @@ export default class View extends Component {
     this.getAllCountryCode()
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.interval)
-  }
-
   state = {
     countryList: [],
     page: 1,
-    timeInterval: null,
 
     countryCode: 'CN',
     agentId: null,
@@ -55,33 +50,15 @@ export default class View extends Component {
     })
   }
 
-  countDown = () => {
-    if (!this.state.timeInterval) {
-      this.changeState({
-        timeInterval: 60
-      })
-    }
-    this.interval = setTimeout(() => {
-      const next = this.state.timeInterval - 1
-      this.changeState({
-        timeInterval: next
-      })
-      if (!next) {
-        clearTimeout(this.interval)
-      } else {
-        this.countDown()
-      }
-    }, 1000)
-  }
 
   changeState = (payload = {}) => {
     this.setState(payload)
   }
 
   render() {
-    const { changeState, countDown } = this
+    const { changeState, } = this
     const {
-      page, countryList, timeInterval,
+      page, countryList,
       countryCode, password, agentId, channel, userType, packType, email, verificationCode, newPassword
     } = this.state
     const { dispatch, modelName } = this.props
@@ -197,7 +174,6 @@ export default class View extends Component {
                             changeState({
                               page: 2
                             })
-                            countDown()
                           }
                         })
                       }}
@@ -212,9 +188,9 @@ export default class View extends Component {
                 <div className={styles.top} >
                   邮箱验证码
                 </div >
-                <div className={styles.desc}>
-                  <div className={styles.name}>邮箱</div >
-                  <div className={styles.email}>{email}</div >
+                <div className={styles.desc} >
+                  <div className={styles.name} >邮箱</div >
+                  <div className={styles.email} >{email}</div >
                 </div >
                 <div className={styles.center} >
                   <form >
@@ -231,16 +207,15 @@ export default class View extends Component {
                         <img alt='vertifycode' src={vertifycodepng} />
                       )}
                       iconPost={(
-                        <div className={styles.resend}
-                             onClick={() => {
-                               if (!timeInterval) this.countDown()
-                             }}
-                        >
-                          {
-                            timeInterval ? (
-                              <span >重新发送({timeInterval})</span >
-                            ) : '点击发送'
-                          }
+                        <div className={styles.resend} >
+                          <CountDown auto onClick={() => {
+                            dispatch({
+                              type: `${modelName}/doSendRegistVerificationCode`,
+                              payload: {
+                                email
+                              }
+                            })
+                          }} />
                         </div >
                       )}
                     />
