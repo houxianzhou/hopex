@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, ShowJsonTip } from '@components'
-import { isEqual, _, parsePathSearch, dealInterval } from '@utils'
+import { isEqual, _, parsePathSearch } from '@utils'
 import wss from '@services/SocketClient'
 import LatestRecord from './LatestRecord'
 import TradeChart from './TradeChart'
@@ -25,6 +25,7 @@ const Comp = {
   PersonEnsure,
   RecentRecord
 }
+let throttle
 @connect(({ home: model, user, theme, loading, dispatch }) => ({
   model,
   user,
@@ -34,25 +35,25 @@ const Comp = {
   dispatch,
 }))
 export default class View extends Component {
-
   componentDidUpdate(prevProps) {
     const { model: { marketCode: prevMarketCode } } = prevProps
     const { model: { marketCode }, dispatch, modelName } = this.props
     if (!isEqual(prevMarketCode, marketCode) && marketCode && prevMarketCode) {
-      _.throttle(
-        () => {
-          wss.closeAll().then((res) => {
-            this.startInit()
-            dispatch({
-              type: `${modelName}/clearState`,
+      if (!throttle) {
+        throttle = _.throttle(
+          () => {
+            wss.closeAll().then((res) => {
+              dispatch({
+                type: `${modelName}/clearState`,
+              })
+              this.startInit()
+              throttle = null
+            }).catch((err) => {
+              console.log('关闭失败')
             })
-          }).catch((err) => {
-            console.log('关闭失败')
-          })
-        }, 1000
-      )
-
-
+          }, 1000)
+        throttle()
+      }
     }
   }
 

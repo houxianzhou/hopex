@@ -8,7 +8,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-    // this.getPosition()
+    this.getPosition()
   }
 
   getPosition = () => {
@@ -16,7 +16,7 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/getPosition`
     }).then(() => {
-      dealInterval(() => {
+      this.interval = dealInterval(() => {
         this.getPosition()
       })
     })

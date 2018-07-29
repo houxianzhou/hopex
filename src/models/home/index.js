@@ -475,7 +475,7 @@ export default joinModel(modelExtend, {
         type: 'createRequestParams',
         payload: {
           "head": {
-            "method": "order.user_active_delegate"
+            "method": "order.getRecentTenHistory"
           },
           "param": {
             "pageIndex": "0",//页码

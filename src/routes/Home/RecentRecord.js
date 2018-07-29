@@ -11,7 +11,8 @@ export default class View extends Component {
     activeLi: 0
   }
   startInit = () => {
-    //this.getPersonalEnsure()
+    // 暂时没有东西
+    // this.getPersonalEnsure()
   }
 
   getPersonalEnsure = () => {
@@ -19,7 +20,7 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/getPersonalEnsure`
     }).then((res) => {
-        dealInterval(() => {
+        this.interval = dealInterval(() => {
           this.getPersonalEnsure()
         })
       }
@@ -128,7 +129,7 @@ export default class View extends Component {
                           )}
                           onClick={() => {
                             changeState({
-                              activeLi:index
+                              activeLi: index
                             })
                           }}
                         >{item}</li >
