@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, ShowJsonTip } from '@components'
 import { isEqual, _, parsePathSearch } from '@utils'
+import { PATH } from '@constants'
 import wss from '@services/SocketClient'
 import LatestRecord from './LatestRecord'
 import TradeChart from './TradeChart'
@@ -81,8 +82,31 @@ export default class View extends Component {
     return !_.isEmpty(userInfo)
   }
 
+  routerGoLogin = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/routerGo`,
+      payload: PATH.login
+    })
+  }
+
+  routerGoRegister = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/routerGo`,
+      payload: PATH.register
+    })
+  }
+
   renderView = (name) => {
-    const props = { ...this.props, isLogin: this.isLogin(), that: this }
+
+    const props = {
+      ...this.props,
+      isLogin: this.isLogin(),
+      routerGoLogin: this.routerGoLogin,
+      routerGoRegister: this.routerGoRegister,
+      that: this
+    }
     const RenderItem = Comp[name]
     return <RenderItem {...props} />
   }

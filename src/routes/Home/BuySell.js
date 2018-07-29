@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { InputNumber, Slider } from "@components"
 import { COLORS } from '@constants'
 import { classNames, _, formatNumber } from '@utils'
-import { PATH } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -113,7 +112,7 @@ export default class View extends Component {
 
   renderSubmit = (config = {}) => {
     const { label_text, label_desc, label_price, className = {}, onSubmit } = config
-    const { isLogin, dispatch, modelName } = this.props
+    const { isLogin, routerGoLogin, routerGoRegister } = this.props
     return <div
       className={classNames(
         styles.submit,
@@ -146,19 +145,14 @@ export default class View extends Component {
         ) : (
           <>
             <div onClick={() => {
-              dispatch({
-                type: `${modelName}/routerGo`,
-                payload: PATH.login
-              })
+              routerGoLogin()
             }} >登录
             </div >
             <div className={styles.center} >或</div >
-            <div onClick={()=>{
-              dispatch({
-                type: `${modelName}/routerGo`,
-                payload: PATH.register
-              })
-            }} >注册</div >
+            <div onClick={() => {
+              routerGoRegister()
+            }} >注册
+            </div >
           </>
         )
       }
