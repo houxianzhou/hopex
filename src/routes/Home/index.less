@@ -53,6 +53,26 @@
           background: @c_panel_light;
         }
       }
+      .td {
+        &.red {
+          color: @_red;
+        }
+        &.blue {
+          color: @_blue;
+        }
+        &.green {
+          color: @_green;
+        }
+
+        &.action{
+          span+span{
+            margin-left: 20px;
+          }
+          span{
+            display: inline-block;
+          }
+        }
+      }
     }
   }
 }
@@ -78,19 +98,11 @@
     .tbody {
       .tr {
         height: 26px;
-        .td {
-          &.buy {
-            color: @_green;
-          }
-          &.sell {
-            color: @_red;
-          }
-        }
       }
     }
   }
-  .record_header{
-    width:100%;
+  .record_header {
+    width: 100%;
     display: flex;
     justify-content: space-between;
   }
@@ -219,15 +231,6 @@
         .td + .td {
           padding: 0 3px;
         }
-        .td {
-
-          &.buy {
-            color: @_green;
-          }
-          &.sell {
-            color: @_red;
-          }
-        }
       }
     }
   }
@@ -342,19 +345,19 @@
       }
     }
     &.notlogin {
-      width:100%;
+      width: 100%;
       height: 100%;
-      .container{
-        width:100%;
+      .container {
+        width: 100%;
         height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         // justify-content: center;
       }
-      .top{
-        margin-top:50px;
-        opacity:.1;
+      .top {
+        margin-top: 50px;
+        opacity: .1;
       }
       .center {
         margin-top: 30px;
@@ -394,6 +397,7 @@
     .tr {
       height: @header2 !important;
     }
+
   }
 }
 

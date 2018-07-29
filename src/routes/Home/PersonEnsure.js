@@ -32,11 +32,21 @@ export default class View extends Component {
       {
         title: '合约',
         dataIndex: 'market',
+        render: (value, record) => ({
+          value,
+          className: 'blue'
+        })
       },
       {
         title: '类型',
         dataIndex: 'type',
-        render: (value, record) => record.side === '1' ? '卖出' : '买入'
+        render: (value, record) => String(record.side) === '1' ? {
+          value: '卖出',
+          className: 'red'
+        } : {
+          value: '买入',
+          className: 'green'
+        }
       },
       {
         title: '杠杆倍数',
@@ -46,6 +56,13 @@ export default class View extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
+        render: (value) => Number(value) >= 0 ? {
+          value,
+          className: 'green'
+        } : {
+          value,
+          className: 'red'
+        }
       },
       {
         title: '委托价格',
@@ -87,34 +104,36 @@ export default class View extends Component {
         dataIndex: 'amount',
         width: 150,
         render: (value, record) => {
-          return (
-            <>
-              <span onClick={(e) => {
-                e.stopPropagation()
-                dispatch({
-                  type: `${modelName}/doCancelPersonEnsure`,
-                  payload: {
-                    market: record.market,
-                    orderId: record.orderId
-                  }
-                })
-              }
-              } >
-              <a >撤销</a >
-            </span >
-              <span onClick={(e) => {
-                e.stopPropagation()
-                dispatch({
-                  type: `${modelName}/getPersonEnsureDetail`,
-                  payload: {
-                    market: record.market,
-                    orderId: record.orderId
-                  }
-                })
-              }} >
-              <a >成交明细</a >
-            </span >
-            </>
+          return ({
+              value: (
+                <>
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      dispatch({
+                        type: `${modelName}/doCancelPersonEnsure`,
+                        payload: {
+                          market: record.market,
+                          orderId: record.orderId
+                        }
+                      })
+                    }
+                    } >撤销</span >
+                  <span onClick={(e) => {
+                    e.stopPropagation()
+                    dispatch({
+                      type: `${modelName}/getPersonEnsureDetail`,
+                      payload: {
+                        market: record.market,
+                        orderId: record.orderId
+                      }
+                    })
+                  }} >成交明细</span >
+                </>
+              ),
+              className: 'blue action'
+            }
+
           )
         }
       },

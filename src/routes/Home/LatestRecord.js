@@ -41,10 +41,10 @@ export default class View extends Component {
         width: '20%',
         render: (value) => value === '2' || value === '买' ? {
           value: '买入',
-          className: 'buy'
+          className: 'green'
         } : {
           value: '卖出',
-          className: 'sell'
+          className: 'red'
         }
       },
       {
@@ -60,10 +60,10 @@ export default class View extends Component {
           const result = <span >{formatNumber(value, 'p')}{img}</span >
           return record.type === '2' || record.type === '买' ? {
             value: result,
-            className: 'buy'
+            className: 'green'
           } : {
             value: result,
-            className: 'sell'
+            className: 'red'
           }
         }
       },

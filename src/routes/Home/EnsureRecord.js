@@ -61,10 +61,10 @@ export default class View extends Component {
           let v = formatNumber(value, 'p')
           return record.type === 'sell' ? {
             value: v,
-            className: 'sell'
+            className: 'red'
           } : {
             value: v,
-            className: 'buy'
+            className: 'green'
           }
         }
       },

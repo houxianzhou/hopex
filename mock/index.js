@@ -173,13 +173,13 @@ export default {
           "orderId": String(index),
           "market": "BTCUSDT" + '第' + pageIndex + '页',
           "source": "我是现价测试单",
-          "type": "1",
-          "side": "2",
+          "type": _.random('1', '2'),
+          "side": _.random('1', '2'),
           "userId": "3",
           "ctime": "1532082876.271102",
           "mtime": "1532082876.271102",
           "price": "6",
-          "amount": "2",
+          "amount": _.random('5', '-5'),
           "taker_fee": "0.01",
           "maker_fee": "0.01",
           "left": "2",
@@ -266,7 +266,7 @@ export default {
 
   // 设置杠杆
   'Post /mock/api/v1/trade/market.leverage_set': (req, res) => {
-    res.send({"ret":"6","errCode":"6","errStr":"user trade amount not zero"})
+    res.send({ "ret": "6", "errCode": "6", "errStr": "user trade amount not zero" })
   },
 
 
