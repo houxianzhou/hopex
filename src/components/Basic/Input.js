@@ -7,6 +7,7 @@ export default function (Props) {
   const {
     iconPrefix, iconPost, placeholder, value,
     onChange, onClear, type = 'text', msg = false, children,
+    style = {}
   } = Props
   return (
     <div className={styles.input} >
@@ -34,7 +35,8 @@ export default function (Props) {
           {
             iconPost || onClear ? (
               <div className='iconPostcontainer' style={!iconPost ? {
-                width: 60, minWidth: 60
+                minWidth: 60,
+                ...style.iconPost
               } : {}} >
                 {
                   iconPost ? (

@@ -17,7 +17,7 @@ import styles from './index.less'
 export default class View extends Component {
 
   state = {
-    page: 2,
+    page: 1,
     email: '',
     password: '',
     newPassword: '',
@@ -130,6 +130,11 @@ export default class View extends Component {
                       type='password'
                       placeholder={'请输入新密码'}
                       value={password}
+                      style={{
+                        iconPost: {
+                          width: 91
+                        }
+                      }}
                       onChange={(e) => {
                         changeState({
                           password: e.target.value
@@ -150,6 +155,11 @@ export default class View extends Component {
                       type='password'
                       placeholder={'请再输入新密码'}
                       value={newPassword}
+                      style={{
+                        iconPost: {
+                          width: 91
+                        }
+                      }}
                       onChange={(e) => {
                         changeState({
                           newPassword: e.target.value

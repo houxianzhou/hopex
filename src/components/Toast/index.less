@@ -4,20 +4,44 @@
   justify-content: center;
   top: 40px;
   padding: 19px 31px;
-  .content{
+  .content {
     color: white;
     background: rgba(0, 0, 0, .5);
-    padding:19px 31px;
+    padding: 19px 31px;
     border-radius: 4px;
   }
 
   left: 0px;
   right: 0px;
-  margin:0 auto;
+  margin: 0 auto;
+}
+
+.toast_message {
+  width: 420px;
+  height: 70px;
+  padding: 20px;
 }
 
 :global {
+  .Toastify__toast-container--top-right {
+    top: 80px;
+  }
   .Toastify__toast-container {
-
+    width: unset;
+    padding: unset;
+  }
+  .Toastify__toast {
+    border-radius: 4px;
+    padding: unset;
+    margin-bottom: unset;
+  }
+  .Toastify__close-button {
+    background: orangered;
+    width: 25px;
+    height: 25px;
+  }
+  .Toastify__close-button--default {
+    color: white;
+    opacity: unset;
   }
 }

@@ -39,10 +39,13 @@ class Toast {
     }, 2000)
   }
 
-  message = () => {
-    toast('hahahahha', {
+  message = (message = 'hahahah') => {
+    toast((
+      <div className={styles.toast_message}>ahhahah</div >
+    ), {
       autoClose: false,
-      className: styles.toast_tip,
+      bodyClassName: styles.toast_message_body,
+      className: styles.toast_message_content,
     })
   }
 }

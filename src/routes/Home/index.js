@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { Mixin, ShowJsonTip } from '@components'
+import { Mixin, ShowJsonTip, Toast } from '@components'
 import { isEqual, _, parsePathSearch } from '@utils'
 import { PATH } from '@constants'
 import wss from '@services/SocketClient'
@@ -59,6 +59,7 @@ export default class View extends Component {
   }
 
   startInit = () => {
+    Toast.message('ahhahah')
     this.getAllMarkets().then((res) => {
       this.childInitStacks.map(item => item && item())
     })
