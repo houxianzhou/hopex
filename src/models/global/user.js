@@ -4,6 +4,7 @@ import {
   doVertifyLogin,
   doLoginOut,
   getAllCountryCode,
+  getDefaultCountryFromIp,
   doRegister,
   doSendRegistVerificationCode,
   doRegisterVerify,
@@ -85,6 +86,12 @@ export default joinModel(modelExtend, {
     },
     * getAllCountryCode({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(getAllCountryCode))
+      if (resOk(res)) {
+        return _.get(res, 'data')
+      }
+    },
+    * getDefaultCountryFromIp({ payload = {} }, { call, put, select }) {
+      const res = getRes(yield call(getDefaultCountryFromIp))
       if (resOk(res)) {
         return _.get(res, 'data')
       }

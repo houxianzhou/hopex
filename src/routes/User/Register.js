@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ToastContainer, toast } from 'react-toastify'
 import { ShowJsonTip, Select, Input, CountDown } from '@components'
-import { classNames, _ } from '@utils'
+import { classNames, _, Patterns } from '@utils'
 import { default as Structure } from './components/Structure'
 import emailpng from '@assets/email.png'
 import passwordpng from '@assets/password.png'
@@ -20,6 +20,7 @@ import styles from './index.less'
 export default class View extends Component {
   componentDidMount() {
     this.getAllCountryCode()
+    this.getDefaultCountryFromIp()
   }
 
   state = {
@@ -27,12 +28,15 @@ export default class View extends Component {
     page: 1,
 
     countryCode: 'CN',
-    agentId: null,
+    agentId: 1,
+    email: '',
+    emailMsg: '',
     password: '',
+    passwordMsg: '',
     channel: 'appstore',
     userType: 'Normal',
     packType: 'pcweb',
-    email: '',
+
     verificationCode: '',
   }
 
@@ -50,6 +54,19 @@ export default class View extends Component {
     })
   }
 
+  getDefaultCountryFromIp = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getDefaultCountryFromIp`
+    }).then(res => {
+      if (res) {
+        this.changeState({
+          countryCode: res
+        })
+      }
+    })
+  }
+
 
   changeState = (payload = {}) => {
     this.setState(payload)
@@ -59,7 +76,7 @@ export default class View extends Component {
     const { changeState, } = this
     const {
       page, countryList,
-      countryCode, password, agentId, channel, userType, packType, email, verificationCode, newPassword
+      countryCode, password, passwordMsg, agentId, channel, userType, packType, email, emailMsg, verificationCode, newPassword
     } = this.state
     const { dispatch, modelName } = this.props
 
@@ -78,14 +95,29 @@ export default class View extends Component {
                       type='text'
                       placeholder={'请填写邮箱'}
                       value={email}
-                      onChange={(e) => {
+                      msg={emailMsg}
+                      onChange={(value) => {
                         changeState({
-                          email: e.target.value
+                          email: value
                         })
                       }}
+
+                      onCheck={(value) => {
+                        if (value && !Patterns.email.test(value)) {
+                          changeState({
+                            emailMsg: '必须符合邮箱格式'
+                          })
+                        } else {
+                          changeState({
+                            emailMsg: ''
+                          })
+                        }
+                      }}
+
                       onClear={() => {
                         changeState({
-                          email: ''
+                          email: '',
+                          emailMsg: ''
                         })
                       }}
                       iconPrefix={(
@@ -96,15 +128,29 @@ export default class View extends Component {
                       type='password'
                       placeholder={'请填写密码'}
                       value={password}
-                      onChange={(e) => {
+                      msg={passwordMsg}
+                      onChange={(value) => {
                         changeState({
-                          password: e.target.value
+                          password: value
                         })
+                      }}
+
+                      onCheck={(value) => {
+                        if (value && !Patterns.password.test(value)) {
+                          changeState({
+                            passwordMsg: ' 密码必须包含大写字母、小写字母和数字，8-16位'
+                          })
+                        } else {
+                          changeState({
+                            passwordMsg: '',
+                          })
+                        }
                       }}
 
                       onClear={() => {
                         changeState({
-                          password: ''
+                          password: '',
+                          passwordMsg: '',
                         })
                       }}
 
@@ -160,7 +206,7 @@ export default class View extends Component {
                     <button
                       className={classNames(
                         styles.formbutton,
-                        email && password && agentId ? styles.permit : styles.notpermit
+                        email && !emailMsg && password && !passwordMsg && agentId ? styles.permit : styles.notpermit
                       )}
                       onClick={(e) => {
                         e.preventDefault()
@@ -198,9 +244,9 @@ export default class View extends Component {
                       type='text'
                       placeholder={'请输入验证码'}
                       value={verificationCode}
-                      onChange={(e) => {
+                      onChange={(value) => {
                         changeState({
-                          verificationCode: e.target.value
+                          verificationCode: value
                         })
                       }}
                       iconPrefix={(

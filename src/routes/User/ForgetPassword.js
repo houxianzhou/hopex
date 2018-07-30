@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ToastContainer, toast } from 'react-toastify'
 import { ShowJsonTip, Select, Input, CountDown } from '@components'
-import { classNames, _ } from '@utils'
+import { classNames, _, Patterns } from '@utils'
 import { default as Structure } from './components/Structure'
 import emailpng from '@assets/email.png'
 import vertifycodepng from '@assets/vertifycode.png'
@@ -19,8 +19,11 @@ export default class View extends Component {
   state = {
     page: 1,
     email: '',
-    password: '',
+    emailMsg: '',
     newPassword: '',
+    newPasswordMsg: '',
+    newPasswordAgain: '',
+    newPasswordMsgAgainMsg: '',
     verificationCode: '',
   }
 
@@ -31,7 +34,7 @@ export default class View extends Component {
   render() {
     const { changeState } = this
     const {
-      page, email, verificationCode, password, newPassword
+      page, email, emailMsg, verificationCode, newPassword, newPasswordMsg, newPasswordAgain, newPasswordAgainMsg
     } = this.state
     const { dispatch, modelName } = this.props
 
@@ -50,14 +53,27 @@ export default class View extends Component {
                       type='text'
                       placeholder={'请填写邮箱'}
                       value={email}
-                      onChange={(e) => {
+                      msg={emailMsg}
+                      onChange={(value) => {
                         changeState({
-                          email: e.target.value
+                          email: value
                         })
+                      }}
+                      onCheck={(value) => {
+                        if (value && !Patterns.email.test(value)) {
+                          changeState({
+                            emailMsg: '必须符合邮箱格式'
+                          })
+                        } else {
+                          changeState({
+                            emailMsg: ''
+                          })
+                        }
                       }}
                       onClear={() => {
                         changeState({
-                          email: ''
+                          email: '',
+                          emailMsg: ''
                         })
                       }}
                       iconPrefix={(
@@ -68,7 +84,7 @@ export default class View extends Component {
                     <button
                       className={classNames(
                         styles.formbutton,
-                        email ? styles.permit : styles.notpermit
+                        email && !emailMsg ? styles.permit : styles.notpermit
                       )}
                       onClick={(e) => {
                         e.preventDefault()
@@ -107,9 +123,9 @@ export default class View extends Component {
                       type='text'
                       placeholder={'请输入验证码'}
                       value={verificationCode}
-                      onChange={(e) => {
+                      onChange={(value) => {
                         changeState({
-                          verificationCode: e.target.value
+                          verificationCode: value
                         })
                       }}
                       iconPrefix={(
@@ -129,46 +145,82 @@ export default class View extends Component {
                     <Input
                       type='password'
                       placeholder={'请输入新密码'}
-                      value={password}
+                      value={newPassword}
+                      msg={newPasswordMsg}
                       style={{
                         iconPost: {
                           width: 91
                         }
                       }}
-                      onChange={(e) => {
+                      onChange={(value) => {
                         changeState({
-                          password: e.target.value
+                          newPassword: value
                         })
+                      }}
+                      onCheck={(value) => {
+                        const test1 = value && !Patterns.password.test(value)
+                        if (test1) {
+                          changeState({
+                            newPasswordMsg: ' 密码必须包含大写字母、小写字母和数字，8-16位'
+                          })
+                        } else if (newPasswordAgain && value !== newPasswordAgain) {
+                          changeState({
+                            newPasswordMsg: ' 新的密码两次输入必须一致'
+                          })
+                        } else {
+                          changeState({
+                            newPasswordMsg: ''
+                          })
+                        }
                       }}
 
                       onClear={() => {
                         changeState({
-                          password: ''
+                          newPassword: '',
+                          newPasswordMsg: ''
                         })
                       }}
 
                       iconPrefix={(
-                        <img alt='password' src={passwordpng} />
+                        <img alt='newPassword' src={passwordpng} />
                       )}
                     />
                     <Input
                       type='password'
                       placeholder={'请再输入新密码'}
-                      value={newPassword}
+                      value={newPasswordAgain}
+                      msg={newPasswordAgainMsg}
                       style={{
                         iconPost: {
                           width: 91
                         }
                       }}
-                      onChange={(e) => {
+                      onChange={(value) => {
                         changeState({
-                          newPassword: e.target.value
+                          newPasswordAgain: value
                         })
+                      }}
+                      onCheck={(value) => {
+                        const test1 = value && !Patterns.password.test(value)
+                        if (test1) {
+                          changeState({
+                            newPasswordAgainMsg: ' 密码必须包含大写字母、小写字母和数字，8-16位'
+                          })
+                        } else if (newPassword && value !== newPassword) {
+                          changeState({
+                            newPasswordAgainMsg: '新的密码必须输入一致'
+                          })
+                        } else {
+                          changeState({
+                            newPasswordAgainMsg: ''
+                          })
+                        }
                       }}
 
                       onClear={() => {
                         changeState({
-                          newPassword: ''
+                          newPasswordAgain: '',
+                          newPasswordAgainMsg: ''
                         })
                       }}
 
@@ -180,7 +232,7 @@ export default class View extends Component {
                     <button
                       className={classNames(
                         styles.formbutton,
-                        email ? styles.permit : styles.notpermit
+                        email && verificationCode && newPassword && !newPasswordMsg && newPasswordAgain && !newPasswordAgainMsg ? styles.permit : styles.notpermit
                       )}
                       onClick={(e) => {
                         e.preventDefault()

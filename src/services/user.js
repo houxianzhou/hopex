@@ -27,8 +27,14 @@ export async function doVertifyLogin(payload) {
 
 // 注册前获取所有的国家
 export async function getAllCountryCode(payload) {
-  return await request(`${prefix}/api/v1/country`)
+  return await request(`${prefix}/api/v1/Country/All`)
 }
+
+// 注册前获取默认国家
+export async function getDefaultCountryFromIp(payload) {
+  return await request(`${prefix}/api/v1/Country/QueryIp`)
+}
+
 
 // 注册,填写信息
 export async function doRegister(payload, errHandler) {

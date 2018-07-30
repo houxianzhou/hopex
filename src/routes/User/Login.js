@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ShowJsonTip, Input } from '@components'
-import { classNames, _ } from '@utils'
+import { classNames, _, Patterns } from '@utils'
 import { PATH } from '@constants'
 import logo2 from '@assets/logo2.png'
 import emailpng from '@assets/email.png'
@@ -17,7 +17,9 @@ import styles from './index.less'
 export default class View extends Component {
   state = {
     email: '',
-    password: ''
+    emailMsg: '',
+    password: '',
+    passwordMsg: ''
   }
 
   changeState = (payload = {}) => {
@@ -46,7 +48,7 @@ export default class View extends Component {
       password: '8888888'
     }
     const { changeState } = this
-    const { email, password } = this.state
+    const { email, emailMsg, password, passwordMsg } = this.state
     const { dispatch, modelName } = this.props
     return (
       <Structure >
@@ -64,15 +66,29 @@ export default class View extends Component {
                 type='text'
                 placeholder={'请填写邮箱'}
                 value={email}
-                onChange={(e) => {
+                msg={emailMsg}
+                onChange={(value) => {
                   changeState({
-                    email: e.target.value
+                    email: value
                   })
+                }}
+
+                onCheck={(value) => {
+                  if (value && !Patterns.email.test(value)) {
+                    changeState({
+                      emailMsg: '必须符合邮箱格式'
+                    })
+                  } else {
+                    changeState({
+                      emailMsg: ''
+                    })
+                  }
                 }}
 
                 onClear={() => {
                   changeState({
-                    email: ''
+                    email: '',
+                    emailMsg: ''
                   })
                 }}
 
@@ -84,15 +100,29 @@ export default class View extends Component {
                 type='password'
                 placeholder={'请填写密码'}
                 value={password}
-                onChange={(e) => {
+                msg={passwordMsg}
+                onChange={(value) => {
                   changeState({
-                    password: e.target.value
+                    password: value
                   })
+                }}
+
+                onCheck={(value) => {
+                  if (value && !Patterns.password.test(value)) {
+                    changeState({
+                      passwordMsg: ' 密码必须包含大写字母、小写字母和数字，8-16位'
+                    })
+                  } else {
+                    changeState({
+                      passwordMsg: '',
+                    })
+                  }
                 }}
 
                 onClear={() => {
                   changeState({
-                    password: ''
+                    password: '',
+                    passwordMsg: ''
                   })
                 }}
 
@@ -103,7 +133,7 @@ export default class View extends Component {
               <button
                 className={classNames(
                   styles.formbutton,
-                  email && password ? styles.permit : styles.notpermit
+                  email && !emailMsg && password && !passwordMsg ? styles.permit : styles.notpermit
                 )}
                 onClick={(e) => {
                   e.preventDefault()
@@ -112,14 +142,14 @@ export default class View extends Component {
                 }} >
                 登录
                 {/*<span*/}
-                  {/*onClick={(e) => {*/}
-                    {/*e.preventDefault()*/}
-                    {/*changeState(person1)*/}
-                  {/*}} >1</span >*/}
+                {/*onClick={(e) => {*/}
+                {/*e.preventDefault()*/}
+                {/*changeState(person1)*/}
+                {/*}} >1</span >*/}
 
                 {/*<span onClick={(e) => {*/}
-                  {/*e.preventDefault()*/}
-                  {/*changeState(person2)*/}
+                {/*e.preventDefault()*/}
+                {/*changeState(person2)*/}
                 {/*}} >2</span >*/}
               </button >
               {/*<button onClick={(e) => {*/}
@@ -138,16 +168,17 @@ export default class View extends Component {
             </form >
             <div className={styles.othermethod} >
               <div
-                style={{cursor:'pointer'}}
+                style={{ cursor: 'pointer' }}
                 onClick={() => {
                   dispatch({
                     type: `${modelName}/routerGo`,
                     payload: PATH.forgetPassword
                   })
                 }}
-              >忘记密码</div >
+              >忘记密码
+              </div >
               <div
-                style={{cursor:'pointer'}}
+                style={{ cursor: 'pointer' }}
                 className={styles.registerentery}
                 onClick={() => {
                   dispatch({

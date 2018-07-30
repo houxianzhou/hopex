@@ -56,7 +56,9 @@ export const delay = (time) => {
 
 export const Patterns = {
   number: /^[0-9]*$/,
-  decimalNumber: /^[0-9|\.]*$/
+  decimalNumber: /^[0-9|\.]*$/,
+  email: /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/,
+  password:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/
 }
 
 export const getPercent = (child = 1, parent = 1, min = 0) => {
