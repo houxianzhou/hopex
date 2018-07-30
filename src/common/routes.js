@@ -41,4 +41,9 @@ export default [
     path: PATH.forgetPassword,
     route: 'User/ForgetPassword'
   },
+  {
+    name: '我的账户',
+    path: PATH.myaccount,
+    route: 'User/MyAccount'
+  },
 ]

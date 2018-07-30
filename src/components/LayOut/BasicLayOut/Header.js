@@ -24,6 +24,8 @@ export default class View extends Component {
   render() {
     const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } }, theme, modelName1, modelName2, dispatch, routesBasic, history } = this.props
 
+    const isLogin = !_.isEmpty(userInfo)
+
     return (
       <div className={
         classNames(
@@ -99,32 +101,56 @@ export default class View extends Component {
             <li >
               <img alt='help' src={help} />
             </li >
-            <li >
-              <img alt='account' src={account} />
-              {
-                email ? (<span >{email}</span >) : null
-              }
-            </li >
-            <li >
-              {_.isEmpty(userInfo) ? (
-                <span
-                  onClick={() => {
-                    dispatch({
-                      type: `${modelName2}/routerGo`,
-                      payload: PATH.login
-                    })
-                  }}
-                >登录</span >
-              ) : (
-                <span
-                  onClick={() => {
-                    dispatch({
-                      type: `${modelName2}/doLoginOut`,
-                    })
-                  }}
-                >退出</span >
-              )}
-            </li >
+            {
+              isLogin ? (
+                <li className={styles.user} >
+                  <img alt='account' src={account} />
+                  {
+                    email ? (<span >{email}</span >) : null
+                  }
+                  <div className={styles.accountContainer} >
+                    <div className={styles.content} >
+                      <div className={styles.desc} onClick={() => {
+                        dispatch({
+                          type: `${modelName2}/routerGo`,
+                          payload: PATH.myaccount
+                        })
+                      }} >
+                        我的账户
+                      </div >
+                      <div className={styles.loginout} onClick={() => {
+                        dispatch({
+                          type: `${modelName2}/doLoginOut`,
+                        })
+                      }} >
+                        退出登录
+                      </div >
+                    </div >
+                  </div >
+                </li >
+              ) : null
+            }
+
+            {/*<li >*/}
+            {/*{_.isEmpty(userInfo) ? (*/}
+            {/*<span*/}
+            {/*onClick={() => {*/}
+            {/*dispatch({*/}
+            {/*type: `${modelName2}/routerGo`,*/}
+            {/*payload: PATH.login*/}
+            {/*})*/}
+            {/*}}*/}
+            {/*>登录</span >*/}
+            {/*) : (*/}
+            {/*<span*/}
+            {/*onClick={() => {*/}
+            {/*dispatch({*/}
+            {/*type: `${modelName2}/doLoginOut`,*/}
+            {/*})*/}
+            {/*}}*/}
+            {/*>退出</span >*/}
+            {/*)}*/}
+            {/*</li >*/}
           </ul >
         </div >
       </div >
