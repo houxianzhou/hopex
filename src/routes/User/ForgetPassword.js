@@ -31,6 +31,7 @@ export default class View extends Component {
     this.setState(payload)
   }
 
+
   render() {
     const { changeState } = this
     const {
@@ -165,11 +166,13 @@ export default class View extends Component {
                           })
                         } else if (newPasswordAgain && value !== newPasswordAgain) {
                           changeState({
-                            newPasswordMsg: ' 新的密码两次输入必须一致'
+                            newPasswordMsg: '新的密码两次输入必须一致',
+                            newPasswordAgainMsg: '新的密码两次输入必须一致',
                           })
                         } else {
                           changeState({
-                            newPasswordMsg: ''
+                            newPasswordMsg: '',
+                            newPasswordAgainMsg: ''
                           })
                         }
                       }}
@@ -204,14 +207,16 @@ export default class View extends Component {
                         const test1 = value && !Patterns.password.test(value)
                         if (test1) {
                           changeState({
-                            newPasswordAgainMsg: ' 密码必须包含大写字母、小写字母和数字，8-16位'
+                            newPasswordAgainMsg: '密码必须包含大写字母、小写字母和数字，8-16位'
                           })
                         } else if (newPassword && value !== newPassword) {
                           changeState({
-                            newPasswordAgainMsg: '新的密码必须输入一致'
+                            newPasswordMsg: '新的密码两次输入必须一致',
+                            newPasswordAgainMsg: '新的密码两次输入必须一致',
                           })
                         } else {
                           changeState({
+                            newPasswordMsg: '',
                             newPasswordAgainMsg: ''
                           })
                         }
