@@ -15,5 +15,6 @@ export default {
   "@c_pannel_border": '#454C5C',
   "@padding_panel": '0 20px 0 30px',
   "@border_radius": '4px',
-  "@c_obvious":'#353D4F'
+  "@c_obvious":'#353D4F',
+  "@c_back":'#F5F5F5',
 }

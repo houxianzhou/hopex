@@ -1,8 +1,8 @@
 .navpannel {
   width: 79%;
-  background: blue;
   display: flex;
   .nav {
+    border-radius: 4px;
     width: 19%;
     min-height: 500px;
     margin-right: 20px;
@@ -15,17 +15,23 @@
             padding-left: 32px;
             color: @c_active_yellow;
             font-size: 16px;
-            img{
+            img {
               margin-right: 13px;
             }
           }
           ul.list {
             margin-top: 20px;
             li {
+              display: flex;
               height: 40px;
-              margin-left: 30%;
+              padding-left: 30%;
               align-items: center;
-              color: black;
+              color: #232833;
+              &.active {
+                border-left:4px solid #E2B96F;
+                background: #FFFBF3;
+
+              }
             }
           }
         }
@@ -33,7 +39,8 @@
     }
   }
   .content {
+    border-radius: 4px;
     flex-grow: 1;
-    background: black;
+    background: white;
   }
 }

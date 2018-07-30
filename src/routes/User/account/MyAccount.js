@@ -5,6 +5,8 @@ import { classNames, _, Patterns } from '@utils'
 import { PATH } from '@constants'
 import styles from './MyAccount.less'
 
+
+
 @connect(({ user: model, loading, dispatch }) => ({
   model,
   modelName: 'user',
@@ -13,14 +15,8 @@ import styles from './MyAccount.less'
 export default class View extends Component {
   render() {
     return (
-      <div className={styles.myaccountpage} >
-        <NavPannel
-          nav={(
-            <div >左边</div >
-          )}
-        >
-          hhh
-        </NavPannel>
+      <div >
+        hahahah
       </div >
     )
   }

@@ -5,8 +5,12 @@ import * as styles from './index.less'
 import { classNames, _, } from '@utils'
 
 export default class View extends Component {
+  state = {
+    active: ''
+  }
+
   render() {
-    const { children, navList = [] } = this.props
+    const { children, navList = [], defaultActive = '' } = this.props
     return (
       <div className={styles.navpannel} >
         <div className={styles.nav} >
@@ -21,11 +25,17 @@ export default class View extends Component {
                   <ul className='list' >
                     {
                       item.list.map((item = {}, index) => (
-                        <li key={index} onClick={() => {
-                          if (_.isFunction(item.onClick)) {
-                            item.onClick()
-                          }
-                        }} >{item.name}</li >
+                        <li
+                          key={index}
+                          className={classNames(
+                            defaultActive === item.name ? 'active' : null
+                          )}
+
+                          onClick={() => {
+                            if (_.isFunction(item.onClick)) {
+                              item.onClick()
+                            }
+                          }} >{item.title}</li >
                       ))
                     }
                   </ul >
@@ -37,7 +47,6 @@ export default class View extends Component {
         <div className={styles.content} >
           {children}
         </div >
-
       </div >
     )
   }
