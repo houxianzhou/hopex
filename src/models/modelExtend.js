@@ -76,15 +76,19 @@ export default {
       })
     },
     * routerGo({ payload = {} }, { call, put, select }) {
-      let repayload
-      if (_.isObjectLike(payload)) {
-        repayload = payload
+      if (payload === -1) {
+        yield put(routerRedux.go(payload))
       } else {
-        repayload = {
-          pathname: payload
+        let repayload
+        if (_.isObjectLike(payload)) {
+          repayload = payload
+        } else {
+          repayload = {
+            pathname: payload
+          }
         }
+        yield put(routerRedux.push(repayload))
       }
-      yield put(routerRedux.push(repayload))
     }
   },
 
