@@ -24,7 +24,7 @@ export default class View extends Component {
   render() {
     const { renderPage } = this
     return (
-      <div className={styles.myaccountpage} >
+      <div className={styles.accountpage} >
         <NavPannel
           defaultActive='MyAccount'
           navList={[
