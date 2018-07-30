@@ -131,10 +131,11 @@ export default joinModel(modelExtend, {
         }
       })))
       return ws1.sendJsonPromise(repayload, (e) => {
+        let res
         if (e && e.data) {
-          e.data = formatJson(e.data)
+          res = formatJson(e.data)
         }
-        const res = getRes(e)
+        res = getRes(res)
         if (resOk(res)) {
           if (_.get(res, 'head.method') === 'kline.query') {
             return _.get(res, 'data.records')

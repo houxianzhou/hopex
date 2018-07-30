@@ -186,8 +186,9 @@ export default class View extends Component {
     ws2.listen({
       name: 'getImportantPrice',
       subscribe: (e) => {
-        if (e && e.data) e.data = formatJson(e.data)
-        const res = getRes(e)
+        let res
+        if (e && e.data) res = formatJson(e.data)
+        res = getRes(res)
         if (resOk(res)) {
           const result = formatJson(res.data)
           const { minPrice, maxPrice, price } = result

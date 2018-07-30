@@ -15,7 +15,7 @@ import {
   GetEnableGoogleVertifyCode,
   doDisbaleGoogleVertify
 } from '@services/user'
-import { _, getRes, resOk, joinModel, localSave, asyncPayload } from '@utils'
+import { _, getRes, resOk, joinModel, localSave, asyncPayload, delay } from '@utils'
 import { Toast } from '@components'
 import { PATH } from '@constants'
 import modelExtend from '@models/modelExtend'
@@ -114,6 +114,13 @@ export default joinModel(modelExtend, {
       if (resOk(res)) {
         if (res) {
           Toast.tip('注册成功，请登录')
+          const result = yield (asyncPayload(delay(2000)))
+          if (result) {
+            yield put({
+              type: 'routerGo',
+              payload: PATH.login
+            })
+          }
         }
       }
     },
@@ -121,7 +128,6 @@ export default joinModel(modelExtend, {
       const res = getRes(yield call(doEmailExists, payload))
       if (resOk(res)) {
         const result = _.get(res, 'data')
-        console.log(res)
         if (_.isBoolean(result)) {
           if (result) {
             return result
@@ -154,6 +160,13 @@ export default joinModel(modelExtend, {
       }))
       if (resOk(res)) {
         Toast.tip('重置密码成功，请登录')
+        const result = yield (asyncPayload(delay(2000)))
+        if (result) {
+          yield put({
+            type: 'routerGo',
+            payload: PATH.login
+          })
+        }
       }
     },
 

@@ -110,16 +110,17 @@ export default class View extends Component {
                   e.preventDefault()
                   this.login()
                 }} >
-                <span
-                  onClick={(e) => {
-                    e.preventDefault()
-                    changeState(person1)
-                  }} >1</span >
                 登录
-                <span onClick={(e) => {
-                  e.preventDefault()
-                  changeState(person2)
-                }} >2</span >
+                {/*<span*/}
+                  {/*onClick={(e) => {*/}
+                    {/*e.preventDefault()*/}
+                    {/*changeState(person1)*/}
+                  {/*}} >1</span >*/}
+
+                {/*<span onClick={(e) => {*/}
+                  {/*e.preventDefault()*/}
+                  {/*changeState(person2)*/}
+                {/*}} >2</span >*/}
               </button >
               {/*<button onClick={(e) => {*/}
               {/*e.preventDefault()*/}

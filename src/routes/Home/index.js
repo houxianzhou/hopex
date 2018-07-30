@@ -59,7 +59,7 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    Toast.message('ahhahah')
+    // Toast.message('ahhahah')
     this.getAllMarkets().then((res) => {
       this.childInitStacks.map(item => item && item())
     })

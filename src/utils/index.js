@@ -17,7 +17,7 @@ export const getRes = function (res) {
   if (res) {
     return {
       head: _.get(res, 'data.head') || _.get(res, 'head') || {},
-      data: _.get(res, 'data.data') || _.get(res, 'data') || res
+      data: _.has(res, 'data.data') ? _.get(res, 'data.data') : (_.has(res, 'data') ? _.get(res, 'data') : res)
     }
   }
   return {
@@ -45,6 +45,14 @@ export const switchTheme = (theme) => {
 export const dealInterval = (func, interval = SPEED.DOWM) => {
   return setTimeout(func, interval)
 }
+export const delay = (time) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true)
+    }, time)
+  })
+}
+
 
 export const Patterns = {
   number: /^[0-9]*$/,
