@@ -73,17 +73,17 @@ export default class View extends Component {
                   })
                 }}
 
-                onCheck={(value) => {
-                  if (value && !Patterns.email.test(value)) {
-                    changeState({
-                      emailMsg: '必须符合邮箱格式'
-                    })
-                  } else {
-                    changeState({
-                      emailMsg: ''
-                    })
-                  }
-                }}
+                // onCheck={(value) => {
+                //   if (value && !Patterns.email.test(value)) {
+                //     changeState({
+                //       emailMsg: '必须符合邮箱格式'
+                //     })
+                //   } else {
+                //     changeState({
+                //       emailMsg: ''
+                //     })
+                //   }
+                // }}
 
                 onClear={() => {
                   changeState({
@@ -107,17 +107,17 @@ export default class View extends Component {
                   })
                 }}
 
-                onCheck={(value) => {
-                  if (value && !Patterns.password.test(value)) {
-                    changeState({
-                      passwordMsg: ' 密码必须包含大写字母、小写字母和数字，8-16位'
-                    })
-                  } else {
-                    changeState({
-                      passwordMsg: '',
-                    })
-                  }
-                }}
+                // onCheck={(value) => {
+                //   if (value && !Patterns.password.test(value)) {
+                //     changeState({
+                //       passwordMsg: ' 密码必须包含大写字母、小写字母和数字，8-16位'
+                //     })
+                //   } else {
+                //     changeState({
+                //       passwordMsg: '',
+                //     })
+                //   }
+                // }}
 
                 onClear={() => {
                   changeState({
