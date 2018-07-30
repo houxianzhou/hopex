@@ -118,62 +118,62 @@ export default class View extends Component {
     const isLogin = this.isLogin()
     return (
       <Mixin.Parent that={this} >
-        <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >
+        <div className={styles.home} >
+          <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >
+          <div className={styles.views} >
+            {
+              renderView('LatestRecord')
+            }
+            {
+              renderView('TradeChart')
+            }
+            {
+              renderView('EnsureRecord')
+            }
+          </div >
+
+          <div className={styles.views} >
+            {
+              renderView('Purse')
+            }
+            {
+              renderView('BuySell')
+            }
+            {
+              renderView('CurrentContract')
+            }
+          </div >
 
 
-        <div className={styles.views} >
           {
-            renderView('LatestRecord')
+            isLogin ? (
+              <div className={styles.views} >
+                {
+                  renderView('PersonEnsure')
+                }
+              </div >
+            ) : null
           }
           {
-            renderView('TradeChart')
+            isLogin ? (
+              <div className={styles.views} >
+                {
+                  renderView('Position')
+                }
+              </div >
+            ) : null
           }
+
           {
-            renderView('EnsureRecord')
+            isLogin ? (
+              <div className={styles.views} >
+                {
+                  renderView('RecentRecord')
+                }
+              </div >
+            ) : null
           }
         </div >
-
-        <div className={styles.views} >
-          {
-            renderView('Purse')
-          }
-          {
-            renderView('BuySell')
-          }
-          {
-            renderView('CurrentContract')
-          }
-        </div >
-
-
-        {
-          isLogin ? (
-            <div className={styles.views} >
-              {
-                renderView('PersonEnsure')
-              }
-            </div >
-          ) : null
-        }
-        {
-          isLogin ? (
-            <div className={styles.views} >
-              {
-                renderView('Position')
-              }
-            </div >
-          ) : null
-        }
-
-        {
-          isLogin ? (
-            <div className={styles.views} >
-              {
-                renderView('RecentRecord')
-              }
-            </div >
-          ) : null
-        }
 
       </Mixin.Parent >
     )
