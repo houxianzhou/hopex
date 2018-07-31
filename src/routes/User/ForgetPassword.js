@@ -33,6 +33,7 @@ export default class View extends Component {
 
 
   render() {
+
     const { changeState } = this
     const {
       page, email, emailMsg, verificationCode, newPassword, newPasswordMsg, newPasswordAgain, newPasswordAgainMsg
@@ -40,7 +41,9 @@ export default class View extends Component {
     const { dispatch, modelName } = this.props
 
     return (
-      <Structure >
+      <Structure goBack={page === 2 ? () => {
+        changeState({ page: 1 })
+      } : null} >
         <div className={styles.forgetPassword} >
           {
             page === 1 ? (

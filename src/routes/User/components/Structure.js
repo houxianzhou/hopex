@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { classNames } from '@utils'
+import { classNames,_ } from '@utils'
 import back from '@assets/back.png'
 import * as styles from './Structure.less'
 
@@ -11,15 +11,19 @@ import * as styles from './Structure.less'
 }))
 export default class View extends Component {
   render() {
-    const { children, dispatch, modelName } = this.props
+    const { children, dispatch, modelName, goBack } = this.props
     return (
       <div className={styles.structure} >
         <div className={styles.content} >
           <div className={styles.back} style={{ cursor: 'pointer' }} onClick={() => {
-            dispatch({
-              type: `${modelName}/routerGo`,
-              payload: -1
-            })
+            if (_.isFunction(goBack)) {
+              goBack()
+            } else {
+              dispatch({
+                type: `${modelName}/routerGo`,
+                payload: -1
+              })
+            }
           }} >
             <img alt={'back'} src={back} />
             返回

@@ -82,7 +82,9 @@ export default class View extends Component {
     const { dispatch, modelName } = this.props
 
     return (
-      <Structure >
+      <Structure goBack={page === 2 ? () => {
+        changeState({ page: 1 })
+      } : null} >
         <div className={styles.register} >
           {
             page === 1 ? (
@@ -186,10 +188,10 @@ export default class View extends Component {
                           option: {
                             borderBottom: '1px solid #EBEBEB',
                             selected: {
-                              color:COLORS.yellow,
+                              color: COLORS.yellow,
                             },
-                            focused:{
-                              color:COLORS.yellow,
+                            focused: {
+                              color: COLORS.yellow,
                             }
                           }
                         }}
