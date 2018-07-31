@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Mixin } from "@components"
 import { classNames } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
-import logogray from '@assets/logogray.png'
+import logogray from '@assets/logo4.png'
 import styles from './index.less'
 
 
@@ -93,7 +93,7 @@ export default class View extends Component {
                   </>
                 ) : (
                   <div className={styles.container} >
-                    <div className={styles.top} ><img src={logogray} style={{ width: '70px' }} /></div >
+                    <div className={styles.top} ><img src={logogray}  /></div >
                     <div className={styles.center} >欢迎来到Hopex</div >
                     <div className={styles.down} >
                       <div onClick={() => {
