@@ -10,40 +10,52 @@ import styles from './index.less'
 const Comp = {
   MyAccount
 }
-@connect(({ user: model, loading, dispatch }) => ({
+@connect(({ user, account: model, loading, dispatch }) => ({
   model,
-  modelName: 'user',
+  user,
+  modelName: 'account',
   dispatch
 }))
 export default class View extends Component {
-
-  renderPage = (page) => {
+  renderPage = (page, props = {}) => {
+    const Props = {
+      ...this.props,
+      ...props
+    }
     const RenderItem = Comp[page]
-    return <RenderItem />
+    return <RenderItem {...Props} />
   }
 
   render() {
+    const { dispatch, modelName } = this.props
     const { renderPage } = this
     return (
       <div className={styles.accountpage} >
+        <ShowJsonTip data={this.props.model} />
         <NavPannel
           defaultActive='MyAccount'
           navList={[
             {
               title: '账户',
               icon: accountyellow,
-              list: [{
-                name: 'MyAccount',
-                title: '我的账户',
-                onClick: () => renderPage('MyAccount')
-              }]
+              list: [
+                {
+                  name: 'MyAccount',
+                  title: '我的账户',
+                  onClick: () => {
+                    dispatch({
+                      type: `${modelName}/changeState`,
+                      payload: {
+                        myAccountPage: 1
+                      }
+                    })
+                    return renderPage('MyAccount')
+                  }
+                }
+              ]
             }
           ]}
-        >
-          {/*{*/}
-          {/*renderPage('MyAccount')*/}
-          {/*}*/}
-        </NavPannel >
+        />
       </div >
     )
   }

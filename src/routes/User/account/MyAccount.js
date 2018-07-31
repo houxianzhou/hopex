@@ -5,15 +5,11 @@ import { classNames, _, Patterns } from '@utils'
 import { PATH } from '@constants'
 import styles from './MyAccount.less'
 
-@connect(({ user: model, loading, dispatch }) => ({
+@connect(({ account: model, }) => ({
   model,
-  modelName: 'user',
-  dispatch
 }))
 export default class View extends Component {
-  state = {
-    page: 1,
-  }
+
   renderStatus = (status) => {
     return status ? (
       <div className={styles.right} >
@@ -32,7 +28,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { page } = this.state
+    const { model: { myAccountPage: page }, modelName, dispatch } = this.props
     const { renderStatus } = this
     const columns = [
       {
@@ -89,12 +85,14 @@ export default class View extends Component {
                   已经设置
                   {renderStatus(true)}
                 </div >
-                <div className={
-                  classNames(
-                    styles.button,
-                    styles.login
-                  )
-                } >
+                <div
+                  className={
+                    classNames(
+                      styles.button,
+                      styles.login
+                    )
+                  }
+                >
                   修改
                 </div >
               </li >
@@ -107,10 +105,20 @@ export default class View extends Component {
                   提现，修改密码，及安全设置时用以输入谷歌验证码
                   {renderStatus(false)}
                 </div >
-                <div className={classNames(
-                  styles.button,
-                  styles.googlebutton
-                )} >修改
+                <div
+                  className={classNames(
+                    styles.button,
+                    styles.googlebutton
+                  )}
+                  onClick={() => {
+                    dispatch({
+                      type: `${modelName}/changeState`,
+                      payload: {
+                        myAccountPage: 2
+                      }
+                    })
+                  }} >
+                  修改
                 </div >
               </li >
             </ul >

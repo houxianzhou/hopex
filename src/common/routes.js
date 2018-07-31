@@ -43,6 +43,7 @@ export default [
   },
   {
     name: '我的账户',
+    model: ['account'],
     path: PATH.myaccount,
     route: 'User/account'
   },
