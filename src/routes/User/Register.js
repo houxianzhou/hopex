@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ToastContainer, toast } from 'react-toastify'
 import { ShowJsonTip, Select, Input, CountDown } from '@components'
-import { PATH } from '@constants'
+import { PATH, COLORS } from '@constants'
 import { classNames, _, Patterns } from '@utils'
 import { default as Structure } from './components/Structure'
 import emailpng from '@assets/email.png'
@@ -185,6 +185,12 @@ export default class View extends Component {
                           },
                           option: {
                             borderBottom: '1px solid #EBEBEB',
+                            selected: {
+                              color:COLORS.yellow,
+                            },
+                            focused:{
+                              color:COLORS.yellow,
+                            }
                           }
                         }}
                       />

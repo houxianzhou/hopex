@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Select, { components } from 'react-select'
+import { _ } from '@utils'
 
 export default class View extends Component {
   render() {
@@ -65,17 +66,23 @@ export default class View extends Component {
           menuList: () => ({
             background: 'white',
             width: '100%',
-            maxHeight: 300,
+            maxHeight: 220,
             overflowY: 'auto',
             boxShadow: '-1px 1px 5px #949494',
             ...styles.menuList
           }),
-          option: (_, { data, isDisabled, isFocused, isSelected }) => ({
-            textAlign: 'center',
-            borderBottom: '1px solid black',
-            padding: 20,
-            ...styles.option
-          }),
+          option: (style, { data, isDisabled, isFocused, isSelected }) => {
+            const focused = _.get(styles.option, 'focused') || {}
+            const selected = _.get(styles.option, 'selected') || {}
+            return {
+              textAlign: 'center',
+              borderBottom: '1px solid black',
+              padding: 20,
+              ...isFocused ? focused : {},
+              ...isSelected ? selected : {},
+              ...styles.option
+            }
+          },
         }} />
     )
   }
