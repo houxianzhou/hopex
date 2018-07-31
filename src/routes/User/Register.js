@@ -211,6 +211,9 @@ export default class View extends Component {
                         }
                       </div >
                       <div >接受<span >服务条款</span ></div >
+                      {
+                        !agentId ? <div className={styles.mustselect}>请勾选</div > : null
+                      }
                     </div >
                     <button
                       className={classNames(
