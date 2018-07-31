@@ -39,7 +39,7 @@ class Toast {
     }, 2000)
   }
 
-  message = (message = 'hahahah') => {
+  message = (message = 'message提示') => {
     toast((
       <div className={styles.toast_message}>ahhahah</div >
     ), {

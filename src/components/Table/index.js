@@ -124,7 +124,7 @@ export default class View extends Component {
           className
         )
       } >
-        <Table >
+        <Table style={style.table} >
           <Thead style={{ left: this.state.x, minWidth: scroll.x }} >
           <Tr >
             {

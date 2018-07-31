@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { ShowJsonTip, Input, NavPannel } from '@components'
+import { ShowJsonTip, Input, NavPannel, Table } from '@components'
 import { classNames, _, Patterns } from '@utils'
 import { PATH } from '@constants'
 import styles from './MyAccount.less'
@@ -11,19 +11,61 @@ import styles from './MyAccount.less'
   dispatch
 }))
 export default class View extends Component {
-  renderStatus = (right) => {
-    return right?(
+  state = {
+    page: 1,
+  }
+  renderStatus = (status) => {
+    return status ? (
       <div className={styles.right} >
         √
       </div >
-    ):(
-      <div>ahhah</div>
+    ) : (
+      <div className={
+        classNames(
+          styles.right,
+          styles.error
+        )
+      } >
+        x
+      </div >
     )
   }
 
   render() {
-    return (
-      <div className={styles.myaccount} >
+    const { page } = this.state
+    const { renderStatus } = this
+    const columns = [
+      {
+        title: '时间',
+        dataIndex: 'time'
+      },
+      {
+        title: '时间',
+        dataIndex: 'time'
+      },
+      {
+        title: '时间',
+        dataIndex: 'time'
+      }
+    ]
+    const tableProps = {
+      columns,
+      dataSource: [
+        {
+          time: '20:09:14'
+        }
+      ],
+      style: {
+        table: {
+          height: 200
+        }
+      },
+      classNames: styles.loginrecord,
+      scroll: {},
+    }
+
+    const page1 = (
+      <>
         <div className={styles.header} >
           <div className={styles.left} >
             <div className={styles.email} >2278095567@qq.com</div >
@@ -45,9 +87,7 @@ export default class View extends Component {
                   styles.loginpassword
                 )} >
                   已经设置
-                  <div className={styles.right} >
-                    √
-                  </div >
+                  {renderStatus(true)}
                 </div >
                 <div className={
                   classNames(
@@ -60,12 +100,42 @@ export default class View extends Component {
               </li >
               <li >
                 <div className={styles.name} >谷歌验证码</div >
-                <div className={styles.desc} >提现，修改密码，及安全设置时用以输入谷歌验证码</div >
-                <div className={styles.button} >修改</div >
+                <div className={classNames(
+                  styles.desc,
+                  styles.google
+                )} >
+                  提现，修改密码，及安全设置时用以输入谷歌验证码
+                  {renderStatus(false)}
+                </div >
+                <div className={classNames(
+                  styles.button,
+                  styles.googlebutton
+                )} >修改
+                </div >
               </li >
             </ul >
           </div >
+          <div className={styles.recentRecord} >
+            <div className={styles.recordheader} >
+              最近10条登录记录
+            </div >
+            <Table {...tableProps} />
+          </div >
         </div >
+      </>
+    )
+
+    const page2 = (
+      <>
+        ahhaha
+      </>
+    )
+
+    return (
+      <div className={styles.myaccount} >
+        {
+          page === 1 ? page1 : (page === 2 ? page2 : null)
+        }
       </div >
     )
   }

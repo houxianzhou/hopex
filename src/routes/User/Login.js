@@ -73,17 +73,17 @@ export default class View extends Component {
                   })
                 }}
 
-                // onCheck={(value) => {
-                //   if (value && !Patterns.email.test(value)) {
-                //     changeState({
-                //       emailMsg: '必须符合邮箱格式'
-                //     })
-                //   } else {
-                //     changeState({
-                //       emailMsg: ''
-                //     })
-                //   }
-                // }}
+                onCheck={(value) => {
+                  if (value && !Patterns.email.test(value)) {
+                    changeState({
+                      emailMsg: '必须符合邮箱格式'
+                    })
+                  } else {
+                    changeState({
+                      emailMsg: ''
+                    })
+                  }
+                }}
 
                 onClear={() => {
                   changeState({

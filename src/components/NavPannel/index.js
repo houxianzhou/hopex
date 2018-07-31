@@ -6,11 +6,13 @@ import { classNames, _, } from '@utils'
 
 export default class View extends Component {
   state = {
-    active: ''
+    active: '',
+    page: null
   }
 
   render() {
-    const { children, navList = [], defaultActive = '' } = this.props
+    const { page } = this.state
+    const { navList = [], defaultActive = '' } = this.props
     return (
       <div className={styles.navpannel} >
         <div className={styles.nav} >
@@ -33,9 +35,13 @@ export default class View extends Component {
 
                           onClick={() => {
                             if (_.isFunction(item.onClick)) {
-                              item.onClick()
+                              this.setState({
+                                page: item.onClick()
+                              })
                             }
-                          }} >{item.title}</li >
+                          }} >
+                          {item.title}
+                        </li >
                       ))
                     }
                   </ul >
@@ -45,7 +51,7 @@ export default class View extends Component {
           </ul >
         </div >
         <div className={styles.content} >
-          {children}
+          {page}
         </div >
       </div >
     )

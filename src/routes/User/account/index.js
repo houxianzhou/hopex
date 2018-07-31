@@ -16,9 +16,10 @@ const Comp = {
   dispatch
 }))
 export default class View extends Component {
+
   renderPage = (page) => {
     const RenderItem = Comp[page]
-    return <RenderItem ></RenderItem >
+    return <RenderItem />
   }
 
   render() {
@@ -34,13 +35,14 @@ export default class View extends Component {
               list: [{
                 name: 'MyAccount',
                 title: '我的账户',
+                onClick: () => renderPage('MyAccount')
               }]
             }
           ]}
         >
-          {
-            renderPage('MyAccount')
-          }
+          {/*{*/}
+          {/*renderPage('MyAccount')*/}
+          {/*}*/}
         </NavPannel >
       </div >
     )

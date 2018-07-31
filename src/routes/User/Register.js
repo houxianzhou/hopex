@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ToastContainer, toast } from 'react-toastify'
 import { ShowJsonTip, Select, Input, CountDown } from '@components'
+import { PATH } from '@constants'
 import { classNames, _, Patterns } from '@utils'
 import { default as Structure } from './components/Structure'
 import emailpng from '@assets/email.png'
@@ -226,6 +227,18 @@ export default class View extends Component {
                     >
                       注册
                     </button >
+                    <div className={styles.loginentry} >已经有账户 ?
+                      <span
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                          dispatch({
+                            type: `${modelName}/routerGo`,
+                            payload: PATH.login
+                          })
+                        }}
+
+                      >登录</span >
+                    </div >
                   </form >
                 </div >
               </div >

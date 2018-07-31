@@ -64,6 +64,9 @@
             &.loginpassword {
               color: #E2B96F;
             }
+            &.google {
+              color: #232833;
+            }
             .right {
               display: flex;
               justify-content: center;
@@ -74,6 +77,10 @@
               height: 22px;
               border-radius: 22px;
               background: rgba(86, 188, 157, .1);
+              &.error {
+                background: rgba(218, 115, 115, .1);
+                color: #DA7373;
+              }
             }
           }
           .button {
@@ -87,6 +94,39 @@
               color: #E2B96F;
               border: 1px solid #E2B96F;
             }
+            &.googlebutton {
+              color: #FFFFFF;
+              background-image: linear-gradient(90deg, #EBCB80 0%, #E0BD7E 100%);
+            }
+
+          }
+        }
+      }
+    }
+    .recentRecord {
+      padding-right: 40px;
+      .recordheader {
+        margin: 60px 0;
+        font-size: 18px;
+        color: #1D222E;
+      }
+    }
+    :global {
+      .thead {
+        .tr {
+          padding-left: 10px;
+          color: #999999;
+
+          height: 50px;
+        }
+      }
+      .tbody {
+        .tr {
+          padding-left: 10px;
+          height: 50px;
+          color: #232833;
+          &.even{
+            background: #F6F8FA;
           }
         }
       }
