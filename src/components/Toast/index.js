@@ -28,7 +28,7 @@ class Toast {
   }
 
 
-  tip = (content = 'tip提示',interval=2000) => {
+  tip = (content = '服务错误提示', interval = 2000) => {
     const toast = this.renderElement('tip', (
       <div className={styles.toast_tip} >
         <div className={styles.content} >{content}</div >
@@ -41,7 +41,7 @@ class Toast {
 
   message = (message = 'message提示') => {
     toast((
-      <div className={styles.toast_message}>ahhahah</div >
+      <div className={styles.toast_message} >ahhahah</div >
     ), {
       autoClose: false,
       bodyClassName: styles.toast_message_body,

@@ -50,7 +50,7 @@ export default class View extends Component {
             position: 'relative',
             width: '100%',
             display: 'flex',
-            justifyContent: 'center',
+            // justifyContent: 'center',
             ...styles.valueContainer
           }),
           menu: () => ({
@@ -68,14 +68,14 @@ export default class View extends Component {
             width: '100%',
             maxHeight: 220,
             overflowY: 'auto',
-            boxShadow: '-1px 1px 5px #949494',
+            boxShadow: 'box-shadow: 0 4px 8px 0 rgba(0,0,0,0.03)',
             ...styles.menuList
           }),
           option: (style, { data, isDisabled, isFocused, isSelected }) => {
             const focused = _.get(styles.option, 'focused') || {}
             const selected = _.get(styles.option, 'selected') || {}
             return {
-              textAlign: 'center',
+              textAlign: 'left',
               borderBottom: '1px solid black',
               padding: 20,
               ...isFocused ? focused : {},

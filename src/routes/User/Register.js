@@ -181,9 +181,10 @@ export default class View extends Component {
                         styles={{
                           menu: {
                             paddingRight: 20,
+                            top:35,
                           },
                           menuList: {
-                            width: '90%'
+                            width: '100%'
                           },
                           option: {
                             borderBottom: '1px solid #EBEBEB',

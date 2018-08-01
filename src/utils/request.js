@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { _, localSave } from '@utils'
+import { Toast } from '@components'
 import pathToRegexp from 'path-to-regexp'
 import { stringify } from 'qs'
 import { message as Message } from 'antd'
@@ -77,12 +78,12 @@ export function request(url = '', options = {}) {
           } else {
             if (_.has(error, 'response.data.errMsg') || _.has(error, 'response.data.errStr')) {
               const message = _.get(error, 'response.data.errMsg') || _.get(error, 'response.data.errStr')
-              Message.error(message)
+              Toast.tip(message)
             } else {
               if (method === 'get') {
-                Message.error('数据获取失败')
+                Toast.tip('数据获取失败')
               } else {
-                Message.error('操作失败')
+                Toast.tip('操作失败')
               }
             }
           }
