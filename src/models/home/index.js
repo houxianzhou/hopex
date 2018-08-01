@@ -5,7 +5,8 @@ import modelExtend from '@models/modelExtend'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
-  getPosition, getPersonEnsureDetail, getAllMarkets, getLeverage, doUpdateLeverage
+  getPosition, getPersonEnsureDetail, getAllMarkets, getLeverage, doUpdateLeverage,
+  getKlineAllList
 } from "@services/trade"
 
 
@@ -20,8 +21,8 @@ export default joinModel(modelExtend, {
     latest_records: [],// 最新成交
     ensure_records: {},// 委托列表
 
-    maxPrice: null, // 24h最高
-    minPrice: null, // 24最低
+    maxPrice24h: null, // 24h最高
+    minPrice24h: null, // 24最低
     indexPrice: null, // 现货价格指数
 
     latestPrice: null, //直接从最新成交列表拿的，最新交易价格
@@ -115,6 +116,40 @@ export default joinModel(modelExtend, {
 
     //K线图全量查询
     * getKlineAllList({ payload = {} }, { call, put }) {
+      const { startTime, endTime } = payload
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {
+            "method": "market.kline",
+          },
+          param: {
+            "startTime": startTime,
+            "endTime": endTime,
+            "interval": "86400"
+          }
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getKlineAllList, repayload))
+        if (resOk(res)) {
+          const result = _.get(res, 'data') || {}
+          const { records = [], maxPrice24h, minPrice24h } = result
+          yield put({
+            type: 'changeState',
+            payload: {
+              maxPrice24h,
+              minPrice24h
+            }
+          })
+          // ...maxPrice ? { maxPrice: formatNumber(maxPrice, 4) } : {},
+          // ...minPrice ? { minPrice: formatNumber(minPrice, 4) } : {},
+          // ...price ? { indexPrice: formatNumber(price, 4) } : {}
+          return records
+        }
+      }
+    },
+    * getKlineAllListFromWs({ payload = {} }, { call, put }) {
       const ws1 = wss.getSocket('ws1')
       const { startTime, endTime } = payload
       const repayload = yield (asyncPayload(yield put({
@@ -215,7 +250,7 @@ export default joinModel(modelExtend, {
     },
 
     //现货价格指数，24最高，24h最低
-    * getImportantPrice({ payload = {} }, { call, put }) {
+    * getImportantPriceFromWs({ payload = {} }, { call, put }) {
       const { method } = payload
       const ws2 = wss.getSocket('ws2')
       if (method === 'sub') {
@@ -538,8 +573,8 @@ export default joinModel(modelExtend, {
         latest_records: [],// 最新成交
         ensure_records: {},// 委托列表
 
-        maxPrice: null, // 24h最高
-        minPrice: null, // 24最低
+        maxPrice24h: null, // 24h最高
+        minPrice24h: null, // 24最低
         indexPrice: null, // 现货价格指数
 
         // minVaryPrice: null, //最小变动价位

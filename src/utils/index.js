@@ -17,7 +17,7 @@ export const getRes = function (res) {
   if (res) {
     return {
       head: _.get(res, 'data.head') || _.get(res, 'head') || {},
-      data: _.has(res, 'data.data') ? _.get(res, 'data.data') : (_.has(res, 'data') ? _.get(res, 'data') : res)
+      data: _.has(res, 'data.data.data')?_.get(res, 'data.data.data'):(_.has(res, 'data.data') ? _.get(res, 'data.data') : (_.has(res, 'data') ? _.get(res, 'data') : res))
     }
   }
   return {

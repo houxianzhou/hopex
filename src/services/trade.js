@@ -71,13 +71,7 @@ export async function doCancelPersonEnsure(payload) {
   })
 }
 
-// 下限价单
-export async function postLimitOrder(payload) {
-  return await request(`${UserIp4}/order.put_limit`, {
-    method: 'post',
-    body: payload
-  })
-}
+
 
 
 // 查询杠杆倍数
@@ -96,6 +90,23 @@ export async function doUpdateLeverage(payload) {
   })
 }
 
+// tradeviewK线图及其上面的价格指数，24小时最高最低
+export async function getKlineAllList(payload) {
+  return await request(`${UserIp3}/market.kline`, {
+    method: 'post',
+    body: payload
+  })
+}
+
+
+
+// 下限价单
+export async function postLimitOrder(payload) {
+  return await request(`${UserIp4}/order.put_limit`, {
+    method: 'post',
+    body: payload
+  })
+}
 
 // 下市价单
 export async function postMarketOrder(payload) {

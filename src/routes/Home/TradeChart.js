@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import echarts from 'echarts'
 import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson } from '@utils'
 import { Mixin } from "@components"
 import wss from '@services/SocketClient'
@@ -8,7 +9,8 @@ import * as styles from './index.less'
 
 export default class View extends Component {
   state = {
-    loaded: false
+    loaded: false,
+    // map:''
   }
 
   componentDidMount() {
@@ -17,7 +19,8 @@ export default class View extends Component {
 
   startInit = () => {
     this.startKline()
-    this.getImportantPrice()
+    // this.getImportantPrice()
+    // this.startDeepMap()
   }
 
 
@@ -25,12 +28,152 @@ export default class View extends Component {
     this.setState(payload)
   }
 
+  startDeepMap = () => {
+    // const canvas = document.getElementById('deepChart')
+    // const deepChartContainer = document.getElementById('deepChartContainer')
+    // console.log(deepChartContainer.offsetHeight,deepChartContainer.offsetWidth)
+    // canvas.setAttribute('height',deepChartContainer.offsetHeight);
+    // canvas.setAttribute('width', deepChartContainer.offsetWidth);
+    const myChart = echarts.init(document.getElementById('deepChart'))
+
+    const data = [
+      [1514739661000, 40],
+      [1514826061000, 13],
+      [1514912461000, 30],
+      [1514998861000, 4]
+    ]
+
+
+    const dims = {
+      time: 0,
+      waveHeight: 1,
+    };
+
+
+    const option = {
+
+      tooltip: {
+        trigger: 'axis',
+        formatter: function (params) {
+          return [
+            echarts.format.formatTime('yyyy-MM-dd', params[0].value[dims.time])
+            + ' ' + echarts.format.formatTime('hh:mm', params[0].value[dims.time]),
+            '风速：' + params[0].value[dims.windSpeed],
+            '风向：' + params[0].value[dims.R],
+            '浪高：' + params[0].value[dims.waveHeight]
+          ].join('<br>');
+        }
+      },
+      grid: {
+        left: 0,
+        right: 40,
+        top: 0,
+        bottom: 45
+        // top: 160,
+        // bottom: 125
+      },
+      xAxis: {
+        type: 'time',
+        maxInterval: 3600 * 1000 * 24,
+        splitLine: {
+          lineStyle: {
+            color: '#ddd'
+          }
+        }
+      },
+      yAxis: [
+        {
+          //name: '浪高（米）',
+          nameLocation: 'middle',
+          nameGap: 35,
+          max: 6,
+          axisLine: {
+            lineStyle: {
+              color: '#015DD5'
+            }
+          },
+          splitLine: { show: false }
+        }, {
+          axisLine: { show: true },
+          axisTick: { show: true },
+          axisLabel: { show: true },
+          splitLine: { show: false }
+        }],
+
+      // dataZoom: [
+      //   {
+      //     type: 'inside',
+      //     xAxisIndex: 0,
+      //     minSpan: 5
+      //   },
+      //   {
+      //     type: 'slider',
+      //     xAxisIndex: 0,
+      //     minSpan: 5,
+      //     height: 20,
+      //     bottom: 50,
+      //     handleIcon: 'M10.7,11.9H9.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4h1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+      //     handleSize: '120%'
+      //   }],
+      series: [
+        {
+          type: 'line',
+          yAxisIndex: 1,
+          showSymbol: false,
+          hoverAnimation: false,
+          symbolSize: 10,
+          areaStyle: {
+            normal: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0, color: 'rgba(88,160,253,1)'
+                }, {
+                  offset: 0.5, color: 'rgba(88,160,253,0.7)'
+                }, {
+                  offset: 1, color: 'rgba(88,160,253,0)'
+                }]
+              }
+            }
+          },
+          lineStyle: {
+            normal: {
+              color: 'rgba(88,160,253,1)'
+            }
+          },
+          itemStyle: {
+            normal: {
+              color: 'rgba(88,160,253,1)'
+            }
+          },
+          encode: {
+            x: dims.time,
+            y: dims.waveHeight
+          },
+          data: data,
+          z: 2
+        }
+      ]
+    };
+
+
+    myChart.setOption(option);
+    window.onresize = () => {
+
+      myChart.resize()
+    }
+  }
+
   startKline = () => {
     const { model: { marketCode }, dispatch, modelName } = this.props
     const TradingView = window.TradingView
     // const Datafeeds = window.Datafeeds
     // window.$ = $
-    const ws1 = wss.getSocket('ws1')
+    // const ws1 = wss.getSocket('ws1')
     const widget = new TradingView.widget({
       disabled_features: [
         "left_toolbar",
@@ -73,7 +216,10 @@ export default class View extends Component {
         searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
         },
         resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
-          ws1.onConnectPromise().then(() => {
+          // ws1.onConnectPromise().then(() => {
+          //
+          // })
+          setTimeout(()=>{
             onSymbolResolvedCallback({
               "name": "",
               "timezone": "Asia/Shanghai",
@@ -168,13 +314,13 @@ export default class View extends Component {
     })
   }
 
-  getImportantPrice = () => {
+  getImportantPriceFromWs = () => {
     let chanId
     const ws2 = wss.getSocket('ws2')
     const { dispatch, modelName } = this.props
     ws2.onConnectPromise().then(() => {
       dispatch({
-        type: `${modelName}/getImportantPrice`,
+        type: `${modelName}/getImportantPriceFromWs`,
         payload: {
           method: 'sub'
         }
@@ -191,13 +337,13 @@ export default class View extends Component {
         res = getRes(res)
         if (resOk(res)) {
           const result = formatJson(res.data)
-          const { minPrice, maxPrice, price } = result
-          if (minPrice || maxPrice || price) {
+          const { minPrice24h, maxPrice24h, price } = result
+          if (minPrice24h || maxPrice24h || price) {
             dispatch({
               type: `${modelName}/changeState`,
               payload: {
-                ...maxPrice ? { maxPrice: formatNumber(maxPrice, 4) } : {},
-                ...minPrice ? { minPrice: formatNumber(minPrice, 4) } : {},
+                ...maxPrice24h ? { maxPrice24h: formatNumber(maxPrice24h, 4) } : {},
+                ...minPrice24h ? { minPrice24h: formatNumber(minPrice24h, 4) } : {},
                 ...price ? { indexPrice: formatNumber(price, 4) } : {}
               }
             })
@@ -224,7 +370,7 @@ export default class View extends Component {
 
   render() {
     const { loaded } = this.state
-    const { model: { marketName = '', maxPrice, minPrice, indexPrice, latestPrice } } = this.props
+    const { model: { marketName = '', maxPrice24h, minPrice24h, indexPrice, latestPrice } } = this.props
     const intervals = [
       { name: '1min' }, { name: '5min' }, { name: '15min' }, { name: '30min' },
       { name: '1hour' }, { name: '4hour' }, { name: '1day' }, { name: '5day' }, { name: '1week' }, { name: '1mon' }
@@ -237,7 +383,7 @@ export default class View extends Component {
               {
                 view: true
               },
-              styles.tradeChart
+              styles.tradeChart,
             )
           }
         >
@@ -275,11 +421,11 @@ export default class View extends Component {
                       </li >
                       <li >
                         <div className={`${styles.title}`} >24h最高</div >
-                        <div className={`${styles.desc} ${styles.maxprice}`} >{maxPrice}</div >
+                        <div className={`${styles.desc} ${styles.maxprice}`} >{maxPrice24h}</div >
                       </li >
                       <li >
                         <div className={styles.title} >24h最低</div >
-                        <div className={`${styles.desc} ${styles.lowprice}`} >{minPrice}</div >
+                        <div className={`${styles.desc} ${styles.lowprice}`} >{minPrice24h}</div >
                       </li >
                       <li >
                         <div className={styles.title} >24h交易额</div >
@@ -316,14 +462,19 @@ export default class View extends Component {
                 }
 
               </div >
-              <div className={styles.tradeview} >
-                <div id='tradeView' style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%'
-                }} >
+              <div className={styles.kmap} >
+
+                <div className={styles.tradeview} >
+                  <div id='tradeView' style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%'
+                  }} >
+                  </div >
                 </div >
+
               </div >
+
             </div >
           </ScrollPannel >
         </div >

@@ -15,6 +15,7 @@
     "dva": "^2.3.1",
     "dva-loading": "^2.0.3",
     "dva-model-extend": "^0.1.2",
+    "echarts": "^4.1.0",
     "fastclick": "^1.0.6",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
