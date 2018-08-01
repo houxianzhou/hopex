@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import echarts from 'echarts'
-import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson } from '@utils'
+import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson, isEqual } from '@utils'
 import { Mixin } from "@components"
 import wss from '@services/SocketClient'
 import arrow_down from '@assets/arrow_down.png'
@@ -12,6 +12,14 @@ import * as styles from './index.less'
 export default class View extends Component {
   componentWillUnmount() {
     window.onresize = null
+  }
+
+  componentDidUpdate(prevProps) {
+    const { model: { ensure_records: prevEnsure_records } } = prevProps
+    const { model: { ensure_records: ensure_records } } = this.props
+    if (!isEqual(prevEnsure_records, ensure_records) && prevEnsure_records && ensure_records) {
+      this.startDeepMap()
+    }
   }
 
   state = {
@@ -26,7 +34,7 @@ export default class View extends Component {
   startInit = () => {
     // this.startKline()
     // this.getImportantPrice()
-    this.startDeepMap()
+    // this.startDeepMap()
   }
 
 
@@ -35,17 +43,15 @@ export default class View extends Component {
   }
 
   startDeepMap = () => {
+    const { model: { ensure_records: { asks = [], bids = [] } = {} } } = this.props
     const deepChart = document.getElementById('deepChart')
     if (!deepChart) return
     const myChart = echarts.init(document.getElementById('deepChart'))
 
-    const data = [
-      [0, 40],
-      [1, 13],
-      [2, 30],
-      [3, 4]
-    ]
-
+    const data = asks.reverse().reduce((sum, item) => {
+      sum.push([item.price, item.amount])
+      return sum
+    }, [])
 
     const dims = {
       time: 0,
@@ -54,7 +60,6 @@ export default class View extends Component {
 
 
     const option = {
-
       tooltip: {
         trigger: 'axis',
         formatter: function (params) {
@@ -404,6 +409,8 @@ export default class View extends Component {
       { name: '1min' }, { name: '5min' }, { name: '15min' }, { name: '30min' },
       { name: '1hour' }, { name: '4hour' }, { name: '1day' }, { name: '5day' }, { name: '1week' }, { name: '1mon' }
     ]
+
+
     return (
       <Mixin.Child that={this} >
         <div

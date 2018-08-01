@@ -99,17 +99,19 @@ export default joinModel(modelExtend, {
 
       if (resOk(res)) {
         const result = {
-          asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc'])||[],
-          bids: _.orderBy(formatNumber(_.get(res.data, 'bids'), ['price', 'amount']), ['price'], ['desc'])||[]
+          asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc']) || [],
+          bids: _.orderBy(formatNumber(_.get(res.data, 'bids'), ['price', 'amount']), ['price'], ['desc']) || []
         }
 
         result.asks.map((item, index) => {
           item.type = 'sell'
-          console.log(_.sumBy(result.asks[index, result.asks.length-1], ({ amount }) => {
-            console.log(amount)
-            return amount
-          }))
-          item.sum = _.sumBy(result.asks[index, result.asks.length-1], ({ amount } = 0) => amount)
+          item.sum = _.sumBy(result.asks.slice(index, result.asks.length), ({ amount = 0 } = {}) => amount)
+        })
+
+
+        result.bids.map((item, index) => {
+          item.type = 'buy'
+          item.sum = _.sumBy(result.bids.slice(0, index + 1), ({ amount = 0 } = {}) => amount)
 
         })
 
@@ -146,8 +148,9 @@ export default joinModel(modelExtend, {
         const res = getRes(yield call(getKlineAllList, repayload))
         if (resOk(res)) {
           const result = _.get(res, 'data') || {}
-          const { records = [], maxPrice24h, minPrice24h, marketPrice,
-            priceLast, totalPrice24h, percent ,dollarPrice
+          const {
+            records = [], maxPrice24h, minPrice24h, marketPrice,
+            priceLast, totalPrice24h, percent, dollarPrice
           } = result
           yield put({
             type: 'changeState',
@@ -158,7 +161,7 @@ export default joinModel(modelExtend, {
               latestPrice: formatNumber(priceLast, 'p'),
               totalPrice24h,
               latestPriceChangePercent: percent,
-              dollarPrice:formatNumber(dollarPrice, 'p'),
+              dollarPrice: formatNumber(dollarPrice, 'p'),
             }
           })
           // ...maxPrice ? { maxPrice: formatNumber(maxPrice, 4) } : {},

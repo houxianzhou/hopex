@@ -83,7 +83,7 @@ export default class View extends Component {
                 dataValue: item.amount
               }))}
             >
-              {value || '--'}
+              {value}
             </ColorChange >
           )
         }
@@ -121,13 +121,18 @@ export default class View extends Component {
       dataSource: (new Array((8 - dataTop.length) > 0 ? (8 - dataTop.length) : 0)).fill().concat(dataTop.slice(0, 8))
     }
 
+    // const tableDownProps = {
+    //   ...tableProps,
+    //   dataSource: _.merge((new Array(8)).fill(), dataDown.slice(0, 8).map((item, index) => {
+    //     item.type = 'buy'
+    //     item.sum = _.sumBy(dataDown.slice(0, index + 1), ({ amount }) => amount)
+    //     return item
+    //   }))
+    // }
+
     const tableDownProps = {
       ...tableProps,
-      dataSource: _.merge((new Array(8)).fill(), dataDown.slice(0, 8).map((item, index) => {
-        item.type = 'buy'
-        item.sum = _.sumBy(dataDown.slice(0, index + 1), ({ amount } = 0) => amount)
-        return item
-      }))
+      dataSource: _.merge((new Array(8)).fill(), dataDown.slice(0, 8))
     }
 
     max = _.maxBy([...tableTopProps.dataSource, ...tableDownProps.dataSource], ({ sum } = {}) => sum)
