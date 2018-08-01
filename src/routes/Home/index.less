@@ -146,6 +146,14 @@
         .compare {
           color: @_green;
           margin-left: 20px;
+          display: flex;
+          flex-direction: column;
+          span.green{
+            color:@_green;
+          }
+          span.ren{
+            color:@_red;
+          }
         }
       }
       .right {
@@ -159,7 +167,7 @@
           padding: 0;
           height: 100%;
           li + li {
-            margin-left: 51px;
+            margin-left: 45px;
           }
           li {
             white-space: nowrap;

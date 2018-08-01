@@ -3,6 +3,8 @@ import echarts from 'echarts'
 import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson } from '@utils'
 import { Mixin } from "@components"
 import wss from '@services/SocketClient'
+import arrow_down from '@assets/arrow_down.png'
+import arrow_top from '@assets/arrow_top.png'
 import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
@@ -219,7 +221,7 @@ export default class View extends Component {
           // ws1.onConnectPromise().then(() => {
           //
           // })
-          setTimeout(()=>{
+          setTimeout(() => {
             onSymbolResolvedCallback({
               "name": "",
               "timezone": "Asia/Shanghai",
@@ -370,7 +372,12 @@ export default class View extends Component {
 
   render() {
     const { loaded } = this.state
-    const { model: { marketName = '', maxPrice24h, minPrice24h, indexPrice, latestPrice } } = this.props
+    const {
+      model: {
+        marketName = '', maxPrice24h, minPrice24h, indexPrice,
+        latestPrice, latestPriceTrend, totalPrice24h, equitablePrice, latestPriceChangePercent, dollarPrice
+      }
+    } = this.props
     const intervals = [
       { name: '1min' }, { name: '5min' }, { name: '15min' }, { name: '30min' },
       { name: '1hour' }, { name: '4hour' }, { name: '1day' }, { name: '5day' }, { name: '1week' }, { name: '1mon' }
@@ -403,8 +410,29 @@ export default class View extends Component {
                       marketName ? (
                         <>
                           <div className={styles.marketname} >{marketName}</div >
-                          < div className={styles.latestprice} >{latestPrice}</div >
-                          <div className={styles.compare} >13.45</div >
+                          < div className={styles.latestprice} >
+                            {latestPrice}
+                            {
+                              latestPriceTrend ? (
+                                <img alt='top' src={arrow_top} />
+                              ) : (
+                                <img alt='down' src={arrow_down} />
+                              )
+                            }
+                          </div >
+                          <div className={styles.compare} >
+                            <div className={styles.percent} >
+                              {
+                                Number(latestPriceChangePercent) > 0 ? (
+                                  <span className={styles.green} >{`${latestPriceChangePercent}%`}</span >
+                                ) : (
+                                  <span className={styles.red} >{`${latestPriceChangePercent}%`}</span >
+                                )
+
+                              }
+                            </div >
+                            <div className={styles.dollar} >{dollarPrice}</div >
+                          </div >
                         </>
                       ) : null
                     }
@@ -417,7 +445,7 @@ export default class View extends Component {
                       </li >
                       <li >
                         <div className={styles.title} >合理价格</div >
-                        <div className={styles.desc} >暂无</div >
+                        <div className={styles.desc} >{equitablePrice}</div >
                       </li >
                       <li >
                         <div className={`${styles.title}`} >24h最高</div >
@@ -429,7 +457,7 @@ export default class View extends Component {
                       </li >
                       <li >
                         <div className={styles.title} >24h交易额</div >
-                        <div className={styles.desc} >暂无</div >
+                        <div className={styles.desc} >{totalPrice24h}</div >
                       </li >
                     </ul >
                   </div >

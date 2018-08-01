@@ -24,11 +24,13 @@ export default joinModel(modelExtend, {
     maxPrice24h: null, // 24h最高
     minPrice24h: null, // 24最低
     indexPrice: null, // 现货价格指数
-
-    latestPrice: null, //直接从最新成交列表拿的，最新交易价格
+    totalPrice24h: null,//z4小时交易总额
+    latestPrice: null, //最新交易价格,改为从tradeview k线接口拉取
+    latestPriceChangePercent: null,//最新价相比24小时前价格的涨跌幅
+    dollarPrice: null,//换算成美元
     latestPriceTrend: 1,//1||0合理趋势，比上次大为1小就是0
-
     equitablePrice: null, // 计算出来的，合理价格
+
 
     minVaryPrice: null, //最小变动价位
     minDealAmount: null, //最小交易量
@@ -74,7 +76,6 @@ export default joinModel(modelExtend, {
           type: 'changeState',
           payload: {
             latest_records: res.data.records,
-            latestPrice: _.get(res.data.records[0], 'price')
           }
         })
         return res
@@ -134,12 +135,19 @@ export default joinModel(modelExtend, {
         const res = getRes(yield call(getKlineAllList, repayload))
         if (resOk(res)) {
           const result = _.get(res, 'data') || {}
-          const { records = [], maxPrice24h, minPrice24h } = result
+          const { records = [], maxPrice24h, minPrice24h, marketPrice,
+            priceLast, totalPrice24h, percent ,dollarPrice
+          } = result
           yield put({
             type: 'changeState',
             payload: {
               maxPrice24h,
-              minPrice24h
+              minPrice24h,
+              indexPrice: formatNumber(marketPrice, 'p'),
+              latestPrice: formatNumber(priceLast, 'p'),
+              totalPrice24h,
+              latestPriceChangePercent: percent,
+              dollarPrice:formatNumber(dollarPrice, 'p'),
             }
           })
           // ...maxPrice ? { maxPrice: formatNumber(maxPrice, 4) } : {},

@@ -163,7 +163,7 @@ export default class View extends Component {
                 </div >
                 <div className={styles.right} >
                   <img alt='ensure' className={styles.ensure} src={ensure} />
-                  {equitablePrice || null}/{indexPrice}
+                  {indexPrice}/{equitablePrice || null}
                 </div >
               </div >
               <div className={styles.down} >

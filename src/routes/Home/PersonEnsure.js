@@ -76,16 +76,17 @@ export default class View extends Component {
       },
       {
         title: '成交均价',
-        dataIndex: 'work',
+        dataIndex: 'avgDealMoney',
         render: (v) => formatNumber(v, 'p')
       },
       {
         title: '委托占用保证金',
-        dataIndex: 'work',
+        dataIndex: 'delegateMoney',
+        render: (v) => formatNumber(v, 'p')
       },
       {
         title: '手续费',
-        dataIndex: 'taker_fee',
+        dataIndex: 'dealFee',
         render: (v) => formatNumber(v, 'p')
       },
       {
@@ -96,8 +97,8 @@ export default class View extends Component {
       {
         title: '状态',
         width: 100,
-        dataIndex: 'amount',
-        render: (value, record) => value && value === record.left ? '等待成交' : (value ? '部分成交' : null)
+        dataIndex: 'orderStatus',
+        render: (value) => value === '1' ? '部分成交' : '等待成交'
       },
       {
         title: '操作',
