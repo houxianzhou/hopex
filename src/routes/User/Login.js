@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { ShowJsonTip, Input } from '@components'
-import { classNames, _, Patterns } from '@utils'
+import { ShowJsonTip, Input, Toast } from '@components'
+import { classNames, _, Patterns, localSave } from '@utils'
 import { PATH } from '@constants'
 import logo2 from '@assets/logo2.png'
 import emailpng from '@assets/email.png'
@@ -15,6 +15,16 @@ import styles from './index.less'
   dispatch
 }))
 export default class View extends Component {
+  componentDidMount() {
+    const newPasswordSave = localSave.get('newPassword') || {}
+    const { email, newPassword } = newPasswordSave
+    if (email && newPassword) {
+      this.changeState({ email, password: newPassword })
+      Toast.tip('重置密码成功')
+      localSave.remove('newPassword')
+    }
+  }
+
   state = {
     email: '',
     emailMsg: '',
@@ -49,7 +59,7 @@ export default class View extends Component {
     }
     const { changeState } = this
     const { email, emailMsg, password, passwordMsg } = this.state
-    const { dispatch, modelName } = this.props
+    const { dispatch, modelName, } = this.props
     return (
       <Structure >
         <div className={styles.login} >
@@ -175,7 +185,7 @@ export default class View extends Component {
                     payload: PATH.forgetPassword
                   })
                 }}
-              >忘记密码
+              >忘记密码 ?
               </div >
               <div
                 style={{ cursor: 'pointer' }}

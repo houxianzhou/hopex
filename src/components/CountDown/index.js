@@ -8,10 +8,8 @@ export default class View extends Component {
   }
 
   componentDidMount() {
-    const { auto = false, onClick } = this.props
-    if (auto && _.isFunction(onClick)) {
-      this.startUp()
-    }
+    const { auto = true, action = true } = this.props
+    this.startUp(auto, action)
   }
 
   componentWillUnmount() {
@@ -38,10 +36,12 @@ export default class View extends Component {
     }, 1000)
   }
 
-  startUp = () => {
+  startUp = (auto = true, action = true) => {
     const { onClick } = this.props
-    if (_.isFunction(onClick)) onClick()
-    this.countDown()
+    if (auto) {
+      if (_.isFunction(onClick) && action) onClick()
+      this.countDown()
+    }
   }
 
   render() {

@@ -16,7 +16,7 @@ import {
   GetEnableGoogleVertifyCode,
   doDisbaleGoogleVertify
 } from '@services/user'
-import { _, getRes, resOk, joinModel, localSave, asyncPayload, delay } from '@utils'
+import { _, getRes, resOk, joinModel, localSave, asyncPayload, delay, } from '@utils'
 import { Toast } from '@components'
 import { PATH } from '@constants'
 import modelExtend from '@models/modelExtend'
@@ -149,7 +149,9 @@ export default joinModel(modelExtend, {
       const res = getRes(yield call(doSendEmailCode, payload, (err) => {
         Toast.tip(err.errStr)
       }))
-      // {"data":"","ret":0,"errCode":null,"errStr":null}
+      if (resOk(res)) {
+        return res
+      }
     },
     * doVertifyCode({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doVertifyCode, payload, (err) => {
@@ -166,13 +168,16 @@ export default joinModel(modelExtend, {
         Toast.tip(err.errStr)
       }))
       if (resOk(res)) {
-        Toast.tip('重置密码成功，请登录')
-        const result = yield (asyncPayload(delay(2000)))
+        // Toast.tip('重置密码成功')
+        const result = yield (asyncPayload(delay(0)))
         if (result) {
           yield put({
             type: 'routerGo',
-            payload: PATH.login
+            payload: {
+              pathname: PATH.login,
+            }
           })
+          localSave.set('newPassword', payload)
         }
       }
     },

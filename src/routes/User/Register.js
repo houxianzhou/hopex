@@ -108,7 +108,7 @@ export default class View extends Component {
                       onCheck={(value) => {
                         if (value && !Patterns.email.test(value)) {
                           changeState({
-                            emailMsg: '必须符合邮箱格式'
+                            emailMsg: '邮箱格式错误'
                           })
                         } else {
                           changeState({
@@ -212,13 +212,13 @@ export default class View extends Component {
                       </div >
                       <div >接受<span >服务条款</span ></div >
                       {
-                        !agentId ? <div className={styles.mustselect}>请勾选</div > : null
+                        !agentId ? <div className={styles.mustselect} >请勾选</div > : null
                       }
                     </div >
                     <button
                       className={classNames(
                         styles.formbutton,
-                        email && !emailMsg && password && !passwordMsg && agentId ? styles.permit : styles.notpermit
+                        email && !emailMsg && password && !passwordMsg && agentId && countryCode ? styles.permit : styles.notpermit
                       )}
                       onClick={(e) => {
                         e.preventDefault()
@@ -278,7 +278,7 @@ export default class View extends Component {
                       )}
                       iconPost={(
                         <div className={styles.resend} >
-                          <CountDown auto onClick={() => {
+                          <CountDown action={false} onClick={() => {
                             dispatch({
                               type: `${modelName}/doSendRegistVerificationCode`,
                               payload: {

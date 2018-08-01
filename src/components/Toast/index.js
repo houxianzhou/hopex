@@ -28,7 +28,7 @@ class Toast {
   }
 
 
-  tip = (content = 'tip提示') => {
+  tip = (content = 'tip提示',interval=2000) => {
     const toast = this.renderElement('tip', (
       <div className={styles.toast_tip} >
         <div className={styles.content} >{content}</div >
@@ -36,7 +36,7 @@ class Toast {
     ))
     this.interval = setTimeout(() => {
       toast.parentNode.removeChild(toast)
-    }, 2000)
+    }, interval)
   }
 
   message = (message = 'message提示') => {

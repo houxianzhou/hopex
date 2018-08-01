@@ -64,7 +64,7 @@ export default class View extends Component {
           </div >
         </div >
         {
-          msg ? (<div className='desc' >{msg}</div >) : null
+          msg ? (<div className='inputmsgdesc' >{msg}</div >) : null
         }
       </div >
     )

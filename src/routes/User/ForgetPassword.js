@@ -41,15 +41,16 @@ export default class View extends Component {
     const { dispatch, modelName } = this.props
 
     return (
-      <Structure goBack={page === 2 ? () => {
-        changeState({ page: 1 })
+      <Structure goBack={page !== 1 ? () => {
+        changeState({ page: page - 1 })
       } : null} >
         <div className={styles.forgetPassword} >
           {
             page === 1 ? (
-              <div className={styles.page1} >
+              <div className={styles.page2} >
                 <div className={styles.top} >
                   重置密码
+                  <div className={styles.desc} ><span >*</span >重置密码后24小时内不能提现</div >
                 </div >
                 <div className={styles.center} >
                   <form >
@@ -111,7 +112,10 @@ export default class View extends Component {
                   </form >
                 </div >
               </div >
-            ) : (
+            ) : null
+          }
+          {
+            page === 2 ? (
               <div className={styles.page2} >
                 <div className={styles.top} >
                   重置密码
@@ -137,7 +141,7 @@ export default class View extends Component {
                       )}
                       iconPost={(
                         <div className={styles.resend} >
-                          <CountDown auto onClick={() => {
+                          <CountDown action={true} onClick={() => {
                             dispatch({
                               type: `${modelName}/doSendEmailCode`,
                               payload: { email }
@@ -146,6 +150,46 @@ export default class View extends Component {
                         </div >
                       )}
                     />
+
+
+                    <button
+                      className={classNames(
+                        styles.formbutton,
+                        email && verificationCode ? styles.permit : styles.notpermit
+                      )}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        dispatch({
+                          type: `${modelName}/doVertifyCode`,
+                          payload: {
+                            email,
+                            verificationCode
+                          }
+                        }).then(res => {
+                          if (res) {
+                            changeState({
+                              page: 3
+                            })
+                          }
+                        })
+                      }}
+                    >
+                      提交
+                    </button >
+                  </form >
+                </div >
+              </div >
+            ) : null
+          }
+          {
+            page === 3 ? (
+              <div className={styles.page2} >
+                <div className={styles.top} >
+                  重置密码
+                  <div className={styles.desc} ><span >*</span >重置密码后24小时内不能提现</div >
+                </div >
+                <div className={styles.center} >
+                  <form >
                     <Input
                       type='password'
                       placeholder={'请输入新密码'}
@@ -240,25 +284,15 @@ export default class View extends Component {
                     <button
                       className={classNames(
                         styles.formbutton,
-                        email && verificationCode && newPassword && !newPasswordMsg && newPasswordAgain && !newPasswordAgainMsg ? styles.permit : styles.notpermit
+                        email && newPassword && !newPasswordMsg && newPasswordAgain && !newPasswordAgainMsg ? styles.permit : styles.notpermit
                       )}
                       onClick={(e) => {
                         e.preventDefault()
                         dispatch({
-                          type: `${modelName}/doVertifyCode`,
+                          type: `${modelName}/doResetPassword`,
                           payload: {
                             email,
-                            verificationCode
-                          }
-                        }).then(res => {
-                          if (res) {
-                            dispatch({
-                              type: `${modelName}/doResetPassword`,
-                              payload: {
-                                email,
-                                newPassword
-                              }
-                            })
+                            newPassword
                           }
                         })
                       }}
@@ -268,7 +302,7 @@ export default class View extends Component {
                   </form >
                 </div >
               </div >
-            )
+            ) : null
           }
         </div >
       </Structure >
