@@ -107,13 +107,18 @@ export default class View extends Component {
     }
 
 
+    // const tableTopProps = {
+    //   ...tableProps,
+    //   dataSource: (new Array((8 - dataTop.length) > 0 ? (8 - dataTop.length) : 0)).fill().concat(dataTop.slice(0, 8).map((item, index) => {
+    //     item.type = 'sell'
+    //     item.sum = _.sumBy(dataTop.slice(index, 8), ({ amount } = 0) => amount)
+    //     return item
+    //   }))
+    // }
+
     const tableTopProps = {
       ...tableProps,
-      dataSource: (new Array((8 - dataTop.length) > 0 ? (8 - dataTop.length) : 0)).fill().concat(dataTop.slice(0, 8).map((item, index) => {
-        item.type = 'sell'
-        item.sum = _.sumBy(dataTop.slice(index, 8), ({ amount } = 0) => amount)
-        return item
-      }))
+      dataSource: (new Array((8 - dataTop.length) > 0 ? (8 - dataTop.length) : 0)).fill().concat(dataTop.slice(0, 8))
     }
 
     const tableDownProps = {

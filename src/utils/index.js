@@ -100,7 +100,7 @@ const toFixed = (item = 0, tofixed) => {
   if (!tofixed) {
     return _.toNumber(Number(item))
   } else {
-    return (new Decimal(item)).toFixed(tofixed)
+    return (new Decimal(Number(item))).toFixed(tofixed)
   }
 }
 

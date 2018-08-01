@@ -10,9 +10,13 @@ import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
 
 export default class View extends Component {
+  componentWillUnmount() {
+    window.onresize = null
+  }
+
   state = {
     loaded: false,
-    // map:''
+    map: 2
   }
 
   componentDidMount() {
@@ -20,9 +24,9 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    this.startKline()
+    // this.startKline()
     // this.getImportantPrice()
-    // this.startDeepMap()
+    this.startDeepMap()
   }
 
 
@@ -31,18 +35,15 @@ export default class View extends Component {
   }
 
   startDeepMap = () => {
-    // const canvas = document.getElementById('deepChart')
-    // const deepChartContainer = document.getElementById('deepChartContainer')
-    // console.log(deepChartContainer.offsetHeight,deepChartContainer.offsetWidth)
-    // canvas.setAttribute('height',deepChartContainer.offsetHeight);
-    // canvas.setAttribute('width', deepChartContainer.offsetWidth);
+    const deepChart = document.getElementById('deepChart')
+    if (!deepChart) return
     const myChart = echarts.init(document.getElementById('deepChart'))
 
     const data = [
-      [1514739661000, 40],
-      [1514826061000, 13],
-      [1514912461000, 30],
-      [1514998861000, 4]
+      [0, 40],
+      [1, 13],
+      [2, 30],
+      [3, 4]
     ]
 
 
@@ -60,40 +61,39 @@ export default class View extends Component {
           return [
             echarts.format.formatTime('yyyy-MM-dd', params[0].value[dims.time])
             + ' ' + echarts.format.formatTime('hh:mm', params[0].value[dims.time]),
-            '风速：' + params[0].value[dims.windSpeed],
-            '风向：' + params[0].value[dims.R],
-            '浪高：' + params[0].value[dims.waveHeight]
           ].join('<br>');
         }
       },
       grid: {
         left: 0,
-        right: 40,
+        right: 30,
         top: 0,
-        bottom: 45
+        bottom: 35
         // top: 160,
         // bottom: 125
       },
       xAxis: {
-        type: 'time',
-        maxInterval: 3600 * 1000 * 24,
+        type: 'value',
+        min: 'dataMin',
+        max: 'dataMax',
         splitLine: {
           lineStyle: {
-            color: '#ddd'
+            color: 'transparent'
           }
         }
       },
       yAxis: [
         {
+          type: 'value',
           //name: '浪高（米）',
           nameLocation: 'middle',
-          nameGap: 35,
-          max: 6,
-          axisLine: {
-            lineStyle: {
-              color: '#015DD5'
-            }
-          },
+          //nameGap: 35,
+          max: 'dataMax',
+          // axisLine: {
+          //   lineStyle: {
+          //     color: '#015DD5'
+          //   }
+          // },
           splitLine: { show: false }
         }, {
           axisLine: { show: true },
@@ -102,21 +102,6 @@ export default class View extends Component {
           splitLine: { show: false }
         }],
 
-      // dataZoom: [
-      //   {
-      //     type: 'inside',
-      //     xAxisIndex: 0,
-      //     minSpan: 5
-      //   },
-      //   {
-      //     type: 'slider',
-      //     xAxisIndex: 0,
-      //     minSpan: 5,
-      //     height: 20,
-      //     bottom: 50,
-      //     handleIcon: 'M10.7,11.9H9.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4h1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
-      //     handleSize: '120%'
-      //   }],
       series: [
         {
           type: 'line',
@@ -133,18 +118,55 @@ export default class View extends Component {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: 'rgba(88,160,253,1)'
+                  offset: 0, color: 'rgba(86,188,157,0.41)'
                 }, {
-                  offset: 0.5, color: 'rgba(88,160,253,0.7)'
-                }, {
-                  offset: 1, color: 'rgba(88,160,253,0)'
+                  offset: 1, color: 'rgba(86,188,157,0)'
                 }]
               }
             }
           },
           lineStyle: {
             normal: {
+              color: 'rgba(86,188,157,1)'
+            }
+          },
+          itemStyle: {
+            normal: {
               color: 'rgba(88,160,253,1)'
+            }
+          },
+          encode: {
+            x: dims.time,
+            y: dims.waveHeight
+          },
+          data: data,
+          z: 2
+        },
+        {
+          type: 'line',
+          yAxisIndex: 1,
+          showSymbol: false,
+          hoverAnimation: false,
+          symbolSize: 10,
+          areaStyle: {
+            normal: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0, color: 'rgba(86,188,157,0.41)'
+                }, {
+                  offset: 1, color: 'rgba(86,188,157,0)'
+                }]
+              }
+            }
+          },
+          lineStyle: {
+            normal: {
+              color: 'rgba(86,188,157,1)'
             }
           },
           itemStyle: {
@@ -159,13 +181,13 @@ export default class View extends Component {
           data: data,
           z: 2
         }
-      ]
+      ],
+
     };
 
 
     myChart.setOption(option);
     window.onresize = () => {
-
       myChart.resize()
     }
   }
@@ -371,7 +393,7 @@ export default class View extends Component {
 
 
   render() {
-    const { loaded } = this.state
+    const { loaded, map } = this.state
     const {
       model: {
         marketName = '', maxPrice24h, minPrice24h, indexPrice,
@@ -431,7 +453,7 @@ export default class View extends Component {
 
                               }
                             </div >
-                            <div className={styles.dollar} >{dollarPrice}</div >
+                            <div className={styles.dollar} >{`$${dollarPrice}`}</div >
                           </div >
                         </>
                       ) : null
@@ -491,15 +513,20 @@ export default class View extends Component {
 
               </div >
               <div className={styles.kmap} >
-
-                <div className={styles.tradeview} >
-                  <div id='tradeView' style={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%'
-                  }} >
-                  </div >
-                </div >
+                {
+                  map === 1 ? (
+                    <div className={styles.tradeview} >
+                      <div id='tradeView' style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%'
+                      }} >
+                      </div >
+                    </div >
+                  ) : (
+                    <div id="deepChart" style={{ width: '100%', height: '100%' }} ></div >
+                  )
+                }
 
               </div >
 

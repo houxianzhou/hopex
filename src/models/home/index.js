@@ -21,18 +21,18 @@ export default joinModel(modelExtend, {
     latest_records: [],// 最新成交
     ensure_records: {},// 委托列表
 
-    maxPrice24h: null, // 24h最高
-    minPrice24h: null, // 24最低
-    indexPrice: null, // 现货价格指数
-    totalPrice24h: null,//z4小时交易总额
-    latestPrice: null, //最新交易价格,改为从tradeview k线接口拉取
-    latestPriceChangePercent: null,//最新价相比24小时前价格的涨跌幅
-    dollarPrice: null,//换算成美元
+    maxPrice24h: '', // 24h最高
+    minPrice24h: '', // 24最低
+    indexPrice: '', // 现货价格指数
+    totalPrice24h: '',//z4小时交易总额
+    latestPrice: '', //最新交易价格,改为从tradeview k线接口拉取
+    latestPriceChangePercent: '',//最新价相比24小时前价格的涨跌幅
+    dollarPrice: '',//换算成美元
     latestPriceTrend: 1,//1||0合理趋势，比上次大为1小就是0
-    equitablePrice: null, // 计算出来的，合理价格
+    equitablePrice: '', // 计算出来的，合理价格
 
 
-    minVaryPrice: null, //最小变动价位
+    minVaryPrice: '', //最小变动价位
     minDealAmount: null, //最小交易量
     keepBailRate: null,//维持保证金率
     levelages: [],//当前合约杠杆列表
@@ -99,9 +99,20 @@ export default joinModel(modelExtend, {
 
       if (resOk(res)) {
         const result = {
-          asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc']),
-          bids: _.orderBy(formatNumber(_.get(res.data, 'bids'), ['price', 'amount']), ['price'], ['desc'])
+          asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc'])||[],
+          bids: _.orderBy(formatNumber(_.get(res.data, 'bids'), ['price', 'amount']), ['price'], ['desc'])||[]
         }
+
+        result.asks.map((item, index) => {
+          item.type = 'sell'
+          console.log(_.sumBy(result.asks[index, result.asks.length-1], ({ amount }) => {
+            console.log(amount)
+            return amount
+          }))
+          item.sum = _.sumBy(result.asks[index, result.asks.length-1], ({ amount } = 0) => amount)
+
+        })
+
         const [asksLast, bidsFirst] = [result.asks[result.asks.length > 8 ? 7 : result.asks.length - 1], result.bids[0]]
         yield put({
           type: 'changeState',
