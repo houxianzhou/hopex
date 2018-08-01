@@ -107,12 +107,9 @@ export default joinModel(modelExtend, {
           item.type = 'sell'
           item.sum = _.sumBy(result.asks.slice(index, result.asks.length), ({ amount = 0 } = {}) => amount)
         })
-
-
         result.bids.map((item, index) => {
           item.type = 'buy'
           item.sum = _.sumBy(result.bids.slice(0, index + 1), ({ amount = 0 } = {}) => amount)
-
         })
 
         const [asksLast, bidsFirst] = [result.asks[result.asks.length > 8 ? 7 : result.asks.length - 1], result.bids[0]]

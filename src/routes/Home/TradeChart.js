@@ -48,10 +48,14 @@ export default class View extends Component {
     if (!deepChart) return
     const myChart = echarts.init(document.getElementById('deepChart'))
 
-    const data = asks.reverse().reduce((sum, item) => {
-      sum.push([item.price, item.amount])
-      return sum
+    const dataAsks = asks.reduce((sum, item) => {
+      return [[item.price, item.sum]].concat(sum)
     }, [])
+
+    const dataBids = bids.reduce((sum, item) => {
+      return [[item.price, item.sum]].concat(sum)
+    }, [])
+
 
     const dims = {
       time: 0,
@@ -144,7 +148,7 @@ export default class View extends Component {
             x: dims.time,
             y: dims.waveHeight
           },
-          data: data,
+          // data: data,
           z: 2
         },
         {
@@ -183,7 +187,46 @@ export default class View extends Component {
             x: dims.time,
             y: dims.waveHeight
           },
-          data: data,
+          data: dataBids,
+          z: 2
+        },
+        {
+          type: 'line',
+          yAxisIndex: 1,
+          showSymbol: false,
+          hoverAnimation: false,
+          symbolSize: 10,
+          areaStyle: {
+            normal: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0, color: 'rgba(86,188,157,0.41)'
+                }, {
+                  offset: 1, color: 'rgba(86,188,157,0)'
+                }]
+              }
+            }
+          },
+          lineStyle: {
+            normal: {
+              color: 'rgba(86,188,157,1)'
+            }
+          },
+          itemStyle: {
+            normal: {
+              color: 'rgba(88,160,253,1)'
+            }
+          },
+          encode: {
+            x: dims.time,
+            y: dims.waveHeight
+          },
+          data: dataAsks,
           z: 2
         }
       ],
@@ -409,7 +452,6 @@ export default class View extends Component {
       { name: '1min' }, { name: '5min' }, { name: '15min' }, { name: '30min' },
       { name: '1hour' }, { name: '4hour' }, { name: '1day' }, { name: '5day' }, { name: '1week' }, { name: '1mon' }
     ]
-
 
     return (
       <Mixin.Child that={this} >
