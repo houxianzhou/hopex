@@ -24,7 +24,7 @@ export default class View extends Component {
 
   state = {
     loaded: false,
-    map: 2
+    map: 1
   }
 
   componentDidMount() {
@@ -32,7 +32,7 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    // this.startKline()
+    this.startKline()
     // this.getImportantPrice()
     // this.startDeepMap()
   }
@@ -78,8 +78,6 @@ export default class View extends Component {
         right: 30,
         top: 0,
         bottom: 35
-        // top: 160,
-        // bottom: 125
       },
       xAxis: {
         type: 'value',
