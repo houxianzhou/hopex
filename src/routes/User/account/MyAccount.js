@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'dva'
-import { ShowJsonTip, Input, NavPannel, Table } from '@components'
+import { ShowJsonTip, NavPannel, Table } from '@components'
+import ChangePassword from './changePassword';
+import { Input } from './input';
 import { classNames, _, Patterns } from '@utils'
 import { PATH } from '@constants'
 import styles from './MyAccount.less'
@@ -82,7 +84,7 @@ export default class View extends Component {
                   styles.desc,
                   styles.loginpassword
                 )} >
-                  已经设置
+                  已设置
                   {renderStatus(true)}
                 </div >
                 <div
@@ -92,6 +94,14 @@ export default class View extends Component {
                       styles.login
                     )
                   }
+                  onClick={() => {
+                    dispatch({
+                      type: `${modelName}/changeState`,
+                      payload: {
+                        myAccountPage: 3
+                      }
+                    })
+                  }}
                 >
                   修改
                 </div >
@@ -134,15 +144,19 @@ export default class View extends Component {
     )
 
     const page2 = (
-      <>
+      <Fragment>
         ahhaha
-      </>
+      </Fragment>
     )
+
+    // const page3 = (
+    //
+    // )
 
     return (
       <div className={styles.myaccount} >
         {
-          page === 1 ? page1 : (page === 2 ? page2 : null)
+          page === 1 ? page1 : (page === 2 ? page2 : (page === 3 ? (<ChangePassword/>) : null))
         }
       </div >
     )
