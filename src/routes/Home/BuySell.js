@@ -182,7 +182,7 @@ export default class View extends Component {
 
   render() {
     const { renderArea } = this
-    const { dispatch, modelName, model: { minVaryPrice = '', minDealAmount = '' } } = this.props
+    const { dispatch, modelName, model: { minVaryPrice = '', minDealAmount = '', maxLimitPrice = '', minLimitPrice } } = this.props
     const { orderChannel, buy, sell } = this.state
 
     // 限价或者市价
@@ -190,7 +190,7 @@ export default class View extends Component {
       label_name: orderChannel === 'order.put_limit' ? '限价' : '市价',
       label_desc: `最小单位${formatNumber(minVaryPrice, 2)}USD`,
       intro_desc: '最高允许买价',
-      intro_price: '10000.0',
+      intro_price: formatNumber(maxLimitPrice,'p'),
       value: buy.price,
       onChange: (value) => {
         this.setState({
@@ -256,6 +256,7 @@ export default class View extends Component {
         ...configPrice,
         ...{
           intro_desc: '最低允许卖价',
+          intro_price: formatNumber(minLimitPrice,'p'),
           value: sell.price,
           onChange: (value) => {
             this.setState({

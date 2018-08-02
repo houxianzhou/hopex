@@ -34,6 +34,10 @@ export default joinModel(modelExtend, {
 
     minVaryPrice: '', //最小变动价位
     minDealAmount: null, //最小交易量
+    minLimitPrice: '',//最低允许卖价
+    maxLimitPrice: '',//最高允许卖价
+
+
     keepBailRate: null,//维持保证金率
     levelages: [],//当前合约杠杆列表
     dealMoney: null,//结算货币
@@ -617,7 +621,9 @@ export default joinModel(modelExtend, {
         minDealAmount: filterOne.minDealAmount,
         keepBailRate: filterOne.keepBailRate,
         levelages: filterOne.levelages,
-        dealMoney: filterOne.dealMoney
+        dealMoney: filterOne.dealMoney,
+        maxLimitPrice: filterOne.maxLimitPrice,
+        minLimitPrice: filterOne.minLimitPrice
       }
     }
   },
