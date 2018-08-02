@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import { Mixin } from "@components"
-import { classNames } from '@utils'
+import { classNames, dealInterval } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
 import logogray from '@assets/logo4.png'
 import styles from './index.less'
 
-
 export default class View extends Component {
+  state = {
+    currentPurse: 0
+  }
   startInit = () => {
-    // this.getPurseAssetList()
+    this.getPurseAssetList()
   }
 
   getPurseAssetList = () => {
@@ -18,8 +20,18 @@ export default class View extends Component {
     })
   }
 
+  changeState = (payload) => {
+    this.setState(payload)
+  }
+
   render() {
+    const { currentPurse } = this.state
     const { model: { assetList = [] }, isLogin, routerGoLogin, routerGoRegister } = this.props
+    const filterOne = assetList[currentPurse] || {}
+    const {
+      floatProfit, floatPercent, walletBalance,
+      deletegate, withdrawFreeze, totalWealth, position, available
+    } = filterOne
     return (
       <Mixin.Child that={this} >
         <div
@@ -36,11 +48,19 @@ export default class View extends Component {
             scroller={false}
             header={
               <div className={styles.purseheader} >
-                <div >钱包</div >
                 <div >
-                  <ul >
+                  钱包
+                </div >
+                <div >
+                  <ul className={styles.tab}>
                     {
-                      assetList.map((item, index) => <li key={index} >{item.name}</li >)
+                      assetList.map((item, index) => <li key={index} onClick={() => {
+                        this.changeState({
+                          currentPurse: index
+                        })
+                      }} className={classNames(
+                        index === currentPurse ? 'active' : null
+                      )} >{item.assetName}</li >)
                     }
                   </ul >
                 </div >
@@ -56,44 +76,44 @@ export default class View extends Component {
                   <>
                     <div className={styles.top} >
                       <div className={styles.tip} >浮动盈亏</div >
-                      <div className={styles.number} >92833.6666</div >
-                      <div className={styles.percent} >500.00%</div >
+                      <div className={styles.number} >{floatProfit}</div >
+                      <div className={styles.percent} >{floatPercent}</div >
                     </div >
                     <div className={styles.down} >
                       <div >
                         <div >
                           <div >钱包余额</div >
-                          <div >67813.243</div >
+                          <div >{walletBalance}</div >
                         </div >
                         <div >
                           <div >委托占用保证金</div >
-                          <div >67813.243</div >
+                          <div >{deletegate}</div >
                         </div >
                         <div >
                           <div >提现冻结金额</div >
-                          <div >67813.243</div >
+                          <div >{withdrawFreeze}</div >
                         </div >
                       </div >
                       <div >
                         <div >
                           <div >总权益</div >
-                          <div >4.587</div >
+                          <div >{totalWealth}</div >
                         </div >
 
                         <div >
                           <div >持仓占用保证金</div >
-                          <div >4.587</div >
+                          <div >{position}</div >
                         </div >
                         <div >
-                          <div >总权益</div >
-                          <div >4.587</div >
+                          <div >可用金额</div >
+                          <div >{available}</div >
                         </div >
                       </div >
                     </div >
                   </>
                 ) : (
                   <div className={styles.container} >
-                    <div className={styles.top} ><img src={logogray}  /></div >
+                    <div className={styles.top} ><img src={logogray} /></div >
                     <div className={styles.center} >欢迎来到Hopex</div >
                     <div className={styles.down} >
                       <div onClick={() => {
@@ -103,7 +123,8 @@ export default class View extends Component {
                       <div className={styles.or} >或</div >
                       <div onClick={() => {
                         routerGoRegister()
-                      }} >注册</div >
+                      }} >注册
+                      </div >
                     </div >
                   </div >
                 )

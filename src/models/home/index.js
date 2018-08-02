@@ -323,17 +323,19 @@ export default joinModel(modelExtend, {
         type: 'createRequestParams',
         payload: {
           "head": {
-            "method": "asset.list"
+            "method": "balance.query"
           },
-          "param": {},
-          powerMsg: '钱包列表 asset.list',
+          "param": {
+            "assetNameList":[]
+          },
+          powerMsg: '钱包balance.query',
           power: [1]
         }
       })))
       if (repayload) {
         const res = getRes(yield call(getPurseAssetList, repayload))
         if (resOk(res)) {
-          const result = _.get(res, 'data.assetList')
+          const result = _.get(res, 'data')
           if (result) {
             yield put({
               type: 'changeState',

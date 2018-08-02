@@ -259,6 +259,7 @@ export default class View extends Component {
     // const ws1 = wss.getSocket('ws1')
     const widget = new TradingView.widget({
       disabled_features: [
+        //"volume_force_overlay",
         "left_toolbar",
         'go_to_date',
         'use_localstorage_for_settings',
@@ -272,7 +273,6 @@ export default class View extends Component {
         'display_market_status',
         'remove_library_container_border',
         'chart_property_page_style',
-        'control_bar',
         'timeframes_toolbar',
         'chart_property_page_background'
       ],

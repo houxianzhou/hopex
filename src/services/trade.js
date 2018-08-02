@@ -33,7 +33,7 @@ export async function getEnsureRecord(payload) {
 
 // 查询用户钱包里面所有的结算货币(相关属性)
 export async function getPurseAssetList(payload) {
-  return request(`${MODE}`, {
+  return request(`${UserIp4}/balance.query`, {
     method: 'post',
     body: payload
   })

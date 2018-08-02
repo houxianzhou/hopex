@@ -40,13 +40,8 @@ export default class View extends Component {
         dataIndex: 'market',
       },
       {
-        title: '当前价格',
+        title: '类型',
         dataIndex: 'no',
-        render: (v) => formatNumber(v, 'p')
-      },
-      {
-        title: '当前合理价格',
-        dataIndex: 'averagePrice',
         render: (v) => formatNumber(v, 'p')
       },
       {
@@ -58,27 +53,37 @@ export default class View extends Component {
         dataIndex: 'amount',
       },
       {
-        title: '开仓均价',
+        title: '委托价格',
         dataIndex: 'averagePrice',
         render: (v) => formatNumber(v, 'p')
       },
       {
-        title: '持续占用保证金',
+        title: '成交数量(张)',
         dataIndex: 'positionMoney',
         render: (v) => formatNumber(v, 'p')
       },
       {
-        title: '维持保证金',
+        title: '成交均价',
         dataIndex: 'keepMoney',
         render: (v) => formatNumber(v, 'p')
       },
       {
-        title: '强平价格',
+        title: '平仓盈亏',
         dataIndex: 'overPrice',
         render: (v) => formatNumber(v, 'p')
       },
       {
-        title: '浮动盈亏(收益率)',
+        title: '手续费',
+        dataIndex: 'floatProfit',
+        render: (v) => formatNumber(v, 'p')
+      },
+      {
+        title: '委托时间',
+        dataIndex: 'floatProfit',
+        render: (v) => formatNumber(v, 'p')
+      },
+      {
+        title: '状态',
         dataIndex: 'floatProfit',
         render: (v) => formatNumber(v, 'p')
       },
@@ -87,7 +92,6 @@ export default class View extends Component {
         width: 250,
         dataIndex: 'work',
       },
-
     ]
     const dataSource = []
     const tableProp = {
