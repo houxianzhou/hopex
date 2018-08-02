@@ -33,7 +33,7 @@ export default joinModel(modelExtend, {
 
 
     minVaryPrice: '', //最小变动价位
-    minDealAmount: null, //最小交易量
+    minDealAmount: '', //最小交易量
     minLimitPrice: '',//最低允许卖价
     maxLimitPrice: '',//最高允许卖价
 

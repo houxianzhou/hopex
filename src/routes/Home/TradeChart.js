@@ -24,7 +24,7 @@ export default class View extends Component {
 
   state = {
     loaded: false,
-    map: 1
+    map: 2
   }
 
   componentDidMount() {
@@ -203,21 +203,21 @@ export default class View extends Component {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: 'rgba(86,188,157,0.41)'
+                  offset: 0, color: 'rgba(218,115,115,0.41)'
                 }, {
-                  offset: 1, color: 'rgba(86,188,157,0)'
+                  offset: 1, color: 'rgba(218,115,115,0)'
                 }]
               }
             }
           },
           lineStyle: {
             normal: {
-              color: 'rgba(86,188,157,1)'
+              color: 'rgba(218,115,115,1)'
             }
           },
           itemStyle: {
             normal: {
-              color: 'rgba(88,160,253,1)'
+              color: 'rgba(86,188,157,1)'
             }
           },
           encode: {
@@ -241,6 +241,8 @@ export default class View extends Component {
   startKline = () => {
     const { model: { marketCode }, dispatch, modelName } = this.props
     const TradingView = window.TradingView
+    const tradeView = document.getElementById('tradeView')
+    if (!tradeView) return
     // const Datafeeds = window.Datafeeds
     // window.$ = $
     // const ws1 = wss.getSocket('ws1')
@@ -534,28 +536,32 @@ export default class View extends Component {
               </div >
               <div className={styles.utilsbuttons} >
                 {
-                  loaded ? (
-                    <>
-                      <ul className={styles.interval} >
-                        {
-                          intervals.map((item, index) => (
-                            <li key={index} >{item.name}</li >
-                          ))
-                        }
-                      </ul >
-                      <ul className={styles.utils} >
-                        <li className={styles.indicator} onClick={() => {
-                          this.widget && this.widget.chart().executeActionById('insertIndicator')
-                        }} >
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17" width="17" height="17" >
-                            <path
-                              d="M16 0a1 1 0 0 0-1 1 1 1 0 0 0 .127.484L13.017 5A1 1 0 0 0 13 5a1 1 0 0 0-.258.035L10.965 3.26A1 1 0 0 0 11 3a1 1 0 0 0-1-1 1 1 0 0 0-1 1 1 1 0 0 0 .082.393L7.12 6.008a1 1 0 0 0-.12-.01 1 1 0 0 0-.44.104l-1.564-1.04A1 1 0 0 0 5 4.998a1 1 0 0 0-1-1 1 1 0 0 0-1 1 1 1 0 0 0 .002.066l-1.56 1.04A1 1 0 0 0 1 5.998a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-.002-.064l1.56-1.04A1 1 0 0 0 4 6a1 1 0 0 0 .44-.103l1.564 1.04A1 1 0 0 0 6 7a1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-.082-.39l1.965-2.62A1 1 0 0 0 10 4a1 1 0 0 0 .258-.035l1.777 1.777A1 1 0 0 0 12 6a1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-.127-.482L15.983 2A1 1 0 0 0 16 2a1 1 0 0 0 1-1 1 1 0 0 0-1-1zm-1 5v10h2V5h-2zM9 7v8h2V7H9zM3 9v6h2V9H3zm9 1v5h2v-5h-2zM0 11v4h2v-4H0zm6 0v4h2v-4H6z"
-                              fill='white' />
-                          </svg >
-                        </li >
-                      </ul >
-                    </>
-                  ) : null
+                  map === 1 ? (
+                    loaded ? (
+                      <>
+                        <ul className={styles.interval} >
+                          {
+                            intervals.map((item, index) => (
+                              <li key={index} >{item.name}</li >
+                            ))
+                          }
+                        </ul >
+                        <ul className={styles.utils} >
+                          <li className={styles.indicator} onClick={() => {
+                            this.widget && this.widget.chart().executeActionById('insertIndicator')
+                          }} >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17" width="17" height="17" >
+                              <path
+                                d="M16 0a1 1 0 0 0-1 1 1 1 0 0 0 .127.484L13.017 5A1 1 0 0 0 13 5a1 1 0 0 0-.258.035L10.965 3.26A1 1 0 0 0 11 3a1 1 0 0 0-1-1 1 1 0 0 0-1 1 1 1 0 0 0 .082.393L7.12 6.008a1 1 0 0 0-.12-.01 1 1 0 0 0-.44.104l-1.564-1.04A1 1 0 0 0 5 4.998a1 1 0 0 0-1-1 1 1 0 0 0-1 1 1 1 0 0 0 .002.066l-1.56 1.04A1 1 0 0 0 1 5.998a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-.002-.064l1.56-1.04A1 1 0 0 0 4 6a1 1 0 0 0 .44-.103l1.564 1.04A1 1 0 0 0 6 7a1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-.082-.39l1.965-2.62A1 1 0 0 0 10 4a1 1 0 0 0 .258-.035l1.777 1.777A1 1 0 0 0 12 6a1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-.127-.482L15.983 2A1 1 0 0 0 16 2a1 1 0 0 0 1-1 1 1 0 0 0-1-1zm-1 5v10h2V5h-2zM9 7v8h2V7H9zM3 9v6h2V9H3zm9 1v5h2v-5h-2zM0 11v4h2v-4H0zm6 0v4h2v-4H6z"
+                                fill='white' />
+                            </svg >
+                          </li >
+                        </ul >
+                      </>
+                    ) : null
+                  ) : (
+                    <div style={{ background: 'red' }} >fff</div >
+                  )
                 }
 
               </div >

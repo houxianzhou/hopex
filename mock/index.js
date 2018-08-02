@@ -2,6 +2,7 @@ import { _ } from 'lodash'
 
 import helper from './helper'
 
+
 const { randomArrayMap, randomStr } = helper
 
 const other = {
@@ -38,7 +39,9 @@ export default {
             "levelages": "[{\"id\":1,\"settingId\":1,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-17 18:39:28\",\"creator\":1},{\"id\":2,\"settingId\":1,\"initialMarginRate\":20.0000000000,\"leverage\":5.0000000000,\"createdTime\":\"2018-07-17 18:39:28\",\"creator\":1},{\"id\":3,\"settingId\":1,\"initialMarginRate\":5.0000000000,\"leverage\":20.0000000000,\"createdTime\":\"2018-07-17 18:39:28\",\"creator\":1}]",
             "showPrec": "8",
             "dealMoney": "BTC",
-            "marketValue": "1.00000000"
+            "marketValue": "1.00000000",
+            minLimitPrice:'1',
+            maxLimitPrice:'2'
           }
         ],
         "ETH": [
@@ -54,7 +57,9 @@ export default {
             "levelages": "[{\"id\":4,\"settingId\":2,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-17 18:53:58\",\"creator\":1},{\"id\":5,\"settingId\":2,\"initialMarginRate\":5.0000000000,\"leverage\":20.0000000000,\"createdTime\":\"2018-07-17 18:53:58\",\"creator\":1}]",
             "showPrec": "8",
             "dealMoney": "BTC",
-            "marketValue": "1.00000000"
+            "marketValue": "1.00000000",
+            minLimitPrice:'1',
+            maxLimitPrice:'2'
           }
         ],
         "XRP": [
@@ -70,7 +75,9 @@ export default {
             "levelages": "[{\"id\":8,\"settingId\":4,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-19 09:53:51\",\"creator\":1},{\"id\":9,\"settingId\":4,\"initialMarginRate\":20.0000000000,\"leverage\":5.0000000000,\"createdTime\":\"2018-07-19 09:53:51\",\"creator\":1}]",
             "showPrec": "4",
             "dealMoney": "XRP",
-            "marketValue": "1.00000000"
+            "marketValue": "1.00000000",
+            minLimitPrice:'1',
+            maxLimitPrice:'2'
           }
         ],
         "EOS": [
@@ -86,7 +93,9 @@ export default {
             "levelages": "[{\"id\":3,\"settingId\":3,\"initialMarginRate\":111.0000000000,\"leverage\":0.9000000000,\"createdTime\":\"2018-07-19 20:46:44\",\"creator\":1}]",
             "showPrec": "8",
             "dealMoney": "BTC",
-            "marketValue": "1.00000000"
+            "marketValue": "1.00000000",
+            minLimitPrice:'1',
+            maxLimitPrice:'2'
           }
         ]
       },
@@ -137,7 +146,7 @@ export default {
       },
       "data": {
         "asks": randomArrayMap(5).map((item, index) => ({
-          "price": index+10, //index,
+          "price": index + 10, //index,
           "amount": _.random(1, 2),//randomStr()
         })),
         "bids": randomArrayMap(5).map((item, index) => ({
@@ -266,6 +275,45 @@ export default {
   // 设置杠杆
   'Post /mock/api/v1/trade/market.leverage_set': (req, res) => {
     res.send({ "ret": "6", "errCode": "6", "errStr": "user trade amount not zero" })
+  },
+
+  //k线图
+  'Post /mock/api/v1/quote/market.kline': (req, res) => {
+    const { body: { param: { startTime, endTime } = {} } = {} } = req
+    const periods = helper.getdays(startTime * 1000, endTime * 1000)
+    res.send({
+      "head": {
+        "method": "market.kline",
+        "timestamps": "1533181070062",
+        "version": "1.0",
+        "lang": "cn",
+        "msgType": "request",
+        "packType": "1",
+        "serialNumber": "56"
+      },
+      "data": {
+        "records": periods.map(item => {
+          const h = 160 + _.random(30, 40)
+          const o = h - _.random(10, 20)
+          const c = o - _.random(10, 30)
+          const l = c - _.random(10, 20)
+          const v = _.random(100, 3000)
+          return [item / 1000, o, c, h, l, v, 6, 'BTCUSD永续']
+        }),
+        "maxPrice24h": "2000",
+        "minPrice24h": "1000",
+        "totalPrice24h": "527500",
+        "marketPrice": "7388.47741901",
+        "percent": "+50.00",
+        "dollarPrice": "2000.00000000",
+        "price24h": "1000",
+        "priceLast": "2000.00000000",
+        "marketName": "BTCUSDT永续"
+      },
+      "errCode": "0",
+      "errStr": "success",
+      "ret": "0"
+    })
   },
 
 
