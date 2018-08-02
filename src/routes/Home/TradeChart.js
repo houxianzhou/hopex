@@ -346,6 +346,14 @@ export default class View extends Component {
               interval = 5 * 24 * 60 * 60
             }
               break
+            case 'W': {
+              interval = 6 * 24 * 60 * 60
+            }
+              break
+            case 'M': {
+              interval = 30 * 24 * 60 * 60
+            }
+              break
           }
           dispatch({
             type: `${modelName}/getKlineAllList`,
@@ -493,8 +501,8 @@ export default class View extends Component {
       { name: '4hour', value: '240' },
       { name: '1day', value: 'D' },
       { name: '5day', value: '5D' },
-      { name: '1week', value: '5W' },
-      { name: '1mon', value: '5M' }
+      { name: '1week', value: 'W' },
+      { name: '1mon', value: 'M' }
     ]
 
     return (
