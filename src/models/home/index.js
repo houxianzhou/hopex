@@ -131,7 +131,7 @@ export default joinModel(modelExtend, {
 
     //K线图全量查询
     * getKlineAllList({ payload = {} }, { call, put }) {
-      const { startTime, endTime } = payload
+      const { startTime, endTime, interval } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
@@ -141,7 +141,7 @@ export default joinModel(modelExtend, {
           param: {
             "startTime": startTime,
             "endTime": endTime,
-            "interval": "86400"
+            "interval": interval
           }
         }
       })))
@@ -326,7 +326,7 @@ export default joinModel(modelExtend, {
             "method": "balance.query"
           },
           "param": {
-            "assetNameList":[]
+            "assetNameList": []
           },
           powerMsg: '钱包balance.query',
           power: [1]

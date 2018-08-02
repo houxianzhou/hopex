@@ -10,6 +10,12 @@ import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
 
 export default class View extends Component {
+  state = {
+    loaded: false,
+    map: 1,
+    time: '1day'
+  }
+
   componentWillUnmount() {
     window.onresize = null
   }
@@ -29,11 +35,6 @@ export default class View extends Component {
         this.startDeepMap()
       }
     }
-  }
-
-  state = {
-    loaded: false,
-    map: 1
   }
 
   // componentDidMount() {
@@ -259,7 +260,7 @@ export default class View extends Component {
     // const ws1 = wss.getSocket('ws1')
     const widget = new TradingView.widget({
       disabled_features: [
-        //"volume_force_overlay",
+        "volume_force_overlay",
         "left_toolbar",
         'go_to_date',
         'use_localstorage_for_settings',
@@ -318,7 +319,7 @@ export default class View extends Component {
               "has_no_volume": false, //布尔表示商品是否拥有成交量数据
               has_empty_bars: true,
               "type": "stock",
-              // supported_resolutions: ['D', '1W', '1M'],// 分辨率选择器中启用一个分辨率数组
+              supported_resolutions: ['1', '5', '15', '30', '60', '240', "D", "5D", "W", "M"],// 分辨率选择器中启用一个分辨率数组
               // "ticker": "AAPL", // 品体系中此商品的唯一标识符
               "data_status": "streaming" //数据状态码。状态显示在图表的右上角。streaming(实时)endofday(已收盘)pulsed(脉冲)
             })
@@ -326,13 +327,35 @@ export default class View extends Component {
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
           const [startTime, endTime] = [String(Math.min(from, to)), String(Math.max(from, to))]
+          let interval
+          switch (resolution) {
+            case '1':
+            case '5':
+            case '15':
+            case '30':
+            case '60':
+            case '240': {
+              interval = 60 * (Number(resolution))
+            }
+              break
+            case 'D': {
+              interval = 1 * 24 * 60 * 60
+            }
+              break
+            case '5D': {
+              interval = 5 * 24 * 60 * 60
+            }
+              break
+          }
           dispatch({
             type: `${modelName}/getKlineAllList`,
             payload: {
               startTime,
-              endTime
+              endTime,
+              interval: String(interval)
             }
           }).then((result = []) => {
+            // console.log(result,'------------------')
             const data = result.map(item => ({
               time: Number(item[0]) * 1000,
               open: Number(item[1]),
@@ -462,8 +485,16 @@ export default class View extends Component {
       }
     } = this.props
     const intervals = [
-      { name: '1min' }, { name: '5min' }, { name: '15min' }, { name: '30min' },
-      { name: '1hour' }, { name: '4hour' }, { name: '1day' }, { name: '5day' }, { name: '1week' }, { name: '1mon' }
+      { name: '1min', value: '1' },
+      { name: '5min', value: '5' },
+      { name: '15min', value: '15' },
+      { name: '30min', value: '30' },
+      { name: '1hour', value: '60' },
+      { name: '4hour', value: '240' },
+      { name: '1day', value: 'D' },
+      { name: '5day', value: '5D' },
+      { name: '1week', value: '5W' },
+      { name: '1mon', value: '5M' }
     ]
 
     return (
@@ -555,7 +586,13 @@ export default class View extends Component {
                         <ul className={styles.interval} >
                           {
                             intervals.map((item, index) => (
-                              <li key={index} >{item.name}</li >
+                              <li
+                                key={index}
+                                onClick={() => {
+                                  this.widget.chart().setResolution(item.value, () => {
+                                  })
+                                }}
+                              >{item.name}</li >
                             ))
                           }
                         </ul >
