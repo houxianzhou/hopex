@@ -14,22 +14,31 @@ export default class View extends Component {
     window.onresize = null
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { model: { ensure_records: prevEnsure_records } } = prevProps
     const { model: { ensure_records: ensure_records } } = this.props
-    if (!isEqual(prevEnsure_records, ensure_records) && prevEnsure_records && ensure_records) {
+    const { map: prevMap } = prevState
+    const { map } = this.state
+    if (!isEqual(prevEnsure_records, ensure_records) && prevEnsure_records && ensure_records && map === 2) {
       this.startDeepMap()
+    }
+    if (!isEqual(prevMap, map)) {
+      if (map === 1) {
+        this.startKline()
+      } else {
+        this.startDeepMap()
+      }
     }
   }
 
   state = {
     loaded: false,
-    map: 2
+    map: 1
   }
 
-  componentDidMount() {
-    // localSave.clearAll()
-  }
+  // componentDidMount() {
+  //   localSave.clearAll()
+  // }
 
   startInit = () => {
     this.startKline()
@@ -46,7 +55,7 @@ export default class View extends Component {
     const { model: { ensure_records: { asks = [], bids = [] } = {} } } = this.props
     const deepChart = document.getElementById('deepChart')
     if (!deepChart) return
-    const myChart = echarts.init(document.getElementById('deepChart'))
+    const myChart = echarts.init(deepChart)
 
     const dataAsks = asks.reduce((sum, item) => {
       return [[item.price, item.sum]].concat(sum)
@@ -67,9 +76,10 @@ export default class View extends Component {
       tooltip: {
         trigger: 'axis',
         formatter: function (params) {
+          const data = _.get(params[0], 'data')
           return [
-            echarts.format.formatTime('yyyy-MM-dd', params[0].value[dims.time])
-            + ' ' + echarts.format.formatTime('hh:mm', params[0].value[dims.time]),
+            `价格${data[0]}`,
+            `累计${data[1]}`,
           ].join('<br>');
         }
       },
@@ -242,6 +252,7 @@ export default class View extends Component {
     const { model: { marketCode }, dispatch, modelName } = this.props
     const TradingView = window.TradingView
     const tradeView = document.getElementById('tradeView')
+
     if (!tradeView) return
     // const Datafeeds = window.Datafeeds
     // window.$ = $
@@ -267,6 +278,7 @@ export default class View extends Component {
       ],
       library_path: '/',
       width: '100%',
+      height: '100%',
       ...marketCode ? { symbol: marketCode } : {},
       // interval: 'D',
       'container_id': 'tradeView',
@@ -442,6 +454,7 @@ export default class View extends Component {
 
   render() {
     const { loaded, map } = this.state
+    const { changeState } = this
     const {
       model: {
         marketName = '', maxPrice24h, minPrice24h, indexPrice,
@@ -559,30 +572,47 @@ export default class View extends Component {
                         </ul >
                       </>
                     ) : null
-                  ) : (
-                    <div style={{ background: 'red' }} >fff</div >
-                  )
+                  ) : null
                 }
-
+                <div className={styles.switchmap} >
+                  <div onClick={() => {
+                    changeState({
+                      map: 1
+                    })
+                  }} className={classNames(
+                    map == 1 ? styles.active : null
+                  )} >
+                    k线图
+                  </div >
+                  <div onClick={() => {
+                    changeState({
+                      map: 2
+                    })
+                  }} className={classNames(
+                    map == 2 ? styles.active : null
+                  )} >
+                    深度图
+                  </div >
+                </div >
               </div >
               <div className={styles.kmap} >
                 {
                   map === 1 ? (
-                    <div className={styles.tradeview} >
-                      <div id='tradeView' style={{
-                        position: 'absolute',
+                    <>
+                      <div id='tradeView' className={styles.tradeView} style={{
                         width: '100%',
                         height: '100%'
-                      }} >
-                      </div >
-                    </div >
+                      }} />
+                    </>
                   ) : (
-                    <div id="deepChart" style={{ width: '100%', height: '100%' }} ></div >
+                    <>
+                      <div style={{ display: 'none', visibility: 'hidden' }} ></div >
+
+                      <div id="deepChart" className={styles.deepChart} style={{ width: '100%', height: '100%' }} />
+                    </>
                   )
                 }
-
               </div >
-
             </div >
           </ScrollPannel >
         </div >
