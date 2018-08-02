@@ -28,6 +28,10 @@ export default class View extends Component {
       {
         title: '合约',
         dataIndex: 'market',
+        render: (value) => ({
+          value,
+          className: 'blue'
+        })
       },
       {
         title: '当前价格',
@@ -46,6 +50,13 @@ export default class View extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
+        render: (value) => Number(value) >= 0 ? {
+          value,
+          className: 'green'
+        } : {
+          value,
+          className: 'red'
+        }
       },
       {
         title: '开仓均价',
@@ -70,7 +81,16 @@ export default class View extends Component {
       {
         title: '浮动盈亏(收益率)',
         dataIndex: 'floatProfit',
-        render: (v, record) => `${formatNumber(v, 'p')}${dealMoney}` + `(${(formatNumber(record.profitRate * 100, 'p'))}%)`
+        render: (v, record) => {
+          const value = `${formatNumber(v, 'p')}${dealMoney}` + `(${(formatNumber(record.profitRate * 100, 'p'))}%)`
+          return Number(v) >= 0 ? {
+            value,
+            className: 'green'
+          } : {
+            value,
+            className: 'red'
+          }
+        }
       },
       {
         title: '操作',
