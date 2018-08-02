@@ -3,7 +3,7 @@ import { _, localSave } from '@utils'
 import { Toast } from '@components'
 import pathToRegexp from 'path-to-regexp'
 import { stringify } from 'qs'
-import { message as Message } from 'antd'
+// import { message as Message } from 'antd'
 
 axios.defaults.timeout = 10000
 axios.defaults.withCredentials = true
@@ -65,11 +65,12 @@ export function request(url = '', options = {}) {
           default:
         }
       }
-
       if (needWatch) {
-        if (_.get(error, 'response.data.ret') === '3') {
+        if (_.get(error, 'response.data.ret') === '100100'
+          || _.get(error, 'response.data.errStr') === 'token expired') {
           // token失效
           localSave.remove('userInfo')
+          window.reload()
         } else {
           if (errHandler) {
             // 需要单独的错误处理器
