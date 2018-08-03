@@ -43,7 +43,7 @@ export default class View extends Component {
   }
 
   componentDidMount() {
-    localSave.clearAll()
+    // localSave.clearAll()
   }
 
   startInit = () => {
