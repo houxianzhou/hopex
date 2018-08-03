@@ -37,9 +37,9 @@ export default class View extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   localSave.clearAll()
-  // }
+  componentDidMount() {
+    localSave.clearAll()
+  }
 
   startInit = () => {
     this.startKline()
@@ -259,14 +259,15 @@ export default class View extends Component {
     // window.$ = $
     // const ws1 = wss.getSocket('ws1')
     const widget = new TradingView.widget({
+
       disabled_features: [
         "volume_force_overlay",
-        "left_toolbar",
+        // "left_toolbar",
         'go_to_date',
         'use_localstorage_for_settings',
         'save_chart_properties_to_local_storage',
         'header_widget',
-        'edit_buttons_in_legend',
+        // 'edit_buttons_in_legend',
         'context_menus',
         'main_series_scale_menu',
         'adaptive_logo',
@@ -425,7 +426,10 @@ export default class View extends Component {
       // widget.subscribe('indicators_dialog',(data)=>{
       //   console.log(data);
       // })
-      // this.chart().createStudy('MACD', false, false, [14, 30, "close", 9])
+      this.widget.chart().createStudy('Moving Average', true, false, [5, "close", 0])
+      this.widget.chart().createStudy('Moving Average', true, false, [10, "close", 0])
+      this.widget.chart().createStudy('Moving Average', true, false, [30, "close", 0])
+      this.widget.chart().createStudy('Moving Average', true, false, [60, "close", 0])
     })
   }
 
@@ -484,7 +488,7 @@ export default class View extends Component {
 
 
   render() {
-    const { loaded, map } = this.state
+    const { loaded, map, time } = this.state
     const { changeState } = this
     const {
       model: {
@@ -597,10 +601,18 @@ export default class View extends Component {
                               <li
                                 key={index}
                                 onClick={() => {
+                                  changeState({
+                                    time: item.name
+                                  })
                                   this.widget.chart().setResolution(item.value, () => {
                                   })
                                 }}
-                              >{item.name}</li >
+                                className={classNames(
+                                  time === item.name ? styles.active : null
+                                )}
+                              >
+                                {item.name}
+                              </li >
                             ))
                           }
                         </ul >
