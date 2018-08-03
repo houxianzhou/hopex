@@ -262,22 +262,30 @@ export default class View extends Component {
 
       disabled_features: [
         "volume_force_overlay",
-        // "left_toolbar",
+        'hide_left_toolbar_by_default',
+        //
         'go_to_date',
         'use_localstorage_for_settings',
         'save_chart_properties_to_local_storage',
         'header_widget',
-        // 'edit_buttons_in_legend',
-        'context_menus',
+        //
         'main_series_scale_menu',
         'adaptive_logo',
         'show_logo_on_all_charts',
         'display_market_status',
-        'remove_library_container_border',
-        'chart_property_page_style',
+
         'timeframes_toolbar',
-        'chart_property_page_background'
+        'chart_property_page_background',
+
+
+        // "left_toolbar",
+        // 'edit_buttons_in_legend',
+        // 'context_menus',
+        //'remove_library_container_border',
+        // 'chart_property_page_style',
+
       ],
+      toolbar_bg: '#232833',
       library_path: '/',
       width: '100%',
       height: '100%',
@@ -292,6 +300,7 @@ export default class View extends Component {
         "paneProperties.bottomMargin": "5",
         "scalesProperties.backgroundColor": "red"
       },
+
       loading_screen: { backgroundColor: "#232833" },
       datafeed: {
         onReady(callback) {
@@ -421,11 +430,7 @@ export default class View extends Component {
     widget.onChartReady(() => {
       this.changeState({ loaded: true })
       this.widget = widget
-      // this.widget.chart().executeActionById('showCountdown')
-
-      // widget.subscribe('indicators_dialog',(data)=>{
-      //   console.log(data);
-      // })
+      this.widget.chart().executeActionById('drawingToolbarAction')
       this.widget.chart().createStudy('Moving Average', true, false, [5, "close", 0])
       this.widget.chart().createStudy('Moving Average', true, false, [10, "close", 0])
       this.widget.chart().createStudy('Moving Average', true, false, [30, "close", 0])
@@ -596,14 +601,29 @@ export default class View extends Component {
                     loaded ? (
                       <>
                         <ul className={styles.interval} >
+                          <li
+                            key={0}
+                            onClick={() => {
+                              changeState({
+                                time: 'realtime'
+                              })
+                              this.widget.chart().setChartType(3)
+                            }}
+                            className={classNames(
+                              time === 'realtime' ? styles.active : null
+                            )}
+                          >
+                            分时
+                          </li >
                           {
                             intervals.map((item, index) => (
                               <li
-                                key={index}
+                                key={index + 1}
                                 onClick={() => {
                                   changeState({
                                     time: item.name
                                   })
+                                  this.widget.chart().setChartType(1)
                                   this.widget.chart().setResolution(item.value, () => {
                                   })
                                 }}
@@ -618,12 +638,22 @@ export default class View extends Component {
                         </ul >
                         <ul className={styles.utils} >
                           <li className={styles.indicator} onClick={() => {
+                            this.widget.chart().executeActionById('chartProperties')
+                          }} >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2.4 120.9 600 600" width="17"
+                                 height="17" >
+                              <path
+                                d="M594 473.5V368.8h-76c-5.7-23.8-15.2-46.4-27.5-66.4l53.8-53.8-73.9-73.9-53.8 53.4c-20.6-12.8-42.7-21.8-66.4-27.5v-75.9H245.5v75.9c-23.8 5.7-46.4 15.2-66.4 27.5l-53.8-53.8-73.9 73.9 53.4 53.8C92 322.6 83 344.7 77.3 368.4h-76V473h75.9c5.7 23.8 15.2 46.4 27.5 66.4L51 593.3l73.9 73.9 53.8-53.4c20.6 12.8 42.7 21.8 66.4 27.5v75.9h104.6v-75.9c23.8-5.7 46.4-15.2 66.4-27.5l53.8 53.8 73.9-73.9-53.4-53.8c12.8-20.6 21.8-42.7 27.5-66.4H594zm-296.4 69.7c-67.3 0-122.3-54.6-122.3-122.3 0-67.3 54.6-122.3 122.3-122.3 67.3 0 122.3 54.6 122.3 122.3-.4 67.4-54.9 122.3-122.3 122.3z"
+                                fill='#6A7286' />
+                            </svg >
+                          </li >
+                          <li className={styles.indicator} onClick={() => {
                             this.widget && this.widget.chart().executeActionById('insertIndicator')
                           }} >
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17" width="17" height="17" >
                               <path
                                 d="M16 0a1 1 0 0 0-1 1 1 1 0 0 0 .127.484L13.017 5A1 1 0 0 0 13 5a1 1 0 0 0-.258.035L10.965 3.26A1 1 0 0 0 11 3a1 1 0 0 0-1-1 1 1 0 0 0-1 1 1 1 0 0 0 .082.393L7.12 6.008a1 1 0 0 0-.12-.01 1 1 0 0 0-.44.104l-1.564-1.04A1 1 0 0 0 5 4.998a1 1 0 0 0-1-1 1 1 0 0 0-1 1 1 1 0 0 0 .002.066l-1.56 1.04A1 1 0 0 0 1 5.998a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-.002-.064l1.56-1.04A1 1 0 0 0 4 6a1 1 0 0 0 .44-.103l1.564 1.04A1 1 0 0 0 6 7a1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-.082-.39l1.965-2.62A1 1 0 0 0 10 4a1 1 0 0 0 .258-.035l1.777 1.777A1 1 0 0 0 12 6a1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-.127-.482L15.983 2A1 1 0 0 0 16 2a1 1 0 0 0 1-1 1 1 0 0 0-1-1zm-1 5v10h2V5h-2zM9 7v8h2V7H9zM3 9v6h2V9H3zm9 1v5h2v-5h-2zM0 11v4h2v-4H0zm6 0v4h2v-4H6z"
-                                fill='white' />
+                                fill='#6A7286' />
                             </svg >
                           </li >
                         </ul >
