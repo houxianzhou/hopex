@@ -10,11 +10,16 @@ import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
 
 export default class View extends Component {
-  state = {
-    loaded: false,
-    map: 1,
-    time: '1day'
+  constructor(props) {
+    super(props)
+    this.studies = []
+    this.state = {
+      loaded: false,
+      map: 1,
+      time: '1day'
+    }
   }
+
 
   componentWillUnmount() {
     window.onresize = null
@@ -431,10 +436,10 @@ export default class View extends Component {
       this.changeState({ loaded: true })
       this.widget = widget
       this.widget.chart().executeActionById('drawingToolbarAction')
-      this.widget.chart().createStudy('Moving Average', true, false, [5, "close", 0])
-      this.widget.chart().createStudy('Moving Average', true, false, [10, "close", 0])
-      this.widget.chart().createStudy('Moving Average', true, false, [30, "close", 0])
-      this.widget.chart().createStudy('Moving Average', true, false, [60, "close", 0])
+      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [5, "close", 0]))
+      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [10, "close", 0]))
+      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [30, "close", 0]))
+      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [60, "close", 0]))
     })
   }
 
@@ -608,6 +613,9 @@ export default class View extends Component {
                                 time: 'realtime'
                               })
                               this.widget.chart().setChartType(3)
+                              this.studies.forEach((id)=>{
+                                this.widget.chart().setEntityVisibility(id,false)
+                              })
                             }}
                             className={classNames(
                               time === 'realtime' ? styles.active : null
@@ -624,6 +632,9 @@ export default class View extends Component {
                                     time: item.name
                                   })
                                   this.widget.chart().setChartType(1)
+                                  this.studies.forEach((id)=>{
+                                    this.widget.chart().setEntityVisibility(id,true)
+                                  })
                                   this.widget.chart().setResolution(item.value, () => {
                                   })
                                 }}
