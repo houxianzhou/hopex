@@ -120,6 +120,7 @@ export default class View extends Component {
       <Mixin.Parent that={this} >
         <div className={styles.home} >
           <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >
+
           <div className={styles.views} >
             {
               renderView('LatestRecord')
@@ -173,6 +174,8 @@ export default class View extends Component {
               </div >
             ) : null
           }
+
+
         </div >
 
       </Mixin.Parent >

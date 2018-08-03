@@ -5,23 +5,22 @@ import { SCROLLX } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
-
 export default class View extends Component {
   state = {
     activeLi: 0
   }
   startInit = () => {
     // 暂时没有东西
-    // this.getPersonalEnsure()
+    this.getPersonalEnsureHistory()
   }
 
-  getPersonalEnsure = () => {
+  getPersonalEnsureHistory = () => {
     const { dispatch, modelName } = this.props
     dispatch({
-      type: `${modelName}/getPersonalEnsure`
+      type: `${modelName}/getPersonalEnsureHistory`
     }).then((res) => {
         this.interval = dealInterval(() => {
-          this.getPersonalEnsure()
+          this.getPersonalEnsureHistory()
         })
       }
     )
@@ -32,17 +31,30 @@ export default class View extends Component {
   }
 
   render() {
+    const { activeLi } = this.state
     const { state, changeState } = this
-    const { model: { positionList = [] } } = this.props
+    const { model: { personalEnsureHistory = [] } } = this.props
     const columns = [
       {
         title: '合约',
         dataIndex: 'market',
+        render: (v) => (
+          {
+            value: v,
+            className: 'blue'
+          }
+        )
       },
       {
         title: '类型',
-        dataIndex: 'no',
-        render: (v) => formatNumber(v, 'p')
+        dataIndex: 'side',
+        render: (v) => v === '1' ? {
+          value: '卖',
+          className: 'red'
+        } : {
+          value: '买',
+          className: 'green'
+        }
       },
       {
         title: '杠杆倍数',
@@ -51,41 +63,63 @@ export default class View extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
+        render: (value) => Number(value) >= 0 ? {
+          value,
+          className: 'green'
+        } : {
+          value,
+          className: 'red'
+        }
       },
       {
         title: '委托价格',
-        dataIndex: 'averagePrice',
+        dataIndex: 'price',
         render: (v) => formatNumber(v, 'p')
       },
       {
         title: '成交数量(张)',
-        dataIndex: 'positionMoney',
+        dataIndex: 'dealAmount',
         render: (v) => formatNumber(v, 'p')
       },
       {
         title: '成交均价',
-        dataIndex: 'keepMoney',
+        dataIndex: 'avgDealMoney',
         render: (v) => formatNumber(v, 'p')
       },
       {
         title: '平仓盈亏',
-        dataIndex: 'overPrice',
+        dataIndex: 'unwindProfit',
         render: (v) => formatNumber(v, 'p')
       },
       {
         title: '手续费',
-        dataIndex: 'floatProfit',
+        dataIndex: 'dealFee',
         render: (v) => formatNumber(v, 'p')
       },
       {
         title: '委托时间',
-        dataIndex: 'floatProfit',
-        render: (v) => formatNumber(v, 'p')
+        dataIndex: 'ctime',
       },
       {
         title: '状态',
-        dataIndex: 'floatProfit',
-        render: (v) => formatNumber(v, 'p')
+        dataIndex: 'orderStatus',
+        render: (v) => {
+          let result
+          switch (v) {
+            case '0':
+              result = '未知状态'
+              break
+            case '1':
+              result = '部分成交，已撤销'
+              break
+            case '2':
+              result = '完全成交'
+              break
+            case '3':
+              result = '已撤销'
+          }
+          return result
+        }
       },
       {
         title: '操作',
@@ -93,7 +127,16 @@ export default class View extends Component {
         dataIndex: 'work',
       },
     ]
-    const dataSource = []
+
+    let dataSource
+    switch (activeLi) {
+      case 0:
+        dataSource = personalEnsureHistory
+        break
+      default:
+        dataSource = []
+    }
+
     const tableProp = {
       className: styles.tableContainer,
       columns,

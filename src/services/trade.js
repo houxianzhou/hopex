@@ -2,7 +2,7 @@ import { request, asyncPayload } from '@utils'
 import { API } from "@constants"
 
 let { MOCKIP, USERIP, USERIP2, UserIp3, UserIp4 } = API
-const MODE = 'mock1'
+const MODE = 'mock'
 
 // mock数据
 if (MODE === 'mock') {
@@ -93,6 +93,14 @@ export async function doUpdateLeverage(payload) {
 // tradeviewK线图及其上面的价格指数，24小时最高最低
 export async function getKlineAllList(payload) {
   return await request(`${UserIp3}/market.kline`, {
+    method: 'post',
+    body: payload
+  })
+}
+
+// 用户历史委托
+export async function getPersonalEnsureHistory(payload) {
+  return await request(`${UserIp4}/user.order_history`, {
     method: 'post',
     body: payload
   })

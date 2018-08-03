@@ -329,57 +329,286 @@ export default {
   },
 
   //资产列表
-  'Post /mock/api/v1/trade/asset.list': (req, res) => {
+  'Post /mock/api/v1/trade/balance.query': (req, res) => {
+    res.send(
+      {
+        "head": {
+          "method": "balance.query",
+          "userId": "3",
+          "userToken": "user.QC5LTHR6HOUZINUCE4YI.pcweb",
+          "lang": "cn",
+          "packType": "1",
+          "version": "1.0",
+          "msgType": "response",
+          "timestamps": "1533285185679478",
+          "serialNumber": "23"
+        },
+        "data": [
+          {
+            "assetName": "BTC",
+            "available": "119999.9999099",
+            "feeFreeze": "0",
+            "walletBalance": "119999.999909909908",
+            "floatProfit": "0",
+            "floatPercent": "12%",
+            "withdrawFreeze": "0",
+            "deletegate": "0",
+            "position": "0",
+            "totalWealth": "0"
+          },
+          {
+            "assetName": "ETH",
+            "available": "0",
+            "feeFreeze": "0",
+            "walletBalance": "0",
+            "floatProfit": "0",
+            "floatPercent": "12%",
+            "withdrawFreeze": "0",
+            "deletegate": "0",
+            "position": "0",
+            "totalWealth": "0"
+          },
+          {
+            "assetName": "XRP",
+            "available": "0",
+            "feeFreeze": "0",
+            "walletBalance": "0",
+            "floatProfit": "0",
+            "floatPercent": "12%",
+            "withdrawFreeze": "0",
+            "deletegate": "0",
+            "position": "0",
+            "totalWealth": "0"
+          }
+        ],
+        "errCode": "0",
+        "errStr": "success",
+        "ret": "0"
+      }
+    )
+  },
+
+  //最近委托
+  'Post /mock/api/v1/trade/user.order_history': (req, res) => {
     res.send({
-      "head": {
-        "method": "balance.query",
-        "msgType": "response",
-        "packType": "1",
-        "lang": "cn",
-        "version": "1.0.0",
-        "timestamps": "1533200435875719",
-        "serialNumber": "57",
-        "userId": "4",
-        "userToken": "56"
+      "data": {
+        "total": "111",
+        "records": [
+          {
+            "ctime": "2018-08-03 17:34:52",
+            "ftime": "2018-08-03 17:34:52",
+            "id": "19591",
+            "user": "3",
+            "market": "BTCUSDT",
+            "source": "我是现价测试单",
+            "type": "1",
+            "side": "1",
+            "price": "100",
+            "amount": "12",
+            "dealAmount": "12",
+            "dealMoney": "0.06",
+            "dealFee": "0.0006",
+            "orderStatus": "2",
+            "leverage": "0",
+            "avgDealMoney": "0",
+            "delegateMoney": "0",
+            "unwindProfit": "0"
+          },
+          {
+            "ctime": "2018-08-03 17:02:52",
+            "ftime": "2018-08-03 17:02:52",
+            "id": "19590",
+            "user": "3",
+            "market": "BTCUSDT",
+            "source": "我是现价测试单",
+            "type": "1",
+            "side": "2",
+            "price": "333",
+            "amount": "21",
+            "dealAmount": "21",
+            "dealMoney": "0.0945945945945946",
+            "dealFee": "0.0009459459459459",
+            "orderStatus": "2",
+            "leverage": "0",
+            "avgDealMoney": "0",
+            "delegateMoney": "0",
+            "unwindProfit": "0"
+          },
+          {
+            "ctime": "2018-08-03 10:38:21",
+            "ftime": "2018-08-03 10:38:21",
+            "id": "19583",
+            "user": "3",
+            "market": "BTCUSDT",
+            "source": "我是现价测试单",
+            "type": "1",
+            "side": "2",
+            "price": "333",
+            "amount": "1",
+            "dealAmount": "1",
+            "dealMoney": "0.0045045045045045",
+            "dealFee": "0.000045045045045",
+            "orderStatus": "2",
+            "leverage": "0",
+            "avgDealMoney": "0",
+            "delegateMoney": "0",
+            "unwindProfit": "0"
+          },
+          {
+            "ctime": "2018-08-02 17:51:00",
+            "ftime": "2018-08-02 17:51:00",
+            "id": "19582",
+            "user": "3",
+            "market": "BTCUSDT",
+            "source": "我是现价测试单",
+            "type": "1",
+            "side": "1",
+            "price": "60",
+            "amount": "111",
+            "dealAmount": "111",
+            "dealMoney": "1.11",
+            "dealFee": "0.0111",
+            "orderStatus": "2",
+            "leverage": "0",
+            "avgDealMoney": "0",
+            "delegateMoney": "0",
+            "unwindProfit": "0"
+          },
+          {
+            "ctime": "2018-08-02 17:50:46",
+            "ftime": "2018-08-03 17:42:14",
+            "id": "19581",
+            "user": "3",
+            "market": "BTCUSDT",
+            "source": "(null)",
+            "type": "1",
+            "side": "1",
+            "price": "223",
+            "amount": "111",
+            "dealAmount": "111",
+            "dealMoney": "0.4977578475336323",
+            "dealFee": "0.0049775784753363",
+            "orderStatus": "2",
+            "leverage": "0",
+            "avgDealMoney": "0",
+            "delegateMoney": "0",
+            "unwindProfit": "0"
+          },
+          {
+            "ctime": "2018-08-02 17:50:26",
+            "ftime": "2018-08-03 17:02:52",
+            "id": "19580",
+            "user": "3",
+            "market": "BTCUSDT",
+            "source": "(null)",
+            "type": "1",
+            "side": "1",
+            "price": "222",
+            "amount": "111",
+            "dealAmount": "111",
+            "dealMoney": "0.4999999945945946",
+            "dealFee": "0.0049999859459459",
+            "orderStatus": "2",
+            "leverage": "0",
+            "avgDealMoney": "0",
+            "delegateMoney": "0",
+            "unwindProfit": "0"
+          },
+          {
+            "ctime": "2018-08-02 17:49:27",
+            "ftime": "2018-08-02 17:49:27",
+            "id": "19579",
+            "user": "3",
+            "market": "BTCUSDT",
+            "source": "我是现价测试单",
+            "type": "1",
+            "side": "1",
+            "price": "100",
+            "amount": "11",
+            "dealAmount": "11",
+            "dealMoney": "0.0495495495495495",
+            "dealFee": "0.0004954954954955",
+            "orderStatus": "2",
+            "leverage": "0",
+            "avgDealMoney": "0",
+            "delegateMoney": "0",
+            "unwindProfit": "0"
+          },
+          {
+            "ctime": "2018-08-02 17:48:56",
+            "ftime": "2018-08-02 17:48:56",
+            "id": "19578",
+            "user": "3",
+            "market": "BTCUSDT",
+            "source": "我是现价测试单",
+            "type": "1",
+            "side": "2",
+            "price": "2000",
+            "amount": "111",
+            "dealAmount": "111",
+            "dealMoney": "0.111",
+            "dealFee": "0.00111",
+            "orderStatus": "2",
+            "leverage": "0",
+            "avgDealMoney": "0",
+            "delegateMoney": "0",
+            "unwindProfit": "0"
+          },
+          {
+            "ctime": "2018-08-02 17:48:40",
+            "ftime": "2018-08-02 17:48:40",
+            "id": "19577",
+            "user": "3",
+            "market": "BTCUSDT",
+            "source": "我是现价测试单",
+            "type": "1",
+            "side": "2",
+            "price": "2000",
+            "amount": "111",
+            "dealAmount": "111",
+            "dealMoney": "0.111",
+            "dealFee": "0.00111",
+            "orderStatus": "2",
+            "leverage": "0",
+            "avgDealMoney": "0",
+            "delegateMoney": "0",
+            "unwindProfit": "0"
+          },
+          {
+            "ctime": "2018-08-02 17:47:59",
+            "ftime": "2018-08-02 17:47:59",
+            "id": "19576",
+            "user": "3",
+            "market": "BTCUSDT",
+            "source": "我是现价测试单",
+            "type": "1",
+            "side": "2",
+            "price": "1111",
+            "amount": "111",
+            "dealAmount": "111",
+            "dealMoney": "0.111",
+            "dealFee": "0.00111",
+            "orderStatus": "2",
+            "leverage": "0",
+            "avgDealMoney": "0",
+            "delegateMoney": "0",
+            "unwindProfit": "0"
+          }
+        ],
+        "pageIndex": "",
+        "pageSize": "10"
       },
-      "data": [
-        {
-          "assetName": "BTC", //资产名称
-          "available": "112233222223344442",//入金,暂时不可用
-          "feeFreeze": "0",//冻结的手续费
-          "walletBalance": "112233222223344442",//钱包金额
-          "floatProfit": "0",//浮动盈亏
-          "floatPercent": "12%",//浮动比例
-          "withdrawFreeze": "0",//提现冻结
-          "deletegate": "0",//委托保证金
-          "position": "0",//持仓保证金
-          "totalWealth": "0"//总权益
-        },
-        {
-          "assetName": "ETH",
-          "available": "0",
-          "feeFreeze": "0",
-          "walletBalance": "0",
-          "floatProfit": "0",
-          "floatPercent": "12%",
-          "withdrawFreeze": "0",
-          "deletegate": "0",
-          "position": "0",
-          "totalWealth": "0"
-        },
-        {
-          "assetName": "XRP",
-          "available": "0",
-          "feeFreeze": "0",
-          "walletBalance": "0",
-          "floatProfit": "0",
-          "floatPercent": "12%",
-          "withdrawFreeze": "0",
-          "deletegate": "0",
-          "position": "0",
-          "totalWealth": "0"
-        }
-      ],
+      "head": {
+        "method": "user.order_history",
+        "userId": "3",
+        "userToken": "user.QC5LTHR6HOUZINUCE4YI.pcweb",
+        "lang": "cn",
+        "packType": "1",
+        "version": "1.0",
+        "msgType": "response",
+        "timestamps": "1533291697010316",
+        "serialNumber": "21"
+      },
       "errCode": "0",
       "errStr": "success",
       "ret": "0"

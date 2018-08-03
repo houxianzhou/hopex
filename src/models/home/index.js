@@ -6,7 +6,7 @@ import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
   getPosition, getPersonEnsureDetail, getAllMarkets, getLeverage, doUpdateLeverage,
-  getKlineAllList
+  getKlineAllList, getPersonalEnsureHistory
 } from "@services/trade"
 
 
@@ -45,6 +45,7 @@ export default joinModel(modelExtend, {
 
     personalEnsures: [],//个人委托列表
     personalEnsures_PageIndex: null,
+    personalEnsureHistory: [],//最近10条委托历史
 
     positionList: [],//个人持仓列表
   },
@@ -531,30 +532,34 @@ export default joinModel(modelExtend, {
       }
     },
 
-    * getRecentTenHistory({ payload = {} }, { call, put }) {
+    //最近10条委托历史
+    * getPersonalEnsureHistory({ payload = {} }, { call, put }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
           "head": {
-            "method": "order.getRecentTenHistory"
+            "method": "user.order_history"
           },
           "param": {
-            "pageIndex": "0",//页码
-            "pageSize": "100"//每页数量
+            "side": "0",
+            "startTime": "0",
+            "endTime": "0",
+            "pageIndex": "",
+            "pageSize": "10"
           },
           power: [1],
           powerMsg: '最近十条'
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getPersonalEnsure, repayload))
+        const res = getRes(yield call(getPersonalEnsureHistory, repayload))
         if (resOk(res)) {
           const result = _.get(res, 'data.records')
           if (result) {
             yield put({
               type: 'changeState',
               payload: {
-                personalEnsures: result
+                personalEnsureHistory: result
               }
             })
           }
