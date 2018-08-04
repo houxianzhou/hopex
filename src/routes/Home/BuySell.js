@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { InputNumber, Slider } from "@components"
 import { COLORS } from '@constants'
-import { classNames, _, formatNumber } from '@utils'
+import { classNames, _, formatNumber, isEqual } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
 
 export default class View extends Component {
   state = {
-    orderChannel: 'order.put_limit',
+    orderChannel: 0,
     buy: {
       price: '',
       amount: '',
@@ -18,6 +18,25 @@ export default class View extends Component {
       price: '',
       amount: '',
       ensureMoney: ''
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { model: { clickSelectOne: prevClickSelectOne } = {} } = prevProps
+    const { model: { clickSelectOne } = {} } = this.props
+    if (!isEqual(prevClickSelectOne, clickSelectOne) && clickSelectOne) {
+      let order = null
+      const { type, price, amount } = clickSelectOne
+      if (type) {
+        order =  type === '1' ? 'sell' : 'buy'
+        this.changeState({
+          [order]:{
+            ...this.state[order],
+            price,
+            amount
+          }
+        })
+      }
     }
   }
 
@@ -187,10 +206,10 @@ export default class View extends Component {
 
     // 限价或者市价
     const configPrice = {
-      label_name: orderChannel === 'order.put_limit' ? '限价' : '市价',
+      label_name: orderChannel === 0 ? '限价' : '市价',
       label_desc: `最小单位${formatNumber(minVaryPrice, 2)}USD`,
       intro_desc: '最高允许买价',
-      intro_price: formatNumber(maxLimitPrice,'p'),
+      intro_price: formatNumber(maxLimitPrice, 'p'),
       value: buy.price,
       onChange: (value) => {
         this.setState({
@@ -236,7 +255,7 @@ export default class View extends Component {
           type: `${modelName}/postSideOrder`,
           payload: {
             side: '2',
-            method: this.state.orderChannel,
+            method: 'order.put_limit',
             price: buy.price,
             amount: buy.amount
           }
@@ -256,7 +275,7 @@ export default class View extends Component {
         ...configPrice,
         ...{
           intro_desc: '最低允许卖价',
-          intro_price: formatNumber(minLimitPrice,'p'),
+          intro_price: formatNumber(minLimitPrice, 'p'),
           value: sell.price,
           onChange: (value) => {
             this.setState({
@@ -299,7 +318,7 @@ export default class View extends Component {
               type: `${modelName}/postSideOrder`,
               payload: {
                 side: '1',
-                method: this.state.orderChannel,
+                method: 'order.put_market',
                 price: sell.price,
                 amount: sell.amount
               }
@@ -322,33 +341,35 @@ export default class View extends Component {
         <ScrollPannel
           scroller={false}
           header={
-            <div >
-              <span
-                style={{
-                  color: this.state.orderChannel === 'order.put_limit' ? 'green' : null
-                }}
+            <ul className={classNames(
+              styles.tab,
+              styles.buyselltab
+            )} >
+              <li
+                className={classNames(
+                  orderChannel === 0 ? 'active' : null
+                )}
                 onClick={() => {
                   this.changeState({
-                    orderChannel: 'order.put_limit',
+                    orderChannel: 0,
                   })
                 }}
               >
                 现价
-              </span >
-              <span
-                style={{
-                  marginLeft: 5,
-                  color: this.state.orderChannel === 'order.put_market' ? 'green' : null
-                }}
+              </li >
+              <li
+                className={classNames(
+                  orderChannel === 1 ? 'active' : null
+                )}
                 onClick={() => {
                   this.changeState({
-                    orderChannel: 'order.put_market',
+                    orderChannel: 1,
                   })
                 }}
               >
                 市价
-              </span >
-            </div >
+              </li >
+            </ul >
           }
         >
           <div className={styles.content} >

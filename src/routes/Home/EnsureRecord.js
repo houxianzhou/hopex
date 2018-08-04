@@ -59,7 +59,7 @@ export default class View extends Component {
         dataIndex: 'price',
         render: (value, record) => {
           let v = formatNumber(value, 'p')
-          return record.type === 'sell' ? {
+          return record.type === '1' ? {
             value: v,
             className: 'red'
           } : {
@@ -92,7 +92,7 @@ export default class View extends Component {
         title: '累计数量(张)',
         dataIndex: 'sum',
         render: (value, record, index, dataSource) => {
-          return <ColorChange color={record.type === 'sell' ? COLORS.redOpacity : COLORS.greenOpacity}
+          return <ColorChange color={record.type === '1' ? COLORS.redOpacity : COLORS.greenOpacity}
                               percent={getPercent(value, max.sum, 0.02)} >
             {value}
           </ColorChange >
@@ -116,9 +116,19 @@ export default class View extends Component {
     //   }))
     // }
 
+    const onClickRow = (item) => {
+      dispatch({
+        type: `${modelName}/changeState`,
+        payload: {
+          clickSelectOne: item
+        }
+      })
+    }
+
     const tableTopProps = {
       ...tableProps,
-      dataSource: (new Array((8 - dataTop.length) > 0 ? (8 - dataTop.length) : 0)).fill().concat(dataTop.slice(0, 8))
+      dataSource: (new Array((8 - dataTop.length) > 0 ? (8 - dataTop.length) : 0)).fill().concat(dataTop.slice(0, 8)),
+      onClickRow
     }
 
     // const tableDownProps = {
@@ -132,7 +142,8 @@ export default class View extends Component {
 
     const tableDownProps = {
       ...tableProps,
-      dataSource: _.merge((new Array(8)).fill(), dataDown.slice(0, 8))
+      dataSource: _.merge((new Array(8)).fill(), dataDown.slice(0, 8)),
+      onClickRow
     }
 
     max = _.maxBy([...tableTopProps.dataSource, ...tableDownProps.dataSource], ({ sum } = {}) => sum)

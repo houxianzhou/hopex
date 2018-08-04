@@ -52,7 +52,6 @@ export default class View extends Component {
     // this.startDeepMap()
   }
 
-
   changeState = (payload) => {
     this.setState(payload)
   }

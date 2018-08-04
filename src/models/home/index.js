@@ -20,6 +20,7 @@ export default joinModel(modelExtend, {
 
     latest_records: [],// 最新成交
     ensure_records: {},// 委托列表
+    clickSelectOne: {}, //从最新成交和委托列表点击选择而来
 
     maxPrice24h: '', // 24h最高
     minPrice24h: '', // 24最低
@@ -44,7 +45,7 @@ export default joinModel(modelExtend, {
     leverage: null, //当前用户的杠杆
 
     personalEnsures: [],//个人委托列表
-    personalEnsures_PageIndex: null,
+    personalEnsures_PageIndex: null, //最新成交价格与上次比较的趋势
     personalEnsureHistory: [],//最近10条委托历史
 
     positionList: [],//个人持仓列表
@@ -109,11 +110,11 @@ export default joinModel(modelExtend, {
         }
 
         result.asks.map((item, index) => {
-          item.type = 'sell'
+          item.type = '1'
           item.sum = _.sumBy(result.asks.slice(index, result.asks.length), ({ amount = 0 } = {}) => amount)
         })
         result.bids.map((item, index) => {
-          item.type = 'buy'
+          item.type = '2'
           item.sum = _.sumBy(result.bids.slice(0, index + 1), ({ amount = 0 } = {}) => amount)
         })
 
@@ -220,7 +221,7 @@ export default joinModel(modelExtend, {
       ws1.sendJson(repayload)
     },
 
-
+    // 获取杠杆
     * getLeverage({ payload = {} }, { call, put }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
@@ -247,6 +248,7 @@ export default joinModel(modelExtend, {
       }
     },
 
+    // 更新杠杆
     * doUpdateLeverage({ payload = {} }, { call, put, select }) {
       const { leverage } = payload
 

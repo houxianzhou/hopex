@@ -25,7 +25,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { latest_records = [] } } = this.props
+    const { model: { latest_records = [] }, dispatch, modelName } = this.props
     const columns = [
       {
         title: '时间',
@@ -77,6 +77,14 @@ export default class View extends Component {
       className: styles.tableContainer,
       columns,
       dataSource: _.merge((new Array(18)).fill(), dataSource),
+      onClickRow: (item) => {
+        dispatch({
+          type: `${modelName}/changeState`,
+          payload: {
+            clickSelectOne: item
+          }
+        })
+      },
       scroll: {
         mouseWheel: true,
         scrollY: true

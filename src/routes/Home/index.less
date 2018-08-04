@@ -46,7 +46,7 @@
       justify-content: center;
       flex-wrap: wrap;
       > div {
-        >div{
+        > div {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -490,6 +490,11 @@
 }
 
 .buySell {
+  .buyselltab {
+    li + li {
+      margin-left: 20px;
+    }
+  }
   .content {
     display: flex;
     color: @c_like_white;
@@ -775,6 +780,7 @@
 
 // tab公共部分
 .tab {
+  display: flex;
   height: 100%;
   :global {
     li {
