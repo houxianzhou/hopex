@@ -56,7 +56,7 @@ export const delay = (time) => {
 
 export const Patterns = {
   number: /^[0-9]*$/,
-  decimalNumber: /^[0-9|\.]*$/,
+  decimalNumber: /^[0-9]+([.]{1}[0-9]*){0,1}$/,
   email: /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/,
   password:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/
 }

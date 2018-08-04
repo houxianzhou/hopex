@@ -28,9 +28,9 @@ export default class View extends Component {
       let order = null
       const { type, price, amount } = clickSelectOne
       if (type) {
-        order =  type === '1' ? 'sell' : 'buy'
+        order = type === '1' ? 'sell' : 'buy'
         this.changeState({
-          [order]:{
+          [order]: {
             ...this.state[order],
             price,
             amount
@@ -45,7 +45,7 @@ export default class View extends Component {
   }
 
   renderInputItem = (config = {}) => {
-    const { label_name, label_desc, intro_desc, intro_price, value, onChange, step } = config
+    const { label_name, label_desc, intro_desc, intro_price, value, onChange, step, max, min } = config
     return (
       <div className={styles.priceitem} >
         <div className={styles.priceinput} >
@@ -53,7 +53,8 @@ export default class View extends Component {
             <div className={styles.label_name} >{label_name}</div >
             <div className={styles.label_desc} >{label_desc}</div >
           </div >
-          <InputNumber className={styles.input_number} value={value} step={step} onChange={onChange} />
+          <InputNumber className={styles.input_number} value={value} step={step} max={max} min={min}
+                       onChange={onChange} />
         </div >
         {
           intro_desc && intro_price ? (
@@ -211,6 +212,10 @@ export default class View extends Component {
       intro_desc: '最高允许买价',
       intro_price: formatNumber(maxLimitPrice, 'p'),
       value: buy.price,
+      step: minVaryPrice,
+      min: 0,
+      max: formatNumber(maxLimitPrice, 'p'),
+
       onChange: (value) => {
         this.setState({
           buy: {
@@ -219,7 +224,7 @@ export default class View extends Component {
           }
         })
       },
-      step: minVaryPrice
+
     }
     // 数量
     const configAmount = {
@@ -277,6 +282,7 @@ export default class View extends Component {
           intro_desc: '最低允许卖价',
           intro_price: formatNumber(minLimitPrice, 'p'),
           value: sell.price,
+          max: formatNumber(minLimitPrice, 'p'),
           onChange: (value) => {
             this.setState({
               sell: {
@@ -285,7 +291,6 @@ export default class View extends Component {
               }
             })
           }
-
         }
       },
       configAmount: {
