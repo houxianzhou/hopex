@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { classNames, moment, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin } from '@components'
 import { SCROLLX, TABLE } from '@constants'
+import defaultpng from '@assets/default.png'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -180,9 +181,10 @@ export default class View extends Component {
         x: SCROLLX.X,
       },
       noDataTip: () => {
-        if (!dataSource.length ) {
-          return <div className='default'>
-            haha
+        if (!dataSource.length) {
+          return <div >
+            <img src={defaultpng} />
+            <div style={{ marginTop: 8 }} >当前无持仓</div >
           </div >
         }
       },

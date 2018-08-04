@@ -127,7 +127,11 @@ export default class View extends Component {
       } >
         {
           _.isFunction(noDataTip) && noDataTip() ? (
-            noDataTip()
+              <div className='default'>
+                {
+                  noDataTip()
+                }
+              </div>
           ) : (
             <Table className={style.table} >
               <Thead style={{ left: this.state.x, minWidth: scroll.x }} >

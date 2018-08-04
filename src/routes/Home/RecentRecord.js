@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { classNames, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin } from '@components'
-import { SCROLLX } from '@constants'
+import { SCROLLX, TABLE } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -158,6 +158,7 @@ export default class View extends Component {
           }
         >
           <ScrollPannel
+            tableHeight={TABLE.trHeight * (dataSource.length + 1)}
             header={
               <div className={styles.header} >
                 <ul className={classNames(

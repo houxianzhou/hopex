@@ -37,13 +37,23 @@
 
 .tableContainer {
   :global {
-    .default{
+    .default {
       // background: red;
-      width:100%;
-      height:100%;
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-wrap: wrap;
+      > div {
+        >div{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #D7DAEE;
+          opacity: .5;
+        }
+      }
     }
     .table {
     }
@@ -257,23 +267,23 @@
         margin-left: 10px;
       }
       li {
-        padding:5px 5px;
+        padding: 5px 5px;
         color: @c_pannel_theader_color;
         height: 30px;
         //  background: black;
         display: flex;
         align-items: center;
         justify-content: center;
-        &.active{
+        &.active {
           background: #1c2030;
-          color:white;
+          color: white;
         }
       }
     }
     ul.utils {
       display: flex;
       margin-left: 10px;
-      li+li{
+      li + li {
         margin-left: 15px;
       }
     }
@@ -442,7 +452,7 @@
 }
 
 .position {
-  height: 242px;
+  min-height: 242px;
   :global {
     .tr {
       height: @header2 !important;
@@ -461,7 +471,7 @@
 }
 
 .recentRecord {
-  height: 242px;
+  min-height: 242px;
   :global {
     .tr {
       height: @header2 !important;
@@ -665,8 +675,6 @@
     }
   }
 }
-
-
 
 // 模态框
 .currentContract_modal {
