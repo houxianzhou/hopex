@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { classNames, moment, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin } from '@components'
-import { SCROLLX } from '@constants'
+import { SCROLLX, TABLE } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -27,7 +27,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { personalEnsures, userInfo }, dispatch, modelName } = this.props
+    const { model: { personalEnsures = [], userInfo = {} }, dispatch, modelName } = this.props
     const columns = [
       {
         title: '合约',
@@ -118,8 +118,9 @@ export default class View extends Component {
                           orderId: record.orderId
                         }
                       })
-                    }
-                    } >撤销</span >
+                    }} >
+                    撤销
+                  </span >
                   <span onClick={(e) => {
                     e.stopPropagation()
                     dispatch({
@@ -129,7 +130,9 @@ export default class View extends Component {
                         orderId: record.orderId
                       }
                     })
-                  }} >成交明细</span >
+                  }} >
+                    成交明细
+                  </span >
                 </>
               ),
               className: 'blue action'
@@ -174,7 +177,14 @@ export default class View extends Component {
         ) : null
       },
       scroll: {
-        x: SCROLLX.X
+        x: SCROLLX.X,
+      },
+      noDataTip: () => {
+        if (!dataSource.length ) {
+          return <div className='default'>
+            haha
+          </div >
+        }
       },
       // loadingMore: (callback) => {
       //   this.getPersonalEnsure({callback})
@@ -193,6 +203,7 @@ export default class View extends Component {
           }
         >
           <ScrollPannel
+            tableHeight={TABLE.trHeight * (dataSource.length + 1)}
             header={
               <div >活跃委托</div >
             }

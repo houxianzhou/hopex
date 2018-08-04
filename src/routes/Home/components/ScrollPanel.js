@@ -6,7 +6,7 @@ import * as styles from './ScrollPanel.less'
 export default class View extends Component {
 
   render() {
-    const { header, children, className = {}, style = {} } = this.props
+    const { header, children, className = {}, style = {}, tableHeight = 'auto' } = this.props
 
     return (
       <div className={
@@ -18,7 +18,7 @@ export default class View extends Component {
         {
           header ? (<div className={styles.header} >{header}</div >) : null
         }
-        <div className={styles.scrollPannelContainer} >
+        <div className={styles.scrollPannelContainer} style={{ height: tableHeight }} >
           <div className={styles.scrollPannelContent} >
             {children}
           </div >

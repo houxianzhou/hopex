@@ -77,7 +77,10 @@ export default class View extends Component {
       className: styles.tableContainer,
       columns,
       dataSource: _.merge((new Array(18)).fill(), dataSource),
-      scroll: {},
+      scroll: {
+        mouseWheel: true,
+        scrollY: true
+      },
     }
     return (
       <Mixin.Child that={this} >

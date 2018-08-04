@@ -9,12 +9,14 @@ export default class View extends Component {
 
   startInit = () => {
     const {
-      mouseWheel = true, // 是否监听滚轮滚动，此属性影响着鼠标滚动时，最外层的scroll滚动条能否滚动
+      mouseWheel = false, // 是否监听滚轮滚动，此属性影响着鼠标滚动时，最外层的scroll滚动条能否滚动
       scrollbar = true, // 滚动条显示样式，是一直显示还是滚动时显示
+      scrollY = false,
       getScroller,
       scroll,//作为覆盖默认配置项传入，
       ...rest
     } = this.props
+
     this.scroll = new BScroll(`.${this.uuid}`, {
       click: true,
       probeType: 3,
@@ -24,7 +26,7 @@ export default class View extends Component {
         fade: false,
         interactive: true
       } : (scrollbar || false),
-      scrollY: !!scrollbar || false,
+      scrollY: scrollY,
       scrollX: true,
       // bounce: false,
       mouseWheel,

@@ -40,6 +40,10 @@ export const SCROLLX = {
   X: 1400
 }
 
+export const TABLE = {
+  trHeight: 40
+}
+
 export const COLORS = {
   green: 'rgba(86,188,157,1)',
   red: 'rgba(218,115,115,1)',
@@ -61,3 +65,4 @@ export const PATH = {
   forgetPassword: '/user/forgetPassword',
   myaccount: '/myaccount'
 }
+
