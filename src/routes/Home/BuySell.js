@@ -131,12 +131,17 @@ export default class View extends Component {
   }
 
   renderSubmit = (config = {}) => {
-    const { label_text, label_desc, label_price, className = {}, onSubmit } = config
+    const {
+      configSubmit: { label_text, label_desc, label_price, className = {}, onSubmit } = {},
+      configPrice: { value: valuePrice } = {},
+      configAmount: { value: valueAmount } = {}
+
+    } = config
     const { isLogin, routerGoLogin, routerGoRegister } = this.props
     return <div
       className={classNames(
         styles.submit,
-        isLogin ? styles.haslogin : styles.notlogin,
+        isLogin && valuePrice && valueAmount ? styles.haslogin : styles.notlogin,
         className
       )}
       onClick={() => {
@@ -194,7 +199,7 @@ export default class View extends Component {
           this.renderEnsureMoney({ ...configEnsure, ...rest })
         }
         {
-          this.renderSubmit({ ...configSubmit, ...rest })
+          this.renderSubmit(config)
         }
       </div >
     )
@@ -231,6 +236,7 @@ export default class View extends Component {
       label_name: '数量',
       label_desc: `最小单位${formatNumber(minDealAmount, 2)}张`,
       value: buy.amount,
+      min: 1,
       onChange: (value) => {
         this.setState({
           buy: {
@@ -261,8 +267,8 @@ export default class View extends Component {
           payload: {
             side: '2',
             method: 'order.put_limit',
-            price: buy.price,
-            amount: buy.amount
+            price: String(buy.price),
+            amount: String(buy.amount)
           }
         })
       }
@@ -324,8 +330,8 @@ export default class View extends Component {
               payload: {
                 side: '1',
                 method: 'order.put_market',
-                price: sell.price,
-                amount: sell.amount
+                price: String(sell.price),
+                amount: String(sell.amount)
               }
             })
           }

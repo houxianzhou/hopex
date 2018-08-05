@@ -19,7 +19,7 @@ export default delay({
       }
     )
   },
-  'Post /mock/api/v1.0/User/Login': (req, res) => {
+  'Post /mock/api/v1/User/Login': (req, res) => {
     res.send(
       {
         data: {

@@ -118,7 +118,7 @@ export async function postLimitOrder(payload) {
 
 // 下市价单
 export async function postMarketOrder(payload) {
-  return await request(`${MODE}`, {
+  return await request(`${UserIp4}/order.put_market`, {
     method: 'post',
     body: payload
   })
