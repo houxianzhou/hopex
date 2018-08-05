@@ -10,6 +10,9 @@ import styles from './index.less'
 
 
 export default class View extends Component {
+  state = {
+    active: 0
+  }
   startInit = () => {
     this.getPosition()
   }
@@ -25,8 +28,22 @@ export default class View extends Component {
     })
   }
 
+  changeState = (payload) => {
+    this.setState(payload)
+  }
+
   render() {
+    const { changeState } = this
     const { model: { positionList = [], dealMoney }, modal: { name }, modelName, dispatch } = this.props
+
+    const openModal = () => {
+      dispatch({
+        type: `${modelName}/openModal`,
+        payload: {
+          name: 'positionMoney'
+        }
+      })
+    }
     const columns = [
       {
         title: '合约',
@@ -73,17 +90,22 @@ export default class View extends Component {
           return (
             <div className={styles.changepositionMoney} >
               <div onClick={() => {
-                dispatch({
-                  type: `${modelName}/openModal`,
-                  payload: {
-                    name: 'positionMoney'
-                  }
+                changeState({
+                  active:0
                 })
-              }} ><img src={substract} /></div >
+                openModal()
+              }} >
+                <img src={substract} />
+              </div >
               <div className={styles.positionMoney} >{formatNumber(v, 'p')}</div >
               <div onClick={() => {
-
-              }} ><img src={add} /></div >
+                changeState({
+                  active:1
+                })
+                openModal()
+              }} >
+                <img src={add} />
+              </div >
             </div >
           )
         }
@@ -146,11 +168,11 @@ export default class View extends Component {
               <div >当前持仓</div >
             }
           >
-            <Table {...tableProp} />
+            <Table {...tableProp}  />
           </ScrollPannel >
         </div >
         {
-          name === 'positionMoney' ? (<RenderModal {...this.props} />) : null
+          name === 'positionMoney' ? (<RenderModal {...this.props} {...this.state} changeState={changeState} />) : null
         }
       </Mixin.Child >
     )
@@ -161,10 +183,78 @@ class RenderModal extends Component {
   render() {
     const props = {
       ...this.props,
-      title:'持仓占用保证金'
+      title: '持仓占用保证金'
     }
+    const { changeState, active, dispatch, modelName } = this.props
     return (
-      <MainModal {...props}>fffff</MainModal >
+      <MainModal {...props} className={styles.position_modal} >
+        <div className={styles.header} >
+          <ul >
+            <li >
+              <div
+                className={classNames(
+                  active === 0 ? styles.active : null
+                )}
+                onClick={() => {
+                  changeState({
+                    active: 0
+                  })
+                }} >
+                增加保证金
+              </div >
+            </li >
+            <li >
+              <div
+                className={classNames(
+                  active === 1 ? styles.active : null
+                )}
+                onClick={() => {
+                  changeState({
+                    active: 1
+                  })
+                }} >
+                减少保证金
+              </div >
+            </li >
+          </ul >
+        </div >
+        <div className={styles.content} >
+          <div className={styles.input} >
+            <div className={styles.edit} >
+              ahhaha
+              <input />
+              <div >BTC</div >
+            </div >
+          </div >
+          <ul className={styles.desc} >
+            <li >最多增加
+              <div >1347.8912BTC</div >
+            </li >
+            <li >追加后的强平价格为 ：
+              <div >1347.8912BTC</div >
+            </li >
+          </ul >
+        </div >
+        <div className={styles.buttons} >
+          <div
+            onClick={() => {
+              dispatch({
+                type: `${modelName}/closeModal`,
+              })
+            }}
+          >
+            取消
+          </div >
+          <div
+            className={styles.confirm}
+            onClick={() => {
+
+            }}
+          >
+            确定
+          </div >
+        </div >
+      </MainModal >
     )
   }
 }

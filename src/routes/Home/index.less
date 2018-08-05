@@ -694,7 +694,7 @@
   }
 }
 
-// 模态框
+// 当前合约模态框
 .currentContract_modal {
   .content {
     padding: 0 35px;
@@ -769,6 +769,88 @@
       }
     }
   }
+}
+
+// 持仓占用保证金模态框
+.position_modal {
+  .header {
+    height: 40px;
+    background: @c_pannel_header_dark;
+    ul {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      li {
+        height: 100%;
+        flex-grow: 1;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        > div {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          font-size: 16px;
+          color: @c_like_white;
+          &.active {
+            color: @c_active_yellow;
+            border-bottom: 2px solid @c_active_yellow;
+          }
+        }
+      }
+    }
+  }
+  .content {
+    padding: 0 38px;
+    .input {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 140px;
+      > div {
+        display: flex;
+        align-items: flex-end;
+      }
+      .edit {
+        width: 200px;
+        position: relative;
+        border-bottom: 1px solid @c_pannel_header_dark;
+        color: @c_active_yellow;
+        input {
+          padding:0 5px;
+          width: 1px;
+          flex-grow: 1;
+          background: unset;
+          border:unset;
+          outline: unset;
+          text-align: center;
+
+          font-size: 38px;
+        }
+        > div {
+          color:@c_like_white;
+          position: absolute;
+          right: -25px;
+        }
+      }
+    }
+    .desc{
+      color:white;
+      li+li{
+        margin-top: 20px;
+      }
+      li{
+        display: flex;
+        >div{
+          margin-left: 20px;
+          color: @c_active_yellow;
+        }
+      }
+      margin-bottom: 50px !important;
+    }
+  }
+
+
 }
 
 // 模态框公共部分
