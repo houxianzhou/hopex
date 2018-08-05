@@ -4,8 +4,8 @@ import modelExtend from '@models/modelExtend'
 export default joinModel(modelExtend, {
   namespace: 'modal',
   state: {
-    name: 'positionMoney',
-    state: true,
+    name: '',
+    state: false,
   },
 
   effects: {

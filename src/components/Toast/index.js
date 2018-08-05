@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { ToastContainer, toast } from 'react-toastify'
-import { _ } from '@utils'
+import { _, classNames } from '@utils'
 import 'react-toastify/dist/ReactToastify.css'
 import * as styles from './index.less'
 
@@ -39,14 +39,39 @@ class Toast {
     }, interval)
   }
 
-  message = (message = 'message提示') => {
-    toast((
-      <div className={styles.toast_message} >ahhahah</div >
-    ), {
-      autoClose: false,
-      bodyClassName: styles.toast_message_body,
-      className: styles.toast_message_content,
-    })
+  message = (status = 'success', title = 'title', message) => {
+    toast(
+      (
+        <div className={styles.toast_message} >
+          <div className={
+            classNames(
+              styles.title,
+              status === 'success' ? styles.success : null,
+              status === 'warn' ? styles.warn : null
+            )
+          } >
+            <div />
+            委托成功
+          </div >
+          {
+            message ? <div className={styles.desc} >{message}</div > : null
+          }
+        </div >
+      ), {
+        hideProgressBar: true,
+        autoClose: 2000,
+        bodyClassName: styles.toast_message_body,
+        className: styles.toast_message_content,
+      }
+    )
+  }
+
+  success = (title, message) => {
+    this.message('success', title, message)
+  }
+
+  warn = (title, message) => {
+    this.message('warn', title, message)
   }
 }
 

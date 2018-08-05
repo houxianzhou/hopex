@@ -617,6 +617,30 @@ export default {
     )
   },
 
+  //下限价单
+  'Post /mock/api/v1/trade/order.put_limit': (req, res) => {
+    res.send(
+      {
+        "data": '',
+        "errCode": "0",
+        "errStr": "success",
+        "ret": "0"
+      }
+    )
+  },
+
+  //下市价单
+  'Post /mock/api/v1/trade/order.put_market': (req, res) => {
+    res.send(
+      {
+        "data": '',
+        "errCode": "0",
+        "errStr": "success",
+        "ret": "0"
+      }
+    )
+  },
+
 }
 
 

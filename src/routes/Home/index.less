@@ -68,6 +68,9 @@
     }
     .tbody {
       .tr {
+        &:hover {
+          background: #1C222E !important;
+        }
         height: 26px;
         //&:nth-child(2n+1) {
         //  background: @c_panel_light;
@@ -612,6 +615,7 @@
         &.notlogin {
           background-image: linear-gradient(90deg, #4A5365 0%, #41495A 100%);
           pointer-events: none;
+          color: #7D879F;
           > div {
             pointer-events: auto;
             cursor: pointer;
@@ -817,31 +821,31 @@
         border-bottom: 1px solid @c_pannel_header_dark;
         color: @c_active_yellow;
         input {
-          padding:0 5px;
+          padding: 0 5px;
           width: 1px;
           flex-grow: 1;
           background: unset;
-          border:unset;
+          border: unset;
           outline: unset;
           text-align: center;
 
           font-size: 38px;
         }
         > div {
-          color:@c_like_white;
+          color: @c_like_white;
           position: absolute;
           right: -25px;
         }
       }
     }
-    .desc{
-      color:white;
-      li+li{
+    .desc {
+      color: white;
+      li + li {
         margin-top: 20px;
       }
-      li{
+      li {
         display: flex;
-        >div{
+        > div {
           margin-left: 20px;
           color: @c_active_yellow;
         }
@@ -849,7 +853,6 @@
       margin-bottom: 50px !important;
     }
   }
-
 
 }
 

@@ -1,4 +1,5 @@
 import { message as Message } from 'antd'
+import { Toast } from '@components'
 import { joinModel, getRes, resOk, formatNumber, _, formatJson, asyncPayload, deepClone } from '@utils'
 import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
@@ -594,7 +595,9 @@ export default joinModel(modelExtend, {
       })))
       if (repayload) {
         const res = getRes(yield call(url, repayload))
-
+        if (resOk(res)) {
+          Toast.success('委托成功')
+        }
       }
     },
   },

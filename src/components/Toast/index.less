@@ -18,8 +18,36 @@
 
 .toast_message {
   width: 420px;
-  height: 70px;
+  // height: 70px;
   padding: 20px;
+  .title {
+    display: flex;
+    align-items: center;
+    color: black;
+
+    > div {
+      border-radius: 5px;
+      width: 10px;
+      height: 10px;
+      margin-right: 8px;
+      border: 3px solid black;
+    }
+    &.success {
+      > div {
+        border-color: @_green;
+      }
+    }
+    &.warn {
+      > div {
+        border-color: #DC5D5D;
+        color: #DC5D5D;
+      }
+    }
+  }
+  .desc {
+    margin-top: 15px;
+  }
+
 }
 
 :global {
@@ -29,6 +57,9 @@
   .Toastify__toast-container {
     width: unset;
     padding: unset;
+  }
+  .Toastify__toast + .Toastify__toast {
+    margin-top: 10px;
   }
   .Toastify__toast {
     border-radius: 4px;

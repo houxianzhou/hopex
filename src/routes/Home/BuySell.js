@@ -266,7 +266,7 @@ export default class View extends Component {
           type: `${modelName}/postSideOrder`,
           payload: {
             side: '2',
-            method: 'order.put_limit',
+            method: orderChannel === 0 ? 'order.put_limit' : 'order.put_market',
             price: String(buy.price),
             amount: String(buy.amount)
           }
@@ -329,7 +329,7 @@ export default class View extends Component {
               type: `${modelName}/postSideOrder`,
               payload: {
                 side: '1',
-                method: 'order.put_market',
+                method: orderChannel === 0 ? 'order.put_limit' : 'order.put_market',
                 price: String(sell.price),
                 amount: String(sell.amount)
               }
