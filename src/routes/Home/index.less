@@ -453,6 +453,19 @@
 
 .position {
   min-height: 242px;
+  .changepositionMoney {
+    display: flex;
+    > div {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &.positionMoney {
+        margin: 0 10px;
+        cursor: unset;
+      }
+    }
+  }
   :global {
     .tr {
       height: @header2 !important;

@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import { classNames, dealInterval, _, formatNumber, getPercent } from '@utils'
 import { Table, Mixin } from '@components'
 import { SCROLLX, TABLE } from '@constants'
+import add from '@assets/add.png'
+import substract from '@assets/substract.png'
 import ScrollPannel from './components/ScrollPanel'
+import MainModal from './components/MainModal'
 import styles from './index.less'
 
 
 export default class View extends Component {
   startInit = () => {
-    //this.getPosition()
+    this.getPosition()
   }
 
   getPosition = () => {
@@ -23,7 +26,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { positionList = [], dealMoney } } = this.props
+    const { model: { positionList = [], dealMoney }, modal: { name }, modelName, dispatch } = this.props
     const columns = [
       {
         title: '合约',
@@ -66,7 +69,24 @@ export default class View extends Component {
       {
         title: '持仓占用保证金',
         dataIndex: 'positionMoney',
-        render: (v) => formatNumber(v, 'p')
+        render: (v) => {
+          return (
+            <div className={styles.changepositionMoney} >
+              <div onClick={() => {
+                dispatch({
+                  type: `${modelName}/openModal`,
+                  payload: {
+                    name: 'positionMoney'
+                  }
+                })
+              }} ><img src={substract} /></div >
+              <div className={styles.positionMoney} >{formatNumber(v, 'p')}</div >
+              <div onClick={() => {
+
+              }} ><img src={add} /></div >
+            </div >
+          )
+        }
       },
       {
         title: '维持保证金',
@@ -127,10 +147,24 @@ export default class View extends Component {
             }
           >
             <Table {...tableProp} />
-
           </ScrollPannel >
         </div >
+        {
+          name === 'positionMoney' ? (<RenderModal {...this.props} />) : null
+        }
       </Mixin.Child >
+    )
+  }
+}
+
+class RenderModal extends Component {
+  render() {
+    const props = {
+      ...this.props,
+      title:'持仓占用保证金'
+    }
+    return (
+      <MainModal {...props}>fffff</MainModal >
     )
   }
 }

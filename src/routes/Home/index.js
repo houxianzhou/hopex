@@ -27,8 +27,9 @@ const Comp = {
   RecentRecord
 }
 let throttle
-@connect(({ home: model, user, theme, loading, dispatch }) => ({
+@connect(({ home: model, modal, user, theme, loading, dispatch }) => ({
   model,
+  modal,
   user,
   modelName: 'home',
   theme,
@@ -120,6 +121,16 @@ export default class View extends Component {
       <Mixin.Parent that={this} >
         <div className={styles.home} >
           <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >
+
+          {
+            isLogin ? (
+              <div className={styles.views} >
+                {
+                  renderView('Position')
+                }
+              </div >
+            ) : null
+          }
           <div className={styles.views} >
             {
               renderView('Purse')
@@ -152,15 +163,7 @@ export default class View extends Component {
               </div >
             ) : null
           }
-          {
-            isLogin ? (
-              <div className={styles.views} >
-                {
-                  renderView('Position')
-                }
-              </div >
-            ) : null
-          }
+
 
           {
             isLogin ? (
@@ -171,13 +174,6 @@ export default class View extends Component {
               </div >
             ) : null
           }
-
-
-
-
-
-
-
 
 
         </div >

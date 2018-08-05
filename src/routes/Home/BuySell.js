@@ -236,7 +236,7 @@ export default class View extends Component {
       label_name: '数量',
       label_desc: `最小单位${formatNumber(minDealAmount, 2)}张`,
       value: buy.amount,
-      min: 1,
+      min: 0,
       onChange: (value) => {
         this.setState({
           buy: {

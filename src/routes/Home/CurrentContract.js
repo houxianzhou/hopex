@@ -12,7 +12,7 @@ import styles from './index.less'
 export default class View extends Component {
 
   startInit = () => {
-   // this.getLeverage()
+    // this.getLeverage()
   }
 
   getLeverage = () => {
@@ -23,10 +23,11 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { marketName, leverage, }, dispatch, modelName } = this.props
+    const { model: { marketName, leverage, }, modal: { name }, dispatch, modelName } = this.props
     const colors = [
       '#52AA64', '#52AA64', '#8CB152', '#8CB152', '#CABA70', '#CABA70', '#D69555', '#D69555', '#D47D5A', ' #D47D5A'
     ]
+
     return (
       <Mixin.Child that={this} >
         <div
@@ -57,7 +58,10 @@ export default class View extends Component {
                     className={styles.edit}
                     onClick={() => {
                       dispatch({
-                        type: `${modelName}/openModal`
+                        type: `${modelName}/openModal`,
+                        payload:{
+                          name: 'contract'
+                        }
                       })
                     }}
                   >编辑
@@ -80,7 +84,9 @@ export default class View extends Component {
               </div >
             </div >
           </ScrollPannel >
-          <RenderModal {...this.props} />
+          {
+            name === 'contract' ? (<RenderModal {...this.props} />) : null
+          }
         </div >
       </Mixin.Child >
     )
@@ -136,7 +142,6 @@ class RenderModal extends Component {
         })
       }
     }
-
 
     return (
       <MainModal {...props} className={styles.currentContract_modal} >
