@@ -4,6 +4,7 @@ import { Table, Mixin } from '@components'
 import { SCROLLX, TABLE } from '@constants'
 import add from '@assets/add.png'
 import substract from '@assets/substract.png'
+import defaultpng from '@assets/default.png'
 import ScrollPannel from './components/ScrollPanel'
 import MainModal from './components/MainModal'
 import styles from './index.less'
@@ -148,7 +149,15 @@ export default class View extends Component {
       dataSource: _.merge((new Array(4)).fill(), dataSource),
       scroll: {
         x: SCROLLX.X
-      }
+      },
+      noDataTip: () => {
+        if (!dataSource.length) {
+          return <div >
+            <img src={defaultpng} />
+            <div style={{ marginTop: 8 }} >当前无持仓</div >
+          </div >
+        }
+      },
     }
     return (
       <Mixin.Child that={this} >

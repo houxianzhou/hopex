@@ -69,7 +69,6 @@ export class MixinChild extends React.Component {
   startInit = () => {
     const { that = {} } = this.props
     const [startInit, childInitStacks] = [_.get(that, 'startInit'), _.get(that, 'props.that.childInitStacks')]
-    console.log(childInitStacks.length)
     if (_.isFunction(startInit) && _.isArray(childInitStacks)) {
       childInitStacks.push(() => {
         this.startUnMount().then(startInit())

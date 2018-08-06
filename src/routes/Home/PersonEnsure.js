@@ -184,7 +184,7 @@ export default class View extends Component {
         if (!dataSource.length) {
           return <div >
             <img src={defaultpng} />
-            <div style={{ marginTop: 8 }} >当前无持仓</div >
+            <div style={{ marginTop: 8 }} >当前无委托</div >
           </div >
         }
       },

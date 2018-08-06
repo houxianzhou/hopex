@@ -32,7 +32,8 @@ export const SOCKETURL = {
 // 接口权限
 export const POWER = {
   private: 1,
-  public: 0
+  public: 0,
+  ifPrivate: 2
 }
 
 // better-scroll横向滚动条出现时机

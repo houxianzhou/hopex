@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { classNames, _, dealInterval, getPercent, formatNumber, isEqual } from '@utils'
 import { Mixin, Table } from "@components"
 import ensure from '@assets/ensure.png'
-import switch_render from '@assets/switch_render.png'
 import { COLORS } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
@@ -71,7 +70,7 @@ export default class View extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render: (value, record, index, dataSource) => {
+        render: (value, record = {}, index, dataSource) => {
           return (
             <ColorChange
               data={{
@@ -84,7 +83,11 @@ export default class View extends Component {
               }))}
               RG={RG}
             >
-              {formatNumber(value, 0, true)}
+              <span style={{
+                color: record.exist === '1' ? COLORS.yellow : null
+              }} >
+                {formatNumber(value, 0, true)}
+                </span >
             </ColorChange >
           )
         }
@@ -92,10 +95,14 @@ export default class View extends Component {
       {
         title: '累计数量(张)',
         dataIndex: 'sum',
-        render: (value, record, index, dataSource) => {
+        render: (value, record = {}) => {
           return <ColorChange color={record.type === '1' ? COLORS.redOpacity : COLORS.greenOpacity}
                               percent={getPercent(value, max.sum, 0.02)} >
-            {formatNumber(value, 0, true)}
+            <span style={{
+              color: record.exist === '1' ? COLORS.yellow : null
+            }} >
+                {formatNumber(value, 0, true)}
+                </span >
           </ColorChange >
         }
       }
@@ -163,20 +170,8 @@ export default class View extends Component {
         >
           <ScrollPannel
             header={
-              <div className={styles.ensurerecord_header}>
+              <div className={styles.ensurerecord_header} >
                 <span >委托列表</span >
-                {/*{*/}
-                  {/*!viewPosition ? (*/}
-                    {/*<img alt='switch' src={switch_render} onClick={() => {*/}
-                      {/*dispatch({*/}
-                        {/*type: 'theme/changeState',*/}
-                        {/*payload: {*/}
-                          {/*viewPosition: !viewPosition*/}
-                        {/*}*/}
-                      {/*})*/}
-                    {/*}} />*/}
-                  {/*) : null*/}
-                {/*}*/}
               </div >
             }
           >

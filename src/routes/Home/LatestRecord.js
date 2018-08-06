@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { classNames, dealInterval, moment, _, formatNumber } from '@utils'
 import switch_render from '@assets/switch_render.png'
 import { Mixin, Table } from "@components"
+import { COLORS } from '@constants'
 import RedGreenArrow from './components/RedGreenArrow'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
@@ -24,7 +25,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { latest_records = [] }, RG, viewPosition, dispatch, modelName } = this.props
+    const { model: { latest_records = [] }, RG, dispatch, modelName } = this.props
     const columns = [
       {
         title: '时间',
@@ -69,7 +70,11 @@ export default class View extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render: (value) => formatNumber(value, 0, true)
+        render: (value, record = {}) => (
+          <span style={{ color: record.exist === '1' ? COLORS.yellow : null }} >
+            {formatNumber(value, 0, true)}
+            </span >
+        )
       },
     ]
     const dataSource = latest_records
@@ -106,14 +111,7 @@ export default class View extends Component {
             header={
               <div className={styles.record_header} >
                 <span >最新成交</span >
-                <img alt='switch' src={switch_render} onClick={() => {
-                  dispatch({
-                    type: 'theme/changeState',
-                    payload: {
-                      viewPosition: !viewPosition
-                    }
-                  })
-                }} />
+                <img alt='switch' src={switch_render} />
 
               </div >
             }

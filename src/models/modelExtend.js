@@ -16,6 +16,7 @@ export default {
     * createRequestParams({ payload = {} }, { call, put, select }) {
       const { power = [], powerMsg = '' } = payload
       const needPower = power[0] === POWER.private
+      const ifNeedPower = power[0] === POWER.ifPrivate //如果登陆了就发，不一定是必须
       const model = yield select(({ user, theme, home }) => (
         {
           ...user, ...theme,
@@ -38,9 +39,9 @@ export default {
           result = reset(['head', 'msgType'], String("request"))
           result = reset(['head', 'packType'], String("1"))
           result = reset(['head', 'serialNumber'], String(_.uniqueId()))
-          if (needPower) {
-            result = reset(['head', 'userId'], String(userId))
-            result = reset(['head', 'userToken'], String(userToken))
+          if (needPower || ifNeedPower) {
+            result = reset(['head', 'userId'], userId ? String(userId) : undefined)
+            result = reset(['head', 'userToken'], userToken ? String(userToken) : undefined)
           }
         }
         if (_.has(payload, 'param')) {

@@ -98,8 +98,9 @@ export default joinModel(modelExtend, {
           },
           "param": {
             "pageSize": "100", //不能大于101
-            "interval": "0" //固定值
-          }
+            "interval": "0", //固定值
+          },
+          power: [2],
         }
       })))
       const res = getRes(yield call(getEnsureRecord, repayload))

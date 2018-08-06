@@ -131,13 +131,13 @@ export default class View extends Component {
 
           <div className={styles.views} >
             {
-              viewPosition ? renderView('LatestRecord') : renderView('EnsureRecord')
+              renderView('LatestRecord')
             }
             {
               renderView('TradeChart')
             }
             {
-              !viewPosition ? renderView('LatestRecord') : renderView('EnsureRecord')
+              renderView('EnsureRecord')
             }
           </div >
 
