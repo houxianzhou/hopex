@@ -10,21 +10,23 @@ import Footer from './Footer'
 import * as styles from './index.less'
 
 @connect(({ theme, loading, dispatch }) => ({
+  // theme,
   loading,
   dispatch,
-  model: theme
+  // model: theme
 }))
 export default class View extends Component {
   render() {
     const {
-      app, routesBasic, model: { theme }
+      app, routesBasic
     } = this.props
     return (
       <Responsive common_cN="device" >
         <div className={
           classNames(
             styles.overbody,
-            switchTheme(theme) ? styles.dark : null
+            styles.dark,
+            //switchTheme(theme) ? styles.dark : null
           )
         } >
           <Header {...this.props} />

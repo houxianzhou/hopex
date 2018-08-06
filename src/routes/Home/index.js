@@ -100,8 +100,9 @@ export default class View extends Component {
   }
 
   renderView = (name) => {
-
+    const { theme: { RG } } = this.props
     const props = {
+      RG,
       ...this.props,
       isLogin: this.isLogin(),
       routerGoLogin: this.routerGoLogin,
@@ -119,7 +120,7 @@ export default class View extends Component {
     return (
       <Mixin.Parent that={this} >
         <div className={styles.home} >
-          <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >
+          <ShowJsonTip data={{ ...this.props.model, ...this.props.user, ...this.props.theme }} ></ShowJsonTip >
 
           <div className={styles.views} >
             {

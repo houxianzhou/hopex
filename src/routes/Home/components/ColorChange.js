@@ -11,7 +11,7 @@ export default class ColorChange extends Component {
 
   componentDidUpdate(prevProps) {
     const { data: prevData = {}, total: prevTotal = [] } = prevProps
-    const { data = {}, total = [] } = this.props
+    const { data = {}, total = [], RG } = this.props
     const prevDataValue = (prevTotal.filter(item => item.dataIndex === data.dataIndex)[0] || {}).dataValue
     const dataValue = data.dataValue
 
@@ -37,7 +37,9 @@ export default class ColorChange extends Component {
       if (!_.isNil(prevDataValue) && !isEqual(prevDataValue, dataValue)) {
         this.setState({
           percent: '100%',
-          color: Number(dataValue) > Number(prevDataValue) ? COLORS.greenOpacity : COLORS.redOpacity
+          color: Number(dataValue) > Number(prevDataValue) ?
+            (RG ? COLORS.greenOpacity : COLORS.redOpacity) :
+            (RG ? COLORS.redOpacity : COLORS.greenOpacity)
         })
         colorCancel()
       }
@@ -49,7 +51,7 @@ export default class ColorChange extends Component {
   }
 
   render() {
-    const { color, style = {}, percent, children } = this.props
+    const { color, style = {}, percent, children, ...rest } = this.props
     return (
       <div style={
         {

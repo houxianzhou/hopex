@@ -107,11 +107,9 @@
               }
               position: relative;
               .accountContainer {
-                // background: red;
                 display: none;
                 position: absolute;
                 width: 220px;
-                // height: 247px;
                 top: 13px;
                 z-index: 2;
                 .content {
@@ -123,6 +121,24 @@
                   width: 100%;
                   height: 100%;
                   background: rgba(255, 255, 255, 1);
+                  .themelist{
+                    display: flex;
+                    li{
+                      >div{
+                        margin-right: 5px;
+                        width:15px;
+                        height: 15px;
+                        border:5px solid @c_active_yellow;
+                        border-radius: 10px;
+                      }
+                      display: flex;
+                      justify-content: flex-start;
+                      color: #333333;
+                      width:100%;
+                      height:100%;
+                      padding:unset
+                    }
+                  }
                   .desc {
                     cursor: pointer;
                     border: 1px solid @c_active_yellow;

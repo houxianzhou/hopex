@@ -15,6 +15,7 @@ let index = 0
   home,
   modelName1: 'home',
   modelName2: 'user',
+  modelName3: 'theme',
   theme,
   user,
   loading,
@@ -22,7 +23,7 @@ let index = 0
 }))
 export default class View extends Component {
   render() {
-    const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } }, theme, modelName1, modelName2, dispatch, routesBasic, history } = this.props
+    const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } } = {}, theme: { RG } = {}, modelName1, modelName2, modelName3, dispatch, routesBasic, history } = this.props
 
     const isLogin = !_.isEmpty(userInfo)
 
@@ -30,7 +31,8 @@ export default class View extends Component {
       <div className={
         classNames(
           styles.header,
-          switchTheme(theme) ? styles.dark : styles.dark//styles.light
+          styles.dark,
+          // switchTheme(theme) ? styles.dark : styles.dark//styles.light
         )
       } >
 
@@ -110,6 +112,37 @@ export default class View extends Component {
                   }
                   <div className={styles.accountContainer} >
                     <div className={styles.content} >
+                      <ul className={styles.themelist} >
+                        <li onClick={(e) => {
+                          e.preventDefault()
+                          dispatch({
+                            type: `${modelName3}/changeState`,
+                            payload: {
+                              RG: 0
+                            }
+                          })
+                        }} >
+                          {
+                            !RG ? <div ></div > : null
+                          }
+                          红涨绿跌
+                        </li >
+                        <li onClick={(e) => {
+                          e.preventDefault()
+                          dispatch({
+                            type: `${modelName3}/changeState`,
+                            payload: {
+                              RG: 1
+                            }
+                          })
+                        }} >
+                          {
+                            RG ? <div ></div > : null
+                          }
+
+                          绿涨红跌
+                        </li >
+                      </ul >
                       <div className={styles.desc} onClick={() => {
                         dispatch({
                           type: `${modelName2}/routerGo`,

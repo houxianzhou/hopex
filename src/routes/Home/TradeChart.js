@@ -3,8 +3,7 @@ import echarts from 'echarts'
 import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson, isEqual } from '@utils'
 import { Mixin } from "@components"
 import wss from '@services/SocketClient'
-import arrow_down from '@assets/arrow_down.png'
-import arrow_top from '@assets/arrow_top.png'
+import RedGreenArrow from './components/RedGreenArrow'
 import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
@@ -502,8 +501,9 @@ export default class View extends Component {
     const {
       model: {
         marketName = '', maxPrice24h, minPrice24h, indexPrice,
-        latestPrice, latestPriceTrend, totalPrice24h, equitablePrice, latestPriceChangePercent, dollarPrice
-      }
+        latestPrice, latestPriceTrend, totalPrice24h, equitablePrice, latestPriceChangePercent, dollarPrice,
+      },
+      RG
     } = this.props
     const intervals = [
       { name: '1min', value: '1' },
@@ -550,9 +550,9 @@ export default class View extends Component {
                             {latestPrice}
                             {
                               latestPriceTrend ? (
-                                <img alt='top' src={arrow_top} />
+                                <RedGreenArrow alt='top' RG={RG} />
                               ) : (
-                                <img alt='down' src={arrow_down} />
+                                <RedGreenArrow alt='down' RG={RG} />
                               )
                             }
                           </div >

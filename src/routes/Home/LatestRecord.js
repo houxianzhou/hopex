@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { classNames, dealInterval, moment, _, formatNumber } from '@utils'
 import switch_render from '@assets/switch_render.png'
 import { Mixin, Table } from "@components"
-import arrow_down from '@assets/arrow_down.png'
-import arrow_top from '@assets/arrow_top.png'
+import RedGreenArrow from './components/RedGreenArrow'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -25,7 +24,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { latest_records = [] }, dispatch, modelName } = this.props
+    const { model: { latest_records = [] }, RG, dispatch, modelName } = this.props
     const columns = [
       {
         title: '时间',
@@ -54,9 +53,9 @@ export default class View extends Component {
         render: (value, record, index, dataSource) => {
           const style = { marginLeft: 7 }
           const next = dataSource[index + 1] || {}
-          const img = value > next.price ? (
-            <img style={style} alt='top' src={arrow_top} />) : (value < next.price ? (
-            <img style={style} alt='down' src={arrow_down} />) : null)
+          const img = Number(value) > Number(next.price) ? (
+            <RedGreenArrow style={style} alt='top' RG={RG} />) : (Number(value) < Number(next.price) ? (
+            <RedGreenArrow style={style} alt='down' RG={RG} />) : null)
           const result = <span >{formatNumber(value, 'p')}{img}</span >
           return record.type === '2' || record.type === '买' ? {
             value: result,

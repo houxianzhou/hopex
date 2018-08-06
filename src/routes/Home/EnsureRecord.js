@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import { classNames, _, dealInterval, getPercent, formatNumber, isEqual } from '@utils'
 import { Mixin, Table } from "@components"
 import ensure from '@assets/ensure.png'
-import arrow_down from '@assets/arrow_down.png'
-import arrow_top from '@assets/arrow_top.png'
 import { COLORS } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
+import RedGreenArrow from './components/RedGreenArrow'
 import styles from './index.less'
 
 let max = null
@@ -46,7 +45,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice, latestPriceTrend }, dispatch, modelName } = this.props
+    const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice, latestPriceTrend }, dispatch, modelName, RG } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'asks')
       , _.get(ensure_records, 'bids')
@@ -82,6 +81,7 @@ export default class View extends Component {
                 dataIndex: item.price,
                 dataValue: item.amount
               }))}
+              RG={RG}
             >
               {value}
             </ColorChange >
@@ -176,9 +176,9 @@ export default class View extends Component {
                   {latestPrice}
                   {
                     latestPriceTrend ? (
-                      <img alt='top' src={arrow_top} />
+                      <RedGreenArrow alt='top' RG={RG} />
                     ) : (
-                      <img alt='down' src={arrow_down} />
+                      <RedGreenArrow alt='down' RG={RG} />
                     )
                   }
                 </div >

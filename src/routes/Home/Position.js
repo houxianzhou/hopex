@@ -34,7 +34,7 @@ export default class View extends Component {
 
   render() {
     const { changeState } = this
-    const { model: { positionList = [], dealMoney }, modal: { name }, modelName, dispatch } = this.props
+    const { model: { positionList = [], dealMoney }, modal: { name }, RG, modelName, dispatch } = this.props
 
     const openModal = () => {
       dispatch({
@@ -91,7 +91,7 @@ export default class View extends Component {
             <div className={styles.changepositionMoney} >
               <div onClick={() => {
                 changeState({
-                  active:0
+                  active: 0
                 })
                 openModal()
               }} >
@@ -100,7 +100,7 @@ export default class View extends Component {
               <div className={styles.positionMoney} >{formatNumber(v, 'p')}</div >
               <div onClick={() => {
                 changeState({
-                  active:1
+                  active: 1
                 })
                 openModal()
               }} >
@@ -127,10 +127,10 @@ export default class View extends Component {
           const value = `${formatNumber(v, 'p')}${dealMoney}` + `(${(formatNumber(record.profitRate * 100, 'p'))}%)`
           return Number(v) >= 0 ? {
             value,
-            className: 'green'
+            className: RG ? 'green' : 'red'
           } : {
             value,
-            className: 'red'
+            className: RG ? 'red' : 'green'
           }
         }
       },
