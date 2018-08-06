@@ -98,12 +98,13 @@ export default class View extends Component {
       expandedRowRender,
       onClickRow,
       noDataTip,
-      scroll = {}
+      scroll = {},
     } = this.props
 
     const getTdThProp = (item = {}) => {
-      const style = item.width ? { width: item.width, minWidth: item.width } : {
+      const style = item.width ? { width: item.width, minWidth: item.width, maxWidth: item.maxWidth } : {
         width: getPercent(1, columns.length),
+        maxWidth: item.maxWidth
       }
       return {
         style,
@@ -119,19 +120,20 @@ export default class View extends Component {
 
     const { loading } = this.state
     return (
-      <div className={
-        classNames(
-          styles.tableContainer,
-          className
-        )
-      } >
+      <div
+        className={
+          classNames(
+            styles.tableContainer,
+            className
+          )
+        } >
         {
           _.isFunction(noDataTip) && noDataTip() ? (
-              <div className='default'>
-                {
-                  noDataTip()
-                }
-              </div>
+            <div className='default' >
+              {
+                noDataTip()
+              }
+            </div >
           ) : (
             <Table className={style.table} >
               <Thead style={{ left: this.state.x, minWidth: scroll.x }} >

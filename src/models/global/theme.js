@@ -12,7 +12,13 @@ export default joinModel(modelExtend, {
     theme: THEME.DARK,
     dragIndex: [
       'LatestRecord'
-    ]
+    ],
+    calculateTableHeight: (dataSource, HeadTr = 40, bodyTr = 40, expandHeadTr = 40, expandBodyTr = 40) => {
+      return dataSource.reduce((sum, next = {}) => {
+        const { expand = [] } = next
+        return (expand.length ? expand.length * expandBodyTr + expandHeadTr : 0) + sum
+      }, dataSource.length * bodyTr + HeadTr)
+    }
   },
   subscriptions: {
     setup({ dispatch, history }) {

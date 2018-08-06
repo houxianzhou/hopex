@@ -19,16 +19,16 @@ export default class View extends Component {
       type: `${modelName}/getPersonalEnsure`,
       payload
     }).then((res) => {
-        if (callback) return callback()
-        this.interval = dealInterval(() => {
-          this.getPersonalEnsure(payload)
-        })
+        // if (callback) return callback()
+        // this.interval = dealInterval(() => {
+        //   this.getPersonalEnsure(payload)
+        // })
       }
     )
   }
 
   render() {
-    const { model: { personalEnsures = [], userInfo = {} }, dispatch, modelName } = this.props
+    const { model: { personalEnsures = [], userInfo = {} }, calculateTableHeight, dispatch, modelName } = this.props
     const columns = [
       {
         title: '合约',
@@ -157,7 +157,7 @@ export default class View extends Component {
           {
             title: '成交时间',
             dataIndex: 'ctime',
-            width: 100,
+            maxWidth: 200,
           },
           {
             title: '手续费',
@@ -165,7 +165,7 @@ export default class View extends Component {
           },
         ]
         return expand.length ? (
-          <div style={{ height: (40 * 3) }} >
+          <div style={{ height: calculateTableHeight(expand) }} >
             <Table
               className={styles.expandetableContainer}
               columns={columns}
@@ -188,10 +188,12 @@ export default class View extends Component {
           </div >
         }
       },
+
       // loadingMore: (callback) => {
       //   this.getPersonalEnsure({callback})
       // }
     }
+
     return (
       <Mixin.Child that={this} >
         <div
@@ -205,12 +207,12 @@ export default class View extends Component {
           }
         >
           <ScrollPannel
-            tableHeight={TABLE.trHeight * (dataSource.length + 1)}
+            tableHeight={calculateTableHeight(dataSource)}
             header={
               <div >活跃委托</div >
             }
           >
-            <Table  {...tableProp} />
+            <Table {...tableProp} />
 
           </ScrollPannel >
         </div >

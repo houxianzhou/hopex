@@ -40,8 +40,8 @@ export default {
             "showPrec": "8",
             "dealMoney": "BTC",
             "marketValue": "1.00000000",
-            minLimitPrice:'1',
-            maxLimitPrice:'2'
+            minLimitPrice:'1000',
+            maxLimitPrice:'2000'
           }
         ],
         "ETH": [
@@ -186,8 +186,8 @@ export default {
           "type": _.random('1', '2'),
           "side": _.random('1', '2'),
           "userId": "3",
-          "ctime": "1532082876.271102",
-          "mtime": "1532082876.271102",
+          "ctime": "20:18:12",
+          "mtime": "20:18:12",
           "price": "6",
           "amount": _.random('5', '-5'),
           "taker_fee": "0.01",
