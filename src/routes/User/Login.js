@@ -19,7 +19,7 @@ export default class View extends Component {
     const newPasswordSave = localSave.get('newPassword') || localSave.get('recordEmail') || {}
     const { email, newPassword } = newPasswordSave
     if (email && newPassword) {
-      this.changeState({ email, password: newPassword })
+      this.changeState({ email, password: '' })//密码不填
       Toast.tip('重置密码成功')
       localSave.remove('newPassword')
     } else {
