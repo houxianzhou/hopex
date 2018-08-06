@@ -69,7 +69,7 @@ export default class View extends Component {
         }
       },
       {
-        title: '数量',
+        title: '数量(张)',
         dataIndex: 'amount',
         render: (value, record, index, dataSource) => {
           return (
