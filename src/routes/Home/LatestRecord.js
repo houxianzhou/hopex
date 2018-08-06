@@ -106,18 +106,14 @@ export default class View extends Component {
             header={
               <div className={styles.record_header} >
                 <span >最新成交</span >
-                {
-                  viewPosition ? (
-                    <img alt='switch' src={switch_render} onClick={() => {
-                      dispatch({
-                        type: 'theme/changeState',
-                        payload: {
-                          viewPosition: !viewPosition
-                        }
-                      })
-                    }} />
-                  ) : null
-                }
+                <img alt='switch' src={switch_render} onClick={() => {
+                  dispatch({
+                    type: 'theme/changeState',
+                    payload: {
+                      viewPosition: !viewPosition
+                    }
+                  })
+                }} />
 
               </div >
             }

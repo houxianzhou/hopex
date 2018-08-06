@@ -165,18 +165,18 @@ export default class View extends Component {
             header={
               <div className={styles.ensurerecord_header}>
                 <span >委托列表</span >
-                {
-                  !viewPosition ? (
-                    <img alt='switch' src={switch_render} onClick={() => {
-                      dispatch({
-                        type: 'theme/changeState',
-                        payload: {
-                          viewPosition: !viewPosition
-                        }
-                      })
-                    }} />
-                  ) : null
-                }
+                {/*{*/}
+                  {/*!viewPosition ? (*/}
+                    {/*<img alt='switch' src={switch_render} onClick={() => {*/}
+                      {/*dispatch({*/}
+                        {/*type: 'theme/changeState',*/}
+                        {/*payload: {*/}
+                          {/*viewPosition: !viewPosition*/}
+                        {/*}*/}
+                      {/*})*/}
+                    {/*}} />*/}
+                  {/*) : null*/}
+                {/*}*/}
               </div >
             }
           >
