@@ -1,14 +1,17 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'dva'
 import { ShowJsonTip, NavPannel, Table } from '@components'
+import circle from '@assets/circle.png'
 import ChangePassword from './changePassword';
 import { Input } from './input';
 import { classNames, _, Patterns } from '@utils'
 import { PATH } from '@constants'
 import styles from './MyAccount.less'
 
-@connect(({ account: model, }) => ({
+@connect(({ account: model, dispatch}) => ({
   model,
+  dispatch,
+  modelName: 'account'
 }))
 export default class View extends Component {
 
@@ -29,9 +32,25 @@ export default class View extends Component {
     )
   }
 
+  state = {
+    googleIdentifyingCode: '',
+    googleIdentifyingCodeMsg: ''
+  };
+  componentDidMount = () => {
+    console.log(this.props);
+    this.props.dispatch({
+      type: `${this.props.modelName}/GetEnableGoogleVertifyCode`,
+      payload: PATH.forgetPassword
+    })
+  };
+  changeState(props) {
+    this.setState(props);
+  }
+
   render() {
-    const { model: { myAccountPage: page }, modelName, dispatch } = this.props
-    const { renderStatus } = this
+    const { model: { myAccountPage: page }, modelName, dispatch } = this.props;
+    const {googleIdentifyingCodeMsg} = this.state;
+    const { renderStatus } = this;
     const columns = [
       {
         title: '时间',
@@ -144,9 +163,95 @@ export default class View extends Component {
     )
 
     const page2 = (
-      <Fragment>
-        ahhaha
-      </Fragment>
+      <Fragment >
+        <p className={styles.openGoogleTitle} >启用谷歌二次验证</p >
+        <div className={styles.lineContainer} >
+          <div className={styles.stepLine}></div>
+          <div className={styles.lineItem} >
+            <div className={styles.leftItem} >
+              <img className={styles.circle} src={circle} alt="" />
+              <div className={styles.step} >Step1</div >
+            </div >
+            <div className={styles.rightItem} >
+              <p className={styles.description} >下载并安装谷歌验证器APP</p >
+              <p className={styles.content} >
+                iOS用户登录App Store搜索“Authenticator”下载；<br />
+                安卓用户登录应用商店或使用手机浏览器搜索“谷歌验证器”下载；
+              </p >
+              <div className={styles.buttonContainer} >
+                <div className={styles.buttonItem} >iPhone下载</div >
+                <div className={styles.buttonItem} >Andriod下载</div >
+              </div >
+            </div >
+          </div >
+          <div className={styles.lineItem} >
+            <div className={styles.leftItem} >
+              <img className={styles.circle} src={circle} alt="" />
+              <div className={styles.step} >Step2</div >
+            </div >
+            <div className={styles.rightItem} >
+              <p className={styles.description} >使用谷歌验证器APP扫描该二维码</p >
+              <div className={styles.step2Container} >
+                <div className={styles.codeLeft} >
+                  <p className={styles.content} >
+                    使用谷歌验证器APP扫描该二维码,如果您无法扫描二维码，可以将该16位密钥手动输入到谷歌验证APP中
+                  </p >
+                  <p className={classNames(
+                    styles.content,
+                    styles.passwordContainer
+                  )} >
+                    密码：<br />
+                    <span className={styles.password} >GM3WENDBG42WCYRU</span >
+                  </p >
+                </div >
+                <div className={styles.codeRight} >
+                  <img className={styles.codeImg} src={circle} alt="" />
+                </div >
+              </div >
+            </div >
+          </div >
+          <div className={styles.lineItem} >
+            <div className={styles.leftItem} >
+              <img className={styles.circle} src={circle} alt="" />
+              <div className={styles.step} >Step3</div >
+            </div >
+            <div className={styles.rightItem} >
+              <p className={styles.description} >在谷歌验证器中备份密钥</p >
+              <p className={styles.content} >
+                <span className={styles.asterisk} >* </span >请将16位密钥记录在纸上，并保存在安全的地方。如遇手机丢失，你可以通过该密钥恢复你的谷歌验证。
+              </p >
+              <p className={classNames(
+                styles.content,
+                styles.passwordContainer,
+              )} >密钥 <span className={styles.password} > &nbsp;&nbsp;GM3WENDBG42WCYRU</span ></p >
+            </div >
+          </div >
+          <div className={classNames(
+            styles.lineItem,
+            styles.lastItem
+          )} >
+            <div className={styles.leftItem} >
+              <img className={styles.circle} src={circle} alt="" />
+              <div className={styles.step} >Step4</div >
+            </div >
+            <div className={styles.rightItem} >
+              <p className={styles.description} >输入谷歌验证器中的6位验证码进行验证</p >
+              <div className={styles.googleCode} >
+                <div className={styles.label}>谷歌验证码</div>
+                <Input
+                  onChange={(value) => {
+                    this.changeState({
+                      googleIdentifyingCode: value
+                    })
+                  }}
+                  msg={googleIdentifyingCodeMsg}
+                  placeholder="请输入谷歌验证码"/>
+              </div >
+            </div >
+          </div >
+          <button className={styles.openGoogle}>开启</button>
+        </div >
+      </Fragment >
     )
 
     // const page3 = (
@@ -156,7 +261,7 @@ export default class View extends Component {
     return (
       <div className={styles.myaccount} >
         {
-          page === 1 ? page1 : (page === 2 ? page2 : (page === 3 ? (<ChangePassword/>) : null))
+          page === 1 ? page1 : (page === 2 ? page2 : (page === 3 ? (<ChangePassword />) : null))
         }
       </div >
     )

@@ -1,6 +1,6 @@
 import { request } from '@utils'
 
-const prefix = ''
+const prefix = '';
 
 export async function getCurrentUser() {
   return await request(`${prefix}/api/user`)
@@ -116,3 +116,5 @@ export async function doDisbaleGoogleVertify(payload) {
     query: payload
   })
 }
+
+//

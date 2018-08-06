@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Input } from './input';
 import * as styles from './MyAccount.less';
 import { Patterns, classNames } from '@utils'
@@ -31,18 +31,19 @@ export default class ChangePassword extends Component {
       && this.state.newPassword === this.state.repeatNewPassword
       && Patterns.password.test(this.state.oldPassword);
   }
+
   render() {
     const { oldPassword, oldPasswordMsg, newPassword, newPasswordMsg, repeatNewPassword, repeatNewPasswordMsg } = this.state;
     const { changeState } = this;
     const PASSWORD = 'wuxioahui';
 
     return (
-      <div className={styles.changePassword}>
-        <p className={styles.title}>修改密码</p>
-        <p className={styles.passwordTip}> <span className={styles.asterisk}>* </span> 重置密码后24小时内不能提现</p>
-        <form action="" className={styles.formPart}>
-          <div className={styles.passwordItem}>
-            <p className={styles.inputTitle}>原密码<span className={styles.asterisk}> *</span></p>
+      <div className={styles.changePassword} >
+        <p className={styles.title} >修改密码</p >
+        <p className={styles.passwordTip} ><span className={styles.asterisk} >* </span > 重置密码后24小时内不能提现</p >
+        <form action="" className={styles.formPart} >
+          <div className={styles.passwordItem} >
+            <p className={styles.inputTitle} >原密码<span className={styles.asterisk} > *</span ></p >
             <Input
               className={styles.inputContainer}
               type='text'
@@ -65,9 +66,9 @@ export default class ChangePassword extends Component {
                 }
               }}
             />
-          </div>
-          <div className={styles.passwordItem}>
-            <p className={styles.inputTitle}>新密码<span className={styles.asterisk}> *</span></p>
+          </div >
+          <div className={styles.passwordItem} >
+            <p className={styles.inputTitle} >新密码<span className={styles.asterisk} > *</span ></p >
             <Input
               className={styles.inputContainer}
               type='password'
@@ -90,9 +91,9 @@ export default class ChangePassword extends Component {
                 }
               }}
             />
-          </div>
-          <div className={styles.passwordItem}>
-            <p className={styles.inputTitle}>确认新密码<span className={styles.asterisk}> *</span></p>
+          </div >
+          <div className={styles.passwordItem} >
+            <p className={styles.inputTitle} >确认新密码<span className={styles.asterisk} > *</span ></p >
             <Input
               className={styles.inputContainer}
               type='password'
@@ -121,13 +122,16 @@ export default class ChangePassword extends Component {
                 }
               }}
             />
-          </div>
-          <button className={classNames(
-            styles.submit,
-            this.handleInputStatus() && styles.inputSuccess
-          )} onClick={this.handleSubmit}>提交</button>
-        </form>
-      </div>
+          </div >
+          <button
+            className={classNames(
+              styles.submit,
+              this.handleInputStatus() && styles.inputSuccess
+            )}
+            onClick={this.handleSubmit} >提交
+          </button >
+        </form >
+      </div >
     )
   }
 }

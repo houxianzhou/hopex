@@ -1,5 +1,9 @@
 .myaccount {
 
+  .asterisk {
+    color: #F54B22;
+  }
+
   .header {
     display: flex;
     height: 160px;
@@ -125,20 +129,18 @@
           padding-left: 10px;
           height: 50px;
           color: #232833;
-          &.even{
+          &.even {
             background: #F6F8FA;
           }
         }
       }
     }
   }
-
+  // 修改密码样式
   .changePassword {
     padding: 40px;
 
-    .asterisk {
-      color: #F54B22;
-    }
+
 
     p.title {
       font-size: 18px;
@@ -185,5 +187,154 @@
         }
       }
     }
+  }
+
+  //开始google验证码样式
+  .openGoogleTitle {
+    font-size: 18px;
+    color: #E2B96F;
+    margin-left: 40px;
+    margin-top: 40px;
+  }
+
+  .lineContainer {
+    margin-left: 40px;
+    position: relative;
+    //display: flex;
+    //flex-direction: column;
+
+    .openGoogle {
+      background-image: linear-gradient(90deg, #EBCB80 0%, #E0BD7E 100%);
+      border-radius: 2px;
+      width: 240px;
+      height: 48px;
+      color: #FFFFFF;
+      border: none;
+      margin-left: 231px;
+      //margin-top: 50px;
+      margin-bottom: 60px;
+    }
+
+    .stepLine {
+      position: absolute;
+      height: 741px;
+      top: 15px;
+      left: 6.578px;
+      width: 1px;
+      background-color: #E2B96F;
+    }
+
+    .lineItem {
+      width: 100%;
+      margin-top: 40px;
+      display: flex;
+
+      &.lastItem {
+        .rightItem {
+          border-bottom: none;
+        }
+      }
+
+      .leftItem {
+        width: 120px;
+        display: flex;
+        align-items: flex-start;
+        //justify-content: space-between;
+
+        .step {
+          margin-left: 10px;
+          width: 80px;
+          height: 26px;
+          background: rgba(226, 185, 111, 0.1);
+          //opacity: 0.1;
+          //background: #E2B96F;
+          text-align: center;
+          line-height: 26px;
+          border-radius: 100px;
+          font-size: 18px;
+          color: #E2B96F;
+        }
+        .circle {
+          margin-top: 5px;
+        }
+      }
+
+      .rightItem {
+        padding-bottom: 43px;
+        border-bottom: 1px solid #EBEBEB;
+        flex-grow: 1;
+        .description {
+          font-size: 16px;
+          color: #232833;
+        }
+        .content {
+          font-size: 16px;
+          color: #999999;
+          //line-height: 26px;
+          margin-top: 15px;
+
+          .password {
+            font-size: 18px;
+            color: #E2B96F;
+          }
+
+          &.passwordContainer {
+            margin-top: 40px;
+          }
+        }
+        .buttonContainer {
+          display: flex;
+          margin-top: 30px;
+
+          .buttonItem {
+            width: 240px;
+            height: 48px;
+            background-image: linear-gradient(90deg, #EBCB80 0%, #E0BD7E 100%);
+            border-radius: 2px;
+            text-align: center;
+            line-height: 48px;
+            font-size: 16px;
+            color: #FFFFFF;
+            cursor: pointer;
+
+            &:nth-child(2) {
+              margin-left: 52px;
+            }
+          }
+        }
+        .step2Container {
+          display: flex;
+          .codeLeft {
+            width: 60%;
+          }
+          .codeRight {
+            margin-left: 54px;
+            img {
+              width: 100px;
+            }
+          }
+        }
+        .googleCode {
+          margin-top: 30px;
+          display: flex;
+          align-items: center;
+
+          .label {
+            width: 132px;
+            color: #232833;
+          }
+        }
+        p {
+          margin: 0;
+          line-height: 26px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width:1433px){
+  .stepLine {
+    height: 769px !important;
   }
 }
