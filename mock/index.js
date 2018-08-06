@@ -122,7 +122,7 @@ export default {
             "id": index,
             "time": 1530869889.717263,
             "price": randomStr(1000, 10000),
-            "amount": randomStr(1, 100),
+            "amount": randomStr(10000, 20000),
             "type": ["2", '1'][_.random(0, 1)]
           }
         ))
@@ -147,11 +147,11 @@ export default {
       "data": {
         "asks": randomArrayMap(5).map((item, index) => ({
           "price": index + 10, //index,
-          "amount": _.random(1, 2),//randomStr()
+          "amount": _.random(10000, 20000),//randomStr()
         })),
         "bids": randomArrayMap(5).map((item, index) => ({
           "price": index,
-          "amount": _.random(1, 2) //randomStr()
+          "amount": _.random(10000, 20000) //randomStr()
         }))
       },
       ...other

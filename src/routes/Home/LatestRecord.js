@@ -69,6 +69,7 @@ export default class View extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
+        render:(value)=>formatNumber(value, 0, true)
       },
     ]
     const dataSource = latest_records

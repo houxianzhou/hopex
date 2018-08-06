@@ -98,16 +98,18 @@ export const asyncPayload = async (payload, func) => {
 
 
 const toFixed = (item = 0, tofixed, toformat) => {
-  if (!tofixed) {
+  if (!tofixed && !toformat) {
     return _.toNumber(Number(item))
   } else {
     if (tofixed && toformat) {
-      return (new BigNumber((new BigNumber(item)).toFixed(tofixed))).toFormat(tofixed)
+      return (new BigNumber(Number(item))).toFormat(tofixed)
+    } else if (!tofixed && toformat) {
+      return Number(item).toLocaleString()
     }
     return (new BigNumber(Number(item))).toFixed(tofixed)
   }
 }
-//console.log((new BigNumber(1000.00001)).toFormat(5))
+// console.log((new BigNumber(1000)).toFormat(2))
 // console.log((new BigNumber((new BigNumber(1000)).toFixed(5))).toFormat(5))
 //console.log((new BigNumber((new BigNumber(1000)).toFormat(2))).toFixed(5))
 

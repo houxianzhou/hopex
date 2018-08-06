@@ -71,7 +71,7 @@ export const moment_helper = {
     return moment(time).format(format)
   },
   formatHMS: (time = Date.now()) => {
-    return moment(time).format('H:mm:ss')
+    return moment(time).format('HH:mm:ss')
   },
   formatHMSFromSeconds: (time) => {
     return moment_helper.formatHMS(String(time).split('.')[0] * 1000)

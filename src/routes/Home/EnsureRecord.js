@@ -83,7 +83,7 @@ export default class View extends Component {
               }))}
               RG={RG}
             >
-              {value}
+              {formatNumber(value, 0, true)}
             </ColorChange >
           )
         }
@@ -94,7 +94,7 @@ export default class View extends Component {
         render: (value, record, index, dataSource) => {
           return <ColorChange color={record.type === '1' ? COLORS.redOpacity : COLORS.greenOpacity}
                               percent={getPercent(value, max.sum, 0.02)} >
-            {value}
+            {formatNumber(value, 0, true)}
           </ColorChange >
         }
       }
