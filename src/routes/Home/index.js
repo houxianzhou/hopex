@@ -121,26 +121,6 @@ export default class View extends Component {
         <div className={styles.home} >
           <ShowJsonTip data={{ ...this.props.model, ...this.props.user }} ></ShowJsonTip >
 
-          {
-            isLogin ? (
-              <div className={styles.views} >
-                {
-                  renderView('Position')
-                }
-              </div >
-            ) : null
-          }
-          <div className={styles.views} >
-            {
-              renderView('Purse')
-            }
-            {
-              renderView('BuySell')
-            }
-            {
-              renderView('CurrentContract')
-            }
-          </div >
           <div className={styles.views} >
             {
               renderView('LatestRecord')
@@ -152,6 +132,28 @@ export default class View extends Component {
               renderView('EnsureRecord')
             }
           </div >
+
+          <div className={styles.views} >
+            {
+              renderView('Purse')
+            }
+            {
+              renderView('BuySell')
+            }
+            {
+              renderView('CurrentContract')
+            }
+          </div >
+
+          {
+            isLogin ? (
+              <div className={styles.views} >
+                {
+                  renderView('Position')
+                }
+              </div >
+            ) : null
+          }
 
           {
             isLogin ? (

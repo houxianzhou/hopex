@@ -11,7 +11,7 @@ export default class View extends Component {
   }
   startInit = () => {
     // 暂时没有东西
-    // this.getPersonalEnsureHistory()
+    this.getPersonalEnsureHistory()
   }
 
   getPersonalEnsureHistory = () => {
