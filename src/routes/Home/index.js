@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, ShowJsonTip, Toast } from '@components'
-import { isEqual, _, parsePathSearch } from '@utils'
+import { isEqual, _, parsePathSearch, localSave } from '@utils'
 import { PATH } from '@constants'
 import wss from '@services/SocketClient'
 import LatestRecord from './LatestRecord'
@@ -37,6 +37,12 @@ let throttle
   dispatch,
 }))
 export default class View extends Component {
+
+  changeState = (payload) => {
+    this.setState(payload)
+  }
+
+
   componentDidUpdate(prevProps) {
     const { model: { marketCode: prevMarketCode } } = prevProps
     const { model: { marketCode }, dispatch, modelName } = this.props
@@ -100,9 +106,10 @@ export default class View extends Component {
   }
 
   renderView = (name) => {
-    const { theme: { RG } } = this.props
+    const { theme: { RG, viewPosition } } = this.props
     const props = {
       RG,
+      viewPosition,
       ...this.props,
       isLogin: this.isLogin(),
       routerGoLogin: this.routerGoLogin,
@@ -115,7 +122,7 @@ export default class View extends Component {
 
   render() {
     const { renderView } = this
-    const { user: { userInfo } } = this.props
+    const { user: { userInfo }, theme: { viewPosition } } = this.props
     const isLogin = this.isLogin()
     return (
       <Mixin.Parent that={this} >
@@ -124,13 +131,13 @@ export default class View extends Component {
 
           <div className={styles.views} >
             {
-              renderView('LatestRecord')
+              viewPosition ? renderView('LatestRecord') : renderView('EnsureRecord')
             }
             {
               renderView('TradeChart')
             }
             {
-              renderView('EnsureRecord')
+              !viewPosition ? renderView('LatestRecord') : renderView('EnsureRecord')
             }
           </div >
 

@@ -50,7 +50,7 @@ export default class View extends Component {
               <div >热门交易</div >
               <ul >
                 {
-                  marketList.map((item, index) => (
+                  marketList.slice(0,4).map((item, index) => (
                     <li key={index} >{item.marketName}</li >
                   ))
                 }

@@ -69,7 +69,7 @@ export default class View extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render:(value)=>formatNumber(value, 0, true)
+        render: (value) => formatNumber(value, 0, true)
       },
     ]
     const dataSource = latest_records
@@ -106,7 +106,14 @@ export default class View extends Component {
             header={
               <div className={styles.record_header} >
                 <span >最新成交</span >
-                <img alt='switch' src={switch_render} />
+                <img alt='switch' src={switch_render} onClick={() => {
+                  dispatch({
+                    type: `${modelName}/changeState`,
+                    payload: {
+                      viewPosition: '0'
+                    }
+                  })
+                }} />
               </div >
             }
           >
