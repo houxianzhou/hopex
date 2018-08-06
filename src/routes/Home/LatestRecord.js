@@ -24,7 +24,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { latest_records = [] }, RG, dispatch, modelName } = this.props
+    const { model: { latest_records = [] }, RG, viewPosition, dispatch, modelName } = this.props
     const columns = [
       {
         title: '时间',
@@ -106,14 +106,19 @@ export default class View extends Component {
             header={
               <div className={styles.record_header} >
                 <span >最新成交</span >
-                <img alt='switch' src={switch_render} onClick={() => {
-                  dispatch({
-                    type: `${modelName}/changeState`,
-                    payload: {
-                      viewPosition: '0'
-                    }
-                  })
-                }} />
+                {
+                  viewPosition ? (
+                    <img alt='switch' src={switch_render} onClick={() => {
+                      dispatch({
+                        type: 'theme/changeState',
+                        payload: {
+                          viewPosition: !viewPosition
+                        }
+                      })
+                    }} />
+                  ) : null
+                }
+
               </div >
             }
           >

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { classNames, _, dealInterval, getPercent, formatNumber, isEqual } from '@utils'
 import { Mixin, Table } from "@components"
 import ensure from '@assets/ensure.png'
+import switch_render from '@assets/switch_render.png'
 import { COLORS } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
@@ -45,7 +46,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice, latestPriceTrend }, dispatch, modelName, RG } = this.props
+    const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice, latestPriceTrend }, dispatch, modelName, RG, viewPosition } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'asks')
       , _.get(ensure_records, 'bids')
@@ -162,8 +163,20 @@ export default class View extends Component {
         >
           <ScrollPannel
             header={
-              <div >
+              <div className={styles.ensurerecord_header}>
                 <span >委托列表</span >
+                {
+                  !viewPosition ? (
+                    <img alt='switch' src={switch_render} onClick={() => {
+                      dispatch({
+                        type: 'theme/changeState',
+                        payload: {
+                          viewPosition: !viewPosition
+                        }
+                      })
+                    }} />
+                  ) : null
+                }
               </div >
             }
           >
