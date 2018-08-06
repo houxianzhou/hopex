@@ -214,7 +214,7 @@ export default class View extends Component {
                         } else if (newPasswordAgain && value !== newPasswordAgain) {
                           changeState({
                             newPasswordMsg: '两次输入的密码不一致',
-                            newPasswordAgainMsg: '两次输入的密码不一致',
+                            // newPasswordAgainMsg: '两次输入的密码不一致',
                           })
                         } else {
                           changeState({
@@ -258,7 +258,7 @@ export default class View extends Component {
                           })
                         } else if (newPassword && value !== newPassword) {
                           changeState({
-                            newPasswordMsg: '新的密码两次输入必须一致',
+                            // newPasswordMsg: '新的密码两次输入必须一致',
                             newPasswordAgainMsg: '新的密码两次输入必须一致',
                           })
                         } else {

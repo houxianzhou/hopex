@@ -121,7 +121,7 @@ export default {
           {
             "id": index,
             "time": 1530869889.717263,
-            "price": randomStr(1, 1000, 10000),
+            "price": randomStr(1000, 10000),
             "amount": randomStr(1, 100),
             "type": ["2", '1'][_.random(0, 1)]
           }

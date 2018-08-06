@@ -1,5 +1,6 @@
 import qs from 'qs'
 import { Decimal } from 'decimal.js'
+import { BigNumber } from 'bignumber.js';
 import { SPEED } from '@constants'
 import { lodash_helper, immutable, moment_helper } from './helper'
 
@@ -17,7 +18,7 @@ export const getRes = function (res) {
   if (res) {
     return {
       head: _.get(res, 'data.head') || _.get(res, 'head') || {},
-      data: _.has(res, 'data.data.data')?_.get(res, 'data.data.data'):(_.has(res, 'data.data') ? _.get(res, 'data.data') : (_.has(res, 'data') ? _.get(res, 'data') : res))
+      data: _.has(res, 'data.data.data') ? _.get(res, 'data.data.data') : (_.has(res, 'data.data') ? _.get(res, 'data.data') : (_.has(res, 'data') ? _.get(res, 'data') : res))
     }
   }
   return {
@@ -58,7 +59,7 @@ export const Patterns = {
   number: /^[0-9]*$/,
   decimalNumber: /^[0-9]+([.]{1}[0-9]*){0,1}$/,
   email: /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/,
-  password:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/
+  password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/
 }
 
 export const getPercent = (child = 1, parent = 1, min = 0) => {
@@ -96,17 +97,23 @@ export const asyncPayload = async (payload, func) => {
 }
 
 
-const toFixed = (item = 0, tofixed) => {
+const toFixed = (item = 0, tofixed, toformat) => {
   if (!tofixed) {
     return _.toNumber(Number(item))
   } else {
-    return (new Decimal(Number(item))).toFixed(tofixed)
+    if (tofixed && toformat) {
+      return (new BigNumber((new BigNumber(item)).toFixed(tofixed))).toFormat(tofixed)
+    }
+    return (new BigNumber(Number(item))).toFixed(tofixed)
   }
 }
+//console.log((new BigNumber(1000.00001)).toFormat(5))
+// console.log((new BigNumber((new BigNumber(1000)).toFixed(5))).toFormat(5))
+//console.log((new BigNumber((new BigNumber(1000)).toFormat(2))).toFixed(5))
 
 
 export const formatNumber = (...params) => {
-  const [prev, propertys = [], tofixed] = params
+  const [prev, propertys = [], tofixed, toformat] = params
   const obj = deepClone(prev)
   if (_.isObjectLike(obj)) {
     if (!_.isArray(propertys) && propertys.length) return obj
@@ -117,7 +124,7 @@ export const formatNumber = (...params) => {
             const key = propertys[i]
             const value = _.get(item, [propertys[i]])
             if (_.has(item, key)) {
-              _.set(item, [key], toFixed(value, tofixed))
+              _.set(item, [key], toFixed(value, tofixed, toformat))
             }
           }
           return item
@@ -126,9 +133,10 @@ export const formatNumber = (...params) => {
       })
     }
   } else if (_.isNumber(obj) || _.isString(obj)) {
-    let param = params[1] || tofixed
-    if (param === 'p' || param === 'price') param = 4
-    return toFixed(obj, param)
+    let param1 = params[1]
+    let param2 = params[2]
+    if (param1 === 'p' || param1 === 'price') param1 = 4
+    return toFixed(obj, param1, param2)
   } else {
     return obj
   }

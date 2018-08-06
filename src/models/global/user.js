@@ -128,6 +128,7 @@ export default joinModel(modelExtend, {
               type: 'routerGo',
               payload: PATH.login
             })
+            localSave.set('newPassword', payload)
           }
         }
       }

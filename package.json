@@ -10,6 +10,7 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "better-scroll": "^1.12.4",
+    "bignumber.js": "^7.2.1",
     "classnames": "^2.2.6",
     "decimal.js": "^10.0.1",
     "dva": "^2.3.1",

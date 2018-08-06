@@ -56,7 +56,7 @@ export default class View extends Component {
           const img = Number(value) > Number(next.price) ? (
             <RedGreenArrow style={style} alt='top' RG={RG} />) : (Number(value) < Number(next.price) ? (
             <RedGreenArrow style={style} alt='down' RG={RG} />) : null)
-          const result = <span >{formatNumber(value, 'p')}{img}</span >
+          const result = <span >{formatNumber(value, 'p', true)}{img}</span >
           return record.type === '2' || record.type === '买' ? {
             value: result,
             className: 'green'
