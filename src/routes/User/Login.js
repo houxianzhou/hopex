@@ -16,13 +16,18 @@ import styles from './index.less'
 }))
 export default class View extends Component {
   componentDidMount() {
-    const newPasswordSave = localSave.get('newPassword') || {}
+    const newPasswordSave = localSave.get('newPassword') || localSave.get('recordEmail') || {}
     const { email, newPassword } = newPasswordSave
     if (email && newPassword) {
       this.changeState({ email, password: newPassword })
       Toast.tip('重置密码成功')
       localSave.remove('newPassword')
+    } else {
+      if (email) {
+        this.changeState({ email })
+      }
     }
+
   }
 
   state = {
@@ -86,7 +91,7 @@ export default class View extends Component {
                 onCheck={(value) => {
                   if (value && !Patterns.email.test(value)) {
                     changeState({
-                      emailMsg: '必须符合邮箱格式'
+                      emailMsg: '邮箱格式错误'
                     })
                   } else {
                     changeState({

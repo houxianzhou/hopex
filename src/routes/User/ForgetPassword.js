@@ -67,7 +67,7 @@ export default class View extends Component {
                       onCheck={(value) => {
                         if (value && !Patterns.email.test(value)) {
                           changeState({
-                            emailMsg: '必须符合邮箱格式'
+                            emailMsg: '邮箱格式错误'
                           })
                         } else {
                           changeState({
@@ -213,8 +213,8 @@ export default class View extends Component {
                           })
                         } else if (newPasswordAgain && value !== newPasswordAgain) {
                           changeState({
-                            newPasswordMsg: '新的密码两次输入必须一致',
-                            newPasswordAgainMsg: '新的密码两次输入必须一致',
+                            newPasswordMsg: '两次输入的密码不一致',
+                            newPasswordAgainMsg: '两次输入的密码不一致',
                           })
                         } else {
                           changeState({

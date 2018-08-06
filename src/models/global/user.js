@@ -61,6 +61,7 @@ export default joinModel(modelExtend, {
               }
             })
             localSave.set('userInfo', payload)
+            localSave.set('recordEmail', { email })
             yield put({
               type: 'routerGo',
               payload: PATH.home
@@ -120,7 +121,7 @@ export default joinModel(modelExtend, {
       }))
       if (resOk(res)) {
         if (res) {
-          Toast.tip('注册成功，请登录')
+          Toast.tip('注册成功')
           const result = yield (asyncPayload(delay(2000)))
           if (result) {
             yield put({
