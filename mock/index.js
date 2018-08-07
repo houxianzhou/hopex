@@ -323,7 +323,7 @@ export default {
     })
   },
 
-  //k线图
+  //k线图数据详情
   'Post /mock/api/v1/quote/market.detail': (req, res) => {
     const { body: { param: { startTime, endTime } = {} } = {} } = req
     const periods = helper.getdays(startTime * 1000, endTime * 1000)

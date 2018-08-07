@@ -24,7 +24,7 @@ export default class View extends Component {
     const { model: { latestPrice: prevLatestPrice } } = prevProps
     const { model: { latestPrice }, dispatch, modelName } = this.props
     if (!isEqual(prevLatestPrice, latestPrice)) {
-      const result = latestPrice > prevLatestPrice ? 1 : 0
+      const result = Number(latestPrice) > Number(prevLatestPrice) ? 1 : 0
       dispatch({
         type: `${modelName}/changeState`,
         payload: {
@@ -208,7 +208,6 @@ export default class View extends Component {
               </div >
               <div className={styles.center} >
                 <div className={styles.left} >
-
                   {
                     latestPriceTrend ? (
                       <>
