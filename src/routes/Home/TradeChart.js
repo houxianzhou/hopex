@@ -514,8 +514,8 @@ export default class View extends Component {
     const { changeState } = this
     const {
       model: {
-        marketName = '', maxPrice24h, minPrice24h, indexPrice,
-        latestPrice, latestPriceTrend, totalPrice24h, equitablePrice, latestPriceChangePercent, dollarPrice,
+        marketName = '', maxPrice24h = '', minPrice24h = '', indexPrice = '',
+        latestPrice = '', latestPriceTrend = '', totalPrice24h = '', equitablePrice = '', latestPriceChangePercent = '', dollarPrice = '',
       },
       RG
     } = this.props
@@ -531,6 +531,7 @@ export default class View extends Component {
       { name: '1week', value: 'W' },
       { name: '1mon', value: 'M' }
     ]
+
 
     return (
       <Mixin.Child that={this} >
@@ -565,12 +566,12 @@ export default class View extends Component {
                               latestPriceTrend ? (
                                 <>
                                   <RedGreenSwitch.GreenText value={latestPrice} />
-                                  <RedGreenSwitch.RedGreenArrow style={{marginLeft:10}} alt='top' />
+                                  <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt='top' />
                                 </>
                               ) : (
                                 <>
                                   <RedGreenSwitch.RedText value={latestPrice} />
-                                  <RedGreenSwitch.RedGreenArrow style={{marginLeft:10}} alt='down' />
+                                  <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt='down' />
                                 </>
                               )
                             }
@@ -579,7 +580,8 @@ export default class View extends Component {
                             <div className={styles.percent} >
                               {
                                 Number(latestPriceChangePercent) > 0 ? (
-                                  <RedGreenSwitch.GreenText value={`${latestPriceChangePercent}%`} />
+                                  latestPriceChangePercent ?
+                                    <RedGreenSwitch.GreenText value={`${latestPriceChangePercent}%`} /> : null
                                 ) : (
                                   <RedGreenSwitch.RedText value={`${latestPriceChangePercent}%`} />
                                 )

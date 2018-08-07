@@ -26,6 +26,7 @@ export default class View extends Component {
     const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } } = {}, theme: { RG } = {}, modelName1, modelName2, modelName3, dispatch, routesBasic, history } = this.props
 
     const isLogin = !_.isEmpty(userInfo)
+    const sorted = _.groupBy(marketList, (item = {}) => item.sortType) || {}
 
     return (
       <div className={
@@ -35,7 +36,6 @@ export default class View extends Component {
           // switchTheme(theme) ? styles.dark : styles.dark//styles.light
         )
       } >
-
         <div className={styles.left} >
           <img alt='logo' src={logo} />
           <ul className={styles.nav} >
@@ -48,26 +48,41 @@ export default class View extends Component {
                       <li key={index} className={styles.navli} >
                         合约交易
                         <div className={styles.dropdown} >
-                          <ul >
+                          <div className={styles.dropdowncontent} >
                             {
-                              marketList.map((item, index) => (
-                                <li
+                              _.keys(sorted).map((item, index) => (
+                                <div
+                                  className={styles.licontainer}
                                   key={index}
-                                  onClick={() => {
-                                    dispatch({
-                                      type: `${modelName1}/getCurrentMarket`,
-                                      payload: item
-                                    })
-                                    // history.replace({
-                                    //   search: `?marketCode=${item.marketCode}`,
-                                    // });
-                                  }}
                                 >
-                                  {item.marketName}
-                                </li >
+                                  <div className={styles.liheader} >{item}</div >
+                                  <ul >
+                                    {
+                                      sorted[item].map((item2 = {}, index2) => {
+                                        return (
+                                          <li key={index2}  onClick={() => {
+                                            dispatch({
+                                              type: `${modelName1}/getCurrentMarket`,
+                                              payload: item2
+
+                                            })
+                                            // history.replace({
+                                            //   search: `?marketCode=${item.marketCode}`,
+                                            // });
+                                          }}>
+                                            <div className={styles.name}>{item2.marketName}</div >
+                                            <div className={styles.price}>9334.5</div >
+                                            <div className={styles.percent}>+13.45</div >
+                                          </li >
+                                        )
+                                      })
+                                    }
+                                  </ul >
+
+                                </div >
                               ))
                             }
-                          </ul >
+                          </div >
                         </div >
                       </li >
                     )

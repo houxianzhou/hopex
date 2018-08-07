@@ -48,29 +48,65 @@
               position: absolute;
               display: none;
             }
-
-            &:hover {
+            &:hover{
               .dropdown {
                 position: absolute;
                 z-index: 1;
                 display: block;
-                padding-top: 5px;
-                ul {
-                  width: 200px;
+                padding-top: 20px;
+                .dropdowncontent {
+                  font-size: 13px;
+                  padding: 20px 20px;
+                  min-width: 330px;
                   background: white;
                   border-radius: 4px;
                   color: black;
-                  li {
-                    &:hover {
-                      color: white;
-                      // background: red;
+                  .licontainer + .licontainer {
+                    margin-top: 20px;
+                  }
+                  .licontainer {
+                    .liheader{
+                      font-size: 16px;
+                      color: black;
+                      font-weight: 600;
                     }
-                    padding: 3px 20px;
+                    ul {
+                      margin-top: 10px;
+                      li {
+                        // background: red;
+                        &:hover{
+                          background: #DAE0E4;
+                          border-radius: 4px;
+                        }
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 10px;
+                        > div {
+                          white-space: nowrap;
+                          &.name {
+                            // background: red;
+                            width: 33%;
+                            min-width: 90px;
+                          }
+                          &.price {
+                            // background: red;
+                            width: 33%;
+                            //min-width: 40px;
+                          }
+                          //&.percent {
+                          //  // width: 30%;
+                          //}
+                        }
+                        div + div {
+                          // margin-left: 10%;
+                        }
+                      }
+                    }
                   }
                 }
               }
-
             }
+
           }
           li.navli.active {
             padding-bottom: 6px;
@@ -121,22 +157,22 @@
                   width: 100%;
                   height: 100%;
                   background: rgba(255, 255, 255, 1);
-                  .themelist{
+                  .themelist {
                     display: flex;
-                    li{
-                      >div{
+                    li {
+                      > div {
                         margin-right: 5px;
-                        width:15px;
+                        width: 15px;
                         height: 15px;
-                        border:5px solid @c_active_yellow;
+                        border: 5px solid @c_active_yellow;
                         border-radius: 10px;
                       }
                       display: flex;
                       justify-content: flex-start;
                       color: #333333;
-                      width:100%;
-                      height:100%;
-                      padding:unset
+                      width: 100%;
+                      height: 100%;
+                      padding: unset
                     }
                   }
                   .desc {

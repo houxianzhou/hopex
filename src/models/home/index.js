@@ -121,12 +121,13 @@ export default joinModel(modelExtend, {
         })
 
         const [asksLast, bidsFirst] = [result.asks[result.asks.length > 8 ? 7 : result.asks.length - 1], result.bids[0]]
+        const equitablePrice = (_.get(asksLast, 'price') * _.get(bidsFirst, 'amount')
+          + _.get(bidsFirst, 'price') * _.get(asksLast, 'amount')) / (_.get(asksLast, 'amount') + _.get(bidsFirst, 'amount'))
         yield put({
           type: 'changeState',
           payload: {
             ensure_records: result,
-            equitablePrice: formatNumber((_.get(asksLast, 'price') * _.get(bidsFirst, 'amount')
-              + _.get(bidsFirst, 'price') * _.get(asksLast, 'amount')) / (_.get(asksLast, 'amount') + _.get(bidsFirst, 'amount')), 'p')
+            equitablePrice: formatNumber(equitablePrice, 'p')
           }
         })
         return res
@@ -592,7 +593,7 @@ export default joinModel(modelExtend, {
     },
 
     // 下单（限价/市价）
-    * postSideOrder({ payload = {} }, { call, put ,select}) {
+    * postSideOrder({ payload = {} }, { call, put, select }) {
       const model = yield select(({ user, }) => (user))
       const { side, method, price, amount } = payload
       const url = method === 'order.put_limit' ? postLimitOrder : postMarketOrder
@@ -616,7 +617,7 @@ export default joinModel(modelExtend, {
       })))
       if (repayload) {
         let prev = _.get(repayload, 'param.source')
-        _.set(repayload, 'param.source',`浏览器，${prev},用户id：${_.get(repayload,'head.userId')},邮箱：${model.userInfo.email}`)
+        _.set(repayload, 'param.source', `浏览器，${prev},用户id：${_.get(repayload, 'head.userId')},邮箱：${model.userInfo.email}`)
         const res = getRes(yield call(url, repayload))
         if (resOk(res)) {
           Toast.success('委托成功')

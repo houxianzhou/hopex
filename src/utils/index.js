@@ -117,6 +117,7 @@ const toFixed = (item = 0, tofixed, toformat) => {
 export const formatNumber = (...params) => {
   const [prev, propertys = [], tofixed, toformat] = params
   const obj = deepClone(prev)
+  if (_.isNaN(prev)) return ''
   if (_.isObjectLike(obj)) {
     if (!_.isArray(propertys) && propertys.length) return obj
     if (_.isArray(obj)) {

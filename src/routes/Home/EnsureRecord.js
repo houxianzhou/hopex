@@ -55,7 +55,7 @@ export default class View extends Component {
   render() {
     const { dis } = this.state
     const { changeState } = this
-    const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice, latestPriceTrend }, dispatch, modelName, RG } = this.props
+    const { model: { ensure_records = [], latestPrice = '', indexPrice = '', equitablePrice = '', latestPriceTrend = '' }, dispatch, modelName, RG } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'asks')
       , _.get(ensure_records, 'bids')
@@ -224,7 +224,7 @@ export default class View extends Component {
                 </div >
                 <div className={styles.right} >
                   <img alt='ensure' className={styles.ensure} src={ensure} />
-                  {indexPrice}/{equitablePrice || null}
+                  {indexPrice}/{equitablePrice}
                 </div >
               </div >
               <div className={styles.down} >
