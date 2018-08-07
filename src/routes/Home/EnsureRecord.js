@@ -208,12 +208,18 @@ export default class View extends Component {
               </div >
               <div className={styles.center} >
                 <div className={styles.left} >
-                  {latestPrice}
+
                   {
                     latestPriceTrend ? (
-                      <RedGreenSwitch.RedGreenArrow alt='top' />
+                      <>
+                        <RedGreenSwitch.GreenText value={latestPrice} />
+                        <RedGreenSwitch.RedGreenArrow alt='top' />
+                      </>
                     ) : (
-                      <RedGreenSwitch.RedGreenArrow alt='down' />
+                      <>
+                        <RedGreenSwitch.RedText value={latestPrice} />
+                        <RedGreenSwitch.RedGreenArrow alt='down' />
+                      </>
                     )
                   }
                 </div >
