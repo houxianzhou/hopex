@@ -5,7 +5,7 @@ import ensure from '@assets/ensure.png'
 import { COLORS } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
-import RedGreenArrow from './components/RedGreenArrow'
+import RedGreenSwitch from './components/RedGreenSwitch'
 import styles from './index.less'
 
 let max = null
@@ -27,7 +27,7 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    // this.getEnsureRecord()
+    this.getEnsureRecord()
   }
 
   getEnsureRecord = () => {
@@ -184,9 +184,9 @@ export default class View extends Component {
                   {latestPrice}
                   {
                     latestPriceTrend ? (
-                      <RedGreenArrow alt='top' RG={RG} />
+                      <RedGreenSwitch.RedGreenArrow alt='top'  />
                     ) : (
-                      <RedGreenArrow alt='down' RG={RG} />
+                      <RedGreenSwitch.RedGreenArrow alt='down'  />
                     )
                   }
                 </div >

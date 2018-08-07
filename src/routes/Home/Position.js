@@ -15,7 +15,7 @@ export default class View extends Component {
     active: 0
   }
   startInit = () => {
-    // this.getPosition()
+    this.getPosition()
   }
 
   getPosition = () => {

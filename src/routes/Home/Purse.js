@@ -10,7 +10,7 @@ export default class View extends Component {
     currentPurse: 0
   }
   startInit = () => {
-    // this.getPurseAssetList()
+    this.getPurseAssetList()
   }
 
   getPurseAssetList = () => {
