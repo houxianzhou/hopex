@@ -592,7 +592,8 @@ export default joinModel(modelExtend, {
     },
 
     // 下单（限价/市价）
-    * postSideOrder({ payload = {} }, { call, put }) {
+    * postSideOrder({ payload = {} }, { call, put ,select}) {
+      const model = yield select(({ user, }) => (user))
       const { side, method, price, amount } = payload
       const url = method === 'order.put_limit' ? postLimitOrder : postMarketOrder
       const repayload = yield (asyncPayload(yield put({
@@ -607,13 +608,15 @@ export default joinModel(modelExtend, {
             "price": price,//价格
             "takerFee": "0.01",
             "makerFee": "0.01",
-            "source": url === postLimitOrder ? '我是现价测试单' : '我是市价测试单'//备注
+            "source": url === postLimitOrder ? `我是现价测试${side === 1 ? '卖' : '买'}单,数量${amount},价格${price}` : '我是市价测试单'//备注
           },
           powerMsg: '下单',
           power: [1]
         }
       })))
       if (repayload) {
+        let prev = _.get(repayload, 'param.source')
+        _.set(repayload, 'param.source',`浏览器，${prev},用户id：${_.get(repayload,'head.userId')},邮箱：${model.userInfo.email}`)
         const res = getRes(yield call(url, repayload))
         if (resOk(res)) {
           Toast.success('委托成功')
