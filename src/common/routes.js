@@ -6,6 +6,7 @@ export default [
     model: ['global/user', 'global/theme', 'global/modal']
   },
   {
+    dest: 'trade',
     name: '合约交易',
     path: PATH.home,
     model: ['home/index'],

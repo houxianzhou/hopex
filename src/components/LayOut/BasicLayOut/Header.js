@@ -23,10 +23,17 @@ let index = 0
 }))
 export default class View extends Component {
   render() {
-    const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } } = {}, theme: { RG } = {}, modelName1, modelName2, modelName3, dispatch, routesBasic, history } = this.props
+    const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } } = {}, theme: { RG } = {}, modelName1, modelName2, modelName3, dispatch, routesBasic, history, location: { pathname } = {} } = this.props
 
     const isLogin = !_.isEmpty(userInfo)
     const sorted = _.groupBy(marketList, (item = {}) => item.sortType) || {}
+
+    const cla = (item = {}) => {
+      return classNames(
+        styles.navli,
+        pathname === item.path ? styles.active : null
+      )
+    }
 
     return (
       <div className={
@@ -42,10 +49,10 @@ export default class View extends Component {
             {
               routesBasic.map((item, index) => {
                 let renderItem = null
-                switch (item.name) {
-                  case '合约交易': {
+                switch (item.dest) {
+                  case 'trade': {
                     renderItem = (
-                      <li key={index} className={styles.navli} >
+                      <li key={index} className={cla(item)} >
                         合约交易
                         <div className={styles.dropdown} >
                           <div className={styles.dropdowncontent} >
@@ -60,7 +67,7 @@ export default class View extends Component {
                                     {
                                       sorted[item].map((item2 = {}, index2) => {
                                         return (
-                                          <li key={index2}  onClick={() => {
+                                          <li key={index2} onClick={() => {
                                             dispatch({
                                               type: `${modelName1}/getCurrentMarket`,
                                               payload: item2
@@ -69,10 +76,10 @@ export default class View extends Component {
                                             // history.replace({
                                             //   search: `?marketCode=${item.marketCode}`,
                                             // });
-                                          }}>
-                                            <div className={styles.name}>{item2.marketName}</div >
-                                            <div className={styles.price}>9334.5</div >
-                                            <div className={styles.percent}>+13.45</div >
+                                          }} >
+                                            <div className={styles.name} >{item2.marketName}</div >
+                                            <div className={styles.price} >9334.5</div >
+                                            <div className={styles.percent} >+13.45</div >
                                           </li >
                                         )
                                       })
@@ -90,7 +97,7 @@ export default class View extends Component {
                     break
                   default: {
                     renderItem = (
-                      <li key={item.name} className={styles.navli} >
+                      <li key={item.name} className={cla(item)} >
                         {item.name}
                         {/*<NavLink to={item.path} >*/}
                         {/*{item.name}*/}
