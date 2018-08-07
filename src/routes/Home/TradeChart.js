@@ -596,7 +596,7 @@ export default class View extends Component {
                       </li >
                       <li >
                         <div className={styles.title} >合理价格</div >
-                        <div className={styles.desc} >{equitablePrice}</div >
+                        <div className={styles.desc} >{formatNumber(equitablePrice, 2)}</div >
                       </li >
                       <li >
                         <div className={`${styles.title}`} >24h最高</div >

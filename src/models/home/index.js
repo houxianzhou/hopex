@@ -184,11 +184,11 @@ export default joinModel(modelExtend, {
             payload: {
               maxPrice24h,
               minPrice24h,
-              indexPrice: formatNumber(marketPrice, 'p'),
-              latestPrice: formatNumber(priceLast, 'p'),
+              indexPrice: marketPrice,
+              latestPrice: priceLast,
               totalPrice24h,
               latestPriceChangePercent: percent,
-              dollarPrice: formatNumber(dollarPrice, 'p'),
+              dollarPrice: dollarPrice,
             }
           })
           return records
