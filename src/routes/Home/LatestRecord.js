@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { classNames, dealInterval, moment, _, formatNumber } from '@utils'
-import switch_render from '@assets/switch_render.png'
 import { Mixin, Table } from "@components"
 import { COLORS } from '@constants'
 import RedGreenSwitch from './components/RedGreenSwitch'
@@ -8,7 +7,6 @@ import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
 export default class View extends Component {
-
   startInit = () => {
     this.getLatestRecord()
   }
@@ -55,7 +53,7 @@ export default class View extends Component {
           const img = Number(value) > Number(next.price) ? (
             <RedGreenSwitch.RedGreenArrow style={style} alt='top' />) : (Number(value) < Number(next.price) ? (
             <RedGreenSwitch.RedGreenArrow style={style} alt='down' />) : null)
-          const result = <span >{formatNumber(value, 'p', true)}{img}</span >
+          const result = <span >{formatNumber(value, 'p')}{img}</span >
           return record.type === '2' || record.type === '买' ? (
             <RedGreenSwitch.GreenText value={result} />
           ) : <RedGreenSwitch.RedText value={result} />
@@ -105,8 +103,6 @@ export default class View extends Component {
             header={
               <div className={styles.record_header} >
                 <span >最新成交</span >
-                <img alt='switch' src={switch_render} />
-
               </div >
             }
           >

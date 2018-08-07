@@ -170,7 +170,20 @@ export default class View extends Component {
           <ScrollPannel
             header={
               <div className={styles.ensurerecord_header} >
-                <span >委托列表</span >
+                <div >委托列表</div >
+                <div className={styles.distance}>
+                  <div>区间</div>
+                  <div>0.5</div>
+                  <svg width="8px" height="5px" viewBox="0 0 8 5" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <g id="02_合约交易-深色" stroke="none"  fill="none" >
+                      <g id="01-合约交易-禁止交易" transform="translate(-1875.000000, -98.000000)" fill="#E2B96F">
+                        <g id="Group-12" transform="translate(1875.000000, 98.000000)">
+                          <polygon id="Triangle" transform="translate(4.000000, 2.500000) scale(1, -1) translate(-4.000000, -2.500000) " points="4 0 8 5 0 5"></polygon>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
+                </div >
               </div >
             }
           >

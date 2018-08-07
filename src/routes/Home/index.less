@@ -301,6 +301,13 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    > div {
+      display: flex;
+      align-items: center;
+      &.distance {
+
+      }
+    }
   }
   :global {
     .tbody {
@@ -911,7 +918,7 @@
 }
 
 // 红绿颜色切换
-:global{
+:global {
   span {
     &.red {
       color: @_red;
