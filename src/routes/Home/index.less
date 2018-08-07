@@ -911,12 +911,14 @@
 }
 
 // 红绿颜色切换
-span {
-  &.red {
-    color: @_red;
-  }
-  &.green {
-    color: @_green;
+:global{
+  span {
+    &.red {
+      color: @_red;
+    }
+    &.green {
+      color: @_green;
+    }
   }
 }
 
