@@ -12,6 +12,13 @@ import styles from './index.less'
 let max = null
 
 export default class View extends Component {
+  state = {
+    dis: 0.5
+  }
+
+  changeState = (payload = {}) => {
+    this.setState(payload)
+  }
 
   componentDidUpdate(prevProps) {
     const { model: { latestPrice: prevLatestPrice } } = prevProps
@@ -46,6 +53,8 @@ export default class View extends Component {
   }
 
   render() {
+    const { dis } = this.state
+    const { changeState } = this
     const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice, latestPriceTrend }, dispatch, modelName, RG } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'asks')
@@ -174,13 +183,17 @@ export default class View extends Component {
                 <div >委托列表</div >
                 <div className={styles.distance} >
                   <div className={styles.text} >区间</div >
-                  <div className={styles.number} >0.5</div >
+                  <div className={styles.number} >{dis}</div >
                   {triangle}
                   <div className={styles.select} >
                     <ul >
                       {
-                        [0.5, 1.0, 1.5].map(item => (
-                          <li key={item}>{item}</li >
+                        ['0.5', '1.0', '1.5'].map(item => (
+                          <li key={item} onClick={() => {
+                            changeState({
+                              dis: item
+                            })
+                          }} >{item}</li >
                         ))
                       }
                     </ul >
