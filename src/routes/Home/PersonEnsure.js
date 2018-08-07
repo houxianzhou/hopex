@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { classNames, moment, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin } from '@components'
 import { SCROLLX, TABLE } from '@constants'
-import defaultpng from '@assets/default.png'
 import ScrollPannel from './components/ScrollPanel'
+import RedGreenSwitch from './components/RedGreenSwitch'
 import styles from './index.less'
 
 
@@ -19,16 +19,16 @@ export default class View extends Component {
       type: `${modelName}/getPersonalEnsure`,
       payload
     }).then((res) => {
-        // if (callback) return callback()
-        // this.interval = dealInterval(() => {
-        //   this.getPersonalEnsure(payload)
-        // })
+        if (callback) return callback()
+        this.interval = dealInterval(() => {
+          this.getPersonalEnsure(payload)
+        })
       }
     )
   }
 
   render() {
-    const { model: { personalEnsures = [], userInfo = {} }, calculateTableHeight, dispatch, modelName } = this.props
+    const { model: { personalEnsures = [], userInfo = {} }, calculateTableHeight, noDataTip, dispatch, modelName } = this.props
     const columns = [
       {
         title: '合约',
@@ -41,13 +41,11 @@ export default class View extends Component {
       {
         title: '类型',
         dataIndex: 'type',
-        render: (value, record) => String(record.side) === '1' ? {
-          value: '卖出',
-          className: 'red'
-        } : {
-          value: '买入',
-          className: 'green'
-        }
+        render: (value, record) => String(record.side) === '1' ? (
+          <RedGreenSwitch.RedText value={'卖'} />
+        ) : (
+          <RedGreenSwitch.GreenText value={'买'} />
+        )
       },
       {
         title: '杠杆倍数',
@@ -57,13 +55,11 @@ export default class View extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render: (value) => Number(value) >= 0 ? {
-          value,
-          className: 'green'
-        } : {
-          value,
-          className: 'red'
-        }
+        render: (value) => Number(value) >= 0 ? (
+          <RedGreenSwitch.GreenText value={value} />
+        ) : (
+          <RedGreenSwitch.RedText value={value} />
+        )
       },
       {
         title: '委托价格',
@@ -180,14 +176,7 @@ export default class View extends Component {
       scroll: {
         x: SCROLLX.X,
       },
-      noDataTip: () => {
-        if (!dataSource.length) {
-          return <div >
-            <img src={defaultpng} />
-            <div style={{ marginTop: 8 }} >当前无委托</div >
-          </div >
-        }
-      },
+      noDataTip: () => noDataTip(dataSource, '当前无委托'),
 
       // loadingMore: (callback) => {
       //   this.getPersonalEnsure({callback})

@@ -207,7 +207,7 @@ export default class View extends Component {
 
   render() {
     const { renderArea } = this
-    const { dispatch, modelName, model: { minVaryPrice = '', minDealAmount = '', maxLimitPrice = '', minLimitPrice } } = this.props
+    const { dispatch, modelName, RG, model: { minVaryPrice = '', minDealAmount = '', maxLimitPrice = '', minLimitPrice } } = this.props
     const { orderChannel, buy, sell } = this.state
 
     // 限价或者市价
@@ -259,7 +259,7 @@ export default class View extends Component {
       label_text: '买入',
       label_desc: '委托价值',
       label_price: '100.BTC',
-      className: styles.buy,
+      className: RG ? styles.buy : styles.sell,
       onSubmit: () => {
         console.log('买入')
         dispatch({
@@ -323,7 +323,7 @@ export default class View extends Component {
         ...configSubmit,
         ...{
           label_text: '卖出',
-          className: styles.sell,
+          className: RG ? styles.sell : styles.buy,
           onSubmit: () => {
             dispatch({
               type: `${modelName}/postSideOrder`,

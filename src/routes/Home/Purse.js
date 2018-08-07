@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Mixin } from "@components"
 import { classNames, dealInterval } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
+import RedGreenSwitch from './components/RedGreenSwitch'
 import logogray from '@assets/logo4.png'
 import styles from './index.less'
 
@@ -52,7 +53,7 @@ export default class View extends Component {
                   钱包
                 </div >
                 <div >
-                  <ul className={styles.tab}>
+                  <ul className={styles.tab} >
                     {
                       assetList.map((item, index) => <li key={index} onClick={() => {
                         this.changeState({
@@ -76,8 +77,12 @@ export default class View extends Component {
                   <>
                     <div className={styles.top} >
                       <div className={styles.tip} >浮动盈亏</div >
-                      <div className={styles.number} >{floatProfit}</div >
-                      <div className={styles.percent} >{floatPercent}</div >
+                      <div className={styles.number} >
+                        <RedGreenSwitch.GreenText value={floatProfit} />
+                      </div >
+                      <div className={styles.percent} >
+                        <RedGreenSwitch.GreenText value={floatPercent} />
+                        </div >
                     </div >
                     <div className={styles.down} >
                       <div >

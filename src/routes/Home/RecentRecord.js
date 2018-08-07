@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { classNames, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin } from '@components'
 import { SCROLLX, TABLE } from '@constants'
-import defaultpng from '@assets/default.png'
+import RedGreenSwitch from './components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -34,7 +34,7 @@ export default class View extends Component {
   render() {
     const { activeLi } = this.state
     const { state, changeState } = this
-    const { model: { personalEnsureHistory = [] } } = this.props
+    const { model: { personalEnsureHistory = [] }, noDataTip } = this.props
     const columns = [
       {
         title: '合约',
@@ -49,13 +49,11 @@ export default class View extends Component {
       {
         title: '类型',
         dataIndex: 'side',
-        render: (v) => v === '1' ? {
-          value: '卖',
-          className: 'red'
-        } : {
-          value: '买',
-          className: 'green'
-        }
+        render: (value) => value === '1' ? (
+          <RedGreenSwitch.RedText value={'卖'} />
+        ) : (
+          <RedGreenSwitch.GreenText value={'买'} />
+        )
       },
       {
         title: '杠杆倍数',
@@ -64,13 +62,11 @@ export default class View extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render: (value) => Number(value) >= 0 ? {
-          value,
-          className: 'green'
-        } : {
-          value,
-          className: 'red'
-        }
+        render: (value) => Number(value) >= 0 ? (
+          <RedGreenSwitch.GreenText value={value} />
+        ): (
+          <RedGreenSwitch.RedText value={value} />
+        )
       },
       {
         title: '委托价格',
@@ -145,14 +141,7 @@ export default class View extends Component {
       scroll: {
         x: SCROLLX.X
       },
-      noDataTip: () => {
-        if (!dataSource.length) {
-          return <div >
-            <img src={defaultpng} />
-            <div style={{ marginTop: 8 }} >当前无历史</div >
-          </div >
-        }
-      },
+      noDataTip: () => noDataTip(dataSource, '当前无历史'),
     }
     return (
       <Mixin.Child that={this} >
