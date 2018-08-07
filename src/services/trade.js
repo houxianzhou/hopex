@@ -2,7 +2,7 @@ import { request, asyncPayload } from '@utils'
 import { API } from "@constants"
 
 let { MOCKIP, USERIP, USERIP2, UserIp3, UserIp4 } = API
-const MODE = 'mock1'
+const MODE = 'mock'
 
 // mock数据
 if (MODE === 'mock') {

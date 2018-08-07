@@ -1,6 +1,6 @@
 import { request } from '@utils'
 
-const prefix = ''
+const prefix = '/mock'
 
 export async function getCurrentUser() {
   return await request(`${prefix}/api/user`)

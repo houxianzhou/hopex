@@ -46,6 +46,10 @@ export default joinModel(modelExtend, {
       if (resOk(res)) {
         const { enabledTwoFactories, token, userId, email } = res.data
         if (enabledTwoFactories) {
+          return {
+            email,
+            userId
+          }
           // 谷歌二次验证
         } else {
           if (token && userId) {
@@ -55,26 +59,41 @@ export default joinModel(modelExtend, {
               email
             }
             yield put({
-              type: 'changeState',
-              payload: {
-                userInfo: payload
-              }
+              type: 'doLoginPrepare',
+              payload
             })
-            localSave.set('userInfo', payload)
-            localSave.set('recordEmail', { email })
-            yield put({
-              type: 'routerGo',
-              payload: PATH.home
-            })
-          } else {
-
+            // yield put({
+            //   type: 'changeState',
+            //   payload: {
+            //     userInfo: payload
+            //   }
+            // })
+            // localSave.set('userInfo', payload)
+            // localSave.set('recordEmail', { email })
+            // yield put({
+            //   type: 'routerGo',
+            //   payload: PATH.home
+            // })
           }
         }
       }
     },
     * doVertifyLogin({ payload = {} }, { call, put, select }) {
       const res = getRes(yield call(doVertifyLogin, payload))
-
+    },
+    * doLoginPrepare({ payload = {} }, { call, put }) {
+      yield put({
+        type: 'changeState',
+        payload: {
+          userInfo: payload
+        }
+      })
+      localSave.set('userInfo', payload)
+      localSave.set('recordEmail', { email: payload.email })
+      yield put({
+        type: 'routerGo',
+        payload: PATH.home
+      })
     },
     * doLoginOut({ payload = {} }, { call, put, select }) {
       yield put({

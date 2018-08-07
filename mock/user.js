@@ -24,6 +24,7 @@ export default delay({
       {
         data: {
           email: '2278095567@qq.com',
+          enabledTwoFactories: false,
           userId: 'mockId',
           token: "mockToken",
         },
