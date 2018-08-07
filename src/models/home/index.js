@@ -252,8 +252,7 @@ export default joinModel(modelExtend, {
             "method": "market.leverage_select"
           },
           param: {},
-          powerMsg: '查询杠杆倍数',
-          power: [1]
+          power: [2]
         }
       })))
       if (repayload) {
