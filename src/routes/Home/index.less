@@ -302,10 +302,52 @@
     display: flex;
     justify-content: space-between;
     > div {
+      flex-wrap: wrap;
       display: flex;
       align-items: center;
       &.distance {
-
+        position: relative;
+        .text {
+          color: @c_pannel_theader_color;
+        }
+        .number {
+          margin-left: 31px;
+          margin-right: 7px;
+        }
+        &:hover{
+          .select{
+            display: block;
+          }
+        }
+        .select {
+          display: none;
+          z-index: 3;
+          width: 100px;
+          position: absolute;
+          top: 0;
+          // border: 1px solid red;
+          padding-top: 20px;
+          ul {
+            border-radius: 4px;
+            box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.08);
+            background: blue;
+            li {
+              cursor: pointer;
+              padding-right: 21px;
+              display: flex;
+              color: @c_active_yellow;
+              align-items: center;
+              justify-content: flex-end;
+              height: 30px;
+              &:nth-child(2n+1) {
+                background: @c_pannel_dark;
+              }
+              &:nth-child(2n) {
+                background: @c_panel_light;
+              }
+            }
+          }
+        }
       }
     }
   }
