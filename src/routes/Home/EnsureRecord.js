@@ -45,7 +45,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice, latestPriceTrend }, dispatch, modelName, RG, viewPosition } = this.props
+    const { model: { ensure_records = [], latestPrice, indexPrice, equitablePrice, latestPriceTrend }, dispatch, modelName, RG } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'asks')
       , _.get(ensure_records, 'bids')
@@ -58,13 +58,14 @@ export default class View extends Component {
         dataIndex: 'price',
         render: (value, record) => {
           let v = formatNumber(value, 'p')
-          return record.type === '1' ? {
-            value: v,
-            className: 'red'
-          } : {
-            value: v,
-            className: 'green'
-          }
+          return record.type === '1' ?<RedGreenSwitch.RedText value={v} />:<RedGreenSwitch.GreenText value={v} />
+          // return record.type === '1' ? {
+          //   value: v,
+          //   className: 'red'
+          // } : {
+          //   value: v,
+          //   className: 'green'
+          // }
         }
       },
       {
