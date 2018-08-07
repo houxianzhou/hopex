@@ -216,7 +216,7 @@ class RenderModal extends Component {
                 promise = dispatch({
                   type: `${modelName}/doUpdateLeverage`,
                   payload: {
-                    leverage: currentValue
+                    leverage: String(currentValue)
                   }
                 })
               }
