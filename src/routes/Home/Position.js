@@ -4,8 +4,8 @@ import { Table, Mixin } from '@components'
 import { SCROLLX, TABLE } from '@constants'
 import add from '@assets/add.png'
 import substract from '@assets/substract.png'
-import defaultpng from '@assets/default.png'
 import ScrollPannel from './components/ScrollPanel'
+import RedGreenSwitch from './components/RedGreenSwitch'
 import MainModal from './components/MainModal'
 import styles from './index.less'
 
@@ -35,7 +35,7 @@ export default class View extends Component {
 
   render() {
     const { changeState } = this
-    const { model: { positionList = [], dealMoney }, modal: { name }, RG, modelName, dispatch } = this.props
+    const { model: { positionList = [], dealMoney }, modal: { name }, noDataTip, modelName, dispatch } = this.props
 
     const openModal = () => {
       dispatch({
@@ -71,13 +71,9 @@ export default class View extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render: (value) => Number(value) >= 0 ? {
-          value,
-          className: 'green'
-        } : {
-          value,
-          className: 'red'
-        }
+        render: (value) => Number(value) >= 0 ? (
+          <RedGreenSwitch.GreenText value={value} />
+        ) : (<RedGreenSwitch.RedText value={value} />)
       },
       {
         title: '开仓均价',
@@ -126,13 +122,11 @@ export default class View extends Component {
         dataIndex: 'floatProfit',
         render: (v, record) => {
           const value = `${formatNumber(v, 'p')}${dealMoney}` + `(${(formatNumber(record.profitRate * 100, 'p'))}%)`
-          return Number(v) >= 0 ? {
-            value,
-            className: RG ? 'green' : 'red'
-          } : {
-            value,
-            className: RG ? 'red' : 'green'
-          }
+          return Number(v) >= 0 ? (
+            <RedGreenSwitch.GreenText value={value} />
+          ) : (
+            <RedGreenSwitch.RedText value={value} />
+          )
         }
       },
       {
@@ -150,14 +144,7 @@ export default class View extends Component {
       scroll: {
         x: SCROLLX.X
       },
-      noDataTip: () => {
-        if (!dataSource.length) {
-          return <div >
-            <img src={defaultpng} />
-            <div style={{ marginTop: 8 }} >当前无持仓</div >
-          </div >
-        }
-      },
+      noDataTip: () => noDataTip(dataSource,'当前无持仓'),
     }
     return (
       <Mixin.Child that={this} >

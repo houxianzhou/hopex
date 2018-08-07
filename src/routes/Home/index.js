@@ -13,6 +13,7 @@ import CurrentContract from './CurrentContract'
 import Position from './Position'
 import PersonEnsure from './PersonEnsure'
 import RecentRecord from './RecentRecord'
+import defaultpng from '@assets/default.png'
 import styles from './index.less'
 
 const Comp = {
@@ -111,6 +112,14 @@ export default class View extends Component {
       RG,
       viewPosition,
       calculateTableHeight,
+      noDataTip: (dataSource = [], text) => {
+        if (!dataSource.length) {
+          return <div >
+            <img src={defaultpng} />
+            <div style={{ marginTop: 8 }} >{text}</div >
+          </div >
+        }
+      },
       ...this.props,
       isLogin: this.isLogin(),
       routerGoLogin: this.routerGoLogin,

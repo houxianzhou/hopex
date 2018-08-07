@@ -3,7 +3,7 @@ import echarts from 'echarts'
 import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson, isEqual } from '@utils'
 import { Mixin } from "@components"
 import wss from '@services/SocketClient'
-import RedGreenArrow from './components/RedGreenArrow'
+import RedGreenSwitch from './components/RedGreenSwitch'
 import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
@@ -246,7 +246,7 @@ export default class View extends Component {
     };
 
 
-    myChart.setOption(option);
+    myChart.setOption(option)
     window.onresize = () => {
       myChart.resize()
     }
@@ -547,12 +547,12 @@ export default class View extends Component {
                         <>
                           <div className={styles.marketname} >{marketName}</div >
                           < div className={styles.latestprice} >
-                            {latestPrice}
+                            <RedGreenSwitch.GreenText value={latestPrice} />
                             {
                               latestPriceTrend ? (
-                                <RedGreenArrow alt='top' RG={RG} />
+                                <RedGreenSwitch.RedGreenArrow alt='top' />
                               ) : (
-                                <RedGreenArrow alt='down' RG={RG} />
+                                <RedGreenSwitch.RedGreenArrow alt='down' />
                               )
                             }
                           </div >
@@ -560,14 +560,15 @@ export default class View extends Component {
                             <div className={styles.percent} >
                               {
                                 Number(latestPriceChangePercent) > 0 ? (
-                                  <span className={styles.green} >{`${latestPriceChangePercent}%`}</span >
+                                  <RedGreenSwitch.GreenText value={`${latestPriceChangePercent}%`} />
                                 ) : (
-                                  <span className={styles.red} >{`${latestPriceChangePercent}%`}</span >
+                                  <RedGreenSwitch.RedText value={`${latestPriceChangePercent}%`} />
                                 )
-
                               }
                             </div >
-                            <div className={styles.dollar} >{`$${dollarPrice}`}</div >
+                            <div className={styles.dollar} >
+                              <RedGreenSwitch.GreenText value={`$${dollarPrice}`} />
+                            </div >
                           </div >
                         </>
                       ) : null
@@ -585,11 +586,15 @@ export default class View extends Component {
                       </li >
                       <li >
                         <div className={`${styles.title}`} >24h最高</div >
-                        <div className={`${styles.desc} ${styles.maxprice}`} >{maxPrice24h}</div >
+                        <div className={`${styles.desc} ${styles.maxprice}`} >
+                          <RedGreenSwitch.GreenText value={maxPrice24h} />
+                        </div >
                       </li >
                       <li >
                         <div className={styles.title} >24h最低</div >
-                        <div className={`${styles.desc} ${styles.lowprice}`} >{minPrice24h}</div >
+                        <div className={`${styles.desc} ${styles.lowprice}`} >
+                          <RedGreenSwitch.RedText value={minPrice24h} />
+                          </div >
                       </li >
                       <li >
                         <div className={styles.title} >24h交易额</div >
@@ -612,8 +617,8 @@ export default class View extends Component {
                                 time: 'realtime'
                               })
                               this.widget.chart().setChartType(3)
-                              this.studies.forEach((id)=>{
-                                this.widget.chart().setEntityVisibility(id,false)
+                              this.studies.forEach((id) => {
+                                this.widget.chart().setEntityVisibility(id, false)
                               })
                             }}
                             className={classNames(
@@ -631,8 +636,8 @@ export default class View extends Component {
                                     time: item.name
                                   })
                                   this.widget.chart().setChartType(1)
-                                  this.studies.forEach((id)=>{
-                                    this.widget.chart().setEntityVisibility(id,true)
+                                  this.studies.forEach((id) => {
+                                    this.widget.chart().setEntityVisibility(id, true)
                                   })
                                   this.widget.chart().setResolution(item.value, () => {
                                   })
