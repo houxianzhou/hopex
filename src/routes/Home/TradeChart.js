@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import echarts from 'echarts'
-import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson, isEqual } from '@utils'
+import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson, isEqual, dealInterval } from '@utils'
 import { Mixin } from "@components"
 import wss from '@services/SocketClient'
 import RedGreenSwitch from './components/RedGreenSwitch'
@@ -47,6 +47,7 @@ export default class View extends Component {
 
   startInit = () => {
     this.startKline()
+    this.startKlineDetail()
     // this.getImportantPrice()
     // this.startDeepMap()
   }
@@ -441,6 +442,19 @@ export default class View extends Component {
     })
   }
 
+  startKlineDetail = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getKlineDetail`,
+    }).then(res => {
+      if (res) {
+        this.interval = dealInterval(() => {
+          this.startKlineDetail()
+        })
+      }
+    })
+  }
+
   getImportantPriceFromWs = () => {
     let chanId
     const ws2 = wss.getSocket('ws2')
@@ -594,7 +608,7 @@ export default class View extends Component {
                         <div className={styles.title} >24h最低</div >
                         <div className={`${styles.desc} ${styles.lowprice}`} >
                           <RedGreenSwitch.RedText value={minPrice24h} />
-                          </div >
+                        </div >
                       </li >
                       <li >
                         <div className={styles.title} >24h交易额</div >

@@ -7,7 +7,7 @@ import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
   getPosition, getPersonEnsureDetail, getAllMarkets, getLeverage, doUpdateLeverage,
-  getKlineAllList, getPersonalEnsureHistory
+  getKlineAllList, getPersonalEnsureHistory, getKlineDetail
 } from "@services/trade"
 
 
@@ -154,6 +154,28 @@ export default joinModel(modelExtend, {
         if (resOk(res)) {
           const result = _.get(res, 'data') || {}
           const {
+            records = []
+          } = result
+          return records
+        }
+      }
+    },
+
+    * getKlineDetail({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {
+            "method": "market.detail",
+          },
+          param: {}
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getKlineDetail, repayload))
+        if (resOk(res)) {
+          const result = _.get(res, 'data') || {}
+          const {
             records = [], maxPrice24h, minPrice24h, marketPrice,
             priceLast, totalPrice24h, percent, dollarPrice
           } = result
@@ -169,13 +191,11 @@ export default joinModel(modelExtend, {
               dollarPrice: formatNumber(dollarPrice, 'p'),
             }
           })
-          // ...maxPrice ? { maxPrice: formatNumber(maxPrice, 4) } : {},
-          // ...minPrice ? { minPrice: formatNumber(minPrice, 4) } : {},
-          // ...price ? { indexPrice: formatNumber(price, 4) } : {}
           return records
         }
       }
     },
+
     * getKlineAllListFromWs({ payload = {} }, { call, put }) {
       const ws1 = wss.getSocket('ws1')
       const { startTime, endTime } = payload

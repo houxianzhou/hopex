@@ -72,8 +72,6 @@ export async function doCancelPersonEnsure(payload) {
 }
 
 
-
-
 // 查询杠杆倍数
 export async function getLeverage(payload) {
   return await request(`${UserIp4}/market.leverage_select`, {
@@ -98,6 +96,14 @@ export async function getKlineAllList(payload) {
   })
 }
 
+// tradeviewK上面的价格指数，24小时最高最低
+export async function getKlineDetail(payload) {
+  return await request(`${UserIp3}/market.detail`, {
+    method: 'post',
+    body: payload
+  })
+}
+
 // 用户历史委托
 export async function getPersonalEnsureHistory(payload) {
   return await request(`${UserIp4}/user.order_history`, {
@@ -105,8 +111,6 @@ export async function getPersonalEnsureHistory(payload) {
     body: payload
   })
 }
-
-
 
 // 下限价单
 export async function postLimitOrder(payload) {

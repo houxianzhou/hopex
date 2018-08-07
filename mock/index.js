@@ -316,14 +316,36 @@ export default {
           const v = _.random(100, 3000)
           return [item / 1000, o, c, h, l, v, 6, 'BTCUSD永续']
         }),
-        "maxPrice24h": "2000",
-        "minPrice24h": "1000",
-        "totalPrice24h": "527500",
+      },
+      "errCode": "0",
+      "errStr": "success",
+      "ret": "0"
+    })
+  },
+
+  //k线图
+  'Post /mock/api/v1/quote/market.detail': (req, res) => {
+    const { body: { param: { startTime, endTime } = {} } = {} } = req
+    const periods = helper.getdays(startTime * 1000, endTime * 1000)
+    res.send({
+      "head": {
+        "method": "market.kline",
+        "timestamps": "1533181070062",
+        "version": "1.0",
+        "lang": "cn",
+        "msgType": "request",
+        "packType": "1",
+        "serialNumber": "56"
+      },
+      "data": {
+        "maxPrice24h": randomStr(100,1000),
+        "minPrice24h": randomStr(100,1000),
+        "totalPrice24h": randomStr(10000,100000),
         "marketPrice": "7388.47741901",
         "percent": "+50.00",
-        "dollarPrice": "2000.00000000",
-        "price24h": "1000",
-        "priceLast": "2000.00000000",
+        "dollarPrice": randomStr(100,1000),
+        "price24h": randomStr(100,1000),
+        "priceLast": randomStr(100,1000),
         "marketName": "BTCUSDT永续"
       },
       "errCode": "0",
