@@ -3,7 +3,7 @@ import { classNames, dealInterval, moment, _, formatNumber } from '@utils'
 import switch_render from '@assets/switch_render.png'
 import { Mixin, Table } from "@components"
 import { COLORS } from '@constants'
-import RedGreenArrow from './components/RedGreenArrow'
+import RedGreenSwitch from './components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -39,13 +39,11 @@ export default class View extends Component {
         title: '方向',
         dataIndex: 'type',
         width: '20%',
-        render: (value) => value === '2' || value === '买' ? {
-          value: '买入',
-          className: 'green'
-        } : {
-          value: '卖出',
-          className: 'red'
-        }
+        render: (value) => value === '2' || value === '买' ? (
+          <RedGreenSwitch.GreenText value='买入' />
+        ) : (
+          <RedGreenSwitch.RedText value='卖出' />
+        )
       },
       {
         title: '价格',
@@ -55,16 +53,12 @@ export default class View extends Component {
           const style = { marginLeft: 7 }
           const next = dataSource[index + 1] || {}
           const img = Number(value) > Number(next.price) ? (
-            <RedGreenArrow style={style} alt='top' RG={RG} />) : (Number(value) < Number(next.price) ? (
-            <RedGreenArrow style={style} alt='down' RG={RG} />) : null)
+            <RedGreenSwitch.RedGreenArrow style={style} alt='top' />) : (Number(value) < Number(next.price) ? (
+            <RedGreenSwitch.RedGreenArrow style={style} alt='down' />) : null)
           const result = <span >{formatNumber(value, 'p', true)}{img}</span >
-          return record.type === '2' || record.type === '买' ? {
-            value: result,
-            className: 'green'
-          } : {
-            value: result,
-            className: 'red'
-          }
+          return record.type === '2' || record.type === '买' ? (
+            <RedGreenSwitch.GreenText value={result} />
+          ) : <RedGreenSwitch.RedText value={result} />
         }
       },
       {

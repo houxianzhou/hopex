@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { _ } from '@utils'
+import { _, classNames } from '@utils'
 import arrow_down from '@assets/arrow_down.png'
 import arrow_top from '@assets/arrow_top.png'
 import arrow_down2 from '@assets/arrow_down2.png'
@@ -12,13 +12,13 @@ import arrow_top2 from '@assets/arrow_top2.png'
 }))
 class RedGreenArrow extends Component {
   render() {
-    const { model: { RG = 1 }, alt, } = this.props
+    const { model: { RG = 1 }, alt, style = {} } = this.props
     if (alt === 'top') {
       return (
-        <img alt='top' src={RG ? arrow_top : arrow_top2} />
+        <img style={style} alt='top' src={RG ? arrow_top : arrow_top2} />
       )
     } else {
-      return <img alt='down' src={RG ? arrow_down : arrow_down2} />
+      return <img style={style} alt='down' src={RG ? arrow_down : arrow_down2} />
     }
   }
 }
@@ -29,9 +29,14 @@ class RedGreenArrow extends Component {
 }))
 class RedText extends Component {
   render() {
-    const { model: { RG = 1 }, children, value } = this.props
+    const { model: { RG = 1 }, value } = this.props
+
     return (
-      <span className='red' >{value}</span >
+      <span className={
+        classNames(
+          RG ? 'red' : 'green'
+        )
+      } >{value}</span >
     )
   }
 }
@@ -43,7 +48,11 @@ class GreenText extends Component {
   render() {
     const { model: { RG = 1 }, value, } = this.props
     return (
-      <span className='green' >{value}</span >
+      <span className={
+        classNames(
+          RG ? 'green' : 'red'
+        )
+      } >{value}</span >
     )
   }
 }
@@ -52,5 +61,8 @@ class GreenText extends Component {
 export default {
   RedGreenArrow,
   RedText,
-  GreenText
+  GreenText,
+  SwitchColor: (color1, color2, RG = 1) => {
+    return RG ? color1 : color2
+  }
 }

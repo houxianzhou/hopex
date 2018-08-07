@@ -58,14 +58,11 @@ export default class View extends Component {
         dataIndex: 'price',
         render: (value, record) => {
           let v = formatNumber(value, 'p')
-          return record.type === '1' ?<RedGreenSwitch.RedText value={v} />:<RedGreenSwitch.GreenText value={v} />
-          // return record.type === '1' ? {
-          //   value: v,
-          //   className: 'red'
-          // } : {
-          //   value: v,
-          //   className: 'green'
-          // }
+          return record.type === '1' ? (
+            <RedGreenSwitch.RedText value={v} />
+          ) : (
+            <RedGreenSwitch.GreenText value={v} />
+          )
         }
       },
       {
@@ -97,8 +94,9 @@ export default class View extends Component {
         title: '累计数量(张)',
         dataIndex: 'sum',
         render: (value, record = {}) => {
-          return <ColorChange color={record.type === '1' ? COLORS.redOpacity : COLORS.greenOpacity}
-                              percent={getPercent(value, max.sum, 0.02)} >
+          return <ColorChange
+            color={record.type === '1' ? RedGreenSwitch.SwitchColor(COLORS.redOpacity, COLORS.greenOpacity, RG) : RedGreenSwitch.SwitchColor(COLORS.greenOpacity, COLORS.redOpacity, RG)}
+            percent={getPercent(value, max.sum, 0.02)} >
             <span style={{
               color: record.exist === '1' ? COLORS.yellow : null
             }} >
@@ -185,9 +183,9 @@ export default class View extends Component {
                   {latestPrice}
                   {
                     latestPriceTrend ? (
-                      <RedGreenSwitch.RedGreenArrow alt='top'  />
+                      <RedGreenSwitch.RedGreenArrow alt='top' />
                     ) : (
-                      <RedGreenSwitch.RedGreenArrow alt='down'  />
+                      <RedGreenSwitch.RedGreenArrow alt='down' />
                     )
                   }
                 </div >
