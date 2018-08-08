@@ -523,13 +523,9 @@ export default joinModel(modelExtend, {
     * getPersonEnsureDetail({ payload = {} }, { call, put, select }) {
       const { orderId } = payload
       const personalEnsures = yield select(({ home: { personalEnsures = [] } }) => deepClone(personalEnsures))
+      const filterOne = deepClone(personalEnsures).filter((item = {}) => item.orderId === orderId)[0] || {}
       personalEnsures.map((item = {}) => {
         delete item.expand
-        // if (item.orderId !== orderId) {
-        //   delete item.expand
-        // } else {
-        //   item.expand = []
-        // }
       })
       yield put({
         type: 'changeState',
@@ -537,34 +533,36 @@ export default joinModel(modelExtend, {
           personalEnsures,
         }
       })
-      const repayload = yield (asyncPayload(yield put({
-        type: 'createRequestParams',
-        payload: {
-          "head": {
-            "method": "order.deals",
-          },
-          "param": {
-            ...payload,
-            pageIndex: '0',
-            pageSize: '100'
-          },
-          power: [1],
-          powerMsg: '查看委托订单明细'
-        }
-      })))
-      if (repayload) {
-        const res = getRes(yield call(getPersonEnsureDetail, repayload))
-        if (resOk(res)) {
-          const { orderId } = payload
-          const personalEnsures = yield select(({ home: { personalEnsures } }) => personalEnsures)
-          const result = deepClone(personalEnsures)
-          result.filter(item => item.orderId === orderId)[0].expand = res.data.records
-          yield put({
-            type: 'changeState',
-            payload: {
-              personalEnsures: result,
-            }
-          })
+      if (!filterOne.expand) {
+        const repayload = yield (asyncPayload(yield put({
+          type: 'createRequestParams',
+          payload: {
+            "head": {
+              "method": "order.deals",
+            },
+            "param": {
+              ...payload,
+              pageIndex: '0',
+              pageSize: '100'
+            },
+            power: [1],
+            powerMsg: '查看委托订单明细'
+          }
+        })))
+        if (repayload) {
+          const res = getRes(yield call(getPersonEnsureDetail, repayload))
+          if (resOk(res)) {
+            const { orderId } = payload
+            const personalEnsures = yield select(({ home: { personalEnsures } }) => personalEnsures)
+            const result = deepClone(personalEnsures)
+            result.filter(item => item.orderId === orderId)[0].expand = res.data.records
+            yield put({
+              type: 'changeState',
+              payload: {
+                personalEnsures: result,
+              }
+            })
+          }
         }
       }
     },
