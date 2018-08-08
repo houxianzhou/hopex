@@ -17,7 +17,6 @@ export default joinModel(modelExtend, {
     marketList: [], // 合约列表
     marketName: '', //当前合约名称
     marketCode: '', //当前合约code
-    numberToFixed: 2, // 小数点位数
 
     latest_records: [],// 最新成交
     ensure_records: {},// 委托列表
@@ -39,6 +38,8 @@ export default joinModel(modelExtend, {
     minLimitPrice: '',//最低允许卖价
     maxLimitPrice: '',//最高允许卖价
     availableMoney: '',//根据钱包资产列表过滤出结算货币的可用额度
+    varyRange: '', // 委托列表区间,
+    showPrec:'',// 控制合理价格小数位数
 
 
     keepBailRate: null,//维持保证金率
@@ -109,8 +110,8 @@ export default joinModel(modelExtend, {
 
       if (resOk(res)) {
         const result = {
-          asks: _.orderBy(_.get(res.data, 'asks')) || [],
-          bids: _.orderBy(_.get(res.data, 'bids')) || []
+          asks: _.orderBy(_.get(res.data, 'asks'),['price'], ['desc']) || [],
+          bids: _.orderBy(_.get(res.data, 'bids'),['price'], ['desc']) || []
         }
 
         result.asks.map((item, index) => {
@@ -129,7 +130,7 @@ export default joinModel(modelExtend, {
           type: 'changeState',
           payload: {
             ensure_records: result,
-            equitablePrice: formatNumber(equitablePrice, 'p')
+            equitablePrice: equitablePrice // formatNumber(equitablePrice, 'p')
           }
         })
         return res
@@ -670,7 +671,9 @@ export default joinModel(modelExtend, {
         levelages: filterOne.levelages,
         dealMoney: filterOne.dealMoney,
         maxLimitPrice: filterOne.maxLimitPrice,
-        minLimitPrice: filterOne.minLimitPrice
+        minLimitPrice: filterOne.minLimitPrice,
+        varyRange: filterOne.varyRange,
+        showPrec: filterOne.showPrec
       }
     }
   },

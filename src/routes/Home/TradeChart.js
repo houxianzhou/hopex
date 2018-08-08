@@ -607,14 +607,14 @@ export default class View extends Component {
                       </li >
                       <li >
                         <div className={`${styles.title}`} >24h最高</div >
-                        <div className={`${styles.desc} ${styles.maxprice}`} >
-                          <RedGreenSwitch.GreenText value={maxPrice24h} />
+                        <div className={`${styles.desc} ${styles.maxprice1}`} >
+                          {maxPrice24h}
                         </div >
                       </li >
                       <li >
                         <div className={styles.title} >24h最低</div >
-                        <div className={`${styles.desc} ${styles.lowprice}`} >
-                          <RedGreenSwitch.RedText value={minPrice24h} />
+                        <div className={`${styles.desc} ${styles.lowprice1}`} >
+                          {minPrice24h}
                         </div >
                       </li >
                       <li >

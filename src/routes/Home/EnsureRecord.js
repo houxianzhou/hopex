@@ -55,11 +55,13 @@ export default class View extends Component {
   render() {
     const { dis } = this.state
     const { changeState } = this
-    const { model: { ensure_records = [], latestPrice = '', indexPrice = '', equitablePrice = '', latestPriceTrend = '' }, dispatch, modelName, RG } = this.props
+    const { model: { ensure_records = [], latestPrice = '', indexPrice = '', equitablePrice = '', latestPriceTrend = '', varyRange = '' }, dispatch, modelName, RG } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'asks')
       , _.get(ensure_records, 'bids')
     ]
+
+    const varyRanges = _.isString(varyRange) ? varyRange.split(' ') : []
 
 
     const columns = [
@@ -187,8 +189,8 @@ export default class View extends Component {
                   <div className={styles.select} >
                     <ul >
                       {
-                        ['0.5', '1.0', '1.5'].map(item => (
-                          <li key={item} onClick={() => {
+                        varyRanges.map((item, index) => (
+                          <li key={index} onClick={() => {
                             changeState({
                               dis: item
                             })
