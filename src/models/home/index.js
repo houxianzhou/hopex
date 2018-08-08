@@ -450,7 +450,7 @@ export default joinModel(modelExtend, {
 
     //个人合约列表 查询用户的所有活跃委托
     * getPersonalEnsure({ payload = {} }, { call, put, select }) {
-      const { pageIndex = 1, pageSize = 10, callback } = payload
+      const { pageIndex = 0, pageSize = 100, callback } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {

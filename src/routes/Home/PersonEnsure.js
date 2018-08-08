@@ -143,7 +143,7 @@ export default class View extends Component {
     const tableProp = {
       className: styles.tableContainer,
       columns,
-      dataSource: _.merge((new Array(4)).fill(), dataSource),
+      dataSource: dataSource, //_.merge((new Array(4)).fill(), dataSource),
       onClickRow: (item) => {
         // console.log(item)
       },
