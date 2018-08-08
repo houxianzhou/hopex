@@ -40,8 +40,8 @@ export default {
             "showPrec": "8",
             "dealMoney": "BTC",
             "marketValue": "1.00000000",
-            minLimitPrice:'1000',
-            maxLimitPrice:'2000'
+            minLimitPrice: '1000',
+            maxLimitPrice: '2000'
           }
         ],
         "ETH": [
@@ -58,8 +58,8 @@ export default {
             "showPrec": "8",
             "dealMoney": "BTC",
             "marketValue": "1.00000000",
-            minLimitPrice:'1',
-            maxLimitPrice:'2'
+            minLimitPrice: '1',
+            maxLimitPrice: '2'
           }
         ],
         "XRP": [
@@ -76,8 +76,8 @@ export default {
             "showPrec": "4",
             "dealMoney": "XRP",
             "marketValue": "1.00000000",
-            minLimitPrice:'1',
-            maxLimitPrice:'2'
+            minLimitPrice: '1',
+            maxLimitPrice: '2'
           }
         ],
         "EOS": [
@@ -94,8 +94,8 @@ export default {
             "showPrec": "8",
             "dealMoney": "BTC",
             "marketValue": "1.00000000",
-            minLimitPrice:'1',
-            maxLimitPrice:'2'
+            minLimitPrice: '1',
+            maxLimitPrice: '2'
           }
         ]
       },
@@ -146,13 +146,13 @@ export default {
       },
       "data": {
         "asks": randomArrayMap(5).map((item, index) => ({
-          "exist":['0','1'][_.random(0,1)],
-          "price": index + 10, //index,
+          "exist": ['0', '1'][_.random(0, 1)],
+          "price": index + 10 + '.0', //index,
           "amount": _.random(10000, 20000),//randomStr()
         })),
         "bids": randomArrayMap(5).map((item, index) => ({
-          "exist":['0','1'][_.random(0,1)],
-          "price": index,
+          "exist": ['0', '1'][_.random(0, 1)],
+          "price": index + '.0',
           "amount": _.random(10000, 20000) //randomStr()
         }))
       },
@@ -216,7 +216,7 @@ export default {
     res.send({
       "data": {
         "total": "0",
-        "records": (new Array(6)).fill().map(item=>(
+        "records": (new Array(6)).fill().map(item => (
           {
             "time": "2018-08-02 17:49:27",
             "role": "2",
@@ -258,11 +258,11 @@ export default {
         "userToken": "56"
       },
       "data": {
-        "positionList": (new Array(3)).fill().map(item=>(
+        "positionList": (new Array(3)).fill().map(item => (
           {
             "market": "BTCUSDT",
             "leverage": "10",
-            "amount": [100,-100][_.random(0,1)],
+            "amount": [100, -100][_.random(0, 1)],
             "averagePrice": "3426.05535492145950280673616680032",
             "keepMoney": "0.004719713584537424571629366093504956",
             "positionMoney": "0.0271945401775727796746263474911476",
@@ -370,14 +370,14 @@ export default {
         "serialNumber": "56"
       },
       "data": {
-        "maxPrice24h": randomStr(100,1000),
-        "minPrice24h": randomStr(100,1000),
-        "totalPrice24h": randomStr(10000,100000),
+        "maxPrice24h": randomStr(100, 1000),
+        "minPrice24h": randomStr(100, 1000),
+        "totalPrice24h": randomStr(10000, 100000),
         "marketPrice": "7388.47741901",
         "percent": "+50.00",
-        "dollarPrice": randomStr(100,1000),
-        "price24h": randomStr(100,1000),
-        "priceLast": randomStr(100,1000),
+        "dollarPrice": randomStr(100, 1000),
+        "price24h": randomStr(100, 1000),
+        "priceLast": randomStr(100, 1000),
         "marketName": "BTCUSDT永续"
       },
       "errCode": "0",
@@ -452,7 +452,7 @@ export default {
       {
         "data": {
           "total": "114",
-          "records": (new Array(2)).fill().map(item=>(
+          "records": (new Array(2)).fill().map(item => (
             {
               "ctime": "2018-08-02 17:51:00",
               "ftime": "2018-08-02 17:51:00",

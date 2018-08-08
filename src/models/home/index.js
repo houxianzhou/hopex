@@ -109,17 +109,17 @@ export default joinModel(modelExtend, {
 
       if (resOk(res)) {
         const result = {
-          asks: _.orderBy(formatNumber(_.get(res.data, 'asks'), ['price', 'amount']), ['price'], ['desc']) || [],
-          bids: _.orderBy(formatNumber(_.get(res.data, 'bids'), ['price', 'amount']), ['price'], ['desc']) || []
+          asks: _.orderBy(_.get(res.data, 'asks')) || [],
+          bids: _.orderBy(_.get(res.data, 'bids')) || []
         }
 
         result.asks.map((item, index) => {
           item.type = '1'
-          item.sum = _.sumBy(result.asks.slice(index, result.asks.length), ({ amount = 0 } = {}) => amount)
+          item.sum = _.sumBy(result.asks.slice(index, result.asks.length), ({ amount = 0 } = {}) => Number(amount))
         })
         result.bids.map((item, index) => {
           item.type = '2'
-          item.sum = _.sumBy(result.bids.slice(0, index + 1), ({ amount = 0 } = {}) => amount)
+          item.sum = _.sumBy(result.bids.slice(0, index + 1), ({ amount = 0 } = {}) => Number(amount))
         })
 
         const [asksLast, bidsFirst] = [result.asks[result.asks.length > 8 ? 7 : result.asks.length - 1], result.bids[0]]

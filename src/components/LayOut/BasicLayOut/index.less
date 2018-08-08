@@ -44,6 +44,12 @@
           }
           li.navli {
             position: relative;
+            .border{
+              position: absolute;
+              width:100%;
+              bottom:-10px;
+              border: 2px solid @c_active_yellow;
+            }
             .dropdown {
               position: absolute;
               display: none;
@@ -110,9 +116,9 @@
           }
           li.navli.active {
             // height:30px;
-            padding-bottom: 5px;
+            // padding-bottom: 5px;
             color: @c_active_yellow;
-            border-bottom: 2px solid @c_active_yellow;
+            // border-bottom: 2px solid @c_active_yellow;
           }
         }
       }
