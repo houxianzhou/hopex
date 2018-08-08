@@ -47,18 +47,25 @@ export default class View extends Component {
     console.log(this.props);
     this.props.dispatch({
       type: `${this.props.modelName}/GetLast10LoginLog`
-    }).then((res) => {
-      this.setState({
-        loginList: res.data
-      })
+    }).then((res = {}) => {
+      // console.log(res)
+      const {data = []} = res;
+      if(data) {
+        this.setState({
+          loginList: data
+        })
+      }
     });
     this.props.dispatch({
       type: `${this.props.modelName}/GetUserInfo`
     }).then((res = {}) => {
       // console.log(res);
-      this.setState({
-        userInfo: res.data
-      })
+      const {data = {}} = res;
+      if (data) {
+        this.setState({
+          userInfo: data
+        })
+      }
     })
   };
   changeState(props) {
@@ -67,7 +74,7 @@ export default class View extends Component {
 
   render() {
     const { model: { myAccountPage: page }, modelName, dispatch } = this.props;
-    const {googleIdentifyingCode, qrImageUrl, securityCode, email, userInfo} = this.state;
+    const {googleIdentifyingCode, qrImageUrl, securityCode, email, userInfo, loginList=[]} = this.state;
     console.log(userInfo)
     const { renderStatus } = this;
     const columns = [
@@ -86,7 +93,7 @@ export default class View extends Component {
     ]
     const tableProps = {
       columns,
-      dataSource: this.state.loginList,
+      dataSource: loginList,
       style: {
         table: {
           height: 200
