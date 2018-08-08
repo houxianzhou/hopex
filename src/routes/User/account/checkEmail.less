@@ -1,0 +1,58 @@
+.checkEmail {
+  .asterisk {
+    color: #F54B22;
+  }
+  padding: 40px 0 0 40px;
+  p.title {
+    font-size: 18px;
+    color: #E2B96F;
+  }
+  p.passwordTip {
+    font-size: 14px;
+    color: #999999;
+    margin-top: 12px;
+  }
+
+  .passwordItem {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+
+    &.emailItem {
+      margin-top: 40px;
+    }
+    .inputContainer {
+      flex-grow: 1;
+    }
+
+    p {
+      &.inputTitle {
+        flex-shrink: 0;
+        width: 148px;
+        font-size: 16px;
+        color: #232833;
+      }
+    }
+  }
+  .submit {
+    margin-top: 60px;
+    width: 240px;
+    height: 48px;
+    background-image: linear-gradient(90deg, #EFEFEF 0%, #ECECEC 100%);
+    border-radius: 2px;
+    margin-left: 148px;
+    font-size: 16px;
+    color: #FFFFFF;
+    border: none;
+    cursor: not-allowed;
+
+    &.inputSuccess {
+      background-image: linear-gradient(90deg, #EBCB80 0%, #E0BD7E 100%);
+      cursor: pointer;
+    }
+  }
+  .resend {
+    position: absolute;
+    right: 5px;
+  }
+}

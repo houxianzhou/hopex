@@ -1,6 +1,6 @@
 import { request } from '@utils'
 
-const prefix = ''
+const prefix = '';
 
 export async function getCurrentUser() {
   return await request(`${prefix}/api/user`)
@@ -117,3 +117,40 @@ export async function doDisbaleGoogleVertify(payload) {
     query: payload
   })
 }
+
+// 获取用户最近十条登录记录
+export async function GetLast10LoginLog(payload) {
+  return await request('/api/v1.0/User/GetLast10LoginLog', {
+    query: payload
+  })
+}
+
+// 开启谷歌二次验证前发送邮箱验证码
+export async function SendEmailToEnableTwoFacotires(payload) {
+  return await request('/api/v1.0/User/SendEmailToEnableTwoFacotires', {
+    query: payload
+  })
+}
+
+// 验证谷歌验证码
+export async function CheckGoogleCode(payload) {
+  return await request('/api/v1.0/User/CheckGoogleCode', {
+    query: payload
+  })
+}
+
+// 获取用户信息
+export async function GetUserInfo(payload) {
+  return await request('/api/v1.0/User/GetUserInfo', {
+    query: payload
+  })
+}
+
+// 修改密码
+export async function ModifyPassword(payload) {
+  return await request('/api/v1.0/User/ModifyPassword', {
+    method: 'post',
+    body: payload,
+  })
+}
+

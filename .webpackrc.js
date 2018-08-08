@@ -18,6 +18,12 @@ export default {
   },
   hash: true,
   publicPath: '/',
+  proxy: {
+    "/api/*": {
+      target: 'http://192.168.70.131:5001',
+      changeOrigin: true
+    }
+  },
   alias: {
     "@routes": path.resolve(__dirname, "./src/routes"),
     "@models": path.resolve(__dirname, "./src/models"),
