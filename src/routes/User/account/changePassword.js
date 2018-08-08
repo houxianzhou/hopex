@@ -93,6 +93,15 @@ export default class ChangePassword extends Component {
                     newPasswordMsg: ''
                   })
                 }
+                if (value !== repeatNewPassword && Patterns.password.test(repeatNewPassword)) {
+                  changeState({
+                    repeatNewPasswordMsg: '两次输入的密码不一致'
+                  })
+                } else if(value === repeatNewPassword) {
+                  changeState({
+                    repeatNewPasswordMsg: ''
+                  })
+                }
               }}
             />
           </div >
