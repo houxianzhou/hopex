@@ -162,6 +162,16 @@ export const parsePathSearch = (search = '') => {
   return qs.parse(search, { ignoreQueryPrefix: true })
 }
 
+export const clearIntervals = (params) => {
+  if (params) {
+    if (_.isArray(params)) {
+      params.forEach(item => item && clearTimeout(item))
+    } else {
+      clearTimeout(params)
+    }
+  }
+}
+
 
 
 

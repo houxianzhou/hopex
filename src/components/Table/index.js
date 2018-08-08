@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { _, classNames, getPercent, isEqual } from '@utils'
+import { _, classNames, getPercent, isEqual, clearIntervals } from '@utils'
 import { Scroller } from '@components'
 import * as styles from './index.less'
 
@@ -29,7 +29,6 @@ const [Table, Thead, Tbody, Tr, Th, Td] = [
 ]
 
 export default class View extends Component {
-
   state = {
     x: 0,
     loading: false
@@ -44,12 +43,14 @@ export default class View extends Component {
   }
 
   componentWillUnmount() {
+    clearIntervals([this.interval, this.interval1, this.interval2])
     window.onresize = null
   }
 
   changeState = (payload) => {
     this.setState(payload)
-    setTimeout(() => {
+    clearTimeout(this.interval1)
+    this.interval1 = setTimeout(() => {
       this.scroller && this.scroller.refresh()
     }, 10)
   }
@@ -69,7 +70,7 @@ export default class View extends Component {
       }
       if (loadingMore && _.isFunction(loadingMore)) {
         if (y - maxScrollY < 3 && movingDirectionY === 1 && !this.state.loading && !this.interval) {
-          this.interval && clearTimeout(this.interval)
+          clearIntervals(this.interval, this.interval2)
           this.changeState({
             loading: true
           })
@@ -78,7 +79,7 @@ export default class View extends Component {
               this.changeState({
                 loading: false
               })
-              setTimeout(() => {
+              this.interval2 = setTimeout(() => {
                 this.interval = null
               }, 700)
             })
@@ -170,7 +171,7 @@ export default class View extends Component {
                                   const key = item2.dataIndex
                                   let value = item[key]
                                   if (_.isNaN(value) || _.isUndefined(value)) {
-                                    result = (<span style={{ opacity: .5 }} ></span >)
+                                    result = (<span style={{ opacity: .5 }} />)
                                   } else {
                                     if (_.isFunction(item2.render)) {
                                       value = item2.render(value, item, index, dataSource)

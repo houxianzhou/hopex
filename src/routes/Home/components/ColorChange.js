@@ -33,7 +33,7 @@ export default class ColorChange extends Component {
       colorCancel()
     }
 
-    if (!_.isEmpty(data) && !_.isEmpty(total)) {
+    if (!_.isEmpty(data) && !_.isEmpty(total) && !isEqual(prevTotal, total)) {
       if (!_.isNil(prevDataValue) && !isEqual(prevDataValue, dataValue)) {
         this.setState({
           percent: '100%',

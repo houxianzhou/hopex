@@ -147,7 +147,7 @@ export default {
       "data": {
         "asks": randomArrayMap(5).map((item, index) => ({
           "exist": ['0', '1'][_.random(0, 1)],
-          "price": index + 10 + '.0', //index,
+          "price": index + 10 + _.random(10,20), //index,
           "amount": _.random(10000, 20000),//randomStr()
         })),
         "bids": randomArrayMap(5).map((item, index) => ({
