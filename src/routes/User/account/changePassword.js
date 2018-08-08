@@ -75,7 +75,7 @@ export default class ChangePassword extends Component {
             <p className={styles.inputTitle} >新密码<span className={styles.asterisk} > *</span ></p >
             <Input
               className={styles.inputContainer}
-              type='text'
+              type='password'
               value={newPassword}
               msg={newPasswordMsg}
               onChange={(value) => {
@@ -100,7 +100,7 @@ export default class ChangePassword extends Component {
             <p className={styles.inputTitle} >确认新密码<span className={styles.asterisk} > *</span ></p >
             <Input
               className={styles.inputContainer}
-              type='text'
+              type='password'
               value={repeatNewPassword}
               msg={repeatNewPasswordMsg}
               onChange={(value) => {
