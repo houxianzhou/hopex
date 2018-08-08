@@ -28,7 +28,6 @@ export default class View extends Component {
         this.changeState({ email })
       }
     }
-
   }
 
   state = {
@@ -39,7 +38,7 @@ export default class View extends Component {
     passwordMsg: '',
 
     googleCode: '',
-    userId:''
+    userId: ''
   }
 
   changeState = (payload = {}) => {
@@ -223,15 +222,13 @@ export default class View extends Component {
                         payload: {
                           userId,
                           googleCode,
-                          loginType: 'web'
+                          loginType: 'pcweb'
                         }
                       })
                     }} >
                     登录
                   </button >
-
                 </form >
-
               </div >
             ) : null
           }

@@ -1,6 +1,6 @@
 import { request } from '@utils'
 
-const prefix = '/mock'
+const prefix = ''
 
 export async function getCurrentUser() {
   return await request(`${prefix}/api/user`)
@@ -19,9 +19,10 @@ export async function doLoginOut(payload) {
 }
 
 // 开启二次验证后的登录
-export async function doVertifyLogin(payload) {
-  return await request('/api/v1.0/User/GoogleLogin', {
-    query: payload
+export async function doVertifyLogin(payload,errHandler) {
+  return await request('/api/v1/User/GoogleLogin', {
+    query: payload,
+    errHandler
   })
 }
 

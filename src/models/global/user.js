@@ -79,7 +79,23 @@ export default joinModel(modelExtend, {
       }
     },
     * doVertifyLogin({ payload = {} }, { call, put, select }) {
-      const res = getRes(yield call(doVertifyLogin, payload))
+      const { email, userId } = payload
+      const res = getRes(yield call(doVertifyLogin, payload, (err) => {
+        Toast.tip(err.errStr)
+      }))
+      if (resOk(res)) {
+        const { data } = res
+        if (data) {
+          yield put({
+            type: 'doLoginPrepare',
+            payload: {
+              email,
+              userId,
+              userToken: data
+            }
+          })
+        }
+      }
     },
     * doLoginPrepare({ payload = {} }, { call, put }) {
       yield put({
