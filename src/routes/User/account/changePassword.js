@@ -18,6 +18,10 @@ export default class ChangePassword extends Component {
     e.preventDefault();
     if (this.handleInputStatus()) {
       console.log(this.state);
+      this.props.submitPassword(
+        this.state.oldPassword,
+        this.state.newPassword
+      )
     }
   }
 
@@ -71,7 +75,7 @@ export default class ChangePassword extends Component {
             <p className={styles.inputTitle} >新密码<span className={styles.asterisk} > *</span ></p >
             <Input
               className={styles.inputContainer}
-              type='password'
+              type='text'
               value={newPassword}
               msg={newPasswordMsg}
               onChange={(value) => {
@@ -96,22 +100,24 @@ export default class ChangePassword extends Component {
             <p className={styles.inputTitle} >确认新密码<span className={styles.asterisk} > *</span ></p >
             <Input
               className={styles.inputContainer}
-              type='password'
+              type='text'
               value={repeatNewPassword}
               msg={repeatNewPasswordMsg}
               onChange={(value) => {
                 changeState({
                   repeatNewPassword: value
                 })
+
               }}
               onCheck={(value) => {
+                console.log(this.state);
                 if (value && !Patterns.password.test(value)) {
                   changeState({
                     repeatNewPasswordMsg: '密码必须包含大写字母、小写字母和数字，8-16位'
                   })
                 } else if (Patterns.password.test(this.state.newPassword)
-                  && Patterns.password.test(this.state.repeatNewPassword)
-                  && this.state.newPassword !== this.state.repeatNewPassword) {
+                  && Patterns.password.test(value)
+                  && this.state.newPassword !== value) {
                   changeState({
                     repeatNewPasswordMsg: '两次输入的密码不一致'
                   })

@@ -55,7 +55,7 @@ export default class View extends Component {
                 <div className={styles.center} >
                   <form >
                     <Input
-                      type='text'
+                      type='text'xf
                       placeholder={'请填写邮箱'}
                       value={email}
                       msg={emailMsg}

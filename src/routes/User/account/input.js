@@ -16,11 +16,14 @@ export class Input extends Component {
   };
   render() {
     const {
-      placeholder, value, type = 'text', msg = ''
+      placeholder='', value='', type = 'text', msg = '', CountDown=''
     } = this.props
     return (
       <div className={styles.inputComponent}>
         <input type={type} value={value} onChange={this.handleChange} className={msg && styles.errStatus} placeholder={placeholder}/>
+        {
+          CountDown ? CountDown : null
+        }
         {
           msg ? (<p className={styles.errDes}>{msg}</p>) : null
         }

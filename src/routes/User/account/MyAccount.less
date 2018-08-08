@@ -210,14 +210,20 @@
       height: 48px;
       color: #FFFFFF;
       border: none;
-      margin-left: 231px;
+      margin-left: 254px;
       //margin-top: 50px;
       margin-bottom: 60px;
+      cursor: pointer;
+
+      &.disabled {
+        background-image: linear-gradient(90deg, #EFEFEF 0%, #ECECEC 100%);
+        //cursor: not-allowed;
+      }
     }
 
     .stepLine {
       position: absolute;
-      height: 741px;
+      height: 670px;
       top: 15px;
       left: 6.578px;
       width: 1px;
@@ -335,6 +341,6 @@
 
 @media screen and (max-width:1433px){
   .stepLine {
-    height: 769px !important;
+    height: 696px !important;
   }
 }
