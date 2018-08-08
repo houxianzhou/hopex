@@ -22,7 +22,7 @@ export default class CheckEmail extends Component {
       <div className={styles.checkEmail} >
         <p className={styles.title} >邮箱验证码</p >
         <p className={styles.passwordTip} ><span
-          className={styles.asterisk} >* </span > 开启谷歌二次验证后24小时内不能提现</p >
+          className={styles.asterisk} >* </span > {type === 'close' ? '关闭' : '开启'}谷歌二次验证后24小时内不能提现</p >
         <form action="" >
           <div className={classNames(
             styles.passwordItem,

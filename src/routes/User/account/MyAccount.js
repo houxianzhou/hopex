@@ -9,6 +9,7 @@ import { Input } from './input';
 import { classNames, _, Patterns } from '@utils'
 import { PATH } from '@constants'
 import styles from './MyAccount.less'
+import {rightIcon, errorIcon} from '@assets/'
 
 @connect(({ account: model, dispatch, theme}) => ({
   model,
@@ -21,7 +22,7 @@ export default class View extends Component {
   renderStatus = (status) => {
     return status ? (
       <div className={styles.right} >
-        √
+        {rightIcon}
       </div >
     ) : (
       <div className={
@@ -30,7 +31,7 @@ export default class View extends Component {
           styles.error
         )
       } >
-        x
+        {errorIcon}
       </div >
     )
   }
@@ -154,14 +155,14 @@ export default class View extends Component {
                   styles.google
                 )} >
                   提现，修改密码，及安全设置时用以输入谷歌验证码
-                  {renderStatus(false)}
+                  {renderStatus(enabledTwoFactories)}
                 </div >
                 {
                   enabledTwoFactories ? (
                     <div
                       className={classNames(
                         styles.button,
-                        styles.googlebutton
+                        styles.login
                       )}
                       onClick={() => {
                         dispatch({
@@ -198,7 +199,7 @@ export default class View extends Component {
                           }
                         })
                       }} >
-                      开启
+                      启用
                     </div >
                   )
                 }

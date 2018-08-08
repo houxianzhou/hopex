@@ -35,3 +35,15 @@ export const email = (
     </g >
   </svg >
 );
+// 账户页面对号图标
+export const rightIcon = (
+  <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><defs><style type="text/css"></style></defs><path d="M833.7 179.7l113.1 113.1-551.5 551.5L77.1 526.1 190.3 413l205.1 205.1 438.3-438.4z" fill="#56BC9D" p-id="2197"></path></svg>
+)
+export const errorIcon = (
+  <svg viewBox="0 0 1024 1024" version="1.1"
+       xmlns="http://www.w3.org/2000/svg" width="16" height="16" >
+    <path
+      d="M960 780.736 691.008 512 960 243.264 780.736 64 512 332.864 243.136 64 64 243.264 332.736 512 64 780.736 243.136 960 512 691.136 780.736 960z"
+      p-id="4122" fill="#DA7373" />
+  </svg >
+)

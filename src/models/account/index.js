@@ -53,11 +53,15 @@ export default joinModel(modelExtend, {
       }));
       if (resOk(res)) {
         yield put({
-          type: 'changeState',
-          payload: {
-            myAccountPage: 1
-          }
+          type: 'routerGo',
+          payload: PATH.account
         })
+        // yield put({
+        //   type: 'changeState',
+        //   payload: {
+        //     myAccountPage: 1
+        //   }
+        // })
       }
     },
     * GetUserInfo({ payload = {} }, { call, put, select }) { // 获取个人信息
@@ -90,10 +94,8 @@ export default joinModel(modelExtend, {
       }));
       if (resOk(res)) {
         yield put({
-          type: 'changeState',
-          payload: {
-            myAccountPage: 1
-          }
+          type: 'routerGo',
+          payload: PATH.account
         })
       }
     },
