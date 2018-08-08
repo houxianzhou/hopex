@@ -10,9 +10,10 @@ import { classNames, _, Patterns } from '@utils'
 import { PATH } from '@constants'
 import styles from './MyAccount.less'
 
-@connect(({ account: model, dispatch}) => ({
+@connect(({ account: model, dispatch, theme}) => ({
   model,
   dispatch,
+  theme,
   modelName: 'account'
 }))
 export default class View extends Component {
@@ -40,7 +41,7 @@ export default class View extends Component {
     qrImageUrl: '', // 二维码
     securityCode: '', // 安全密钥
     loginList: [],
-    email: this.props.user.userInfo.email,
+    // email: this.props.user.userInfo.email,
     userInfo: {}
   };
   componentDidMount = () => {
@@ -73,9 +74,8 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { myAccountPage: page }, modelName, dispatch } = this.props;
-    const {googleIdentifyingCode, qrImageUrl, securityCode, email, userInfo, loginList=[]} = this.state;
-    console.log(userInfo)
+    const { model: { myAccountPage: page }, modelName, dispatch, theme:{calculateTableHeight} } = this.props;
+    const {googleIdentifyingCode, qrImageUrl, securityCode, userInfo:{email = '', country='', lastLoginTime='', lastLoginIp='', enabledTwoFactories=''}, loginList=[]} = this.state;
     const { renderStatus } = this;
     const columns = [
       {
@@ -90,7 +90,7 @@ export default class View extends Component {
         title: '所在地',
         dataIndex: 'ipCountry'
       }
-    ]
+    ];
     const tableProps = {
       columns,
       dataSource: loginList,
@@ -107,12 +107,12 @@ export default class View extends Component {
       <>
         <div className={styles.header} >
           <div className={styles.left} >
-            <div className={styles.email} >{userInfo.email}</div >
-            <div className={styles.country} >{userInfo.country}</div >
+            <div className={styles.email} >{email}</div >
+            <div className={styles.country} >{country}</div >
           </div >
           <div className={styles.right} >
-            <div >最后登录时间 :<span >{userInfo.lastLoginTime}</span ></div >
-            <div >Ip :<span >{userInfo.lastLoginIp}</span ></div >
+            <div >最后登录时间 :<span >{lastLoginTime}</span ></div >
+            <div >Ip :<span >{lastLoginIp}</span ></div >
           </div >
         </div >
         <div className={styles.down} >
@@ -157,7 +157,7 @@ export default class View extends Component {
                   {renderStatus(false)}
                 </div >
                 {
-                  userInfo.enabledTwoFactories ? (
+                  enabledTwoFactories ? (
                     <div
                       className={classNames(
                         styles.button,
@@ -183,10 +183,12 @@ export default class View extends Component {
                         dispatch({
                           type: `${this.props.modelName}/GetEnableGoogleVertifyCode`,
                         }).then((res = {}) => {
-                          const {qrImageUrl = '', securityCode = ''} = res;
+                          // console.log(res)
+                          if (!res.data) return;
+                          const {qrImageUrl = '', securityCode = ''} = res.data;
                           this.setState({
-                            qrImageUrl: qrImageUrl,
-                            securityCode: securityCode,
+                            qrImageUrl: qrImageUrl || '',
+                            securityCode: securityCode || '',
                           })
                         });
                         dispatch({
@@ -200,21 +202,6 @@ export default class View extends Component {
                     </div >
                   )
                 }
-                {/*<div*/}
-                  {/*className={classNames(*/}
-                    {/*styles.button,*/}
-                    {/*styles.googlebutton*/}
-                  {/*)}*/}
-                  {/*onClick={() => {*/}
-                    {/*dispatch({*/}
-                      {/*type: `${modelName}/changeState`,*/}
-                      {/*payload: {*/}
-                        {/*myAccountPage: 2*/}
-                      {/*}*/}
-                    {/*})*/}
-                  {/*}} >*/}
-                  {/*启用*/}
-                {/*</div >*/}
               </li >
             </ul >
           </div >
@@ -222,7 +209,9 @@ export default class View extends Component {
             <div className={styles.recordheader} >
               最近10条登录记录
             </div >
-            <Table {...tableProps} />
+            <div style={{height: calculateTableHeight(loginList)}}>
+              <Table {...tableProps} />
+            </div>
           </div >
         </div >
       </>
@@ -325,6 +314,15 @@ export default class View extends Component {
                 payload: {
                   googleCode: googleIdentifyingCode
                 }
+              }).then((res) => {
+                if(res) {
+                  dispatch({
+                    type: `${modelName}/changeState`,
+                    payload: {
+                      myAccountPage: 4
+                    }
+                  })
+                }
               })
             }}
           >开启</button>
@@ -334,16 +332,27 @@ export default class View extends Component {
 
     const closeGoogleEmailPage = (
      <CheckEmail
-       type='close'
-       submitGoogleCode={(code) => {
+       type="close"
+       email={email}
+       sendEmailFunc={() => {
+         dispatch({
+           type: `${this.props.modelName}/SendEmailToDisableTwoFacotires`,
+           payload: {
+             email
+           }
+         })
+       }}
+       submitEmailCode={(code) => {
+         console.log(code)
          if (!code) {
            return;
          }
+         console.log(code)
          dispatch({
-           type: `${this.props.modelName}/CheckGoogleCode`,
+           type: `${this.props.modelName}/doDisbaleGoogleVertify`,
            payload: {
-             googleCode: googleIdentifyingCode,
-           }
+             verificationCode: code || '',
+           },
          })
        }}
      />
@@ -378,7 +387,16 @@ export default class View extends Component {
           dispatch({
             type: `${this.props.modelName}/CheckGoogleCode`,
             payload: {
-              googleCode: code
+              googleCode: code,
+            }
+          }).then((res) => {
+            if (res) {
+              dispatch({
+                type: `${modelName}/changeState`,
+                payload: {
+                  myAccountPage: 6
+                }
+              })
             }
           })
         }}

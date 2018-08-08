@@ -9,7 +9,9 @@ import {
   SendEmailToEnableTwoFacotires,
   doEnableGoogleVertify,
   GetUserInfo,
-  ModifyPassword
+  ModifyPassword,
+  SendEmailToDisableTwoFacotires,
+  doDisbaleGoogleVertify
 } from '@services/user'
 
 
@@ -32,16 +34,12 @@ export default joinModel(modelExtend, {
       const res = getRes(yield call(GetLast10LoginLog, payload));
       return res;
     },
-    * CheckGoogleCode({ payload = {} }, { call, put, select }) { // 验证google
+    * CheckGoogleCode({ payload = {} }, { call, put, select }) { // 验证google验证码
       const res = getRes(yield call(CheckGoogleCode, payload));
       if (resOk(res)) {
-        yield put({
-          type: 'changeState',
-          payload: {
-            myAccountPage: 4
-          }
-        })
+        return true;
       }
+      return false;
     },
     * SendEmailToEnableTwoFacotires({ payload = {} }, { call, put, select }) { // 开启google验证发送邮件
       // const res = getRes(yield call(SendEmailToEnableTwoFacotires, payload));
@@ -78,6 +76,24 @@ export default joinModel(modelExtend, {
         yield put({
           type: 'routerGo',
           payload: PATH.login
+        })
+      }
+    },
+    * SendEmailToDisableTwoFacotires({ payload = {} }, { call, put, select }) { // 关闭google验证发送验证码
+      const res = getRes(yield call(SendEmailToDisableTwoFacotires, payload, (err) => {
+        Toast.tip(err.errStr);
+      }));
+    },
+    * doDisbaleGoogleVertify({ payload = {} }, { call, put, select }) { // 关闭google验证
+      const res = getRes(yield call(doDisbaleGoogleVertify, payload, (err) => {
+        Toast.tip(err.errStr);
+      }));
+      if (resOk(res)) {
+        yield put({
+          type: 'changeState',
+          payload: {
+            myAccountPage: 1
+          }
         })
       }
     },
