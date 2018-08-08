@@ -67,11 +67,11 @@ export default class View extends Component {
         title: '价格',
         dataIndex: 'price',
         render: (value, record) => {
-          let v = formatNumber(value, 'p')
+          // let v = formatNumber(value, 'p')
           return record.type === '1' ? (
-            <RedGreenSwitch.RedText value={v} />
+            <RedGreenSwitch.RedText value={value} />
           ) : (
-            <RedGreenSwitch.GreenText value={v} />
+            <RedGreenSwitch.GreenText value={value} />
           )
         }
       },
