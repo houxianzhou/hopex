@@ -210,6 +210,39 @@ export default {
       ...other
     })
   },
+  //用户的委托明细
+  'Post /mock/api/v1/trade/order.deals': (req, res) => {
+
+    res.send({
+      "data": {
+        "total": "0",
+        "records": (new Array(6)).fill().map(item=>(
+          {
+            "time": "2018-08-02 17:49:27",
+            "role": "2",
+            "price": "222",
+            "amount": "11",
+            "fee": "0.0004954954954955"
+          }
+        )),
+        "pageIndex": "0",
+        "pageSize": "100"
+      },
+      "head": {
+        "method": "order.deals",
+        "userId": "3",
+        "userToken": "user.QC5LTHR6HOUZINUCE4YI.pcweb",
+        "lang": "cn",
+        "packType": "1",
+        "version": "1.0",
+        "msgType": "response",
+        "timestamps": "1533708873466509",
+        "serialNumber": "951"
+      },
+      ...other
+    })
+  },
+
   //用户持仓
   'Post /mock/api/v1/trade/user.position': (req, res) => {
     res.send({
@@ -244,7 +277,6 @@ export default {
       ...other
     })
   },
-
   //用户撤单
   'Post /mock/api/v1/trade/order.cancel': (req, res) => {
     res.send({

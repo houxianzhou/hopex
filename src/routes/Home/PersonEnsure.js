@@ -64,32 +64,31 @@ export default class View extends Component {
       {
         title: '委托价格',
         dataIndex: 'price',
-        render: (value) => formatNumber(value, 4)
+        //render: (value) => value
       },
       {
         title: '成交数量(张)',
-        dataIndex: 'amount',
-        render: (value, record) => value - record.left
+        dataIndex: 'dealAmount',
       },
       {
         title: '成交均价',
         dataIndex: 'avgDealMoney',
-        render: (v) => formatNumber(v, 'p')
+        //render: (v) => formatNumber(v, 'p')
       },
       {
         title: '委托占用保证金',
         dataIndex: 'delegateMoney',
-        render: (v) => formatNumber(v, 'p')
+        //render: (v) => formatNumber(v, 'p')
       },
       {
         title: '手续费',
         dataIndex: 'dealFee',
-        render: (v) => formatNumber(v, 'p')
+        //render: (v) => formatNumber(v, 'p')
       },
       {
         title: '委托时间',
         dataIndex: 'ctime',
-        render: (value) => value
+        // render: (value) => value
       },
       {
         title: '状态',
@@ -118,18 +117,22 @@ export default class View extends Component {
                     }} >
                     撤销
                   </span >
-                  <span onClick={(e) => {
-                    e.stopPropagation()
-                    dispatch({
-                      type: `${modelName}/getPersonEnsureDetail`,
-                      payload: {
-                        market: record.market,
-                        orderId: record.orderId
-                      }
-                    })
-                  }} >
+                  {
+                    record.orderStatus === '1' ? (
+                      <span onClick={(e) => {
+                        e.stopPropagation()
+                        dispatch({
+                          type: `${modelName}/getPersonEnsureDetail`,
+                          payload: {
+                            market: record.market,
+                            orderId: record.orderId
+                          }
+                        })
+                      }} >
                     成交明细
                   </span >
+                    ) : null
+                  }
                 </>
               ),
               className: 'blue action'
@@ -151,16 +154,26 @@ export default class View extends Component {
         const { expand = [] } = record
         const columns = [
           {
+            title: '成交数量(张)',
+            dataIndex: 'amount',
+            maxWidth: 200,
+          },
+          {
+            title: '成交价格(张)',
+            dataIndex: 'amount',
+            maxWidth: 200,
+          },
+          {
             title: '成交时间',
-            dataIndex: 'ctime',
+            dataIndex: 'time',
             maxWidth: 200,
           },
           {
             title: '手续费',
-            dataIndex: 'takefee',
+            dataIndex: 'fee',
           },
         ]
-        return expand.length ? (
+        return _.has(record, 'expand') ? (
           <div style={{ height: calculateTableHeight(expand) }} >
             <Table
               className={styles.expandetableContainer}
@@ -177,7 +190,6 @@ export default class View extends Component {
         x: SCROLLX.X,
       },
       noDataTip: () => noDataTip(dataSource, '当前无委托'),
-
       // loadingMore: (callback) => {
       //   this.getPersonalEnsure({callback})
       // }
