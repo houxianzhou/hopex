@@ -27,7 +27,7 @@ export default joinModel(modelExtend, {
     minPrice24h: '', // 24最低
     indexPrice: '', // 现货价格指数
     totalPrice24h: '',//z4小时交易总额
-    latestPrice: '', //最新交易价格,改为从tradeview k线接口拉取
+    latestPrice: '', //最新交易价格,
     latestPriceChangePercent: '',//最新价相比24小时前价格的涨跌幅
     dollarPrice: '',//换算成美元
     latestPriceTrend: 1,//1||0合理趋势，比上次大为1小就是0
@@ -38,6 +38,7 @@ export default joinModel(modelExtend, {
     minDealAmount: '', //最小交易量
     minLimitPrice: '',//最低允许卖价
     maxLimitPrice: '',//最高允许卖价
+    availableMoney: '',//根据钱包资产列表过滤出结算货币的可用额度
 
 
     keepBailRate: null,//维持保证金率
@@ -45,6 +46,7 @@ export default joinModel(modelExtend, {
     dealMoney: null,//结算货币
     leverage: null, //当前用户的杠杆
 
+    assetList: [],//钱包资产列表
     personalEnsures: [],//个人委托列表
     personalEnsures_PageIndex: null, //最新成交价格与上次比较的趋势
     personalEnsureHistory: [],//最近10条委托历史
@@ -82,7 +84,7 @@ export default joinModel(modelExtend, {
         yield put({
           type: 'changeState',
           payload: {
-            latest_records: res.data.records,
+            latest_records: res.data.records || res.data,
           }
         })
         return res
@@ -368,6 +370,7 @@ export default joinModel(modelExtend, {
                 assetList: result
               }
             })
+            return result
           }
         }
       }

@@ -15,9 +15,20 @@ export default class View extends Component {
   }
 
   getPurseAssetList = () => {
-    const { dispatch, modelName } = this.props
+    const { dispatch, modelName, model: { dealMoney = '' } } = this.props
     dispatch({
       type: `${modelName}/getPurseAssetList`
+    }).then((res) => {
+      if (res) {
+        // 计算结算货币的可用金额供给交易模块slider使用
+        const filterOne = res.filter(item => item.assetName === dealMoney)[0] || {}
+        dispatch({
+          type: `${modelName}/changeState`,
+          payload: {
+            availableMoney: filterOne.available
+          }
+        })
+      }
     })
   }
 
@@ -27,7 +38,7 @@ export default class View extends Component {
 
   render() {
     const { currentPurse } = this.state
-    const { model: { assetList = [] }, isLogin, routerGoLogin, routerGoRegister } = this.props
+    const { model: { assetList = [], }, isLogin, routerGoLogin, routerGoRegister } = this.props
     const filterOne = assetList[currentPurse] || {}
     const {
       floatProfit, floatPercent, walletBalance,
@@ -82,7 +93,7 @@ export default class View extends Component {
                       </div >
                       <div className={styles.percent} >
                         <RedGreenSwitch.GreenText value={floatPercent} />
-                        </div >
+                      </div >
                     </div >
                     <div className={styles.down} >
                       <div >
