@@ -50,7 +50,7 @@ export default class ChangePassword extends Component {
             <p className={styles.inputTitle} >原密码<span className={styles.asterisk} > *</span ></p >
             <Input
               className={styles.inputContainer}
-              type='text'
+              type='password'
               value={oldPassword}
               msg={oldPasswordMsg}
               onChange={(value) => {
