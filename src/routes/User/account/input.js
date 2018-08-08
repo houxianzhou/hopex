@@ -11,7 +11,7 @@ export class Input extends Component {
   };
 
   handleCheck = (e) => {
-    const value = e.target.value;
+    const value = e.target.value; // ff
     _.isFunction(this.props.onCheck) && this.props.onCheck(value)
   };
   render() {
