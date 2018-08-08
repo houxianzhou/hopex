@@ -34,7 +34,7 @@ export default class View extends Component {
   render() {
     const { activeLi } = this.state
     const { state, changeState } = this
-    const { model: { personalEnsureHistory = [] }, noDataTip } = this.props
+    const { model: { personalEnsureHistory = [] }, noDataTip, modelName,dispatch } = this.props
     const columns = [
       {
         title: '合约',
@@ -100,6 +100,7 @@ export default class View extends Component {
       {
         title: '状态',
         dataIndex: 'orderStatus',
+        width: 130,
         render: (v) => {
           let result
           switch (v) {
@@ -120,8 +121,28 @@ export default class View extends Component {
       },
       {
         title: '操作',
-        width: 250,
-        dataIndex: 'work',
+        width: 150,
+        dataIndex: 'orderStatus',
+        render: (value, record = {}) => {
+          return ({
+              value: (
+                <span onClick={(e) => {
+                  e.stopPropagation()
+                  dispatch({
+                    type: `${modelName}/getPersonEnsureDetail`,
+                    payload: {
+                      market: record.market,
+                      orderId: record.orderId
+                    }
+                  })
+                }} >
+                    成交明细
+                  </span >
+              ),
+              className: 'blue action'
+            }
+          )
+        }
       },
     ]
 

@@ -92,7 +92,7 @@ export default class View extends Component {
       },
       {
         title: '状态',
-        width: 100,
+        width: 130,
         dataIndex: 'orderStatus',
         render: (value) => value === '1' ? '部分成交' : '等待成交'
       },
@@ -137,7 +137,6 @@ export default class View extends Component {
               ),
               className: 'blue action'
             }
-
           )
         }
       },

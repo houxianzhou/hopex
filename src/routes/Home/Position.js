@@ -131,10 +131,21 @@ export default class View extends Component {
       },
       {
         title: '操作',
-        width: 250,
-        dataIndex: 'work',
+        width: 280,
+        dataIndex: 'overPrice',
+        render: () => {
+          return {
+            value: (
+              <div >
+                <input />
+                <span >现价全平</span >
+                <span >市价全平</span >
+              </div >
+            ),
+            className: 'blue action'
+          }
+        }
       },
-
     ]
     const dataSource = positionList
     const tableProp = {
