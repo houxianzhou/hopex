@@ -474,6 +474,7 @@ export default joinModel(modelExtend, {
           const [result, pageIndex] = [_.get(res, 'data.records'), _.get(res, 'data.pageIndex')]
           const personalEnsures = yield select(({ home: { personalEnsures = [] } }) => personalEnsures)
           if (result) {
+            // 此处为解决轮询的问题
             result.map((item = {}) => {
               const exsit = personalEnsures.filter(one => one.orderId === item.orderId)[0] || {}
               if (exsit && exsit.expand) {
@@ -519,7 +520,6 @@ export default joinModel(modelExtend, {
     //查看委托订单明细 订单明细
     * getPersonEnsureDetail({ payload = {} }, { call, put, select }) {
       const { orderId } = payload
-      console.log(orderId, '----')
       const personalEnsures = yield select(({ home: { personalEnsures = [] } }) => deepClone(personalEnsures))
       personalEnsures.map((item = {}) => {
         delete item.expand
