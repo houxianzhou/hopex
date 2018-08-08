@@ -182,10 +182,11 @@ export default class View extends Component {
                       onClick={() => {
                         dispatch({
                           type: `${this.props.modelName}/GetEnableGoogleVertifyCode`,
-                        }).then((res) => {
+                        }).then((res = {}) => {
+                          const {qrImageUrl = '', securityCode = ''} = res;
                           this.setState({
-                            qrImageUrl: res.data.qrImageUrl,
-                            securityCode: res.data.securityCode,
+                            qrImageUrl: qrImageUrl,
+                            securityCode: securityCode,
                           })
                         });
                         dispatch({
