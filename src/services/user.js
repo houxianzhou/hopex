@@ -132,6 +132,9 @@ export async function SendEmailToEnableTwoFacotires(payload) {
   })
 }
 
+// SendEmailToDisableTwoFacotires 关闭google验证发送验证码
+
+
 // 验证谷歌验证码
 export async function CheckGoogleCode(payload) {
   return await request('/api/v1.0/User/CheckGoogleCode', {

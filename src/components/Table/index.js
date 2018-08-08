@@ -99,7 +99,7 @@ export default class View extends Component {
       onClickRow,
       noDataTip,
       scroll = {},
-    } = this.props
+    } = this.props;
 
     const getTdThProp = (item = {}) => {
       const style = item.width ? { width: item.width, minWidth: item.width, maxWidth: item.maxWidth } : {

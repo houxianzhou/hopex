@@ -54,7 +54,7 @@ export default class View extends Component {
     });
     this.props.dispatch({
       type: `${this.props.modelName}/GetUserInfo`
-    }).then((res) => {
+    }).then((res = {}) => {
       // console.log(res);
       this.setState({
         userInfo: res.data
@@ -324,22 +324,22 @@ export default class View extends Component {
       </Fragment >
     );
 
-    // const closeGooglePage = (
-    //  <CheckEmail
-    //    type='close'
-    //    submitGoogleCode={(code) => {
-    //      if (!code) {
-    //        return;
-    //      }
-    //      dispatch({
-    //        type: `${this.props.modelName}/CheckGoogleCode`,
-    //        payload: {
-    //          googleCode: googleIdentifyingCode,
-    //        }
-    //      })
-    //    }}
-    //  />
-    // )
+    const closeGoogleEmailPage = (
+     <CheckEmail
+       type='close'
+       submitGoogleCode={(code) => {
+         if (!code) {
+           return;
+         }
+         dispatch({
+           type: `${this.props.modelName}/CheckGoogleCode`,
+           payload: {
+             googleCode: googleIdentifyingCode,
+           }
+         })
+       }}
+     />
+    )
 
     const openGooglePage = (
       <CheckEmail
@@ -399,7 +399,7 @@ export default class View extends Component {
     return (
       <div className={styles.myaccount} >
         {
-          page === 1 ? page1 : (page === 2 ? page2 : (page === 3 ? changePassword : (page === 4 ? openGooglePage : page === 5 ? closeGoogle : null)))
+          page === 1 ? page1 : (page === 2 ? page2 : (page === 3 ? changePassword : (page === 4 ? openGooglePage : page === 5 ? closeGoogle : page === 6 ? closeGoogleEmailPage : null)))
         }
       </div >
     )
