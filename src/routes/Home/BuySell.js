@@ -72,7 +72,6 @@ export default class View extends Component {
   renderEnsureMoney = (config = {}) => {
     const { isLogin, } = this.props
     const { label_action, label_action_price, label_available, label_available_price } = config
-    const p1 = label_available_price * 0.25 || 0
     const marks = {
       0: '',
       [label_available_price * 0.25]: '',
@@ -84,7 +83,7 @@ export default class View extends Component {
       marks: marks,
       max: label_available_price,
       defaultValue: 1,
-      step: 1,
+      step: 0.1,
       included: true,
       disabled: isLogin ? false : true,
       dotStyle: {
@@ -220,7 +219,7 @@ export default class View extends Component {
       value: buy.price,
       step: minVaryPrice,
       min: 0,
-      max: formatNumber(maxLimitPrice, 'p'),
+      max: Number(maxLimitPrice), //formatNumber(maxLimitPrice, 'p'),
 
       onChange: (value) => {
         this.setState({
@@ -289,7 +288,7 @@ export default class View extends Component {
           intro_desc: '最低允许卖价',
           intro_price: formatNumber(minLimitPrice, 'p'),
           value: sell.price,
-          max: formatNumber(minLimitPrice, 'p'),
+          min: minLimitPrice, //formatNumber(minLimitPrice, 'p'),
           onChange: (value) => {
             this.setState({
               sell: {

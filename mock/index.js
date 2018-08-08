@@ -261,16 +261,16 @@ export default {
         "positionList": (new Array(3)).fill().map(item => (
           {
             "market": "BTCUSDT",
-            "leverage": "10",
-            "amount": [100, -100][_.random(0, 1)],
-            "averagePrice": "3426.05535492145950280673616680032",
-            "keepMoney": "0.004719713584537424571629366093504956",
-            "positionMoney": "0.0271945401775727796746263474911476",
-            "overPrice": "3768.660890413605453087409783480351",
-            "floatProfit": "3.553309776002507508209662686697644",
-            "profitRate": "0.0009428573913458519080673369813754055",
-            "reasonablePrice": "222.8634850166481687014428412874583",
-            "lastPrice": "1000",
+            "leverage": "10.00",
+            "amount": "-1236019",
+            "averagePrice": "232.88",
+            "positionMoney": "534.7138",
+            "overPrice": "257.35",
+            "keepMoney": "30.1388",
+            "floatProfit": "0BTC",
+            "profitRate": "0.00%",
+            "reasonablePrice": "0.0",
+            "lastPrice": "6472.0"
           }
         )),
       },
