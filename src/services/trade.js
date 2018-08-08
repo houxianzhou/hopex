@@ -63,6 +63,14 @@ export async function getPersonalEnsure(payload) {
   })
 }
 
+//个人合约详情
+export async function getPersonEnsureDetail(payload) {
+  return request(`${UserIp4}/order.deals`, {
+    method: 'post',
+    body: payload
+  })
+}
+
 // 撤单
 export async function doCancelPersonEnsure(payload) {
   return request(`${UserIp4}/order.cancel`, {
