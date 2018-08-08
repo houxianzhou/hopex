@@ -52,70 +52,54 @@ export default class View extends Component {
           <ul className={styles.nav} >
             {
               routesBasic.map((item = {}, index) => {
-                let renderItem = null
-                switch (item.dest) {
-                  case 'trade': {
-                    renderItem = (
-                      <li key={index} className={cla(item)} >
-                        合约交易
-                        {isMatch(item.path) ? (<div className={styles.border} ></div >) : null}
-                        {
-                          !_.isEmpty(sorted) ? (
-                            <div className={styles.dropdown} >
-                              <div className={styles.dropdowncontent} >
-                                {
-                                  _.keys(sorted).map((item, index) => (
-                                    <div
-                                      className={styles.licontainer}
-                                      key={index}
-                                    >
-                                      <div className={styles.liheader} >{item}</div >
-                                      <ul >
-                                        {
-                                          sorted[item].map((item2 = {}, index2) => {
-                                            return (
-                                              <li key={index2} onClick={() => {
-                                                dispatch({
-                                                  type: `${modelName1}/getCurrentMarket`,
-                                                  payload: item2
+                return (
+                  <li key={index} className={cla(item)} >
+                    <NavLink to={item.path} >
+                      {item.name}
+                    </NavLink >
+                    {isMatch(item.path) ? (<div className={styles.border} ></div >) : null}
+                    {
+                      item.dest === 'trade' && !_.isEmpty(sorted) ? (
+                        <div className={styles.dropdown} >
+                          <div className={styles.dropdowncontent} >
+                            {
+                              _.keys(sorted).map((item, index) => (
+                                <div
+                                  className={styles.licontainer}
+                                  key={index}
+                                >
+                                  <div className={styles.liheader} >{item}</div >
+                                  <ul >
+                                    {
+                                      sorted[item].map((item2 = {}, index2) => {
+                                        return (
+                                          <li key={index2} onClick={() => {
+                                            dispatch({
+                                              type: `${modelName1}/getCurrentMarket`,
+                                              payload: item2
 
-                                                })
-                                                // history.replace({
-                                                //   search: `?marketCode=${item.marketCode}`,
-                                                // });
-                                              }} >
-                                                <div className={styles.name} >{item2.marketName}</div >
-                                                <div className={styles.price} >9334.5</div >
-                                                <div className={styles.percent} >+13.45</div >
-                                              </li >
-                                            )
-                                          })
-                                        }
-                                      </ul >
-
-                                    </div >
-                                  ))
-                                }
-                              </div >
-                            </div >
-                          ) : null
-                        }
-                      </li >
-                    )
-                  }
-                    break
-                  default: {
-                    renderItem = (
-                      <li key={item.name} className={cla(item)} >
-                        {item.name}
-                        {/*<NavLink to={item.path} >*/}
-                        {/*{item.name}*/}
-                        {/*</NavLink >*/}
-                      </li >
-                    )
-                  }
-                }
-                return renderItem
+                                            })
+                                            // history.replace({
+                                            //   search: `?marketCode=${item.marketCode}`,
+                                            // });
+                                          }} >
+                                            <div className={styles.name} >{item2.marketName}</div >
+                                            <div className={styles.price} >9334.5</div >
+                                            <div className={styles.percent} >+13.45</div >
+                                          </li >
+                                        )
+                                      })
+                                    }
+                                  </ul >
+                                </div >
+                              ))
+                            }
+                          </div >
+                        </div >
+                      ) : null
+                    }
+                  </li >
+                )
               })
             }
           </ul >

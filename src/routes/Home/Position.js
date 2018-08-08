@@ -57,12 +57,12 @@ export default class View extends Component {
       {
         title: '当前价格',
         dataIndex: 'lastPrice',
-        render: (v) => formatNumber(v, 'p')
+        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '当前合理价格',
         dataIndex: 'averagePrice',
-        render: (v) => formatNumber(v, 'p')
+        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '杠杆倍数',
@@ -78,7 +78,7 @@ export default class View extends Component {
       {
         title: '开仓均价',
         dataIndex: 'averagePrice',
-        render: (v) => formatNumber(v, 'p')
+        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '持仓占用保证金',
@@ -94,7 +94,7 @@ export default class View extends Component {
               }} >
                 <img src={substract} />
               </div >
-              <div className={styles.positionMoney} >{formatNumber(v, 'p')}</div >
+              <div className={styles.positionMoney} >{v}</div >
               <div onClick={() => {
                 changeState({
                   active: 1
@@ -110,18 +110,18 @@ export default class View extends Component {
       {
         title: '维持保证金',
         dataIndex: 'keepMoney',
-        render: (v) => formatNumber(v, 'p')
+        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '强平价格',
         dataIndex: 'overPrice',
-        render: (v) => formatNumber(v, 'p')
+        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '浮动盈亏(收益率)',
         dataIndex: 'floatProfit',
-        render: (v, record) => {
-          const value = `${formatNumber(v, 'p')}${dealMoney}` + `(${(formatNumber(record.profitRate * 100, 'p'))}%)`
+        render: (v, record = {}) => {
+          const value = `${record.floatProfit}(${record.profitRate})`
           return Number(v) >= 0 ? (
             <RedGreenSwitch.GreenText value={value} />
           ) : (
@@ -144,7 +144,7 @@ export default class View extends Component {
       scroll: {
         x: SCROLLX.X
       },
-      noDataTip: () => noDataTip(dataSource,'当前无持仓'),
+      noDataTip: () => noDataTip(dataSource, '当前无持仓'),
     }
     return (
       <Mixin.Child that={this} >

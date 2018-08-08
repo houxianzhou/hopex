@@ -15,17 +15,20 @@ export default [
   {
     name: '资金管理',
     path: '/manage',
-    route: 'User'
+    model: ['account'],
+    route: 'User/account'
   },
   {
     name: '历史',
     path: '/history',
-    route: 'User'
+    model: ['account'],
+    route: 'User/account'
   },
   {
     name: '常见问题',
     path: '/question',
-    route: 'User'
+    model: ['account'],
+    route: 'User/account'
   },
   {
     name: '登录',
