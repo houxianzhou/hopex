@@ -128,13 +128,13 @@ export default class View extends Component {
               value: (
                 <span onClick={(e) => {
                   e.stopPropagation()
-                  dispatch({
-                    type: `${modelName}/getPersonEnsureDetail`,
-                    payload: {
-                      market: record.market,
-                      orderId: record.orderId
-                    }
-                  })
+                  // dispatch({
+                  //   type: `${modelName}/getPersonEnsureDetail`,
+                  //   payload: {
+                  //     market: record.market,
+                  //     orderId: record.orderId
+                  //   }
+                  // })
                 }} >
                     成交明细
                   </span >

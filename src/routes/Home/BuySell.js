@@ -288,6 +288,7 @@ export default class View extends Component {
           intro_desc: '最低允许卖价',
           intro_price: formatNumber(minLimitPrice, 'p'),
           value: sell.price,
+          max: window.Infinity,
           min: minLimitPrice, //formatNumber(minLimitPrice, 'p'),
           onChange: (value) => {
             this.setState({
