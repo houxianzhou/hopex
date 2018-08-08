@@ -179,7 +179,7 @@ export default {
         "pageIndex": String(pageIndex),
         "pageSize": "100",
         "total": "3",
-        "records": (new Array(Number(10))).fill({}).map((item, index) => ({
+        "records": (new Array(Number(3))).fill({}).map((item, index) => ({
           "orderId": String(index),
           "market": "BTCUSDT" + '第' + pageIndex + '页',
           "source": "我是现价测试单",
@@ -225,7 +225,7 @@ export default {
         "userToken": "56"
       },
       "data": {
-        "positionList": (new Array(6)).fill().map(item=>(
+        "positionList": (new Array(3)).fill().map(item=>(
           {
             "market": "BTCUSDT",
             "leverage": "10",
@@ -420,8 +420,7 @@ export default {
       {
         "data": {
           "total": "114",
-          "records": [
-
+          "records": (new Array(2)).fill().map(item=>(
             {
               "ctime": "2018-08-02 17:51:00",
               "ftime": "2018-08-02 17:51:00",
@@ -441,68 +440,8 @@ export default {
               "avgDealMoney": "0",
               "delegateMoney": "0",
               "unwindProfit": "0"
-            },
-            {
-              "ctime": "2018-08-02 17:50:46",
-              "ftime": "2018-08-03 17:42:14",
-              "id": "19581",
-              "user": "3",
-              "market": "BTCUSDT",
-              "source": "(null)",
-              "type": "1",
-              "side": "1",
-              "price": "223",
-              "amount": "111",
-              "dealAmount": "111",
-              "dealMoney": "0.4977578475336323",
-              "dealFee": "0.0049775784753363",
-              "orderStatus": "2",
-              "leverage": "0",
-              "avgDealMoney": "0",
-              "delegateMoney": "0",
-              "unwindProfit": "0"
-            },
-            {
-              "ctime": "2018-08-02 17:50:26",
-              "ftime": "2018-08-03 17:02:52",
-              "id": "19580",
-              "user": "3",
-              "market": "BTCUSDT",
-              "source": "(null)",
-              "type": "1",
-              "side": "1",
-              "price": "222",
-              "amount": "111",
-              "dealAmount": "111",
-              "dealMoney": "0.4999999945945946",
-              "dealFee": "0.0049999859459459",
-              "orderStatus": "2",
-              "leverage": "0",
-              "avgDealMoney": "0",
-              "delegateMoney": "0",
-              "unwindProfit": "0"
-            },
-            {
-              "ctime": "2018-08-02 17:49:27",
-              "ftime": "2018-08-02 17:49:27",
-              "id": "19579",
-              "user": "3",
-              "market": "BTCUSDT",
-              "source": "我是现价测试单",
-              "type": "1",
-              "side": "1",
-              "price": "100",
-              "amount": "11",
-              "dealAmount": "11",
-              "dealMoney": "0.0495495495495495",
-              "dealFee": "0.0004954954954955",
-              "orderStatus": "2",
-              "leverage": "0",
-              "avgDealMoney": "0",
-              "delegateMoney": "0",
-              "unwindProfit": "0"
             }
-          ],
+          )),
           "pageIndex": "",
           "pageSize": "10"
         },

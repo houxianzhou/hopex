@@ -70,18 +70,19 @@ export default class View extends Component {
   }
 
   renderEnsureMoney = (config = {}) => {
-    const { isLogin } = this.props
-    const { label_buy, label_buy_price, label_sell, label_sell_price } = config
+    const { isLogin, } = this.props
+    const { label_action, label_action_price, label_available, label_available_price } = config
+    const p1 = label_available_price * 0.25 || 0
     const marks = {
       0: '',
-      2000: '',
-      4000: '',
-      6000: '',
-      10000: '',
+      [label_available_price * 0.25]: '',
+      [label_available_price * 0.5]: '',
+      [label_available_price * 0.75]: '',
+      [label_available_price]: '',
     }
     const props = {
       marks: marks,
-      max: 10000,
+      max: label_available_price,
       defaultValue: 1,
       step: 1,
       included: true,
@@ -119,11 +120,11 @@ export default class View extends Component {
         <Slider  {...props} />
         <div className={styles.description} >
           <div >
-            <span >{label_buy}</span >
-            <span >{label_buy_price}</span ></div >
+            <span >{label_action}</span >
+            <span >{label_action_price}</span ></div >
           <div >
-            <span >{label_sell}</span >
-            <span >{label_sell_price}</span >
+            <span >{label_available}</span >
+            <span >{label_available_price}</span >
           </div >
         </div >
       </div >
@@ -207,7 +208,7 @@ export default class View extends Component {
 
   render() {
     const { renderArea } = this
-    const { dispatch, modelName, RG, model: { minVaryPrice = '', minDealAmount = '', maxLimitPrice = '', minLimitPrice } } = this.props
+    const { dispatch, modelName, RG, model: { minVaryPrice = '', minDealAmount = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' } } = this.props
     const { orderChannel, buy, sell } = this.state
 
     // 限价或者市价
@@ -249,10 +250,10 @@ export default class View extends Component {
     }
     // 保证金
     const configEnsure = {
-      label_buy: '买入保证金',
-      label_buy_price: '1000',
-      label_sell: '可用金额',
-      label_sell_price: '1000.0'
+      label_action: '买入保证金',
+      label_action_price: '1000',
+      label_available: '可用金额',
+      label_available_price: Number(availableMoney)
     }
     // 交易按钮
     const configSubmit = {
@@ -316,7 +317,7 @@ export default class View extends Component {
       configEnsure: {
         ...configEnsure,
         ...{
-          label_buy: '卖出保证金',
+          label_action: '卖出保证金',
         }
       },
       configSubmit: {

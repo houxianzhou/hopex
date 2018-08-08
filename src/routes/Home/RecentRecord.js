@@ -64,7 +64,7 @@ export default class View extends Component {
         dataIndex: 'amount',
         render: (value) => Number(value) >= 0 ? (
           <RedGreenSwitch.GreenText value={value} />
-        ): (
+        ) : (
           <RedGreenSwitch.RedText value={value} />
         )
       },
@@ -137,7 +137,7 @@ export default class View extends Component {
     const tableProp = {
       className: styles.tableContainer,
       columns,
-      dataSource: _.merge((new Array(4)).fill(), dataSource),
+      dataSource: dataSource, //_.merge((new Array(4)).fill(), dataSource),
       scroll: {
         x: SCROLLX.X
       },
