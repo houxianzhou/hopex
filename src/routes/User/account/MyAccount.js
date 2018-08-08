@@ -149,7 +149,7 @@ export default class View extends Component {
                 </div >
               </li >
               <li >
-                <div className={styles.name} >谷歌验证码</div >
+                <div className={styles.name} >谷歌二次验证</div >
                 <div className={classNames(
                   styles.desc,
                   styles.google

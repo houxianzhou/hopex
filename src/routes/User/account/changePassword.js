@@ -33,7 +33,7 @@ export default class ChangePassword extends Component {
     return Patterns.password.test(this.state.newPassword)
       && Patterns.password.test(this.state.repeatNewPassword)
       && this.state.newPassword === this.state.repeatNewPassword
-      && Patterns.password.test(this.state.oldPassword);
+      && this.state.oldPassword;
   }
 
   render() {
@@ -58,17 +58,17 @@ export default class ChangePassword extends Component {
                   oldPassword: value
                 })
               }}
-              onCheck={(value) => {
-                if (value && !Patterns.password.test(value)) {
-                  changeState({
-                    oldPasswordMsg: '密码必须包含大写字母、小写字母和数字，8-16位'
-                  })
-                } else {
-                  changeState({
-                    oldPasswordMsg: ''
-                  })
-                }
-              }}
+              // onCheck={(value) => {
+              //   if (value && !Patterns.password.test(value)) {
+              //     changeState({
+              //       oldPasswordMsg: '密码必须包含大写字母、小写字母和数字，8-16位'
+              //     })
+              //   } else {
+              //     changeState({
+              //       oldPasswordMsg: ''
+              //     })
+              //   }
+              // }}
             />
           </div >
           <div className={styles.passwordItem} >
