@@ -39,7 +39,7 @@ export default joinModel(modelExtend, {
     maxLimitPrice: '',//最高允许卖价
     availableMoney: '',//根据钱包资产列表过滤出结算货币的可用额度
     varyRange: '', // 委托列表区间,
-    showPrec:'',// 控制合理价格小数位数
+    showPrec: '',// 控制合理价格小数位数
 
 
     keepBailRate: null,//维持保证金率
@@ -92,7 +92,7 @@ export default joinModel(modelExtend, {
       }
     },
     // 委托列表
-    * getEnsureRecord({ payload = {} }, { call, put }) {
+    * getEnsureRecord({ payload = {} }, { call, put, select }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
@@ -110,8 +110,8 @@ export default joinModel(modelExtend, {
 
       if (resOk(res)) {
         const result = {
-          asks: _.orderBy(_.get(res.data, 'asks'),['price'], ['desc']) || [],
-          bids: _.orderBy(_.get(res.data, 'bids'),['price'], ['desc']) || []
+          asks: _.orderBy(_.get(res.data, 'asks'), ['price'], ['desc']) || [],
+          bids: _.orderBy(_.get(res.data, 'bids'), ['price'], ['desc']) || []
         }
 
         result.asks.map((item, index) => {
@@ -126,11 +126,12 @@ export default joinModel(modelExtend, {
         const [asksLast, bidsFirst] = [result.asks[result.asks.length > 8 ? 7 : result.asks.length - 1], result.bids[0]]
         const equitablePrice = (_.get(asksLast, 'price') * _.get(bidsFirst, 'amount')
           + _.get(bidsFirst, 'price') * _.get(asksLast, 'amount')) / (_.get(asksLast, 'amount') + _.get(bidsFirst, 'amount'))
+        const showPrec = yield select(({ home: { showPrec } }) => showPrec)
         yield put({
           type: 'changeState',
           payload: {
             ensure_records: result,
-            equitablePrice: equitablePrice // formatNumber(equitablePrice, 'p')
+            equitablePrice: formatNumber(equitablePrice, Number(showPrec))
           }
         })
         return res
