@@ -113,7 +113,7 @@ export default class View extends Component {
           </div >
           <div className={styles.right} >
             <div >最后登录时间 :<span >{lastLoginTime}</span ></div >
-            <div >Ip :<span >{lastLoginIp}</span ></div >
+            <div >IP :<span >{lastLoginIp}</span ></div >
           </div >
         </div >
         <div className={styles.down} >
