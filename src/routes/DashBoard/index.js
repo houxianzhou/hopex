@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { _, } from '@utils'
-import * as styles from './index.less'
-import banner from '@assets/banner.jpg'
-import phone from '@assets/home-iphone.jpg'
-import item1 from '@assets/item1.png'
+import { _, } from '@utils';
+import * as styles from './index.less';
+import banner from '@assets/banner.jpg';
+import phone from '@assets/home-iphone.jpg';
+import item1 from '@assets/item1.png';
+import computer from '@assets/computer.png';
+import{BtIcon} from '@assets'
 const itemList = [
   {
     img: item1,
@@ -79,10 +81,9 @@ export default class View extends Component {
           <div className={styles.aboutUsFont}>Hopex平台优势</div>
           <div className={styles.adventureContainer}>
             {
-              itemList.map(item => {
+              itemList.map((item, index) => {
                 return (
-                  <div className={styles.adventureItem}>
-                    <div className={styles.adventureItem}>
+                  <div key={index} className={styles.adventureItem}>
                       <div className={styles.itemIcon}>
                         <img src={item.img}/>
                       </div>
@@ -91,11 +92,30 @@ export default class View extends Component {
                         {item.des}<br/>
                         {item.desSecondLine}
                       </div>
-                    </div>
                   </div >
                 )
               })
             }
+          </div>
+          <div className={styles.contract}>
+            <div className={styles.imgContainer}>
+              <img src={computer} alt="" />
+            </div>
+            <div className={styles.contractItem}>
+              <div className={styles.headerPart}></div>
+              <div className={styles.aboutUsFont}>我们提供的合约</div>
+              <div className={styles.contractDes}>
+                Hopex支持多个币种的合约，同时我们也在不断开发创新的其他币种合约，力图给予广大投资者最丰富的选择。
+              </div>
+              <div className={styles.contractIconContainer}>
+                <div className={styles.firstIconLine}>
+                  <div className={styles.iconItem}>
+                    {BtIcon}
+                  </div>
+                </div >
+                <div className={styles.secondIconLine}></div >
+              </div>
+            </div>
           </div>
         </div>
       </div >
