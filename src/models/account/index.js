@@ -56,6 +56,7 @@ export default joinModel(modelExtend, {
           type: 'routerGo',
           payload: PATH.account
         })
+        Toast.tip('谷歌二次验证已开启');
         // yield put({
         //   type: 'changeState',
         //   payload: {
@@ -97,6 +98,7 @@ export default joinModel(modelExtend, {
           type: 'routerGo',
           payload: PATH.account
         })
+        Toast.tip('谷歌二次验证已关闭');
       }
     },
   },

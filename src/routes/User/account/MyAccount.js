@@ -213,7 +213,7 @@ export default class View extends Component {
             <div className={styles.recordheader} >
               最近10条登录记录
             </div >
-            <div style={{height: calculateTableHeight(loginList)}}>
+            <div style={{height: calculateTableHeight(loginList, 50, 50)}}>
               <Table {...tableProps} />
             </div>
           </div >

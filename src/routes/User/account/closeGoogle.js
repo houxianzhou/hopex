@@ -12,7 +12,10 @@ export default class CloseGoogle extends Component {
     const { submitGoogleCode = () => {} } = this.props;
     return (
       <div className={styles.closeGoogle} >
-        <p className={styles.title} >关闭谷歌二次验证</p >
+        <p className={styles.title} >
+          关闭谷歌二次验证
+          <span className={styles.passwordTip}>（若未收到邮件，请检查垃圾箱）</span>
+        </p >
         <p className={styles.passwordTip} >
           <span className={styles.asterisk} >* </span >
            关闭谷歌二次验证后24小时内不能提现
@@ -41,7 +44,7 @@ export default class CloseGoogle extends Component {
               e.preventDefault();
               if (!code) return;
               submitGoogleCode(code);
-            }} >确认
+            }} >关闭
           </button >
         </form >
 

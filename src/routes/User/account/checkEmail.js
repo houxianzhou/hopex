@@ -20,9 +20,12 @@ export default class CheckEmail extends Component {
     const { code } = this.state;
     return (
       <div className={styles.checkEmail} >
-        <p className={styles.title} >邮箱验证码</p >
-        <p className={styles.passwordTip} ><span
-          className={styles.asterisk} >* </span > {type === 'close' ? '关闭' : '开启'}谷歌二次验证后24小时内不能提现</p >
+        <p className={styles.title} >
+          邮箱验证码
+          <span className={styles.passwordTip}> (若未收到邮件，请检查垃圾箱)</span>
+        </p >
+        {/*<p className={styles.passwordTip} ><span*/}
+          {/*className={styles.asterisk} >* </span > {type === 'close' ? '关闭' : '开启'}谷歌二次验证后24小时内不能提现</p >*/}
         <form action="" >
           <div className={classNames(
             styles.passwordItem,
