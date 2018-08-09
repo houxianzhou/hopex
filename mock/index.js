@@ -147,7 +147,7 @@ export default {
       "data": {
         "asks": randomArrayMap(5).map((item, index) => ({
           "exist": ['0', '1'][_.random(0, 1)],
-          "price": index + 10 + _.random(10,20), //index,
+          "price": index + 10 + _.random(10, 20), //index,
           "amount": _.random(10000, 20000),//randomStr()
         })),
         "bids": randomArrayMap(5).map((item, index) => ({
@@ -452,11 +452,11 @@ export default {
       {
         "data": {
           "total": "114",
-          "records": (new Array(2)).fill().map(item => (
+          "records": (new Array(2)).fill().map((item, index) => (
             {
               "ctime": "2018-08-02 17:51:00",
               "ftime": "2018-08-02 17:51:00",
-              "id": "19582",
+              "id": index + '',
               "user": "3",
               "market": "BTCUSDT",
               "source": "我是现价测试单",

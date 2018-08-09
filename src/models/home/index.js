@@ -524,7 +524,7 @@ export default joinModel(modelExtend, {
       }
     },
 
-    //查看委托订单明细 订单明细
+    //查看订单明细
     * getPersonEnsureDetail({ payload = {} }, { call, put, select }) {
       const { orderId, type } = payload
       let ensures = null
@@ -581,7 +581,7 @@ export default joinModel(modelExtend, {
     },
 
     //最近10条委托历史
-    * getPersonalEnsureHistory({ payload = {} }, { call, put }) {
+    * getPersonalEnsureHistory({ payload = {} }, { call, put, select }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
@@ -603,7 +603,15 @@ export default joinModel(modelExtend, {
         const res = getRes(yield call(getPersonalEnsureHistory, repayload))
         if (resOk(res)) {
           const result = _.get(res, 'data.records')
+          const personalEnsureHistory = yield select(({ home: { personalEnsureHistory = [] } }) => personalEnsureHistory)
           if (result) {
+            // 此处为解决轮询的问题
+            result.map((item = {}) => {
+              const exsit = personalEnsureHistory.filter(one => one.id === item.id)[0] || {}
+              if (exsit && exsit.expand) {
+                item.expand = exsit.expand
+              }
+            })
             yield put({
               type: 'changeState',
               payload: {
