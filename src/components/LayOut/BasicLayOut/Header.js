@@ -62,22 +62,29 @@ export default class View extends Component {
                         <div className={styles.dropdown} >
                           <div className={styles.dropdowncontent} >
                             {
-                              _.keys(sorted).map((item, index) => (
+                              _.keys(sorted).map((item1, index) => (
                                 <div
                                   className={styles.licontainer}
                                   key={index}
                                 >
-                                  <div className={styles.liheader} >{item}</div >
+                                  <div className={styles.liheader} >{item1}</div >
                                   <ul >
                                     {
-                                      sorted[item].map((item2 = {}, index2) => {
+                                      sorted[item1].map((item2 = {}, index2) => {
                                         return (
                                           <li key={index2} onClick={() => {
-                                            dispatch({
-                                              type: `${modelName1}/getCurrentMarket`,
-                                              payload: item2
+                                            if (pathname !== PATH.home) {
+                                              dispatch({
+                                                type: `${modelName1}/routerGo`,
+                                                payload: PATH.home
+                                              })
+                                            } else {
+                                              dispatch({
+                                                type: `${modelName1}/getCurrentMarket`,
+                                                payload: item2
+                                              })
+                                            }
 
-                                            })
                                             // history.replace({
                                             //   search: `?marketCode=${item.marketCode}`,
                                             // });
