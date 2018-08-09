@@ -110,8 +110,8 @@ export default joinModel(modelExtend, {
 
       if (resOk(res)) {
         const result = {
-          asks: _.orderBy(_.get(res.data, 'asks'), ['price'], ['desc']) || [],
-          bids: _.orderBy(_.get(res.data, 'bids'), ['price'], ['desc']) || []
+          asks: _.orderBy(_.get(res.data, 'asks'), (item) => Number(item.price), ['desc']) || [],
+          bids: _.orderBy(_.get(res.data, 'bids'), (item) => Number(item.price), ['desc']) || []
         }
 
         result.asks.map((item, index) => {
