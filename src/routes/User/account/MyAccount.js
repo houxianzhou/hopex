@@ -198,6 +198,9 @@ export default class View extends Component {
                             myAccountPage: 2
                           }
                         })
+                        this.setState({
+                          googleIdentifyingCode: ''
+                        })
                       }} >
                       启用
                     </div >
@@ -235,8 +238,12 @@ export default class View extends Component {
                 安卓用户登录应用商店或使用手机浏览器搜索“谷歌验证器”下载；
               </p >
               <div className={styles.buttonContainer} >
-                <div className={styles.buttonItem} >iPhone下载</div >
-                <div className={styles.buttonItem} >Andriod下载</div >
+                <div className={styles.buttonItem} >
+                  <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8" target="_blank">iPhone下载</a >
+                </div >
+                <div className={styles.buttonItem} >
+                  <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Andriod下载</a >
+                </div >
               </div >
             </div >
           </div >

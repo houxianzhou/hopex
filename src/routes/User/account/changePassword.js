@@ -39,7 +39,6 @@ export default class ChangePassword extends Component {
   render() {
     const { oldPassword, oldPasswordMsg, newPassword, newPasswordMsg, repeatNewPassword, repeatNewPasswordMsg } = this.state;
     const { changeState } = this;
-    const PASSWORD = 'wuxioahui';
 
     return (
       <div className={styles.changePassword} >
