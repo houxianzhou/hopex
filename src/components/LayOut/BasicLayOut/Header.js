@@ -10,7 +10,6 @@ import notice from '@assets/notice.png'
 import network from '@assets/network.png'
 import * as styles from './index.less'
 
-let index = 0
 @connect(({ home, user, theme, loading, dispatch }) => ({
   home,
   modelName1: 'home',
@@ -57,7 +56,7 @@ export default class View extends Component {
                     <NavLink to={item.path} >
                       {item.name}
                     </NavLink >
-                    {isMatch(item.path) ? (<div className={styles.border} ></div >) : null}
+                    {isMatch(item.path) ? (<div className={styles.border} />) : null}
                     {
                       item.dest === 'trade' && !_.isEmpty(sorted) ? (
                         <div className={styles.dropdown} >
@@ -178,27 +177,6 @@ export default class View extends Component {
                 </li >
               ) : null
             }
-
-            {/*<li >*/}
-            {/*{_.isEmpty(userInfo) ? (*/}
-            {/*<span*/}
-            {/*onClick={() => {*/}
-            {/*dispatch({*/}
-            {/*type: `${modelName2}/routerGo`,*/}
-            {/*payload: PATH.login*/}
-            {/*})*/}
-            {/*}}*/}
-            {/*>登录</span >*/}
-            {/*) : (*/}
-            {/*<span*/}
-            {/*onClick={() => {*/}
-            {/*dispatch({*/}
-            {/*type: `${modelName2}/doLoginOut`,*/}
-            {/*})*/}
-            {/*}}*/}
-            {/*>退出</span >*/}
-            {/*)}*/}
-            {/*</li >*/}
           </ul >
         </div >
       </div >

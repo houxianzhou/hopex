@@ -124,8 +124,8 @@ export default joinModel(modelExtend, {
         })
 
         const [asksLast, bidsFirst] = [result.asks[result.asks.length > 8 ? 7 : result.asks.length - 1], result.bids[0]]
-        const equitablePrice = (_.get(asksLast, 'price') * _.get(bidsFirst, 'amount')
-          + _.get(bidsFirst, 'price') * _.get(asksLast, 'amount')) / (_.get(asksLast, 'amount') + _.get(bidsFirst, 'amount'))
+        const equitablePrice = (Number(_.get(asksLast, 'price')) * Number(_.get(bidsFirst, 'amount'))
+          + Number(_.get(bidsFirst, 'price')) * Number(_.get(asksLast, 'amount'))) / (Number(_.get(asksLast, 'amount')) + Number(_.get(bidsFirst, 'amount')))
         const showPrec = yield select(({ home: { showPrec } }) => showPrec)
         yield put({
           type: 'changeState',

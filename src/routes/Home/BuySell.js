@@ -213,7 +213,7 @@ export default class View extends Component {
     // 限价或者市价
     const configPrice = {
       label_name: orderChannel === 0 ? '限价' : '市价',
-      label_desc: `最小单位${formatNumber(minVaryPrice, 2)}USD`,
+      label_desc: `最小单位${formatNumber(minVaryPrice, 2)}`,
       intro_desc: '最高允许买价',
       intro_price: formatNumber(maxLimitPrice, 'p'),
       value: buy.price,
