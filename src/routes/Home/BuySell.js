@@ -207,13 +207,13 @@ export default class View extends Component {
 
   render() {
     const { renderArea } = this
-    const { dispatch, modelName, RG, model: { minVaryPrice = '', minDealAmount = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' } } = this.props
+    const { dispatch, modelName, RG, model: { minVaryPrice = '', marketSecond = '', minDealAmount = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' } } = this.props
     const { orderChannel, buy, sell } = this.state
 
     // 限价或者市价
     const configPrice = {
       label_name: orderChannel === 0 ? '限价' : '市价',
-      label_desc: `最小单位${formatNumber(minVaryPrice, 2)}`,
+      label_desc: `最小单位${minVaryPrice}${marketSecond}`,
       intro_desc: '最高允许买价',
       intro_price: formatNumber(maxLimitPrice, 'p'),
       value: buy.price,

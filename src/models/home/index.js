@@ -40,6 +40,7 @@ export default joinModel(modelExtend, {
     availableMoney: '',//根据钱包资产列表过滤出结算货币的可用额度
     varyRange: '', // 委托列表区间,
     showPrec: '',// 控制合理价格小数位数
+    marketSecond: '',//标价货币,区分结算货币
 
 
     keepBailRate: null,//维持保证金率
@@ -672,7 +673,8 @@ export default joinModel(modelExtend, {
         maxLimitPrice: filterOne.maxLimitPrice,
         minLimitPrice: filterOne.minLimitPrice,
         varyRange: filterOne.varyRange,
-        showPrec: filterOne.showPrec
+        showPrec: filterOne.showPrec,
+        marketSecond: filterOne.marketSecond
       }
     }
   },
