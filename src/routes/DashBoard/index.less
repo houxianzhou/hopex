@@ -1,3 +1,4 @@
+@width: 1.333;
 .home {
   .header {
     //height: 300px;
@@ -5,25 +6,130 @@
       width: 100%;
     }
   }
+  .headerPart {
+    width: 30px/@width;
+    height: 30px/@width;
+    background-color: #E2B96F;
+  }
+  .aboutUsFont {
+    //margin-top: 40px/@width;
+    font-size: 42px;
+    color: #E2B96F;
+    margin-top: 40px/@width;
+  }
+  .absolutFont {
+    letter-spacing: -1px;
+  }
   .notice {
-    height: 30px;
+    height: 42px;
     margin: 0;
     width: 100%;
     background-color: #1D222E;
     font-size: 16px;
     color: #FFFFFF;
-    line-height: 30px;
+    line-height: 42px;
   }
   .aboutUs {
-    height: 400px;
-    background-image: url(../../assets/home-phone.png);
-    background-repeat: no-repeat;
-    background-size: contain;
+    height: 800px/@width;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+
+    .imgContainer {
+      width: 50%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      img {
+        width: 400px;
+        display: inline-block;
+        margin-right: 100px;
+      }
+    }
 
     .aboutUsContent {
+      position: relative;
       width: 50%;
+      .absoluteFont {
+        position: absolute;
+        top: 25%;
+        font-size: 100px/@width;
+        opacity: 0.04;
+        color: #232833;
+      }
+      .headerPart {
+        margin-top: 249px/@width;
+        width: 30px/@width;
+        height: 30px/@width;
+        background-color: #E2B96F;
+      }
+
+      .aboutUsFont {
+        font-size: 42px;
+        color: #E2B96F;
+      }
+
+      .aboutUsMain {
+        margin-top: 60px/@width;
+        width:700px/@width;
+        font-size: 20px;
+        line-height: 29px;
+        color: #232833;
+      }
+    }
+  }
+  .adventure {
+    width: 1600px/@width;
+    margin: 0 auto;
+    position: relative;
+
+    .absoluteFont {
+      position: absolute;
+      top: 0;
+      left: 10%;
+      font-size: 100px/@width;
+      opacity: 0.04;
+      color: #232833;
+    }
+
+    .adventureContainer {
+      width: 1500px/@width;
+      margin: 120px/@width auto;
+      min-height: 500px;
+      display: flex;
+      flex-wrap: wrap;
+
+      .adventureItem {
+        width: 450px/@width;
+        height: 600px/@width;
+        margin: 0 8px 20px 8px;
+        background: #FFFFFF;
+        border: 1px solid #EBEBEB;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .itemIcon {
+          margin-top: 124px/@width;
+          width: 213px/@width;
+          //border-radius: 213px/@width;
+          //background-color: #0a8415;
+          img {
+            width: 100%;
+          }
+        }
+        .itemTitle {
+          margin-top: 4px;
+          font-size: 25px;
+          color: #333;
+        }
+        .itemContent {
+          margin-top: 20px;
+          font-size: 16px;
+          color: #666666;
+          line-height: 30px;
+          text-align: center;
+        }
+      }
     }
   }
 }
