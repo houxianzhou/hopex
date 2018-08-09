@@ -32,7 +32,7 @@ export default {
             "marketName": "BTCUSDT永续",
             "direction": "2",
             "marketType": "2",
-            "minVaryPrice": "0.50",
+            "minVaryPrice": "0.5",
             "minDealAmount": "1",
             "varyRange": "1 2 4 8",
             "keepBailRate": "0.01000000",
@@ -147,7 +147,7 @@ export default {
       "data": {
         "asks": randomArrayMap(5).map((item, index) => ({
           "exist": ['0', '1'][_.random(0, 1)],
-          "price": index + 10 + _.random(10, 20), //index,
+          "price":  1.34, // index + 10 + _.random(10, 20),
           "amount": _.random(10000, 20000),//randomStr()
         })),
         "bids": randomArrayMap(5).map((item, index) => ({
@@ -454,24 +454,24 @@ export default {
           "total": "114",
           "records": (new Array(2)).fill().map((item, index) => (
             {
-              "ctime": "2018-08-02 17:51:00",
-              "ftime": "2018-08-02 17:51:00",
-              "id": index + '',
+              "ctime": "2018-08-09 17:06:27",
+              "ftime": "2018-08-09 17:06:46",
+              "id": "19654"+index,
               "user": "3",
               "market": "BTCUSDT",
-              "source": "我是现价测试单",
+              "source": "浏览器，我是现价测试买单,数量10,价格6118.5,用户id：3,邮箱：xiaoyi.wei@bcsystech.com",
               "type": "1",
               "side": "1",
-              "price": "60",
-              "amount": "111",
-              "dealAmount": "111",
-              "dealMoney": "1.11",
-              "dealFee": "0.0111",
-              "orderStatus": "2",
-              "leverage": "0",
-              "avgDealMoney": "0",
-              "delegateMoney": "0",
-              "unwindProfit": "0"
+              "price": "6118.50",
+              "amount": "10",
+              "dealAmount": "5",
+              "dealMoney": "0.0008171937566397",
+              "dealFee": "-0.00",
+              "orderStatus": "1",
+              "leverage": "20.00",
+              "avgDealMoney": "6118.5",
+              "delegateMoney": "0.00004209",
+              "unwindProfit": "--"
             }
           )),
           "pageIndex": "",

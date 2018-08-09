@@ -1,6 +1,6 @@
 import qs from 'qs'
 import { Decimal } from 'decimal.js'
-import { BigNumber } from 'bignumber.js';
+import { BigNumber } from 'bignumber.js'
 import { SPEED } from '@constants'
 import { lodash_helper, immutable, moment_helper } from './helper'
 

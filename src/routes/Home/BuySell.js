@@ -219,8 +219,7 @@ export default class View extends Component {
       value: buy.price,
       step: minVaryPrice,
       min: 0,
-      max: Number(maxLimitPrice), //formatNumber(maxLimitPrice, 'p'),
-
+      // max: Number(maxLimitPrice), //formatNumber(maxLimitPrice, 'p'),
       onChange: (value) => {
         this.setState({
           buy: {
@@ -288,8 +287,8 @@ export default class View extends Component {
           intro_desc: '最低允许卖价',
           intro_price: formatNumber(minLimitPrice, 'p'),
           value: sell.price,
-          max: window.Infinity,
-          min: minLimitPrice, //formatNumber(minLimitPrice, 'p'),
+          // max: window.Infinity,
+          // min: 0, //formatNumber(minLimitPrice, 'p'),
           onChange: (value) => {
             this.setState({
               sell: {

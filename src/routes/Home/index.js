@@ -174,7 +174,17 @@ export default class View extends Component {
       <Mixin.Parent that={this} >
         <div className={styles.home} >
           <ShowJsonTip data={{ ...this.props.model, ...this.props.user, ...this.props.theme }} ></ShowJsonTip >
-
+          <div className={styles.views} >
+            {
+              renderView('Purse')
+            }
+            {
+              renderView('BuySell')
+            }
+            {
+              renderView('CurrentContract')
+            }
+          </div >
           <div className={styles.views} >
             {
               renderView('LatestRecord')
@@ -187,17 +197,7 @@ export default class View extends Component {
             }
           </div >
 
-          <div className={styles.views} >
-            {
-              renderView('Purse')
-            }
-            {
-              renderView('BuySell')
-            }
-            {
-              renderView('CurrentContract')
-            }
-          </div >
+
 
           {
             isLogin ? (

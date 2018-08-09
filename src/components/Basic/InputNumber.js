@@ -1,46 +1,72 @@
 import React, { Component } from 'react'
+import { BigNumber } from 'bignumber.js'
 import { classNames, Patterns, _, isEqual } from '@utils'
 import * as styles from './InputNumber.less'
 
 export default class View extends Component {
 
   componentWillUnmount() {
-    clearTimeout(this.interval)
+    this.interval && clearTimeout(this.interval)
   }
 
-  componentDidUpdate(prevProps) {
-    const { value: prevValue } = prevProps
-    const { value, max, min = 0, onChange } = this.props
-    if (!isEqual(prevValue, value) && !_.isNil(value)
-      && !_.inRange(Number(value), Number(min) || window['-Infinity'], Number(max) || window.Infinity)
-      && _.isFunction(onChange)) {
-      this.interval = setTimeout(() => {
-        onChange(_.clamp(Number(value), Number(min) || window['-Infinity'], Number(max) || window.Infinity))
-      })
-    }
-  }
+  rules = (value) => {
+    let { step = 10, max, min, prec = step, onChange } = this.props
 
-  render() {
-    let { value = null, step = 10, max, min, } = this.props
-    const {
-      onChange, className = {}, style = {}
-    } = this.props
     if (!_.isNil(value) && !_.isNil(step)) {
-      value = value
       step = Number(step)
       max = Number(max)
       min = Number(min)
     }
 
-    const rules = (value) => {
-      if (!_.isNil(value)) {
+    if (!_.isNil(value) && value !== '') {
+      if (!/\.$/.test(value)) {
         if (value < min) value = min
         if (value > max) value = max
-        onChange(value)
-      } else {
-        onChange('')
+        const v = new BigNumber(value)
+        const int = Math.floor(v.div(prec).valueOf())
+        const floa = v.minus(int * step).valueOf()
+        // console.log(int, floa, prec)
+        if (floa > prec / 2) {
+          value = (int + 1) * prec
+        } else {
+          value = int * prec
+        }
+        // if (value < prec) value = prec
       }
+      onChange(value)
+    } else {
+      onChange('')
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { value: prevValue } = prevProps
+    const { value } = this.props
+    if (!isEqual(prevValue, value)) {
+      this.interval = setTimeout(() => {
+        this.rules(value)
+      })
+
+    }
+    // if (!isEqual(prevValue, value) && !_.isNil(value)
+    //   && !_.inRange(Number(value), Number(min) || window['-Infinity'], Number(max) || window.Infinity)
+    //   && _.isFunction(onChange)) {
+    //   this.interval = setTimeout(() => {
+    //     onChange(_.clamp(Number(value), Number(min) || window['-Infinity'], Number(max) || window.Infinity))
+    //   })
+    // }
+  }
+
+  render() {
+    let { value = null, step } = this.props
+    const {
+      className = {}, style = {}
+    } = this.props
+
+    const { rules } = this
+
+    step = Number(step)
+
 
     return (
       <div
@@ -52,9 +78,9 @@ export default class View extends Component {
         <div
           onClick={
             () => {
-
               if (!_.isNil(value)) {
-                let result = Number(value) - step
+                let result = new BigNumber(Number(value))
+                result = result.minus(step)
                 rules(result)
               }
             }

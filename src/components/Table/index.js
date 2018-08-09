@@ -28,7 +28,7 @@ const [Table, Thead, Tbody, Tr, Th, Td] = [
   createElement('td'),
 ]
 
-export default class View extends Component {
+export default class Table1 extends Component {
   state = {
     x: 0,
     loading: false
