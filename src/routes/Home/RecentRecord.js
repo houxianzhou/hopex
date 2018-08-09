@@ -126,19 +126,22 @@ export default class View extends Component {
         render: (value, record = {}) => {
           return ({
               value: (
-                <span onClick={(e) => {
-                  e.stopPropagation()
-                  dispatch({
-                    type: `${modelName}/getPersonEnsureDetail`,
-                    payload: {
-                      type: '1',
-                      market: record.market,
-                      orderId: record.id
-                    }
-                  })
-                }} >
+                record.orderStatus === '1' ? (
+                  <span onClick={(e) => {
+                    e.stopPropagation()
+                    dispatch({
+                      type: `${modelName}/getPersonEnsureDetail`,
+                      payload: {
+                        type: '1',
+                        market: record.market,
+                        orderId: record.id
+                      }
+                    })
+                  }} >
                     成交明细
                   </span >
+                ) : null
+
               ),
               className: 'blue action'
             }
