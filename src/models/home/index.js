@@ -39,8 +39,12 @@ export default joinModel(modelExtend, {
     maxLimitPrice: '',//最高允许卖价
     availableMoney: '',//根据钱包资产列表过滤出结算货币的可用额度
     varyRange: '', // 委托列表区间,
-    showPrec: '',// 控制合理价格小数位数
+    showPrec: '',// 控制合理价格小数位数,跟价格有关的通常是他
     marketSecond: '',//标价货币,区分结算货币
+    showWalletPrec: '',//跟钱包价格有关的通常是他
+    showRatePrec: '',//百分比显示位数
+    showFeePrec: '',//费率显示位数
+    showLeveragePrec: '',//杠杆显示位数
 
 
     keepBailRate: null,//维持保证金率
@@ -522,19 +526,27 @@ export default joinModel(modelExtend, {
 
     //查看委托订单明细 订单明细
     * getPersonEnsureDetail({ payload = {} }, { call, put, select }) {
-      const { orderId } = payload
-      const personalEnsures = yield select(({ home: { personalEnsures = [] } }) => deepClone(personalEnsures))
-      const filterOne = deepClone(personalEnsures).filter((item = {}) => item.orderId === orderId)[0] || {}
-      personalEnsures.map((item = {}) => {
+      const { orderId, type } = payload
+      let ensures = null
+      let sort
+      if (type === '0') {
+        sort = 'personalEnsures'
+        ensures = yield select(({ home: { personalEnsures = [] } }) => deepClone(personalEnsures))
+      } else if (type === '1') {
+        sort = 'personalEnsureHistory'
+        ensures = yield select(({ home: { personalEnsureHistory = [] } }) => deepClone(personalEnsureHistory))
+      }
+      const filterOne = deepClone(ensures).filter((item = {}) => (item.orderId || item.id) === orderId)[0] || {}
+      ensures.map((item = {}) => {
         delete item.expand
       })
       yield put({
         type: 'changeState',
         payload: {
-          personalEnsures,
+          [sort]: ensures,
         }
       })
-      if (!filterOne.expand) {
+      if (!_.get(filterOne, 'expand')) {
         const repayload = yield (asyncPayload(yield put({
           type: 'createRequestParams',
           payload: {
@@ -547,22 +559,22 @@ export default joinModel(modelExtend, {
               pageSize: '100'
             },
             power: [1],
-            powerMsg: '查看委托订单明细'
+            powerMsg: '查看订单明细'
           }
         })))
         if (repayload) {
           const res = getRes(yield call(getPersonEnsureDetail, repayload))
           if (resOk(res)) {
-            const { orderId } = payload
-            const personalEnsures = yield select(({ home: { personalEnsures } }) => personalEnsures)
-            const result = deepClone(personalEnsures)
-            result.filter(item => item.orderId === orderId)[0].expand = res.data.records
-            yield put({
-              type: 'changeState',
-              payload: {
-                personalEnsures: result,
-              }
-            })
+            const result = ensures.filter((item = {}) => (item.orderId || item.id) === orderId)[0]
+            if (result) {
+              result.expand = _.get(res, 'data.records')
+              yield put({
+                type: 'changeState',
+                payload: {
+                  [sort]: ensures,
+                }
+              })
+            }
           }
         }
       }
@@ -674,7 +686,10 @@ export default joinModel(modelExtend, {
         minLimitPrice: filterOne.minLimitPrice,
         varyRange: filterOne.varyRange,
         showPrec: filterOne.showPrec,
-        marketSecond: filterOne.marketSecond
+        marketSecond: filterOne.marketSecond,
+        showWalletPrec: filterOne.showWalletPrec,
+        showRatePrec: filterOne.showRatePrec,
+        showFeePrec: filterOne.showFeePrec
       }
     }
   },

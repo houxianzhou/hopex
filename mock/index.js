@@ -32,7 +32,7 @@ export default {
             "marketName": "BTCUSDT永续",
             "direction": "2",
             "marketType": "2",
-            "minVaryPrice": "0.50000000",
+            "minVaryPrice": "0.50",
             "minDealAmount": "1",
             "varyRange": "1 2 4 8",
             "keepBailRate": "0.01000000",

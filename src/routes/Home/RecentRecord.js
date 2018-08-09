@@ -34,7 +34,7 @@ export default class View extends Component {
   render() {
     const { activeLi } = this.state
     const { state, changeState } = this
-    const { model: { personalEnsureHistory = [] }, noDataTip, modelName,dispatch } = this.props
+    const { model: { personalEnsureHistory = [] }, noDataTip, calculateTableHeight, expandedRowRender, modelName, dispatch } = this.props
     const columns = [
       {
         title: '合约',
@@ -128,13 +128,14 @@ export default class View extends Component {
               value: (
                 <span onClick={(e) => {
                   e.stopPropagation()
-                  // dispatch({
-                  //   type: `${modelName}/getPersonEnsureDetail`,
-                  //   payload: {
-                  //     market: record.market,
-                  //     orderId: record.orderId
-                  //   }
-                  // })
+                  dispatch({
+                    type: `${modelName}/getPersonEnsureDetail`,
+                    payload: {
+                      type: '1',
+                      market: record.market,
+                      orderId: record.id
+                    }
+                  })
                 }} >
                     成交明细
                   </span >
@@ -163,6 +164,7 @@ export default class View extends Component {
         x: SCROLLX.X
       },
       noDataTip: () => noDataTip(dataSource, '当前无历史'),
+      expandedRowRender,
     }
     return (
       <Mixin.Child that={this} >
@@ -177,7 +179,7 @@ export default class View extends Component {
           }
         >
           <ScrollPannel
-            tableHeight={TABLE.trHeight * (dataSource.length + 1)}
+            tableHeight={calculateTableHeight(dataSource)}
             header={
               <div className={styles.header} >
                 <ul className={classNames(

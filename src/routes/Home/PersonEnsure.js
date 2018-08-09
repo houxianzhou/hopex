@@ -28,7 +28,10 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { personalEnsures = [], userInfo = {} }, calculateTableHeight, noDataTip, dispatch, modelName } = this.props
+    const {
+      model: { personalEnsures = [], userInfo = {} }, calculateTableHeight, expandedRowRender, noDataTip, dispatch, modelName
+    }
+      = this.props
     const columns = [
       {
         title: '合约',
@@ -124,6 +127,7 @@ export default class View extends Component {
                         dispatch({
                           type: `${modelName}/getPersonEnsureDetail`,
                           payload: {
+                            type: '0',
                             market: record.market,
                             orderId: record.orderId
                           }
@@ -149,42 +153,7 @@ export default class View extends Component {
       onClickRow: (item) => {
         // console.log(item)
       },
-      expandedRowRender: (record = {}) => {
-        const { expand = [] } = record
-        const columns = [
-          {
-            title: '成交数量(张)',
-            dataIndex: 'amount',
-            maxWidth: 200,
-          },
-          {
-            title: '成交价格(张)',
-            dataIndex: 'amount',
-            maxWidth: 200,
-          },
-          {
-            title: '成交时间',
-            dataIndex: 'time',
-            maxWidth: 200,
-          },
-          {
-            title: '手续费',
-            dataIndex: 'fee',
-          },
-        ]
-        return _.has(record, 'expand') ? (
-          <div style={{ height: calculateTableHeight(expand) }} >
-            <Table
-              className={styles.expandetableContainer}
-              columns={columns}
-              dataSource={expand}
-              scroll={{
-                bounce: false
-              }}
-            />
-          </div >
-        ) : null
-      },
+      expandedRowRender,
       scroll: {
         x: SCROLLX.X,
       },

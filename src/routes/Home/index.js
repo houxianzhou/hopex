@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { Mixin, ShowJsonTip, Toast } from '@components'
+import { Mixin, ShowJsonTip, Toast, Table } from '@components'
 import { isEqual, _, parsePathSearch, localSave } from '@utils'
 import { PATH } from '@constants'
 import wss from '@services/SocketClient'
@@ -120,6 +120,42 @@ export default class View extends Component {
           </div >
         }
       },
+      expandedRowRender: (record = {}) => {
+        const { expand = [] } = record
+        const columns = [
+          {
+            title: '成交数量(张)',
+            dataIndex: 'amount',
+            maxWidth: 200,
+          },
+          {
+            title: '成交价格(张)',
+            dataIndex: 'amount',
+            maxWidth: 200,
+          },
+          {
+            title: '成交时间',
+            dataIndex: 'time',
+            maxWidth: 200,
+          },
+          {
+            title: '手续费',
+            dataIndex: 'fee',
+          },
+        ]
+        return _.has(record, 'expand') ? (
+          <div style={{ height: calculateTableHeight(expand) }} >
+            <Table
+              className={styles.expandetableContainer}
+              columns={columns}
+              dataSource={expand}
+              scroll={{
+                bounce: false
+              }}
+            />
+          </div >
+        ) : null
+      },
       ...this.props,
       isLogin: this.isLogin(),
       routerGoLogin: this.routerGoLogin,
@@ -183,7 +219,6 @@ export default class View extends Component {
             ) : null
           }
 
-
           {
             isLogin ? (
               <div className={styles.views} >
@@ -194,9 +229,7 @@ export default class View extends Component {
             ) : null
           }
 
-
         </div >
-
       </Mixin.Parent >
     )
   }
