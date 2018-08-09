@@ -71,27 +71,27 @@ export default class View extends Component {
       {
         title: '委托价格',
         dataIndex: 'price',
-        render: (v) => formatNumber(v, 'p')
+        //render: (v) => formatNumber(v, 'p')
       },
       {
         title: '成交数量(张)',
         dataIndex: 'dealAmount',
-        render: (v) => formatNumber(v, 'p')
+        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '成交均价',
         dataIndex: 'avgDealMoney',
-        render: (v) => formatNumber(v, 'p')
+        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '平仓盈亏',
         dataIndex: 'unwindProfit',
-        render: (v) => formatNumber(v, 'p')
+        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '手续费',
         dataIndex: 'dealFee',
-        render: (v) => formatNumber(v, 'p')
+        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '委托时间',
