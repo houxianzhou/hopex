@@ -6,6 +6,13 @@ export default [
     model: ['global/user', 'global/theme', 'global/modal']
   },
   {
+    dest: 'dashboard',
+    name: '首页',
+    path: PATH.dashboard,
+    model: ['dashboard'],
+    route: 'DashBoard'
+  },
+  {
     dest: 'trade',
     name: '合约交易',
     path: PATH.home,

@@ -61,6 +61,7 @@ export const NUMBER = {
 
 export const PATH = {
   login: '/user/login',
+  dashboard: '/dashboard',
   home: '/home',
   register: '/user/register',
   forgetPassword: '/user/forgetPassword',
