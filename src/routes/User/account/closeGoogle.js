@@ -14,7 +14,7 @@ export default class CloseGoogle extends Component {
       <div className={styles.closeGoogle} >
         <p className={styles.title} >
           关闭谷歌二次验证
-          <span className={styles.passwordTip}>（若未收到邮件，请检查垃圾箱）</span>
+          {/*<span className={styles.passwordTip}>（若未收到邮件，请检查垃圾箱）</span>*/}
         </p >
         <p className={styles.passwordTip} >
           <span className={styles.asterisk} >* </span >

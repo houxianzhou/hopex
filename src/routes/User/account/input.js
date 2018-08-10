@@ -14,20 +14,22 @@ export class Input extends Component {
     const value = e.target.value; // ff
     _.isFunction(this.props.onCheck) && this.props.onCheck(value)
   };
+
   render() {
     const {
-      placeholder='', value='', type = 'text', msg = '', CountDown=''
+      placeholder = '', value = '', type = 'text', msg = '', CountDown = ''
     } = this.props
     return (
-      <div className={styles.inputComponent}>
-        <input type={type} value={value} onChange={this.handleChange} className={msg && styles.errStatus} placeholder={placeholder}/>
+      <div className={styles.inputComponent} >
+        <input type={type} value={value} onChange={this.handleChange} className={msg && styles.errStatus}
+               placeholder={placeholder} />
         {
           CountDown ? CountDown : null
         }
         {
-          msg ? (<p className={styles.errDes}>{msg}</p>) : null
+          msg ? (<p className={styles.errDes} >{msg}</p >) : null
         }
-      </div>
+      </div >
     )
   }
 }

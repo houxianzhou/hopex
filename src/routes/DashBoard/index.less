@@ -31,6 +31,7 @@
   }
   .aboutUs {
     height: 800px/@width;
+    margin-bottom: 200px;
     display: flex;
     justify-content: center;
 
@@ -94,6 +95,7 @@
     .adventureContainer {
       width: 1500px/@width;
       margin: 120px/@width auto;
+      //margin-top: 110px/@width;
       min-height: 500px;
       display: flex;
       flex-wrap: wrap;
@@ -134,12 +136,18 @@
     .contract {
       display: flex;
 
-      img {
-        width: 500px;
-      }
+
       .imgContainer {
         width: 50%;
+        position: relative;
         flex-grow: 0;
+
+        img {
+          width: 1000px;
+          position: absolute;
+          right: 178px/@width;
+          bottom: 0;
+        }
       }
       .contractItem {
         width: 50%;
@@ -151,6 +159,59 @@
           color: #666666;
         }
       }
+    }
+  }
+  .contractIconContainer {
+    .firstIconLine, .secondIconLine {
+      margin-top: 45px/@width;
+      display: flex;
+      justify-content: flex-start;
+
+      .iconItem {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 60px/@width;
+      }
+      .bitIcon {
+        width: 140px/@width;
+        height: 140px/@width;
+        svg {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .iconDes {
+        margin-top: 20px/@width;
+        font-size: 18px;
+        color: #666666;
+      }
+    }
+  }
+  .homeFooter {
+    margin-top: 328px/@width;
+    height: 500px;
+    background-repeat: no-repeat;
+    background-image: url(../../assets/home-footer.png);
+    //background-size: contain;
+    padding-top: 186px;
+
+    .footerTitle {
+      font-size: 30px;
+      color: #FFFFFF;
+      margin-left: 20%;
+    }
+    .signButton {
+      cursor: pointer;
+      margin-top: 50px;
+      border: none;
+      color: #fff;
+      width: 300px;
+      height: 48px;
+      line-height: 48px;
+      background-image: linear-gradient(90deg, #EBCB80 0%, #E0BD7E 100%);
+      border-radius: 2px;
+      margin-left: 20%;
     }
   }
 }
