@@ -30,10 +30,13 @@ export default class View extends Component {
       if (type) {
         order = type === '1' ? 'sell' : 'buy'
         this.changeState({
-          [order]: {
-            ...this.state[order],
+          sell: {
+            ...this.state.sell,
             price,
-            amount
+          },
+          buy: {
+            ...this.state.buy,
+            price,
           }
         })
       }
@@ -206,7 +209,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { renderArea } = this
+    const { renderArea, changeState } = this
     const { dispatch, modelName, RG, model: { minVaryPrice = '', marketSecond = '', minDealAmount = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' } } = this.props
     const { orderChannel, buy, sell } = this.state
 
@@ -221,7 +224,7 @@ export default class View extends Component {
       min: 0,
       // max: Number(maxLimitPrice), //formatNumber(maxLimitPrice, 'p'),
       onChange: (value) => {
-        this.setState({
+        changeState({
           buy: {
             ...buy,
             price: value
@@ -237,7 +240,7 @@ export default class View extends Component {
       value: buy.amount,
       min: 0,
       onChange: (value) => {
-        this.setState({
+        changeState({
           buy: {
             ...buy,
             amount: value
@@ -287,10 +290,10 @@ export default class View extends Component {
           intro_desc: '最低允许卖价',
           intro_price: formatNumber(minLimitPrice, 'p'),
           value: sell.price,
-          // max: window.Infinity,
-          // min: 0, //formatNumber(minLimitPrice, 'p'),
+          step: minVaryPrice,
+          min: 0,
           onChange: (value) => {
-            this.setState({
+            changeState({
               sell: {
                 ...sell,
                 price: value
@@ -304,7 +307,7 @@ export default class View extends Component {
         ...{
           value: sell.amount,
           onChange: (value) => {
-            this.setState({
+            changeState({
               sell: {
                 ...sell,
                 amount: value

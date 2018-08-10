@@ -74,14 +74,6 @@ export default class View extends Component {
       className: styles.tableContainer,
       columns,
       dataSource: _.merge((new Array(18)).fill(), dataSource),
-      onClickRow: (item) => {
-        dispatch({
-          type: `${modelName}/changeState`,
-          payload: {
-            clickSelectOne: item
-          }
-        })
-      },
       scroll: {
         mouseWheel: true,
         scrollY: true
