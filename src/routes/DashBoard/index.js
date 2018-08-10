@@ -15,6 +15,7 @@ import Swiper from 'swiper/dist/js/swiper.js'
 import 'swiper/dist/css/swiper.min.css'
 import bannerFirst from '@assets/home-1.jpg';
 import bannerSecond from '@assets/home-2.jpg';
+import bannerThird from '@assets/home-3.png';
 import { btIcon, moreIcon, yzIcon, ytIcon } from '@assets'
 
 const itemList = [
@@ -61,8 +62,16 @@ const itemList = [
 }))
 export default class View extends Component {
   componentDidMount = () => {
+    const _this = this;
     new Swiper(this.refs.swiperContainer, {
-      autoplay: true,//可选选项，自动滑动
+      autoplay: {
+        delay: 3000
+      },//可选选项，自动滑动
+      speed: 500,
+      pagination: {
+        el:'.swiper-pagination',
+      }
+      // effect : 'fade',
     })
   }
 
@@ -73,13 +82,16 @@ export default class View extends Component {
         <div className={styles.header} ref="swiperContainer" >
           <div className="swiper-wrapper" >
             <div className="swiper-slide" >
+              <img src={bannerThird} alt="" />
+            </div >
+            <div className="swiper-slide" >
               <img src={bannerFirst} alt="" />
             </div >
             <div className="swiper-slide" >
               <img src={bannerSecond} alt="" />
             </div >
-            {/*<div className="swiper-slide" >slider3</div >*/}
           </div >
+          <div className="swiper-pagination" ref="swiperPagination"></div>
         </div >
         {/*// <div className={classNames(*/}
         {/*//   styles.header,*/}
@@ -96,7 +108,7 @@ export default class View extends Component {
         {/*</div >*/}
         {/*</div >*/}
         <div className={styles.notice} >
-          <p>关于hopex将于北京时间2018年9月1日上线的通知</p>
+          <p >关于hopex将于北京时间2018年9月1日上线的通知</p >
         </div >
         <div className={styles.aboutUs} >
           <div className={styles.imgContainer} >
