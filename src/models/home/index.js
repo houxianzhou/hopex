@@ -522,7 +522,8 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(doCancelPersonEnsure, repayload))
         if (resOk(res)) {
-          Toast.tip('撤销成功')
+          // Message.error('ahhaah')
+          // Toast.tip('撤销成功')
         }
       }
     },
