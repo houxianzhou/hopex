@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { _, classNames } from '@utils';
 import * as styles from './index.less';
-import banner from '@assets/banner.jpg';
+import {Toast} from "@components";
 import phone from '@assets/home-iphone.jpg';
 import icon01 from '@assets/icon01.png';
 import icon02 from '@assets/icon02.png';
@@ -201,7 +201,9 @@ export default class View extends Component {
           <div className={styles.footerTitle} >
             时不我待，开启全新投资之旅
           </div >
-          <button className={styles.signButton} >免费注册实盘账户</button >
+          <button className={styles.signButton} onClick={() => {
+            Toast.tip('暂未开放')
+          }}>免费注册实盘账户</button >
         </div >
       </div >
     )
