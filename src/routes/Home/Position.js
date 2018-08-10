@@ -94,7 +94,7 @@ export default class View extends Component {
               }} >
                 <img src={substract} />
               </div >
-              <div className={styles.positionMoney} >{v}</div >
+              <div className={styles.positionMoney} >{formatNumber(v, 10)}</div >
               <div onClick={() => {
                 changeState({
                   active: 1
@@ -110,18 +110,18 @@ export default class View extends Component {
       {
         title: '维持保证金',
         dataIndex: 'keepMoney',
-        // render: (v) => formatNumber(v, 'p')
+        render: (v) => formatNumber(v, 10)
       },
       {
         title: '强平价格',
         dataIndex: 'overPrice',
-        // render: (v) => formatNumber(v, 'p')
+        render: (v) => formatNumber(v, 10)
       },
       {
         title: '浮动盈亏(收益率)',
         dataIndex: 'floatProfit',
         render: (v, record = {}) => {
-          const value = `${record.floatProfit}(${record.profitRate})`
+          const value = `${formatNumber(Number(record.floatProfit), 10)}(${record.profitRate})`
           return Number(v) >= 0 ? (
             <RedGreenSwitch.GreenText value={value} />
           ) : (
