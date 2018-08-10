@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { InputNumber, Slider } from "@components"
+import { InputNumber, Slider, Loading, Button } from "@components"
 import { COLORS } from '@constants'
 import { classNames, _, formatNumber, isEqual } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
@@ -138,7 +138,7 @@ export default class View extends Component {
 
     } = config
     const { isLogin, routerGoLogin, routerGoRegister } = this.props
-    return <div
+    return <Button
       className={classNames(
         styles.submit,
         isLogin && valuePrice && valueAmount ? styles.haslogin : styles.notlogin,
@@ -182,7 +182,7 @@ export default class View extends Component {
         )
       }
 
-    </div >
+    </Button >
   }
 
   renderArea = (config = {}) => {
@@ -248,7 +248,7 @@ export default class View extends Component {
     }
     // 保证金
     const configEnsure = {
-      label_action: '买入保证金',
+      label_action: '预估占用保证金',
       label_action_price: '1000',
       label_available: '可用金额',
       label_available_price: Number(availableMoney)
@@ -316,7 +316,7 @@ export default class View extends Component {
       configEnsure: {
         ...configEnsure,
         ...{
-          label_action: '卖出保证金',
+          // label_action: '卖出保证金',
         }
       },
       configSubmit: {
