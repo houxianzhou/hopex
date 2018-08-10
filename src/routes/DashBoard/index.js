@@ -6,7 +6,7 @@ import banner from '@assets/banner.jpg';
 import phone from '@assets/home-iphone.jpg';
 import item1 from '@assets/item1.png';
 import computer from '@assets/computer.png';
-import { btIcon,moreIcon, yzIcon, ytIcon } from '@assets'
+import { btIcon, moreIcon, yzIcon, ytIcon } from '@assets'
 
 const itemList = [
   {
@@ -111,43 +111,49 @@ export default class View extends Component {
               <div className={styles.contractIconContainer} >
                 <div className={styles.firstIconLine} >
                   <div className={styles.iconItem} >
-                    <div className={styles.bitIcon}>
+                    <div className={styles.bitIcon} >
                       {btIcon}
-                    </div>
-                    <p className={styles.iconDes}>比特币</p>
+                    </div >
+                    <p className={styles.iconDes} >比特币</p >
                   </div >
                   <div className={styles.iconItem} >
-                    <div className={styles.bitIcon}>
+                    <div className={styles.bitIcon} >
                       {ytIcon}
-                    </div>
-                    <p className={styles.iconDes}>以太币</p>
+                    </div >
+                    <p className={styles.iconDes} >以太币</p >
                   </div >
                   <div className={styles.iconItem} >
-                    <div className={styles.bitIcon}>
+                    <div className={styles.bitIcon} >
                       {btIcon}
-                    </div>
-                    <p className={styles.iconDes}>瑞波币</p>
+                    </div >
+                    <p className={styles.iconDes} >瑞波币</p >
                   </div >
 
                 </div >
                 <div className={styles.secondIconLine} >
                   <div className={styles.iconItem} >
-                    <div className={styles.bitIcon}>
-                      { yzIcon }
-                    </div>
-                    <p className={styles.iconDes}>柚子币</p>
+                    <div className={styles.bitIcon} >
+                      {yzIcon}
+                    </div >
+                    <p className={styles.iconDes} >柚子币</p >
                   </div >
                   <div className={styles.iconItem} >
-                    <div className={styles.bitIcon}>
+                    <div className={styles.bitIcon} >
                       {moreIcon}
-                    </div>
-                    <p className={styles.iconDes}>更多</p>
+                    </div >
+                    <p className={styles.iconDes} >更多</p >
                   </div >
                 </div >
               </div >
             </div >
           </div >
         </div >
+        <div className={styles.homeFooter}>
+          <div className={styles.footerTitle}>
+            时不我待，开启全新投资之旅
+          </div>
+          <button className={styles.signButton}>免费注册实盘账户</button>
+        </div>
       </div >
     )
   }

@@ -136,12 +136,18 @@
     .contract {
       display: flex;
 
-      img {
-        width: 500px;
-      }
+
       .imgContainer {
         width: 50%;
+        position: relative;
         flex-grow: 0;
+
+        img {
+          width: 1000px;
+          position: absolute;
+          right: 178px/@width;
+          bottom: 0;
+        }
       }
       .contractItem {
         width: 50%;
@@ -180,6 +186,31 @@
         font-size: 18px;
         color: #666666;
       }
+    }
+  }
+  .homeFooter {
+    margin-top: 328px/@width;
+    height: 500px;
+    background-repeat: no-repeat;
+    background-image: url(../../assets/home-footer.png);
+    //background-size: contain;
+    padding-top: 186px;
+
+    .footerTitle {
+      font-size: 30px;
+      color: #FFFFFF;
+      margin-left: 20%;
+    }
+    .signButton {
+      margin-top: 50px;
+      border: none;
+      color: #fff;
+      width: 300px;
+      height: 48px;
+      line-height: 48px;
+      background-image: linear-gradient(90deg, #EBCB80 0%, #E0BD7E 100%);
+      border-radius: 2px;
+      margin-left: 20%;
     }
   }
 }
