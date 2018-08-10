@@ -13,7 +13,7 @@ let max = null
 
 export default class View extends Component {
   state = {
-    dis: 0.5
+    dis: ''
   }
 
   changeState = (payload = {}) => {
@@ -61,7 +61,8 @@ export default class View extends Component {
       , _.get(ensure_records, 'bids')
     ]
 
-    const varyRanges = _.isString(varyRange) ? varyRange.split(' ') : []
+    let varyRanges = _.isString(varyRange) ? varyRange.split(' ') : []
+    const showDis = varyRanges.indexOf(dis) > 0 ? dis : varyRanges[0]
 
 
     const columns = [
@@ -184,18 +185,22 @@ export default class View extends Component {
                 <div >委托列表</div >
                 <div className={styles.distance} >
                   <div className={styles.text} >区间</div >
-                  <div className={styles.number} >{dis}</div >
+                  <div className={styles.number} >{showDis}</div >
                   {triangle}
                   <div className={styles.select} >
                     <ul >
                       {
-                        varyRanges.map((item, index) => (
-                          <li key={index} onClick={() => {
-                            changeState({
-                              dis: item
-                            })
-                          }} >{item}</li >
-                        ))
+                        varyRanges.map((item, index) => {
+                          if (item !== showDis) {
+                            return (
+                              <li key={index} onClick={() => {
+                                changeState({
+                                  dis: item
+                                })
+                              }} >{item}</li >
+                            )
+                          }
+                        })
                       }
                     </ul >
                   </div >
