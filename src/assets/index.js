@@ -39,7 +39,7 @@ export const email = (
 export const rightIcon = (
   <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" >
     <path d="M833.7 179.7l113.1 113.1-551.5 551.5L77.1 526.1 190.3 413l205.1 205.1 438.3-438.4z" fill="#56BC9D"
-          pId="2197" />
+          pid="2197" />
   </svg >
 )
 export const errorIcon = (
@@ -126,7 +126,7 @@ export const yzIcon = (
 );
 
 export const moreIcon = (
-  <svg width="140px" height="140px" viewBox="0 0 140 140" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <svg width="140px" height="140px" viewBox="0 0 140 140" version="1.1" xmlns="http://www.w3.org/2000/svg" >
     <title >more</title >
     <desc >Created with Sketch.</desc >
     <defs >

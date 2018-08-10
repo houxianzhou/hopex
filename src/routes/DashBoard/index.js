@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { _, classNames } from '@utils';
 import * as styles from './index.less';
-import {Toast} from "@components";
+import { Toast } from "@components";
 import phone from '@assets/home-iphone.jpg';
 import icon01 from '@assets/icon01.png';
 import icon02 from '@assets/icon02.png';
@@ -69,7 +69,7 @@ export default class View extends Component {
       },//可选选项，自动滑动
       speed: 500,
       pagination: {
-        el:'.swiper-pagination',
+        el: '.swiper-pagination',
       }
       // effect : 'fade',
     })
@@ -91,22 +91,8 @@ export default class View extends Component {
               <img src={bannerSecond} alt="" />
             </div >
           </div >
-          <div className="swiper-pagination" ref="swiperPagination"></div>
+          <div className="swiper-pagination" ref="swiperPagination" />
         </div >
-        {/*// <div className={classNames(*/}
-        {/*//   styles.header,*/}
-        {/*//   'swiper-container'*/}
-        {/*// )} ref="swiperContainer">*/}
-        {/*//   <div className="swiper-wrapper" >*/}
-        {/*//     <div className="swiper-slide" >*/}
-        {/*//       <img src={bannerFirst} alt="" />*/}
-        {/*//     </div >*/}
-        {/*<div className="swiper-slide" >*/}
-        {/*<img src={bannerSecond} alt="" />*/}
-        {/*</div >*/}
-        {/*/!*<div className="swiper-slide" >slider3</div >*!/*/}
-        {/*</div >*/}
-        {/*</div >*/}
         <div className={styles.notice} >
           <p >关于hopex将于北京时间2018年9月1日上线的通知</p >
         </div >
@@ -203,7 +189,8 @@ export default class View extends Component {
           </div >
           <button className={styles.signButton} onClick={() => {
             Toast.tip('暂未开放')
-          }}>免费注册实盘账户</button >
+          }} >免费注册实盘账户
+          </button >
         </div >
       </div >
     )

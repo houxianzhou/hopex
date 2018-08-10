@@ -32,10 +32,10 @@ export default [
     route: 'User/account'
   },
   {
-    name: '常见问题',
+    name: '解释说明',
     path: '/question',
     model: ['account'],
-    route: 'User/account'
+    route: 'Question'
   },
   {
     name: '登录',
