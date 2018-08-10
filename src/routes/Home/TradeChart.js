@@ -598,7 +598,7 @@ export default class View extends Component {
                   <div className={styles.right} >
                     <ul >
                       <li >
-                        <div className={styles.title} >现货价格指数</div >
+                        <div className={styles.title} >现货指数价格</div >
                         <div className={styles.desc} >{indexPrice}</div >
                       </li >
                       <li >

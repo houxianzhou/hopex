@@ -29,7 +29,7 @@ export default joinModel(modelExtend, {
     latestPrice: '', //最新交易价格,
     latestPriceChangePercent: '',//最新价相比24小时前价格的涨跌幅
     dollarPrice: '',//换算成美元
-    latestPriceTrend: 1,//1||0合理趋势，比上次大为1小就是0
+    latestPriceTrend: 1,//1升，-1降
     equitablePrice: '', // 计算出来的，合理价格
 
 
@@ -41,16 +41,17 @@ export default joinModel(modelExtend, {
     varyRange: '', // 委托列表区间,
     showPrec: '',// 控制合理价格小数位数,跟价格有关的通常是他
     marketSecond: '',//标价货币,区分结算货币
-    showWalletPrec: '',//跟钱包价格有关的通常是他
-    showRatePrec: '',//百分比显示位数
-    showFeePrec: '',//费率显示位数
-    showLeveragePrec: '',//杠杆显示位数
+    // showWalletPrec: '',//跟钱包价格有关的通常是他
+    // showRatePrec: '',//百分比显示位数
+    // showFeePrec: '',//费率显示位数
+    // showLeveragePrec: '',//杠杆显示位数
 
 
     keepBailRate: null,//维持保证金率
     levelages: [],//当前合约杠杆列表
     dealMoney: null,//结算货币
     leverage: null, //当前用户的杠杆
+    leverageIsModify: null,//当前用户是否可以编辑杠杆
 
     assetList: [],//钱包资产列表
     personalEnsures: [],//个人委托列表
@@ -186,12 +187,13 @@ export default joinModel(modelExtend, {
         if (resOk(res)) {
           const result = _.get(res, 'data') || {}
           const {
-            records = [], maxPrice24h, minPrice24h, marketPrice,
+            direction, maxPrice24h, minPrice24h, marketPrice,
             priceLast, totalPrice24h, percent, dollarPrice
           } = result
           yield put({
             type: 'changeState',
             payload: {
+              ...direction !== '0' ? { latestPriceTrend: Number(direction) } : {},
               maxPrice24h,
               minPrice24h,
               indexPrice: marketPrice,
@@ -201,7 +203,7 @@ export default joinModel(modelExtend, {
               dollarPrice: dollarPrice,
             }
           })
-          return records
+          return result
         }
       }
     },
@@ -268,11 +270,12 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(getLeverage, repayload))
         if (resOk(res)) {
-          const result = _.get(res, 'data.leverage')
+          const [leverage, isModify] = [_.get(res, 'data.leverage'), _.get(res, 'data.isModify')]
           yield put({
             type: 'changeState',
             payload: {
-              leverage: result
+              leverage,
+              leverageIsModify: isModify
             }
           })
         }
@@ -695,9 +698,9 @@ export default joinModel(modelExtend, {
         varyRange: filterOne.varyRange,
         showPrec: filterOne.showPrec,
         marketSecond: filterOne.marketSecond,
-        showWalletPrec: filterOne.showWalletPrec,
-        showRatePrec: filterOne.showRatePrec,
-        showFeePrec: filterOne.showFeePrec
+        // showWalletPrec: filterOne.showWalletPrec,
+        // showRatePrec: filterOne.showRatePrec,
+        // showFeePrec: filterOne.showFeePrec
       }
     }
   },

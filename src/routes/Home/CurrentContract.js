@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { COLORS } from '@constants'
-import { Mixin, Slider } from "@components"
+import { Mixin, Slider, Toast } from "@components"
 import { classNames, getPercent, formatNumber, _ } from '@utils'
 import grayangle from '@assets/grayangle.png'
 import activeangle from '@assets/activeangle.png'
@@ -23,7 +23,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { marketName, leverage, }, modal: { name }, dispatch, modelName } = this.props
+    const { model: { marketName, leverage, leverageIsModify = false }, modal: { name }, dispatch, modelName } = this.props
     const colors = [
       '#52AA64', '#52AA64', '#8CB152', '#8CB152', '#CABA70', '#CABA70', '#D69555', '#D69555', '#D47D5A', ' #D47D5A'
     ]
@@ -57,12 +57,12 @@ export default class View extends Component {
                   <div
                     className={styles.edit}
                     onClick={() => {
-                      dispatch({
+                      leverageIsModify ? dispatch({
                         type: `${modelName}/openModal`,
-                        payload:{
+                        payload: {
                           name: 'contract'
                         }
-                      })
+                      }) : Toast.tip('当前有该合约持仓或委托，无法修改杠杆倍数')
                     }}
                   >编辑
                   </div >
