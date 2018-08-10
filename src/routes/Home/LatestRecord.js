@@ -29,9 +29,9 @@ export default class View extends Component {
         title: '时间',
         dataIndex: 'time',
         width: '25%',
-        render: (value) => {
-          return moment.formatHMSFromSeconds(value)
-        }
+        // render: (value) => {
+        //   return moment.formatHMSFromSeconds(value)
+        // }
       },
       {
         title: '方向',
@@ -53,7 +53,7 @@ export default class View extends Component {
           const img = Number(value) > Number(next.price) ? (
             <RedGreenSwitch.RedGreenArrow style={style} alt='top' />) : (Number(value) < Number(next.price) ? (
             <RedGreenSwitch.RedGreenArrow style={style} alt='down' />) : null)
-          const result = <span >{formatNumber(value, 'p')}{img}</span >
+          const result = <span >{value}{img}</span >
           return record.type === '2' || record.type === '买' ? (
             <RedGreenSwitch.GreenText value={result} />
           ) : <RedGreenSwitch.RedText value={result} />
@@ -64,7 +64,7 @@ export default class View extends Component {
         dataIndex: 'amount',
         render: (value, record = {}) => (
           <span style={{ color: record.exist === '1' ? COLORS.yellow : null }} >
-            {formatNumber(value, 0, true)}
+            {value}
             </span >
         )
       },

@@ -26,7 +26,7 @@ export default class View extends Component {
         const int = Math.floor(v.div(prec).valueOf())
         const floa = v.minus(int * step).valueOf()
         // console.log(int, floa, prec)
-        if (floa > prec / 2) {
+        if (floa >= (new BigNumber(prec)).div(2).valueOf()) {
           value = (int + 1) * prec
         } else {
           value = int * prec
@@ -42,6 +42,7 @@ export default class View extends Component {
   componentDidUpdate(prevProps) {
     const { value: prevValue } = prevProps
     const { value } = this.props
+    clearTimeout(this.interval)
     if (!isEqual(prevValue, value)) {
       this.interval = setTimeout(() => {
         this.rules(value)
