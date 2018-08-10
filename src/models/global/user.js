@@ -62,7 +62,6 @@ export default joinModel(modelExtend, {
               type: 'doLoginPrepare',
               payload
             })
-            Toast.tip('登录成功')
             // yield put({
             //   type: 'changeState',
             //   payload: {
@@ -95,6 +94,7 @@ export default joinModel(modelExtend, {
               userToken: data
             }
           })
+          Toast.tip('登录成功')
         }
       }
     },
