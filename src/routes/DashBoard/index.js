@@ -4,7 +4,12 @@ import { _, classNames } from '@utils';
 import * as styles from './index.less';
 import banner from '@assets/banner.jpg';
 import phone from '@assets/home-iphone.jpg';
-import item1 from '@assets/item1.png';
+import icon01 from '@assets/icon01.png';
+import icon02 from '@assets/icon02.png';
+import icon03 from '@assets/icon03.png';
+import icon04 from '@assets/icon04.png';
+import icon05 from '@assets/icon05.png';
+import icon06 from '@assets/icon06.png';
 import computer from '@assets/computer.png';
 import Swiper from 'swiper/dist/js/swiper.js'
 import 'swiper/dist/css/swiper.min.css'
@@ -14,37 +19,37 @@ import { btIcon, moreIcon, yzIcon, ytIcon } from '@assets'
 
 const itemList = [
   {
-    img: item1,
+    img: icon01,
     title: '创新的交易品种',
     des: 'BTC、ETH永续(永不到期)合约',
     desSecondLine: '紧跟市场随时交易'
   },
   {
-    img: item1,
+    img: icon02,
     title: '高杠杆',
     des: '提供高达100倍杠杆',
     desSecondLine: '1%的市场波动即可实现本金翻倍'
   },
   {
-    img: item1,
+    img: icon03,
     title: '灵活的交易规则',
     des: '支持做多和做空，无论熊市牛市均可获利',
     desSecondLine: '支持随时调节杠杆倍数'
   },
   {
-    img: item1,
+    img: icon04,
     title: '低手续费',
     des: '手续费低于同类平台',
     desSecondLine: '让广大投资者收益更加丰厚'
   },
   {
-    img: item1,
+    img: icon05,
     title: '顶尖的技术',
     des: '业界领先的撮合引擎，高达100万笔/秒的撮合',
     desSecondLine: '风控模块每秒对账户进行10次以上的检测'
   },
   {
-    img: item1,
+    img: icon06,
     title: '卓越的安全性',
     des: '全面采用冷钱包',
     desSecondLine: '100%保证用户数字资产的安全'
