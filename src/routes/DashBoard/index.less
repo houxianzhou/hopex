@@ -4,6 +4,7 @@
     padding: 0;
     margin: 0;
     min-height: 200px;
+    overflow: hidden;
     img {
       width: 100%;
     }
@@ -27,9 +28,22 @@
     margin: 0;
     width: 100%;
     background-color: #1D222E;
-    font-size: 16px;
+    //font-size: 16px;
     color: #FFFFFF;
     line-height: 42px;
+    overflow: hidden;
+    p {
+      line-height: 42px;
+      height: 100%;
+      animation: notice 20s linear infinite;
+      margin: 0;
+      padding: 0;
+      cursor: pointer;
+
+      &:hover {
+        animation-play-state:paused;
+      }
+    }
   }
   .aboutUs {
     height: 800px/@width;
@@ -215,5 +229,13 @@
       border-radius: 2px;
       margin-left: 20%;
     }
+  }
+}
+@keyframes notice {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
   }
 }

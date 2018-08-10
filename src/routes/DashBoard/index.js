@@ -90,9 +90,9 @@ export default class View extends Component {
         {/*/!*<div className="swiper-slide" >slider3</div >*!/*/}
         {/*</div >*/}
         {/*</div >*/}
-        <p className={styles.notice} >
-          关于hopex将于北京时间2018年9月1日上线的通知
-        </p >
+        <div className={styles.notice} >
+          <p>关于hopex将于北京时间2018年9月1日上线的通知</p>
+        </div >
         <div className={styles.aboutUs} >
           <div className={styles.imgContainer} >
             <img src={phone} alt="" />
