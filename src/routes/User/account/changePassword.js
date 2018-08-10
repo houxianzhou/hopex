@@ -96,7 +96,7 @@ export default class ChangePassword extends Component {
                   changeState({
                     repeatNewPasswordMsg: '两次输入的密码不一致'
                   })
-                } else if(value === repeatNewPassword) {
+                } else if (value === repeatNewPassword) {
                   changeState({
                     repeatNewPasswordMsg: ''
                   })

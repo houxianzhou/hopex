@@ -9,9 +9,9 @@ import { Input } from './input';
 import { classNames, _, Patterns } from '@utils'
 import { PATH } from '@constants'
 import styles from './MyAccount.less'
-import {rightIcon, errorIcon} from '@assets/'
+import { rightIcon, errorIcon } from '@assets/'
 
-@connect(({ account: model, dispatch, theme}) => ({
+@connect(({ account: model, dispatch, theme }) => ({
   model,
   dispatch,
   theme,
@@ -51,8 +51,8 @@ export default class View extends Component {
       type: `${this.props.modelName}/GetLast10LoginLog`
     }).then((res = {}) => {
       // console.log(res)
-      const {data = []} = res;
-      if(data) {
+      const { data = [] } = res;
+      if (data) {
         this.setState({
           loginList: data
         })
@@ -62,7 +62,7 @@ export default class View extends Component {
       type: `${this.props.modelName}/GetUserInfo`
     }).then((res = {}) => {
       // console.log(res);
-      const {data = {}} = res;
+      const { data = {} } = res;
       if (data) {
         this.setState({
           userInfo: data
@@ -70,13 +70,14 @@ export default class View extends Component {
       }
     })
   };
+
   changeState(props) {
     this.setState(props);
   }
 
   render() {
-    const { model: { myAccountPage: page }, modelName, dispatch, theme:{calculateTableHeight} } = this.props;
-    const {googleIdentifyingCode, qrImageUrl, securityCode, userInfo:{email = '', country='', lastLoginTime='', lastLoginIp='', enabledTwoFactories=''}, loginList=[]} = this.state;
+    const { model: { myAccountPage: page }, modelName, dispatch, theme: { calculateTableHeight } } = this.props;
+    const { googleIdentifyingCode, qrImageUrl, securityCode, userInfo: { email = '', country = '', lastLoginTime = '', lastLoginIp = '', enabledTwoFactories = '' }, loginList = [] } = this.state;
     const { renderStatus } = this;
     const columns = [
       {
@@ -186,7 +187,7 @@ export default class View extends Component {
                         }).then((res = {}) => {
                           // console.log(res)
                           if (!res.data) return;
-                          const {qrImageUrl = '', securityCode = ''} = res.data;
+                          const { qrImageUrl = '', securityCode = '' } = res.data;
                           this.setState({
                             qrImageUrl: qrImageUrl || '',
                             securityCode: securityCode || '',
@@ -213,9 +214,9 @@ export default class View extends Component {
             <div className={styles.recordheader} >
               最近10条登录记录
             </div >
-            <div style={{height: calculateTableHeight(loginList, 50, 50)}}>
+            <div style={{ height: calculateTableHeight(loginList, 50, 50) }} >
               <Table {...tableProps} />
-            </div>
+            </div >
           </div >
         </div >
       </>
@@ -225,7 +226,7 @@ export default class View extends Component {
       <Fragment >
         <p className={styles.openGoogleTitle} >启用谷歌二次验证</p >
         <div className={styles.lineContainer} >
-          <div className={styles.stepLine}></div>
+          <div className={styles.stepLine} ></div >
           <div className={styles.lineItem} >
             <div className={styles.leftItem} >
               <img className={styles.circle} src={circle} alt="" />
@@ -239,10 +240,12 @@ export default class View extends Component {
               </p >
               <div className={styles.buttonContainer} >
                 <div className={styles.buttonItem} >
-                  <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8" target="_blank">iPhone下载</a >
+                  <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8"
+                     target="_blank" >iPhone下载</a >
                 </div >
                 <div className={styles.buttonItem} >
-                  <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Andriod下载</a >
+                  <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
+                     target="_blank" >Andriod下载</a >
                 </div >
               </div >
             </div >
@@ -296,7 +299,7 @@ export default class View extends Component {
             <div className={styles.rightItem} >
               <p className={styles.description} >输入谷歌验证器中的6位验证码进行验证</p >
               <div className={styles.googleCode} >
-                <div className={styles.label}>谷歌验证码</div>
+                <div className={styles.label} >谷歌验证码</div >
                 <Input
                   onChange={(value) => {
                     this.changeState({
@@ -304,7 +307,7 @@ export default class View extends Component {
                     })
                   }}
                   value={googleIdentifyingCode}
-                  placeholder="请输入谷歌验证码"/>
+                  placeholder="请输入谷歌验证码" />
               </div >
             </div >
           </div >
@@ -313,7 +316,7 @@ export default class View extends Component {
               styles.openGoogle,
               !googleIdentifyingCode && styles.disabled
             )}
-            onClick = {() => {
+            onClick={() => {
               if (!googleIdentifyingCode) {
                 return;
               }
@@ -323,7 +326,7 @@ export default class View extends Component {
                   googleCode: googleIdentifyingCode
                 }
               }).then((res) => {
-                if(res) {
+                if (res) {
                   dispatch({
                     type: `${modelName}/changeState`,
                     payload: {
@@ -333,37 +336,38 @@ export default class View extends Component {
                 }
               })
             }}
-          >开启</button>
+          >开启
+          </button >
         </div >
       </Fragment >
     );
 
     const closeGoogleEmailPage = (
-     <CheckEmail
-       type="close"
-       email={email}
-       sendEmailFunc={() => {
-         dispatch({
-           type: `${this.props.modelName}/SendEmailToDisableTwoFacotires`,
-           payload: {
-             email
-           }
-         })
-       }}
-       submitEmailCode={(code) => {
-         console.log(code)
-         if (!code) {
-           return;
-         }
-         console.log(code)
-         dispatch({
-           type: `${this.props.modelName}/doDisbaleGoogleVertify`,
-           payload: {
-             verificationCode: code || '',
-           },
-         })
-       }}
-     />
+      <CheckEmail
+        type="close"
+        email={email}
+        sendEmailFunc={() => {
+          dispatch({
+            type: `${this.props.modelName}/SendEmailToDisableTwoFacotires`,
+            payload: {
+              email
+            }
+          })
+        }}
+        submitEmailCode={(code) => {
+          console.log(code)
+          if (!code) {
+            return;
+          }
+          console.log(code)
+          dispatch({
+            type: `${this.props.modelName}/doDisbaleGoogleVertify`,
+            payload: {
+              verificationCode: code || '',
+            },
+          })
+        }}
+      />
     )
 
     const openGooglePage = (

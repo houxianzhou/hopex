@@ -6,7 +6,8 @@ import banner from '@assets/banner.jpg';
 import phone from '@assets/home-iphone.jpg';
 import item1 from '@assets/item1.png';
 import computer from '@assets/computer.png';
-import{BtIcon} from '@assets'
+import { btIcon,moreIcon, yzIcon, ytIcon } from '@assets'
+
 const itemList = [
   {
     img: item1,
@@ -17,8 +18,8 @@ const itemList = [
   {
     img: item1,
     title: '高杠杆',
-    des: '提供高达50倍杠杆',
-    desSecondLine: '2%的市场波动即可实现本金翻倍'
+    des: '提供高达100倍杠杆',
+    desSecondLine: '1%的市场波动即可实现本金翻倍'
   },
   {
     img: item1,
@@ -53,71 +54,100 @@ export default class View extends Component {
   render() {
     const { model: { myname } = {} } = this.props;
     return (
-      <div className={styles.home}>
-        <div className={styles.header}>
+      <div className={styles.home} >
+        <div className={styles.header} >
           <img src={banner} alt="" />
-        </div>
-        <p className={styles.notice}>
+        </div >
+        <p className={styles.notice} >
           关于hopex将于北京时间2018年9月1日上线的通知
-        </p>
-        <div className={styles.aboutUs}>
-          <div className={styles.imgContainer}>
+        </p >
+        <div className={styles.aboutUs} >
+          <div className={styles.imgContainer} >
             <img src={phone} alt="" />
-          </div>
-          <div className={styles.aboutUsContent}>
-            <div className={styles.absoluteFont}>ABOUT US</div>
-            <div className={styles.headerPart}></div>
-            <div className={styles.aboutUsFont}>关于我们</div>
-            <div className={styles.aboutUsMain}>
+          </div >
+          <div className={styles.aboutUsContent} >
+            <div className={styles.absoluteFont} >ABOUT US</div >
+            <div className={styles.headerPart} />
+            <div className={styles.aboutUsFont} >关于我们</div >
+            <div className={styles.aboutUsMain} >
               Hopex是由一群极客和数字资产爱好者创建的一个专注于数字资产衍生品交易的平台。
-              <br/><br/>
+              <br /><br />
               通过对技术、安全性、用户体验不断钻研提升，我们致力于打造一个为用户提供创新、便捷、可靠的数字资产衍生品交易服务的世界级平台。
-            </div>
-          </div>
-        </div>
-        <div className={styles.adventure}>
-          <div className={styles.absoluteFont}>PLATFORM ADVANTAGE</div>
-          <div className={styles.headerPart}></div>
-          <div className={styles.aboutUsFont}>Hopex平台优势</div>
-          <div className={styles.adventureContainer}>
+            </div >
+          </div >
+        </div >
+        <div className={styles.adventure} >
+          <div className={styles.absoluteFont} >PLATFORM ADVANTAGE</div >
+          <div className={styles.headerPart} />
+          <div className={styles.aboutUsFont} >Hopex平台优势</div >
+          <div className={styles.adventureContainer} >
             {
               itemList.map((item, index) => {
                 return (
-                  <div key={index} className={styles.adventureItem}>
-                      <div className={styles.itemIcon}>
-                        <img src={item.img}/>
-                      </div>
-                      <div className={styles.itemTitle}>{item.title}</div>
-                      <div className={styles.itemContent}>
-                        {item.des}<br/>
-                        {item.desSecondLine}
-                      </div>
+                  <div key={index} className={styles.adventureItem} >
+                    <div className={styles.itemIcon} >
+                      <img src={item.img} />
+                    </div >
+                    <div className={styles.itemTitle} >{item.title}</div >
+                    <div className={styles.itemContent} >
+                      {item.des}<br />
+                      {item.desSecondLine}
+                    </div >
                   </div >
                 )
               })
             }
-          </div>
-          <div className={styles.contract}>
-            <div className={styles.imgContainer}>
+          </div >
+          <div className={styles.contract} >
+            <div className={styles.imgContainer} >
               <img src={computer} alt="" />
-            </div>
-            <div className={styles.contractItem}>
-              <div className={styles.headerPart}></div>
-              <div className={styles.aboutUsFont}>我们提供的合约</div>
-              <div className={styles.contractDes}>
+            </div >
+            <div className={styles.contractItem} >
+              <div className={styles.headerPart} />
+              <div className={styles.aboutUsFont} >我们提供的合约</div >
+              <div className={styles.contractDes} >
                 Hopex支持多个币种的合约，同时我们也在不断开发创新的其他币种合约，力图给予广大投资者最丰富的选择。
-              </div>
-              <div className={styles.contractIconContainer}>
-                <div className={styles.firstIconLine}>
-                  <div className={styles.iconItem}>
-                    {BtIcon}
-                  </div>
+              </div >
+              <div className={styles.contractIconContainer} >
+                <div className={styles.firstIconLine} >
+                  <div className={styles.iconItem} >
+                    <div className={styles.bitIcon}>
+                      {btIcon}
+                    </div>
+                    <p className={styles.iconDes}>比特币</p>
+                  </div >
+                  <div className={styles.iconItem} >
+                    <div className={styles.bitIcon}>
+                      {ytIcon}
+                    </div>
+                    <p className={styles.iconDes}>以太币</p>
+                  </div >
+                  <div className={styles.iconItem} >
+                    <div className={styles.bitIcon}>
+                      {btIcon}
+                    </div>
+                    <p className={styles.iconDes}>瑞波币</p>
+                  </div >
+
                 </div >
-                <div className={styles.secondIconLine}></div >
-              </div>
-            </div>
-          </div>
-        </div>
+                <div className={styles.secondIconLine} >
+                  <div className={styles.iconItem} >
+                    <div className={styles.bitIcon}>
+                      { yzIcon }
+                    </div>
+                    <p className={styles.iconDes}>柚子币</p>
+                  </div >
+                  <div className={styles.iconItem} >
+                    <div className={styles.bitIcon}>
+                      {moreIcon}
+                    </div>
+                    <p className={styles.iconDes}>更多</p>
+                  </div >
+                </div >
+              </div >
+            </div >
+          </div >
+        </div >
       </div >
     )
   }

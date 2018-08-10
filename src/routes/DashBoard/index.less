@@ -31,6 +31,7 @@
   }
   .aboutUs {
     height: 800px/@width;
+    margin-bottom: 200px;
     display: flex;
     justify-content: center;
 
@@ -94,6 +95,7 @@
     .adventureContainer {
       width: 1500px/@width;
       margin: 120px/@width auto;
+      //margin-top: 110px/@width;
       min-height: 500px;
       display: flex;
       flex-wrap: wrap;
@@ -150,6 +152,33 @@
           line-height: 26px;
           color: #666666;
         }
+      }
+    }
+  }
+  .contractIconContainer {
+    .firstIconLine, .secondIconLine {
+      margin-top: 45px/@width;
+      display: flex;
+      justify-content: flex-start;
+
+      .iconItem {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 60px/@width;
+      }
+      .bitIcon {
+        width: 140px/@width;
+        height: 140px/@width;
+        svg {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .iconDes {
+        margin-top: 20px/@width;
+        font-size: 18px;
+        color: #666666;
       }
     }
   }
