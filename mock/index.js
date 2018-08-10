@@ -120,7 +120,7 @@ export default {
         "records": randomArrayMap(100).map((item, index) => (
           {
             "id": index,
-            "time": 1530869889.717263,
+            "time": "13:09:23",
             "price": randomStr(1000, 10000),
             "amount": randomStr(10000, 20000),
             "type": ["2", '1'][_.random(0, 1)]

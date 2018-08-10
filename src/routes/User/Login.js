@@ -190,7 +190,7 @@ export default class View extends Component {
               <div className={styles.down} >
                 <form >
                   <Input
-                    type='password'
+                    type='text'
                     placeholder={'请填写谷歌验证码'}
                     value={googleCode}
                     // msg={passwordMsg}
