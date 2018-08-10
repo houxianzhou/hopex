@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { _, } from '@utils';
+import { _, classNames } from '@utils';
 import * as styles from './index.less';
 import banner from '@assets/banner.jpg';
 import phone from '@assets/home-iphone.jpg';
 import item1 from '@assets/item1.png';
 import computer from '@assets/computer.png';
+import Swiper from 'swiper/dist/js/swiper.js'
+import 'swiper/dist/css/swiper.min.css'
+import bannerFirst from '@assets/home-1.jpg';
+import bannerSecond from '@assets/home-2.jpg';
 import { btIcon, moreIcon, yzIcon, ytIcon } from '@assets'
 
 const itemList = [
@@ -51,13 +55,41 @@ const itemList = [
   model,
 }))
 export default class View extends Component {
+  componentDidMount = () => {
+    new Swiper(this.refs.swiperContainer, {
+      autoplay: true,//可选选项，自动滑动
+    })
+  }
+
   render() {
     const { model: { myname } = {} } = this.props;
     return (
       <div className={styles.home} >
-        <div className={styles.header} >
-          <img src={banner} alt="" />
+        <div className={styles.header} ref="swiperContainer" >
+          <div className="swiper-wrapper" >
+            <div className="swiper-slide" >
+              <img src={bannerFirst} alt="" />
+            </div >
+            <div className="swiper-slide" >
+              <img src={bannerSecond} alt="" />
+            </div >
+            {/*<div className="swiper-slide" >slider3</div >*/}
+          </div >
         </div >
+        {/*// <div className={classNames(*/}
+        {/*//   styles.header,*/}
+        {/*//   'swiper-container'*/}
+        {/*// )} ref="swiperContainer">*/}
+        {/*//   <div className="swiper-wrapper" >*/}
+        {/*//     <div className="swiper-slide" >*/}
+        {/*//       <img src={bannerFirst} alt="" />*/}
+        {/*//     </div >*/}
+        {/*<div className="swiper-slide" >*/}
+        {/*<img src={bannerSecond} alt="" />*/}
+        {/*</div >*/}
+        {/*/!*<div className="swiper-slide" >slider3</div >*!/*/}
+        {/*</div >*/}
+        {/*</div >*/}
         <p className={styles.notice} >
           关于hopex将于北京时间2018年9月1日上线的通知
         </p >
@@ -148,12 +180,12 @@ export default class View extends Component {
             </div >
           </div >
         </div >
-        <div className={styles.homeFooter}>
-          <div className={styles.footerTitle}>
+        <div className={styles.homeFooter} >
+          <div className={styles.footerTitle} >
             时不我待，开启全新投资之旅
-          </div>
-          <button className={styles.signButton}>免费注册实盘账户</button>
-        </div>
+          </div >
+          <button className={styles.signButton} >免费注册实盘账户</button >
+        </div >
       </div >
     )
   }
