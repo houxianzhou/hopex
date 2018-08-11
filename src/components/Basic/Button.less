@@ -1,0 +1,22 @@
+.button {
+  position: relative;
+  &.loadingStatus{
+    &:before{
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      bottom: -1px;
+      right: -1px;
+      background: #fff;
+      opacity: 0.25;
+      content: '';
+      border-radius: inherit;
+      z-index: 1;
+      -webkit-transition: opacity .2s;
+      transition: opacity .2s;
+      pointer-events: none;
+      display: block;
+    }
+  }
+
+}

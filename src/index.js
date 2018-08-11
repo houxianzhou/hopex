@@ -8,7 +8,9 @@ import createHistory from 'history/createBrowserHistory'
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 import { ROOT } from '@constants'
+
 import './index.less'
+
 
 
 moment.locale('zh-cn')
@@ -21,7 +23,7 @@ const app = dva({
 
 // 2. Plugins
 app.use(createLoading({
-  namespace:'Loading'
+  namespace: 'Loading'
 }))
 // 4. Router
 app.router(require('./router').default)

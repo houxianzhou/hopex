@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { classNames, _ } from '@utils'
 import { Loading } from "@components"
+import * as styles from './Button.less'
 
 export default class View extends Component {
   // componentDidUpdate() {
@@ -14,6 +15,8 @@ export default class View extends Component {
         style={style}
         className={
           classNames(
+            styles.button,
+            loading ? styles.loadingStatus : null,
             className,
             loading ? 'loadingStatus' : null
           )

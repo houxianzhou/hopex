@@ -1,0 +1,22 @@
+.loadingIcon {
+  display: inline-block;
+  margin: 0 10px;
+  animation-name: loadingIcon;
+  animation-duration: .6s;
+
+  animation-timing-function: linear;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+@keyframes loadingIcon {
+  0% {
+    transform: rotate(0deg)
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}

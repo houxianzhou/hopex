@@ -8,6 +8,7 @@ import styles from './index.less'
 
 export default class View extends Component {
   state = {
+    side: '',
     orderChannel: 0,
     buy: {
       price: '',
@@ -212,7 +213,7 @@ export default class View extends Component {
   render() {
     const { renderArea, changeState } = this
     const { dispatch, loading, modelName, RG, model: { minVaryPrice = '', marketSecond = '', minDealAmount = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' } } = this.props
-    const { orderChannel, buy, sell } = this.state
+    const { side, orderChannel, buy, sell } = this.state
 
     // 限价或者市价
     const configPrice = {
@@ -259,13 +260,15 @@ export default class View extends Component {
     }
     // 交易按钮
     const configSubmit = {
+      loading: side === '2' && loading.effects[`${modelName}/postSideOrder`],
       label_text: '买入',
       label_desc: '委托价值',
       label_price: '100.BTC',
       className: RG ? styles.buy : styles.sell,
-      loading: loading.effects[`${modelName}/postSideOrder`],
       onSubmit: () => {
-        console.log('买入')
+        changeState({
+          side: '2'
+        })
         dispatch({
           type: `${modelName}/postSideOrder`,
           payload: {
@@ -327,9 +330,13 @@ export default class View extends Component {
       configSubmit: {
         ...configSubmit,
         ...{
+          loading: side === '1' && loading.effects[`${modelName}/postSideOrder`],
           label_text: '卖出',
           className: RG ? styles.sell : styles.buy,
           onSubmit: () => {
+            changeState({
+              side: '1'
+            })
             dispatch({
               type: `${modelName}/postSideOrder`,
               payload: {
