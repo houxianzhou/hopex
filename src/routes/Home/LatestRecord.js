@@ -23,7 +23,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { latest_records = [] }, RG, dispatch, modelName } = this.props
+    const { model: { latest_records = [] }, RG, dispatch, modelName, loading } = this.props
     const columns = [
       {
         title: '时间',

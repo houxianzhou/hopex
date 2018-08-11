@@ -33,6 +33,7 @@
     "react-dom": "^16.4.1",
     "react-draggable": "^3.0.5",
     "react-helmet": "^5.2.0",
+    "react-loading": "^2.0.3",
     "react-modal": "^3.5.1",
     "react-responsive": "^4.1.0",
     "react-select": "^2.0.0",

@@ -28,7 +28,7 @@ export default class View extends Component {
         }}
       >
         {children}
-        <Loading.Circle1 loading={loading} />
+        <Loading.Circle loading={loading} />
       </div >
     )
   }
