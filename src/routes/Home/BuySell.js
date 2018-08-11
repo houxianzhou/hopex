@@ -135,13 +135,14 @@ export default class View extends Component {
 
   renderSubmit = (config = {}) => {
     const {
-      configSubmit: { label_text, label_desc, label_price, className = {}, onSubmit } = {},
+      configSubmit: { label_text, label_desc, label_price, className = {}, onSubmit, loading } = {},
       configPrice: { value: valuePrice } = {},
       configAmount: { value: valueAmount } = {}
 
     } = config
     const { isLogin, routerGoLogin, routerGoRegister } = this.props
     return <Button
+      loading={loading}
       className={classNames(
         styles.submit,
         isLogin && valuePrice && valueAmount ? styles.haslogin : styles.notlogin,
@@ -210,7 +211,7 @@ export default class View extends Component {
 
   render() {
     const { renderArea, changeState } = this
-    const { dispatch, modelName, RG, model: { minVaryPrice = '', marketSecond = '', minDealAmount = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' } } = this.props
+    const { dispatch, loading, modelName, RG, model: { minVaryPrice = '', marketSecond = '', minDealAmount = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' } } = this.props
     const { orderChannel, buy, sell } = this.state
 
     // 限价或者市价
@@ -262,6 +263,7 @@ export default class View extends Component {
       label_desc: '委托价值',
       label_price: '100.BTC',
       className: RG ? styles.buy : styles.sell,
+      loading: loading.effects[`${modelName}/postSideOrder`],
       onSubmit: () => {
         console.log('买入')
         dispatch({

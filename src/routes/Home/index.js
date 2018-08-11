@@ -28,13 +28,13 @@ const Comp = {
   RecentRecord
 }
 let throttle
-@connect(({ home: model, modal, user, theme, loading, dispatch }) => ({
+@connect(({ home: model, modal, user, theme, Loading, dispatch }) => ({
   model,
   modal,
   user,
   modelName: 'home',
   theme,
-  loading,
+  loading: Loading,
   dispatch,
 }))
 export default class View extends Component {
@@ -198,7 +198,6 @@ export default class View extends Component {
               renderView('CurrentContract')
             }
           </div >
-
 
 
           {

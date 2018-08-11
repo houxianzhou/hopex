@@ -94,7 +94,7 @@ export default {
   },
 
   reducers: {
-    changeState(state, { payload }) {
+    changeState(state, { payload = {} }) {
       return { ...state, ...payload }
     },
     clearState(state, { payload }) {
