@@ -45,9 +45,10 @@ export default class View extends Component {
     const { value } = this.props
     // clearTimeout(this.interval)
     if (!isEqual(prevValue, value)) {
-      this.interval = setTimeout(() => {
-        this.rules(value)
-      })
+      this.rules(value)
+      // this.interval = setTimeout(() => {
+      //   this.rules(value)
+      // })
     }
     // if (!isEqual(prevValue, value) && !_.isNil(value)
     //   && !_.inRange(Number(value), Number(min) || window['-Infinity'], Number(max) || window.Infinity)
