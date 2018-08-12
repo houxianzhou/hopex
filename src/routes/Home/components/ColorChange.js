@@ -48,10 +48,11 @@ export default class ColorChange extends Component {
 
   componentDidUpdate(prevProps) {
     const { data: prevData = {}, total: prevTotal = [] } = prevProps
-    const { data = {}, total = [], RG } = this.props
-    const prevDataValue = (prevTotal.filter(item => item.dataIndex === data.dataIndex)[0] || {}).dataValue
+    const { data = {}, total = [], RG, color: prevColor } = this.props
+    if (prevColor) return
     const dataValue = data.dataValue
     if (!_.isNil(dataValue) && !isEqual(prevTotal, total)) {
+      const prevDataValue = (prevTotal.filter(item => item.dataIndex === data.dataIndex)[0] || {}).dataValue
       if (!throttle) {
         throttle = _.throttle(
           () => {

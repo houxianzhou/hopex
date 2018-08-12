@@ -53,8 +53,9 @@ export default class View extends Component {
         dataIndex: 'time',
         width: '25%',
         render: (value, record, index, dataSource) => (
-           value
-         // <Color record={record} dataSource={dataSource} >{value}</Color >
+          index < 5 ? (
+            <Color record={record} dataSource={dataSource} >{value}</Color >
+          ) : value
         )
       },
       {
