@@ -1,3 +1,6 @@
 {
-  "extends": "umi"
+  "extends": "umi",
+  "rules":{
+    "import/no-webpack-loader-syntax": "off"
+  }
 }

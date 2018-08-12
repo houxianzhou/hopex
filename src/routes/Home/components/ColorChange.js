@@ -1,9 +1,31 @@
 import React, { Component } from 'react'
 import { classNames, isEqual, _, dealInterval } from '@utils'
 import { COLORS } from '@constants'
-import * as styles from './ColorChange.less'
+// import Worker from 'worker-loader!../file.worker.js'
+//
+// const worker = new Worker()
 
+let throttle
 export default class ColorChange extends Component {
+  componentDidMount() {
+    // worker.addEventListener('message', (event) => {
+    //   const { prevDataValue, dataValue, prevTotal, total, RG } = event.data
+    //   if (!_.isNil(dataValue) && !isEqual(prevTotal, total)) {
+    //     const { colorChange } = this
+    //     let color = null
+    //     if (_.isNil(prevDataValue)) {
+    //       color = COLORS.yellowOpacity
+    //       colorChange(color)
+    //     } else if (!isEqual(prevDataValue, dataValue)) {
+    //       color = Number(dataValue) > Number(prevDataValue) ?
+    //         (RG ? COLORS.greenOpacity : COLORS.redOpacity) :
+    //         (RG ? COLORS.redOpacity : COLORS.greenOpacity)
+    //       colorChange(color)
+    //     }
+    //   }
+    // })
+  }
+
   state = {
     percent: 0,
     color: null
@@ -29,21 +51,25 @@ export default class ColorChange extends Component {
     const { data = {}, total = [], RG } = this.props
     const prevDataValue = (prevTotal.filter(item => item.dataIndex === data.dataIndex)[0] || {}).dataValue
     const dataValue = data.dataValue
-
-
     if (!_.isNil(dataValue) && !isEqual(prevTotal, total)) {
-      const { colorChange } = this
-      let color = null
-      if (_.isNil(prevDataValue)) {
-        color = COLORS.yellowOpacity
-        colorChange(color)
-      } else if (!isEqual(prevDataValue, dataValue)) {
-        color = Number(dataValue) > Number(prevDataValue) ?
-          (RG ? COLORS.greenOpacity : COLORS.redOpacity) :
-          (RG ? COLORS.redOpacity : COLORS.greenOpacity)
-        colorChange(color)
+      if (!throttle) {
+        throttle = _.throttle(
+          () => {
+            const { colorChange } = this
+            let color = null
+            if (_.isNil(prevDataValue)) {
+              color = COLORS.yellowOpacity
+              colorChange(color)
+            } else if (!isEqual(prevDataValue, dataValue)) {
+              color = Number(dataValue) > Number(prevDataValue) ?
+                (RG ? COLORS.greenOpacity : COLORS.redOpacity) :
+                (RG ? COLORS.redOpacity : COLORS.greenOpacity)
+              colorChange(color)
+            }
+            throttle = null
+          }, 200)
+        throttle()
       }
-
     }
   }
 

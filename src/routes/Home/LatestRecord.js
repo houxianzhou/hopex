@@ -7,6 +7,7 @@ import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
 import styles from './index.less'
 
+
 function Color(Props) {
   const { record = {}, dataSource = [], children } = Props
   return (
@@ -52,8 +53,8 @@ export default class View extends Component {
         dataIndex: 'time',
         width: '25%',
         render: (value, record, index, dataSource) => (
-          value
-          // <Color record={record} dataSource={dataSource} >{value}</Color >
+           value
+         // <Color record={record} dataSource={dataSource} >{value}</Color >
         )
       },
       {

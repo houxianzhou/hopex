@@ -118,7 +118,7 @@ export default {
       },
       "data": {
         "records": [{
-          "id": _.random(101,200),
+          "id": _.random(101, 200),
           "time": "任意值",
           "price": randomStr(1000, 10000),
           "amount": randomStr(10000, 20000),
@@ -153,7 +153,7 @@ export default {
       "data": {
         "asks": randomArrayMap(5).map((item, index) => ({
           "exist": ['0', '1'][_.random(0, 1)],
-          "price":  index + 10 + _.random(10, 20),
+          "price": index + 10 + _.random(10, 20),
           "amount": _.random(10000, 20000),//randomStr()
         })),
         "bids": randomArrayMap(5).map((item, index) => ({
@@ -267,7 +267,7 @@ export default {
         "positionList": (new Array(3)).fill().map(item => (
           {
             "market": "BTCUSDT",
-            "leverage": "10.00",
+            "leverage": _.random(10, 50) + '',
             "amount": "-1236019",
             "averagePrice": "232.88",
             "positionMoney": "534.7138",
@@ -462,7 +462,7 @@ export default {
             {
               "ctime": "2018-08-09 17:06:27",
               "ftime": "2018-08-09 17:06:46",
-              "id": "19654"+index,
+              "id": "19654" + index,
               "user": "3",
               "market": "BTCUSDT",
               "source": "浏览器，我是现价测试买单,数量10,价格6118.5,用户id：3,邮箱：xiaoyi.wei@bcsystech.com",
@@ -474,7 +474,7 @@ export default {
               "dealMoney": "0.0008171937566397",
               "dealFee": "-0.00",
               "orderStatus": "1",
-              "leverage": "20.00",
+              "leverage": _.random(10, 90) + '',
               "avgDealMoney": "6118.5",
               "delegateMoney": "0.00004209",
               "unwindProfit": "--"

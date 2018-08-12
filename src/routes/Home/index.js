@@ -16,6 +16,7 @@ import RecentRecord from './RecentRecord'
 import defaultpng from '@assets/default.png'
 import styles from './index.less'
 
+
 const Comp = {
   LatestRecord,
   TradeChart,
@@ -56,7 +57,6 @@ export default class View extends Component {
               type: `${modelName}/clearState`,
             })
             wss.closeAll().then((res) => {
-
               this.startInit()
               throttle = null
             }).catch((err) => {

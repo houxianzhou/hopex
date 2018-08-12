@@ -9,8 +9,8 @@ export default {
     "development": {
       "extraBabelPlugins": ["dva-hmr"]
     },
-
   },
+
   // extraBabelPresets:[
   //   ["@babel/env", { "targets": { "node": 6 } }]
   // ],
