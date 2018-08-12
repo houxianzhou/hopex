@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import echarts from 'echarts'
+const echarts= require('echarts/lib/echarts')
+require('echarts/lib/chart/line')
+require('echarts/lib/component/tooltip')
+require('echarts/lib/component/title')
 import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson, isEqual, dealInterval } from '@utils'
 import { Mixin } from "@components"
 import wss from '@services/SocketClient'
 import RedGreenSwitch from './components/RedGreenSwitch'
-import $ from 'jquery'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
 
