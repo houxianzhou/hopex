@@ -679,7 +679,10 @@ export default joinModel(modelExtend, {
         latestPrice: null, //计算出来的，最新交易价格
         equitablePrice: null, // 计算出来的，合理价格
 
+
+        personalEnsureHistory: [],//最近10条委托历史
         personalEnsures: [],//个人委托列表
+        positionList: [],//个人持仓列表
       }
     },
     getCurrentMarket(state, { payload = {} }) {

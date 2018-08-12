@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-const echarts= require('echarts/lib/echarts')
-require('echarts/lib/chart/line')
-require('echarts/lib/component/tooltip')
-require('echarts/lib/component/title')
 import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson, isEqual, dealInterval } from '@utils'
 import { Mixin } from "@components"
 import wss from '@services/SocketClient'
 import RedGreenSwitch from './components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
+
+const echarts = require('echarts/lib/echarts')
+require('echarts/lib/chart/line')
+require('echarts/lib/component/tooltip')
+require('echarts/lib/component/title')
 
 export default class View extends Component {
   constructor(props) {
@@ -449,6 +450,7 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/getKlineDetail`,
     }).then(res => {
+      if (!this._isMounted) return
       if (res) {
         this.interval = dealInterval(() => {
           this.startKlineDetail()

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, isEqual, _ } from '@utils'
+import { classNames, isEqual, _, dealInterval } from '@utils'
 import { COLORS } from '@constants'
 import * as styles from './ColorChange.less'
 
@@ -9,40 +9,41 @@ export default class ColorChange extends Component {
     color: null
   }
 
+  colorChange = (color) => {
+    this.interval && clearTimeout(this.interval)
+    this.setState({
+      percent: '100%',
+      color
+    })
+    this.interval = dealInterval(() => {
+      this.setState({
+        // percent: '0',
+        color: null
+      })
+      this.interval = null
+    }, 300)
+  }
+
   componentDidUpdate(prevProps) {
     const { data: prevData = {}, total: prevTotal = [] } = prevProps
     const { data = {}, total = [], RG } = this.props
     const prevDataValue = (prevTotal.filter(item => item.dataIndex === data.dataIndex)[0] || {}).dataValue
     const dataValue = data.dataValue
 
-    const colorCancel = () => {
-      clearTimeout(this.interval)
-      this.interval = setTimeout(() => {
-        this.setState({
-          percent: '0',
-          color: null
-        })
-      }, 200)
-    }
 
-    if (_.isNil(prevDataValue) && !_.isEmpty(data)) {
-      this.setState({
-        percent: '100%',
-        color: COLORS.yellowOpacity
-      })
-      colorCancel()
-    }
-
-    if (!_.isEmpty(data) && !_.isEmpty(total) && !isEqual(prevTotal, total)) {
-      if (!_.isNil(prevDataValue) && !isEqual(prevDataValue, dataValue)) {
-        this.setState({
-          percent: '100%',
-          color: Number(dataValue) > Number(prevDataValue) ?
-            (RG ? COLORS.greenOpacity : COLORS.redOpacity) :
-            (RG ? COLORS.redOpacity : COLORS.greenOpacity)
-        })
-        colorCancel()
+    if (!_.isNil(dataValue) && !isEqual(prevTotal, total)) {
+      const { colorChange } = this
+      let color = null
+      if (_.isNil(prevDataValue)) {
+        color = COLORS.yellowOpacity
+        colorChange(color)
+      } else if (!isEqual(prevDataValue, dataValue)) {
+        color = Number(dataValue) > Number(prevDataValue) ?
+          (RG ? COLORS.greenOpacity : COLORS.redOpacity) :
+          (RG ? COLORS.redOpacity : COLORS.greenOpacity)
+        colorChange(color)
       }
+
     }
   }
 
@@ -51,23 +52,26 @@ export default class ColorChange extends Component {
   }
 
   render() {
-    const { color, style = {}, percent, children, ...rest } = this.props
+    const { color, style = {}, percent, children, all = false, ...rest } = this.props
+    const getStyle = {
+      ...{
+        left: 0,
+        width: '100%',
+        height: '100%',
+        position: all ? 'absolute' : 'relative',
+        display: 'flex',
+        alignItems: 'center',
+      },
+      ...style
+    }
     return (
-      <div style={
-        {
-          ...{
-            width: '100%',
-            height: '100%',
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'center',
-          },
-          ...style
-        }
-      } >
+      <div style={all ? {
+        display: 'flex',
+        alignItems: 'center',
+      } : getStyle} >
         <div style={{
           position: 'absolute',
-          left: -5,
+          left: all ? 0 : -5,
           width: percent || this.state.percent,
           height: '90%',
           background: color || this.state.color,

@@ -4,18 +4,40 @@ import { Mixin, Table } from "@components"
 import { COLORS } from '@constants'
 import RedGreenSwitch from './components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
+import ColorChange from './components/ColorChange'
 import styles from './index.less'
+
+function Color(Props) {
+  const { record = {}, dataSource = [], children } = Props
+  return (
+    <ColorChange
+      all={true}
+      data={{
+        dataIndex: record.id,
+        dataValue: record.id,
+      }}
+      total={dataSource.map((item = {}) => ({
+        dataIndex: item.id,
+        dataValue: item.id,
+      }))}
+    >
+      {children}
+    </ColorChange >
+  )
+}
 
 export default class View extends Component {
   startInit = () => {
     this.getLatestRecord()
   }
 
+
   getLatestRecord = () => {
     const { dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getLatestRecord`,
     }).then(() => {
+      if (!this._isMounted) return
       this.interval = dealInterval(() => {
         this.getLatestRecord()
       })
@@ -29,19 +51,25 @@ export default class View extends Component {
         title: '时间',
         dataIndex: 'time',
         width: '25%',
-        // render: (value) => {
-        //   return moment.formatHMSFromSeconds(value)
-        // }
+        render: (value, record, index, dataSource) => (
+          value
+          // <Color record={record} dataSource={dataSource} >{value}</Color >
+        )
       },
       {
         title: '方向',
         dataIndex: 'type',
         width: '20%',
-        render: (value) => value === '2' || value === '买' ? (
-          <RedGreenSwitch.GreenText value='买入' />
-        ) : (
-          <RedGreenSwitch.RedText value='卖出' />
-        )
+        render: (value, record, index, dataSource) => {
+          const v = value === '2' || value === '买' ? (
+            <RedGreenSwitch.GreenText value='买入' />
+          ) : (
+            <RedGreenSwitch.RedText value='卖出' />
+          )
+          return (
+            v
+          )
+        }
       },
       {
         title: '价格',
@@ -54,19 +82,21 @@ export default class View extends Component {
             <RedGreenSwitch.RedGreenArrow style={style} alt='top' />) : (Number(value) < Number(next.price) ? (
             <RedGreenSwitch.RedGreenArrow style={style} alt='down' />) : null)
           const result = <span >{value}{img}</span >
-          return record.type === '2' || record.type === '买' ? (
+          let v = record.type === '2' || record.type === '买' ? (
             <RedGreenSwitch.GreenText value={result} />
           ) : <RedGreenSwitch.RedText value={result} />
+          return v
         }
       },
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render: (value, record = {}) => (
-          <span style={{ color: record.exist === '1' ? COLORS.yellow : null }} >
+        render: (value, record = {}) => {
+          let v = <span style={{ color: record.exist === '1' ? COLORS.yellow : null }} >
             {value}
             </span >
-        )
+          return v
+        }
       },
     ]
     const dataSource = latest_records

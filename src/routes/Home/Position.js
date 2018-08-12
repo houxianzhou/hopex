@@ -23,6 +23,7 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/getPosition`
     }).then(() => {
+      if (!this._isMounted) return
       this.interval = dealInterval(() => {
         this.getPosition()
       })

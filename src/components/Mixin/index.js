@@ -71,26 +71,33 @@ export class MixinChild extends React.Component {
     const [startInit, childInitStacks] = [_.get(that, 'startInit'), _.get(that, 'props.that.childInitStacks')]
     if (_.isFunction(startInit) && _.isArray(childInitStacks)) {
       childInitStacks.push(() => {
-        this.startUnMount().then(startInit())
+        this.startUnMount().then(
+          () => {
+            that._isMounted = true
+            startInit()
+          }
+        )
       })
     }
   }
 
   startUnMount = () => {
     const { that = {} } = this.props
-    if (that.interval) {
-      return new Promise((resolve) => {
-        if (_.isArray(that.interval)) {
-          that.interval.map(item => clearTimeout(item))
-        } else {
-          clearTimeout(that.interval)
-        }
-        that.interval = null
-        resolve()
-      })
-    } else {
-      return Promise.resolve()
-    }
+    that._isMounted = false
+    return Promise.resolve()
+    // if (that.interval) {
+    //   return new Promise((resolve) => {
+    //     if (_.isArray(that.interval)) {
+    //       that.interval.map(item => clearTimeout(item))
+    //     } else {
+    //       clearTimeout(that.interval)
+    //     }
+    //     that.interval = null
+    //     resolve()
+    //   })
+    // } else {
+    //   return Promise.resolve()
+    // }
   }
 
   render() {

@@ -83,11 +83,10 @@ export default class View extends Component {
                                                 type: `${modelName1}/getCurrentMarket`,
                                                 payload: item2
                                               })
+                                              history.replace({
+                                                search: `?marketCode=${item2.marketCode}`,
+                                              })
                                             }
-
-                                            // history.replace({
-                                            //   search: `?marketCode=${item.marketCode}`,
-                                            // });
                                           }} >
                                             <div className={styles.name} >{item2.marketName}</div >
                                             <div className={styles.price} >9334.5</div >

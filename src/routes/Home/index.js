@@ -49,12 +49,14 @@ export default class View extends Component {
     const { model: { marketCode }, dispatch, modelName } = this.props
     if (!isEqual(prevMarketCode, marketCode) && marketCode && prevMarketCode) {
       if (!throttle) {
+        // 暂时失效
         throttle = _.throttle(
           () => {
+            dispatch({
+              type: `${modelName}/clearState`,
+            })
             wss.closeAll().then((res) => {
-              dispatch({
-                type: `${modelName}/clearState`,
-              })
+
               this.startInit()
               throttle = null
             }).catch((err) => {
@@ -67,6 +69,10 @@ export default class View extends Component {
   }
 
   startInit = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/clearState`,
+    })
     this.getAllMarkets().then((res) => {
       this.childInitStacks.map(item => item && item())
     })

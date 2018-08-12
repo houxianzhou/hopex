@@ -20,6 +20,7 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/getPersonalEnsureHistory`
     }).then((res) => {
+        if (!this._isMounted) return
         this.interval = dealInterval(() => {
           this.getPersonalEnsureHistory()
         })

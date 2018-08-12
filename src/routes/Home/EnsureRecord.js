@@ -38,6 +38,7 @@ export default class View extends Component {
     this.getEnsureRecord()
   }
 
+
   getEnsureRecord = () => {
     const { dispatch, modelName } = this.props
     dispatch({
@@ -46,6 +47,7 @@ export default class View extends Component {
         mode: 'http'
       }
     }).then(res => {
+      if (!this._isMounted) return
       this.interval = dealInterval(() => {
         this.getEnsureRecord()
       })

@@ -19,6 +19,7 @@ export default class View extends Component {
       type: `${modelName}/getPersonalEnsure`,
       payload
     }).then((res) => {
+      if (!this._isMounted) return
         if (callback) return callback()
         this.interval = dealInterval(() => {
           this.getPersonalEnsure(payload)

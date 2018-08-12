@@ -117,7 +117,13 @@ export default {
         "userToken": "56"
       },
       "data": {
-        "records": randomArrayMap(100).map((item, index) => (
+        "records": [{
+          "id": _.random(101,200),
+          "time": "任意值",
+          "price": randomStr(1000, 10000),
+          "amount": randomStr(10000, 20000),
+          "type": ["2", '1'][_.random(0, 1)]
+        }].concat(randomArrayMap(99).map((item, index) => (
           {
             "id": index,
             "time": "13:09:23",
@@ -125,7 +131,7 @@ export default {
             "amount": randomStr(10000, 20000),
             "type": ["2", '1'][_.random(0, 1)]
           }
-        ))
+        )))
       },
       ...other
     })
@@ -147,7 +153,7 @@ export default {
       "data": {
         "asks": randomArrayMap(5).map((item, index) => ({
           "exist": ['0', '1'][_.random(0, 1)],
-          "price":  1.34, // index + 10 + _.random(10, 20),
+          "price":  index + 10 + _.random(10, 20),
           "amount": _.random(10000, 20000),//randomStr()
         })),
         "bids": randomArrayMap(5).map((item, index) => ({
