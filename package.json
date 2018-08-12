@@ -31,6 +31,7 @@
     "react-draggable": "^3.0.5",
     "react-loading": "^2.0.3",
     "react-modal": "^3.5.1",
+    "react-paginate": "^5.2.4",
     "react-responsive": "^4.1.0",
     "react-select": "^2.0.0",
     "react-toastify": "^4.1.0",
