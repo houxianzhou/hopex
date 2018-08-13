@@ -63,7 +63,7 @@ export async function getPosition(payload) {
 
 // 获取所有的个人合约列表
 export async function getPersonalEnsure(payload) {
-  return request(`${UserIp4}/order.user_active_delegate`, {
+  return request(`${UserIp4}/user.active_delegate`, {
     method: 'post',
     body: payload
   })

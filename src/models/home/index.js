@@ -439,7 +439,7 @@ export default joinModel(modelExtend, {
         }
       })))
       const res = getRes(yield call(getAllMarketDetails, repayload))
-      console.log(res,'--------------')
+      console.log(res, '--------------')
       if (resOk(res)) {
         const result = []
         _.mapKeys((_.get(res, 'data') || {}), (v = [], k = '') => {
@@ -510,9 +510,10 @@ export default joinModel(modelExtend, {
         type: 'createRequestParams',
         payload: {
           "head": {
-            "method": "order.user_active_delegate"
+            "method": "user.active_delegate"
           },
           "param": {
+            marketList: [],
             "pageIndex": String(pageIndex), //页码
             "pageSize": String(pageSize) //每页数量
           },
@@ -523,7 +524,7 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(getPersonalEnsure, repayload))
         if (resOk(res)) {
-          const [result, pageIndex] = [_.get(res, 'data.records'), _.get(res, 'data.pageIndex')]
+          const [result, pageIndex] = [_.get(res, 'data'), _.get(res, 'data.pageIndex')]
           const personalEnsures = yield select(({ home: { personalEnsures = [] } }) => personalEnsures)
           if (result) {
             // 此处为解决轮询的问题
