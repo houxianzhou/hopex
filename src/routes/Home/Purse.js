@@ -46,7 +46,7 @@ export default class View extends Component {
     const { model: { assetList = [], }, isLogin, routerGoLogin, routerGoRegister } = this.props
     const filterOne = assetList[currentPurse] || {}
     const {
-      roe, floatPercent, walletBalance,
+      roe, floatPercent, walletBalance, positionMargin,
       withdrawFreeze, totalWealth, delegateMargin, availableBalance
     } = filterOne
     return (
@@ -123,7 +123,7 @@ export default class View extends Component {
 
                         <div >
                           <div >持仓占用保证金</div >
-                          <div >{delegateMargin}</div >
+                          <div >{positionMargin}</div >
                         </div >
                         <div >
                           <div >可用金额</div >

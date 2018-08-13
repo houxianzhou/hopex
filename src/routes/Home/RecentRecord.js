@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { classNames, dealInterval, _, formatNumber } from '@utils'
-import { Table, Mixin } from '@components'
+import { Table, Mixin, Button } from '@components'
 import { SCROLLX, TABLE } from '@constants'
 import RedGreenSwitch from './components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
@@ -139,7 +139,9 @@ export default class View extends Component {
                       }
                     })
                   }} >
-                    成交明细
+                    <Button loading={record.loading} layer={false} loadingSize={16} >
+                          成交明细
+                        </Button >
                   </span >
                 ) : null
 

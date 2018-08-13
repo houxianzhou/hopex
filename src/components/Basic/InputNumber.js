@@ -32,8 +32,6 @@ export default class View extends Component {
 
   rules = (value) => {
     let { step = 10, max, min, prec = step, onChange } = this.props
-    console.log(value,'++++++++')
-
     if (!_.isNil(value) && !_.isNil(step)) {
       // value=Number(value)
       step = scientificToNumber(step)

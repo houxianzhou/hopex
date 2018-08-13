@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { classNames, moment, dealInterval, _, formatNumber } from '@utils'
-import { Table, Mixin } from '@components'
+import { Table, Mixin, Button } from '@components'
 import { SCROLLX, TABLE } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import RedGreenSwitch from './components/RedGreenSwitch'
@@ -19,7 +19,7 @@ export default class View extends Component {
       type: `${modelName}/getPersonalEnsure`,
       payload
     }).then((res) => {
-      if (!this._isMounted) return
+        if (!this._isMounted) return
         if (callback) return callback()
         this.interval = dealInterval(() => {
           this.getPersonalEnsure(payload)
@@ -104,7 +104,7 @@ export default class View extends Component {
         title: '操作',
         dataIndex: 'amount',
         width: 150,
-        render: (value, record) => {
+        render: (value, record = {}) => {
           return ({
               value: (
                 <>
@@ -134,7 +134,9 @@ export default class View extends Component {
                           }
                         })
                       }} >
-                    成交明细
+                        <Button loading={record.loading} layer={false} loadingSize={16} >
+                          成交明细
+                        </Button >
                   </span >
                     ) : null
                   }

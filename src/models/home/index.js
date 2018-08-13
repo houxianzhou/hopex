@@ -530,6 +530,7 @@ export default joinModel(modelExtend, {
     //查看订单明细
     * getPersonEnsureDetail({ payload = {} }, { call, put, select }) {
       const { orderId, type } = payload
+      const isCurrentOrder = (item = {}) => (item.orderId || item.id) === orderId
       let ensures = null
       let sort
       if (type === '0') {
@@ -539,8 +540,13 @@ export default joinModel(modelExtend, {
         sort = 'personalEnsureHistory'
         ensures = yield select(({ home: { personalEnsureHistory = [] } }) => deepClone(personalEnsureHistory))
       }
-      const filterOne = deepClone(ensures).filter((item = {}) => (item.orderId || item.id) === orderId)[0] || {}
+      const filterOne = deepClone(ensures).filter((item = {}) => isCurrentOrder(item))[0] || {}
       ensures.map((item = {}) => {
+        if (isCurrentOrder(item) && !item.expand) {
+          item.loading = true
+        } else {
+          delete item.loading
+        }
         delete item.expand
       })
       yield put({
@@ -568,9 +574,10 @@ export default joinModel(modelExtend, {
         if (repayload) {
           const res = getRes(yield call(getPersonEnsureDetail, repayload))
           if (resOk(res)) {
-            const result = ensures.filter((item = {}) => (item.orderId || item.id) === orderId)[0]
+            const result = ensures.filter((item = {}) => isCurrentOrder(item))[0]
             if (result) {
               result.expand = _.get(res, 'data.records')
+              result.loading = false
               yield put({
                 type: 'changeState',
                 payload: {
