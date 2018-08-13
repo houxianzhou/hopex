@@ -22,7 +22,7 @@ export default class View extends Component {
           <div className={styles.scrollPannelContent} >
             {
               loading ? (
-                <Loading.Bars />
+                <Loading.Circle loading={loading} isGlobal />
               ) : null
             }
             {children}

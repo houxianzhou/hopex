@@ -43,7 +43,7 @@ export default class ColorChange extends Component {
         color: null
       })
       this.interval = null
-    }, 300)
+    }, 250)
   }
 
   componentDidUpdate(prevProps) {
@@ -68,7 +68,7 @@ export default class ColorChange extends Component {
               colorChange(color)
             }
             throttle = null
-          }, 200)
+          }, 100)
         throttle()
       }
     }

@@ -7,11 +7,12 @@ import { classNames } from '@utils'
 // https://www.html5tricks.com/demo/svg-css3-loading-icons/index.html
 class Circle extends Component {
   render() {
+
+    const { color = '#f3f3f3', isGlobal = false } = this.props
     let {
-      size = 'middle',
+      size = isGlobal ? 40 : 'middle',
       loading = false,
     } = this.props
-    const { color = '#f3f3f3' } = this.props
     switch (size) {
       case 'large':
         size = 23
@@ -20,17 +21,24 @@ class Circle extends Component {
         size = 20
         break
     }
+
+    let v = (
+      <i style={{ fontSize: size, color: color }}
+         className={
+           classNames(
+             'iconfont icon-loading',
+             styles.loadingIcon
+           )
+         } />
+    )
     return (
       loading ? (
-        <i style={{ fontSize: size, color: color }}
-           className={
-             classNames(
-               'iconfont icon-loading',
-               styles.loadingIcon
-             )
-           } />
+        isGlobal ? (
+          <div className={styles.loadingContainer} >
+            {v}
+          </div >
+        ) : v
       ) : null
-
     )
   }
 }

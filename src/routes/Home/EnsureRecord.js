@@ -57,7 +57,7 @@ export default class View extends Component {
   render() {
     const { dis } = this.state
     const { changeState } = this
-    const { model: { ensure_records = [], latestPrice = '', latestPriceShown = '', indexPrice = '', equitablePrice = '', latestPriceTrend = '', varyRange = '' }, dispatch, modelName, RG } = this.props
+    const { model: { ensure_records = [], latestPrice = '', latestPriceShown = '', indexPrice = '', equitablePrice = '', latestPriceTrend = '', varyRange = '' }, dispatch, modelName, loading, RG } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'asks')
       , _.get(ensure_records, 'bids')
@@ -182,6 +182,7 @@ export default class View extends Component {
           }
         >
           <ScrollPannel
+            loading={loading.effects[`${modelName}/getEnsureRecord`] && _.isEmpty(ensure_records)}
             header={
               <div className={styles.ensurerecord_header} >
                 <div >委托列表</div >

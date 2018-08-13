@@ -124,6 +124,7 @@ export default class View extends Component {
           }
         >
           <ScrollPannel
+            loading={loading.effects[`${modelName}/getLatestRecord`]&&_.isEmpty(latest_records)}
             header={
               <div className={styles.record_header} >
                 <span >最新成交</span >
