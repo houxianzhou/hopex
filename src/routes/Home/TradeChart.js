@@ -519,7 +519,7 @@ export default class View extends Component {
     const {
       model: {
         marketName = '', maxPrice24h = '', minPrice24h = '', indexPrice = '',
-        latestPrice = '', latestPriceTrend = '', totalPrice24h = '', equitablePrice = '', latestPriceChangePercent = '', dollarPrice = '',
+        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', equitablePrice = '', latestPriceChangePercent = '', dollarPrice = '',
       },
       RG
     } = this.props
@@ -568,10 +568,10 @@ export default class View extends Component {
                             {
                               (/\+/.test(latestPrice)) ? (
                                 <RedGreenSwitch.GreenText
-                                  value={_.isString(latestPrice) ? latestPrice.replace(/[+-]/, '') : null} />
+                                  value={latestPriceShown} />
                               ) : (
                                 <RedGreenSwitch.RedText
-                                  value={_.isString(latestPrice) ? latestPrice.replace(/[+-]/, '') : null} />
+                                  value={latestPriceShown} />
                               )
                             }
                             {

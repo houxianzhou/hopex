@@ -197,6 +197,7 @@ export default joinModel(modelExtend, {
               minPrice24h,
               indexPrice: marketPrice,
               latestPrice: priceLast,
+              latestPriceShown: _.isString(priceLast) ? priceLast.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
               totalPrice24h,
               latestPriceChangePercent: percent,
               dollarPrice: dollarPrice,

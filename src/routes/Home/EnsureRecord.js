@@ -57,7 +57,7 @@ export default class View extends Component {
   render() {
     const { dis } = this.state
     const { changeState } = this
-    const { model: { ensure_records = [], latestPrice = '', indexPrice = '', equitablePrice = '', latestPriceTrend = '', varyRange = '' }, dispatch, modelName, RG } = this.props
+    const { model: { ensure_records = [], latestPrice = '', latestPriceShown = '', indexPrice = '', equitablePrice = '', latestPriceTrend = '', varyRange = '' }, dispatch, modelName, RG } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'asks')
       , _.get(ensure_records, 'bids')
@@ -217,16 +217,19 @@ export default class View extends Component {
               <div className={styles.center} >
                 <div className={styles.left} >
                   {
-                    latestPriceTrend ? (
-                      <>
-                        <RedGreenSwitch.GreenText value={latestPrice} />
-                        <RedGreenSwitch.RedGreenArrow alt='top' />
-                      </>
+                    (/\+/.test(latestPrice)) ? (
+                      <RedGreenSwitch.GreenText
+                        value={latestPriceShown} />
                     ) : (
-                      <>
-                        <RedGreenSwitch.RedText value={latestPrice} />
-                        <RedGreenSwitch.RedGreenArrow alt='down' />
-                      </>
+                      <RedGreenSwitch.RedText
+                        value={latestPriceShown} />
+                    )
+                  }
+                  {
+                    latestPriceTrend ? (
+                      <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt='top' />
+                    ) : (
+                      <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt='down' />
                     )
                   }
                 </div >
