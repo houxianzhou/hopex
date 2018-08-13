@@ -536,7 +536,6 @@ export default class View extends Component {
       { name: '1mon', value: 'M' }
     ]
 
-
     return (
       <Mixin.Child that={this} >
         <div
@@ -567,16 +566,19 @@ export default class View extends Component {
                           <div className={styles.marketname} >{marketName}</div >
                           < div className={styles.latestprice} >
                             {
-                              latestPriceTrend ? (
-                                <>
-                                  <RedGreenSwitch.GreenText value={latestPrice} />
-                                  <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt='top' />
-                                </>
+                              (/\+/.test(latestPrice)) ? (
+                                <RedGreenSwitch.GreenText
+                                  value={_.isString(latestPrice) ? latestPrice.replace(/[+-]/, '') : null} />
                               ) : (
-                                <>
-                                  <RedGreenSwitch.RedText value={latestPrice} />
-                                  <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt='down' />
-                                </>
+                                <RedGreenSwitch.RedText
+                                  value={_.isString(latestPrice) ? latestPrice.replace(/[+-]/, '') : null} />
+                              )
+                            }
+                            {
+                              latestPriceTrend ? (
+                                <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt='top' />
+                              ) : (
+                                <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt='down' />
                               )
                             }
                           </div >

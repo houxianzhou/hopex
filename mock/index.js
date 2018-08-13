@@ -12,7 +12,6 @@ const other = {
 }
 
 export default {
-
   // 合约列表
   'Post /mock/api/v1/quote/market.list': (req, res) => {
     res.send({
@@ -391,7 +390,7 @@ export default {
         "percent": "+50.00",
         "dollarPrice": randomStr(100, 1000),
         "price24h": randomStr(100, 1000),
-        "priceLast": randomStr(100, 1000),
+        "priceLast": '+' + randomStr(100, 1000),
         "marketName": "BTCUSDT永续"
       },
       "errCode": "0",
