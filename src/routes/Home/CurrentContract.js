@@ -85,7 +85,7 @@ export default class View extends Component {
             </div >
           </ScrollPannel >
           {
-            name === 'contract' ? (<RenderModal {...this.props} />) : null
+            name === 'contract' ? (<RenderModal {...this.props} getLeverage={this.getLeverage} />) : null
           }
         </div >
       </Mixin.Child >
@@ -104,7 +104,7 @@ class RenderModal extends Component {
       title: '设置杠杆倍数'
     }
 
-    const { model: { levelages = [], keepBailRate, leverage, }, dispatch, modelName } = this.props
+    const { model: { levelages = [], keepBailRate, leverage, }, getLeverage, dispatch, modelName } = this.props
     const { currentValue } = this.state
     const marks = levelages.reduce((sum, next = {}) => {
       const leverage = next.leverage
@@ -161,7 +161,7 @@ class RenderModal extends Component {
                 <div >维持保证金率</div >
               </li >
               {
-                levelages.map((item, index) => {
+                _.orderBy(levelages, (item = {}) => item.leverage).map((item, index) => {
                   return (
                     <li key={index + 1} >
                       {
@@ -224,6 +224,7 @@ class RenderModal extends Component {
                 dispatch({
                   type: `${modelName}/closeModal`,
                 })
+                getLeverage()
               })
             }}
           >

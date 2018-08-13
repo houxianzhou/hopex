@@ -5,10 +5,11 @@ export default class Content extends Component {
   render() {
     const { children } = this.props
     return (
-      <div className={styles.content} >
+      <div className={styles.content} style={{
+        // background:'red'
+      }}>
         {children}
       </div >
     )
   }
-
 }
