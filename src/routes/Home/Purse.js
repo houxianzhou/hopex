@@ -25,11 +25,14 @@ export default class View extends Component {
         dispatch({
           type: `${modelName}/changeState`,
           payload: {
-            availableMoney: filterOne.available
+            availableMoney: filterOne.availableBalance
           }
         })
         if (!this._isMounted) return
-        this.getPurseAssetList()
+        this.interval = dealInterval(() => {
+          this.getPurseAssetList()
+        })
+
       }
     })
   }
