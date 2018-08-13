@@ -22,7 +22,7 @@ class Circle extends Component {
     }
     return (
       loading ? (
-        <i style={{ fontSize: size, }}
+        <i style={{ fontSize: size, color: color }}
            className={
              classNames(
                'iconfont icon-loading',
@@ -44,9 +44,9 @@ class Bars extends Component {
     const { color = '#fff' } = this.props
     return (
       loading ? (
-        <div className={styles.loadingContainer}>
-          <ReactLoading type='bars' color={color}  />
-        </div>
+        <div className={styles.loadingContainer} >
+          <ReactLoading type='bars' color={color} />
+        </div >
       ) : null
     )
   }

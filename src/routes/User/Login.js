@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { ShowJsonTip, Input, Toast } from '@components'
+import { ShowJsonTip, Input, Toast, Button } from '@components'
 import { classNames, _, Patterns, localSave } from '@utils'
 import { PATH } from '@constants'
 import logo2 from '@assets/logo2.png'
@@ -10,8 +10,9 @@ import vertifycodepng from '@assets/vertifycode.png'
 import { default as Structure } from './components/Structure'
 import styles from './index.less'
 
-@connect(({ user: model, loading, dispatch }) => ({
+@connect(({ user: model, Loading: loading, dispatch }) => ({
   model,
+  loading,
   modelName: 'user',
   dispatch
 }))
@@ -76,7 +77,7 @@ export default class View extends Component {
     }
     const { changeState } = this
     const { email, emailMsg, password, passwordMsg, googleCode, userId, page } = this.state
-    const { dispatch, modelName, } = this.props
+    const { dispatch, modelName, loading } = this.props
     return (
       <Structure goBack={page !== 1 ? () => {
         changeState({ page: page - 1 })
@@ -147,7 +148,9 @@ export default class View extends Component {
                       <img alt='password' src={passwordpng} />
                     )}
                   />
-                  <button
+
+                  <Button
+                    loading={loading.effects[`${modelName}/doLogin`]}
                     className={classNames(
                       styles.formbutton,
                       email && !emailMsg && password && !passwordMsg ? styles.permit : styles.notpermit
@@ -157,7 +160,7 @@ export default class View extends Component {
                       this.login()
                     }} >
                     登录
-                  </button >
+                  </Button >
                 </form >
                 <div className={styles.othermethod} >
                   <div
@@ -210,7 +213,8 @@ export default class View extends Component {
                       <img alt='vertifycode' src={vertifycodepng} />
                     )}
                   />
-                  <button
+                  <Button
+                    loading={loading.effects[`${modelName}/doVertifyLogin`]}
                     className={classNames(
                       styles.formbutton,
                       email && userId && googleCode ? styles.permit : styles.notpermit
@@ -227,7 +231,7 @@ export default class View extends Component {
                       })
                     }} >
                     登录
-                  </button >
+                  </Button >
                 </form >
               </div >
             ) : null

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ToastContainer, toast } from 'react-toastify'
-import { ShowJsonTip, Select, Input, CountDown } from '@components'
+import { ShowJsonTip, Select, Input, CountDown, Button } from '@components'
 import { classNames, _, Patterns } from '@utils'
 import { default as Structure } from './components/Structure'
 import emailpng from '@assets/email.png'
@@ -9,7 +9,8 @@ import vertifycodepng from '@assets/vertifycode.png'
 import passwordpng from '@assets/password.png'
 import styles from './index.less'
 
-@connect(({ user: model, loading, dispatch }) => ({
+@connect(({ user: model, Loading: loading, dispatch }) => ({
+  loading,
   model,
   modelName: 'user',
   dispatch
@@ -38,7 +39,7 @@ export default class View extends Component {
     const {
       page, email, emailMsg, verificationCode, newPassword, newPasswordMsg, newPasswordAgain, newPasswordAgainMsg
     } = this.state
-    const { dispatch, modelName } = this.props
+    const { dispatch, modelName, loading } = this.props
 
     return (
       <Structure goBack={page !== 1 ? () => {
@@ -86,7 +87,8 @@ export default class View extends Component {
                       )}
                     />
 
-                    <button
+                    <Button
+                      loading={loading.effects[`${modelName}/doEmailExists`]}
                       className={classNames(
                         styles.formbutton,
                         email && !emailMsg ? styles.permit : styles.notpermit
@@ -108,7 +110,7 @@ export default class View extends Component {
                       }}
                     >
                       下一步
-                    </button >
+                    </Button >
                   </form >
                 </div >
               </div >
@@ -152,7 +154,8 @@ export default class View extends Component {
                     />
 
 
-                    <button
+                    <Button
+                      loading={loading.effects[`${modelName}/doVertifyCode`]}
                       className={classNames(
                         styles.formbutton,
                         email && verificationCode ? styles.permit : styles.notpermit
@@ -175,7 +178,7 @@ export default class View extends Component {
                       }}
                     >
                       提交
-                    </button >
+                    </Button >
                   </form >
                 </div >
               </div >
@@ -281,7 +284,8 @@ export default class View extends Component {
                       )}
                     />
 
-                    <button
+                    <Button
+                      loading={loading.effects[`${modelName}/doResetPassword`]}
                       className={classNames(
                         styles.formbutton,
                         email && newPassword && !newPasswordMsg && newPasswordAgain && !newPasswordAgainMsg ? styles.permit : styles.notpermit
@@ -298,7 +302,7 @@ export default class View extends Component {
                       }}
                     >
                       提交
-                    </button >
+                    </Button >
                   </form >
                 </div >
               </div >

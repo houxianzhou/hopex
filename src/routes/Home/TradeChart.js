@@ -627,6 +627,13 @@ export default class View extends Component {
                         <div className={styles.title} >24h交易额</div >
                         <div className={styles.desc} >{totalPrice24h}</div >
                       </li >
+
+                      <li >
+                        <div className={styles.title} >
+                          <span className='blue'>更多</span>
+                        </div >
+                        <div className={styles.desc} ></div >
+                      </li >
                     </ul >
                   </div >
                 </div >

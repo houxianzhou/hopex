@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ToastContainer, toast } from 'react-toastify'
-import { ShowJsonTip, Select, Input, CountDown } from '@components'
+import { ShowJsonTip, Select, Input, CountDown, Button } from '@components'
 import { PATH, COLORS } from '@constants'
 import { classNames, _, Patterns } from '@utils'
 import { default as Structure } from './components/Structure'
@@ -13,10 +13,11 @@ import selectpng from '@assets/select.png'
 import vertifycodepng from '@assets/vertifycode.png'
 import styles from './index.less'
 
-@connect(({ user: model, loading, dispatch }) => ({
+@connect(({ user: model, Loading: loading, dispatch }) => ({
   model,
   modelName: 'user',
-  dispatch
+  dispatch,
+  loading
 }))
 export default class View extends Component {
   componentDidMount() {
@@ -30,7 +31,7 @@ export default class View extends Component {
 
     countryCode: 'CN',
     agentId: 1,
-    email: '',
+    email: '1',
     emailMsg: '',
     password: '',
     passwordMsg: '',
@@ -79,7 +80,7 @@ export default class View extends Component {
       page, countryList,
       countryCode, password, passwordMsg, agentId, channel, userType, packType, email, emailMsg, verificationCode, newPassword
     } = this.state
-    const { dispatch, modelName } = this.props
+    const { dispatch, modelName, loading } = this.props
 
     return (
       <Structure goBack={page === 2 ? () => {
@@ -181,7 +182,7 @@ export default class View extends Component {
                         styles={{
                           menu: {
                             paddingRight: 20,
-                            top:35,
+                            top: 35,
                           },
                           menuList: {
                             width: '100%'
@@ -216,7 +217,8 @@ export default class View extends Component {
                         !agentId ? <div className={styles.mustselect} >请勾选</div > : null
                       }
                     </div >
-                    <button
+                    <Button
+                      loading={loading.effects[`${modelName}/doRegister`]}
                       className={classNames(
                         styles.formbutton,
                         email && !emailMsg && password && !passwordMsg && agentId && countryCode ? styles.permit : styles.notpermit
@@ -238,7 +240,7 @@ export default class View extends Component {
                       }}
                     >
                       注册
-                    </button >
+                    </Button >
                     <div className={styles.loginentry} >已经有账户 ?
                       <span
                         style={{ cursor: 'pointer' }}
@@ -290,7 +292,8 @@ export default class View extends Component {
                         </div >
                       )}
                     />
-                    <button
+                    <Button
+                      loading={loading.effects[`${modelName}/doRegisterVerify`]}
                       className={classNames(
                         styles.formbutton,
                         email && verificationCode ? styles.permit : styles.notpermit
@@ -306,7 +309,7 @@ export default class View extends Component {
                       }}
                     >
                       注册
-                    </button >
+                    </Button >
                   </form >
                 </div >
               </div >

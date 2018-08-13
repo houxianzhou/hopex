@@ -81,6 +81,9 @@ export default class View extends Component {
   getAllMarkets = () => {
     const { dispatch, modelName, model: { marketList = [] }, location: { search } } = this.props
     if (_.isEmpty(marketList)) {
+      // dispatch({
+      //   type:`${modelName}/getAllMarketDetails`
+      // })
       return dispatch({
         type: `${modelName}/getAllMarkets`,
         payload: {

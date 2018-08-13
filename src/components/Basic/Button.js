@@ -9,7 +9,7 @@ export default class View extends Component {
   // }
 
   render() {
-    const { children, style = {}, className, onClick, loading = false, layer = true, loadingSize } = this.props
+    const { children, style = {}, className, onClick, loading = false, layer = true, loadingSize, color } = this.props
     return (
       <div
         style={style}
@@ -21,14 +21,14 @@ export default class View extends Component {
             loading ? 'loadingStatus' : null
           )
         }
-        onClick={() => {
+        onClick={(e) => {
           if (_.isFunction(onClick) && !loading) {
-            onClick()
+            onClick(e)
           }
         }}
       >
         {children}
-        <Loading.Circle loading={loading} size={loadingSize} />
+        <Loading.Circle loading={loading} size={loadingSize} color={color} />
       </div >
     )
   }

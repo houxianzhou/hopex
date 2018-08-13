@@ -165,11 +165,11 @@ export default {
     })
   },
   //用户的委托列表
-  'Post /mock/api/v1/trade/order.user_active_delegate': (req, res) => {
+  'Post /mock/api/v1/trade/user.active_delegate': (req, res) => {
     const { pageIndex, pageSize } = _.get(req.body, 'param')
     res.send({
       "head": {
-        "method": "order.user_active_delegate",
+        "method": "user.active_delegate",
         "userId": "3",
         "userToken": "user.QC5LTHR6HOUZINUCE4YI.web",
         "lang": "cn",
@@ -180,38 +180,33 @@ export default {
         "serialNumber": "49",
         "msgType": "response"
       },
-      "data": {
-        "pageIndex": String(pageIndex),
-        "pageSize": "100",
-        "total": "3",
-        "records": (new Array(Number(3))).fill({}).map((item, index) => ({
-          "orderId": String(index),
-          "market": "BTCUSDT" + '第' + pageIndex + '页',
-          "source": "我是现价测试单",
-          "type": _.random('1', '2'),
-          "side": _.random('1', '2'),
-          "userId": "3",
-          "ctime": "20:18:12",
-          "mtime": "20:18:12",
-          "price": "6",
-          "amount": _.random('5', '-5'),
-          "taker_fee": "0.01",
-          "maker_fee": "0.01",
-          "left": "2",
-          "deal_stock": "0",
-          "deal_money": "0",
-          "deal_fee": "0",
-          "takerFee": "0.01",
-          "makerFee": "0.01",
-          "dealAmount": "0",
-          "dealMoney": "0",
-          "dealFee": "0",
-          "orderStatus": "1",
-          "leverage": "10",
-          "avgDealMoney": "0",
-          "delegateMoney": "0.006"
-        }))
-      },
+      "data":  (new Array(Number(3))).fill({}).map((item, index) => ({
+        "orderId": String(index),
+        "market": "BTCUSDT" + '第' + pageIndex + '页',
+        "source": "我是现价测试单",
+        "type": _.random('1', '2'),
+        "side": _.random('1', '2'),
+        "userId": "3",
+        "ctime": "20:18:12",
+        "mtime": "20:18:12",
+        "price": "6",
+        "amount": _.random('5', '-5'),
+        "taker_fee": "0.01",
+        "maker_fee": "0.01",
+        "left": "2",
+        "deal_stock": "0",
+        "deal_money": "0",
+        "deal_fee": "0",
+        "takerFee": "0.01",
+        "makerFee": "0.01",
+        "dealAmount": "0",
+        "dealMoney": "0",
+        "dealFee": "0",
+        "orderStatus": "1",
+        "leverage": "10",
+        "avgDealMoney": "0",
+        "delegateMoney": "0.006"
+      })),
       ...other
     })
   },
@@ -247,7 +242,6 @@ export default {
       ...other
     })
   },
-
   //用户持仓
   'Post /mock/api/v1/trade/user.position': (req, res) => {
     res.send({
