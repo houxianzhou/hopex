@@ -28,6 +28,8 @@ export default class View extends Component {
             availableMoney: filterOne.available
           }
         })
+        if (!this._isMounted) return
+        this.getPurseAssetList()
       }
     })
   }
@@ -41,8 +43,8 @@ export default class View extends Component {
     const { model: { assetList = [], }, isLogin, routerGoLogin, routerGoRegister } = this.props
     const filterOne = assetList[currentPurse] || {}
     const {
-      floatProfit, floatPercent, walletBalance,
-      deletegate, withdrawFreeze, totalWealth, position, available
+      roe, floatPercent, walletBalance,
+      withdrawFreeze, totalWealth, delegateMargin, availableBalance
     } = filterOne
     return (
       <Mixin.Child that={this} >
@@ -89,7 +91,7 @@ export default class View extends Component {
                     <div className={styles.top} >
                       <div className={styles.tip} >浮动盈亏</div >
                       <div className={styles.number} >
-                        <RedGreenSwitch.GreenText value={floatProfit} />
+                        <RedGreenSwitch.GreenText value={`${roe}%`} />
                       </div >
                       <div className={styles.percent} >
                         <RedGreenSwitch.GreenText value={floatPercent} />
@@ -103,7 +105,7 @@ export default class View extends Component {
                         </div >
                         <div >
                           <div >委托占用保证金</div >
-                          <div >{deletegate}</div >
+                          <div >{delegateMargin}</div >
                         </div >
                         <div >
                           <div >提现冻结金额</div >
@@ -118,11 +120,11 @@ export default class View extends Component {
 
                         <div >
                           <div >持仓占用保证金</div >
-                          <div >{position}</div >
+                          <div >{delegateMargin}</div >
                         </div >
                         <div >
                           <div >可用金额</div >
-                          <div >{available}</div >
+                          <div >{availableBalance}</div >
                         </div >
                       </div >
                     </div >
