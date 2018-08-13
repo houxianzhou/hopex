@@ -5,7 +5,7 @@ import modelExtend from '@models/modelExtend'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
-  getPosition, getPersonEnsureDetail, getAllMarkets, getLeverage, doUpdateLeverage,
+  getPosition, getPersonEnsureDetail, getAllMarkets, getAllMarketDetails, getLeverage, doUpdateLeverage,
   getKlineAllList, getPersonalEnsureHistory, getKlineDetail
 } from "@services/trade"
 
@@ -386,48 +386,7 @@ export default joinModel(modelExtend, {
       }
     },
 
-    //合约列表 market.list
-    // * getAllMarkets({ payload = {} }, { call, put }) {
-    //   const repayload = yield (asyncPayload(yield put({
-    //     type: 'createRequestParams',
-    //     payload: {
-    //       "head": {
-    //         "method": "market.list"
-    //       },
-    //       "param": {},
-    //     }
-    //   })))
-    //   const res = getRes(yield call(getAllMarkets, repayload))
-    //   if (resOk(res)) {
-    //     const result = []
-    //     _.mapKeys((_.get(res, 'data') || {}), (v = [], k = '') => {
-    //       v.forEach(item => item.sortType = k)
-    //       result.push(...v)
-    //     })
-    //     result.map(item => {
-    //       item.levelages = formatJson(item.levelages)
-    //     })
-    //     if (result) {
-    //       const { search } = payload
-    //       const filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
-    //       yield put({
-    //         type: 'changeState',
-    //         payload: {
-    //           marketList: result
-    //         }
-    //       })
-    //       yield put({
-    //         type: 'getCurrentMarket',
-    //         payload: filterOne
-    //       })
-    //       return result
-    //     }
-    //   } else {
-    //     return Promise.reject('合约列表获取失败')
-    //   }
-    // },
-
-    //合约列表 market.list
+    // 合约列表 market.list
     * getAllMarkets({ payload = {} }, { call, put }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
@@ -439,6 +398,48 @@ export default joinModel(modelExtend, {
         }
       })))
       const res = getRes(yield call(getAllMarkets, repayload))
+      if (resOk(res)) {
+        const result = []
+        _.mapKeys((_.get(res, 'data') || {}), (v = [], k = '') => {
+          v.forEach(item => item.sortType = k)
+          result.push(...v)
+        })
+        result.map(item => {
+          item.levelages = formatJson(item.levelages)
+        })
+        if (result) {
+          const { search } = payload
+          const filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
+          yield put({
+            type: 'changeState',
+            payload: {
+              marketList: result
+            }
+          })
+          yield put({
+            type: 'getCurrentMarket',
+            payload: filterOne
+          })
+          return result
+        }
+      } else {
+        return Promise.reject('合约列表获取失败')
+      }
+    },
+
+    //合约列表 market.list
+    * getAllMarketDetails({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "market.detail_list"
+          },
+          "param": {},
+        }
+      })))
+      const res = getRes(yield call(getAllMarketDetails, repayload))
+      console.log(res,'--------------')
       if (resOk(res)) {
         const result = []
         _.mapKeys((_.get(res, 'data') || {}), (v = [], k = '') => {

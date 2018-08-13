@@ -46,6 +46,12 @@ export async function getAllMarkets(payload) {
     body: payload
   })
 }
+export async function getAllMarketDetails(payload) {
+  return request(`${UserIp3}/market.detail_list`, {
+    method: 'post',
+    body: payload
+  })
+}
 
 // 获取所有的个人持仓列表
 export async function getPosition(payload) {
