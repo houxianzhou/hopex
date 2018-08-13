@@ -3,6 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import { classNames, Patterns, _, isEqual } from '@utils'
 import * as styles from './InputNumber.less'
 
+
 export default class View extends Component {
 
   componentWillUnmount() {
@@ -13,28 +14,31 @@ export default class View extends Component {
     let { step = 10, max, min, prec = step, onChange } = this.props
 
     if (!_.isNil(value) && !_.isNil(step)) {
+      // value=Number(value)
       step = Number(step)
       max = Number(max)
       min = Number(min)
     }
 
     if (!_.isNil(value) && value !== '') {
-      // console.log(value, '------------')
-      if (!/\.$/.test(value)) {
+      // value = scientificToNumber(value)
+      if (!/\.$/.test(value) || /^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$/.test(value)) {
         if (value < min) value = min
         if (value > max) value = max
+
         const v = new BigNumber(value)
         const int = Math.floor(v.div(prec).valueOf())
         const floa = v.minus(int * step).valueOf()
-        // console.log(int, floa, prec)
+        //console.log(int, floa, prec)
+        // console.log(floa, scientificToNumber((new BigNumber(prec)).div(2).valueOf()), floa >= scientificToNumber((new BigNumber(prec)).div(2).valueOf()))
         if (floa >= (new BigNumber(prec)).div(2).valueOf()) {
           value = (int + 1) * prec
         } else {
           value = int * prec
         }
-        // if (value < prec) value = prec
       }
       onChange(value)
+      // onChange((new BigNumber(value)).toFixed(9))
     } else {
       onChange('')
     }
@@ -60,16 +64,17 @@ export default class View extends Component {
   }
 
   render() {
+
+    /*科学计数法转换数值*/
+
     let { value = null, step } = this.props
     const {
       className = {}, style = {}
     } = this.props
 
     const { rules } = this
-
     step = Number(step)
-
-
+    // console.log(step)
     return (
       <div
         style={style}
@@ -81,8 +86,8 @@ export default class View extends Component {
           onClick={
             () => {
               if (!_.isNil(value)) {
-                let result = new BigNumber(Number(value))
-                result = result.minus(step)
+                let result = Number(value) - step
+                // result = result.minus(step)
                 rules(result)
               }
             }
@@ -97,7 +102,8 @@ export default class View extends Component {
         <div onClick={
           () => {
             if (!_.isNil(value)) {
-              let result = step + Number(value)
+              let result = Number(value) + Number(step)
+              // result = result.plus(step).valueOf()
               rules(result)
             }
           }

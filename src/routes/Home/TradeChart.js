@@ -585,14 +585,14 @@ export default class View extends Component {
                               {
                                 Number(latestPriceChangePercent) > 0 ? (
                                   latestPriceChangePercent ?
-                                    <RedGreenSwitch.GreenText value={`${latestPriceChangePercent}%`} /> : null
+                                    <RedGreenSwitch.GreenText value={`${latestPriceChangePercent}`} /> : null
                                 ) : (
-                                  <RedGreenSwitch.RedText value={`${latestPriceChangePercent}%`} />
+                                  <RedGreenSwitch.RedText value={`${latestPriceChangePercent}`} />
                                 )
                               }
                             </div >
                             <div className={styles.dollar} >
-                              <RedGreenSwitch.GreenText value={`$${dollarPrice}`} />
+                              <RedGreenSwitch.GreenText value={`${dollarPrice}`} />
                             </div >
                           </div >
                         </>

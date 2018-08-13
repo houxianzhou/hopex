@@ -57,12 +57,12 @@ export default class View extends Component {
       },
       {
         title: '当前价格',
-        dataIndex: 'lastPrice',
+        dataIndex: 'lastPriceShow',
         // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '当前合理价格',
-        dataIndex: 'reasonablePrice',
+        dataIndex: 'reasonablePriceShow',
         // render: (v) => formatNumber(v, 'p')
       },
       {
@@ -78,12 +78,12 @@ export default class View extends Component {
       },
       {
         title: '开仓均价',
-        dataIndex: 'averagePrice',
+        dataIndex: 'averagePriceShow',
         // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '持仓占用保证金',
-        dataIndex: 'positionMoney',
+        dataIndex: 'positionMoneyShow',
         render: (v) => {
           return (
             <div className={styles.changepositionMoney} >
@@ -110,19 +110,19 @@ export default class View extends Component {
       },
       {
         title: '维持保证金',
-        dataIndex: 'keepMoney',
+        dataIndex: 'keepMoneyShow',
         //render: (v) => formatNumber(v, 10)
       },
       {
         title: '强平价格',
-        dataIndex: 'overPrice',
+        dataIndex: 'overPriceShow',
         // render: (v) => formatNumber(v, 10)
       },
       {
         title: '浮动盈亏(收益率)',
-        dataIndex: 'floatProfit',
+        dataIndex: 'floatProfitShow',
         render: (value, record = {}) => {
-          return Number(value) >= 0 ? (
+          return Number(record.floatProfit) >= 0 ? (
             <RedGreenSwitch.GreenText value={value} />
           ) : (
             <RedGreenSwitch.RedText value={value} />
