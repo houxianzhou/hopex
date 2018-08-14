@@ -37,6 +37,7 @@ export default class ColorChange extends Component {
       percent: '100%',
       color
     })
+
     this.interval = dealInterval(() => {
       this.setState({
         // percent: '0',
