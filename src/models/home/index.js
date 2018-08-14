@@ -31,7 +31,8 @@ export default joinModel(modelExtend, {
     latestPriceChangePercentShown: '',//纯粹显示，去掉了加减号
     dollarPrice: '',//换算成美元
     latestPriceTrend: 1,//1升，-1降
-    equitablePrice: '', // 计算出来的，合理价格
+    equitablePrice: '', // 计算出来的，合理价格，用在显示在委托列表那儿
+    reasonablePrice: '',//也是合理价格，不过是从market.deatl接口拉过来的
 
 
     minVaryPrice: '', //最小变动价位
@@ -193,7 +194,7 @@ export default joinModel(modelExtend, {
           const result = _.get(res, 'data') || {}
           const {
             direction, maxPrice24h, minPrice24h, marketPrice,
-            priceLast, totalPrice24h, percent, dollarPrice
+            priceLast, totalPrice24h, percent, dollarPrice, reasonablePrice
           } = result
           yield put({
             type: 'changeState',
@@ -203,6 +204,7 @@ export default joinModel(modelExtend, {
               minPrice24h,
               indexPrice: marketPrice,
               latestPrice: priceLast,
+              reasonablePrice,
               latestPriceShown: _.isString(priceLast) ? priceLast.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
               totalPrice24h,
               latestPriceChangePercent: percent,

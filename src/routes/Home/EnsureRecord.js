@@ -35,7 +35,7 @@ export default class View extends Component {
   // }
 
   startInit = () => {
-     this.getEnsureRecord()
+    this.getEnsureRecord()
   }
 
 
@@ -57,7 +57,7 @@ export default class View extends Component {
   render() {
     const { dis } = this.state
     const { changeState } = this
-    const { model: { ensure_records = [], latestPrice = '', latestPriceShown = '', indexPrice = '', equitablePrice = '', latestPriceTrend = '', varyRange = '' }, dispatch, modelName, loading, RG } = this.props
+    const { model: { ensure_records = [], latestPrice = '', latestPriceShown = '', indexPrice = '', equitablePrice = '', reasonablePrice = '', latestPriceTrend = '', varyRange = '' }, dispatch, modelName, loading, RG } = this.props
     const [dataTop = [], dataDown = []] = [
       _.get(ensure_records, 'asks')
       , _.get(ensure_records, 'bids')
@@ -127,16 +127,6 @@ export default class View extends Component {
       columns,
     }
 
-
-    // const tableTopProps = {
-    //   ...tableProps,
-    //   dataSource: (new Array((8 - dataTop.length) > 0 ? (8 - dataTop.length) : 0)).fill().concat(dataTop.slice(0, 8).map((item, index) => {
-    //     item.type = 'sell'
-    //     item.sum = _.sumBy(dataTop.slice(index, 8), ({ amount } = 0) => amount)
-    //     return item
-    //   }))
-    // }
-
     const onClickRow = (item) => {
       dispatch({
         type: `${modelName}/changeState`,
@@ -152,14 +142,6 @@ export default class View extends Component {
       onClickRow
     }
 
-    // const tableDownProps = {
-    //   ...tableProps,
-    //   dataSource: _.merge((new Array(8)).fill(), dataDown.slice(0, 8).map((item, index) => {
-    //     item.type = 'buy'
-    //     item.sum = _.sumBy(dataDown.slice(0, index + 1), ({ amount }) => amount)
-    //     return item
-    //   }))
-    // }
 
     const tableDownProps = {
       ...tableProps,
@@ -236,7 +218,7 @@ export default class View extends Component {
                 </div >
                 <div className={styles.right} >
                   <img alt='ensure' className={styles.ensure} src={ensure} />
-                  {indexPrice}/{equitablePrice}
+                  {indexPrice}/{equitablePrice || reasonablePrice}
                 </div >
               </div >
               <div className={styles.down} >

@@ -519,7 +519,7 @@ export default class View extends Component {
     const {
       model: {
         marketName = '', maxPrice24h = '', minPrice24h = '', indexPrice = '',
-        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', equitablePrice = '', latestPriceChangePercent = '',
+        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', equitablePrice = '', reasonablePrice = '', latestPriceChangePercent = '',
         latestPriceChangePercentShown = '', dollarPrice = '',
       },
       RG
@@ -615,7 +615,7 @@ export default class View extends Component {
                       </li >
                       <li >
                         <div className={styles.title} >合理价格</div >
-                        <div className={styles.desc} >{equitablePrice}</div >
+                        <div className={styles.desc} >{reasonablePrice}</div >
                       </li >
                       <li >
                         <div className={`${styles.title}`} >24h最高</div >

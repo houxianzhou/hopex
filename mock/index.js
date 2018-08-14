@@ -150,16 +150,24 @@ export default {
         "userToken": "56"
       },
       "data": {
-        "asks": randomArrayMap(5).map((item, index) => ({
-          "exist": ['0', '1'][_.random(0, 1)],
-          "price": index + 10 + _.random(10, 20),
-          "amount": _.random(10000, 20000),//randomStr()
-        })),
-        "bids": randomArrayMap(5).map((item, index) => ({
-          "exist": ['0', '1'][_.random(0, 1)],
-          "price": index + '.0',
-          "amount": _.random(10000, 20000) //randomStr()
-        }))
+        "asks": randomArrayMap(5).map((item, index) => {
+          const res = _.random(10000, 20000)
+          return {
+            "exist": ['0', '1'][_.random(0, 1)],
+            "price": index + 10 + _.random(10, 20),
+            "amountShow": res,//randomStr()
+            "amount": res,//randomStr()
+          }
+        }),
+        "bids": randomArrayMap(5).map((item, index) => {
+          const res = _.random(10000, 20000)
+          return {
+            "exist": ['0', '1'][_.random(0, 1)],
+            "price": index + '.0',
+            "amountShow": res,//randomStr()
+            "amount": res //randomStr()
+          }
+        })
       },
       ...other
     })
@@ -180,9 +188,9 @@ export default {
         "serialNumber": "49",
         "msgType": "response"
       },
-      "data":  (new Array(Number(3))).fill({}).map((item, index) => ({
+      "data": (new Array(Number(3))).fill({}).map((item, index) => ({
         "orderId": String(index),
-        "marketName":'BTCUSDT永续',
+        "marketName": 'BTCUSDT永续',
         "market": "BTCUSDT" + '第' + pageIndex + '页',
         "source": "我是现价测试单",
         "type": _.random('1', '2'),
@@ -323,7 +331,10 @@ export default {
   // 查询用户杠杆
   'Post /mock/api/v1/trade/market.leverage_select': (req, res) => {
     res.send({
-      "data": { "leverage": 20.0 },
+      "data": {
+        "leverage": 20.0,
+        isModify: true
+      },
       ...other
     })
   },
@@ -381,6 +392,7 @@ export default {
         "maxPrice24h": randomStr(100, 1000),
         "minPrice24h": randomStr(100, 1000),
         "totalPrice24h": randomStr(10000, 100000),
+        reasonablePrice: randomStr(10000, 100000),
         "marketPrice": "7388.47741901",
         "percent": "+50.00",
         "dollarPrice": randomStr(100, 1000),
@@ -486,7 +498,7 @@ export default {
               "ftime": "2018-08-09 17:06:46",
               "id": "19654" + index,
               "user": "3",
-              "marketName":'BTCUSDT永续',
+              "marketName": 'BTCUSDT永续',
               "market": "BTCUSDT",
               "source": "浏览器，我是现价测试买单,数量10,价格6118.5,用户id：3,邮箱：xiaoyi.wei@bcsystech.com",
               "type": "1",
