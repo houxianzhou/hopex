@@ -35,7 +35,7 @@ export default class View extends Component {
   // }
 
   startInit = () => {
-    this.getEnsureRecord()
+     this.getEnsureRecord()
   }
 
 
@@ -98,7 +98,7 @@ export default class View extends Component {
               <span style={{
                 color: record.exist === '1' ? COLORS.yellow : null
               }} >
-                {formatNumber(value, 0, true)}
+                {record.amountShow}
                 </span >
             </ColorChange >
           )

@@ -36,7 +36,7 @@ export default class View extends Component {
     const columns = [
       {
         title: '合约',
-        dataIndex: 'market',
+        dataIndex: 'marketName',
         render: (value, record) => ({
           value,
           className: 'blue'

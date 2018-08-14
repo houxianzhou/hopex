@@ -12,18 +12,23 @@ export default class View extends Component {
   }
   startInit = () => {
     // 暂时没有东西
-    this.getPersonalEnsureHistory()
+    this.getHistory('1')
   }
 
-  getPersonalEnsureHistory = () => {
+  getHistory = (type) => {
     const { dispatch, modelName } = this.props
     dispatch({
-      type: `${modelName}/getPersonalEnsureHistory`
+      type: `${modelName}/getHistory`,
+      payload: {
+        type
+      }
     }).then((res) => {
         if (!this._isMounted) return
-        this.interval = dealInterval(() => {
-          this.getPersonalEnsureHistory()
-        })
+        if (type === '1') {
+          this.interval = dealInterval(() => {
+            this.getHistory(type)
+          })
+        }
       }
     )
   }
@@ -34,12 +39,12 @@ export default class View extends Component {
 
   render() {
     const { activeLi } = this.state
-    const { state, changeState } = this
+    const { state, changeState, getHistory } = this
     const { model: { personalEnsureHistory = [] }, noDataTip, calculateTableHeight, expandedRowRender, modelName, dispatch } = this.props
     const columns = [
       {
         title: '合约',
-        dataIndex: 'market',
+        dataIndex: 'marketName',
         render: (v) => (
           {
             value: v,
@@ -193,7 +198,24 @@ export default class View extends Component {
                   styles.recentrecord_tab
                 )} >
                   {
-                    ['最近10条委托历史', '最近10条交割历史', '最近10条强平历史', '最近10条自动减仓历史'].map((item, index) => {
+                    [
+                      {
+                        name: '最近10条委托历史',
+                        // type: '1', 默认为['1','2']
+                      },
+                      {
+                        name: '最近10条交割历史',
+                        type: '3'
+                      },
+                      {
+                        name: '最近10条强平历史',
+                        type: '4'
+                      },
+                      {
+                        name: '最近10条自动减仓历史',
+                        type: '5'
+                      }
+                    ].map((item = {}, index) => {
                       return (
                         <li
                           key={index}
@@ -206,8 +228,9 @@ export default class View extends Component {
                             changeState({
                               activeLi: index
                             })
+                            item.type && getHistory(item.type)
                           }}
-                        >{item}</li >
+                        >{item.name}</li >
                       )
                     })
                   }

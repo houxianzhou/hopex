@@ -58,6 +58,9 @@ export default joinModel(modelExtend, {
     personalEnsures: [],//个人委托列表
     personalEnsures_PageIndex: null, //最新成交价格与上次比较的趋势
     personalEnsureHistory: [],//最近10条委托历史
+    deliveryHistory: [],//交割历史
+    highlevelHistory: [],//强平历史
+    reduceHistory: [],//减仓历史
 
     positionList: [],//个人持仓列表
   },
@@ -639,7 +642,36 @@ export default joinModel(modelExtend, {
     },
 
     //最近10条委托历史
-    * getPersonalEnsureHistory({ payload = {} }, { call, put, select }) {
+    * getHistory({ payload = {} }, { call, put, select }) {
+      const { type } = payload
+      let prev
+      let historyType
+      let historyList
+      switch (type) {
+        case '1': {
+          historyType = ["1", "2"] //限价单，市价单一起就是最近委托
+          historyList = 'personalEnsureHistory'
+          prev = yield select(({ home: { personalEnsureHistory = [] } }) => personalEnsureHistory)
+        }
+          break
+        case '3': {
+          historyType = ['3'] //强平单
+          historyList = 'highlevelHistory'
+          prev = yield select(({ home: { highlevelHistory = [] } }) => highlevelHistory)
+        }
+          break
+        case '4': {
+          historyType = ['4'] //交割单
+          historyList = 'deliveryHistory'
+          prev = yield select(({ home: { deliveryHistory = [] } }) => deliveryHistory)
+        }
+          break
+        case '5': {
+          historyType = ['5'] //自动减仓
+          historyList = 'reduceHistory'
+          prev = yield select(({ home: { reduceHistory = [] } }) => reduceHistory)
+        }
+      }
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
@@ -648,7 +680,7 @@ export default joinModel(modelExtend, {
           },
           "param": {
             marketList: [],
-            typeList: ["1", "2"],
+            typeList: historyType,
             "side": "0",
             "startTime": "0",
             "endTime": "0",
@@ -663,11 +695,10 @@ export default joinModel(modelExtend, {
         const res = getRes(yield call(getPersonalEnsureHistory, repayload))
         if (resOk(res)) {
           const result = _.get(res, 'data.records')
-          const personalEnsureHistory = yield select(({ home: { personalEnsureHistory = [] } }) => personalEnsureHistory)
           if (result) {
             // 此处为解决轮询的问题
             result.map((item = {}) => {
-              const exsit = personalEnsureHistory.filter(one => one.id === item.id)[0] || {}
+              const exsit = prev.filter(one => one.id === item.id)[0] || {}
               if (exsit && exsit.expand) {
                 item.expand = exsit.expand
               }
@@ -675,7 +706,7 @@ export default joinModel(modelExtend, {
             yield put({
               type: 'changeState',
               payload: {
-                personalEnsureHistory: result
+                [historyList]: result
               }
             })
           }

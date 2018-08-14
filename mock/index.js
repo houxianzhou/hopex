@@ -182,6 +182,7 @@ export default {
       },
       "data":  (new Array(Number(3))).fill({}).map((item, index) => ({
         "orderId": String(index),
+        "marketName":'BTCUSDT永续',
         "market": "BTCUSDT" + '第' + pageIndex + '页',
         "source": "我是现价测试单",
         "type": _.random('1', '2'),
@@ -485,6 +486,7 @@ export default {
               "ftime": "2018-08-09 17:06:46",
               "id": "19654" + index,
               "user": "3",
+              "marketName":'BTCUSDT永续',
               "market": "BTCUSDT",
               "source": "浏览器，我是现价测试买单,数量10,价格6118.5,用户id：3,邮箱：xiaoyi.wei@bcsystech.com",
               "type": "1",

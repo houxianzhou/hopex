@@ -46,8 +46,8 @@ export default class View extends Component {
     const { model: { assetList = [], }, isLogin, routerGoLogin, routerGoRegister } = this.props
     const filterOne = assetList[currentPurse] || {}
     const {
-      roe, floatPercent, walletBalance, positionMargin,
-      withdrawFreeze, totalWealth, delegateMargin, availableBalance
+      roe = '', floatPercent = '', walletBalance = '', positionMargin = '',
+      withdrawFreeze = '', totalWealth = '', delegateMargin = '', availableBalance = ''
     } = filterOne
     return (
       <Mixin.Child that={this} >
@@ -94,7 +94,7 @@ export default class View extends Component {
                     <div className={styles.top} >
                       <div className={styles.tip} >浮动盈亏</div >
                       <div className={styles.number} >
-                        <RedGreenSwitch.GreenText value={`${roe}%`} />
+                        <RedGreenSwitch.GreenText value={roe ? `${roe}%` : null} />
                       </div >
                       <div className={styles.percent} >
                         <RedGreenSwitch.GreenText value={floatPercent} />
