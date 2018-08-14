@@ -8,6 +8,7 @@ import account from '@assets/account.png'
 import help from '@assets/help.png'
 import notice from '@assets/notice.png'
 import network from '@assets/network.png'
+import RedGreenSwitch from '@routes/Home/components/RedGreenSwitch'
 import * as styles from './index.less'
 
 @connect(({ home, user, theme, loading, dispatch }) => ({
@@ -89,8 +90,31 @@ export default class View extends Component {
                                             }
                                           }} >
                                             <div className={styles.name} >{item2.marketName}</div >
-                                            <div className={styles.price} >9334.5</div >
-                                            <div className={styles.percent} >+13.45</div >
+                                            <div className={styles.price} >
+                                              {
+                                                item2.direction ? (
+                                                  <RedGreenSwitch.GreenText
+                                                    value={item2.price24h} />
+                                                ) : (
+                                                  <RedGreenSwitch.RedText
+                                                    value={item2.price24h} />
+                                                )
+                                              }
+                                              </div >
+                                            <div className={styles.percent} >
+                                              {
+                                                item2.direction ? (
+                                                  <RedGreenSwitch.GreenText
+                                                    value={item2.percent} />
+                                                ) : (
+                                                  <RedGreenSwitch.RedText
+                                                    value={item2.percent} />
+                                                )
+                                              }
+                                              <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt={
+                                                !_.isNil(item2.direction)? (item2.direction ? 'top' : 'down') : null
+                                              } />
+                                            </div >
                                           </li >
                                         )
                                       })

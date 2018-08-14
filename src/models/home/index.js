@@ -30,8 +30,7 @@ export default joinModel(modelExtend, {
     latestPriceChangePercent: '',//最新价相比24小时前价格的涨跌幅
     latestPriceChangePercentShown: '',//纯粹显示，去掉了加减号
     dollarPrice: '',//换算成美元
-    latestPriceTrend: 1,//1升，-1降
-    // equitablePrice: '', // 计算出来的，合理价格，用在显示在委托列表那儿,已经废弃
+    latestPriceTrend: '',//1升，-1降
     reasonablePrice: '',//合理价格，从market.deatl接口拉过来的
 
 
@@ -39,27 +38,23 @@ export default joinModel(modelExtend, {
     minDealAmount: '', //最小交易量
     minLimitPrice: '',//最低允许卖价
     maxLimitPrice: '',//最高允许卖价
-    availableMoney: '',//根据钱包资产列表过滤出结算货币的可用额度
+    availableMoney: '',//可用金额
+
+
     varyRange: '', // 委托列表区间,
-    showPrec: '',// 控制合理价格小数位数,跟价格有关的通常是他
-    marketSecond: '',//标价货币,区分结算货币
-
-
-    keepBailRate: null,//维持保证金率
     levelages: [],//当前合约杠杆列表
-    dealMoney: null,//结算货币
     leverage: null, //当前用户的杠杆
     leverageIsModify: null,//当前用户是否可以编辑杠杆
 
     assetList: [],//钱包资产列表
     personalEnsures: [],//个人委托列表
+    positionList: [],//个人持仓列表
     personalEnsures_PageIndex: null, //未曾用过
     personalEnsureHistory: [],//最近10条委托历史
     deliveryHistory: [],//交割历史
     highlevelHistory: [],//强平历史
     reduceHistory: [],//减仓历史
 
-    positionList: [],//个人持仓列表
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -274,12 +269,14 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(getLeverage, repayload))
         if (resOk(res)) {
-          const [leverage, isModify] = [_.get(res, 'data.leverage'), _.get(res, 'data.isModify')]
+          const { leverage, isModify, varyRange, leverages } = _.get(res, 'data')
           yield put({
             type: 'changeState',
             payload: {
               leverage,
-              leverageIsModify: isModify
+              leverageIsModify: isModify,
+              varyRange,
+              leverages
             }
           })
         }
@@ -306,6 +303,7 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(doUpdateLeverage, repayload))
         if (resOk(res)) {
+          Toast.tip('杠杆修改成功')
           return res
         } else {
           return Promise.reject('修改杠杆失败')
@@ -452,7 +450,6 @@ export default joinModel(modelExtend, {
             result.push(item2)
           })
         })
-        // console.log(result)
         if (result) {
           const { search } = payload
           const filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
@@ -465,9 +462,6 @@ export default joinModel(modelExtend, {
           yield put({
             type: 'getCurrentMarket',
             payload: filterOne
-          })
-          yield put({
-            type: 'getBuySellDetail'
           })
           return result
         }
@@ -482,7 +476,7 @@ export default joinModel(modelExtend, {
         type: 'createRequestParams',
         payload: {
           "head": {
-            "method": "market.detail_list"
+            "method": "*"
           },
           "param": {
             "side": 0,
@@ -503,11 +497,9 @@ export default joinModel(modelExtend, {
             minPriceMovementDisplay: result.minPriceMovementDisplay,
 
             minDealAmount: result.minTradeNum,
-            minTradeNumDisplay:result.minTradeNumDisplay,
+            minDealAmountDisplay: result.minTradeNumDisplay,
 
-            keepBailRate: result.keepBailRate,
-            levelages: result.levelages,
-            dealMoney: result.dealMoney,
+            availableMoney: result.availableBalance,
 
             maxLimitPrice: result.maxBuyPrice,
             minLimitPrice: result.minSellPrice,
@@ -515,7 +507,6 @@ export default joinModel(modelExtend, {
         })
 
       }
-
     },
 
     //个人持仓列表
@@ -801,10 +792,13 @@ export default joinModel(modelExtend, {
         minPrice24h: null, // 24最低
         indexPrice: null, // 现货价格指数
 
-        // minVaryPrice: null, //最小变动价位
-        // minDealAmount: null, //最小交易量
-        // keepBailRate: null,//维持保证金率
-        // levelages: [],//杠杆
+
+        minVaryPrice: '', //最小变动价位
+        minDealAmount: '', //最小交易量
+        minLimitPrice: '',//最低允许卖价
+        maxLimitPrice: '',//最高允许卖价
+        availableMoney: '',//可用金额
+
 
         personalEnsureHistory: [],//最近10条委托历史
         personalEnsures: [],//个人委托列表

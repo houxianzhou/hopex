@@ -24,6 +24,7 @@ export default class View extends Component {
 
   render() {
     const { model: { marketName, leverage, leverageIsModify = false }, modal: { name }, dispatch, modelName } = this.props
+
     const colors = [
       '#52AA64', '#52AA64', '#8CB152', '#8CB152', '#CABA70', '#CABA70', '#D69555', '#D69555', '#D47D5A', ' #D47D5A'
     ]
@@ -104,9 +105,9 @@ class RenderModal extends Component {
       title: '设置杠杆倍数'
     }
 
-    const { model: { levelages = [], keepBailRate, leverage, }, getLeverage, dispatch, modelName } = this.props
+    const { model: { leverages = [], keepBailRate, leverage, }, getLeverage, dispatch, modelName } = this.props
     const { currentValue } = this.state
-    const marks = levelages.reduce((sum, next = {}) => {
+    const marks = leverages .reduce((sum, next = {}) => {
       const leverage = next.leverage
       sum[leverage] = String(leverage)
       return sum
@@ -143,6 +144,7 @@ class RenderModal extends Component {
       }
     }
 
+
     return (
       <MainModal {...props} className={styles.currentContract_modal} >
         <div className={styles.content} >
@@ -161,7 +163,7 @@ class RenderModal extends Component {
                 <div >维持保证金率</div >
               </li >
               {
-                _.orderBy(levelages, (item = {}) => item.leverage).map((item, index) => {
+                _.orderBy(leverages, (item = {}) => item.leverage).map((item, index) => {
                   return (
                     <li key={index + 1} >
                       {
@@ -187,7 +189,7 @@ class RenderModal extends Component {
 
                       <div >{item.leverage}</div >
                       <div >{getPercent(Number(1), Number(item.leverage))}</div >
-                      <div >{formatNumber(keepBailRate, 2)}</div >
+                      <div >{item.initialMarginRate}%</div >
                     </li >
                   )
                 })

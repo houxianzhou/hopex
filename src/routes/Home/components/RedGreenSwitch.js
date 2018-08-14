@@ -17,8 +17,10 @@ class RedGreenArrow extends Component {
       return (
         <img style={style} alt='top' src={RG ? arrow_top : arrow_top2} />
       )
-    } else {
+    } else if (alt === 'down') {
       return <img style={style} alt='down' src={RG ? arrow_down : arrow_down2} />
+    } else {
+      return null
     }
   }
 }

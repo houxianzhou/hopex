@@ -36,7 +36,7 @@ export default class View extends Component {
 
   render() {
     const { changeState } = this
-    const { model: { positionList = [], dealMoney }, modal: { name }, noDataTip, modelName, dispatch } = this.props
+    const { model: { positionList = [],}, modal: { name }, noDataTip, modelName, dispatch } = this.props
 
     const openModal = () => {
       dispatch({

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { InputNumber, Slider, Loading, Button } from "@components"
+import { Mixin, InputNumber, Slider, Loading, Button } from "@components"
 import { COLORS } from '@constants'
 import { classNames, _, formatNumber, isEqual } from '@utils'
 import ScrollPannel from './components/ScrollPanel'
@@ -7,6 +7,12 @@ import styles from './index.less'
 
 
 export default class View extends Component {
+  startInit = () => {
+    const { dispatch, modelName, } = this.props
+    dispatch({
+      type: `${modelName}/getBuySellDetail`,
+    })
+  }
   state = {
     side: '',
     orderChannel: 0,
@@ -212,13 +218,13 @@ export default class View extends Component {
 
   render() {
     const { renderArea, changeState } = this
-    const { dispatch, loading, modelName, RG, model: { minVaryPrice = '', marketSecond = '', minDealAmount = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' } } = this.props
+    const { dispatch, loading, modelName, RG, model: { minVaryPrice = '', minPriceMovementDisplay = '', minDealAmount = '', minDealAmountDisplay = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' } } = this.props
     const { side, orderChannel, buy, sell } = this.state
 
     // 限价或者市价
     const configPrice = {
       label_name: orderChannel === 0 ? '限价' : '市价',
-      label_desc: `最小单位${minVaryPrice}${marketSecond}`,
+      label_desc: `最小单位${minPriceMovementDisplay}`,
       intro_desc: '最高允许买价',
       intro_price: formatNumber(maxLimitPrice, 'p'),
       value: buy.price,
@@ -238,7 +244,7 @@ export default class View extends Component {
     // 数量
     const configAmount = {
       label_name: '数量',
-      label_desc: `最小单位${formatNumber(minDealAmount, 2)}张`,
+      label_desc: `最小单位${minDealAmountDisplay}`,
       value: buy.amount,
       min: 0,
       onChange: (value) => {
@@ -351,60 +357,62 @@ export default class View extends Component {
       }
     }
     return (
-      <div
-        className={
-          classNames(
-            {
-              view: true
-            },
-            styles.buySell
-          )
-        }
-      >
-        <ScrollPannel
-          scroller={false}
-          header={
-            <ul className={classNames(
-              styles.tab,
-              styles.buyselltab
-            )} >
-              <li
-                className={classNames(
-                  orderChannel === 0 ? 'active' : null
-                )}
-                onClick={() => {
-                  this.changeState({
-                    orderChannel: 0,
-                  })
-                }}
-              >
-                现价
-              </li >
-              <li
-                className={classNames(
-                  orderChannel === 1 ? 'active' : null
-                )}
-                onClick={() => {
-                  this.changeState({
-                    orderChannel: 1,
-                  })
-                }}
-              >
-                市价
-              </li >
-            </ul >
+      <Mixin.Child that={this} >
+        <div
+          className={
+            classNames(
+              {
+                view: true
+              },
+              styles.buySell
+            )
           }
         >
-          <div className={styles.content} >
-            {
-              renderArea(configBuy)
+          <ScrollPannel
+            scroller={false}
+            header={
+              <ul className={classNames(
+                styles.tab,
+                styles.buyselltab
+              )} >
+                <li
+                  className={classNames(
+                    orderChannel === 0 ? 'active' : null
+                  )}
+                  onClick={() => {
+                    this.changeState({
+                      orderChannel: 0,
+                    })
+                  }}
+                >
+                  现价
+                </li >
+                <li
+                  className={classNames(
+                    orderChannel === 1 ? 'active' : null
+                  )}
+                  onClick={() => {
+                    this.changeState({
+                      orderChannel: 1,
+                    })
+                  }}
+                >
+                  市价
+                </li >
+              </ul >
             }
-            {
-              renderArea(configSell)
-            }
-          </div >
-        </ScrollPannel >
-      </div >
+          >
+            <div className={styles.content} >
+              {
+                renderArea(configBuy)
+              }
+              {
+                renderArea(configSell)
+              }
+            </div >
+          </ScrollPannel >
+        </div >
+      </Mixin.Child >
     )
   }
 }

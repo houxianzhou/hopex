@@ -575,13 +575,9 @@ export default class View extends Component {
                                   value={latestPriceShown} />
                               )
                             }
-                            {
-                              latestPriceTrend ? (
-                                <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt='top' />
-                              ) : (
-                                <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt='down' />
-                              )
-                            }
+                            <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt={
+                              latestPriceTrend !== '' ? (latestPriceTrend ? 'top' : 'down') : null
+                            } />
                           </div >
                           <div className={styles.compare} >
                             <div className={styles.percent} >
