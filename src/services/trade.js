@@ -53,6 +53,13 @@ export async function getAllMarketDetails(payload) {
   })
 }
 
+export async function getBuySellDetail(payload) {
+  return request(`/api/v1/gateway/Trade/OrderParameter`, {
+    method: 'post',
+    body: payload
+  })
+}
+
 // 获取所有的个人持仓列表
 export async function getPosition(payload) {
   return request(`${UserIp4}/user.position`, {

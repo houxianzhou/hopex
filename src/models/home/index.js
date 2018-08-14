@@ -6,7 +6,7 @@ import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
   getPosition, getPersonEnsureDetail, getAllMarkets, getAllMarketDetails, getLeverage, doUpdateLeverage,
-  getKlineAllList, getPersonalEnsureHistory, getKlineDetail
+  getKlineAllList, getPersonalEnsureHistory, getKlineDetail, getBuySellDetail
 } from "@services/trade"
 
 
@@ -31,8 +31,8 @@ export default joinModel(modelExtend, {
     latestPriceChangePercentShown: '',//纯粹显示，去掉了加减号
     dollarPrice: '',//换算成美元
     latestPriceTrend: 1,//1升，-1降
-    equitablePrice: '', // 计算出来的，合理价格，用在显示在委托列表那儿
-    reasonablePrice: '',//也是合理价格，不过是从market.deatl接口拉过来的
+    // equitablePrice: '', // 计算出来的，合理价格，用在显示在委托列表那儿,已经废弃
+    reasonablePrice: '',//合理价格，从market.deatl接口拉过来的
 
 
     minVaryPrice: '', //最小变动价位
@@ -43,10 +43,6 @@ export default joinModel(modelExtend, {
     varyRange: '', // 委托列表区间,
     showPrec: '',// 控制合理价格小数位数,跟价格有关的通常是他
     marketSecond: '',//标价货币,区分结算货币
-    // showWalletPrec: '',//跟钱包价格有关的通常是他
-    // showRatePrec: '',//百分比显示位数
-    // showFeePrec: '',//费率显示位数
-    // showLeveragePrec: '',//杠杆显示位数
 
 
     keepBailRate: null,//维持保证金率
@@ -57,7 +53,7 @@ export default joinModel(modelExtend, {
 
     assetList: [],//钱包资产列表
     personalEnsures: [],//个人委托列表
-    personalEnsures_PageIndex: null, //最新成交价格与上次比较的趋势
+    personalEnsures_PageIndex: null, //未曾用过
     personalEnsureHistory: [],//最近10条委托历史
     deliveryHistory: [],//交割历史
     highlevelHistory: [],//强平历史
@@ -136,14 +132,13 @@ export default joinModel(modelExtend, {
         })
 
         const [asksLast, bidsFirst] = [result.asks[result.asks.length > 8 ? 7 : result.asks.length - 1], result.bids[0]]
-        const equitablePrice = (Number(_.get(asksLast, 'price')) * Number(_.get(bidsFirst, 'amount'))
-          + Number(_.get(bidsFirst, 'price')) * Number(_.get(asksLast, 'amount'))) / (Number(_.get(asksLast, 'amount')) + Number(_.get(bidsFirst, 'amount')))
-        const showPrec = yield select(({ home: { showPrec } }) => showPrec)
+        // const equitablePrice = (Number(_.get(asksLast, 'price')) * Number(_.get(bidsFirst, 'amount'))
+        //   + Number(_.get(bidsFirst, 'price')) * Number(_.get(asksLast, 'amount'))) / (Number(_.get(asksLast, 'amount')) + Number(_.get(bidsFirst, 'amount')))
+        // const showPrec = yield select(({ home: { showPrec } }) => showPrec)
         yield put({
           type: 'changeState',
           payload: {
             ensure_records: result,
-            equitablePrice: formatNumber(equitablePrice, Number(showPrec))
           }
         })
         return res
@@ -448,16 +443,16 @@ export default joinModel(modelExtend, {
         }
       })))
       const res = getRes(yield call(getAllMarketDetails, repayload))
-      console.log(res, '--------------')
       if (resOk(res)) {
         const result = []
-        _.mapKeys((_.get(res, 'data') || {}), (v = [], k = '') => {
-          v.forEach(item => item.sortType = k)
-          result.push(...v)
+        _.get(res, 'data').map((item = {}) => {
+          const { name, list = [] } = item
+          list.forEach((item2 = {}) => {
+            item2.sortType = name
+            result.push(item2)
+          })
         })
-        result.map(item => {
-          item.levelages = formatJson(item.levelages)
-        })
+        // console.log(result)
         if (result) {
           const { search } = payload
           const filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
@@ -471,11 +466,56 @@ export default joinModel(modelExtend, {
             type: 'getCurrentMarket',
             payload: filterOne
           })
+          yield put({
+            type: 'getBuySellDetail'
+          })
           return result
         }
       } else {
         return Promise.reject('合约列表获取失败')
       }
+    },
+
+    //获取买入卖出模块数据依赖项
+    * getBuySellDetail({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "market.detail_list"
+          },
+          "param": {
+            "side": 0,
+            "price": 0,
+            "amount": 0,
+            "leverage": 0
+          },
+        }
+      })))
+      const res = getRes(yield call(getBuySellDetail, repayload))
+      if (resOk(res)) {
+        const result = _.get(res, 'data') || {}
+
+        yield put({
+          type: 'changeState',
+          payload: {
+            minVaryPrice: result.minPriceMovement,
+            minPriceMovementDisplay: result.minPriceMovementDisplay,
+
+            minDealAmount: result.minTradeNum,
+            minTradeNumDisplay:result.minTradeNumDisplay,
+
+            keepBailRate: result.keepBailRate,
+            levelages: result.levelages,
+            dealMoney: result.dealMoney,
+
+            maxLimitPrice: result.maxBuyPrice,
+            minLimitPrice: result.minSellPrice,
+          }
+        })
+
+      }
+
     },
 
     //个人持仓列表
@@ -766,10 +806,6 @@ export default joinModel(modelExtend, {
         // keepBailRate: null,//维持保证金率
         // levelages: [],//杠杆
 
-        latestPrice: null, //计算出来的，最新交易价格
-        equitablePrice: null, // 计算出来的，合理价格
-
-
         personalEnsureHistory: [],//最近10条委托历史
         personalEnsures: [],//个人委托列表
         positionList: [],//个人持仓列表
@@ -781,19 +817,16 @@ export default joinModel(modelExtend, {
         ...state,
         marketName: filterOne.marketName,
         marketCode: filterOne.marketCode,
-        minVaryPrice: filterOne.minVaryPrice,
-        minDealAmount: filterOne.minDealAmount,
-        keepBailRate: filterOne.keepBailRate,
-        levelages: filterOne.levelages,
-        dealMoney: filterOne.dealMoney,
-        maxLimitPrice: filterOne.maxLimitPrice,
-        minLimitPrice: filterOne.minLimitPrice,
-        varyRange: filterOne.varyRange,
-        showPrec: filterOne.showPrec,
-        marketSecond: filterOne.marketSecond,
-        // showWalletPrec: filterOne.showWalletPrec,
-        // showRatePrec: filterOne.showRatePrec,
-        // showFeePrec: filterOne.showFeePrec
+        // minVaryPrice: filterOne.minPriceMovementDisplay,
+        // minDealAmount: filterOne.minDealAmount,
+        // keepBailRate: filterOne.keepBailRate,
+        // levelages: filterOne.levelages,
+        // dealMoney: filterOne.dealMoney,
+        // maxLimitPrice: filterOne.maxLimitPrice,
+        // minLimitPrice: filterOne.minLimitPrice,
+        // varyRange: filterOne.varyRange,
+        // showPrec: filterOne.showPrec,
+        // marketSecond: filterOne.marketSecond,
       }
     }
   },

@@ -519,7 +519,7 @@ export default class View extends Component {
     const {
       model: {
         marketName = '', maxPrice24h = '', minPrice24h = '', indexPrice = '',
-        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', equitablePrice = '', reasonablePrice = '', latestPriceChangePercent = '',
+        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', reasonablePrice = '', latestPriceChangePercent = '',
         latestPriceChangePercentShown = '', dollarPrice = '',
       },
       RG

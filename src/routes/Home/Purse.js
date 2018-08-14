@@ -15,19 +15,11 @@ export default class View extends Component {
   }
 
   getPurseAssetList = () => {
-    const { dispatch, modelName, model: { dealMoney = '' } } = this.props
+    const { dispatch, modelName, model: {} } = this.props
     dispatch({
       type: `${modelName}/getPurseAssetList`
     }).then((res) => {
       if (res) {
-        // 计算结算货币的可用金额供给交易模块slider使用
-        const filterOne = res.filter(item => item.assetName === dealMoney)[0] || {}
-        dispatch({
-          type: `${modelName}/changeState`,
-          payload: {
-            availableMoney: filterOne.availableBalance
-          }
-        })
         if (!this._isMounted) return
         this.interval = dealInterval(() => {
           this.getPurseAssetList()
