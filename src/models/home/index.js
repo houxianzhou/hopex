@@ -6,7 +6,8 @@ import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
   getPosition, getPersonEnsureDetail, getAllMarkets, getAllMarketDetails, getLeverage, doUpdateLeverage,
-  getKlineAllList, getPersonalEnsureHistory, getKlineDetail, getBuySellDetail
+  getKlineAllList, getPersonalEnsureHistory, getKlineDetail, getBuySellDetail,
+  calculatePositionEnsureMoney, doUpdatePositionEnsureMoney
 } from "@services/trade"
 
 
@@ -541,6 +542,63 @@ export default joinModel(modelExtend, {
             })
             return result
           }
+        }
+      }
+    },
+
+    // 计算持仓保证金
+    * calculatePositionEnsureMoney({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "user.append_position_margin_query"
+          },
+          "param": {
+            "marketList": [],
+            ...payload
+          },
+          power: [1],
+          powerMsg: '计算持仓保证金'
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(calculatePositionEnsureMoney, repayload))
+        if (resOk(res)) {
+          const result = _.get(res, 'data')
+          if (result) {
+            return result
+          }
+        }
+      }
+    },
+
+
+    // 增加或减少持仓保证金
+    * doUpdatePositionEnsureMoney({ payload = {} }, { call, put }) {
+      const { assetName, assetChange } = payload
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "position_margin_update"
+          },
+          "param": {
+            assetName,
+            "businessType": "position",//持仓保证金充值,固定值
+            assetChange,
+            detail: { desc: '增加或减少持仓保证金' }
+          },
+          power: [1],
+          powerMsg: '增加或减少持仓保证金'
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(doUpdatePositionEnsureMoney, repayload))
+        if (resOk(res)) {
+          const action = Number(assetChange) > 0 ? '增加' : '减少'
+          Toast.tip(`${action}保证金成功`)
+          return res
         }
       }
     },

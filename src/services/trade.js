@@ -55,12 +55,30 @@ export async function getAllMarketDetails(payload) {
   })
 }
 
+//交易buy,sell依赖
 export async function getBuySellDetail(payload) {
   return request(`${UserIp0}/gateway/Trade/OrderParameter`, {
     method: 'post',
     body: payload
   })
 }
+
+//查询最多添加或减少的保证金及强平价格
+export async function calculatePositionEnsureMoney(payload) {
+  return request(`${UserIp4}/user.append_position_margin_query`, {
+    method: 'post',
+    body: payload
+  })
+}
+
+//增加或减少持仓保证金
+export async function doUpdatePositionEnsureMoney(payload) {
+  return request(`${UserIp4}/position_margin_update`, {
+    method: 'post',
+    body: payload
+  })
+}
+
 
 // 获取所有的个人持仓列表
 export async function getPosition(payload) {

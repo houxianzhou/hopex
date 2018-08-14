@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { classNames, dealInterval, _, formatNumber, getPercent } from '@utils'
-import { Table, Mixin } from '@components'
+import { Table, Mixin, Button } from '@components'
 import { SCROLLX, TABLE } from '@constants'
 import add from '@assets/add.png'
 import substract from '@assets/substract.png'
@@ -36,7 +36,7 @@ export default class View extends Component {
 
   render() {
     const { changeState } = this
-    const { model: { positionList = [],}, modal: { name }, noDataTip, modelName, dispatch } = this.props
+    const { model: { positionList = [], }, modal: { name }, noDataTip, modelName, dispatch } = this.props
 
     const openModal = () => {
       dispatch({
@@ -88,19 +88,21 @@ export default class View extends Component {
           return (
             <div className={styles.changepositionMoney} >
               <div onClick={() => {
-                changeState({
-                  active: 0
-                })
                 openModal()
+                changeState({
+                  active: 1
+                })
+
               }} >
                 <img src={substract} />
               </div >
               <div className={styles.positionMoney} >{v}</div >
               <div onClick={() => {
-                changeState({
-                  active: 1
-                })
                 openModal()
+                changeState({
+                  active: 0
+                })
+
               }} >
                 <img src={add} />
               </div >
@@ -190,12 +192,28 @@ export default class View extends Component {
 }
 
 class RenderModal extends Component {
+  state = {
+    inputValue: '',
+    dealCurrency: '',
+    increase: {},
+    reduce: {}
+  }
+
+  changeState = (payload) => {
+    this.setState(payload)
+  }
+
   render() {
     const props = {
       ...this.props,
       title: '持仓占用保证金'
     }
-    const { changeState, active, dispatch, modelName } = this.props
+    const { changeState: changeStateInModal } = this
+    const { inputValue, dealCurrency = '', increase = {}, reduce = {} } = this.state
+    const { changeState, active, dispatch, modelName, loading } = this.props
+
+    const currentObj = active === 0 ? increase : reduce
+    const { maxChange = '', overPrice = '' } = currentObj || {}
     return (
       <MainModal {...props} className={styles.position_modal} >
         <div className={styles.header} >
@@ -231,17 +249,39 @@ class RenderModal extends Component {
         <div className={styles.content} >
           <div className={styles.input} >
             <div className={styles.edit} >
-              ahhaha
-              <input />
+              <input value={inputValue} onChange={
+                _.throttle((e) => {
+                  const value = e.target.value
+                  changeStateInModal({
+                    inputValue: value
+                  })
+                  dispatch({
+                    type: `${modelName}/calculatePositionEnsureMoney`,
+                    payload: {
+                      marginChange: e.target.value
+                    }
+                  }).then((res) => {
+                    if (res) {
+                      const { dealcurrency: dealCurrency = '', increase = {}, reduce = {} } = res || {}
+                      changeStateInModal({
+                        dealCurrency,
+                        increase,
+                        reduce
+                      })
+                    }
+                  })
+                }, 10)
+              } />
               <div >BTC</div >
             </div >
           </div >
           <ul className={styles.desc} >
-            <li >最多增加
-              <div >1347.8912BTC</div >
+            <li >
+              最多增加 :
+              <div >{`${maxChange}${dealCurrency}`}</div >
             </li >
-            <li >追加后的强平价格为 ：
-              <div >1347.8912BTC</div >
+            <li >追加后的强平价格为 :
+              <div >{`${overPrice}${dealCurrency}`}</div >
             </li >
           </ul >
         </div >
@@ -258,10 +298,26 @@ class RenderModal extends Component {
           <div
             className={styles.confirm}
             onClick={() => {
+              dispatch({
+                type: `${modelName}/doUpdatePositionEnsureMoney`,
+                payload: {
+                  assetName: dealCurrency,
+                  assetChange: active === 1 ? `-${inputValue}` : inputValue
+                }
+              }).then((res) => {
+                if (res) {
+                  dispatch({
+                    type: `${modelName}/closeModal`,
+                  })
+                }
+              })
 
             }}
           >
-            确定
+            <Button layer={false} loading={loading.effects[`${modelName}/doUpdatePositionEnsureMoney`]} >
+              确定
+            </Button >
+
           </div >
         </div >
       </MainModal >

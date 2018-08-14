@@ -47,6 +47,7 @@ export default {
         if (_.has(payload, 'param')) {
           result = reset(['param', 'market'], String(marketCode))
           result = reset(['param', 'marketCode'], String(marketCode))
+          result = reset(['param', 'businessId'], String(_.uniqueId()))
         }
         result = result.map((value) => {
           if (value === 'replaceWith_market') return String(marketCode)

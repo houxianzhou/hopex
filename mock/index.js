@@ -288,6 +288,57 @@ export default {
       ...other
     })
   },
+
+  //查询持仓占用保证金
+  'Post /mock/api/v1/trade/user.append_position_margin_query': (req, res) => {
+    res.send({
+      "head": {
+        "method": "user.append_position_margin_query",
+        "userId": "3",
+        "userToken": "user.QC5LTHR6HOUZINUCE4YI.pcweb",
+        "lang": "cn",
+        "packType": "1",
+        "version": "1.0",
+        "msgType": "response",
+        "timestamps": "1534259459422383",
+        "serialNumber": "1369"
+      },
+      "data": {
+        "increase": {
+          "maxChange": "-97880319.9709580707",
+          "overPrice": "245.9290217635"
+        },
+        "reduce": {
+          "maxChange": "0.0000000000",
+          "overPrice": "245.9290217635"
+        },
+        "dealcurrency": "BTC"
+      },
+      "errCode": "0",
+      "errStr": "success",
+      "ret": "0"
+    })
+  },
+
+  //更新持仓占用保证金
+  'Post /mock/api/v1/trade/position_margin_update': (req, res) => {
+    res.send({
+      "head": {
+        "method": "position_margin_update",
+        "userId": "3",
+        "userToken": "user.QC5LTHR6HOUZINUCE4YI.pcweb",
+        "lang": "cn",
+        "packType": "1",
+        "version": "1.0",
+        "msgType": "response",
+        "timestamps": "1534262284859300",
+        "serialNumber": "6004"
+      },
+      "errCode": "0",
+      "errStr": "success",
+      "ret": "0"
+    })
+  },
   //用户撤单
   'Post /mock/api/v1/trade/order.cancel': (req, res) => {
     res.send({
