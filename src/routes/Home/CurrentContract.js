@@ -107,7 +107,7 @@ class RenderModal extends Component {
 
     const { model: { leverages = [], keepBailRate, leverage, }, getLeverage, dispatch, modelName } = this.props
     const { currentValue } = this.state
-    const marks = leverages .reduce((sum, next = {}) => {
+    const marks = leverages.reduce((sum, next = {}) => {
       const leverage = next.leverage
       sum[leverage] = String(leverage)
       return sum
@@ -189,7 +189,7 @@ class RenderModal extends Component {
 
                       <div >{item.leverage}</div >
                       <div >{getPercent(Number(1), Number(item.leverage))}</div >
-                      <div >{item.initialMarginRate}%</div >
+                      <div >{keepBailRate}</div >
                     </li >
                   )
                 })

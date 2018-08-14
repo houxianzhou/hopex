@@ -1,11 +1,12 @@
 import { request, asyncPayload } from '@utils'
 import { API } from "@constants"
 
-let { MOCKIP, USERIP, USERIP2, UserIp3, UserIp4 } = API
-const MODE = 'mock1'
+let { MOCKIP, UserIp0, USERIP, USERIP2, UserIp3, UserIp4 } = API
+const MODE = 'mock'
 
 // mock数据
 if (MODE === 'mock') {
+  UserIp0 = `/mock${UserIp0}`
   UserIp3 = `/mock${UserIp3}`
   UserIp4 = `/mock${UserIp4}`
   require('./socketServer')
@@ -46,6 +47,7 @@ export async function getAllMarkets(payload) {
     body: payload
   })
 }
+
 export async function getAllMarketDetails(payload) {
   return request(`${UserIp3}/market.detail_list`, {
     method: 'post',
@@ -54,7 +56,7 @@ export async function getAllMarketDetails(payload) {
 }
 
 export async function getBuySellDetail(payload) {
-  return request(`/api/v1/gateway/Trade/OrderParameter`, {
+  return request(`${UserIp0}/gateway/Trade/OrderParameter`, {
     method: 'post',
     body: payload
   })

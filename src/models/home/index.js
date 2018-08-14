@@ -41,6 +41,7 @@ export default joinModel(modelExtend, {
     availableMoney: '',//可用金额
 
 
+    keepBailRate: '',//维持保证金率
     varyRange: '', // 委托列表区间,
     levelages: [],//当前合约杠杆列表
     leverage: null, //当前用户的杠杆
@@ -269,14 +270,15 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(getLeverage, repayload))
         if (resOk(res)) {
-          const { leverage, isModify, varyRange, leverages } = _.get(res, 'data')
+          const { leverage, isModify, varyRange, leverages, keepBailRate } = _.get(res, 'data')
           yield put({
             type: 'changeState',
             payload: {
               leverage,
               leverageIsModify: isModify,
               varyRange,
-              leverages
+              leverages,
+              keepBailRate
             }
           })
         }

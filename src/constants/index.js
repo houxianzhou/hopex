@@ -13,7 +13,8 @@ export const API = {
   USERIP: '/v1/trade',
   USERIP2: '/api/v1/tc',
   UserIp3: '/api/v1/quote',
-  UserIp4: '/api/v1/trade'
+  UserIp4: '/api/v1/trade',
+  UserIp0: '/api/v1'
 }
 
 export const SPEED = {

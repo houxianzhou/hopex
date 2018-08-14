@@ -13,92 +13,87 @@ const other = {
 
 export default {
   // 合约列表
-  'Post /mock/api/v1/quote/market.list': (req, res) => {
+  'Post /mock/api/v1/quote/market.detail_list': (req, res) => {
     res.send({
-      "head": {
-        "method": "market.list",
-        "timestamps": "1532490892550791",
-        "version": "1.0",
-        "lang": "cn",
-        "msgType": "response",
-        "packType": "1",
-        "serialNumber": "6"
-      },
-      "data": {
-        "BTC": [
-          {
-            "marketCode": "BTCUSDT",
-            "marketName": "BTCUSDT永续",
-            "direction": "2",
-            "marketType": "2",
-            "minVaryPrice": "0.000000001",
-            "minDealAmount": "1",
-            "varyRange": "1 2 4 8",
-            "keepBailRate": "0.01000000",
-            "levelages": "[{\"id\":1,\"settingId\":1,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-17 18:39:28\",\"creator\":1},{\"id\":2,\"settingId\":1,\"initialMarginRate\":20.0000000000,\"leverage\":5.0000000000,\"createdTime\":\"2018-07-17 18:39:28\",\"creator\":1},{\"id\":3,\"settingId\":1,\"initialMarginRate\":5.0000000000,\"leverage\":20.0000000000,\"createdTime\":\"2018-07-17 18:39:28\",\"creator\":1}]",
-            "showPrec": "8",
-            "dealMoney": "BTC",
-            "marketValue": "1.00000000",
-            minLimitPrice: '1000',
-            maxLimitPrice: '2000'
-          }
-        ],
-        "ETH": [
-          {
-            "marketCode": "ETHBTC",
-            "marketName": "ETHBTC永续",
-            "direction": "1",
-            "marketType": "2",
-            "minVaryPrice": "0.10000000",
-            "minDealAmount": "1",
-            "varyRange": "1 2 4 8",
-            "keepBailRate": "1.00000000",
-            "levelages": "[{\"id\":4,\"settingId\":2,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-17 18:53:58\",\"creator\":1},{\"id\":5,\"settingId\":2,\"initialMarginRate\":5.0000000000,\"leverage\":20.0000000000,\"createdTime\":\"2018-07-17 18:53:58\",\"creator\":1}]",
-            "showPrec": "8",
-            "dealMoney": "BTC",
-            "marketValue": "1.00000000",
-            minLimitPrice: '1',
-            maxLimitPrice: '2'
-          }
-        ],
-        "XRP": [
-          {
-            "marketCode": "XRPETH",
-            "marketName": "XRPETH永续",
-            "direction": "2",
-            "marketType": "2",
-            "minVaryPrice": "1.00000000",
-            "minDealAmount": "1",
-            "varyRange": "1 2 4 6 8",
-            "keepBailRate": "1.00000000",
-            "levelages": "[{\"id\":8,\"settingId\":4,\"initialMarginRate\":10.0000000000,\"leverage\":10.0000000000,\"createdTime\":\"2018-07-19 09:53:51\",\"creator\":1},{\"id\":9,\"settingId\":4,\"initialMarginRate\":20.0000000000,\"leverage\":5.0000000000,\"createdTime\":\"2018-07-19 09:53:51\",\"creator\":1}]",
-            "showPrec": "4",
-            "dealMoney": "XRP",
-            "marketValue": "1.00000000",
-            minLimitPrice: '1',
-            maxLimitPrice: '2'
-          }
-        ],
-        "EOS": [
-          {
-            "marketCode": "EOSBTC",
-            "marketName": "EOSBTC永续",
-            "direction": "1",
-            "marketType": "2",
-            "minVaryPrice": "1.00000000",
-            "minDealAmount": "1",
-            "varyRange": "1 3 44",
-            "keepBailRate": "1.00000000",
-            "levelages": "[{\"id\":3,\"settingId\":3,\"initialMarginRate\":111.0000000000,\"leverage\":0.9000000000,\"createdTime\":\"2018-07-19 20:46:44\",\"creator\":1}]",
-            "showPrec": "8",
-            "dealMoney": "BTC",
-            "marketValue": "1.00000000",
-            minLimitPrice: '1',
-            maxLimitPrice: '2'
-          }
-        ]
-      },
-      ...other
+      "data": [{
+        "name": "BTC",
+        "list": [{
+          "price24h": "6079.00",
+          "priceLast": "6000.00",
+          "direction": -1,
+          "marketCode": "BTCUSDT",
+          "marketName": "BTCUSDT永续",
+          "percent": "-1.29",
+          "dollarPrice": "6000.00",
+          "position": true
+        }]
+      }, {
+        "name": "ETH",
+        "list": [{
+          "marketCode": "ETHBTC",
+          "marketName": "ETHBTC永续",
+          "price24h": "",
+          "priceLast": "",
+          "percent": "",
+          "dollarPrice": "",
+          "position": false
+        }, {
+          "marketCode": "ETHUSDT",
+          "marketName": "ETHUSDT永续",
+          "price24h": "",
+          "priceLast": "",
+          "percent": "",
+          "dollarPrice": "",
+          "position": false
+        }]
+      }, {
+        "name": "XRP",
+        "list": [{
+          "marketCode": "XRPBTC",
+          "marketName": "XRPBTC永续",
+          "price24h": "",
+          "priceLast": "",
+          "percent": "",
+          "dollarPrice": "",
+          "position": false
+        }, {
+          "marketCode": "XRPETH",
+          "marketName": "XRPETH永续",
+          "price24h": "",
+          "priceLast": "",
+          "percent": "",
+          "dollarPrice": "",
+          "position": false
+        }, {
+          "marketCode": "XRPUSDT",
+          "marketName": "XRPUSDT永续",
+          "price24h": "",
+          "priceLast": "",
+          "percent": "",
+          "dollarPrice": "",
+          "position": false
+        }]
+      }, {
+        "name": "EOS",
+        "list": [{
+          "marketCode": "EOSETH",
+          "marketName": "EOSETH永续",
+          "price24h": "",
+          "priceLast": "",
+          "percent": "",
+          "dollarPrice": "",
+          "position": false
+        }, {
+          "price24h": "0.0007989",
+          "priceLast": "0.0007400",
+          "direction": -1,
+          "marketCode": "EOSBTC",
+          "marketName": "EOSBTC永续",
+          "percent": "-7.37",
+          "dollarPrice": "4.46",
+          "position": true
+        }]
+      }], "ret": "0", "errCode": "0", "errStr": "success"
     })
   },
   //最新成交
@@ -330,14 +325,14 @@ export default {
 
   // 查询用户杠杆
   'Post /mock/api/v1/trade/market.leverage_select': (req, res) => {
-    res.send({
-      "data": {
-        "leverage": 20.0,
-        isModify: true
-      },
-      ...other
-    })
+    res.send({"ret":"0","errCode":"0","errStr":"Success","data":{"leverage":10.0,"isModify":true,"varyRange":"0.5 5 10 50","leverages":[{"id":1,"settingId":1,"initialMarginRate":10.0,"leverage":10.0,"createdTime":"2018-07-17 18:39:28","creator":1},{"id":2,"settingId":1,"initialMarginRate":20.0,"leverage":5.0,"createdTime":"2018-07-17 18:39:28","creator":1},{"id":3,"settingId":1,"initialMarginRate":5.0,"leverage":20.0,"createdTime":"2018-07-17 18:39:28","creator":1},{"id":10,"settingId":1,"initialMarginRate":2.0,"leverage":50.0,"createdTime":"2018-08-05 10:53:24","creator":1}],"keepBailRate":"0.5%"}})
   },
+
+  // 查询buy sell依赖详情
+  'Post /mock/api/v1/gateway/Trade/OrderParameter': (req, res) => {
+    res.send({"data":{"marketCode":"BTCUSDT","minPriceMovement":0.5,"minPriceMovementDisplay":"0.5BTC","maintenanceMarginRate":0.005,"maintenanceMarginRateDisplay":"0.005%","minTradeNum":1,"minTradeNumDisplay":"1张","availableBalance":0.0,"availableBalanceDisplay":"","maxBuyPrice":6296.1,"minSellPrice":5929.3,"orderValue":0.0,"orderValueDisplay":"","leverages":[{"initialMarginRate":20.0,"initialMarginRateDisplay":"20%","leverage":5.0,"leverageDisplay":"5倍"},{"initialMarginRate":10.0,"initialMarginRateDisplay":"10%","leverage":10.0,"leverageDisplay":"10倍"},{"initialMarginRate":5.0,"initialMarginRateDisplay":"5%","leverage":20.0,"leverageDisplay":"20倍"},{"initialMarginRate":2.0,"initialMarginRateDisplay":"2%","leverage":50.0,"leverageDisplay":"50倍"}],"margin":0.0,"marginDisplay":""},"ret":0,"errCode":"","errStr":""})
+  },
+
 
   // 设置杠杆
   'Post /mock/api/v1/trade/market.leverage_set': (req, res) => {
