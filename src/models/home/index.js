@@ -26,7 +26,9 @@ export default joinModel(modelExtend, {
     indexPrice: '', // 现货价格指数
     totalPrice24h: '',//z4小时交易总额
     latestPrice: '', //最新交易价格,
+    latestPriceShown: '',//纯粹显示，去掉了加减号
     latestPriceChangePercent: '',//最新价相比24小时前价格的涨跌幅
+    latestPriceChangePercentShown: '',//纯粹显示，去掉了加减号
     dollarPrice: '',//换算成美元
     latestPriceTrend: 1,//1升，-1降
     equitablePrice: '', // 计算出来的，合理价格
@@ -200,6 +202,7 @@ export default joinModel(modelExtend, {
               latestPriceShown: _.isString(priceLast) ? priceLast.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
               totalPrice24h,
               latestPriceChangePercent: percent,
+              latestPriceChangePercentShown: _.isString(percent) ? percent.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
               dollarPrice: dollarPrice,
             }
           })

@@ -519,7 +519,8 @@ export default class View extends Component {
     const {
       model: {
         marketName = '', maxPrice24h = '', minPrice24h = '', indexPrice = '',
-        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', equitablePrice = '', latestPriceChangePercent = '', dollarPrice = '',
+        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', equitablePrice = '', latestPriceChangePercent = '',
+        latestPriceChangePercentShown = '', dollarPrice = '',
       },
       RG
     } = this.props
@@ -585,16 +586,21 @@ export default class View extends Component {
                           <div className={styles.compare} >
                             <div className={styles.percent} >
                               {
-                                Number(latestPriceChangePercent) > 0 ? (
-                                  latestPriceChangePercent ?
-                                    <RedGreenSwitch.GreenText value={`${latestPriceChangePercent}`} /> : null
+                                (/[+-]/.test(latestPriceChangePercent)) ? (
+                                  <RedGreenSwitch.GreenText value={`${latestPriceChangePercentShown}`} />
                                 ) : (
-                                  <RedGreenSwitch.RedText value={`${latestPriceChangePercent}`} />
+                                  <RedGreenSwitch.RedText value={`${latestPriceChangePercentShown}`} />
                                 )
                               }
                             </div >
                             <div className={styles.dollar} >
-                              <RedGreenSwitch.GreenText value={`${dollarPrice}`} />
+                              {
+                                (/[+-]/.test(latestPriceChangePercent)) ? (
+                                  <RedGreenSwitch.GreenText value={dollarPrice} />
+                                ) : (
+                                  <RedGreenSwitch.RedText value={dollarPrice} />
+                                )
+                              }
                             </div >
                           </div >
                         </>
@@ -630,7 +636,7 @@ export default class View extends Component {
 
                       <li >
                         <div className={styles.title} >
-                          <span className='blue'>更多</span>
+                          <span className='blue' >更多</span >
                         </div >
                         <div className={styles.desc} ></div >
                       </li >
