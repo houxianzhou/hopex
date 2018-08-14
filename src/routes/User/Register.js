@@ -239,7 +239,7 @@ export default class View extends Component {
                         })
                       }}
                     >
-                      注册
+                      <button>注册</button>
                     </Button >
                     <div className={styles.loginentry} >已经有账户 ?
                       <span
@@ -308,7 +308,7 @@ export default class View extends Component {
                         })
                       }}
                     >
-                      注册
+                      <button>注册</button>
                     </Button >
                   </form >
                 </div >

@@ -160,6 +160,12 @@
   width: 100%;
   height: 48px;
   margin-top: 60px;
+  button{
+    border: unset;
+    background: unset;
+    outline: unset;
+    color:unset;
+  }
   span {
     color: black;
     line-height: 20px;
@@ -176,12 +182,15 @@
 }
 
 .permit {
-  color: white;
+  button{
+    color:unset;
+  }
+  color: white !important;
   background-image: linear-gradient(90deg, #EBCB80 0%, #E0BD7E 100%);
 }
 
 .toast {
-  background: red;
+  // background: red;
 }
 
 :global {

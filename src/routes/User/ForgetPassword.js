@@ -109,7 +109,7 @@ export default class View extends Component {
                         })
                       }}
                     >
-                      下一步
+                      <button>下一步</button>
                     </Button >
                   </form >
                 </div >
@@ -177,7 +177,7 @@ export default class View extends Component {
                         })
                       }}
                     >
-                      提交
+                      <button>提交</button>
                     </Button >
                   </form >
                 </div >

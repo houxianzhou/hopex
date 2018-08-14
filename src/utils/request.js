@@ -70,7 +70,7 @@ export function request(url = '', options = {}) {
           || _.get(error, 'response.data.errStr') === 'token expired') {
           // token失效
           localSave.remove('userInfo')
-          // window.location.reload()
+          window.location.reload()
         } else {
           if (errHandler) {
             // 需要单独的错误处理器

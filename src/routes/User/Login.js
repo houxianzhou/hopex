@@ -159,7 +159,9 @@ export default class View extends Component {
                       e.preventDefault()
                       this.login()
                     }} >
-                    登录
+                    <button >
+                      登录
+                    </button >
                   </Button >
                 </form >
                 <div className={styles.othermethod} >
