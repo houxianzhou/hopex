@@ -646,6 +646,7 @@ export default joinModel(modelExtend, {
             "method": "user.order_history"
           },
           "param": {
+            marketList: [],
             "side": "0",
             "startTime": "0",
             "endTime": "0",
