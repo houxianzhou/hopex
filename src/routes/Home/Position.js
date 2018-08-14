@@ -121,8 +121,9 @@ export default class View extends Component {
       {
         title: '浮动盈亏(收益率)',
         dataIndex: 'floatProfitShow',
+        width: 200,
         render: (value, record = {}) => {
-          const v=`${value}(${record.profitRate})`
+          const v = `${value}(${record.profitRate})`
           return Number(record.floatProfit) >= 0 ? (
             <RedGreenSwitch.GreenText value={v} />
           ) : (
