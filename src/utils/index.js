@@ -3,7 +3,6 @@ import { BigNumber } from 'bignumber.js'
 import { SPEED } from '@constants'
 import { lodash_helper, immutable, moment_helper } from './helper'
 
-
 export { default as joinModel }  from 'dva-model-extend'
 export Responsive from 'react-responsive'
 export classNames from 'classnames'

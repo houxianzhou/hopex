@@ -98,6 +98,7 @@ export default joinModel(modelExtend, {
         return res
       }
     },
+
     // 委托列表
     * getEnsureRecord({ payload = {} }, { call, put, select }) {
       const repayload = yield (asyncPayload(yield put({
@@ -647,10 +648,11 @@ export default joinModel(modelExtend, {
           },
           "param": {
             marketList: [],
+            typeList: ["1", "2"],
             "side": "0",
             "startTime": "0",
             "endTime": "0",
-            "pageIndex": "",
+            "pageIndex": "1",
             "pageSize": "10"
           },
           power: [1],
