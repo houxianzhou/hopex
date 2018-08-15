@@ -50,6 +50,11 @@ export default class View extends Component {
     }
   }
 
+  isLimitPrice = () => {
+    const { orderChannel } = this.state
+    return orderChannel === 0
+  }
+
   changeState = (payload) => {
     this.setState(payload)
   }
@@ -149,11 +154,12 @@ export default class View extends Component {
     } = config
     const { isLogin, routerGoLogin, routerGoRegister } = this.props
     const { orderChannel } = this.state
+    const { isLimitPrice } = this
     return <Button
       loading={loading}
       className={classNames(
         styles.submit,
-        isLogin && (orderChannel === 0 ? (valuePrice && valueAmount) : valueAmount) ? styles.haslogin : styles.notlogin,
+        isLogin && (isLimitPrice() ? (valuePrice && valueAmount) : valueAmount) ? styles.haslogin : styles.notlogin,
         className
       )}
       onClick={() => {
@@ -220,18 +226,18 @@ export default class View extends Component {
   }
 
   render() {
-    const { renderArea, changeState } = this
+    const { renderArea, changeState, isLimitPrice } = this
     const { dispatch, loading, modelName, RG, model: { minVaryPrice = '', minPriceMovementDisplay = '', minDealAmount = '', minDealAmountDisplay = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' } } = this.props
-    const { side, orderChannel, buy, sell } = this.state
+    const { side, buy, sell } = this.state
 
     // 限价或者市价
     const configPrice = {
-      label_name: orderChannel === 0 ? '限价' : '市价',
+      label_name: isLimitPrice() ? '限价' : '市价',
       label_desc: `最小单位${minPriceMovementDisplay}`,
       intro_desc: '最高允许买价',
-      intro_price: formatNumber(maxLimitPrice, 'p'),
-      value: buy.price,
-      step:  minVaryPrice,
+      intro_price: maxLimitPrice,
+      value: isLimitPrice() ? buy.price : '',
+      step: minVaryPrice,
       min: 0,
       // max: Number(maxLimitPrice), //formatNumber(maxLimitPrice, 'p'),
       onChange: (value) => {
@@ -282,7 +288,7 @@ export default class View extends Component {
           type: `${modelName}/postSideOrder`,
           payload: {
             side: '2',
-            method: orderChannel === 0 ? 'order.put_limit' : 'order.put_market',
+            method: isLimitPrice() ? 'order.put_limit' : 'order.put_market',
             price: String(buy.price),
             amount: String(buy.amount)
           }
@@ -302,8 +308,8 @@ export default class View extends Component {
         ...configPrice,
         ...{
           intro_desc: '最低允许卖价',
-          intro_price: formatNumber(minLimitPrice, 'p'),
-          value: sell.price,
+          intro_price: minLimitPrice,
+          value: isLimitPrice() ? sell.price : '',
           step: minVaryPrice,
           min: 0,
           onChange: (value) => {
@@ -350,7 +356,7 @@ export default class View extends Component {
               type: `${modelName}/postSideOrder`,
               payload: {
                 side: '1',
-                method: orderChannel === 0 ? 'order.put_limit' : 'order.put_market',
+                method: isLimitPrice() ? 'order.put_limit' : 'order.put_market',
                 price: String(sell.price),
                 amount: String(sell.amount)
               }
@@ -380,7 +386,7 @@ export default class View extends Component {
               )} >
                 <li
                   className={classNames(
-                    orderChannel === 0 ? 'active' : null
+                    isLimitPrice() ? 'active' : null
                   )}
                   onClick={() => {
                     this.changeState({
@@ -392,7 +398,7 @@ export default class View extends Component {
                 </li >
                 <li
                   className={classNames(
-                    orderChannel === 1 ? 'active' : null
+                    !isLimitPrice() ? 'active' : null
                   )}
                   onClick={() => {
                     this.changeState({

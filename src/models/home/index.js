@@ -573,7 +573,6 @@ export default joinModel(modelExtend, {
       }
     },
 
-
     // 增加或减少持仓保证金
     * doUpdatePositionEnsureMoney({ payload = {} }, { call, put }) {
       const { assetName, assetChange } = payload
