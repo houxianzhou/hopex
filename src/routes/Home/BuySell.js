@@ -276,11 +276,11 @@ export default class View extends Component {
             price: value
           }
         })
-        getBuyDetail({
-          side: '2',
-          price: value,
-          amount: buy.amount
-        })
+        // getBuyDetail({
+        //   side: '2',
+        //   price: value,
+        //   amount: buy.amount
+        // })
       }
     }
     // 数量
