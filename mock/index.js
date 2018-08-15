@@ -430,12 +430,12 @@ export default {
         "maintenanceMarginRateDisplay": "0.005%",
         "minTradeNum": 1,
         "minTradeNumDisplay": "1张",
-        "availableBalance": 0.0,
+        "availableBalance": _.random(10, 10000),
         "availableBalanceDisplay": "",
         "maxBuyPrice": 6296.1,
         "minSellPrice": 5929.3,
-        "orderValue": 0.0,
-        "orderValueDisplay": "",
+        "orderValue": _.random(10, 10000),
+        "orderValueDisplay": _.random(10, 10000) + 'BTC',
         "leverages": [{
           "initialMarginRate": 20.0,
           "initialMarginRateDisplay": "20%",
@@ -453,14 +453,26 @@ export default {
           "leverageDisplay": "20倍"
         }, { "initialMarginRate": 2.0, "initialMarginRateDisplay": "2%", "leverage": 50.0, "leverageDisplay": "50倍" }],
         "margin": 0.0,
-        "marginDisplay": ""
+        "marginDisplay": _.random(10, 10000) + 'BTC'
       }, "ret": 0, "errCode": "", "errStr": ""
     })
   },
 
   //查询费率
   'Get /mock/api/v1/gateway/Trade/FeeRate': (req, res) => {
-    res.send({"data":{"marketName":"BTCUSDT永续","makerFeeRate":-0.00025,"makerFeeRateDisplay":"-0.025%","takerFeeRate":0.00075,"takerFeeRateDisplay":"0.075%","liquidationFeeRate":0.00075,"liquidationFeeRateDisplay":"0.075%","deliveryRate":0.0,"deliveryRateDisplay":"0%"},"ret":0,"errCode":"","errStr":""})
+    res.send({
+      "data": {
+        "marketName": "BTCUSDT永续",
+        "makerFeeRate": -0.00025,
+        "makerFeeRateDisplay": "-0.025%",
+        "takerFeeRate": 0.00075,
+        "takerFeeRateDisplay": "0.075%",
+        "liquidationFeeRate": 0.00075,
+        "liquidationFeeRateDisplay": "0.075%",
+        "deliveryRate": 0.0,
+        "deliveryRateDisplay": "0%"
+      }, "ret": 0, "errCode": "", "errStr": ""
+    })
   },
 
 
@@ -627,13 +639,13 @@ export default {
               "market": "BTCUSDT",
               "source": "浏览器，我是现价测试买单,数量10,价格6118.5,用户id：3,邮箱：xiaoyi.wei@bcsystech.com",
               "type": "1",
-              "side": "1",
+              "side": "2",
               "price": "6118.50",
               "amount": "10",
               "dealAmount": "5",
               "dealMoney": "0.0008171937566397",
               "dealFee": "-0.00",
-              "orderStatus": "1",
+              "orderStatus": "2",
               "leverage": _.random(10, 90) + '',
               "avgDealMoney": "6118.5",
               "delegateMoney": "0.00004209",

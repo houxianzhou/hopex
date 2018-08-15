@@ -9,20 +9,31 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
+    this.getBuySellDetail()
+  }
+
+  getBuySellDetail = (payload = {}) => {
     const { dispatch, modelName, } = this.props
-    dispatch({
+    return dispatch({
       type: `${modelName}/getBuySellDetail`,
+      payload
     })
   }
+
+
   state = {
     side: '',
-    orderChannel: 0,
+    orderChannel: 0,// 限价还是市价
     buy: {
+      marginDisplay: '', //保证金
+      orderValueDisplay: '',//委托价值
       price: '',
       amount: '',
       ensureMoney: ''
     },
     sell: {
+      marginDisplay: '', //保证金
+      orderValueDisplay: '',//委托价值
       price: '',
       amount: '',
       ensureMoney: ''
@@ -33,10 +44,8 @@ export default class View extends Component {
     const { model: { clickSelectOne: prevClickSelectOne } = {} } = prevProps
     const { model: { clickSelectOne } = {} } = this.props
     if (!isEqual(prevClickSelectOne, clickSelectOne) && clickSelectOne) {
-      let order = null
       const { type, price, amount } = clickSelectOne
       if (type) {
-        order = type === '1' ? 'sell' : 'buy'
         this.changeState({
           sell: {
             ...this.state.sell,
@@ -151,7 +160,6 @@ export default class View extends Component {
       configSubmit: { label_text, label_desc, label_price, className = {}, onSubmit, loading } = {},
       configPrice: { value: valuePrice } = {},
       configAmount: { value: valueAmount } = {}
-
     } = config
     const { isLogin, routerGoLogin, routerGoRegister } = this.props
     const { orderChannel } = this.state
@@ -202,7 +210,6 @@ export default class View extends Component {
           </>
         )
       }
-
     </Button >
   }
 
@@ -227,9 +234,30 @@ export default class View extends Component {
   }
 
   render() {
-    const { renderArea, changeState, isLimitPrice } = this
-    const { dispatch, loading, modelName, RG, model: { minVaryPrice = '', minPriceMovementDisplay = '', minDealAmount = '', minDealAmountDisplay = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' }, modal: { name } = {}, openModal } = this.props
+    const { renderArea, changeState, isLimitPrice, getBuySellDetail } = this
+    const {
+      dispatch, loading, modelName, RG, model: {
+        minVaryPrice = '', minPriceMovementDisplay = '', minDealAmount = '',
+        minDealAmountDisplay = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '',
+      }, modal: { name } = {}, openModal
+    } = this.props
     const { side, buy, sell } = this.state
+
+    const getBuyDetail = (payload) => {
+      getBuySellDetail(payload).then(res => {
+        if (res) {
+          const { marginDisplay, orderValueDisplay } = res
+          const { buy } = this.state
+          changeState({
+            buy: {
+              ...buy,
+              marginDisplay,
+              orderValueDisplay
+            }
+          })
+        }
+      })
+    }
 
     // 限价或者市价
     const configPrice = {
@@ -240,16 +268,20 @@ export default class View extends Component {
       value: isLimitPrice() ? buy.price : '',
       step: minVaryPrice,
       min: 0,
-      // max: Number(maxLimitPrice), //formatNumber(maxLimitPrice, 'p'),
       onChange: (value) => {
+        // console.log(value,'-------------')
         changeState({
           buy: {
             ...buy,
             price: value
           }
         })
-      },
-
+        getBuyDetail({
+          side: '2',
+          price: value,
+          amount: buy.amount
+        })
+      }
     }
     // 数量
     const configAmount = {
@@ -270,7 +302,7 @@ export default class View extends Component {
     // 保证金
     const configEnsure = {
       label_action: '预估占用保证金',
-      label_action_price: '1000',
+      label_action_price: buy.marginDisplay,
       label_available: '可用金额',
       label_available_price: Number(availableMoney)
     }
@@ -279,7 +311,7 @@ export default class View extends Component {
       loading: side === '2' && loading.effects[`${modelName}/postSideOrder`],
       label_text: '买入',
       label_desc: '委托价值',
-      label_price: '100.BTC',
+      label_price: buy.orderValueDisplay,
       className: RG ? styles.buy : styles.sell,
       onSubmit: () => {
         changeState({
@@ -340,7 +372,7 @@ export default class View extends Component {
       configEnsure: {
         ...configEnsure,
         ...{
-          // label_action: '卖出保证金',
+          label_action_price: sell.marginDisplay,
         }
       },
       configSubmit: {
@@ -348,6 +380,7 @@ export default class View extends Component {
         ...{
           loading: side === '1' && loading.effects[`${modelName}/postSideOrder`],
           label_text: '卖出',
+          label_price: sell.orderValueDisplay,
           className: RG ? styles.sell : styles.buy,
           onSubmit: () => {
             changeState({
@@ -391,7 +424,7 @@ export default class View extends Component {
                       isLimitPrice() ? 'active' : null
                     )}
                     onClick={() => {
-                      this.changeState({
+                      changeState({
                         orderChannel: 0,
                       })
                     }}
@@ -403,7 +436,7 @@ export default class View extends Component {
                       !isLimitPrice() ? 'active' : null
                     )}
                     onClick={() => {
-                      this.changeState({
+                      changeState({
                         orderChannel: 1,
                       })
                     }}
@@ -464,6 +497,7 @@ class RenderModal extends Component {
   }
 
   render() {
+    const { changeState } = this
     const { dispatch, modelName, closeModal, model: { marketName } } = this.props
     const {
       fee: {

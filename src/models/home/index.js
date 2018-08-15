@@ -475,6 +475,7 @@ export default joinModel(modelExtend, {
 
     //获取买入卖出模块数据依赖项
     * getBuySellDetail({ payload = {} }, { call, put }) {
+      const { side, price, amount } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
@@ -482,9 +483,9 @@ export default joinModel(modelExtend, {
             "method": "*"
           },
           "param": {
-            "side": 0,
-            "price": 0,
-            "amount": 0,
+            side,
+            price,
+            amount,
             "leverage": 0
           },
         }
@@ -508,6 +509,7 @@ export default joinModel(modelExtend, {
             minLimitPrice: result.minSellPrice,
           }
         })
+        return result
 
       }
     },
@@ -530,7 +532,6 @@ export default joinModel(modelExtend, {
         }
       }
     },
-
 
     //个人持仓列表
     * getPosition({ payload = {} }, { call, put, select }) {
