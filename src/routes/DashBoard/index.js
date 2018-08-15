@@ -55,14 +55,32 @@ const itemList = [
     des: '全面采用冷钱包',
     desSecondLine: '100%保证用户数字资产的安全'
   }
-]
+];
 
-@connect(({ dashboard: model }) => ({
+@connect(({ dashboard: model, dispatch }) => ({
   model,
+  dispatch,
+  modelName: 'dashboard'
 }))
 export default class View extends Component {
+  state = {
+    bannerList: [],
+    notifies: []
+  }
   componentDidMount = () => {
+    console.log(this.props);
     const _this = this;
+    this.props.dispatch({
+      type: `${this.props.modelName}/getIndexInfo`
+    }).then((res) => {
+      if (!res.data) return;
+      const {banners='', notifies=''} = res.data;
+      // console.log();
+      this.setState({
+        bannerList: banners,
+        notifies: notifies,
+      })
+    })
     new Swiper(this.refs.swiperContainer, {
       autoplay: {
         delay: 3000,
@@ -78,24 +96,41 @@ export default class View extends Component {
 
   render() {
     const { model: { myname } = {} } = this.props;
+    const { bannerList, notifies} = this.state;
+
     return (
       <div className={styles.home} >
         <div className={styles.header} ref="swiperContainer" >
           <div className="swiper-wrapper" >
-            <div className="swiper-slide" >
-              <img src={bannerThird} alt="" />
-            </div >
-            <div className="swiper-slide" >
-              <img src={bannerFirst} alt="" />
-            </div >
-            <div className="swiper-slide" >
-              <img src={bannerSecond} alt="" />
-            </div >
+            {
+              bannerList.map((v, index) => {
+                return (
+                  <div key={index} className="swiper-slide" >
+                    <img src={v.imgUrl} alt="" />
+                  </div >
+                )
+              })
+            }
+            {/*<div className="swiper-slide" >*/}
+              {/*<img src={bannerThird} alt="" />*/}
+            {/*</div >*/}
+            {/*<div className="swiper-slide" >*/}
+              {/*<img src={bannerFirst} alt="" />*/}
+            {/*</div >*/}
+            {/*<div className="swiper-slide" >*/}
+              {/*<img src={bannerSecond} alt="" />*/}
+            {/*</div >*/}
           </div >
           <div className="swiper-pagination" ref="swiperPagination" />
         </div >
         <div className={styles.notice} >
-          <p >关于hopex将于北京时间2018年9月1日上线的通知</p >
+          {
+            notifies.map((v, index) => {
+              return (
+                <a target="_blank" href={v.link} >{v.title}</a >
+              )
+            })
+          }
         </div >
         <div className={styles.aboutUs} >
           <div className={styles.imgContainer} >
