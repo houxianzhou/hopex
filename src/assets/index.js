@@ -35,6 +35,14 @@ export const email = (
     </g >
   </svg >
 );
+
+export const editIcon = (
+  <svg width="19" height="19" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 18"
+       style={{ enableBackground: "new 0 0 17 18" }} xmlSpace="preserve" >
+    <path fill="#E2B96F" className="st0"
+          d="M15,15H8.8l6.9-7.8c0.7-0.8,0.7-2-0.1-2.7l-2.9-2.9c0,0,0,0,0,0c-0.8-0.8-2.1-0.7-2.8,0.1L1,11v6H7l0,0h8  c0.6,0,1-0.4,1-1S15.6,15,15,15z M11.3,3l2.9,2.9l-1.3,1.5L9.9,4.4L11.3,3z M8.5,5.9l3,3L6.1,15H3v-3.2L8.5,5.9z" />
+  </svg >
+)
 // 账户页面对号图标
 export const rightIcon = (
   <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" >

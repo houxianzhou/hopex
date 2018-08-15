@@ -4,6 +4,7 @@ import { Table, Mixin, Button } from '@components'
 import { SCROLLX, TABLE } from '@constants'
 import add from '@assets/add.png'
 import substract from '@assets/substract.png'
+import { editIcon } from '@assets'
 import ScrollPannel from './components/ScrollPanel'
 import RedGreenSwitch from './components/RedGreenSwitch'
 import MainModal from './components/MainModal'
@@ -249,6 +250,7 @@ class RenderModal extends Component {
         <div className={styles.content} >
           <div className={styles.input} >
             <div className={styles.edit} >
+              {editIcon}
               <input value={inputValue} onChange={
                 _.throttle((e) => {
                   const value = e.target.value
@@ -277,7 +279,7 @@ class RenderModal extends Component {
           </div >
           <ul className={styles.desc} >
             <li >
-              最多增加 :
+              最多{active === 0 ? '增加' : '减少'} :
               <div >{`${maxChange}${dealCurrency}`}</div >
             </li >
             <li >追加后的强平价格为 :
