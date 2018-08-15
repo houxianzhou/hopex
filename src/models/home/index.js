@@ -777,7 +777,7 @@ export default joinModel(modelExtend, {
             "side": "0",
             "startTime": "0",
             "endTime": "0",
-            "pageIndex": "1",
+            "pageIndex": "",
             "pageSize": "10"
           },
           power: [1],
@@ -813,6 +813,7 @@ export default joinModel(modelExtend, {
       const model = yield select(({ user, }) => (user))
       const { side, method, price, amount } = payload
       const url = method === 'order.put_limit' ? postLimitOrder : postMarketOrder
+      const priceAfter = method === 'order.put_limit' ? price : undefined
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
@@ -822,9 +823,8 @@ export default joinModel(modelExtend, {
           "param": {
             "side": side,// 1:sell 2:buy
             "amount": amount,//买卖数量
-            "price": price,//价格
-            "takerFee": "0.01",
-            "makerFee": "0.01",
+            "price": priceAfter,//价格
+
             "source": url === postLimitOrder ? `我是现价测试${side === 1 ? '卖' : '买'}单,数量${amount},价格${price}` : '我是市价测试单'//备注
           },
           powerMsg: '下单',

@@ -143,7 +143,9 @@ export default class View extends Component {
           return {
             value: (
               <div >
-                <input />
+                <input onChange={(e) => {
+                  console.log(e.target.value)
+                }} />
                 <span >现价全平</span >
                 <span >市价全平</span >
               </div >

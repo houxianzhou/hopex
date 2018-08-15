@@ -148,11 +148,12 @@ export default class View extends Component {
 
     } = config
     const { isLogin, routerGoLogin, routerGoRegister } = this.props
+    const { orderChannel } = this.state
     return <Button
       loading={loading}
       className={classNames(
         styles.submit,
-        isLogin && valuePrice && valueAmount ? styles.haslogin : styles.notlogin,
+        isLogin && (orderChannel === 0 ? (valuePrice && valueAmount) : valueAmount) ? styles.haslogin : styles.notlogin,
         className
       )}
       onClick={() => {
@@ -182,12 +183,14 @@ export default class View extends Component {
           <>
             <div onClick={() => {
               routerGoLogin()
-            }} >登录
+            }} >
+              登录
             </div >
             <div className={styles.center} >或</div >
             <div onClick={() => {
               routerGoRegister()
-            }} >注册
+            }} >
+              注册
             </div >
           </>
         )
@@ -228,7 +231,7 @@ export default class View extends Component {
       intro_desc: '最高允许买价',
       intro_price: formatNumber(maxLimitPrice, 'p'),
       value: buy.price,
-      step: minVaryPrice,
+      step:  minVaryPrice,
       min: 0,
       // max: Number(maxLimitPrice), //formatNumber(maxLimitPrice, 'p'),
       onChange: (value) => {
@@ -385,7 +388,7 @@ export default class View extends Component {
                     })
                   }}
                 >
-                  现价
+                  限价
                 </li >
                 <li
                   className={classNames(

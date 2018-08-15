@@ -140,7 +140,7 @@ export default class View extends Component {
                       payload: {
                         type: '1',
                         market: record.market,
-                        orderId: record.id
+                        orderId: record.orderId
                       }
                     })
                   }} >
