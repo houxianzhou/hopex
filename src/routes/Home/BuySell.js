@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Mixin, InputNumber, Slider, Loading, Button } from "@components"
 import { COLORS } from '@constants'
 import { classNames, _, formatNumber, isEqual } from '@utils'
+import MainModal from './components/MainModal'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -227,7 +228,7 @@ export default class View extends Component {
 
   render() {
     const { renderArea, changeState, isLimitPrice } = this
-    const { dispatch, loading, modelName, RG, model: { minVaryPrice = '', minPriceMovementDisplay = '', minDealAmount = '', minDealAmountDisplay = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' } } = this.props
+    const { dispatch, loading, modelName, RG, model: { minVaryPrice = '', minPriceMovementDisplay = '', minDealAmount = '', minDealAmountDisplay = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '' }, modal: { name } = {}, openModal } = this.props
     const { side, buy, sell } = this.state
 
     // 限价或者市价
@@ -380,35 +381,46 @@ export default class View extends Component {
           <ScrollPannel
             scroller={false}
             header={
-              <ul className={classNames(
-                styles.tab,
-                styles.buyselltab
-              )} >
-                <li
-                  className={classNames(
-                    isLimitPrice() ? 'active' : null
-                  )}
-                  onClick={() => {
-                    this.changeState({
-                      orderChannel: 0,
-                    })
-                  }}
-                >
-                  限价
-                </li >
-                <li
-                  className={classNames(
-                    !isLimitPrice() ? 'active' : null
-                  )}
-                  onClick={() => {
-                    this.changeState({
-                      orderChannel: 1,
-                    })
-                  }}
-                >
-                  市价
-                </li >
-              </ul >
+              <div className={styles.buysellheader} >
+                <ul className={classNames(
+                  styles.tab,
+                  styles.buyselltab
+                )} >
+                  <li
+                    className={classNames(
+                      isLimitPrice() ? 'active' : null
+                    )}
+                    onClick={() => {
+                      this.changeState({
+                        orderChannel: 0,
+                      })
+                    }}
+                  >
+                    限价
+                  </li >
+                  <li
+                    className={classNames(
+                      !isLimitPrice() ? 'active' : null
+                    )}
+                    onClick={() => {
+                      this.changeState({
+                        orderChannel: 1,
+                      })
+                    }}
+                  >
+                    市价
+                  </li >
+                </ul >
+                <ul className={styles.right} >
+                  <li >计算器</li >
+                  <li onClick={
+                    () => {
+                      openModal({ name: 'fee' })
+                    }
+                  } >费用
+                  </li >
+                </ul >
+              </div >
             }
           >
             <div className={styles.content} >
@@ -421,7 +433,69 @@ export default class View extends Component {
             </div >
           </ScrollPannel >
         </div >
+        {
+          name === 'fee' ? (<RenderModal {...this.props} {...this.state}  />) : null
+        }
       </Mixin.Child >
+    )
+  }
+}
+
+class RenderModal extends Component {
+  state = {
+    fee: {}
+  }
+
+  componentDidMount() {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getMarketFee`
+    }).then(res => {
+      if (res) {
+        this.changeState({
+          fee: res
+        })
+      }
+    })
+  }
+
+  changeState = (payload) => {
+    this.setState(payload)
+  }
+
+  render() {
+    const { dispatch, modelName, closeModal, model: { marketName } } = this.props
+    const {
+      fee: {
+        makerFeeRateDisplay = '', takerFeeRateDisplay = '',
+        liquidationFeeRateDisplay = '', deliveryRateDisplay = ''
+      } = {}
+    } = this.state
+    const props = {
+      ...this.props,
+      title: marketName
+    }
+    return (
+      <MainModal {...props} className={styles.buySellFee_Modal} >
+        <ul >
+          <li >
+            <div >流动性提供方(挂单)手续费率:</div >
+            <div >{makerFeeRateDisplay}</div >
+          </li >
+          <li >
+            <div >流动性提供方(吃单)手续费率:</div >
+            <div >{takerFeeRateDisplay}</div >
+          </li >
+          <li >
+            <div >强平手续费率:</div >
+            <div >{liquidationFeeRateDisplay}</div >
+          </li >
+          <li >
+            <div >交割手续费率:</div >
+            <div >{deliveryRateDisplay}</div >
+          </li >
+        </ul >
+      </MainModal >
     )
   }
 }

@@ -458,6 +458,11 @@ export default {
     })
   },
 
+  //查询费率
+  'Get /mock/api/v1/gateway/Trade/FeeRate': (req, res) => {
+    res.send({"data":{"marketName":"BTCUSDT永续","makerFeeRate":-0.00025,"makerFeeRateDisplay":"-0.025%","takerFeeRate":0.00075,"takerFeeRateDisplay":"0.075%","liquidationFeeRate":0.00075,"liquidationFeeRateDisplay":"0.075%","deliveryRate":0.0,"deliveryRateDisplay":"0%"},"ret":0,"errCode":"","errStr":""})
+  },
+
 
   // 设置杠杆
   'Post /mock/api/v1/trade/market.leverage_set': (req, res) => {

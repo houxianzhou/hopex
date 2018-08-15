@@ -63,6 +63,13 @@ export async function getBuySellDetail(payload) {
   })
 }
 
+//获取用户当前合约的费率
+export async function getMarketFee(payload) {
+  return request(`${UserIp0}/gateway/Trade/FeeRate`, {
+    query: payload
+  })
+}
+
 //查询最多添加或减少的保证金及强平价格
 export async function calculatePositionEnsureMoney(payload) {
   return request(`${UserIp4}/user.append_position_margin_query`, {

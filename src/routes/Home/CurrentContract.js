@@ -23,7 +23,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { marketName, leverage, leverageIsModify = false }, modal: { name }, dispatch, modelName } = this.props
+    const { model: { marketName, leverage, leverageIsModify = false }, modal: { name }, dispatch, modelName, openModal } = this.props
 
     const colors = [
       '#52AA64', '#52AA64', '#8CB152', '#8CB152', '#CABA70', '#CABA70', '#D69555', '#D69555', '#D47D5A', ' #D47D5A'
@@ -58,11 +58,8 @@ export default class View extends Component {
                   <div
                     className={styles.edit}
                     onClick={() => {
-                      leverageIsModify ? dispatch({
-                        type: `${modelName}/openModal`,
-                        payload: {
-                          name: 'contract'
-                        }
+                      leverageIsModify ? openModal({
+                        name: 'contract'
                       }) : Toast.tip('当前有该合约持仓或委托，无法修改杠杆倍数')
                     }}
                   >编辑
@@ -105,7 +102,7 @@ class RenderModal extends Component {
       title: '设置杠杆倍数'
     }
 
-    const { model: { leverages = [], keepBailRate, leverage, }, getLeverage, dispatch, modelName } = this.props
+    const { model: { leverages = [], keepBailRate, leverage, }, getLeverage, dispatch, modelName, closeModal } = this.props
     const { currentValue } = this.state
     const marks = leverages.reduce((sum, next = {}) => {
       const leverage = next.leverage
@@ -201,9 +198,7 @@ class RenderModal extends Component {
         <div className={styles.buttons} >
           <div
             onClick={() => {
-              dispatch({
-                type: `${modelName}/closeModal`,
-              })
+              closeModal()
             }}
           >
             取消
@@ -223,10 +218,10 @@ class RenderModal extends Component {
                 })
               }
               promise.then(res => {
-                dispatch({
-                  type: `${modelName}/closeModal`,
-                })
-                getLeverage()
+                if (res) {
+                  closeModal()
+                  getLeverage()
+                }
               })
             }}
           >

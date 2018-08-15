@@ -132,7 +132,7 @@ export default class View extends Component {
         render: (value, record = {}) => {
           return ({
               value: (
-                record.orderStatus === '1' ? (
+                ['1', '2'].indexOf(record.orderStatus) > 0 ? (
                   <span onClick={(e) => {
                     e.stopPropagation()
                     dispatch({

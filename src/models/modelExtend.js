@@ -49,10 +49,17 @@ export default {
           result = reset(['param', 'marketCode'], String(marketCode))
           result = reset(['param', 'businessId'], String(_.uniqueId()))
         }
+       // 单独的一套规则
+        if (_.has(payload, 'param1')) {
+          result = reset(['param1','market'], String(marketCode))
+          result = reset(['param1','lang'], String(lang))
+        }
+
         result = result.map((value) => {
           if (value === 'replaceWith_market') return String(marketCode)
           return value
         })
+
         return result.toJS()
       }
     },

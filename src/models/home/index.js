@@ -7,7 +7,7 @@ import {
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
   getPosition, getPersonEnsureDetail, getAllMarkets, getAllMarketDetails, getLeverage, doUpdateLeverage,
   getKlineAllList, getPersonalEnsureHistory, getKlineDetail, getBuySellDetail,
-  calculatePositionEnsureMoney, doUpdatePositionEnsureMoney
+  calculatePositionEnsureMoney, doUpdatePositionEnsureMoney, getMarketFee
 } from "@services/trade"
 
 
@@ -391,7 +391,7 @@ export default joinModel(modelExtend, {
       }
     },
 
-    // 合约列表 market.list
+    // 合约列表 market.list 废弃
     * getAllMarkets({ payload = {} }, { call, put }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
@@ -511,6 +511,26 @@ export default joinModel(modelExtend, {
 
       }
     },
+
+    //获取当前用户合约的费率
+    * getMarketFee({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          param1: {},
+          power: [1],
+          powerMsg: '获取当前用户合约的费率'
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getMarketFee, repayload.param1))
+        if (resOk(res)) {
+          const result = _.get(res, 'data') || {}
+          return result
+        }
+      }
+    },
+
 
     //个人持仓列表
     * getPosition({ payload = {} }, { call, put, select }) {
@@ -812,7 +832,7 @@ export default joinModel(modelExtend, {
           if (result) {
             // 此处为解决轮询的问题
             result.map((item = {}) => {
-              const exsit = prev.filter((one = {}) => one.id === item.id)[0] || {}
+              const exsit = prev.filter((one = {}) => one.orderId === item.orderId)[0] || {}
               if (exsit && exsit.expand) {
                 item.expand = exsit.expand
               }

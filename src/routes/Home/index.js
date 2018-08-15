@@ -119,11 +119,22 @@ export default class View extends Component {
   }
 
   renderView = (name) => {
-    const { theme: { RG, viewPosition, calculateTableHeight } } = this.props
+    const { theme: { RG, viewPosition, calculateTableHeight }, dispatch, modelName } = this.props
     const props = {
       RG,
       viewPosition,
       calculateTableHeight,
+      openModal: (payload = {}) => {
+        dispatch({
+          type: `${modelName}/openModal`,
+          payload
+        })
+      },
+      closeModal: () => {
+        dispatch({
+          type: `${modelName}/closeModal`,
+        })
+      },
       noDataTip: (dataSource = [], text) => {
         if (!dataSource.length) {
           return <div >

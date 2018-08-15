@@ -37,15 +37,11 @@ export default class View extends Component {
 
   render() {
     const { changeState } = this
-    const { model: { positionList = [], }, modal: { name }, noDataTip, modelName, dispatch } = this.props
+    const { model: { positionList = [], }, modal: { name }, noDataTip, modelName, dispatch, openModal: prevOpenModal, } = this.props
+
 
     const openModal = () => {
-      dispatch({
-        type: `${modelName}/openModal`,
-        payload: {
-          name: 'positionMoney'
-        }
-      })
+      prevOpenModal({ name: 'positionMoney' })
     }
     const columns = [
       {
@@ -233,7 +229,7 @@ class RenderModal extends Component {
     }
     const { changeState: changeStateInModal } = this
     const { inputValue, dealCurrency = '', increase = {}, reduce = {} } = this.state
-    const { changeState, active, dispatch, modelName, loading } = this.props
+    const { changeState, active, dispatch, modelName, loading, closeModal } = this.props
 
     const currentObj = active === 0 ? increase : reduce
     const { maxChange = '', overPrice = '' } = currentObj || {}
@@ -312,9 +308,7 @@ class RenderModal extends Component {
         <div className={styles.buttons} >
           <div
             onClick={() => {
-              dispatch({
-                type: `${modelName}/closeModal`,
-              })
+              closeModal()
             }}
           >
             取消
@@ -330,9 +324,7 @@ class RenderModal extends Component {
                 }
               }).then((res) => {
                 if (res) {
-                  dispatch({
-                    type: `${modelName}/closeModal`,
-                  })
+                  closeModal()
                 }
               })
 
