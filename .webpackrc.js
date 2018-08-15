@@ -21,7 +21,7 @@ export default {
   publicPath: '/',
   proxy: {
     "/api/*": {
-      target: 'http://192.168.70.131:5001',
+      target: 'http://192.168.70.131:5003',
       changeOrigin: true
     }
   },

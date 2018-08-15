@@ -11,14 +11,14 @@
     }
   }
   .headerPart {
-    width: 60px/@width;
-    height: 8px/@width;
+    width: 60px;
+    height: 8px;
     margin: 0 auto;
     background-color: #E2B96F;
   }
   .aboutUsFont {
     //margin-top: 40px/@width;
-    font-size: 42px;
+    font-size: 36px;
     text-align: center;
     color: #E2B96F;
     margin-top: 40px/@width;
@@ -35,15 +35,24 @@
     color: #FFFFFF;
     line-height: 42px;
     overflow: hidden;
-    p {
+    display: flex;
+    justify-content: center;
+    a {
+      display: inline-block;
+      margin-left: 20px;
       line-height: 42px;
       height: 100%;
-      //animation: notice 20s linear infinite;
-      margin: 0;
-      padding: 0;
       cursor: pointer;
-      text-align: center;
     }
+    //a {
+    //  line-height: 42px;
+    //  height: 100%;
+    //  //animation: notice 20s linear infinite;
+    //  margin: 0;
+    //  padding: 0;
+    //  cursor: pointer;
+    //  text-align: center;
+    //}
   }
   .aboutUs {
     height: 800px/@width;
@@ -74,7 +83,6 @@
         color: #232833;
       }
       .headerPart {
-        //margin-top: 249px/@width;
         margin: 249px/@width 0 0;
         //width: 30px/@width;
         //height: 30px/@width;
@@ -89,8 +97,9 @@
 
       .aboutUsMain {
         margin-top: 60px/@width;
-        width:700px/@width;
-        font-size: 20px;
+        //width:780px;
+        padding-right: 240px;
+        font-size: 18px;
         line-height: 29px;
         color: #232833;
       }
