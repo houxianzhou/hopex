@@ -261,8 +261,9 @@ export default {
         "userToken": "56"
       },
       "data": {
-        "positionList": (new Array(3)).fill().map(item => (
-          {
+        "positionList": (new Array(3)).fill().map((item, index) => {
+          const arryas = ['BTC', 'USDT', 'EOC']
+          return {
             amount: "-1227304",
             averagePrice: _.random(10, 50) + '',
             averagePriceShow: "234.75",
@@ -273,8 +274,8 @@ export default {
             lastPrice: "6000.0",
             lastPriceShow: "6000.0",
             leverage: "20.00",
-            market: "BTCUSDT",
-            marketName: "BTCUSDT永续",
+            market: arryas[index],
+            marketName: `${arryas[index]}永续`,
             overPrice: "245.8305757134",
             overPriceShow: "245.83",
             positionMoney: "265.3165163631",
@@ -283,7 +284,7 @@ export default {
             reasonablePrice: "6370.8808454090",
             reasonablePriceShow: _.random(10, 50) + '',
           }
-        )),
+        }),
       },
       ...other
     })
@@ -376,12 +377,85 @@ export default {
 
   // 查询用户杠杆
   'Post /mock/api/v1/trade/market.leverage_select': (req, res) => {
-    res.send({"ret":"0","errCode":"0","errStr":"Success","data":{"leverage":10.0,"isModify":true,"varyRange":"0.5 5 10 50","leverages":[{"id":1,"settingId":1,"initialMarginRate":10.0,"leverage":10.0,"createdTime":"2018-07-17 18:39:28","creator":1},{"id":2,"settingId":1,"initialMarginRate":20.0,"leverage":5.0,"createdTime":"2018-07-17 18:39:28","creator":1},{"id":3,"settingId":1,"initialMarginRate":5.0,"leverage":20.0,"createdTime":"2018-07-17 18:39:28","creator":1},{"id":10,"settingId":1,"initialMarginRate":2.0,"leverage":50.0,"createdTime":"2018-08-05 10:53:24","creator":1}],"keepBailRate":"0.5%"}})
+    res.send({
+      "ret": "0",
+      "errCode": "0",
+      "errStr": "Success",
+      "data": {
+        "leverage": 10.0,
+        "isModify": true,
+        "varyRange": "0.5 5 10 50",
+        "leverages": [{
+          "id": 1,
+          "settingId": 1,
+          "initialMarginRate": 10.0,
+          "leverage": 10.0,
+          "createdTime": "2018-07-17 18:39:28",
+          "creator": 1
+        }, {
+          "id": 2,
+          "settingId": 1,
+          "initialMarginRate": 20.0,
+          "leverage": 5.0,
+          "createdTime": "2018-07-17 18:39:28",
+          "creator": 1
+        }, {
+          "id": 3,
+          "settingId": 1,
+          "initialMarginRate": 5.0,
+          "leverage": 20.0,
+          "createdTime": "2018-07-17 18:39:28",
+          "creator": 1
+        }, {
+          "id": 10,
+          "settingId": 1,
+          "initialMarginRate": 2.0,
+          "leverage": 50.0,
+          "createdTime": "2018-08-05 10:53:24",
+          "creator": 1
+        }],
+        "keepBailRate": "0.5%"
+      }
+    })
   },
 
   // 查询buy sell依赖详情
   'Post /mock/api/v1/gateway/Trade/OrderParameter': (req, res) => {
-    res.send({"data":{"marketCode":"BTCUSDT","minPriceMovement":0.5,"minPriceMovementDisplay":"0.5BTC","maintenanceMarginRate":0.005,"maintenanceMarginRateDisplay":"0.005%","minTradeNum":1,"minTradeNumDisplay":"1张","availableBalance":0.0,"availableBalanceDisplay":"","maxBuyPrice":6296.1,"minSellPrice":5929.3,"orderValue":0.0,"orderValueDisplay":"","leverages":[{"initialMarginRate":20.0,"initialMarginRateDisplay":"20%","leverage":5.0,"leverageDisplay":"5倍"},{"initialMarginRate":10.0,"initialMarginRateDisplay":"10%","leverage":10.0,"leverageDisplay":"10倍"},{"initialMarginRate":5.0,"initialMarginRateDisplay":"5%","leverage":20.0,"leverageDisplay":"20倍"},{"initialMarginRate":2.0,"initialMarginRateDisplay":"2%","leverage":50.0,"leverageDisplay":"50倍"}],"margin":0.0,"marginDisplay":""},"ret":0,"errCode":"","errStr":""})
+    res.send({
+      "data": {
+        "marketCode": "BTCUSDT",
+        "minPriceMovement": 0.5,
+        "minPriceMovementDisplay": "0.5BTC",
+        "maintenanceMarginRate": 0.005,
+        "maintenanceMarginRateDisplay": "0.005%",
+        "minTradeNum": 1,
+        "minTradeNumDisplay": "1张",
+        "availableBalance": 0.0,
+        "availableBalanceDisplay": "",
+        "maxBuyPrice": 6296.1,
+        "minSellPrice": 5929.3,
+        "orderValue": 0.0,
+        "orderValueDisplay": "",
+        "leverages": [{
+          "initialMarginRate": 20.0,
+          "initialMarginRateDisplay": "20%",
+          "leverage": 5.0,
+          "leverageDisplay": "5倍"
+        }, {
+          "initialMarginRate": 10.0,
+          "initialMarginRateDisplay": "10%",
+          "leverage": 10.0,
+          "leverageDisplay": "10倍"
+        }, {
+          "initialMarginRate": 5.0,
+          "initialMarginRateDisplay": "5%",
+          "leverage": 20.0,
+          "leverageDisplay": "20倍"
+        }, { "initialMarginRate": 2.0, "initialMarginRateDisplay": "2%", "leverage": 50.0, "leverageDisplay": "50倍" }],
+        "margin": 0.0,
+        "marginDisplay": ""
+      }, "ret": 0, "errCode": "", "errStr": ""
+    })
   },
 
 
@@ -542,7 +616,7 @@ export default {
             {
               "ctime": "2018-08-09 17:06:27",
               "ftime": "2018-08-09 17:06:46",
-              "id": "19654" + index,
+              "orderId": "19654" + index,
               "user": "3",
               "marketName": 'BTCUSDT永续',
               "market": "BTCUSDT",

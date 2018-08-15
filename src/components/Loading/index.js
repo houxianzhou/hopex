@@ -8,7 +8,7 @@ import { classNames } from '@utils'
 class Circle extends Component {
   render() {
 
-    const { color = '#f3f3f3', isGlobal = false } = this.props
+    const { color = '#f3f3f3', isGlobal = false, margin = '0 10px' } = this.props
     let {
       size = isGlobal ? 40 : 'middle',
       loading = false,
@@ -23,7 +23,7 @@ class Circle extends Component {
     }
 
     let v = (
-      <i style={{ fontSize: size, color: color }}
+      <i style={{ fontSize: size, color: color, margin: margin }}
          className={
            classNames(
              'iconfont icon-loading',

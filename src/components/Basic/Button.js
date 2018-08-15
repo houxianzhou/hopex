@@ -9,7 +9,7 @@ export default class View extends Component {
   // }
 
   render() {
-    const { children, style = {}, className, onClick, loading = false, layer = true, loadingSize, color } = this.props
+    const { children, style = {}, className, onClick, loading = false, layer = true, loadingSize, color, loadingMargin } = this.props
     return (
       <div
         style={style}
@@ -28,7 +28,7 @@ export default class View extends Component {
         }}
       >
         {children}
-        <Loading.Circle loading={loading} size={loadingSize} color={color} />
+        <Loading.Circle loading={loading} size={loadingSize} margin={loadingMargin} color={color} />
       </div >
     )
   }

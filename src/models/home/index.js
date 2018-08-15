@@ -513,7 +513,7 @@ export default joinModel(modelExtend, {
     },
 
     //个人持仓列表
-    * getPosition({ payload = {} }, { call, put }) {
+    * getPosition({ payload = {} }, { call, put, select }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
@@ -532,7 +532,15 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(getPosition, repayload))
         if (resOk(res)) {
+          const positionList = yield select(({ home: { positionList = [] } }) => positionList)
           const result = _.get(res, 'data.positionList')
+          // 解决轮训问题
+          result.map((item = {}) => {
+            const exsit = positionList.filter((one = {}) => one.market === item.market)[0] || {}
+            if (exsit && exsit.inputValue) {
+              item.inputValue = exsit.inputValue
+            }
+          })
           if (result) {
             yield put({
               type: 'changeState',
@@ -544,6 +552,20 @@ export default joinModel(modelExtend, {
           }
         }
       }
+    },
+
+    //用户输入修改持仓列
+    * doInputChangePosition({ payload = {} }, { call, put, select }) {
+      const { market, value } = payload
+      const positionList = yield select(({ home: { positionList = [] } }) => deepClone(positionList))
+      const filterOne = positionList.filter((item = {}) => item.market === market)[0] || {}
+      filterOne.inputValue = value
+      yield put({
+        type: 'changeState',
+        payload: {
+          positionList
+        }
+      })
     },
 
     // 计算持仓保证金
@@ -628,7 +650,7 @@ export default joinModel(modelExtend, {
           if (result) {
             // 此处为解决轮询的问题
             result.map((item = {}) => {
-              const exsit = personalEnsures.filter(one => one.orderId === item.orderId)[0] || {}
+              const exsit = personalEnsures.filter((one = {}) => one.orderId === item.orderId)[0] || {}
               if (exsit && exsit.expand) {
                 item.expand = exsit.expand
               }
@@ -790,7 +812,7 @@ export default joinModel(modelExtend, {
           if (result) {
             // 此处为解决轮询的问题
             result.map((item = {}) => {
-              const exsit = prev.filter(one => one.id === item.id)[0] || {}
+              const exsit = prev.filter((one = {}) => one.id === item.id)[0] || {}
               if (exsit && exsit.expand) {
                 item.expand = exsit.expand
               }

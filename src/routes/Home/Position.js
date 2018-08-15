@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { classNames, dealInterval, _, formatNumber, getPercent } from '@utils'
-import { Table, Mixin, Button } from '@components'
+import { classNames, dealInterval, _, formatNumber, getPercent, Patterns } from '@utils'
+import { Table, Mixin, Button, Toast } from '@components'
 import { SCROLLX, TABLE } from '@constants'
 import add from '@assets/add.png'
 import substract from '@assets/substract.png'
@@ -132,21 +132,41 @@ export default class View extends Component {
           ) : (
             <RedGreenSwitch.RedText value={v} />
           )
-
         }
       },
       {
         title: '操作',
         width: 280,
         dataIndex: 'overPrice',
-        render: () => {
+        render: (value, record = {}, index) => {
           return {
             value: (
               <div >
-                <input onChange={(e) => {
-                  console.log(e.target.value)
+                <input value={record.inputValue || ''} onChange={(e) => {
+                  if (Patterns.decimalNumber.test(e.target.value) || e.target.value === '') {
+                    dispatch({
+                      type: `${modelName}/doInputChangePosition`,
+                      payload: {
+                        market: record.market,
+                        value: e.target.value
+                      }
+                    })
+                  }
                 }} />
-                <span >现价全平</span >
+                <span onClick={() => {
+                  if (!record.inputValue) return Toast.tip('请填写价格')
+                  dispatch({
+                    type: `${modelName}/postSideOrder`,
+                    payload: {
+                      side: Number(record.amount) > 0 ? '1' : '2',
+                      method: 'order.put_limit',
+                      price: record.inputValue,
+                      amount: String(Math.abs(Number(record.amount)))
+                    }
+                  })
+                }} >
+                  <Button layer={false} loading={false} loadingMargin='0 0 0 2px' >限价全平</Button >
+                </span >
                 <span >市价全平</span >
               </div >
             ),
