@@ -65,7 +65,8 @@ export default class View extends Component {
     const _this = this;
     new Swiper(this.refs.swiperContainer, {
       autoplay: {
-        delay: 3000
+        delay: 3000,
+        disableOnInteraction: false,
       },//可选选项，自动滑动
       speed: 500,
       pagination: {
@@ -134,9 +135,9 @@ export default class View extends Component {
             }
           </div >
           <div className={styles.contract} >
-            <div className={styles.imgContainer} >
-              <img src={computer} alt="" />
-            </div >
+            {/*<div className={styles.imgContainer} >*/}
+            {/*<img src={computer} alt="" />*/}
+            {/*</div >*/}
             <div className={styles.contractItem} >
               <div className={styles.headerPart} />
               <div className={styles.aboutUsFont} >我们提供的合约</div >
@@ -163,9 +164,6 @@ export default class View extends Component {
                     </div >
                     <p className={styles.iconDes} >瑞波币</p >
                   </div >
-
-                </div >
-                <div className={styles.secondIconLine} >
                   <div className={styles.iconItem} >
                     <div className={styles.bitIcon} >
                       {yzIcon}
@@ -178,6 +176,9 @@ export default class View extends Component {
                     </div >
                     <p className={styles.iconDes} >更多</p >
                   </div >
+                </div >
+                <div className={styles.secondIconLine} >
+
                 </div >
               </div >
             </div >

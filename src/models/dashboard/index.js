@@ -10,6 +10,7 @@ export default joinModel(modelExtend, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
+      
     },
   },
 

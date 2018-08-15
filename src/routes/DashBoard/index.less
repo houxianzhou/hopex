@@ -11,13 +11,15 @@
     }
   }
   .headerPart {
-    width: 30px/@width;
-    height: 30px/@width;
+    width: 60px/@width;
+    height: 8px/@width;
+    margin: 0 auto;
     background-color: #E2B96F;
   }
   .aboutUsFont {
     //margin-top: 40px/@width;
     font-size: 42px;
+    text-align: center;
     color: #E2B96F;
     margin-top: 40px/@width;
   }
@@ -72,15 +74,17 @@
         color: #232833;
       }
       .headerPart {
-        margin-top: 249px/@width;
-        width: 30px/@width;
-        height: 30px/@width;
+        //margin-top: 249px/@width;
+        margin: 249px/@width 0 0;
+        //width: 30px/@width;
+        //height: 30px/@width;
         background-color: #E2B96F;
       }
 
       .aboutUsFont {
         font-size: 42px;
         color: #E2B96F;
+        text-align: left;
       }
 
       .aboutUsMain {
@@ -108,7 +112,7 @@
 
     .adventureContainer {
       width: 1500px/@width;
-      margin: 120px/@width auto;
+      margin: 120px/@width auto 160px/@width auto;
       //margin-top: 110px/@width;
       min-height: 500px;
       display: flex;
@@ -148,13 +152,13 @@
       }
     }
     .contract {
-      display: flex;
+      //display: flex;
 
 
       .imgContainer {
-        width: 50%;
+        //width: 50%;
         position: relative;
-        flex-grow: 0;
+        //flex-grow: 0;
 
         img {
           width: 1000px;
@@ -164,10 +168,9 @@
         }
       }
       .contractItem {
-        width: 50%;
-        flex-shrink: 0;
         .contractDes {
-          margin-top: 30px;
+          text-align: center;
+          margin-top: 77px;
           font-size: 16px;
           line-height: 26px;
           color: #666666;
@@ -177,9 +180,9 @@
   }
   .contractIconContainer {
     .firstIconLine, .secondIconLine {
-      margin-top: 45px/@width;
+      margin-top: 100px/@width;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-around;
 
       .iconItem {
         display: flex;
@@ -196,14 +199,14 @@
         }
       }
       .iconDes {
-        margin-top: 20px/@width;
+        margin-top: 77px/@width;
         font-size: 18px;
         color: #666666;
       }
     }
   }
   .homeFooter {
-    margin-top: 328px/@width;
+    margin-top: 200px/@width;
     height: 500px;
     background-repeat: no-repeat;
     background-image: url(../../assets/home-footer.png);
@@ -212,13 +215,15 @@
     padding-top: 186px;
 
     .footerTitle {
+      text-align: center;
       font-size: 30px;
       color: #FFFFFF;
-      margin-left: 20%;
+      //margin-left: 20%;
     }
     .signButton {
+      display: block;
       cursor: pointer;
-      margin-top: 50px;
+      margin: 50px auto;
       border: none;
       color: #fff;
       width: 300px;
@@ -226,7 +231,7 @@
       line-height: 48px;
       background-image: linear-gradient(90deg, #EBCB80 0%, #E0BD7E 100%);
       border-radius: 2px;
-      margin-left: 20%;
+      //margin-left: 20%;
     }
   }
 }
