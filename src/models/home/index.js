@@ -40,6 +40,8 @@ export default joinModel(modelExtend, {
     minLimitPrice: '',//最低允许卖价
     maxLimitPrice: '',//最高允许卖价
     availableMoney: '',//可用金额
+    userAllowTrade: '', //是否可交易
+    marketAllowTrade: '',//是否可交易
 
 
     keepBailRate: '',//维持保证金率
@@ -484,8 +486,8 @@ export default joinModel(modelExtend, {
           },
           "param": {
             side,
-            price:Number(price),
-            amount:Number(amount),
+            price: Number(price),
+            amount: Number(amount),
             "leverage": 0
           },
         }
@@ -507,10 +509,11 @@ export default joinModel(modelExtend, {
 
             maxLimitPrice: result.maxBuyPrice,
             minLimitPrice: result.minSellPrice,
+            userAllowTrade: result.userAllowTrade,
+            marketAllowTrade: result.marketAllowTrade
           }
         })
         return result
-
       }
     },
 

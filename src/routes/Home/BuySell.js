@@ -212,14 +212,13 @@ export default class View extends Component {
       configPrice: { value: valuePrice } = {},
       configAmount: { value: valueAmount } = {}
     } = config
-    const { isLogin, routerGoLogin, routerGoRegister } = this.props
-    const { orderChannel } = this.state
+    const { isLogin, routerGoLogin, routerGoRegister, model: { userAllowTrade, marketAllowTrade } } = this.props
     const { isLimitPrice } = this
     return <Button
       loading={loading}
       className={classNames(
         styles.submit,
-        isLogin && (isLimitPrice() ? (valuePrice && valueAmount) : valueAmount) ? styles.haslogin : styles.notlogin,
+        isLogin && (isLimitPrice() ? (valuePrice && valueAmount) : valueAmount) && userAllowTrade && marketAllowTrade ? styles.haslogin : styles.notlogin,
         className
       )}
       onClick={() => {
