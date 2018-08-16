@@ -56,9 +56,9 @@ export default class View extends Component {
         title: '类型',
         dataIndex: 'side',
         render: (value) => value === '1' ? (
-          <RedGreenSwitch.RedText value={'卖'} />
+          <RedGreenSwitch.RedText value={'卖出'} />
         ) : (
-          <RedGreenSwitch.GreenText value={'买'} />
+          <RedGreenSwitch.GreenText value={'买入'} />
         )
       },
       {
@@ -68,10 +68,10 @@ export default class View extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render: (value) => Number(value) >= 0 ? (
-          <RedGreenSwitch.GreenText value={value} />
-        ) : (
+        render: (value, record = {}) => String(record.side) === '1' ? (
           <RedGreenSwitch.RedText value={value} />
+        ) : (
+          <RedGreenSwitch.GreenText value={value} />
         )
       },
       {

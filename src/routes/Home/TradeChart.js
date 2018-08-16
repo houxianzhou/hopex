@@ -519,8 +519,7 @@ export default class View extends Component {
     const {
       model: {
         marketName = '', maxPrice24h = '', minPrice24h = '', indexPrice = '',
-        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', reasonablePrice = '', latestPriceChangePercent = '',
-        latestPriceChangePercentShown = '', dollarPrice = '',
+        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', reasonablePrice = '', latestPriceChangePercent = '', latestPriceChangePercentShown = '', dollarPrice = '', marketAllowTrade = ''
       },
       RG
     } = this.props
@@ -564,7 +563,12 @@ export default class View extends Component {
                     {
                       marketName ? (
                         <>
-                          <div className={styles.marketname} >{marketName}</div >
+                          <div className={styles.marketname} >
+                            {
+                              !marketAllowTrade ? (<div className={styles.notallowtrade} >暂停交易</div >) : null
+                            }
+                            {marketName}
+                          </div >
                           < div className={styles.latestprice} >
                             {
                               (/\+/.test(latestPrice)) ? (
