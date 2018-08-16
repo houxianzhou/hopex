@@ -475,7 +475,7 @@ export default joinModel(modelExtend, {
 
     //获取买入卖出模块数据依赖项
     * getBuySellDetail({ payload = {} }, { call, put }) {
-      const { side, price, amount } = payload
+      const { side, price = '0', amount = '0' } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
@@ -484,8 +484,8 @@ export default joinModel(modelExtend, {
           },
           "param": {
             side,
-            price,
-            amount,
+            price:Number(price),
+            amount:Number(amount),
             "leverage": 0
           },
         }

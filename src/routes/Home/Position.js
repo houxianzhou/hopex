@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import ReactTooltip from 'react-tooltip'
 import { classNames, dealInterval, _, formatNumber, getPercent, Patterns } from '@utils'
-import { Table, Mixin, Button, Toast } from '@components'
-import { SCROLLX, TABLE } from '@constants'
+import { Table, Mixin, Button, Toast, ToolTip,  } from '@components'
+import { SCROLLX, TABLE, } from '@constants'
 import add from '@assets/add.png'
 import substract from '@assets/substract.png'
 import { editIcon } from '@assets'
@@ -163,7 +164,13 @@ export default class View extends Component {
                 }} >
                   <Button layer={false} loading={false} loadingMargin='0 0 0 2px' >限价全平</Button >
                 </span >
-                <span >市价全平</span >
+                <span >
+                  市价全平
+                  {/*<p data-tip="React-tooltip"> ◕‿‿◕ </p>*/}
+
+                  {/*<ReactTooltip place="top" type="dark" effect="float"/>*/}
+
+                </span >
               </div >
             ),
             className: 'blue action'

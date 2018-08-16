@@ -9,7 +9,8 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
-    this.getBuySellDetail()
+    this.getBuyDetail()
+    this.getSellDetail()
   }
 
   getBuySellDetail = (payload = {}) => {
@@ -17,6 +18,50 @@ export default class View extends Component {
     return dispatch({
       type: `${modelName}/getBuySellDetail`,
       payload
+    })
+  }
+
+  getBuyDetail = () => {
+    const { price, amount } = this.state.buy
+    const { model: { maxLimitPrice } } = this.props
+    this.getBuySellDetail({
+      price: this.isLimitPrice() ? price : Number(maxLimitPrice),
+      amount,
+      side: '2'
+    }).then(res => {
+      if (res) {
+        const { marginDisplay, orderValueDisplay } = res
+        const { buy } = this.state
+        this.changeState({
+          buy: {
+            ...buy,
+            marginDisplay,
+            orderValueDisplay
+          }
+        })
+      }
+    })
+  }
+
+  getSellDetail = () => {
+    const { price, amount } = this.state.sell
+    const { model: { minLimitPrice } } = this.props
+    this.getBuySellDetail({
+      price: this.isLimitPrice() ? price : Number(minLimitPrice),
+      amount,
+      side: '1'
+    }).then(res => {
+      if (res) {
+        const { marginDisplay, orderValueDisplay } = res
+        const { sell } = this.state
+        this.changeState({
+          sell: {
+            ...sell,
+            marginDisplay,
+            orderValueDisplay
+          }
+        })
+      }
     })
   }
 
@@ -65,8 +110,10 @@ export default class View extends Component {
     return orderChannel === 0
   }
 
-  changeState = (payload) => {
-    this.setState(payload)
+  changeState = (payload, callback) => {
+    this.setState(payload, () => {
+      _.isFunction(callback) && callback()
+    })
   }
 
   renderInputItem = (config = {}) => {
@@ -234,7 +281,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { renderArea, changeState, isLimitPrice, getBuySellDetail } = this
+    const { renderArea, changeState, isLimitPrice, getBuyDetail, getSellDetail } = this
     const {
       dispatch, loading, modelName, RG, model: {
         minVaryPrice = '', minPriceMovementDisplay = '', minDealAmount = '',
@@ -243,21 +290,6 @@ export default class View extends Component {
     } = this.props
     const { side, buy, sell } = this.state
 
-    const getBuyDetail = (payload) => {
-      getBuySellDetail(payload).then(res => {
-        if (res) {
-          const { marginDisplay, orderValueDisplay } = res
-          const { buy } = this.state
-          changeState({
-            buy: {
-              ...buy,
-              marginDisplay,
-              orderValueDisplay
-            }
-          })
-        }
-      })
-    }
 
     // 限价或者市价
     const configPrice = {
@@ -269,18 +301,15 @@ export default class View extends Component {
       step: minVaryPrice,
       min: 0,
       onChange: (value) => {
-        // console.log(value,'-------------')
         changeState({
           buy: {
             ...buy,
             price: value
           }
+        }, () => {
+          getBuyDetail()
         })
-        // getBuyDetail({
-        //   side: '2',
-        //   price: value,
-        //   amount: buy.amount
-        // })
+
       }
     }
     // 数量
@@ -295,6 +324,8 @@ export default class View extends Component {
             ...buy,
             amount: value
           }
+        }, () => {
+          getBuyDetail()
         })
       },
       step: minDealAmount
@@ -352,6 +383,10 @@ export default class View extends Component {
                 price: value
               }
             })
+            getSellDetail({
+              price: value,
+              amount: sell.amount
+            })
           }
         }
       },
@@ -365,6 +400,10 @@ export default class View extends Component {
                 ...sell,
                 amount: value
               }
+            })
+            getSellDetail({
+              price: sell.price,
+              amount: value
             })
           }
         }
