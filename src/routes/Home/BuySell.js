@@ -9,6 +9,10 @@ import styles from './index.less'
 
 export default class View extends Component {
   startInit = () => {
+    this.getAllDetail()
+  }
+
+  getAllDetail = () => {
     this.getBuyDetail()
     this.getSellDetail()
   }
@@ -465,6 +469,8 @@ export default class View extends Component {
                     onClick={() => {
                       changeState({
                         orderChannel: 0,
+                      }, () => {
+                        this.getAllDetail()
                       })
                     }}
                   >
@@ -477,6 +483,8 @@ export default class View extends Component {
                     onClick={() => {
                       changeState({
                         orderChannel: 1,
+                      }, () => {
+                        this.getAllDetail()
                       })
                     }}
                   >

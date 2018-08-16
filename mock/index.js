@@ -423,6 +423,8 @@ export default {
   'Post /mock/api/v1/gateway/Trade/OrderParameter': (req, res) => {
     res.send({
       "data": {
+        "userAllowTrade": true,
+        "marketAllowTrade": true,
         "marketCode": "BTCUSDT",
         "minPriceMovement": 0.5,
         "minPriceMovementDisplay": "0.5BTC",
