@@ -152,8 +152,8 @@ export default class View extends Component {
             maxWidth: 200,
           },
           {
-            title: '成交价格(张)',
-            dataIndex: 'amount',
+            title: '成交价格',
+            dataIndex: 'price',
             maxWidth: 200,
           },
           {
