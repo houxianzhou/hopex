@@ -19,7 +19,7 @@ import * as styles from './index.less'
 }))
 export default class View extends Component {
   render() {
-    const { home: { marketList = [] } = {}, dispatch, routesBasic, history } = this.props
+    const { home: { marketList = [] } = {}, dispatch, routesBasic, history, switchMarket } = this.props
 
     return (
       <div className={styles.footer} >
@@ -50,8 +50,10 @@ export default class View extends Component {
               <div >热门交易</div >
               <ul >
                 {
-                  marketList.slice(0,4).map((item, index) => (
-                    <li key={index} >{item.marketName}</li >
+                  marketList.slice(0, 4).map((item, index) => (
+                    <li key={index} onClick={() => {
+                      switchMarket(item.marketCode)
+                    }} >{item.marketName}</li >
                   ))
                 }
               </ul >

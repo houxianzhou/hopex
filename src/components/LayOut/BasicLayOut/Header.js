@@ -23,7 +23,7 @@ import * as styles from './index.less'
 }))
 export default class View extends Component {
   render() {
-    const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } } = {}, theme: { RG, switchMarket } = {}, modelName1, modelName2, modelName3, dispatch, routesBasic, history, location: { pathname } = {} } = this.props
+    const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } } = {}, theme: { RG } = {}, modelName2, modelName3, dispatch, routesBasic, location: { pathname } = {}, switchMarket } = this.props
 
     const isLogin = !_.isEmpty(userInfo)
     const sorted = _.groupBy(marketList, (item = {}) => item.sortType) || {}
@@ -74,20 +74,7 @@ export default class View extends Component {
                                       sorted[item1].map((item2 = {}, index2) => {
                                         return (
                                           <li key={index2} onClick={() => {
-                                            if (pathname !== PATH.home) {
-                                              dispatch({
-                                                type: `${modelName1}/routerGo`,
-                                                payload: PATH.home
-                                              })
-                                            } else {
-                                              // dispatch({
-                                              //   type: `${modelName1}/getCurrentMarket`,
-                                              //   payload: item2
-                                              // })
-                                              history.replace({
-                                                search: `?marketCode=${item2.marketCode}`,
-                                              })
-                                            }
+                                            switchMarket(item2.marketCode)
                                           }} >
                                             <div className={styles.name} >{item2.marketName}</div >
                                             <div className={styles.price} >

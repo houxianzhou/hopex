@@ -4,6 +4,7 @@ import { Route, Redirect, Switch } from 'dva/router'
 import dynamic from 'dva/dynamic'
 import { classNames, switchTheme } from '@utils'
 import { Scroller, Responsive } from '@components'
+import { PATH } from '@constants'
 import Header from './Header'
 import Content from './Content'
 import Footer from './Footer'
@@ -13,10 +14,38 @@ import * as styles from './index.less'
   // theme,
   loading,
   dispatch,
-  // model: theme
+  modelName: 'theme'
 }))
 export default class View extends Component {
+  switchMarket = (value, marketCode) => {
+    const { history, location: { pathname }, dispatch, modelName } = this.props
+    const go = (marketCode) => {
+      history.replace({
+        search: `?marketCode=${marketCode}`,
+      })
+    }
+    if (value && marketCode) {
+      return (
+        <span onClick={() => {
+          go(marketCode)
+        }} >{value}</span >
+      )
+    } else if (value) {
+      if (pathname !== PATH.home) {
+        dispatch({
+          type: `${modelName}/routerGo`,
+          payload: PATH.home
+        })
+      } else {
+        history.replace({
+          search: `?marketCode=${value}`,
+        })
+      }
+    }
+  }
+
   render() {
+    const { switchMarket } = this
     const {
       app, routesBasic
     } = this.props
@@ -29,7 +58,7 @@ export default class View extends Component {
             //switchTheme(theme) ? styles.dark : null
           )
         } >
-          <Header {...this.props} />
+          <Header {...this.props} switchMarket={switchMarket} />
           <Content >
             <Switch >
               <Redirect exact from="/" to='/home' />
@@ -45,7 +74,7 @@ export default class View extends Component {
               }
             </Switch >
           </Content >
-          <Footer {...this.props} />
+          <Footer {...this.props} switchMarket={switchMarket} />
         </div >
       </Responsive >
     )

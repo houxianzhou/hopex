@@ -198,7 +198,6 @@ export default class View extends Component {
       scroll: {
         x: SCROLLX.X,
       },
-
       noDataTip: () => noDataTip(dataSource, '当前无持仓'),
     }
     return (

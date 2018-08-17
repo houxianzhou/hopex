@@ -40,14 +40,17 @@ export default class View extends Component {
   render() {
     const { activeLi } = this.state
     const { state, changeState, getHistory } = this
-    const { model: { personalEnsureHistory = [] }, noDataTip, calculateTableHeight, expandedRowRender, modelName, dispatch } = this.props
+    const {
+      model: { personalEnsureHistory = [] }, noDataTip, calculateTableHeight, expandedRowRender,
+      modelName, dispatch, switchMarket
+    } = this.props
     const columns = [
       {
         title: '合约',
         dataIndex: 'marketName',
-        render: (v) => (
+        render: (v, record = {}) => (
           {
-            value: v,
+            value: switchMarket(v, record.market),
             className: 'blue'
           }
         )
