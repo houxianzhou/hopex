@@ -147,7 +147,7 @@ export default class View extends Component {
 
   renderEnsureMoney = (config = {}) => {
     const { isLogin, } = this.props
-    const { label_action, label_action_price, label_available, label_available_price } = config
+    const { label_action, label_action_price, label_available, label_available_price, label_available_price_display } = config
     const marks = {
       0: '',
       [label_available_price * 0.25]: '',
@@ -199,7 +199,7 @@ export default class View extends Component {
             <span >{label_action_price}</span ></div >
           <div >
             <span >{label_available}</span >
-            <span >{label_available_price}</span >
+            <span >{label_available_price_display}</span >
           </div >
         </div >
       </div >
@@ -288,9 +288,14 @@ export default class View extends Component {
     const {
       dispatch, loading, modelName, RG, model: {
         minVaryPrice = '', minPriceMovementDisplay = '', minDealAmount = '',
-        minDealAmountDisplay = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '',
-      }, modal: { name } = {}, openModal
-    } = this.props
+        minDealAmountDisplay = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '', availableMoneyDisplay,
+      },
+      modal: {
+        name
+      }
+        = {}, openModal
+    }
+      = this.props
     const { side, buy, sell } = this.state
 
 
@@ -338,7 +343,8 @@ export default class View extends Component {
       label_action: '预估占用保证金',
       label_action_price: buy.marginDisplay,
       label_available: '可用金额',
-      label_available_price: Number(availableMoney)
+      label_available_price: Number(availableMoney),
+      label_available_price_display: availableMoneyDisplay
     }
     // 交易按钮
     const configSubmit = {

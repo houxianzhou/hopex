@@ -37,9 +37,11 @@ export default joinModel(modelExtend, {
 
     minVaryPrice: '', //最小变动价位
     minDealAmount: '', //最小交易量
+    minDealAmountDisplay: '',
     minLimitPrice: '',//最低允许卖价
     maxLimitPrice: '',//最高允许卖价
     availableMoney: '',//可用金额
+    availableMoneyDisplay: '',
     userAllowTrade: true, //是否可交易
     marketAllowTrade: true,//是否可交易
 
@@ -506,6 +508,8 @@ export default joinModel(modelExtend, {
             minDealAmountDisplay: result.minTradeNumDisplay,
 
             availableMoney: result.availableBalance,
+            availableMoneyDisplay: result.availableBalanceDisplay,
+
 
             maxLimitPrice: result.maxBuyPrice,
             minLimitPrice: result.minSellPrice,

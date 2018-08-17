@@ -433,7 +433,7 @@ export default {
         "minTradeNum": 1,
         "minTradeNumDisplay": "1张",
         "availableBalance": _.random(10, 10000),
-        "availableBalanceDisplay": "",
+        "availableBalanceDisplay": "12345.0987BTC",
         "maxBuyPrice": 6296.1,
         "minSellPrice": 5929.3,
         "orderValue": _.random(10, 10000),
