@@ -98,9 +98,9 @@ export default class View extends Component {
                                                     value={item2.percent} />
                                                 )
                                               }
-                                              <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt={
-                                                !_.isNil(item2.direction) ? (item2.direction ? 'top' : 'down') : null
-                                              } />
+                                              {/*<RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt={*/}
+                                                {/*!_.isNil(item2.direction) ? (item2.direction ? 'top' : 'down') : null*/}
+                                              {/*} />*/}
                                             </div >
                                           </li >
                                         )
