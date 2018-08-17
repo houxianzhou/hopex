@@ -164,6 +164,9 @@ export async function ModifyPassword(payload) {
 // 首页接口
 export async function getIndexInfo(payload) {
   return await request('/api/v1/gateway/Home/Index', {
-    query: payload
+    query: {
+      ...payload,
+      type: 'Web'
+    }
   })
 }

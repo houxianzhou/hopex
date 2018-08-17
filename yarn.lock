@@ -8256,6 +8256,13 @@ react-toastify@^4.1.0:
     prop-types "^15.6.0"
     react-transition-group "^2.2.1"
 
+react-tooltip@^3.6.1:
+  version "3.6.1"
+  resolved "http://registry.npm.taobao.org/react-tooltip/download/react-tooltip-3.6.1.tgz#2ca993baa50d7e0271b8d13c6024445a883842eb"
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
+
 react-transition-group@^2.2.1:
   version "2.4.0"
   resolved "http://registry.npm.taobao.org/react-transition-group/download/react-transition-group-2.4.0.tgz#1d9391fabfd82e016f26fabd1eec329dbd922b5a"
