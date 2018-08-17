@@ -261,8 +261,8 @@ export default {
         "userToken": "56"
       },
       "data": {
-        "positionList": (new Array(3)).fill().map((item, index) => {
-          const arryas = ['BTC', 'USDT', 'EOC']
+        "positionList": (new Array(5)).fill().map((item, index) => {
+          const arryas = ['BTC', 'USDT', 'EOC','w','b']
           return {
             amount: "-1227304",
             averagePrice: _.random(10, 50) + '',

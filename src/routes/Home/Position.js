@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactTooltip from 'react-tooltip'
 import { classNames, dealInterval, _, formatNumber, getPercent, Patterns } from '@utils'
 import { Table, Mixin, Button, Toast, ToolTip, } from '@components'
 import { SCROLLX, TABLE, } from '@constants'
@@ -182,11 +181,7 @@ export default class View extends Component {
                     amount: record.amount
                   })
                 }} >
-                  市价全平
-                  {/*<p data-tip="React-tooltip"> ◕‿‿◕ </p>*/}
-
-                  {/*<ReactTooltip place="top" type="dark" effect="float"/>*/}
-
+                  <ToolTip >市价全平</ToolTip >
                 </span >
               </div >
             ),
@@ -201,8 +196,9 @@ export default class View extends Component {
       columns,
       dataSource: dataSource, //_.merge((new Array(4)).fill(), dataSource),
       scroll: {
-        x: SCROLLX.X
+        x: SCROLLX.X,
       },
+
       noDataTip: () => noDataTip(dataSource, '当前无持仓'),
     }
     return (

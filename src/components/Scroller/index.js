@@ -49,7 +49,7 @@ export default class View extends Component {
           style={{
             height: '100%',
             width: '100%',
-            overflow: 'hidden',
+            // overflow: 'hidden',
             position: 'absolute',
             top: 0,
             left: 0
