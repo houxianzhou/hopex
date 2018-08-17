@@ -76,22 +76,34 @@ export default class View extends Component {
       if (!res.data) return;
       const { banners = '', notifies = '' } = res.data;
       // console.log();
+
       this.setState({
         bannerList: banners,
         notifies: notifies,
       })
+      new Swiper(this.refs.swiperContainer, {
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },//可选选项，自动滑动
+        speed: 500,
+        pagination: {
+          el: '.swiper-pagination',
+        }
+        // effect : 'fade',
+      })
     })
-    new Swiper(this.refs.swiperContainer, {
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-      },//可选选项，自动滑动
-      speed: 500,
-      pagination: {
-        el: '.swiper-pagination',
-      }
-      // effect : 'fade',
-    })
+    // new Swiper(this.refs.swiperContainer, {
+    //   autoplay: {
+    //     delay: 3000,
+    //     disableOnInteraction: false,
+    //   },//可选选项，自动滑动
+    //   speed: 500,
+    //   pagination: {
+    //     el: '.swiper-pagination',
+    //   }
+    //   // effect : 'fade',
+    // })
   }
 
   render() {
