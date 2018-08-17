@@ -98,9 +98,6 @@ export default class View extends Component {
                                                     value={item2.percent} />
                                                 )
                                               }
-                                              {/*<RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt={*/}
-                                                {/*!_.isNil(item2.direction) ? (item2.direction ? 'top' : 'down') : null*/}
-                                              {/*} />*/}
                                             </div >
                                           </li >
                                         )
@@ -131,7 +128,9 @@ export default class View extends Component {
             <li >
               <img alt='notice' src={notice} />
             </li >
-            <li >
+            <li onClick={() => {
+              window.open('https://hopex.zendesk.com/')
+            }} >
               <img alt='help' src={help} />
             </li >
             {
