@@ -23,7 +23,7 @@ import * as styles from './index.less'
 }))
 export default class View extends Component {
   render() {
-    const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } } = {}, theme: { RG } = {}, modelName1, modelName2, modelName3, dispatch, routesBasic, history, location: { pathname } = {} } = this.props
+    const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } } = {}, theme: { RG, switchMarket } = {}, modelName1, modelName2, modelName3, dispatch, routesBasic, history, location: { pathname } = {} } = this.props
 
     const isLogin = !_.isEmpty(userInfo)
     const sorted = _.groupBy(marketList, (item = {}) => item.sortType) || {}
@@ -80,10 +80,10 @@ export default class View extends Component {
                                                 payload: PATH.home
                                               })
                                             } else {
-                                              dispatch({
-                                                type: `${modelName1}/getCurrentMarket`,
-                                                payload: item2
-                                              })
+                                              // dispatch({
+                                              //   type: `${modelName1}/getCurrentMarket`,
+                                              //   payload: item2
+                                              // })
                                               history.replace({
                                                 search: `?marketCode=${item2.marketCode}`,
                                               })
@@ -100,7 +100,7 @@ export default class View extends Component {
                                                     value={item2.price24h} />
                                                 )
                                               }
-                                              </div >
+                                            </div >
                                             <div className={styles.percent} >
                                               {
                                                 item2.direction ? (
@@ -112,7 +112,7 @@ export default class View extends Component {
                                                 )
                                               }
                                               <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt={
-                                                !_.isNil(item2.direction)? (item2.direction ? 'top' : 'down') : null
+                                                !_.isNil(item2.direction) ? (item2.direction ? 'top' : 'down') : null
                                               } />
                                             </div >
                                           </li >

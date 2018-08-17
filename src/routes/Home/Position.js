@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactTooltip from 'react-tooltip'
 import { classNames, dealInterval, _, formatNumber, getPercent, Patterns } from '@utils'
-import { Table, Mixin, Button, Toast, ToolTip,  } from '@components'
+import { Table, Mixin, Button, Toast, ToolTip, } from '@components'
 import { SCROLLX, TABLE, } from '@constants'
 import add from '@assets/add.png'
 import substract from '@assets/substract.png'
@@ -38,7 +38,7 @@ export default class View extends Component {
 
   render() {
     const { changeState } = this
-    const { model: { positionList = [], }, modal: { name }, noDataTip, modelName, dispatch, openModal: prevOpenModal, } = this.props
+    const { model: { positionList = [], }, modal: { name }, noDataTip, modelName, dispatch, openModal: prevOpenModal, switchMarket } = this.props
 
 
     const openModal = () => {
@@ -48,8 +48,8 @@ export default class View extends Component {
       {
         title: '合约',
         dataIndex: 'marketName',
-        render: (value) => ({
-          value,
+        render: (value, record = {}) => ({
+          value: switchMarket(value, record.market),
           className: 'blue'
         })
       },
@@ -164,7 +164,18 @@ export default class View extends Component {
                 }} >
                   <Button layer={false} loading={false} loadingMargin='0 0 0 2px' >限价全平</Button >
                 </span >
-                <span >
+                <span onClick={() => {
+                  // if (!record.inputValue) return Toast.tip('请填写价格')
+                  dispatch({
+                    type: `${modelName}/postSideOrder`,
+                    payload: {
+                      side: Number(record.amount) > 0 ? '1' : '2',
+                      method: 'order.put_market',
+                      price: '',
+                      amount: String(Math.abs(Number(record.amount)))
+                    }
+                  })
+                }} >
                   市价全平
                   {/*<p data-tip="React-tooltip"> ◕‿‿◕ </p>*/}
 
@@ -218,6 +229,31 @@ export default class View extends Component {
 }
 
 class RenderModal extends Component {
+
+  componentDidMount() {
+    this.calculatePositionEnsureMoney()
+  }
+
+  calculatePositionEnsureMoney = (value = '') => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/calculatePositionEnsureMoney`,
+      payload: {
+        marginChange: value
+      }
+    }).then((res) => {
+      if (res) {
+        const { dealcurrency: dealCurrency = '', increase = {}, reduce = {} } = res || {}
+        this.changeState({
+          dealCurrency,
+          increase,
+          reduce
+        })
+      }
+    })
+  }
+
+
   state = {
     inputValue: '',
     dealCurrency: '',
@@ -234,7 +270,7 @@ class RenderModal extends Component {
       ...this.props,
       title: '持仓占用保证金'
     }
-    const { changeState: changeStateInModal } = this
+    const { changeState: changeStateInModal, calculatePositionEnsureMoney } = this
     const { inputValue, dealCurrency = '', increase = {}, reduce = {} } = this.state
     const { changeState, active, dispatch, modelName, loading, closeModal } = this.props
 
@@ -282,21 +318,7 @@ class RenderModal extends Component {
                   changeStateInModal({
                     inputValue: value
                   })
-                  dispatch({
-                    type: `${modelName}/calculatePositionEnsureMoney`,
-                    payload: {
-                      marginChange: e.target.value
-                    }
-                  }).then((res) => {
-                    if (res) {
-                      const { dealcurrency: dealCurrency = '', increase = {}, reduce = {} } = res || {}
-                      changeStateInModal({
-                        dealCurrency,
-                        increase,
-                        reduce
-                      })
-                    }
-                  })
+                  calculatePositionEnsureMoney(value)
                 }, 10)
               } />
               <div >BTC</div >
@@ -334,7 +356,6 @@ class RenderModal extends Component {
                   closeModal()
                 }
               })
-
             }}
           >
             <Button layer={false} loading={loading.effects[`${modelName}/doUpdatePositionEnsureMoney`]} >

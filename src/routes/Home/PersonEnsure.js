@@ -30,15 +30,16 @@ export default class View extends Component {
 
   render() {
     const {
-      model: { personalEnsures = [], userInfo = {} }, calculateTableHeight, expandedRowRender, noDataTip, dispatch, modelName
+      model: { personalEnsures = [], userInfo = {} }, calculateTableHeight, expandedRowRender, noDataTip,
+      dispatch, modelName, switchMarket
     }
       = this.props
     const columns = [
       {
         title: '合约',
         dataIndex: 'marketName',
-        render: (value, record) => ({
-          value,
+        render: (value, record = {}) => ({
+          value: switchMarket(value, record.market),
           className: 'blue'
         })
       },
@@ -59,7 +60,7 @@ export default class View extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render: (value,record) => String(record.side) === '1' ? (
+        render: (value, record) => String(record.side) === '1' ? (
           <RedGreenSwitch.RedText value={value} />
         ) : (
           <RedGreenSwitch.GreenText value={value} />

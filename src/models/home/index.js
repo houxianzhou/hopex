@@ -83,7 +83,7 @@ export default joinModel(modelExtend, {
           "param": {
             "pageSize": "100",
             "lastId": "1"
-          }
+          },
         }
       })))
       const res = getRes(yield call(getLatestRecord, repayload))

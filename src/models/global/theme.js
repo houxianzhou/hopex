@@ -1,3 +1,4 @@
+import {routerRedux} from 'dva/router'
 import { joinModel } from '@utils'
 import modelExtend from '@models/modelExtend'
 import { THEME } from '@constants'
@@ -18,7 +19,7 @@ export default joinModel(modelExtend, {
         const { expand = [] } = next
         return (expand.length ? expand.length * expandBodyTr + expandHeadTr : 0) + sum
       }, dataSource.length * bodyTr + HeadTr)
-    }
+    },
   },
   subscriptions: {
     setup({ dispatch, history }) {

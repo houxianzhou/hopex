@@ -51,6 +51,8 @@ export default class View extends Component {
   startInit = () => {
     this.startKline()
     this.startKlineDetail()
+
+
     // this.getImportantPrice()
     // this.startDeepMap()
   }

@@ -10,6 +10,12 @@ import { _ } from '@utils'
 }))
 export class MixinParent extends React.Component {
 
+  constructor(props) {
+    super(props)
+    const { that } = this.props
+    that.childInitStacks = []
+  }
+
   componentDidMount() {
     const { model: { userInfo } = {}, dispatch, modelName } = this.props
     const getCurrentUser = new Promise((resolve, reject) => {
@@ -55,7 +61,8 @@ export class MixinChild extends React.Component {
   constructor(props) {
     super(props)
     const { that = {} } = this.props
-    if (!that.props.that.childInitStacks) that.props.that.childInitStacks = []
+    that._isMounted = true
+    // if (!that.props.that.childInitStacks) that.props.that.childInitStacks = []
   }
 
   componentDidMount() {
@@ -63,7 +70,8 @@ export class MixinChild extends React.Component {
   }
 
   componentWillUnmount() {
-    this.startUnMount()
+    this.props.that._isMounted=false
+    // this.startUnMount()
   }
 
   startInit = () => {
@@ -71,12 +79,10 @@ export class MixinChild extends React.Component {
     const [startInit, childInitStacks] = [_.get(that, 'startInit'), _.get(that, 'props.that.childInitStacks')]
     if (_.isFunction(startInit) && _.isArray(childInitStacks)) {
       childInitStacks.push(() => {
-        this.startUnMount().then(
-          () => {
-            that._isMounted = true
-            startInit()
-          }
-        )
+        startInit()
+        // this.startUnMount().then(
+        //
+        // )
       })
     }
   }
@@ -84,7 +90,7 @@ export class MixinChild extends React.Component {
   startUnMount = () => {
     const { that = {} } = this.props
     that._isMounted = false
-    return Promise.resolve()
+    // return Promise.resolve()
     // if (that.interval) {
     //   return new Promise((resolve) => {
     //     if (_.isArray(that.interval)) {

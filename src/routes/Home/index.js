@@ -44,7 +44,6 @@ export default class View extends Component {
     this.setState(payload)
   }
 
-
   componentDidUpdate(prevProps) {
     const { model: { marketCode: prevMarketCode } } = prevProps
     const { model: { marketCode }, dispatch, modelName } = this.props
@@ -80,13 +79,22 @@ export default class View extends Component {
 
   getAllMarkets = () => {
     const { dispatch, modelName, model: { marketList = [] }, location: { search } } = this.props
+
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        return dispatch({
+          type: `${modelName}/getAllMarketDetails`,
+          payload: {
+            search: parsePathSearch(search).marketCode
+          }
+        }).then((res) => {
+          resolve()
+        })
+      }, 500)
+    })
+
     if (_.isEmpty(marketList)) {
-      return dispatch({
-        type: `${modelName}/getAllMarketDetails`,
-        payload: {
-          search: parsePathSearch(search).marketCode
-        }
-      })
+
       // return dispatch({
       //   type: `${modelName}/getAllMarkets`,
       //   payload: {
@@ -94,7 +102,7 @@ export default class View extends Component {
       //   }
       // })
     }
-    return Promise.resolve()
+    // return Promise.resolve()
   }
 
   isLogin = () => {
@@ -119,11 +127,27 @@ export default class View extends Component {
   }
 
   renderView = (name) => {
-    const { theme: { RG, viewPosition, calculateTableHeight }, dispatch, modelName } = this.props
+    const { theme: { RG, viewPosition, calculateTableHeight }, dispatch, modelName, history } = this.props
     const props = {
       RG,
       viewPosition,
       calculateTableHeight,
+      switchMarket: (value, marketCode) => {
+        const go = (marketCode) => {
+          history.replace({
+            search: `?marketCode=${marketCode}`,
+          })
+        }
+        if (value && marketCode) {
+          return (
+            <span onClick={() => {
+              go(marketCode)
+            }} >{value}</span >
+          )
+        } else if (value) {
+          go(value)
+        }
+      },
       openModal: (payload = {}) => {
         dispatch({
           type: `${modelName}/openModal`,
