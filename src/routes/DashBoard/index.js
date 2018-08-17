@@ -105,7 +105,7 @@ export default class View extends Component {
             {
               bannerList.map((v, index) => {
                 return (
-                  <div key={index} className="swiper-slide" >
+                  <div key={v.imgUrl} className="swiper-slide" >
                     <img src={v.imgUrl} alt="" />
                   </div >
                 )
@@ -127,7 +127,7 @@ export default class View extends Component {
           {
             notifies.map((v, index) => {
               return (
-                <a target="_blank" href={v.link} >{v.title}</a >
+                <a key={index} target="_blank" href={v.link} >{v.title}</a >
               )
             })
           }
