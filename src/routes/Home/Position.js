@@ -32,18 +32,33 @@ export default class View extends Component {
     })
   }
 
+  postOrder = (payload) => {
+    const { price, amount, method } = payload
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/postSideOrder`,
+      payload: {
+        side: Number(amount) > 0 ? '1' : '2',
+        method: method,
+        price: price,
+        amount: String(Math.abs(Number(amount)))
+      }
+    })
+  }
+
   changeState = (payload) => {
     this.setState(payload)
   }
 
   render() {
-    const { changeState } = this
+    const { changeState, postOrder } = this
     const { model: { positionList = [], }, modal: { name }, noDataTip, modelName, dispatch, openModal: prevOpenModal, switchMarket } = this.props
 
 
     const openModal = () => {
       prevOpenModal({ name: 'positionMoney' })
     }
+
     const columns = [
       {
         title: '合约',
@@ -152,28 +167,19 @@ export default class View extends Component {
                 }} />
                 <span onClick={() => {
                   if (!record.inputValue) return Toast.tip('请填写价格')
-                  dispatch({
-                    type: `${modelName}/postSideOrder`,
-                    payload: {
-                      side: Number(record.amount) > 0 ? '1' : '2',
-                      method: 'order.put_limit',
-                      price: record.inputValue,
-                      amount: String(Math.abs(Number(record.amount)))
-                    }
+                  postOrder({
+                    method: 'order.put_limit',
+                    price: record.inputValue,
+                    amount: record.amount
                   })
                 }} >
                   <Button layer={false} loading={false} loadingMargin='0 0 0 2px' >限价全平</Button >
                 </span >
                 <span onClick={() => {
-                  // if (!record.inputValue) return Toast.tip('请填写价格')
-                  dispatch({
-                    type: `${modelName}/postSideOrder`,
-                    payload: {
-                      side: Number(record.amount) > 0 ? '1' : '2',
-                      method: 'order.put_market',
-                      price: '',
-                      amount: String(Math.abs(Number(record.amount)))
-                    }
+                  postOrder({
+                    method: 'order.put_market',
+                    price: '',
+                    amount: record.amount
                   })
                 }} >
                   市价全平

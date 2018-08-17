@@ -144,7 +144,7 @@ export default joinModel(modelExtend, {
       }
     },
 
-    //K线图全量查询
+    // K线图全量查询
     * getKlineAllList({ payload = {} }, { call, put }) {
       const { startTime, endTime, interval } = payload
       const repayload = yield (asyncPayload(yield put({
@@ -632,6 +632,7 @@ export default joinModel(modelExtend, {
             assetName,
             "businessType": "position",//持仓保证金充值,固定值
             assetChange,
+            businessId: _.uniqueId(),
             detail: { desc: '增加或减少持仓保证金' }
           },
           power: [1],
