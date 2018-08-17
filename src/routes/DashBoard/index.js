@@ -74,7 +74,7 @@ export default class View extends Component {
       type: `${this.props.modelName}/getIndexInfo`
     }).then((res) => {
       if (!res.data) return;
-      const {banners='', notifies=''} = res.data;
+      const { banners = '', notifies = '' } = res.data;
       // console.log();
       this.setState({
         bannerList: banners,
@@ -96,29 +96,45 @@ export default class View extends Component {
 
   render() {
     const { model: { myname } = {} } = this.props;
-    const { bannerList, notifies} = this.state;
+    const { bannerList, notifies } = this.state;
 
     return (
       <div className={styles.home} >
         <div className={styles.header} ref="swiperContainer" >
-          <div className="swiper-wrapper" >
+          <div className={
+            classNames(
+              'swiper-wrapper',
+              styles.wrapper
+            )
+          } >
             {
               bannerList.map((v, index) => {
                 return (
-                  <div key={v.imgUrl} className="swiper-slide" >
-                    <img src={v.imgUrl} alt="" />
+                  <div
+                    key={v.imgUrl}
+                    style={{
+                      backgroundImage: `url(${v.imgUrl})`,
+                      backgroundPosition: 'center center'
+                    }}
+                    className={
+                      classNames(
+                        'swiper-slide',
+                        styles.slide
+                      )
+                    } >
+                    {/*<img src={v.imgUrl} alt="" />*/}
                   </div >
                 )
               })
             }
             {/*<div className="swiper-slide" >*/}
-              {/*<img src={bannerThird} alt="" />*/}
+            {/*<img src={bannerThird} alt="" />*/}
             {/*</div >*/}
             {/*<div className="swiper-slide" >*/}
-              {/*<img src={bannerFirst} alt="" />*/}
+            {/*<img src={bannerFirst} alt="" />*/}
             {/*</div >*/}
             {/*<div className="swiper-slide" >*/}
-              {/*<img src={bannerSecond} alt="" />*/}
+            {/*<img src={bannerSecond} alt="" />*/}
             {/*</div >*/}
           </div >
           <div className="swiper-pagination" ref="swiperPagination" />
