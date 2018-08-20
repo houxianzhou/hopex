@@ -1,5 +1,6 @@
 @width: 1.333;
 .home {
+  background: #F9F9F9;
   .header {
     position: relative;
     padding: 0;
@@ -31,7 +32,7 @@
     font-size: 36px;
     text-align: center;
     color: #E2B96F;
-    margin-top: 40px/@width;
+    margin-top: 42px;
   }
   .absolutFont {
     letter-spacing: -1px;
@@ -65,10 +66,15 @@
     //}
   }
   .aboutUs {
-    height: 800px/@width;
-    margin-bottom: 200px;
+    background-color: #fff;
+    height: 560px;
+    margin-bottom: 160px;
     display: flex;
     justify-content: center;
+    background-image:url('../../assets/home-bg.png'),url('../../assets/home-bg1.png');
+    background-position: 0 107px, 100% 202px;
+    background-size: 253px auto, 309px auto;
+    background-repeat: no-repeat, no-repeat;
 
     .imgContainer {
       width: 50%;
@@ -76,9 +82,10 @@
       justify-content: flex-end;
       align-items: flex-end;
       img {
-        width: 400px;
+        width: 300px;
         display: inline-block;
-        margin-right: 100px;
+        margin-right: 180px;
+        margin-bottom: -118px;
       }
     }
 
@@ -87,28 +94,29 @@
       width: 50%;
       .absoluteFont {
         position: absolute;
-        top: 25%;
-        font-size: 100px/@width;
-        opacity: 0.04;
+        top: 214px;
+        left: 56px;
+        //font-size: 100px/@width;
+        //opacity: 0.04;
         color: #232833;
       }
       .headerPart {
-        margin: 249px/@width 0 0;
+        margin: 186px 0 0;
         //width: 30px/@width;
         //height: 30px/@width;
         background-color: #E2B96F;
       }
 
       .aboutUsFont {
-        font-size: 42px;
+        font-size: 34px;
         color: #E2B96F;
         text-align: left;
       }
 
       .aboutUsMain {
-        margin-top: 60px/@width;
-        //width:780px;
-        padding-right: 240px;
+        margin-top: 40px;
+        max-width:780px;
+        //padding-right: 240px;
         font-size: 18px;
         line-height: 29px;
         color: #232833;
@@ -120,36 +128,41 @@
     margin: 0 auto;
     position: relative;
 
+    .aboutUsFont {
+      margin-top: 49px;
+    }
+
     .absoluteFont {
       position: absolute;
-      top: 0;
-      left: 10%;
-      font-size: 100px/@width;
-      opacity: 0.04;
+      top: 39px;
+      left: 50%;
+      transform: translateX(-50%);
+      //opacity: 0.04;
       color: #232833;
     }
 
     .adventureContainer {
-      width: 1500px/@width;
-      margin: 120px/@width auto 160px/@width auto;
-      //margin-top: 110px/@width;
+      width: 1320px;
+      margin: 107px  auto 160px auto;
       min-height: 500px;
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
 
       .adventureItem {
-        width: 450px/@width;
-        height: 600px/@width;
-        margin: 0 8px 20px 8px;
+        width: 420px;
+        height: 500px;
+        margin-bottom: 30px;
         background: #FFFFFF;
-        border: 1px solid #EBEBEB;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        //border: 1px solid #EBEBEB;
+        //display: flex;
+        //flex-direction: column;
+        //align-items: center;
 
         .itemIcon {
-          margin-top: 124px/@width;
-          width: 213px/@width;
+          margin-top: 112px;
+          margin-left: 166px;
+          width: 105px;
           //border-radius: 213px/@width;
           //background-color: #0a8415;
           img {
@@ -157,13 +170,14 @@
           }
         }
         .itemTitle {
-          margin-top: 4px;
-          font-size: 25px;
+          margin-top: 60px;
+          font-size: 22px;
           color: #333;
+          text-align: center;
         }
         .itemContent {
           margin-top: 20px;
-          font-size: 16px;
+          font-size: 18px;
           color: #666666;
           line-height: 30px;
           text-align: center;
@@ -187,10 +201,11 @@
         }
       }
       .contractItem {
+        position: relative;
         .contractDes {
           text-align: center;
           margin-top: 77px;
-          font-size: 16px;
+          font-size: 18px;
           line-height: 26px;
           color: #666666;
         }
@@ -199,19 +214,23 @@
   }
   .contractIconContainer {
     .firstIconLine, .secondIconLine {
-      margin-top: 100px/@width;
+      margin-top: 70px;
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
 
       .iconItem {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-left: 60px/@width;
+        margin-left: 128px;
+
+        &:nth-child(1) {
+          margin-left: 0px;
+        }
       }
       .bitIcon {
-        width: 140px/@width;
-        height: 140px/@width;
+        width: 40px;
+        height: 40px;
         svg {
           width: 100%;
           height: 100%;

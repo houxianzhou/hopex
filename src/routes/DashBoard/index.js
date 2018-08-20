@@ -3,20 +3,17 @@ import { connect } from 'dva'
 import { _, classNames } from '@utils';
 import * as styles from './index.less';
 import { Toast } from "@components";
-import phone from '@assets/home-iphone.jpg';
+import phone from '@assets/iphone11.png';
 import icon01 from '@assets/icon01.png';
 import icon02 from '@assets/icon02.png';
 import icon03 from '@assets/icon03.png';
 import icon04 from '@assets/icon04.png';
 import icon05 from '@assets/icon05.png';
 import icon06 from '@assets/icon06.png';
-import computer from '@assets/computer.png';
+import provide from '@assets/provide.png';
 import Swiper from 'swiper/dist/js/swiper.js'
 import 'swiper/dist/css/swiper.min.css'
-import bannerFirst from '@assets/home-1.jpg';
-import bannerSecond from '@assets/home-2.jpg';
-import bannerThird from '@assets/home-3.png';
-import { btIcon, moreIcon, yzIcon, ytIcon } from '@assets'
+import { btIcon, moreIcon, yzIcon, ytIcon, aboutUs, advantage } from '@assets'
 
 const itemList = [
   {
@@ -93,17 +90,6 @@ export default class View extends Component {
         // effect : 'fade',
       })
     })
-    // new Swiper(this.refs.swiperContainer, {
-    //   autoplay: {
-    //     delay: 3000,
-    //     disableOnInteraction: false,
-    //   },//可选选项，自动滑动
-    //   speed: 500,
-    //   pagination: {
-    //     el: '.swiper-pagination',
-    //   }
-    //   // effect : 'fade',
-    // })
   }
 
   render() {
@@ -165,7 +151,9 @@ export default class View extends Component {
             <img src={phone} alt="" />
           </div >
           <div className={styles.aboutUsContent} >
-            <div className={styles.absoluteFont} >ABOUT US</div >
+            <div className={styles.absoluteFont} >
+              {aboutUs}
+            </div >
             <div className={styles.headerPart} />
             <div className={styles.aboutUsFont} >关于我们</div >
             <div className={styles.aboutUsMain} >
@@ -176,7 +164,9 @@ export default class View extends Component {
           </div >
         </div >
         <div className={styles.adventure} >
-          <div className={styles.absoluteFont} >PLATFORM ADVANTAGE</div >
+          <div className={styles.absoluteFont} >
+            {advantage}
+          </div >
           <div className={styles.headerPart} />
           <div className={styles.aboutUsFont} >Hopex平台优势</div >
           <div className={styles.adventureContainer} >
@@ -202,8 +192,13 @@ export default class View extends Component {
             {/*<img src={computer} alt="" />*/}
             {/*</div >*/}
             <div className={styles.contractItem} >
+              <div className={styles.absoluteFont} >
+                <img src={provide} alt="" />
+              </div >
               <div className={styles.headerPart} />
-              <div className={styles.aboutUsFont} >我们提供的合约</div >
+              <div className={styles.aboutUsFont} >
+                我们提供的合约
+              </div >
               <div className={styles.contractDes} >
                 Hopex支持多个币种的合约，同时我们也在不断开发创新的其他币种合约，力图给予广大投资者最丰富的选择。
               </div >
