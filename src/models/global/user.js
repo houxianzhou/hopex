@@ -157,14 +157,13 @@ export default joinModel(modelExtend, {
       }))
       if (resOk(res)) {
         if (res) {
-          Toast.tip('注册成功')
           const result = yield (asyncPayload(delay(2000)))
           if (result) {
             yield put({
               type: 'routerGo',
               payload: PATH.login
             })
-            localSave.set('newPassword', payload)
+            localSave.set('newPassword', { ...payload, ...{ msg: '注册成功' } })
           }
         }
       }
@@ -215,7 +214,7 @@ export default joinModel(modelExtend, {
               pathname: PATH.login,
             }
           })
-          localSave.set('newPassword', payload)
+          localSave.set('newPassword', { ...payload, ...{ msg: '重置密码成功' } })
         }
       }
     },

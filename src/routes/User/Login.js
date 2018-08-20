@@ -19,10 +19,10 @@ import styles from './index.less'
 export default class View extends Component {
   componentDidMount() {
     const newPasswordSave = localSave.get('newPassword') || localSave.get('recordEmail') || {}
-    const { email, newPassword } = newPasswordSave
-    if (email && newPassword) {
+    const { email, msg } = newPasswordSave
+    if (email && msg) {
       this.changeState({ email, password: '' })//密码不填
-      Toast.tip('重置密码成功')
+      Toast.tip(msg)
       localSave.remove('newPassword')
     } else {
       if (email) {
@@ -233,7 +233,7 @@ export default class View extends Component {
                         }
                       })
                     }} >
-                    <button>登录</button>
+                    <button >登录</button >
                   </Button >
                 </form >
               </div >

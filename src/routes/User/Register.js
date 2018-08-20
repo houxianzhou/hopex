@@ -31,7 +31,7 @@ export default class View extends Component {
 
     countryCode: 'CN',
     agentId: 1,
-    email: '1',
+    email: '',
     emailMsg: '',
     password: '',
     passwordMsg: '',
