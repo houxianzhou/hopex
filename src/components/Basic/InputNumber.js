@@ -31,10 +31,10 @@ export default class View extends Component {
   }
 
   rules = (value) => {
-    let { step = 10, max, min, prec = step, onChange } = this.props
+    let { step = 10, max, min, prec = 1, onChange } = this.props
     if (!_.isNil(value) && !_.isNil(step)) {
       // value=Number(value)
-      step = scientificToNumber(step)
+      // step = scientificToNumber(step)
       max = Number(max)
       min = Number(min)
     }
@@ -45,15 +45,13 @@ export default class View extends Component {
       if (test1 || test2) {
         if (value < min) value = min
         if (value > max) value = max
-        const v = new BigNumber(value)
-        const int = Math.floor(v.div(prec).valueOf())
-        const floa = v.minus(int * step).valueOf()
-        if (floa >= (new BigNumber(prec)).div(2).valueOf()) {
-          value = (int + 1) * prec
-        } else {
-          value = int * prec
-        }
+        // const v = new BigNumber(value)
+        const int = Math.floor(value / step)
+        // const floa = v.minus(int * step).valueOf()
+        value = int * step
       }
+
+      value = (new BigNumber(value)).toFixed(prec)
 
       // const posnum = step.split('.')[1].length
       // console.log(value,'------------')
@@ -81,25 +79,12 @@ export default class View extends Component {
   componentDidUpdate(prevProps) {
     const { value: prevValue } = prevProps
     const { value } = this.props
-    // clearTimeout(this.interval)
     if (!isEqual(prevValue, value)) {
       this.rules(value)
-      // this.interval = setTimeout(() => {
-      //   this.rules(value)
-      // })
     }
-    // if (!isEqual(prevValue, value) && !_.isNil(value)
-    //   && !_.inRange(Number(value), Number(min) || window['-Infinity'], Number(max) || window.Infinity)
-    //   && _.isFunction(onChange)) {
-    //   this.interval = setTimeout(() => {
-    //     onChange(_.clamp(Number(value), Number(min) || window['-Infinity'], Number(max) || window.Infinity))
-    //   })
-    // }
   }
 
   render() {
-
-    /*科学计数法转换数值*/
 
     let { value = null, step } = this.props
     const {
@@ -130,7 +115,7 @@ export default class View extends Component {
         </div >
         <input value={value} onChange={(e) => {
           if (Patterns.decimalNumber.test(e.target.value) || e.target.value === '') {
-            rules(e.target.value)
+            rules(e.target.value.replace('。', '.'))
           }
         }} />
         <div onClick={

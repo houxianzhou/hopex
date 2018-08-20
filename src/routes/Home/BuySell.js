@@ -121,7 +121,7 @@ export default class View extends Component {
   }
 
   renderInputItem = (config = {}) => {
-    const { label_name, label_desc, intro_desc, intro_price, value, onChange, step, max, min } = config
+    const { label_name, label_desc, intro_desc, intro_price, value, onChange, step, prec, max, min } = config
     return (
       <div className={styles.priceitem} >
         <div className={styles.priceinput} >
@@ -129,7 +129,7 @@ export default class View extends Component {
             <div className={styles.label_name} >{label_name}</div >
             <div className={styles.label_desc} >{label_desc}</div >
           </div >
-          <InputNumber className={styles.input_number} value={value} step={step} max={max} min={min}
+          <InputNumber className={styles.input_number} value={value} prec={prec} step={step} max={max} min={min}
                        onChange={onChange} />
         </div >
         {
@@ -218,7 +218,7 @@ export default class View extends Component {
       loading={loading}
       className={classNames(
         styles.submit,
-        isLogin && (isLimitPrice() ? (valuePrice && valueAmount) : valueAmount) && userAllowTrade && marketAllowTrade ? styles.haslogin : styles.notlogin,
+        isLogin && (isLimitPrice() ? (Number(valuePrice) && Number(valueAmount)) : valueAmount) && userAllowTrade && marketAllowTrade ? styles.haslogin : styles.notlogin,
         className
       )}
       onClick={() => {
@@ -287,7 +287,7 @@ export default class View extends Component {
     const { renderArea, changeState, isLimitPrice, getBuyDetail, getSellDetail } = this
     const {
       dispatch, loading, modelName, RG, model: {
-        minVaryPrice = '', minPriceMovementDisplay = '', minDealAmount = '',
+        minVaryPrice = '', minPricePrecision = 0, minPriceMovementDisplay = '', minDealAmount = '',
         minDealAmountDisplay = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '', availableMoneyDisplay,
       },
       modal: {
@@ -306,6 +306,7 @@ export default class View extends Component {
       intro_desc: '最高允许买价',
       intro_price: maxLimitPrice,
       value: isLimitPrice() ? buy.price : '',
+      prec: minPricePrecision,
       step: minVaryPrice,
       min: 0,
       onChange: (value) => {
@@ -314,10 +315,7 @@ export default class View extends Component {
             ...buy,
             price: value
           }
-        }, () => {
-          getBuyDetail()
-        })
-
+        }, getBuyDetail)
       }
     }
     // 数量
@@ -332,9 +330,7 @@ export default class View extends Component {
             ...buy,
             amount: value
           }
-        }, () => {
-          getBuyDetail()
-        })
+        }, getBuyDetail)
       },
       step: minDealAmount
     }
@@ -391,11 +387,7 @@ export default class View extends Component {
                 ...sell,
                 price: value
               }
-            })
-            getSellDetail({
-              price: value,
-              amount: sell.amount
-            })
+            }, getSellDetail)
           }
         }
       },
@@ -409,11 +401,7 @@ export default class View extends Component {
                 ...sell,
                 amount: value
               }
-            })
-            getSellDetail({
-              price: sell.price,
-              amount: value
-            })
+            }, getSellDetail)
           }
         }
       },
@@ -549,8 +537,7 @@ class RenderModal extends Component {
   }
 
   render() {
-    const { changeState } = this
-    const { dispatch, modelName, closeModal, model: { marketName } } = this.props
+    const { model: { marketName } } = this.props
     const {
       fee: {
         makerFeeRateDisplay = '', takerFeeRateDisplay = '',

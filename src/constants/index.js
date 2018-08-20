@@ -20,7 +20,7 @@ export const API = {
 export const SPEED = {
   TOP: 0,
   MIDDLE: 10,
-  DOWM: 1800
+  DOWM: 2000
 }
 
 export const SOCKETURL = {

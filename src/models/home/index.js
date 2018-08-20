@@ -34,8 +34,8 @@ export default joinModel(modelExtend, {
     latestPriceTrend: '',//1升，-1降
     reasonablePrice: '',//合理价格，从market.deatl接口拉过来的
 
-
     minVaryPrice: '', //最小变动价位
+    minPricePrecision:'',//输入精度
     minDealAmount: '', //最小交易量
     minDealAmountDisplay: '',
     minLimitPrice: '',//最低允许卖价
@@ -503,6 +503,7 @@ export default joinModel(modelExtend, {
           payload: {
             minVaryPrice: result.minPriceMovement,
             minPriceMovementDisplay: result.minPriceMovementDisplay,
+            minPricePrecision: result.minPricePrecision,
 
             minDealAmount: result.minTradeNum,
             minDealAmountDisplay: result.minTradeNumDisplay,

@@ -28,18 +28,18 @@ function Color(Props) {
 }
 
 export default class View extends Component {
-  constructor(props) {
-    super(props)
-    this._isMounted = true
-  }
-
-  componentDidMount() {
-     this.startInit()
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false
-  }
+  // constructor(props) {
+  //   super(props)
+  //   this._isMounted = true
+  // }
+  //
+  // componentDidMount() {
+  //    this.startInit()
+  // }
+  //
+  // componentWillUnmount() {
+  //   this._isMounted = false
+  // }
 
   startInit = () => {
     this.getLatestRecord()
@@ -126,27 +126,29 @@ export default class View extends Component {
       },
     }
     return (
-      <div
-        className={
-          classNames(
-            {
-              view: true
-            },
-            styles.latestRecord
-          )
-        }
-      >
-        <ScrollPannel
-          loading={loading.effects[`${modelName}/getLatestRecord`] && _.isEmpty(latest_records)}
-          header={
-            <div className={styles.record_header} >
-              <span >最新成交</span >
-            </div >
+      <Mixin.Child that={this} >
+        <div
+          className={
+            classNames(
+              {
+                view: true
+              },
+              styles.latestRecord
+            )
           }
         >
-          <Table {...tableProps} />
-        </ScrollPannel >
-      </div >
+          <ScrollPannel
+            loading={loading.effects[`${modelName}/getLatestRecord`] && _.isEmpty(latest_records)}
+            header={
+              <div className={styles.record_header} >
+                <span >最新成交</span >
+              </div >
+            }
+          >
+            <Table {...tableProps} />
+          </ScrollPannel >
+        </div >
+      </Mixin.Child >
     )
   }
 }

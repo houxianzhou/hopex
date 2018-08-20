@@ -262,7 +262,7 @@ export default {
       },
       "data": {
         "positionList": (new Array(5)).fill().map((item, index) => {
-          const arryas = ['BTC', 'USDT', 'EOC','w','b']
+          const arryas = ['BTC', 'USDT', 'EOC', 'w', 'b']
           return {
             amount: "-1227304",
             averagePrice: _.random(10, 50) + '',
@@ -426,8 +426,8 @@ export default {
         "userAllowTrade": true,
         "marketAllowTrade": true,
         "marketCode": "BTCUSDT",
-        "minPriceMovement": 0.5,
-        "minPriceMovementDisplay": "0.5BTC",
+        "minPriceMovement": 0.000000001,
+        "minPriceMovementDisplay": "0.000005BTC",
         "maintenanceMarginRate": 0.005,
         "maintenanceMarginRateDisplay": "0.005%",
         "minTradeNum": 1,
@@ -435,6 +435,7 @@ export default {
         "availableBalance": _.random(10, 10000),
         "availableBalanceDisplay": "12345.0987BTC",
         "maxBuyPrice": 6296.1,
+        "minPricePrecision": 9,
         "minSellPrice": 5929.3,
         "orderValue": _.random(10, 10000),
         "orderValueDisplay": _.random(10, 10000) + 'BTC',
