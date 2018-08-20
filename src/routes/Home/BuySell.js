@@ -121,7 +121,7 @@ export default class View extends Component {
   }
 
   renderInputItem = (config = {}) => {
-    const { label_name, label_desc, intro_desc, intro_price, value, onChange, step, prec, max, min } = config
+    const { label_name, label_desc, intro_desc, intro_price, value, onChange, step, prec, max, min, placeHolder = '' } = config
     return (
       <div className={styles.priceitem} >
         <div className={styles.priceinput} >
@@ -129,8 +129,15 @@ export default class View extends Component {
             <div className={styles.label_name} >{label_name}</div >
             <div className={styles.label_desc} >{label_desc}</div >
           </div >
-          <InputNumber className={styles.input_number} value={value} prec={prec} step={step} max={max} min={min}
-                       onChange={onChange} />
+          {
+            !placeHolder ? (
+              <InputNumber className={styles.input_number} value={value} prec={prec} step={step} max={max} min={min}
+                           onChange={onChange} />
+            ) : (
+              <div className={styles.input_number} >{placeHolder}</div >
+            )
+          }
+
         </div >
         {
           intro_desc && intro_price ? (
@@ -218,7 +225,7 @@ export default class View extends Component {
       loading={loading}
       className={classNames(
         styles.submit,
-        isLogin && (isLimitPrice() ? (Number(valuePrice) && Number(valueAmount)) : valueAmount) && userAllowTrade && marketAllowTrade ? styles.haslogin : styles.notlogin,
+        isLogin && (isLimitPrice() ? (Number(valuePrice) && Number(valueAmount)) : Number(valueAmount)) && userAllowTrade && marketAllowTrade ? styles.haslogin : styles.notlogin,
         className
       )}
       onClick={() => {
@@ -305,6 +312,7 @@ export default class View extends Component {
       label_desc: `最小单位${minPriceMovementDisplay}`,
       intro_desc: '最高允许买价',
       intro_price: maxLimitPrice,
+      placeHolder:isLimitPrice() ? '' : '市价',
       value: isLimitPrice() ? buy.price : '',
       prec: minPricePrecision,
       step: minVaryPrice,
@@ -563,10 +571,10 @@ class RenderModal extends Component {
             <div >强平手续费率:</div >
             <div >{liquidationFeeRateDisplay}</div >
           </li >
-          <li >
-            <div >交割手续费率:</div >
-            <div >{deliveryRateDisplay}</div >
-          </li >
+          {/*<li >*/}
+          {/*<div >交割手续费率:</div >*/}
+          {/*<div >{deliveryRateDisplay}</div >*/}
+          {/*</li >*/}
         </ul >
       </MainModal >
     )
