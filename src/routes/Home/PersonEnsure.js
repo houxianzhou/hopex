@@ -182,7 +182,10 @@ export default class View extends Component {
           <ScrollPannel
             tableHeight={calculateTableHeight(dataSource)}
             header={
-              <div >活跃委托</div >
+              <div className={styles.header}>
+                <div>活跃委托</div>
+                <div >* 委托有效期7天</div>
+              </div >
             }
           >
             <Table {...tableProp} />

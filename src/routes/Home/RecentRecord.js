@@ -238,6 +238,7 @@ export default class View extends Component {
                     })
                   }
                 </ul >
+                <div ><span className='blue'>查看完整历史</span></div >
               </div >
             }
           >
