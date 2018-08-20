@@ -155,7 +155,11 @@ export default class View extends Component {
               {aboutUs}
             </div >
             <div className={styles.headerPart} />
-            <div className={styles.aboutUsFont} >关于我们</div >
+            <div className={classNames(
+              styles.aboutUsFont,
+              styles.fontTitle
+            )} >关于我们
+            </div >
             <div className={styles.aboutUsMain} >
               Hopex是由一群极客和数字资产爱好者创建的一个专注于数字资产衍生品交易的平台。
               <br /><br />
@@ -168,7 +172,11 @@ export default class View extends Component {
             {advantage}
           </div >
           <div className={styles.headerPart} />
-          <div className={styles.aboutUsFont} >Hopex平台优势</div >
+          <div className={classNames(
+            styles.aboutUsFont,
+            styles.fontTitle
+          )} >Hopex平台优势
+          </div >
           <div className={styles.adventureContainer} >
             {
               itemList.map((item, index) => {
@@ -177,7 +185,10 @@ export default class View extends Component {
                     <div className={styles.itemIcon} >
                       <img src={item.img} />
                     </div >
-                    <div className={styles.itemTitle} >{item.title}</div >
+                    <div className={classNames(
+                      styles.itemTitle,
+                      styles.fontTitle
+                    )} >{item.title}</div >
                     <div className={styles.itemContent} >
                       {item.des}<br />
                       {item.desSecondLine}
@@ -196,7 +207,12 @@ export default class View extends Component {
                 <img src={provide} alt="" />
               </div >
               <div className={styles.headerPart} />
-              <div className={styles.aboutUsFont} >
+              <div className={
+                classNames(
+                  styles.aboutUsFont,
+                  styles.fontTitle
+                )
+              } >
                 我们提供的合约
               </div >
               <div className={styles.contractDes} >
