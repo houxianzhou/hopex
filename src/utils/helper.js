@@ -4,6 +4,7 @@ import store from 'store'
 import { fromJS, is } from 'immutable'
 
 export const lodash_helper = {
+  isInteger: _.isInteger,
   groupBy: _.groupBy,
   inRange: _.inRange,
   clamp: _.clamp,

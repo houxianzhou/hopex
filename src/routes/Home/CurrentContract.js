@@ -23,7 +23,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { model: { marketName, leverage, leverageIsModify = false }, modal: { name }, dispatch, modelName, openModal } = this.props
+    const { model: { marketName, leverage, leverageIsModify = false }, modal: { name }, isLogin, openModal } = this.props
 
     const colors = [
       '#52AA64', '#52AA64', '#8CB152', '#8CB152', '#CABA70', '#CABA70', '#D69555', '#D69555', '#D47D5A', ' #D47D5A'
@@ -62,7 +62,10 @@ export default class View extends Component {
                         name: 'contract'
                       }) : Toast.tip('当前有该合约持仓或委托，无法修改杠杆倍数')
                     }}
-                  >编辑
+                  >
+                    {
+                      isLogin ? '编辑' : null
+                    }
                   </div >
                 </div >
                 <div className={styles.number} >
@@ -75,7 +78,10 @@ export default class View extends Component {
                 <ul >
                   {
                     colors.map((item, index) => (
-                      <li key={index} style={{ background: item }} />
+                      <li key={index} style={{
+                        background: isLogin ? item : null,
+                        border: isLogin ? null : '1px solid #3E4555'
+                      }} />
                     ))
                   }
                 </ul >
@@ -161,10 +167,15 @@ class RenderModal extends Component {
               </li >
               {
                 _.orderBy(leverages, (item = {}) => item.leverage).map((item, index) => {
+                  const isMatch = (item = {}) => {
+                    return currentValue && Number(currentValue) !== Number(leverage) && Number(item.leverage) === Number(currentValue)
+                  }
                   return (
-                    <li key={index + 1} >
+                    <li key={index + 1} className={classNames(
+                      isMatch(item) ? styles.ismatch : null
+                    )} >
                       {
-                        String(item.leverage) === String(leverage) ? (
+                        Number(item.leverage) === Number(leverage) ? (
                           <div className={styles.symbol} >
                             <div >
                               当前值
@@ -174,7 +185,7 @@ class RenderModal extends Component {
                         ) : null
                       }
                       {
-                        currentValue && String(currentValue) !== String(leverage) && String(item.leverage) === String(currentValue) ? (
+                        isMatch(item) ? (
                           <div className={styles.symbol} >
                             <div >
                               新值
@@ -183,7 +194,6 @@ class RenderModal extends Component {
                           </div >
                         ) : null
                       }
-
                       <div >{item.leverage}</div >
                       <div >{getPercent(Number(1), Number(item.leverage))}</div >
                       <div >{keepBailRate}</div >

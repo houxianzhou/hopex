@@ -300,7 +300,7 @@ export default class View extends Component {
       modal: {
         name
       }
-        = {}, openModal
+        = {}, openModal, isLogin
     }
       = this.props
     const { side, buy, sell } = this.state
@@ -312,7 +312,7 @@ export default class View extends Component {
       label_desc: `最小单位${minPriceMovementDisplay}`,
       intro_desc: '最高允许买价',
       intro_price: maxLimitPrice,
-      placeHolder:isLimitPrice() ? '' : '市价',
+      placeHolder: isLimitPrice() ? '' : '市价',
       value: isLimitPrice() ? buy.price : '',
       prec: minPricePrecision,
       step: minVaryPrice,
@@ -494,12 +494,17 @@ export default class View extends Component {
                 </ul >
                 <ul className={styles.right} >
                   <li >计算器</li >
-                  <li onClick={
-                    () => {
-                      openModal({ name: 'fee' })
-                    }
-                  } >费用
-                  </li >
+                  {
+                    isLogin ? (
+                      <li onClick={
+                        () => {
+                          openModal({ name: 'fee' })
+                        }
+                      } >
+                        费用
+                      </li >
+                    ) : null
+                  }
                 </ul >
               </div >
             }

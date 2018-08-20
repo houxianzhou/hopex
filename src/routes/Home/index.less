@@ -846,9 +846,15 @@
         li {
           &:first-child {
             div {
+              justify-content: flex-start;
               width: unset;
               padding: 15px;
               color: @c_like_white_05;
+            }
+          }
+          &.ismatch {
+            >div{
+              color: @c_active_yellow;
             }
           }
           > div {

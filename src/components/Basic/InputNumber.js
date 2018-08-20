@@ -3,27 +3,6 @@ import { BigNumber } from 'bignumber.js'
 import { classNames, Patterns, _, isEqual } from '@utils'
 import * as styles from './InputNumber.less'
 
-function scientificToNumber(num) {
-  var str = num.toString();
-  var reg = /^(\d+)(e)([\-]?\d+)$/;
-  var arr, len,
-    zero = '';
-
-  /*6e7或6e+7 都会自动转换数值*/
-  if (!reg.test(str)) {
-    return num;
-  } else {
-    /*6e-7 需要手动转换*/
-    arr = reg.exec(str);
-    len = Math.abs(arr[3]) - 1;
-    for (var i = 0; i < len; i++) {
-      zero += '0';
-    }
-
-    return '0.' + zero + arr[1];
-  }
-}
-
 export default class View extends Component {
 
   componentWillUnmount() {
@@ -40,36 +19,20 @@ export default class View extends Component {
     }
 
     if (!_.isNil(value) && value !== '') {
-      let test1 = !/\.$/.test(value)
+      let test1 = /\.$/.test(value)
       let test2 = /^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$/.test(value)
-      if (test1 || test2) {
+
+      if (test1) {
+      } else {
         if (value < min) value = min
         if (value > max) value = max
-        // const v = new BigNumber(value)
         const int = Math.floor(value / step)
-        // const floa = v.minus(int * step).valueOf()
         value = int * step
+        if (_.isInteger(value)) {
+          prec = 0
+        }
+        value = (new BigNumber(value)).toFixed(prec)
       }
-
-      value = (new BigNumber(value)).toFixed(prec)
-
-      // const posnum = step.split('.')[1].length
-      // console.log(value,'------------')
-      // if (/[Ee]/.test(value)) {
-      //   onChange((new BigNumber(value)).toFixed(posnum))
-      // } else {
-      //   if(/\./.test(value)){
-      //     if(value.toString().split('.')[1].length>posnum){
-      //       onChange((new BigNumber(value)).toFixed(posnum))
-      //     }else{
-      //       onChange(value)
-      //     }
-      //   }else{
-      //     onChange(value)
-      //   }
-      // }
-
-
       onChange(value)
     } else {
       onChange('')
