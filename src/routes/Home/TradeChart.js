@@ -589,7 +589,7 @@ export default class View extends Component {
                             <div className={styles.percent} >
                               {
                                 (/[+-]/.test(latestPriceChangePercent)) ? (
-                                  <RedGreenSwitch.GreenText value={`${latestPriceChangePercentShown}`} />
+                                  <RedGreenSwitch.GreenText value={`${latestPriceChangePercent}`} />
                                 ) : (
                                   <RedGreenSwitch.RedText value={`${latestPriceChangePercentShown}`} />
                                 )

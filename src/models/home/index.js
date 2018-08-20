@@ -922,16 +922,6 @@ export default joinModel(modelExtend, {
         ...state,
         marketName: filterOne.marketName,
         marketCode: filterOne.marketCode,
-        // minVaryPrice: filterOne.minPriceMovementDisplay,
-        // minDealAmount: filterOne.minDealAmount,
-        // keepBailRate: filterOne.keepBailRate,
-        // levelages: filterOne.levelages,
-        // dealMoney: filterOne.dealMoney,
-        // maxLimitPrice: filterOne.maxLimitPrice,
-        // minLimitPrice: filterOne.minLimitPrice,
-        // varyRange: filterOne.varyRange,
-        // showPrec: filterOne.showPrec,
-        // marketSecond: filterOne.marketSecond,
       }
     }
   },

@@ -68,7 +68,9 @@ export default class View extends Component {
                                   className={styles.licontainer}
                                   key={index}
                                 >
-                                  <div className={styles.liheader} >{item1}</div >
+                                  <div className={styles.liheader} >
+                                    {item1}
+                                  </div >
                                   <ul >
                                     {
                                       sorted[item1].map((item2 = {}, index2) => {
@@ -76,10 +78,13 @@ export default class View extends Component {
                                           <li key={index2} onClick={() => {
                                             switchMarket(item2.marketCode)
                                           }} >
-                                            <div className={styles.name} >{item2.marketName}</div >
+                                            <div className={styles.name} >
+                                              {item2.pause ? <div >暂停</div > : null}
+                                              {item2.marketName}
+                                            </div >
                                             <div className={styles.price} >
                                               {
-                                                item2.direction ? (
+                                                /[\+]/.test(item2.percent) ? (
                                                   <RedGreenSwitch.GreenText
                                                     value={item2.price24h} />
                                                 ) : (
@@ -90,7 +95,7 @@ export default class View extends Component {
                                             </div >
                                             <div className={styles.percent} >
                                               {
-                                                item2.direction ? (
+                                                /[\+]/.test(item2.percent) ? (
                                                   <RedGreenSwitch.GreenText
                                                     value={item2.percent} />
                                                 ) : (
