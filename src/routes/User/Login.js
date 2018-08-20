@@ -184,7 +184,8 @@ export default class View extends Component {
                         payload: PATH.register
                       })
                     }}
-                  >注册
+                  >
+                    注册
                   </div >
                 </div >
               </div >
@@ -232,7 +233,7 @@ export default class View extends Component {
                         }
                       })
                     }} >
-                    登录
+                    <button>登录</button>
                   </Button >
                 </form >
               </div >

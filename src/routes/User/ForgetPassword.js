@@ -109,7 +109,9 @@ export default class View extends Component {
                         })
                       }}
                     >
-                      <button>下一步</button>
+                      <button>
+                        下一步
+                      </button>
                     </Button >
                   </form >
                 </div >
@@ -152,8 +154,6 @@ export default class View extends Component {
                         </div >
                       )}
                     />
-
-
                     <Button
                       loading={loading.effects[`${modelName}/doVertifyCode`]}
                       className={classNames(
@@ -301,7 +301,7 @@ export default class View extends Component {
                         })
                       }}
                     >
-                      提交
+                      <button>提交</button>
                     </Button >
                   </form >
                 </div >
