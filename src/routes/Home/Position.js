@@ -256,7 +256,7 @@ class RenderModal extends Component {
 
 
   state = {
-    inputValue: '',
+    inputValue: '0',
     dealCurrency: '',
     increase: {},
     reduce: {}
@@ -313,7 +313,7 @@ class RenderModal extends Component {
           <div className={styles.input} >
             <div className={styles.edit} >
               {editIcon}
-              <input value={inputValue} onChange={
+              <input value={formatNumber(inputValue,'p')} onChange={
                 _.throttle((e) => {
                   const value = e.target.value
                   changeStateInModal({
