@@ -22,11 +22,12 @@ export default class View extends Component {
       let test1 = /\.$/.test(value)
       let test2 = /^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$/.test(value)
 
+
       if (test1) {
       } else {
         if (value < min) value = min
         if (value > max) value = max
-        const int = Math.floor(value / step)
+        const int = Math.floor((new BigNumber(value)).div(step).toFixed(prec))
         value = int * step
         if (_.isInteger(value)) {
           prec = 0
