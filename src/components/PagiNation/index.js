@@ -9,9 +9,9 @@ export default class View extends Component {
       forcePage,
       initialPage = 0,
       onPageChange,
-      pageCount = 20,
-      previousLabel = '上一页',
-      nextLabel = '下一页',
+      total = 20,
+      previousLabel = '<',
+      nextLabel = '>',
       containerClassName,
       pageClassName,
       activeClassName,
@@ -22,8 +22,10 @@ export default class View extends Component {
       <ReactPaginate
         initialPage={initialPage}
         forcePage={forcePage}
-        onPageChange={onPageChange}
-        pageCount={pageCount}
+        onPageChange={(e) => {
+          onPageChange(e.selected)
+        }}
+        pageCount={total}
         previousLabel={previousLabel}
         nextLabel={nextLabel}
         containerClassName={
@@ -48,6 +50,7 @@ export default class View extends Component {
           classNames(
             styles.previousClassName,
             previousClassName,
+            initialPage === 0 ? styles.hide : null
           )
         }
         nextClassName={

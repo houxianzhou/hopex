@@ -788,7 +788,7 @@ export default joinModel(modelExtend, {
 
     //最近10条委托历史
     * getHistory({ payload = {} }, { call, put, select }) {
-      const { type, page } = payload
+      const { type, page = '', pageSize = 10 } = payload
       let prev
       let historyType
       let historyList
@@ -829,8 +829,8 @@ export default joinModel(modelExtend, {
             "side": "0",
             "startTime": "0",
             "endTime": "0",
-            "pageIndex": "",
-            "pageSize": "10"
+            "pageIndex": String(page),
+            "pageSize": String(pageSize)
           },
           power: [1],
           powerMsg: '最近十条'
@@ -839,11 +839,15 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(getPersonalEnsureHistory, repayload))
         if (resOk(res)) {
-          const result = _.get(res, 'data.records')
+          const [result, total] = [_.get(res, 'data.records'), _.get(res, 'data.total')]
           if (result) {
             // 区分有分页的和没有分页的两种
-            if (page) {
-              return [result, historyList]
+            if (String(page)) {
+              return {
+                result,
+                historyList,
+                total: Math.ceil(total / pageSize)
+              }
             } else {
               // 此处为解决轮询的问题
               result.map((item = {}) => {

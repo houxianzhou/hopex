@@ -1,4 +1,12 @@
 .container {
+  a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    height:100%;
+    outline: none;
+  }
   // background: red;
   display: flex;
   .pageClassName {
@@ -9,6 +17,9 @@
     background: red;
   }
   .previousClassName {
+    &.hide{
+      display: none !important;
+    }
     color: blue;
   }
   .nextClassName {

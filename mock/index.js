@@ -628,33 +628,35 @@ export default {
 
   //最近委托历史
   'Post /mock/api/v1/trade/user.order_history': (req, res) => {
+    const { pageIndex, pageSize = 10 } = req.body.param
+    const records = (new Array(pageIndex ? 100 : 3)).fill().map((item, index) => (
+      {
+        "ctime": "2018-08-09 17:06:27",
+        "ftime": "2018-08-09 17:06:46",
+        "orderId": "19654" + index,
+        "user": "3",
+        "marketName": 'BTCUSDT永续' + (index),
+        "market": "BTCUSDT",
+        "source": "浏览器，我是现价测试买单,数量10,价格6118.5,用户id：3,邮箱：xiaoyi.wei@bcsystech.com",
+        "type": "1",
+        "side": "2",
+        "price": "6118.50",
+        "amount": "10",
+        "dealAmount": "5",
+        "dealMoney": "0.0008171937566397",
+        "dealFee": "-0.00",
+        "orderStatus": "2",
+        "leverage": _.random(10, 90) + '',
+        "avgDealMoney": "6118.5",
+        "delegateMoney": "0.00004209",
+        "unwindProfit": "--"
+      }
+    ))
     res.send(
       {
         "data": {
-          "total": "114",
-          "records": (new Array(2)).fill().map((item, index) => (
-            {
-              "ctime": "2018-08-09 17:06:27",
-              "ftime": "2018-08-09 17:06:46",
-              "orderId": "19654" + index,
-              "user": "3",
-              "marketName": 'BTCUSDT永续',
-              "market": "BTCUSDT",
-              "source": "浏览器，我是现价测试买单,数量10,价格6118.5,用户id：3,邮箱：xiaoyi.wei@bcsystech.com",
-              "type": "1",
-              "side": "2",
-              "price": "6118.50",
-              "amount": "10",
-              "dealAmount": "5",
-              "dealMoney": "0.0008171937566397",
-              "dealFee": "-0.00",
-              "orderStatus": "2",
-              "leverage": _.random(10, 90) + '',
-              "avgDealMoney": "6118.5",
-              "delegateMoney": "0.00004209",
-              "unwindProfit": "--"
-            }
-          )),
+          "total": records.length + '',
+          "records": records.slice(Number(pageIndex) * pageSize, (Number(pageIndex) + 1) * pageSize),
           "pageIndex": "",
           "pageSize": "10"
         },

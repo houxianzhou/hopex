@@ -4,8 +4,8 @@
 @header1: 32px;
 @header2: 40px;
 .tableContainer {
-:global {
-  .default {
+  :global {
+    .default {
       // background: red;
       width: 100%;
       height: 100%;
@@ -13,8 +13,8 @@
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
-    > div {
       > div {
+        > div {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -23,42 +23,42 @@
         }
       }
     }
-  .table {
+    .table {
     }
-  .tr {
+    .tr {
       padding: 0 @padding_li_left;
     }
-  .thead {
-    .tr {
+    .thead {
+      .tr {
         color: @c_pannel_theader_color;
         height: @header1;
       }
     }
-  .tbody {
-    .tr {
-      &:hover {
+    .tbody {
+      .tr {
+        &:hover {
           background: #1C222E !important;
         }
         height: 26px;
         //&:nth-child(2n+1) {
         //  background: @c_panel_light;
         //}
-      &.even {
+        &.even {
           background: @c_panel_light;
         }
       }
-    .td {
-      &.red {
+      .td {
+        &.red {
           color: @_red;
         }
-      &.blue {
+        &.blue {
           color: @_blue;
         }
-      &.green {
+        &.green {
           color: @_green;
         }
 
-      &.action {
+        &.action {
           input {
             color: white;
             border: 1px solid #4B556D;
@@ -81,8 +81,8 @@
 }
 
 .expandetableContainer {
-:global {
-  .tr {
+  :global {
+    .tr {
       padding: 0 @padding_li_left;
       background: @c_pannel_header_dark !important;
     }
@@ -150,6 +150,38 @@
         color: @c_active_yellow;
         border-bottom: 2px solid @c_active_yellow;
       }
+    }
+  }
+}
+
+.paginationcontainerClassName {
+  display: flex;
+  justify-content: flex-end;
+  :global {
+    .paginationpageClassName {
+
+      border: 1px solid #EBEBEB;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 4px;
+      width: 30px;
+      height: 30px;
+      color: #999999;
+    }
+    .paginationpageActiveClassName {
+      border: unset;
+      background: @c_active_yellow;
+      color: white;
+      &:active {
+        background: #f4c883;
+      }
+    }
+    .paginationPreviousNextClassName {
+      color: #666666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

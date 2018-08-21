@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { classNames, dealInterval, _, formatNumber } from '@utils'
-import { Table, Mixin, Button } from '@components'
+import { Table, Mixin, Button, PagiNation } from '@components'
 import { SCROLLX, TABLE } from '@constants'
 import RedGreenSwitch from '@routes/Home/components/RedGreenSwitch'
 
@@ -8,7 +8,8 @@ import styles from './index.less'
 
 export default class View extends Component {
   state = {
-    activeLi: 0,
+    activeLi: '1',
+    total: 1,//总页数
     personalEnsureHistory: [],//最近10条委托历史
     deliveryHistory: [],//交割历史
     highlevelHistory: [],//强平历史
@@ -16,12 +17,12 @@ export default class View extends Component {
   }
 
   componentDidMount() {
-    this.startInit()
+    // this.startInit()
   }
 
   startInit = () => {
     // 暂时没有东西
-    this.getHistory('1')
+    this.getHistory()
   }
 
   changeState = (payload = {}, callback) => {
@@ -30,19 +31,21 @@ export default class View extends Component {
     })
   }
 
-  getHistory = (type) => {
+  getHistory = (page = '0') => {
+    const { activeLi } = this.state
     const { dispatch, modelName1 } = this.props
     dispatch({
       type: `${modelName1}/getHistory`,
       payload: {
-        type,
-        page: '0'
+        type: activeLi,
+        page
       }
     }).then(res => {
       if (res) {
         this.changeState(
           {
-            [res[1]]: res[0]
+            [res['historyList']]: res['result'],
+            total: res.total
           }
         )
       }
@@ -54,7 +57,7 @@ export default class View extends Component {
   }
 
   render() {
-    const { activeLi, personalEnsureHistory } = this.state
+    const { activeLi, personalEnsureHistory, total } = this.state
     const { state, changeState, getHistory } = this
     const {
       noDataTip, calculateTableHeight,
@@ -178,7 +181,7 @@ export default class View extends Component {
 
     let dataSource
     switch (activeLi) {
-      case 0:
+      case '1':
         dataSource = personalEnsureHistory
         break
       default:
@@ -188,7 +191,19 @@ export default class View extends Component {
     const tableProp = {
       className: styles.tableContainer,
       columns,
-      dataSource: dataSource, //_.merge((new Array(4)).fill(), dataSource),
+      dataSource: dataSource,
+    }
+
+    const pageProp = {
+      total: total,
+      onPageChange: (e) => {
+        getHistory(e)
+      },
+      containerClassName: styles.paginationcontainerClassName,
+      pageClassName: 'paginationpageClassName',
+      activeClassName:'paginationpageActiveClassName',
+      previousClassName: 'paginationpageClassName',
+      nextClassName:'paginationpageClassName',
     }
     return (
       <div
@@ -198,8 +213,9 @@ export default class View extends Component {
           )
         }
       >
-        <div style={{ height: 500 }} >
+        <div style={{ height: calculateTableHeight(dataSource) }} >
           <Table {...tableProp} />
+          <PagiNation {...pageProp} />
         </div >
       </div >
     )

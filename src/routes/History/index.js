@@ -18,8 +18,9 @@ const Comp = {
 export default class View extends Component {
 
   renderPage = (page, props = {}) => {
-    const {} = this.props
+    const { theme: { calculateTableHeight } } = this.props
     const Props = {
+      calculateTableHeight,
       ...this.props,
       ...props
     }
