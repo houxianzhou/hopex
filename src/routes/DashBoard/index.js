@@ -81,9 +81,13 @@ export default class View extends Component {
       new Swiper(this.refs.swiperContainer, {
         autoplay: {
           delay: 3000,
-          disableOnInteraction: false,
+          // disableOnInteraction: false,
         },//可选选项，自动滑动
         speed: 500,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
         pagination: {
           el: '.swiper-pagination',
         }
@@ -120,21 +124,20 @@ export default class View extends Component {
                         styles.slide
                       )
                     } >
-                    {/*<img src={v.imgUrl} alt="" />*/}
                   </div >
                 )
               })
             }
-            {/*<div className="swiper-slide" >*/}
-            {/*<img src={bannerThird} alt="" />*/}
-            {/*</div >*/}
-            {/*<div className="swiper-slide" >*/}
-            {/*<img src={bannerFirst} alt="" />*/}
-            {/*</div >*/}
-            {/*<div className="swiper-slide" >*/}
-            {/*<img src={bannerSecond} alt="" />*/}
-            {/*</div >*/}
           </div >
+          <div className={classNames(
+            "swiper-button-prev",
+            styles.swiperPrev
+          )} />
+          <div className={classNames(
+            "swiper-button-next",
+            styles.swiperNext,
+          )} />
+
           <div className="swiper-pagination" ref="swiperPagination" />
         </div >
         <div className={styles.notice} >
