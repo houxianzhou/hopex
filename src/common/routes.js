@@ -28,8 +28,8 @@ export default [
   {
     name: '历史',
     path: '/history',
-    model: ['account'],
-    route: 'User/account'
+    model: ['history'],
+    route: 'History'
   },
   {
     name: '解释说明',
