@@ -35,7 +35,7 @@ export default joinModel(modelExtend, {
     reasonablePrice: '',//合理价格，从market.deatl接口拉过来的
 
     minVaryPrice: '', //最小变动价位
-    minPricePrecision:'',//输入精度
+    minPricePrecision: '',//输入精度
     minDealAmount: '', //最小交易量
     minDealAmountDisplay: '',
     minLimitPrice: '',//最低允许卖价
@@ -56,6 +56,7 @@ export default joinModel(modelExtend, {
     personalEnsures: [],//个人委托列表
     positionList: [],//个人持仓列表
     personalEnsures_PageIndex: null, //未曾用过
+
     personalEnsureHistory: [],//最近10条委托历史
     deliveryHistory: [],//交割历史
     highlevelHistory: [],//强平历史
@@ -787,7 +788,7 @@ export default joinModel(modelExtend, {
 
     //最近10条委托历史
     * getHistory({ payload = {} }, { call, put, select }) {
-      const { type } = payload
+      const { type, page } = payload
       let prev
       let historyType
       let historyList
@@ -840,19 +841,24 @@ export default joinModel(modelExtend, {
         if (resOk(res)) {
           const result = _.get(res, 'data.records')
           if (result) {
-            // 此处为解决轮询的问题
-            result.map((item = {}) => {
-              const exsit = prev.filter((one = {}) => one.orderId === item.orderId)[0] || {}
-              if (exsit && exsit.expand) {
-                item.expand = exsit.expand
-              }
-            })
-            yield put({
-              type: 'changeState',
-              payload: {
-                [historyList]: result
-              }
-            })
+            // 区分有分页的和没有分页的两种
+            if (page) {
+              return [result, historyList]
+            } else {
+              // 此处为解决轮询的问题
+              result.map((item = {}) => {
+                const exsit = prev.filter((one = {}) => one.orderId === item.orderId)[0] || {}
+                if (exsit && exsit.expand) {
+                  item.expand = exsit.expand
+                }
+              })
+              yield put({
+                type: 'changeState',
+                payload: {
+                  [historyList]: result
+                }
+              })
+            }
           }
           return res
         }

@@ -43,6 +43,22 @@ input, button {
 }
 
 
+// 红绿颜色切换
+:global {
+  span {
+    &.red {
+      color: @_red;
+    }
+    &.green {
+      color: @_green;
+    }
+    &.blue {
+      color: @_blue;
+    }
+  }
+}
+
+
 
 :global{
   @font-face {font-family: "iconfont";

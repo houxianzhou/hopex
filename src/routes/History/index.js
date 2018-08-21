@@ -7,10 +7,11 @@ import { default as MarketTrade } from './MarketTrade'
 const Comp = {
   MarketTrade
 }
-@connect(({ user, history: model, loading, dispatch }) => ({
+@connect(({ home,  history: model, loading, dispatch }) => ({
   model,
-  user,
+  home,
   modelName: 'history',
+  modelName1: 'home',
   dispatch
 }))
 export default class View extends Component {
@@ -26,10 +27,13 @@ export default class View extends Component {
 
   render() {
     const { renderPage } = this
-    const { dispatch, modelName } = this.props
     return (
       <div >
         <NavPannel
+          style={{
+            // widthPannel: '90%',
+            // widthNav:'16%'
+          }}
           defaultActive='marketTradeHistory'
           navList={[
             {
@@ -39,12 +43,6 @@ export default class View extends Component {
                   name: 'marketTradeHistory',
                   title: '合约历史交易',
                   onClick: () => {
-                    dispatch({
-                      type: `${modelName}/changeState`,
-                      payload: {
-                        marketTradePage: 1
-                      }
-                    })
                     return renderPage('MarketTrade')
                   }
                 }

@@ -8,7 +8,7 @@ import {} from '@services/user'
 export default joinModel(modelExtend, {
   namespace: 'history',
   state: {
-    marketTradePage: 1,
+    // marketTradePage: 1,
   },
   subscriptions: {
     setup({ dispatch, history }) {
