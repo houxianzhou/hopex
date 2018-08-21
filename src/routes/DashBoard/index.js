@@ -81,7 +81,7 @@ export default class View extends Component {
       new Swiper(this.refs.swiperContainer, {
         autoplay: {
           delay: 3000,
-          // disableOnInteraction: false,
+          disableOnInteraction: false,
         },//可选选项，自动滑动
         speed: 500,
         navigation: {
