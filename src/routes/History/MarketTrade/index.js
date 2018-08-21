@@ -194,7 +194,7 @@ export default class View extends Component {
       <div
         className={
           classNames(
-            styles.recentRecord
+            styles.marketTradeHistory
           )
         }
       >

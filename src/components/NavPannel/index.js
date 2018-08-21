@@ -31,11 +31,11 @@ export default class View extends Component {
 
   render() {
     const { page, active, } = this.state
-    const { navList = [], style: { widthPannel, widthNav } = {} } = this.props
+    const { navList = [], style: { widthPannel = '79%', widthNav = '19%' } = {} } = this.props
     return (
       <div className={styles.pannelContainer} >
-        <div className={styles.navpannel} style={{ width: widthPannel || '79%' }} >
-          <div className={styles.nav} style={{ width: widthNav || '19%' }} >
+        <div className={styles.navpannel} style={{ width: widthPannel }} >
+          <div className={styles.nav} style={{ width: widthNav }} >
             <ul className='block' >
               {
                 navList.map((item = {}, index) => (

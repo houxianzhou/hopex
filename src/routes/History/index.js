@@ -7,9 +7,10 @@ import { default as MarketTrade } from './MarketTrade'
 const Comp = {
   MarketTrade
 }
-@connect(({ home,  history: model, loading, dispatch }) => ({
+@connect(({ home, theme, history: model, loading, dispatch }) => ({
   model,
   home,
+  theme,
   modelName: 'history',
   modelName1: 'home',
   dispatch
@@ -17,6 +18,7 @@ const Comp = {
 export default class View extends Component {
 
   renderPage = (page, props = {}) => {
+    const {} = this.props
     const Props = {
       ...this.props,
       ...props
@@ -30,10 +32,6 @@ export default class View extends Component {
     return (
       <div >
         <NavPannel
-          style={{
-            // widthPannel: '90%',
-            // widthNav:'16%'
-          }}
           defaultActive='marketTradeHistory'
           navList={[
             {
