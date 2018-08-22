@@ -3,7 +3,8 @@ import { SOCKETURL } from '@constants'
 
 class Ws {
   constructor(url) {
-    this.ws = new WebSocket(url) // window.ReconnectingWebSocket(url, null, { debug: true, reconnectInterval: 0 })
+    this.ws = new WebSocket(url)
+    this.onClosePromise = null
     this.onConnectPromiseLists = []
     this.sendJsonPromiseLists = []
     this.listeners = []
@@ -29,6 +30,10 @@ class Ws {
     }
     this.ws.onclose = (e) => {
       console.log(`${url}连接关闭...`, e)
+      if (this.onClosePromise) {
+        this.onClosePromise()
+        this.onClosePromise = null
+      }
       this.repeatConnect(e)
     }
     this.ws.onerror = (e) => {
@@ -69,6 +74,13 @@ class Ws {
 
   close = () => {
     this.ws.close(4000, 'selfClose')
+  }
+
+  closePromise = () => {
+    return new Promise((resolve) => {
+      this.close()
+      this.onClosePromise = resolve
+    })
   }
 
   sendJson = (json) => {
@@ -127,33 +139,49 @@ class Wss {
     }
   }
 
-  closeAll = () => {
-    let i = 0
-    const promiseAll = []
-    return new Promise((resolve, reject) => {
-      _.values(this.sockets).forEach((item = {}) => item.listeners.forEach((item) => {
-        if (item.unsubscribe) {
-          promiseAll.push(item.unsubscribe)
-        }
-      }))
-      if (promiseAll.length) {
-        promiseAll.forEach(item => {
-          const result = item()
-          if (!result || !result.then) {
-            reject('发现某些unsubscribe不是promise,会导致无法判断所有的socket是否取消订阅')
-          } else {
-            result.then(() => {
-              i++
-              if (i === promiseAll.length) {
-                resolve()
-              }
-            })
+  closeAll = (isForce) => {
+    if (isForce) {
+      const promiseAll = _.values(this.sockets)
+      return new Promise((resolve) => {
+        let i = 0
+        promiseAll.forEach((item = {}) => item.closePromise().then(
+          () => {
+            i++
+            if (i === promiseAll.length) {
+              this.sockets = {}
+              return resolve()
+            }
           }
-        })
-      } else {
-        resolve()
-      }
-    })
+        ).catch(error => console.log('断开连接失败', error)))
+      })
+    } else {
+      let i = 0
+      const promiseAll = []
+      return new Promise((resolve, reject) => {
+        _.values(this.sockets).forEach((item = {}) => item.listeners.forEach((item) => {
+          if (item.unsubscribe) {
+            promiseAll.push(item.unsubscribe)
+          }
+        }))
+        if (promiseAll.length) {
+          promiseAll.forEach(item => {
+            const result = item()
+            if (!result || !result.then) {
+              reject('发现某些unsubscribe不是promise,会导致无法判断所有的socket是否取消订阅')
+            } else {
+              result.then(() => {
+                i++
+                if (i === promiseAll.length) {
+                  resolve()
+                }
+              })
+            }
+          })
+        } else {
+          resolve()
+        }
+      })
+    }
   }
 }
 

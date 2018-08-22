@@ -189,29 +189,61 @@ export default joinModel(modelExtend, {
         const res = getRes(yield call(getKlineDetail, repayload))
         if (resOk(res)) {
           const result = _.get(res, 'data') || {}
-          const {
-            direction, maxPrice24h, minPrice24h, marketPrice,
-            priceLast, totalPrice24h, percent, dollarPrice, reasonablePrice
-          } = result
           yield put({
-            type: 'changeState',
+            type: `updateKlineDetail`,
             payload: {
-              ...direction !== '0' ? { latestPriceTrend: Number(direction) } : {},
-              maxPrice24h,
-              minPrice24h,
-              indexPrice: marketPrice,
-              latestPrice: priceLast,
-              reasonablePrice,
-              latestPriceShown: _.isString(priceLast) ? priceLast.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
-              totalPrice24h,
-              latestPriceChangePercent: percent,
-              latestPriceChangePercentShown: _.isString(percent) ? percent.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
-              dollarPrice: dollarPrice,
+              result,
             }
           })
           return result
         }
       }
+    },
+    * getKlineDetailFromWs({ payload = {} }, { call, put }) {
+      const ws = wss.getSocket('ws')
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {
+            "method": "price.subscribe",
+          },
+          param: {}
+        }
+      })))
+      if (repayload) {
+        return ws.sendJson(repayload)
+      }
+    },
+    * updateKlineDetail({ payload = {} }, { call, put }) {
+      const { result = {}, request } = payload
+      let {
+        direction, maxPrice24h, minPrice24h, marketPrice,
+        priceLast, totalPrice24h, percent, dollarPrice, reasonablePrice
+      } = result
+      if (request === 'ws') {
+        ({
+          lastPrice: priceLast, lastPriceToUSD: dollarPrice, changePercent24: percent,
+          fairPrice: reasonablePrice, price24Max: maxPrice24h, price24Min: minPrice24h,
+          amount24h: totalPrice24h
+        } = result)
+      }
+
+      yield put({
+        type: 'changeState',
+        payload: {
+          ...direction !== '0' ? { latestPriceTrend: Number(direction) } : {},
+          maxPrice24h,
+          minPrice24h,
+          indexPrice: marketPrice,
+          latestPrice: priceLast,
+          reasonablePrice,
+          latestPriceShown: _.isString(priceLast) ? priceLast.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
+          totalPrice24h,
+          latestPriceChangePercent: percent,
+          latestPriceChangePercentShown: _.isString(percent) ? percent.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
+          dollarPrice: dollarPrice,
+        }
+      })
     },
 
     * getKlineAllListFromWs({ payload = {} }, { call, put }) {

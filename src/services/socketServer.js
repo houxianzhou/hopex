@@ -17,7 +17,8 @@ class MockServer {
       socket.on('message', (e) => {
         if (this.onMessage) this.onMessage(e)
       })
-      socket.on('close', () => {
+      socket.on('close', (e) => {
+        console.log(e,'---------------------')
         if (this.onClose) this.onClose()
       })
 
@@ -50,86 +51,36 @@ class MockServer {
   }
 }
 
-let times = 0
-const mockServer1 = new MockServer(SOCKETURL.ws1)
-mockServer1.onMessage = (e) => {
-  if (!e) return
-  const message = JSON.parse(e)
-  // console.log(message, '-------------服务端响应订阅')
-  const { head: { method } = {} } = message
-  switch (method) {
-    case 'kline.query': {
-      const { param: { startTime, endTime } = {} } = message
-      // console.log(moment.format(startTime), '------', moment.format(endTime))
-      const periods = moment.getdays(startTime * 1000, endTime * 1000)
-      mockServer1.sendJson(
-        {
-          "isTrusted": false,
-          "head": {
-            "method": "kline.query",
-            "msgType": "response",
-            "packType": "1",
-            "lang": "cn",
-            "version": "1.0.0",
-            "timestamps": "1531480173066302",
-            "serialNumber": "57"
-          },
-          "data": {
-            "records": periods.map(item => {
-              const h = 160 + _.random(30, 40)
-              const o = h - _.random(10, 20)
-              const c = o - _.random(10, 30)
-              const l = c - _.random(10, 20)
-              const v = _.random(100, 3000)
-              return [item / 1000, o, c, h, l, v, 6, 'BTCUSD永续']
-            })
-          },
-          "errCode": "0",
-          "errStr": "success",
-          "ret": "0"
-        }
-      )
-    }
-      break
-    default:
-  }
-}
 
-
-const mockServer2 = new MockServer(SOCKETURL.ws2)
+const mockServer2 = new MockServer(SOCKETURL.ws)
 mockServer2.onMessage = (e) => {
   if (!e) return
   const message = JSON.parse(e)
-  const { channel, event, chanId } = message
-  if (event === 'subscribe') {
-    switch (channel) {
-      case 'market': {
-        mockServer2.subScribe({
-          name: 'importantPrice',
-          func: () => {
-            mockServer2.sendJson({
-              "price": _.random(1000, 10000),
-              "minPrice": _.random(1000, 10000),
-              "maxPrice": _.random(1000, 10000),
-              "chanId": 204,
-              "pair": "BTCUSD"
-            })
+  const { head: { method } } = message
+  if (method === 'price.subscribe') {
+    mockServer2.subScribe({
+      name: 'price.subscribe',
+      func: () => {
+        mockServer2.sendJson(
+          {
+            "method": "price.update",
+            "timestamp": 1534853820063,
+            "data": {
+              "marketName": "BTCUSDT永续",
+              "lastPrice": _.random(1, 100) + '',
+              "lastPriceToUSD": `$${_.random(100, 200)}`,
+              "direction": -1,
+              "changePercent24": `-${_.random(200, 300)}%`,
+              "marketPrice": `${_.random(300, 400)}`,
+              "fairPrice": `${_.random(400, 500)}`,
+              "price24Max": `${_.random(500, 600)}`,
+              "price24Min": `${_.random(600, 700)}`,
+              "amount24h": `${_.random(700, 800)}BTC`,
+            }
           }
-        })
+        )
       }
-        break
-      default:
-    }
-  } else {
-    clearTimeout(mockServer2.interval)
-    mockServer2.interval = setTimeout(() => {
-      mockServer2.clearStacks()
-      mockServer2.sendJson({
-        "event": "unsubscribed",
-        "status": "OK",
-        "chanId": chanId
-      })
-    }, 2000)
+    })
   }
 }
 

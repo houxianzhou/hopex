@@ -50,7 +50,8 @@ export default class View extends Component {
 
   startInit = () => {
     this.startKline()
-    this.startKlineDetail()
+    // this.startKlineDetail()
+    this.startKlineDetailWs()
 
 
     // this.getImportantPrice()
@@ -451,13 +452,41 @@ export default class View extends Component {
     const { dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getKlineDetail`,
-    }).then(res => {
-      if (!this._isMounted) return
-      if (res) {
-        this.interval = dealInterval(() => {
-          this.startKlineDetail()
-        })
-      }
+    })
+  }
+
+  startKlineDetailWs = () => {
+    const { dispatch, modelName } = this.props
+    const ws = wss.getSocket('ws')
+    ws.onConnectPromise().then(() => {
+      dispatch({
+        type: `${modelName}/getKlineDetailFromWs`,
+      }).then(res => {
+        if (res) {
+          ws.listen({
+            name: 'price.subscribe',
+            subscribe: (e) => {
+              let res
+              if (e && e.data) res = formatJson(e.data)
+              res = getRes(res)
+              if (resOk(res)) {
+                const result = _.get(res, 'data')
+                dispatch({
+                  type: `${modelName}/updateKlineDetail`,
+                  payload: {
+                    result,
+                    request: 'ws'
+                  }
+                })
+              }
+            },
+            unsubscribe: () => {
+            },
+            restart: () => {
+            }
+          })
+        }
+      })
     })
   }
 

@@ -25,7 +25,8 @@ export const SPEED = {
 
 export const SOCKETURL = {
   ws1: 'ws://testnet.hopex.com/tcws',
-  ws2: 'ws://testnet.hopex.com/ws'
+  ws2: 'ws://testnet.hopex.com/ws',
+  ws: 'wss://api.hopex.com/ws'
   // ws1: 'ws://192.168.70.131:10060/tcws',
   // ws2: 'ws://192.168.70.131/ws'
 }

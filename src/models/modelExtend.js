@@ -47,7 +47,7 @@ export default {
         if (_.has(payload, 'param')) {
           result = reset(['param', 'market'], String(marketCode))
           result = reset(['param', 'marketCode'], String(marketCode))
-          // result = reset(['param', 'businessId'], String(_.uniqueId()))
+          result = reset(['param', 'lang'], String(lang))
         }
        // 单独的一套规则
         if (_.has(payload, 'param1')) {
