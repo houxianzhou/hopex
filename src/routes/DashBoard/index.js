@@ -79,6 +79,7 @@ export default class View extends Component {
         notifies: notifies,
       })
       new Swiper(this.refs.swiperContainer, {
+        loop: true,
         autoplay: {
           delay: 3000,
           disableOnInteraction: false,
