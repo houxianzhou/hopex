@@ -128,7 +128,7 @@ export default joinModel(modelExtend, {
           latest_records: [
             ...result,
             ...latest_records,
-          ]
+          ].slice(0,100)
         }
       })
     },

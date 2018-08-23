@@ -3,7 +3,7 @@ import { _, moment } from '@utils'
 import { SOCKETURL } from '@constants'
 
 class MockServer {
-  constructor(url, INTERVAL = 1000) {
+  constructor(url, INTERVAL = 2000) {
     this.interval = null
     this.subScribes = []
     this.server = new Server(url)
@@ -95,6 +95,36 @@ mockServer2.onMessage = (e) => {
               "amount": "1",
               "type": "1"
             }]
+          }
+        )
+      }
+    })
+  } else if (method === 'orderbook.subscribe') {
+    mockServer2.subScribe({
+      name: 'orderbook.update',
+      func: () => {
+        mockServer2.sendJson(
+          {
+            "method": "orderbook.update",
+            "timestamp": 1535015367280,
+            "data": {
+              "asks": [
+                {
+                  "priceD": 0.0,
+                  "price": `${_.random(1, 3)}`,
+                  "amount": _.random(10,100),
+                  "amountShow": "3,506",
+                  "exist": 0
+                }
+              ],
+              "bids": [{
+                "priceD": 0.0,
+                "price": `${_.random(1,3)}`,
+                "amount": _.random(10,100),
+                "amountShow": "3,506",
+                "exist": 0
+              }]
+            }
           }
         )
       }

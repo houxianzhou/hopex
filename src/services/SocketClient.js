@@ -68,9 +68,7 @@ class Ws {
 
   listen = (obj = {}) => {
     if (_.has(obj, 'name') && _.has(obj, 'subscribe') && _.has(obj, 'unsubscribe') && _.has(obj, 'restart')) {
-      console.log(obj.name,'name')
       _.remove(this.listeners, item => {
-        console.log(item.name,obj.name,'name')
         return item.name === obj.name
       })
       this.listeners.push(obj)
