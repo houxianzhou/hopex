@@ -40,7 +40,7 @@ export default class View extends Component {
       type: `${modelName}/getLatestRecord`,
     }).then(res => {
       if (res) {
-        // this.getLatestRecordFromWs()
+        this.getLatestRecordFromWs()
       }
     })
   }
