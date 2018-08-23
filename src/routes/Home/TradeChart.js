@@ -52,10 +52,6 @@ export default class View extends Component {
     this.startKline()
     // this.startKlineDetail()
     this.startKlineDetailWs()
-
-
-    // this.getImportantPrice()
-    // this.startDeepMap()
   }
 
   changeState = (payload) => {

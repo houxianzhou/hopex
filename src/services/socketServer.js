@@ -2,14 +2,13 @@ import { Server } from 'mock-socket'
 import { _, moment } from '@utils'
 import { SOCKETURL } from '@constants'
 
-const INTERVAL = 1000
-
 class MockServer {
-  constructor(url, interval) {
-    this.interval = interval || INTERVAL
+  constructor(url, INTERVAL = 1000) {
+    this.interval = null
     this.subScribes = []
     this.server = new Server(url)
     this.server.on('connection', socket => {
+      clearTimeout(this.interval)
       this.socket = socket
       if (this.onConnection) {
         this.onConnection(socket)
@@ -18,17 +17,16 @@ class MockServer {
         if (this.onMessage) this.onMessage(e)
       })
       socket.on('close', (e) => {
-        console.log(e,'---------------------')
         if (this.onClose) this.onClose()
       })
 
-      setInterval(() => {
+      this.interval = setInterval(() => {
         this.subScribes.forEach((item = {}) => {
           if (_.isFunction(item.func)) {
             item.func()
           }
         })
-      }, 2000)
+      }, INTERVAL)
     })
   }
 
@@ -40,6 +38,7 @@ class MockServer {
 
   subScribe = (obj) => {
     if (_.has(obj, 'name') && _.has(obj, 'func')) {
+      _.remove(this.subScribes, item => item.name === obj.name)
       this.subScribes.push(obj)
     } else {
       console.log('订阅的对象必须包含name属性和func属性')

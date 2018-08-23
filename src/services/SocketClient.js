@@ -1,4 +1,4 @@
-import { _, asyncPayload } from '@utils'
+import { _ } from '@utils'
 import { SOCKETURL } from '@constants'
 
 class Ws {
@@ -31,7 +31,7 @@ class Ws {
     this.ws.onclose = (e) => {
       console.log(`${url}连接关闭...`, e)
       if (this.onClosePromise) {
-        this.onClosePromise()
+        this.onClosePromise(true)
         this.onClosePromise = null
       }
       this.repeatConnect(e)
@@ -145,11 +145,13 @@ class Wss {
       return new Promise((resolve) => {
         let i = 0
         promiseAll.forEach((item = {}) => item.closePromise().then(
-          () => {
-            i++
-            if (i === promiseAll.length) {
-              this.sockets = {}
-              return resolve()
+          (res) => {
+            if (res) {
+              i++
+              if (i === promiseAll.length) {
+                this.sockets = {}
+                return resolve(true)
+              }
             }
           }
         ).catch(error => console.log('断开连接失败', error)))

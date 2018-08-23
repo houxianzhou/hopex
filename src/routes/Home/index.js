@@ -56,8 +56,10 @@ export default class View extends Component {
               type: `${modelName}/clearState`,
             })
             wss.closeAll(true).then((res) => {
-              this.startInit()
-              throttle = null
+              if (res) {
+                this.startInit()
+                throttle = null
+              }
             }).catch((err) => {
               console.log('关闭失败')
             })
