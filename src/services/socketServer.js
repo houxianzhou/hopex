@@ -80,6 +80,25 @@ mockServer2.onMessage = (e) => {
         )
       }
     })
+  } else if (method === 'deals.subscribe') {
+    mockServer2.subScribe({
+      name: 'deals.update',
+      func: () => {
+        mockServer2.sendJson(
+          {
+            "method": "deals.update",
+            "timestamp": 1535000397026,
+            "data": [{
+              "id": `${_.random(1000, 10000)}`,
+              "time": "12:59:56",
+              "price": `${_.random(10, 100)}`,
+              "amount": "1",
+              "type": "1"
+            }]
+          }
+        )
+      }
+    })
   }
 }
 

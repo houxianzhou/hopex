@@ -100,10 +100,9 @@ export default class View extends Component {
         dataIndex: 'time',
         width: '25%',
         render: (value, record, index, dataSource) => (
-          value
-          // index < 3 ? (
-          //   <Color record={record} dataSource={dataSource.slice(0, 1)} >{value}</Color >
-          // ) : value
+          index < 3 ? (
+            <Color record={record} dataSource={dataSource.slice(0, 3)} >{value}</Color >
+          ) : value
         )
       },
       {

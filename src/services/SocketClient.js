@@ -10,10 +10,10 @@ class Ws {
     this.listeners = []
     this.ws.onopen = () => {
       console.log(`${url}连接开启.....`)
-      this.onConnectPromiseLists.forEach((resolve, index) => {
+      this.onConnectPromiseLists.forEach((resolve) => {
         resolve()
-        this.onConnectPromiseLists.splice(index, 1)
       })
+      this.onConnectPromiseLists = []
       if (_.keys(this.onConnectPromiseLists).length) {
         console.error('Ws设计错误,onConnectPromiseLists有剩余的为执行完')
       }

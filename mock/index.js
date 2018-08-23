@@ -112,23 +112,21 @@ export default {
         "userId": "1",
         "userToken": "56"
       },
-      "data": {
-        "records": [{
-          "id": _.random(101, 200),
-          "time": "任意值",
+      "data": [{
+        "id": _.random(101, 200),
+        "time": "任意值",
+        "price": randomStr(1000, 10000),
+        "amount": randomStr(10000, 20000),
+        "type": ["2", '1'][_.random(0, 1)]
+      }].concat(randomArrayMap(99).map((item, index) => (
+        {
+          "id": index,
+          "time": "13:09:23",
           "price": randomStr(1000, 10000),
           "amount": randomStr(10000, 20000),
           "type": ["2", '1'][_.random(0, 1)]
-        }].concat(randomArrayMap(99).map((item, index) => (
-          {
-            "id": index,
-            "time": "13:09:23",
-            "price": randomStr(1000, 10000),
-            "amount": randomStr(10000, 20000),
-            "type": ["2", '1'][_.random(0, 1)]
-          }
-        )))
-      },
+        }
+      ))),
       ...other
     })
   },

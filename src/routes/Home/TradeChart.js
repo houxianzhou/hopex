@@ -263,7 +263,6 @@ export default class View extends Component {
     // window.$ = $
     // const ws1 = wss.getSocket('ws1')
     const widget = new TradingView.widget({
-
       disabled_features: [
         "volume_force_overlay",
         'hide_left_toolbar_by_default',
