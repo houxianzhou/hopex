@@ -92,13 +92,45 @@ export default joinModel(modelExtend, {
       const res = getRes(yield call(getLatestRecord, repayload))
       if (resOk(res)) {
         yield put({
-          type: 'changeState',
+          type: 'updateLatestRecord',
           payload: {
-            latest_records: res.data.records || res.data,
+            result: res.data,
           }
         })
         return res
       }
+    },
+    * getLatestRecordFromWs({ payload = {} }, { call, put, select }) {
+      const latest_records = yield select(({ home: { latest_records = [] } }) => latest_records) || []
+      const ws = wss.getSocket('ws')
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {
+            "method": "deals.subscribe",
+          },
+          param: {
+            lastId: _.get(latest_records[0], 'id'),
+            "limit": 20
+          }
+        }
+      })))
+      if (repayload) {
+        return ws.sendJson(repayload)
+      }
+    },
+    * updateLatestRecord({ payload = {} }, { call, put, select }) {
+      const { result = [] } = payload
+      const latest_records = yield select(({ home: { latest_records = [] } }) => latest_records) || []
+      yield put({
+        type: 'changeState',
+        payload: {
+          latest_records: [
+            ...result,
+            ...latest_records,
+          ].slice(0, 100)
+        }
+      })
     },
 
     // 委托列表
@@ -174,7 +206,37 @@ export default joinModel(modelExtend, {
         }
       }
     },
+    * getKlineAllListFromWs({ payload = {} }, { call, put }) {
+      const ws1 = wss.getSocket('ws1')
+      const { startTime, endTime } = payload
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {
+            "method": "kline.query",
+          },
+          param: {
+            "startTime": startTime,
+            "endTime": endTime,
+            "interval": "86400"
+          }
+        }
+      })))
+      return ws1.sendJsonPromise(repayload, (e) => {
+        let res
+        if (e && e.data) {
+          res = formatJson(e.data)
+        }
+        res = getRes(res)
+        if (resOk(res)) {
+          if (_.get(res, 'head.method') === 'kline.query') {
+            return _.get(res, 'data.records')
+          }
+        }
+      })
+    },
 
+    // k线详情数据
     * getKlineDetail({ payload = {} }, { call, put }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
@@ -246,35 +308,6 @@ export default joinModel(modelExtend, {
       })
     },
 
-    * getKlineAllListFromWs({ payload = {} }, { call, put }) {
-      const ws1 = wss.getSocket('ws1')
-      const { startTime, endTime } = payload
-      const repayload = yield (asyncPayload(yield put({
-        type: 'createRequestParams',
-        payload: {
-          head: {
-            "method": "kline.query",
-          },
-          param: {
-            "startTime": startTime,
-            "endTime": endTime,
-            "interval": "86400"
-          }
-        }
-      })))
-      return ws1.sendJsonPromise(repayload, (e) => {
-        let res
-        if (e && e.data) {
-          res = formatJson(e.data)
-        }
-        res = getRes(res)
-        if (resOk(res)) {
-          if (_.get(res, 'head.method') === 'kline.query') {
-            return _.get(res, 'data.records')
-          }
-        }
-      })
-    },
 
     //K线图增量订阅
     * getKlineAddMore({ payload = {} }, { call, put }) {

@@ -23,12 +23,12 @@ export default class View extends Component {
         type
       }
     }).then((res) => {
-        if (!this._isMounted) return
-        if (type === '1') {
-          this.interval = dealInterval(() => {
-            this.getHistory(type)
-          })
-        }
+        // if (!this._isMounted) return
+        // if (type === '1') {
+        //   this.interval = dealInterval(() => {
+        //     this.getHistory(type)
+        //   })
+        // }
       }
     )
   }

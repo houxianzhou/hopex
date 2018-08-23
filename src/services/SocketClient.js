@@ -1,4 +1,4 @@
-import { _ } from '@utils'
+import { _, formatJson, getRes } from '@utils'
 import { SOCKETURL } from '@constants'
 
 class Ws {
@@ -19,14 +19,17 @@ class Ws {
       }
     }
     this.ws.onmessage = (e) => {
-      this.listeners.forEach(item => item.subscribe && item.subscribe(e))
-      this.sendJsonPromiseLists.forEach(([resolve, func], index) => {
-        const result = func(e)
-        if (!!result) {
-          resolve(result)
-          this.sendJsonPromiseLists.splice(index, 1)
-        }
-      })
+      if (e && e.data) {
+        const res = formatJson(e.data)
+        this.listeners.forEach(item => item.subscribe && item.subscribe(e, res))
+        this.sendJsonPromiseLists.forEach(([resolve, func], index) => {
+          const result = func(e)
+          if (!!result) {
+            resolve(result)
+            this.sendJsonPromiseLists.splice(index, 1)
+          }
+        })
+      }
     }
     this.ws.onclose = (e) => {
       console.log(`${url}连接关闭...`, e)

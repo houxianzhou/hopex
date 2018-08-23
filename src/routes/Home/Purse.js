@@ -20,10 +20,10 @@ export default class View extends Component {
       type: `${modelName}/getPurseAssetList`
     }).then((res) => {
       if (res) {
-        if (!this._isMounted) return
-        this.interval = dealInterval(() => {
-          this.getPurseAssetList()
-        })
+        // if (!this._isMounted) return
+        // this.interval = dealInterval(() => {
+        //   this.getPurseAssetList()
+        // })
 
       }
     })

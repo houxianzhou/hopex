@@ -247,8 +247,6 @@ export default class View extends Component {
       ],
 
     };
-
-
     myChart.setOption(option)
     window.onresize = () => {
       myChart.resize()
@@ -461,11 +459,8 @@ export default class View extends Component {
         if (res) {
           ws.listen({
             name: 'price.subscribe',
-            subscribe: (e) => {
-              let res
-              if (e && e.data) res = formatJson(e.data)
-              res = getRes(res)
-              if (resOk(res)) {
+            subscribe: (e, res) => {
+              if (_.get(res, 'method') === 'price.update') {
                 const result = _.get(res, 'data')
                 dispatch({
                   type: `${modelName}/updateKlineDetail`,

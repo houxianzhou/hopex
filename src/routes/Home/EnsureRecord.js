@@ -46,11 +46,6 @@ export default class View extends Component {
       payload: {
         mode: 'http'
       }
-    }).then(res => {
-      if (!this._isMounted) return
-      this.interval = dealInterval(() => {
-        this.getEnsureRecord()
-      })
     })
   }
 

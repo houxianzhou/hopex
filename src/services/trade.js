@@ -9,7 +9,7 @@ if (MODE === 'mock') {
   UserIp0 = `/mock${UserIp0}`
   UserIp3 = `/mock${UserIp3}`
   UserIp4 = `/mock${UserIp4}`
-  require('./socketServer')
+  // require('./socketServer')
 }
 
 // 最新成交列表

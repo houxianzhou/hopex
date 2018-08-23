@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { classNames, dealInterval, moment, _, formatNumber } from '@utils'
+import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson, isEqual, dealInterval } from '@utils'
 import { Mixin, Table } from "@components"
 import { COLORS } from '@constants'
+import wss from '@services/SocketClient'
 import RedGreenSwitch from './components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
@@ -50,11 +51,43 @@ export default class View extends Component {
     const { dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getLatestRecord`,
-    }).then(() => {
-      if (!this._isMounted) return false
-      this.interval = dealInterval(() => {
+    }).then(res => {
+      if (res) {
+        this.getLatestRecordFromWs()
+      }
+    })
+  }
 
-        this.getLatestRecord()
+  getLatestRecordFromWs = () => {
+    const { dispatch, modelName } = this.props
+    const ws = wss.getSocket('ws')
+    ws.onConnectPromise().then(() => {
+      dispatch({
+        type: `${modelName}/getLatestRecordFromWs`,
+      }).then(res => {
+        if (res) {
+          ws.listen({
+            name: 'deals.subscribe',
+            subscribe: (e, res) => {
+              if (_.get(res, 'method') === 'deals.update') {
+                if (resOk(res)) {
+                  const result = _.get(res, 'data')
+                  dispatch({
+                    type: `${modelName}/updateLatestRecord`,
+                    payload: {
+                      result,
+                      request: 'ws'
+                    }
+                  })
+                }
+              }
+            },
+            unsubscribe: () => {
+            },
+            restart: () => {
+            }
+          })
+        }
       })
     })
   }
@@ -67,9 +100,10 @@ export default class View extends Component {
         dataIndex: 'time',
         width: '25%',
         render: (value, record, index, dataSource) => (
-          index < 3 ? (
-            <Color record={record} dataSource={dataSource} >{value}</Color >
-          ) : value
+          value
+          // index < 3 ? (
+          //   <Color record={record} dataSource={dataSource.slice(0, 1)} >{value}</Color >
+          // ) : value
         )
       },
       {
