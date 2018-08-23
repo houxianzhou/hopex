@@ -29,19 +29,6 @@ function Color(Props) {
 }
 
 export default class View extends Component {
-  // constructor(props) {
-  //   super(props)
-  //   this._isMounted = true
-  // }
-  //
-  // componentDidMount() {
-  //    this.startInit()
-  // }
-  //
-  // componentWillUnmount() {
-  //   this._isMounted = false
-  // }
-
   startInit = () => {
     this.getLatestRecord()
   }
@@ -53,7 +40,7 @@ export default class View extends Component {
       type: `${modelName}/getLatestRecord`,
     }).then(res => {
       if (res) {
-        this.getLatestRecordFromWs()
+        // this.getLatestRecordFromWs()
       }
     })
   }
@@ -70,16 +57,14 @@ export default class View extends Component {
             name: 'deals.subscribe',
             subscribe: (e, res) => {
               if (_.get(res, 'method') === 'deals.update') {
-                if (resOk(res)) {
-                  const result = _.get(res, 'data')
-                  dispatch({
-                    type: `${modelName}/updateLatestRecord`,
-                    payload: {
-                      result,
-                      request: 'ws'
-                    }
-                  })
-                }
+                const result = _.get(res, 'data')
+                dispatch({
+                  type: `${modelName}/updateLatestRecord`,
+                  payload: {
+                    result,
+                    request: 'ws'
+                  }
+                })
               }
             },
             unsubscribe: () => {

@@ -178,6 +178,23 @@ export default joinModel(modelExtend, {
         return res
       }
     },
+    * getEnsureRecordFromWs({ payload = {} }, { call, put, select }) {
+      const latest_records = yield select(({ home: { latest_records = [] } }) => latest_records) || []
+      const ws = wss.getSocket('ws')
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {
+            "method": "orderbook.subscribe",
+          },
+          param: {},
+          power: [2],
+        }
+      })))
+      if (repayload) {
+        return ws.sendJson(repayload)
+      }
+    },
 
     // K线图全量查询
     * getKlineAllList({ payload = {} }, { call, put }) {

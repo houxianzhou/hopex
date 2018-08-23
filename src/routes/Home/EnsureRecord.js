@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { classNames, _, dealInterval, getPercent, formatNumber, isEqual } from '@utils'
 import { Mixin, Table } from "@components"
+import wss from '@services/SocketClient'
 import ensure from '@assets/ensure.png'
 import { triangle } from '@assets'
 import { COLORS } from '@constants'
@@ -35,7 +36,7 @@ export default class View extends Component {
   // }
 
   startInit = () => {
-     this.getEnsureRecord()
+    this.getEnsureRecord()
   }
 
 
@@ -46,6 +47,48 @@ export default class View extends Component {
       payload: {
         mode: 'http'
       }
+    }).then(res => {
+      if (res) {
+        if (!this._isMounted) return
+        this.interval = dealInterval(() => {
+          this.getEnsureRecord()
+        })
+
+        // this.getEnsureRecordFromWs()
+      }
+    })
+  }
+
+  getEnsureRecordFromWs = () => {
+    const { dispatch, modelName } = this.props
+    const ws = wss.getSocket('ws')
+    ws.onConnectPromise().then(() => {
+      dispatch({
+        type: `${modelName}/getEnsureRecordFromWs`,
+      }).then(res => {
+        if (res) {
+          ws.listen({
+            name: 'deals.subscribe',
+            subscribe: (e, res) => {
+              console.log(res, 'ppppppppppppp')
+              if (_.get(res, 'method') === 'orderbook.update') {
+                const result = _.get(res, 'data')
+                // dispatch({
+                //   type: `${modelName}/updateLatestRecord`,
+                //   payload: {
+                //     result,
+                //     request: 'ws'
+                //   }
+                // })
+              }
+            },
+            unsubscribe: () => {
+            },
+            restart: () => {
+            }
+          })
+        }
+      })
     })
   }
 

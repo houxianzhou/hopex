@@ -51,7 +51,7 @@ export default class View extends Component {
   startInit = () => {
     this.startKline()
     // this.startKlineDetail()
-    this.startKlineDetailWs()
+    // this.startKlineDetailWs()
   }
 
   changeState = (payload) => {
