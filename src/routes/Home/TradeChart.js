@@ -50,8 +50,7 @@ export default class View extends Component {
 
   startInit = () => {
     this.startKline()
-    // this.startKlineDetail()
-     this.startKlineDetailWs()
+    this.startKlineDetailWs()
   }
 
   changeState = (payload) => {
@@ -457,7 +456,7 @@ export default class View extends Component {
       }).then(res => {
         if (res) {
           ws.listen({
-            name: 'price.subscribe',
+            name: 'price.update',
             subscribe: (e, res) => {
               if (_.get(res, 'method') === 'price.update') {
                 const result = _.get(res, 'data')

@@ -62,7 +62,7 @@ export default class ColorChange extends Component {
             if (_.isNil(prevDataValue)) {
               color = COLORS.yellowOpacity
               colorChange(color)
-            } else if (!isEqual(prevDataValue, dataValue)) {
+            } else if (!isEqual(String(prevDataValue), String(dataValue))) {
               color = Number(dataValue) > Number(prevDataValue) ?
                 (RG ? COLORS.greenOpacity : COLORS.redOpacity) :
                 (RG ? COLORS.redOpacity : COLORS.greenOpacity)

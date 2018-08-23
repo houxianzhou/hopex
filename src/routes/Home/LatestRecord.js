@@ -54,7 +54,7 @@ export default class View extends Component {
       }).then(res => {
         if (res) {
           ws.listen({
-            name: 'deals.subscribe',
+            name: 'deals.update',
             subscribe: (e, res) => {
               if (_.get(res, 'method') === 'deals.update') {
                 const result = _.get(res, 'data')

@@ -49,12 +49,7 @@ export default class View extends Component {
       }
     }).then(res => {
       if (res) {
-        if (!this._isMounted) return
-        this.interval = dealInterval(() => {
-          this.getEnsureRecord()
-        })
-
-        // this.getEnsureRecordFromWs()
+        this.getEnsureRecordFromWs()
       }
     })
   }
@@ -68,18 +63,17 @@ export default class View extends Component {
       }).then(res => {
         if (res) {
           ws.listen({
-            name: 'deals.subscribe',
+            name: 'orderbook.update',
             subscribe: (e, res) => {
-              console.log(res, 'ppppppppppppp')
               if (_.get(res, 'method') === 'orderbook.update') {
                 const result = _.get(res, 'data')
-                // dispatch({
-                //   type: `${modelName}/updateLatestRecord`,
-                //   payload: {
-                //     result,
-                //     request: 'ws'
-                //   }
-                // })
+                dispatch({
+                  type: `${modelName}/updateEnsureRecord`,
+                  payload: {
+                    result,
+                    request: 'ws'
+                  }
+                })
               }
             },
             unsubscribe: () => {
@@ -134,7 +128,7 @@ export default class View extends Component {
               RG={RG}
             >
               <span style={{
-                color: record.exist === '1' ? COLORS.yellow : null
+                color: String(record.exist) === '1' ? COLORS.yellow : null
               }} >
                 {record.amountShow}
                 </span >
@@ -150,7 +144,7 @@ export default class View extends Component {
             color={record.type === '1' ? RedGreenSwitch.SwitchColor(COLORS.redOpacity, COLORS.greenOpacity, RG) : RedGreenSwitch.SwitchColor(COLORS.greenOpacity, COLORS.redOpacity, RG)}
             percent={getPercent(value, max.sum, 0.02)} >
             <span style={{
-              color: record.exist === '1' ? COLORS.yellow : null
+              color: String(record.exist) === '1' ? COLORS.yellow : null
             }} >
                 {formatNumber(value, 0, true)}
                 </span >

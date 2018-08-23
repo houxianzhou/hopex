@@ -128,11 +128,10 @@ export default joinModel(modelExtend, {
           latest_records: [
             ...result,
             ...latest_records,
-          ].slice(0, 100)
+          ]
         }
       })
     },
-
     // 委托列表
     * getEnsureRecord({ payload = {} }, { call, put, select }) {
       const repayload = yield (asyncPayload(yield put({
@@ -149,37 +148,17 @@ export default joinModel(modelExtend, {
         }
       })))
       const res = getRes(yield call(getEnsureRecord, repayload))
-
       if (resOk(res)) {
-        const result = {
-          asks: _.orderBy(_.get(res.data, 'asks'), (item) => Number(item.price), ['desc']) || [],
-          bids: _.orderBy(_.get(res.data, 'bids'), (item) => Number(item.price), ['desc']) || []
-        }
-
-        result.asks.map((item, index) => {
-          item.type = '1'
-          item.sum = _.sumBy(result.asks.slice(index, result.asks.length), ({ amount = 0 } = {}) => Number(amount))
-        })
-        result.bids.map((item, index) => {
-          item.type = '2'
-          item.sum = _.sumBy(result.bids.slice(0, index + 1), ({ amount = 0 } = {}) => Number(amount))
-        })
-
-        const [asksLast, bidsFirst] = [result.asks[result.asks.length > 8 ? 7 : result.asks.length - 1], result.bids[0]]
-        // const equitablePrice = (Number(_.get(asksLast, 'price')) * Number(_.get(bidsFirst, 'amount'))
-        //   + Number(_.get(bidsFirst, 'price')) * Number(_.get(asksLast, 'amount'))) / (Number(_.get(asksLast, 'amount')) + Number(_.get(bidsFirst, 'amount')))
-        // const showPrec = yield select(({ home: { showPrec } }) => showPrec)
         yield put({
-          type: 'changeState',
+          type: 'updateEnsureRecord',
           payload: {
-            ensure_records: result,
+            result: res.data
           }
         })
         return res
       }
     },
     * getEnsureRecordFromWs({ payload = {} }, { call, put, select }) {
-      const latest_records = yield select(({ home: { latest_records = [] } }) => latest_records) || []
       const ws = wss.getSocket('ws')
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
@@ -194,6 +173,52 @@ export default joinModel(modelExtend, {
       if (repayload) {
         return ws.sendJson(repayload)
       }
+    },
+    * updateEnsureRecord({ payload = {} }, { call, put, select }) {
+      const ensure_records = yield select(({ home: { ensure_records = [] } }) => ensure_records) || {}
+      let { result = {} } = payload
+      let asks = [...(ensure_records.asks ? ensure_records.asks : [])]
+      let bids = [...(ensure_records.bids ? ensure_records.bids : [])]
+      if (_.has(result, 'asks')) {
+        result.asks.map((item = {}) => {
+          const filterOne = _.findIndex(asks, (one = {}) => String(one.price) === String(item.price))
+          if (filterOne !== -1) {
+            asks.splice(filterOne, 1, item)
+          } else {
+            asks.push(item)
+          }
+        })
+      }
+      if (_.has(result, 'bids')) {
+        result.bids.map((item = {}) => {
+          const filterOne = _.findIndex(bids, (one = {}) => String(one.price) === item.price)
+          if (filterOne !== -1) {
+            bids.splice(filterOne, 1, item)
+          } else {
+            bids.push(item)
+          }
+        })
+      }
+
+      result = {
+        asks: _.orderBy(asks, (item) => Number(item.price), ['desc']) || [],
+        bids: _.orderBy(bids, (item) => Number(item.price), ['desc']) || []
+      }
+
+      result.asks.map((item, index) => {
+        item.type = '1'
+        item.sum = _.sumBy(result.asks.slice(index, result.asks.length), ({ amount = 0 } = {}) => Number(amount))
+      })
+      result.bids.map((item, index) => {
+        item.type = '2'
+        item.sum = _.sumBy(result.bids.slice(0, index + 1), ({ amount = 0 } = {}) => Number(amount))
+      })
+      yield put({
+        type: 'changeState',
+        payload: {
+          ensure_records: result,
+        }
+      })
     },
 
     // K线图全量查询
