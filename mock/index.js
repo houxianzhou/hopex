@@ -2,9 +2,6 @@ import { _ } from 'lodash'
 
 import helper from './helper'
 
-
-
-
 const { randomArrayMap, randomStr } = helper
 
 const other = {

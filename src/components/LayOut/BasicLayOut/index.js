@@ -17,35 +17,7 @@ import * as styles from './index.less'
   modelName: 'theme'
 }))
 export default class View extends Component {
-  switchMarket = (value, marketCode) => {
-    const { history, location: { pathname }, dispatch, modelName } = this.props
-    const go = (marketCode) => {
-      history.replace({
-        search: `?marketCode=${marketCode}`,
-      })
-    }
-    if (value && marketCode) {
-      return (
-        <span onClick={() => {
-          go(marketCode)
-        }} >{value}</span >
-      )
-    } else if (value) {
-      if (pathname !== PATH.home) {
-        dispatch({
-          type: `${modelName}/routerGo`,
-          payload: PATH.home
-        })
-      } else {
-        history.replace({
-          search: `?marketCode=${value}`,
-        })
-      }
-    }
-  }
-
   render() {
-    const { switchMarket } = this
     const {
       app, routesBasic
     } = this.props
@@ -58,7 +30,7 @@ export default class View extends Component {
             //switchTheme(theme) ? styles.dark : null
           )
         } >
-          <Header {...this.props} switchMarket={switchMarket} />
+          <Header {...this.props} />
           <Content >
             <Switch >
               <Redirect exact from="/" to='/home' />
@@ -74,7 +46,7 @@ export default class View extends Component {
               }
             </Switch >
           </Content >
-          <Footer {...this.props} switchMarket={switchMarket} />
+          <Footer {...this.props}  />
         </div >
       </Responsive >
     )

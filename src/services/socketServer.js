@@ -113,7 +113,7 @@ mockServer2.onMessage = (e) => {
                   "priceD": 0.0,
                   "price": `${_.random(1, 3)}`,
                   "amount": _.random(10, 100),
-                  "amountShow": "3,506",
+                  "amountShow": `${_.random(10, 100)}`,
                   "exist": 0
                 }
               ],

@@ -17,7 +17,7 @@ export default class View extends Component {
   }
 
   componentDidMount() {
-    // this.startInit()
+    this.startInit()
   }
 
   startInit = () => {
@@ -52,20 +52,17 @@ export default class View extends Component {
     })
   }
 
-  changeState = (payload) => {
-    this.setState(payload)
-  }
-
   render() {
     const { activeLi, personalEnsureHistory, total } = this.state
     const { state, changeState, getHistory } = this
     const {
       noDataTip, calculateTableHeight,
-      modelName, dispatch, switchMarket
+      modelName, dispatch
     } = this.props
     const columns = [
       {
         title: '合约',
+        width:120,
         dataIndex: 'marketName',
         render: (v, record = {}) => (
           {
@@ -76,6 +73,7 @@ export default class View extends Component {
       },
       {
         title: '类型',
+        width: 60,
         dataIndex: 'side',
         render: (value) => value === '1' ? (
           <RedGreenSwitch.RedText value={'卖出'} />
@@ -99,27 +97,22 @@ export default class View extends Component {
       {
         title: '委托价格',
         dataIndex: 'price',
-        //render: (v) => formatNumber(v, 'p')
       },
       {
         title: '成交数量(张)',
         dataIndex: 'dealAmount',
-        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '成交均价',
         dataIndex: 'avgDealMoney',
-        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '平仓盈亏',
         dataIndex: 'unwindProfit',
-        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '手续费',
         dataIndex: 'dealFee',
-        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '委托时间',
@@ -201,9 +194,9 @@ export default class View extends Component {
       },
       containerClassName: styles.paginationcontainerClassName,
       pageClassName: 'paginationpageClassName',
-      activeClassName:'paginationpageActiveClassName',
+      activeClassName: 'paginationpageActiveClassName',
       previousClassName: 'paginationpageClassName',
-      nextClassName:'paginationpageClassName',
+      nextClassName: 'paginationpageClassName',
     }
     return (
       <div
@@ -213,10 +206,13 @@ export default class View extends Component {
           )
         }
       >
+        <ul className={styles.tab}>
+          <li>1</li>
+        </ul>
         <div style={{ height: calculateTableHeight(dataSource) }} >
           <Table {...tableProp} />
-          <PagiNation {...pageProp} />
         </div >
+        <div className={styles.pages} ><PagiNation {...pageProp} /></div >
       </div >
     )
   }

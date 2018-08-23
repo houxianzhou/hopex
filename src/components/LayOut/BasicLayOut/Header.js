@@ -9,6 +9,7 @@ import help from '@assets/help.png'
 import notice from '@assets/notice.png'
 import network from '@assets/network.png'
 import RedGreenSwitch from '@routes/Home/components/RedGreenSwitch'
+import SwitchMarket from '@routes/Components/SwitchMarket'
 import * as styles from './index.less'
 
 @connect(({ home, user, theme, loading, dispatch }) => ({
@@ -23,7 +24,7 @@ import * as styles from './index.less'
 }))
 export default class View extends Component {
   render() {
-    const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } } = {}, theme: { RG } = {}, modelName2, modelName3, dispatch, routesBasic, location: { pathname } = {}, switchMarket } = this.props
+    const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } } = {}, theme: { RG } = {}, modelName2, modelName3, dispatch, routesBasic, location: { pathname } = {} } = this.props
 
     const isLogin = !_.isEmpty(userInfo)
     const sorted = _.groupBy(marketList, (item = {}) => item.sortType) || {}
@@ -75,9 +76,7 @@ export default class View extends Component {
                                     {
                                       sorted[item1].map((item2 = {}, index2) => {
                                         return (
-                                          <li key={index2} onClick={() => {
-                                            switchMarket(item2.marketCode)
-                                          }} >
+                                          <SwitchMarket key={index2} value={item2.marketCode} Ele='li' {...this.props}>
                                             <div className={styles.name} >
                                               {item2.pause ? <div >暂停</div > : null}
                                               {item2.marketName}
@@ -104,7 +103,7 @@ export default class View extends Component {
                                                 )
                                               }
                                             </div >
-                                          </li >
+                                          </SwitchMarket >
                                         )
                                       })
                                     }

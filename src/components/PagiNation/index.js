@@ -4,7 +4,12 @@ import { classNames } from '@utils'
 import * as styles from './index.less'
 
 export default class View extends Component {
+  state = {
+    page: 0
+  }
+
   render() {
+    const { page } = this.state
     const {
       forcePage,
       initialPage = 0,
@@ -23,6 +28,9 @@ export default class View extends Component {
         initialPage={initialPage}
         forcePage={forcePage}
         onPageChange={(e) => {
+          this.setState({
+            page: e.selected
+          })
           onPageChange(e.selected)
         }}
         pageCount={total}
@@ -50,13 +58,14 @@ export default class View extends Component {
           classNames(
             styles.previousClassName,
             previousClassName,
-            initialPage === 0 ? styles.hide : null
+            page === 0 ? styles.hide : null
           )
         }
         nextClassName={
           classNames(
             styles.nextClassName,
             nextClassName,
+            page === total-1 ? styles.hide : null
           )
         }
       />

@@ -14,6 +14,7 @@ import Position from './Position'
 import PersonEnsure from './PersonEnsure'
 import RecentRecord from './RecentRecord'
 import defaultpng from '@assets/default.png'
+import SwitchMarket from '../Components/SwitchMarket'
 import styles from './index.less'
 
 
@@ -150,26 +151,28 @@ export default class View extends Component {
   }
 
   renderView = (name) => {
-    const { theme: { RG, viewPosition, calculateTableHeight }, dispatch, modelName, history } = this.props
+    const { theme: { RG, viewPosition, calculateTableHeight }, dispatch, modelName } = this.props
+
     const props = {
       RG,
       viewPosition,
       calculateTableHeight,
       switchMarket: (value, marketCode) => {
-        const go = (marketCode) => {
-          history.replace({
-            search: `?marketCode=${marketCode}`,
-          })
-        }
-        if (value && marketCode) {
-          return (
-            <span onClick={() => {
-              go(marketCode)
-            }} >{value}</span >
-          )
-        } else if (value) {
-          go(value)
-        }
+        return <SwitchMarket {...this.props} value={value} marketCode={marketCode} />
+        // const go = (marketCode) => {
+        //   history.replace({
+        //     search: `?marketCode=${marketCode}`,
+        //   })
+        // }
+        // if (value && marketCode) {
+        //   return (
+        //     <span onClick={() => {
+        //       go(marketCode)
+        //     }} >{value}</span >
+        //   )
+        // } else if (value) {
+        //   go(value)
+        // }
       },
       openModal: (payload = {}) => {
         dispatch({
