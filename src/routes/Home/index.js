@@ -81,7 +81,6 @@ export default class View extends Component {
 
   getAllMarkets = () => {
     const { dispatch, modelName, model: { marketList = [] }, location: { search } } = this.props
-
     return new Promise((resolve) => {
       setTimeout(() => {
         return dispatch({
@@ -90,21 +89,43 @@ export default class View extends Component {
             search: parsePathSearch(search).marketCode
           }
         }).then((res) => {
+          this.getAllMarketsFromWs()
           resolve()
         })
       }, 500)
     })
+  }
 
-    if (_.isEmpty(marketList)) {
-
-      // return dispatch({
-      //   type: `${modelName}/getAllMarkets`,
-      //   payload: {
-      //     search: parsePathSearch(search).marketCode
-      //   }
-      // })
-    }
-    // return Promise.resolve()
+  getAllMarketsFromWs = () => {
+    const { dispatch, modelName } = this.props
+    const ws = wss.getSocket('ws')
+    ws.onConnectPromise().then(() => {
+      dispatch({
+        type: `${modelName}/getAllMarketDetailsFromWs`,
+      }).then(res => {
+        if (res) {
+          ws.listen({
+            name: 'market.update',
+            subscribe: (e, res) => {
+              if (_.get(res, 'method') === 'market.update') {
+                const result = _.get(res, 'data')
+                dispatch({
+                  type: `${modelName}/updateAllMarketDetails`,
+                  payload: {
+                    result,
+                    request: 'ws'
+                  }
+                })
+              }
+            },
+            unsubscribe: () => {
+            },
+            restart: () => {
+            }
+          })
+        }
+      })
+    })
   }
 
   isLogin = () => {

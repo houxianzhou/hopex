@@ -128,7 +128,7 @@ export default joinModel(modelExtend, {
           latest_records: [
             ...result,
             ...latest_records,
-          ].slice(0,100)
+          ].slice(0, 100)
         }
       })
     },
@@ -350,7 +350,6 @@ export default joinModel(modelExtend, {
       })
     },
 
-
     //K线图增量订阅
     * getKlineAddMore({ payload = {} }, { call, put }) {
       const ws1 = wss.getSocket('ws1')
@@ -503,47 +502,6 @@ export default joinModel(modelExtend, {
       }
     },
 
-    // 合约列表 market.list 废弃
-    * getAllMarkets({ payload = {} }, { call, put }) {
-      const repayload = yield (asyncPayload(yield put({
-        type: 'createRequestParams',
-        payload: {
-          "head": {
-            "method": "market.list"
-          },
-          "param": {},
-        }
-      })))
-      const res = getRes(yield call(getAllMarkets, repayload))
-      if (resOk(res)) {
-        const result = []
-        _.mapKeys((_.get(res, 'data') || {}), (v = [], k = '') => {
-          v.forEach(item => item.sortType = k)
-          result.push(...v)
-        })
-        result.map(item => {
-          item.levelages = formatJson(item.levelages)
-        })
-        if (result) {
-          const { search } = payload
-          const filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
-          yield put({
-            type: 'changeState',
-            payload: {
-              marketList: result
-            }
-          })
-          yield put({
-            type: 'getCurrentMarket',
-            payload: filterOne
-          })
-          return result
-        }
-      } else {
-        return Promise.reject('合约列表获取失败')
-      }
-    },
-
     //合约列表 market.list
     * getAllMarketDetails({ payload = {} }, { call, put }) {
       const repayload = yield (asyncPayload(yield put({
@@ -569,19 +527,58 @@ export default joinModel(modelExtend, {
           const { search } = payload
           const filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
           yield put({
-            type: 'changeState',
+            type: 'updateAllMarketDetails',
             payload: {
-              marketList: result
+              result,
+              filterOne
             }
-          })
-          yield put({
-            type: 'getCurrentMarket',
-            payload: filterOne
           })
           return result
         }
       } else {
         return Promise.reject('合约列表获取失败')
+      }
+    },
+    * getAllMarketDetailsFromWs({ payload = {} }, { call, put }) {
+      const ws = wss.getSocket('ws')
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {
+            "method": "market.subscribe",
+          },
+          param: {}
+        }
+      })))
+      if (repayload) {
+        return ws.sendJson(repayload)
+      }
+    },
+    * updateAllMarketDetails({ payload = {} }, { call, put, select }) {
+      const marketList = yield select(({ home: { marketList = [] } }) => marketList) || {}
+      const { result = [], filterOne } = payload
+      result.map((item = {}) => {
+        const filterOne = _.findIndex(marketList, (one = {}) => String(one.marketCode) === String(item.marketCode))
+        if (filterOne !== -1) {
+          marketList.splice(filterOne, 1, {
+            ...marketList[filterOne],
+            ...item,
+          })
+        } else {
+          marketList.push(item)
+        }
+      })
+      yield put({
+        type: 'changeState',
+        payload: {
+          marketList
+        }
+      })
+      if (filterOne) {
+        yield put({
+          type: 'getCurrentMarket',
+          payload: filterOne
+        })
       }
     },
 

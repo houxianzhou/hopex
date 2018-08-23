@@ -84,12 +84,12 @@ export default class View extends Component {
                                             </div >
                                             <div className={styles.price} >
                                               {
-                                                /[\+]/.test(item2.percent) ? (
+                                                /[\+]/.test(item2.priceLast) ? (
                                                   <RedGreenSwitch.GreenText
-                                                    value={item2.price24h} />
+                                                    value={item2.priceLast} />
                                                 ) : (
                                                   <RedGreenSwitch.RedText
-                                                    value={item2.price24h} />
+                                                    value={item2.priceLast} />
                                                 )
                                               }
                                             </div >

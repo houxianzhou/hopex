@@ -112,19 +112,41 @@ mockServer2.onMessage = (e) => {
                 {
                   "priceD": 0.0,
                   "price": `${_.random(1, 3)}`,
-                  "amount": _.random(10,100),
+                  "amount": _.random(10, 100),
                   "amountShow": "3,506",
                   "exist": 0
                 }
               ],
               "bids": [{
                 "priceD": 0.0,
-                "price": `${_.random(1,3)}`,
-                "amount": _.random(10,100),
+                "price": `${_.random(1, 3)}`,
+                "amount": _.random(10, 100),
                 "amountShow": "3,506",
                 "exist": 0
               }]
             }
+          }
+        )
+      }
+    })
+  } else if (method === 'market.subscribe') {
+    mockServer2.subScribe({
+      name: 'market.update',
+      func: () => {
+        mockServer2.sendJson(
+          {
+            "method": "market.update",
+            "timestamp": 1535020483778,
+            "data": [{
+              "marketCode": "BTCUSDT",
+              "marketName": "BTCUSDT永续",
+              "priceLast": `${_.random(1, 100)}`,
+              "dollarPrice": "$55.09",
+              "totalPrice24h": "0BTC",
+              "pause": false,
+              "percent": `${_.random(1, 100)}%`,
+              "position": false
+            }]
           }
         )
       }
