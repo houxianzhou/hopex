@@ -108,7 +108,7 @@ export const getColumns = (props = {}) => {
       render: (value, record = {}) => {
         return ({
             value: (
-              ['1', '2'].indexOf(record.orderStatus) > 0 ? (
+              ['1', '2'].indexOf(record.orderStatus) !== -1 ? (
                 <span onClick={(e) => {
                   e.stopPropagation()
                   dispatch({

@@ -3,164 +3,88 @@ import { classNames, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin, Button } from '@components'
 import { SCROLLX, TABLE } from '@constants'
 import { getColumns, Tabs } from '@routes/Components/HistoryTable'
-import RedGreenSwitch from './components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
 
 import styles from './index.less'
 
 export default class View extends Component {
   state = {
-    activeLi: 0
+    activeLi: '1'
   }
   startInit = () => {
     // 暂时没有东西
-    this.getHistory('1')
+    this.getHistory()
   }
 
-  getHistory = (type) => {
+  getHistory = () => {
+    const { activeLi } = this.state
     const { dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getHistory`,
       payload: {
-        type
+        type: activeLi
       }
     }).then((res) => {
         if (!this._isMounted) return
-        if (type === '1') {
+        if (activeLi === '1') {
           this.interval = dealInterval(() => {
-            this.getHistory(type)
+            this.getHistory(activeLi)
           })
         }
       }
     )
   }
 
-  changeState = (payload) => {
-    this.setState(payload)
+  changeState = (payload = {}, callback) => {
+    this.setState(payload, () => {
+      _.isFunction(callback) && callback()
+    })
   }
 
   render() {
     const { activeLi } = this.state
-    const { state, changeState, getHistory } = this
+    const { changeState, getHistory } = this
     const {
       model: { personalEnsureHistory = [] }, noDataTip, calculateTableHeight, expandedRowRender,
-      modelName, dispatch, switchMarket
+      modelName, dispatch,
     } = this.props
-    const columns = [
-      {
-        title: '合约',
-        dataIndex: 'marketName',
-        render: (v, record = {}) => (
-          {
-            value: switchMarket(v, record.market),
-            className: 'blue'
-          }
-        )
-      },
-      {
-        title: '类型',
-        dataIndex: 'side',
-        render: (value) => value === '1' ? (
-          <RedGreenSwitch.RedText value={'卖出'} />
-        ) : (
-          <RedGreenSwitch.GreenText value={'买入'} />
-        )
-      },
-      {
-        title: '杠杆倍数',
-        dataIndex: 'leverage',
-      },
-      {
-        title: '数量(张)',
-        dataIndex: 'amount',
-        render: (value, record = {}) => String(record.side) === '1' ? (
-          <RedGreenSwitch.RedText value={value} />
-        ) : (
-          <RedGreenSwitch.GreenText value={value} />
-        )
-      },
-      {
-        title: '委托价格',
-        dataIndex: 'price',
-      },
-      {
-        title: '成交数量(张)',
-        dataIndex: 'dealAmount',
-      },
-      {
-        title: '成交均价',
-        dataIndex: 'avgDealMoney',
-      },
-      {
-        title: '平仓盈亏',
-        dataIndex: 'unwindProfit',
-      },
-      {
-        title: '手续费',
-        dataIndex: 'dealFee',
-      },
-      {
-        title: '委托时间',
-        dataIndex: 'ctime',
-      },
-      {
-        title: '状态',
-        dataIndex: 'orderStatus',
-        width: 130,
-        render: (v) => {
-          let result
-          switch (v) {
-            case '0':
-              result = '未知状态'
-              break
-            case '1':
-              result = '部分成交，已撤销'
-              break
-            case '2':
-              result = '完全成交'
-              break
-            case '3':
-              result = '已撤销'
-          }
-          return result
-        }
-      },
-      {
-        title: '操作',
-        width: 150,
-        dataIndex: 'orderStatus',
-        render: (value, record = {}) => {
-          return ({
-              value: (
-                ['1', '2'].indexOf(record.orderStatus) > 0 ? (
-                  <span onClick={(e) => {
-                    e.stopPropagation()
-                    dispatch({
-                      type: `${modelName}/getPersonEnsureDetail`,
-                      payload: {
-                        type: '1',
-                        market: record.market,
-                        orderId: record.orderId
-                      }
-                    })
-                  }} >
-                    <Button loading={record.loading} layer={false} loadingSize={16} >
-                          成交明细
-                        </Button >
+    const columns = getColumns({
+      ...this.props,
+      columns: [
+        {
+          title: '操作',
+          width: 150,
+          render: (value, record = {}) => {
+            return ({
+                value: (
+                  ['1', '2'].indexOf(record.orderStatus) !== -1 ? (
+                    <span onClick={(e) => {
+                      e.stopPropagation()
+                      dispatch({
+                        type: `${modelName}/getPersonEnsureDetail`,
+                        payload: {
+                          type: '1',
+                          market: record.market,
+                          orderId: record.orderId
+                        }
+                      })
+                    }} >
+                    <Button loading={record.loading} layer={false} loadingSize={16} >成交明细</Button >
                   </span >
-                ) : null
-
-              ),
-              className: 'blue action'
-            }
-          )
+                  ) : null
+                ),
+                className: 'blue action'
+              }
+            )
+          }
         }
-      },
-    ]
+      ]
+    })
+
 
     let dataSource
     switch (activeLi) {
-      case 0:
+      case '1':
         dataSource = personalEnsureHistory
         break
       default:
@@ -198,44 +122,28 @@ export default class View extends Component {
                   styles.recentrecord_tab
                 )} >
                   {
-                    [
-                      {
-                        name: '最近10条委托历史',
-                        // type: '1', 默认为['1','2']
-                      },
-                      {
-                        name: '最近10条交割历史',
-                        type: '3'
-                      },
-                      {
-                        name: '最近10条强平历史',
-                        type: '4'
-                      },
-                      {
-                        name: '最近10条自动减仓历史',
-                        type: '5'
-                      }
-                    ].map((item = {}, index) => {
+                    Tabs.map((item = {}, index) => {
                       return (
                         <li
                           key={index}
                           className={classNames(
                             {
-                              'active': state.activeLi === index
+                              'active': activeLi === item.type
                             }
                           )}
                           onClick={() => {
                             changeState({
-                              activeLi: index
+                              activeLi: item.type
+                            }, () => {
+                              getHistory()
                             })
-                            item.type && getHistory(item.type)
                           }}
                         >{item.name}</li >
                       )
                     })
                   }
                 </ul >
-                <div ><span className='blue'>查看完整历史</span></div >
+                <div ><span className='blue' >查看完整历史</span ></div >
               </div >
             }
           >
