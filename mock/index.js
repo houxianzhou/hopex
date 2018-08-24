@@ -142,7 +142,7 @@ export default {
         "userToken": "56"
       },
       "data": {
-        "asks": randomArrayMap(5).map((item, index) => {
+        "asks": randomArrayMap(15).map((item, index) => {
           const res = _.random(10000, 20000)
           return {
             "exist": ['0', '1'][_.random(0, 1)],
