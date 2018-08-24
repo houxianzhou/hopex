@@ -49,7 +49,7 @@ export default class View extends Component {
       }
     }).then(res => {
       if (res) {
-        // this.getEnsureRecordFromWs()
+        this.getEnsureRecordFromWs()
       }
     })
   }
