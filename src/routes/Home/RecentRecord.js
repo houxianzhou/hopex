@@ -7,7 +7,7 @@ import ScrollPannel from './components/ScrollPanel'
 
 import styles from './index.less'
 
-export default class View extends Component {
+export default class RecentRecord extends Component {
   state = {
     activeLi: '1'
   }

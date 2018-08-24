@@ -191,17 +191,17 @@ export class RenderModal extends Component {
       {
         title: '成交数量(张)',
         dataIndex: 'amount',
-        maxWidth: 200,
+        // maxWidth: 200,
       },
       {
         title: '成交价格',
         dataIndex: 'price',
-        maxWidth: 200,
+        // maxWidth: 200,
       },
       {
         title: '成交时间',
         dataIndex: 'time',
-        maxWidth: 200,
+        // maxWidth: 200,
       },
       {
         title: '手续费',

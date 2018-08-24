@@ -6,7 +6,7 @@ import RedGreenSwitch from './components/RedGreenSwitch'
 import logogray from '@assets/logo4.png'
 import styles from './index.less'
 
-export default class View extends Component {
+export default class Pure extends Component {
   state = {
     currentPurse: 0
   }

@@ -7,7 +7,7 @@ import RedGreenSwitch from './components/RedGreenSwitch'
 import styles from './index.less'
 
 
-export default class View extends Component {
+export default class PersonEnsure extends Component {
   startInit = () => {
     this.getPersonalEnsure()
   }

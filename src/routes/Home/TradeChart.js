@@ -11,7 +11,7 @@ require('echarts/lib/chart/line')
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/title')
 
-export default class View extends Component {
+export default class TradeChart extends Component {
   constructor(props) {
     super(props)
     this.studies = []

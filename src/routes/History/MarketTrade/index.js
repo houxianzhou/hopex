@@ -74,7 +74,7 @@ export default class View extends Component {
     const { changeState, getHistory } = this
     const {
       modal: { name, data }, openModal,
-      noDataTip, calculateTableHeight,
+      calculateTableHeight,
     } = this.props
     const columns = getColumns({
       ...this.props,

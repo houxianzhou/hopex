@@ -7,9 +7,17 @@ import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
 
-export default class View extends Component {
+export default class BuySell extends Component {
   startInit = () => {
     this.getAllDetail()
+  }
+
+  changeState = (payload, callback) => {
+    if (this._isMounted) {
+      this.setState(payload, () => {
+        _.isFunction(callback) && callback()
+      })
+    }
   }
 
   getAllDetail = () => {
@@ -112,12 +120,6 @@ export default class View extends Component {
   isLimitPrice = () => {
     const { orderChannel } = this.state
     return orderChannel === 0
-  }
-
-  changeState = (payload, callback) => {
-    this.setState(payload, () => {
-      _.isFunction(callback) && callback()
-    })
   }
 
   renderInputItem = (config = {}) => {

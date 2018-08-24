@@ -12,7 +12,7 @@ import styles from './index.less'
 
 let max = null
 
-export default class View extends Component {
+export default class EnsureRecord extends Component {
   state = {
     dis: ''
   }

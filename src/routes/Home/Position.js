@@ -11,7 +11,7 @@ import MainModal from './components/MainModal'
 import styles from './index.less'
 
 
-export default class View extends Component {
+export default class Position extends Component {
   state = {
     active: 0
   }

@@ -28,7 +28,7 @@ function Color(Props) {
   )
 }
 
-export default class View extends Component {
+export default class LatestRecord extends Component {
   startInit = () => {
     this.getLatestRecord()
   }
