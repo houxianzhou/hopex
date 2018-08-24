@@ -130,6 +130,7 @@ export default class View extends Component {
                           type: `${modelName}/getPersonEnsureDetail`,
                           payload: {
                             type: '0',
+                            side: record.side,
                             market: record.market,
                             orderId: record.orderId
                           }
@@ -182,9 +183,9 @@ export default class View extends Component {
           <ScrollPannel
             tableHeight={calculateTableHeight(dataSource)}
             header={
-              <div className={styles.header}>
-                <div>活跃委托</div>
-                <div >* 委托有效期7天</div>
+              <div className={styles.header} >
+                <div >活跃委托</div >
+                <div >* 委托有效期7天</div >
               </div >
             }
           >

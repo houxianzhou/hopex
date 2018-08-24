@@ -4,7 +4,7 @@ import close from '@assets/close.png'
 import * as styles from './MainModal.less'
 
 export default function (Props) {
-  const { children, title, dispatch, modelName, className, modalProps = {} } = Props
+  const { children, title, dispatch, modelName, className, modalProps = {}, } = Props
   return (
     <Modal {...modalProps}>
       <div className={
@@ -13,7 +13,7 @@ export default function (Props) {
           className
         )
       } >
-        <div className='header' >
+        <div className='header'>
           {title}
           <div
             className='close'

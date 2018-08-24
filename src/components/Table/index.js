@@ -29,9 +29,13 @@ const [Table, Thead, Tbody, Tr, Th, Td] = [
 ]
 
 export default class Table1 extends Component {
-  state = {
-    x: 0,
-    loading: false
+  constructor(props) {
+    super(props)
+    this._isMount = true
+    this.state = {
+      x: 0,
+      loading: false
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -43,16 +47,19 @@ export default class Table1 extends Component {
   }
 
   componentWillUnmount() {
+    this._isMount = false
     clearIntervals([this.interval, this.interval1, this.interval2])
     window.onresize = null
   }
 
   changeState = (payload) => {
-    this.setState(payload)
-    clearTimeout(this.interval1)
-    this.interval1 = setTimeout(() => {
-      this.scroller && this.scroller.refresh()
-    }, 10)
+    if (this._isMount) {
+      this.setState(payload)
+      clearTimeout(this.interval1)
+      this.interval1 = setTimeout(() => {
+        this.scroller && this.scroller.refresh()
+      }, 10)
+    }
   }
 
   getScroller = (scroller) => {

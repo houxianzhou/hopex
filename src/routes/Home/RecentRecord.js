@@ -64,6 +64,7 @@ export default class View extends Component {
                         type: `${modelName}/getPersonEnsureDetail`,
                         payload: {
                           type: '1',
+                          side: record.side,
                           market: record.market,
                           orderId: record.orderId
                         }

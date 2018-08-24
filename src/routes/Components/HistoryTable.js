@@ -1,7 +1,10 @@
+import React, { Component } from 'react'
 import RedGreenSwitch from '@routes/Home/components/RedGreenSwitch'
-import { Button } from '@components'
-import { _ } from '@utils'
+import MainModal from '@routes/Home/components/MainModal'
+import { Button, Table } from '@components'
+import { _, classNames } from '@utils'
 import SwitchMarket from '../Components/SwitchMarket'
+import * as styles from './HistoryTable.less'
 
 export const Tabs = [
   {
@@ -145,4 +148,74 @@ export const getColumns = (props = {}) => {
     }
   })
   return cols
+}
+
+export class RenderModal extends Component {
+  render() {
+    const { className } = this.props
+    const props = {
+      ...this.props,
+      title: '持仓占用保证金',
+      modalProps: {
+        style: {
+          width: 1000
+        }
+      },
+      className: styles.dealDetail
+    }
+
+    const columns = [
+      {
+        title: '成交数量(张)',
+        dataIndex: 'amount',
+        maxWidth: 200,
+      },
+      {
+        title: '成交价格',
+        dataIndex: 'price',
+        maxWidth: 200,
+      },
+      {
+        title: '成交时间',
+        dataIndex: 'time',
+        maxWidth: 200,
+      },
+      {
+        title: '手续费',
+        dataIndex: 'fee',
+      },
+    ]
+
+    const dataSource = (new Array(28)).fill().map(item => (
+      {
+        "market": "BTCUSDT",
+        "time": "2018-08-24 15:26:15",
+        "role": "2",
+        "price": "6600.0",
+        "amount": "14",
+        "fee": "0.0000BTC"
+      }
+    ))
+
+    const tableProps = {
+      className: classNames(
+        styles.tableContainer,
+        className
+      ),
+      columns,
+      dataSource,
+      scroll: {
+        mouseWheel: true,
+        scrollY: true
+      },
+    }
+
+    return (
+      <MainModal {...props}>
+        <div className={styles.tablecr} >
+          <Table {...tableProps} />
+        </div >
+      </MainModal >
+    )
+  }
 }

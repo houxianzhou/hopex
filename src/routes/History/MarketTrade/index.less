@@ -62,3 +62,37 @@
     }
   }
 }
+
+.detailModal {
+  :global {
+    .table {
+      :global {
+        .tr {
+          padding-left: 40px;
+          color: #232833;
+        }
+        .thead {
+          .tr {
+            height: @header2;
+          }
+          font-size: 12px;
+        }
+        .tbody {
+          font-size: 13px;
+          .tr {
+            height: @header2;
+            &:hover {
+              background: #eff1f3 !important;
+            }
+            &.even {
+              background: white;
+            }
+            &.odd {
+              background: #F6F8FA;
+            }
+          }
+        }
+      }
+    }
+  }
+}

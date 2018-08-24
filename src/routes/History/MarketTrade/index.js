@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { classNames, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin, Button, PagiNation } from '@components'
 import { SCROLLX, TABLE } from '@constants'
-import { getColumns, Tabs } from '@routes/Components/HistoryTable'
-import MainModal from '@routes/Home/components/MainModal'
+import { getColumns, Tabs, RenderModal } from '@routes/Components/HistoryTable'
+
 
 import styles from './index.less'
 
@@ -191,26 +191,11 @@ export default class View extends Component {
           <PagiNation {...pageProp} />
         </div >
         {
-          name === 'dealDetail' ? (<RenderModal {...this.props}  />) : null
+          name === 'dealDetail' ? (<RenderModal {...this.props} className={styles.detailModal} />) : null
         }
       </div >
     )
   }
 }
 
-class RenderModal extends Component {
-
-  render() {
-    const props = {
-      ...this.props,
-      title: '持仓占用保证金'
-    }
-
-    return (
-      <MainModal {...props} >
-        <div >ahhahahah</div >
-      </MainModal >
-    )
-  }
-}
 
