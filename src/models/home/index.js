@@ -203,8 +203,8 @@ export default joinModel(modelExtend, {
       const remove = (result) => _.remove(result, (item = {}) => Number(item.amount) !== 0)
 
       result = {
-        asks: _.orderBy(remove(asks), ['desc']) || [],
-        bids: _.orderBy(remove(bids), ['desc']) || []
+        asks: _.orderBy(remove(asks), (item) => Number(item.price), ['desc']) || [],
+        bids: _.orderBy(remove(bids), (item) => Number(item.price), ['desc']) || []
       }
 
       result.asks.map((item, index) => {
