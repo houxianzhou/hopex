@@ -3,14 +3,14 @@ import { connect } from 'dva'
 import { NavPannel } from '@components'
 import { default as MarketTrade } from './MarketTrade'
 
-
 const Comp = {
   MarketTrade
 }
-@connect(({ home, theme, history: model, loading, dispatch }) => ({
+@connect(({ home, theme, modal, history: model, loading, dispatch }) => ({
   model,
   home,
   theme,
+  modal,
   modelName: 'history',
   modelName1: 'home',
   dispatch

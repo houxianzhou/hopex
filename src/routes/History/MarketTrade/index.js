@@ -3,6 +3,7 @@ import { classNames, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin, Button, PagiNation } from '@components'
 import { SCROLLX, TABLE } from '@constants'
 import { getColumns, Tabs } from '@routes/Components/HistoryTable'
+import MainModal from '@routes/Home/components/MainModal'
 
 import styles from './index.less'
 
@@ -69,6 +70,7 @@ export default class View extends Component {
     } = this.state
     const { changeState, getHistory } = this
     const {
+      modal: { name },
       noDataTip, calculateTableHeight,
       modelName, dispatch
     } = this.props
@@ -86,6 +88,28 @@ export default class View extends Component {
         {
           title: '委托时间',
           width: 180
+        },
+        {
+          title: '操作',
+          dataIndex: 'orderStatus',
+          render: (value, record = {}) => {
+            return ({
+                value: (
+                  ['1', '2'].indexOf(record.orderStatus) !== -1 ? (
+                    <span onClick={(e) => {
+                      e.stopPropagation()
+                    }} >
+                    <Button loading={record.loading} layer={false} loadingSize={16} >
+                          成交明细
+                        </Button >
+                  </span >
+                  ) : null
+
+                ),
+                className: 'blue action'
+              }
+            )
+          }
         },
       ]
     })
@@ -136,9 +160,9 @@ export default class View extends Component {
           )
         }
       >
-        <div className={styles.top}>
-          <div className={styles.title}>合约交易历史</div >
-          <div className={styles.desc}><span >*</span >为保证系统性能，只保留最近60天的历史记录</div >
+        <div className={styles.top} >
+          <div className={styles.title} >合约交易历史</div >
+          <div className={styles.desc} ><span >*</span >为保证系统性能，只保留最近60天的历史记录</div >
         </div >
         <ul className={classNames(
           styles.tab,
@@ -166,7 +190,26 @@ export default class View extends Component {
         <div className={styles.pages} >
           <PagiNation {...pageProp} />
         </div >
+        {
+          name === 'dealDetail' ? (<RenderModal {...this.props}  />) : null
+        }
       </div >
+    )
+  }
+}
+
+class RenderModal extends Component {
+
+  render() {
+    const props = {
+      ...this.props,
+      title: '持仓占用保证金'
+    }
+
+    return (
+      <MainModal {...props} >
+        <div >ahhahahah</div >
+      </MainModal >
     )
   }
 }

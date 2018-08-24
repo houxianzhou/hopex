@@ -4,9 +4,9 @@ import close from '@assets/close.png'
 import * as styles from './MainModal.less'
 
 export default function (Props) {
-  const { children, title, dispatch, modelName, className } = Props
+  const { children, title, dispatch, modelName, className, modalProps = {} } = Props
   return (
-    <Modal >
+    <Modal {...modalProps}>
       <div className={
         classNames(
           styles.mainmodal,
