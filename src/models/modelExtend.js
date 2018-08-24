@@ -49,10 +49,10 @@ export default {
           result = reset(['param', 'marketCode'], String(marketCode))
           result = reset(['param', 'lang'], String(lang))
         }
-       // 单独的一套规则
+        // 单独的一套规则
         if (_.has(payload, 'param1')) {
-          result = reset(['param1','market'], String(marketCode))
-          result = reset(['param1','lang'], String(lang))
+          result = reset(['param1', 'market'], String(marketCode))
+          result = reset(['param1', 'lang'], String(lang))
         }
 
         result = result.map((value) => {
@@ -67,11 +67,12 @@ export default {
       // 未启用
     },
     * openModal({ payload = {} }, { call, put, select }) {
-      const { name } = payload
+      const { name, data } = payload
       yield put({
         type: 'modal/changeState',
         payload: {
           name,
+          data,
           state: true
         }
       })
@@ -81,6 +82,7 @@ export default {
         type: 'modal/changeState',
         payload: {
           name: '',
+          data: null,
           state: false
         }
       })

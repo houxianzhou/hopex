@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
+import { connect } from 'dva'
 import { classNames, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin, Button, PagiNation } from '@components'
 import { SCROLLX, TABLE } from '@constants'
 import { getColumns, Tabs, RenderModal } from '@routes/Components/HistoryTable'
 
-
 import styles from './index.less'
 
+@connect(({ modal }) => ({
+  modal
+}))
 export default class View extends Component {
   state = {
     activeLi: '1',
@@ -70,9 +73,8 @@ export default class View extends Component {
     } = this.state
     const { changeState, getHistory } = this
     const {
-      modal: { name },
+      modal: { name, data }, openModal,
       noDataTip, calculateTableHeight,
-      modelName, dispatch
     } = this.props
     const columns = getColumns({
       ...this.props,
@@ -97,14 +99,14 @@ export default class View extends Component {
                 value: (
                   ['1', '2'].indexOf(record.orderStatus) !== -1 ? (
                     <span onClick={(e) => {
-                      e.stopPropagation()
+                      openModal({
+                        name: 'dealDetail',
+                        data: record
+                      })
                     }} >
-                    <Button loading={record.loading} layer={false} loadingSize={16} >
-                          成交明细
-                        </Button >
+                   成交明细
                   </span >
                   ) : null
-
                 ),
                 className: 'blue action'
               }
@@ -152,6 +154,7 @@ export default class View extends Component {
       previousClassName: 'paginationpageClassName',
       nextClassName: 'paginationpageClassName',
     }
+
     return (
       <div
         className={
@@ -182,7 +185,6 @@ export default class View extends Component {
               }} >{item.name}</li >
             ))
           }
-
         </ul >
         <div style={{ height: calculateTableHeight(dataSource) }} >
           <Table {...tableProp} />
@@ -191,7 +193,7 @@ export default class View extends Component {
           <PagiNation {...pageProp} />
         </div >
         {
-          name === 'dealDetail' ? (<RenderModal {...this.props} className={styles.detailModal} />) : null
+          name === 'dealDetail' ? (<RenderModal {...this.props} data={data} className={styles.detailModal} />) : null
         }
       </div >
     )

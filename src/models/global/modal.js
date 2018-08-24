@@ -4,6 +4,7 @@ import modelExtend from '@models/modelExtend'
 export default joinModel(modelExtend, {
   namespace: 'modal',
   state: {
+    data: null,
     name: '',
     state: false,
   },

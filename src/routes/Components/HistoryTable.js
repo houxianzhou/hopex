@@ -150,7 +150,30 @@ export const getColumns = (props = {}) => {
   return cols
 }
 
+
 export class RenderModal extends Component {
+  state = {
+    dataSource: []
+  }
+
+  componentDidMount() {
+    const { dispatch, data: record = {} } = this.props
+    dispatch({
+      type: `home/getOrderDetail`,
+      payload: {
+        side: record.side,
+        market: record.market,
+        orderId: record.orderId
+      }
+    }).then(res => {
+      if (res) {
+        this.setState({
+          dataSource: res
+        })
+      }
+    })
+  }
+
   render() {
     const { className } = this.props
     const props = {
@@ -186,16 +209,7 @@ export class RenderModal extends Component {
       },
     ]
 
-    const dataSource = (new Array(28)).fill().map(item => (
-      {
-        "market": "BTCUSDT",
-        "time": "2018-08-24 15:26:15",
-        "role": "2",
-        "price": "6600.0",
-        "amount": "14",
-        "fee": "0.0000BTC"
-      }
-    ))
+    const dataSource = this.state.dataSource
 
     const tableProps = {
       className: classNames(

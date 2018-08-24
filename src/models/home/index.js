@@ -891,6 +891,33 @@ export default joinModel(modelExtend, {
         }
       }
     },
+    * getOrderDetail({ payload = {} }, { call, put,}) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {
+            "method": "order.deals",
+          },
+          "param": {
+            ...payload,
+            pageIndex: '0',
+            pageSize: '100'
+          },
+          power: [1],
+          powerMsg: '查看订单明细'
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getPersonEnsureDetail, repayload))
+        if (resOk(res)) {
+          const result = _.get(res, 'data.records')
+          if (result) {
+            return result
+          }
+        }
+      }
+    },
+
 
     //最近10条委托历史
     * getHistory({ payload = {} }, { call, put, select }) {
