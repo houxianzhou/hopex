@@ -1,6 +1,7 @@
 import RedGreenSwitch from '@routes/Home/components/RedGreenSwitch'
 import { Button } from '@components'
 import { _ } from '@utils'
+import SwitchMarket from '../Components/SwitchMarket'
 
 export const Tabs = [
   {
@@ -27,9 +28,9 @@ export const getColumns = (props = {}) => {
     {
       title: '合约',
       dataIndex: 'marketName',
-      render: (v, record = {}) => (
+      render: (value, record) => (
         {
-          value: v,
+          value: <SwitchMarket value={value} marketCode={record.market} {...props} />,
           className: 'blue'
         }
       )

@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { classNames, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin, Button } from '@components'
 import { SCROLLX, TABLE } from '@constants'
+import { getColumns, Tabs } from '@routes/Components/HistoryTable'
 import RedGreenSwitch from './components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
+
 import styles from './index.less'
 
 export default class View extends Component {
@@ -80,27 +82,22 @@ export default class View extends Component {
       {
         title: '委托价格',
         dataIndex: 'price',
-        //render: (v) => formatNumber(v, 'p')
       },
       {
         title: '成交数量(张)',
         dataIndex: 'dealAmount',
-        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '成交均价',
         dataIndex: 'avgDealMoney',
-        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '平仓盈亏',
         dataIndex: 'unwindProfit',
-        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '手续费',
         dataIndex: 'dealFee',
-        // render: (v) => formatNumber(v, 'p')
       },
       {
         title: '委托时间',

@@ -159,20 +159,6 @@ export default class View extends Component {
       calculateTableHeight,
       switchMarket: (value, marketCode) => {
         return <SwitchMarket {...this.props} value={value} marketCode={marketCode} />
-        // const go = (marketCode) => {
-        //   history.replace({
-        //     search: `?marketCode=${marketCode}`,
-        //   })
-        // }
-        // if (value && marketCode) {
-        //   return (
-        //     <span onClick={() => {
-        //       go(marketCode)
-        //     }} >{value}</span >
-        //   )
-        // } else if (value) {
-        //   go(value)
-        // }
       },
       openModal: (payload = {}) => {
         dispatch({

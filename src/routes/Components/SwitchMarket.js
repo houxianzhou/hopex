@@ -15,29 +15,27 @@ export default class View extends Component {
     })
   }
   switchMarket = (value) => {
-    const { history, location: { pathname }, dispatch, modelName } = this.props
+    const { location: { pathname }, dispatch, modelName } = this.props
     if (pathname !== PATH.home) {
       dispatch({
         type: `${modelName}/routerGo`,
         payload: PATH.home
       })
     } else {
-      history.replace({
-        search: `?marketCode=${value}`,
-      })
+      this.go(value)
     }
   }
 
   render() {
-    const { go, switchMarket } = this
+    const { switchMarket } = this
     const { value, marketCode, children, Ele = 'span' } = this.props
     return (
       value && marketCode ? (
         <span onClick={() => {
-          go(marketCode)
+          switchMarket(marketCode)
         }} >{value}</span >
       ) : <Ele onClick={() => {
-        switchMarket(value)
+        switchMarket(value) //此时value就是marketCode
       }} >{children}</Ele >
     )
   }
