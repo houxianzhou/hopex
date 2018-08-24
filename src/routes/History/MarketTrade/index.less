@@ -2,8 +2,32 @@
 
 .marketTradeHistory {
   padding: 40px;
-  .pages{
+
+  .top {
+    .title {
+      color: @c_active_yellow;
+      font-size: 18px;
+    }
+    .desc {
+      span {
+        margin-right: 6px;
+        color: @_red;
+      }
+      color: #999999;
+      margin: 12px 0 50px 0;
+    }
+  }
+  .pages {
     margin-top: 20px;
+  }
+  .markettradetabs {
+    height: 40px;
+    li {
+      color: #999999;
+    }
+    li + li {
+      margin-left: 70px;
+    }
   }
   :global {
     .table {

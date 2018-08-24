@@ -142,7 +142,7 @@ export default {
         "userToken": "56"
       },
       "data": {
-        "asks": randomArrayMap(1).map((item, index) => {
+        "asks": randomArrayMap(5).map((item, index) => {
           const res = _.random(10000, 20000)
           return {
             "exist": ['0', '1'][_.random(0, 1)],
@@ -625,8 +625,10 @@ export default {
 
   //最近委托历史
   'Post /mock/api/v1/trade/user.order_history': (req, res) => {
-    const { pageIndex, pageSize = 10 } = req.body.param
-    const records = (new Array(pageIndex ? 100 : 3)).fill().map((item, index) => (
+    const { pageIndex, pageSize = 10, typeList = [] } = req.body.param
+    const type = typeList[0]
+    const total = Number(type) * 20
+    const records = (new Array(pageIndex ? total : 3)).fill().map((item, index) => (
       {
         "ctime": "2018-08-09 17:06:27",
         "ftime": "2018-08-09 17:06:46",

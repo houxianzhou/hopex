@@ -4,15 +4,10 @@ import { classNames } from '@utils'
 import * as styles from './index.less'
 
 export default class View extends Component {
-  state = {
-    page: 0
-  }
-
   render() {
-    const { page } = this.state
     const {
-      forcePage,
-      initialPage = 0,
+      currentPage = 0,
+      // initialPage = 0,
       onPageChange,
       total = 20,
       previousLabel = '<',
@@ -24,51 +19,50 @@ export default class View extends Component {
       nextClassName
     } = this.props
     return (
-      <ReactPaginate
-        initialPage={initialPage}
-        forcePage={forcePage}
-        onPageChange={(e) => {
-          this.setState({
-            page: e.selected
-          })
-          onPageChange(e.selected)
-        }}
-        pageCount={total}
-        previousLabel={previousLabel}
-        nextLabel={nextLabel}
-        containerClassName={
-          classNames(
-            styles.container,
-            containerClassName,
-          )
-        }
-        pageClassName={
-          classNames(
-            styles.pageClassName,
-            pageClassName,
-          )
-        }
-        activeClassName={
-          classNames(
-            styles.activeClassName,
-            activeClassName,
-          )
-        }
-        previousClassName={
-          classNames(
-            styles.previousClassName,
-            previousClassName,
-            page === 0 ? styles.hide : null
-          )
-        }
-        nextClassName={
-          classNames(
-            styles.nextClassName,
-            nextClassName,
-            page === total-1 ? styles.hide : null
-          )
-        }
-      />
+      total ? (
+        <ReactPaginate
+          // initialPage={initialPage}
+          forcePage={currentPage}
+          onPageChange={(e) => {
+            onPageChange(e.selected)
+          }}
+          pageCount={total}
+          previousLabel={previousLabel}
+          nextLabel={nextLabel}
+          containerClassName={
+            classNames(
+              styles.container,
+              containerClassName,
+            )
+          }
+          pageClassName={
+            classNames(
+              styles.pageClassName,
+              pageClassName,
+            )
+          }
+          activeClassName={
+            classNames(
+              styles.activeClassName,
+              activeClassName,
+            )
+          }
+          previousClassName={
+            classNames(
+              styles.previousClassName,
+              previousClassName,
+              currentPage === 0 ? styles.hide : null
+            )
+          }
+          nextClassName={
+            classNames(
+              styles.nextClassName,
+              nextClassName,
+              currentPage === total - 1 ? styles.hide : null
+            )
+          }
+        />
+      ) : null
     )
   }
 }

@@ -904,15 +904,15 @@ export default joinModel(modelExtend, {
         }
           break
         case '3': {
-          historyType = ['3'] //强平单
-          historyList = 'highlevelHistory'
-          prev = yield select(({ home: { highlevelHistory = [] } }) => highlevelHistory)
+          historyType = ['3'] //交割单
+          historyList = 'deliveryHistory'
+          prev = yield select(({ home: { deliveryHistory = [] } }) => deliveryHistory)
         }
           break
         case '4': {
-          historyType = ['4'] //交割单
-          historyList = 'deliveryHistory'
-          prev = yield select(({ home: { deliveryHistory = [] } }) => deliveryHistory)
+          historyType = ['4'] //强平单
+          historyList = 'highlevelHistory'
+          prev = yield select(({ home: { highlevelHistory = [] } }) => highlevelHistory)
         }
           break
         case '5': {
