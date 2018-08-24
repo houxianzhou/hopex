@@ -171,7 +171,7 @@ export default class View extends Component {
     const tableTopProps = {
       ...tableProps,
       // dataSource: dataTop.slice(dataTop.length-8,dataTop.length),
-       dataSource: (new Array((8 - dataTop.length) > 0 ? (8 - dataTop.length) : 0)).fill().concat(dataTop.slice(dataTop.length-8,dataTop.length)),
+      dataSource: (new Array((8 - dataTop.length) > 0 ? (8 - dataTop.length) : 0)).fill().concat(dataTop.slice(Math.max(dataTop.length - 8, 0), dataTop.length)),
       onClickRow
     }
 
