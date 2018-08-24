@@ -49,7 +49,8 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    // this.startKline()
+    this.startKline()
+    this.startKlineDetail()
     this.startKlineDetailWs()
   }
 

@@ -12,7 +12,7 @@ export default class View extends Component {
   }
   startInit = () => {
     // 暂时没有东西
-    // this.getHistory('1')
+    this.getHistory('1')
   }
 
   getHistory = (type) => {
