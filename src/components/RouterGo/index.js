@@ -1,13 +1,31 @@
 import React, { Component } from 'react'
+import { connect } from 'dva'
 import { PATH } from '@constants'
 
-// @connect(({ theme: model, loading, dispatch }) => ({
-//   model,
-//   modelName: 'theme',
-//   loading,
-//   dispatch,
-// }))
-export default class View extends Component {
+@connect(({ theme: model, loading, dispatch,}) => ({
+  model,
+  modelName: 'theme',
+  loading,
+  dispatch,
+}))
+class SwitchRoute extends Component {
+  render() {
+    const { children, Ele = 'span', dispatch, modelName, value } = this.props
+    return (
+      <Ele onClick={() => {
+        dispatch(
+          {
+            type: `${modelName}/routerGo`,
+            payload: value
+          }
+        )
+      }} >{children}</Ele >
+    )
+  }
+}
+
+
+class SwitchMarket extends Component {
   go = (marketCode) => {
     const { history } = this.props
     history.replace({
@@ -39,6 +57,11 @@ export default class View extends Component {
       }} >{children}</Ele >
     )
   }
+}
+
+export default {
+  SwitchRoute,
+  SwitchMarket
 }
 
 

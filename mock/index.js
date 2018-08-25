@@ -479,7 +479,9 @@ export default delay({
 
   // 设置杠杆
   'Post /mock/api/v1/trade/market.leverage_set': (req, res) => {
-    res.send({ "ret": "6", "errCode": "6", "errStr": "user trade amount not zero" })
+    res.send({ "errCode": "0",
+      "errStr": "success",
+      "ret": "0"})
   },
 
   //k线图

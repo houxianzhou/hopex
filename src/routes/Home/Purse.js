@@ -139,14 +139,12 @@ export default class Pure extends Component {
                     <div className={styles.top} ><img src={logogray} /></div >
                     <div className={styles.center} >欢迎来到Hopex</div >
                     <div className={styles.down} >
-                      <div onClick={() => {
-                        routerGoLogin()
-                      }} >登录
+                      <div >
+                        {routerGoLogin('登录')}
                       </div >
                       <div className={styles.or} >或</div >
-                      <div onClick={() => {
-                        routerGoRegister()
-                      }} >注册
+                      <div >
+                        {routerGoRegister('注册')}
                       </div >
                     </div >
                   </div >

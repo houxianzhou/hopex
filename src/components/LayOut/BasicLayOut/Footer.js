@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
+import { RouterGo } from '@components'
 import logo3 from '@assets/logo3.png'
 import facebook from '@assets/Facebook.png'
 import ins from '@assets/ins.png'
 import telegram from '@assets/telegram.png'
 import twitter from '@assets/Twitter.png'
-import SwitchMarket from '@routes/Components/SwitchMarket'
 import { classNames, _ } from '@utils'
 
 import * as styles from './index.less'
@@ -20,7 +20,7 @@ import * as styles from './index.less'
 }))
 export default class View extends Component {
   render() {
-    const { home: { marketList = [] } = {},  } = this.props
+    const { home: { marketList = [] } = {}, } = this.props
 
     return (
       <div className={styles.footer} >
@@ -52,9 +52,9 @@ export default class View extends Component {
               <ul >
                 {
                   marketList.slice(0, 4).map((item, index) => (
-                    <SwitchMarket key={index} value={item.marketCode} Ele='li' {...this.props}>
+                    <RouterGo.SwitchMarket key={index} value={item.marketCode} Ele='li' {...this.props}>
                       {item.marketName}
-                    </SwitchMarket>
+                    </RouterGo.SwitchMarket >
                   ))
                 }
               </ul >

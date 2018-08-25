@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { Mixin, ShowJsonTip, Toast, Table } from '@components'
-import { isEqual, _, parsePathSearch, localSave } from '@utils'
+import { Mixin, ShowJsonTip, Table, RouterGo } from '@components'
+import { isEqual, _, parsePathSearch, } from '@utils'
 import { PATH } from '@constants'
 import wss from '@services/SocketClient'
 import LatestRecord from './LatestRecord'
@@ -14,7 +14,6 @@ import Position from './Position'
 import PersonEnsure from './PersonEnsure'
 import RecentRecord from './RecentRecord'
 import defaultpng from '@assets/default.png'
-import SwitchMarket from '../Components/SwitchMarket'
 import styles from './index.less'
 
 
@@ -134,20 +133,12 @@ export default class View extends Component {
     return !_.isEmpty(userInfo)
   }
 
-  routerGoLogin = () => {
-    const { dispatch, modelName } = this.props
-    dispatch({
-      type: `${modelName}/routerGo`,
-      payload: PATH.login
-    })
+  routerGoLogin = (value) => {
+    return <RouterGo.SwitchRoute value={PATH.login} >{value}</RouterGo.SwitchRoute >
   }
 
-  routerGoRegister = () => {
-    const { dispatch, modelName } = this.props
-    dispatch({
-      type: `${modelName}/routerGo`,
-      payload: PATH.register
-    })
+  routerGoRegister = (value) => {
+    return <RouterGo.SwitchRoute value={PATH.register} >{value}</RouterGo.SwitchRoute >
   }
 
   renderView = (name) => {
@@ -158,7 +149,7 @@ export default class View extends Component {
       viewPosition,
       calculateTableHeight,
       switchMarket: (value, marketCode) => {
-        return <SwitchMarket {...this.props} value={value} marketCode={marketCode} />
+        return <RouterGo.SwitchMarket {...this.props} value={value} marketCode={marketCode} />
       },
       openModal: (payload = {}) => {
         dispatch({

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { classNames, _, } from '@utils'
-import { Table, PagiNation } from '@components'
+import { Table, PagiNation, Mixin } from '@components'
 import { getColumns, Tabs, RenderModal } from '@routes/Components/HistoryTable'
 
 import styles from './index.less'
@@ -31,12 +31,6 @@ export default class View extends Component {
   startInit = () => {
     // 暂时没有东西
     this.getHistory()
-  }
-
-  changeState = (payload = {}, callback) => {
-    this.setState(payload, () => {
-      _.isFunction(callback) && callback()
-    })
   }
 
   getHistory = () => {
@@ -157,52 +151,54 @@ export default class View extends Component {
     }
 
     return (
-      <div
-        className={
-          classNames(
-            styles.marketTradeHistory
-          )
-        }
-      >
-        <div className={styles.top} >
-          <div className={styles.title} >合约交易历史</div >
-          <div className={styles.desc} ><span >*</span >为保证系统性能，只保留最近60天的历史记录</div >
-        </div >
-        <ul className={classNames(
-          styles.tab,
-          styles.markettradetabs,
-        )} >
-          {
-            Tabs.map((item, index) => (
-              <li key={index} className={classNames(
-                activeLi === item.type ? 'active' : null
-              )} onClick={() => {
-                changeState({
-                  currentPage: 0,
-                  activeLi: item.type
-                }, () => {
-                  getHistory()
-                })
-              }} >{item.name}</li >
-            ))
+      <Mixin.Child that={this} >
+        <div
+          className={
+            classNames(
+              styles.marketTradeHistory
+            )
           }
-        </ul >
-        <div style={{ height: calculateTableHeight(dataSource) }} >
-          <Table {...tableProp} />
+        >
+          <div className={styles.top} >
+            <div className={styles.title} >合约交易历史</div >
+            <div className={styles.desc} ><span >*</span >为保证系统性能，只保留最近60天的历史记录</div >
+          </div >
+          <ul className={classNames(
+            styles.tab,
+            styles.markettradetabs,
+          )} >
+            {
+              Tabs.map((item, index) => (
+                <li key={index} className={classNames(
+                  activeLi === item.type ? 'active' : null
+                )} onClick={() => {
+                  changeState({
+                    currentPage: 0,
+                    activeLi: item.type
+                  }, () => {
+                    getHistory()
+                  })
+                }} >{item.name}</li >
+              ))
+            }
+          </ul >
+          <div style={{ height: calculateTableHeight(dataSource) }} >
+            <Table {...tableProp} />
+          </div >
+          <div className={styles.pages} >
+            <PagiNation {...pageProp} />
+          </div >
+          {
+            name === 'dealDetail' ? (<RenderModal
+              {...this.props}
+              data={data}
+              loading={loading.effects[`${modelName1}/getOrderDetail`]}
+              className={styles.detailModal}
+              style={{ background: '#F6F8FA' }}
+            />) : null
+          }
         </div >
-        <div className={styles.pages} >
-          <PagiNation {...pageProp} />
-        </div >
-        {
-          name === 'dealDetail' ? (<RenderModal
-            {...this.props}
-            data={data}
-            loading={loading.effects[`${modelName1}/getOrderDetail`]}
-            className={styles.detailModal}
-            style={{background:'#F6F8FA'}}
-          />) : null
-        }
-      </div >
+      </Mixin.Child >
     )
   }
 }

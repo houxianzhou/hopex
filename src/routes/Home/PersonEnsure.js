@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { classNames, moment, dealInterval, _, formatNumber } from '@utils'
-import { Table, Mixin, Button } from '@components'
-import { SCROLLX, TABLE } from '@constants'
+import { classNames, dealInterval, } from '@utils'
+import { Table, Mixin, } from '@components'
+import { SCROLLX, } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
 import RedGreenSwitch from './components/RedGreenSwitch'
+import { RenderModal } from '@routes/Components/HistoryTable'
 import styles from './index.less'
 
 
@@ -30,8 +31,8 @@ export default class PersonEnsure extends Component {
 
   render() {
     const {
-      model: { personalEnsures = [], userInfo = {} }, calculateTableHeight, expandedRowRender, noDataTip,
-      dispatch, modelName, switchMarket
+      model: { personalEnsures = [] }, modal: { name, data }, calculateTableHeight, expandedRowRender, noDataTip,
+      dispatch, modelName, switchMarket, loading, openModal
     }
       = this.props
     const columns = [
@@ -126,19 +127,12 @@ export default class PersonEnsure extends Component {
                     record.orderStatus === '1' ? (
                       <span onClick={(e) => {
                         e.stopPropagation()
-                        dispatch({
-                          type: `${modelName}/getPersonEnsureDetail`,
-                          payload: {
-                            type: '0',
-                            side: record.side,
-                            market: record.market,
-                            orderId: record.orderId
-                          }
+                        openModal({
+                          name: 'dealDetail',
+                          data: record
                         })
                       }} >
-                        <Button loading={record.loading} layer={false} loadingSize={16} >
-                          成交明细
-                        </Button >
+                        成交明细
                   </span >
                     ) : null
                   }
@@ -192,6 +186,13 @@ export default class PersonEnsure extends Component {
             <Table {...tableProp} />
 
           </ScrollPannel >
+          {
+            name === 'dealDetail' ? (<RenderModal
+              {...this.props}
+              loading={loading.effects[`${modelName}/getOrderDetail`]}
+              data={data}
+              className={styles.detailModal} />) : null
+          }
         </div >
       </Mixin.Child >
     )

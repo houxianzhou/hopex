@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { NavLink } from 'dva/router'
 import { classNames, switchTheme, _ } from '@utils'
+import { RouterGo } from '@components'
 import { PATH } from '@constants'
 import logo from '@assets/logo.png'
 import account from '@assets/account.png'
@@ -9,7 +10,6 @@ import help from '@assets/help.png'
 import notice from '@assets/notice.png'
 import network from '@assets/network.png'
 import RedGreenSwitch from '@routes/Home/components/RedGreenSwitch'
-import SwitchMarket from '@routes/Components/SwitchMarket'
 import * as styles from './index.less'
 
 @connect(({ home, user, theme, loading, dispatch }) => ({
@@ -76,7 +76,7 @@ export default class View extends Component {
                                     {
                                       sorted[item1].map((item2 = {}, index2) => {
                                         return (
-                                          <SwitchMarket key={index2} value={item2.marketCode} Ele='li' {...this.props}>
+                                          <RouterGo.SwitchMarket key={index2} value={item2.marketCode} Ele='li' {...this.props}>
                                             <div className={styles.name} >
                                               {item2.pause ? <div >暂停</div > : null}
                                               {item2.marketName}
@@ -103,7 +103,7 @@ export default class View extends Component {
                                                 )
                                               }
                                             </div >
-                                          </SwitchMarket >
+                                          </RouterGo.SwitchMarket >
                                         )
                                       })
                                     }
@@ -157,7 +157,7 @@ export default class View extends Component {
                           })
                         }} >
                           {
-                            !RG ? <div ></div > : null
+                            !RG ? <div /> : null
                           }
                           红涨绿跌
                         </li >
@@ -171,7 +171,7 @@ export default class View extends Component {
                           })
                         }} >
                           {
-                            RG ? <div ></div > : null
+                            RG ? <div /> : null
                           }
 
                           绿涨红跌

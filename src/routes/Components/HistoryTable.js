@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import RedGreenSwitch from '@routes/Home/components/RedGreenSwitch'
 import MainModal from '@routes/Home/components/MainModal'
-import { Button, Table, Loading } from '@components'
+import { Button, Table, Loading, RouterGo } from '@components'
 import { _, classNames } from '@utils'
-import SwitchMarket from '../Components/SwitchMarket'
 import * as styles from './HistoryTable.less'
 
 export const Tabs = [
@@ -33,7 +32,7 @@ export const getColumns = (props = {}) => {
       dataIndex: 'marketName',
       render: (value, record) => (
         {
-          value: <SwitchMarket value={value} marketCode={record.market} {...props} />,
+          value: <RouterGo.SwitchMarket value={value} marketCode={record.market} {...props} />,
           className: 'blue'
         }
       )

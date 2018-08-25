@@ -247,16 +247,12 @@ export default class BuySell extends Component {
           </>
         ) : (
           <>
-            <div onClick={() => {
-              routerGoLogin()
-            }} >
-              登录
+            <div >
+              {routerGoLogin('登录')}
             </div >
             <div className={styles.center} >或</div >
-            <div onClick={() => {
-              routerGoRegister()
-            }} >
-              注册
+            <div >
+              {routerGoRegister('注册')}
             </div >
           </>
         )

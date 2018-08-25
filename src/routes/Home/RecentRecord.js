@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { classNames, dealInterval, _, formatNumber } from '@utils'
-import { Table, Mixin, Button } from '@components'
-import { SCROLLX, TABLE } from '@constants'
+import { classNames, dealInterval, } from '@utils'
+import { Table, Mixin, } from '@components'
+import { SCROLLX, } from '@constants'
 import { getColumns, Tabs, RenderModal } from '@routes/Components/HistoryTable'
 import ScrollPannel from './components/ScrollPanel'
 
@@ -59,7 +59,7 @@ export default class RecentRecord extends Component {
                         data: record
                       })
                     }} >
-                    <Button loading={record.loading} layer={false} loadingSize={16} >成交明细</Button >
+                    成交明细
                   </span >
                   ) : null
                 ),
