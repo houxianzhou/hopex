@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { _, classNames, getPercent, isEqual, clearIntervals } from '@utils'
-import { Scroller } from '@components'
+import { Scroller, Loading } from '@components'
 import * as styles from './index.less'
 
 const createElement = (_className) => {
@@ -34,7 +34,7 @@ export default class Table1 extends Component {
     this._isMount = true
     this.state = {
       x: 0,
-      loading: false
+      loadingMore: false //加载更多的加载状态
     }
   }
 
@@ -76,15 +76,15 @@ export default class Table1 extends Component {
         prevX = x
       }
       if (loadingMore && _.isFunction(loadingMore)) {
-        if (y - maxScrollY < 3 && movingDirectionY === 1 && !this.state.loading && !this.interval) {
+        if (y - maxScrollY < 3 && movingDirectionY === 1 && !this.state.loadingMore && !this.interval) {
           clearIntervals(this.interval, this.interval2)
           this.changeState({
-            loading: true
+            loadingMore: true
           })
           this.interval = setTimeout(() => {
             loadingMore(() => {
               this.changeState({
-                loading: false
+                loadingMore: false
               })
               this.interval2 = setTimeout(() => {
                 this.interval = null
@@ -106,6 +106,7 @@ export default class Table1 extends Component {
       onClickRow,
       noDataTip,
       scroll = {},
+      loading = false,//分页数据源加载状态
     } = this.props;
 
     const getTdThProp = (item = {}) => {
@@ -125,7 +126,7 @@ export default class Table1 extends Component {
       scroll
     }
 
-    const { loading } = this.state
+    const { loadingMore } = this.state
     return (
       <div
         className={
@@ -209,7 +210,12 @@ export default class Table1 extends Component {
                     }
                     </Tbody >
                     {
-                      loading ? (<div className={styles.loadingmore} >加载更多......</div >) : null
+                      loading ? (
+                        <Loading.Circle loading={loading} isGlobal color={'white'} backgroundOpacity={0.1} />
+                      ) : null
+                    }
+                    {
+                      loadingMore ? (<div className={styles.loadingmore} >加载更多......</div >) : null
                     }
                   </Scroller >
                 </div >

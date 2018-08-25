@@ -1,3 +1,4 @@
+import { delay } from 'roadhog-api-doc'
 import { _ } from 'lodash'
 
 import helper from './helper'
@@ -10,7 +11,7 @@ const other = {
   "ret": "0"
 }
 
-export default {
+export default delay({
   // 合约列表
   'Post /mock/api/v1/quote/market.detail_list': (req, res) => {
     res.send({
@@ -627,7 +628,7 @@ export default {
   'Post /mock/api/v1/trade/user.order_history': (req, res) => {
     const { pageIndex, pageSize = 10, typeList = [] } = req.body.param
     const type = typeList[0]
-    const total = Number(type) * 20
+    const total = Number(type) * 20 + 30
     const records = (new Array(pageIndex ? total : 3)).fill().map((item, index) => (
       {
         "ctime": "2018-08-09 17:06:27",
@@ -701,6 +702,6 @@ export default {
     )
   },
 
-}
+}, 1000)
 
 

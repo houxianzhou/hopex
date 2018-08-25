@@ -7,8 +7,9 @@ import { getColumns, Tabs, RenderModal } from '@routes/Components/HistoryTable'
 
 import styles from './index.less'
 
-@connect(({ modal }) => ({
-  modal
+@connect(({ modal, Loading }) => ({
+  modal,
+  loading: Loading
 }))
 export default class View extends Component {
   state = {
@@ -74,7 +75,7 @@ export default class View extends Component {
     const { changeState, getHistory } = this
     const {
       modal: { name, data }, openModal,
-      calculateTableHeight,
+      calculateTableHeight, loading, modelName1
     } = this.props
     const columns = getColumns({
       ...this.props,
@@ -133,6 +134,7 @@ export default class View extends Component {
     }
 
     const tableProp = {
+      loading: loading.effects[`${modelName1}/getHistory`],
       className: styles.tableContainer,
       columns,
       dataSource: dataSource,

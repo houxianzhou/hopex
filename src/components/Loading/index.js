@@ -8,7 +8,7 @@ import { classNames } from '@utils'
 class Circle extends Component {
   render() {
 
-    const { color = '#f3f3f3', isGlobal = false, margin = '0 10px' } = this.props
+    const { color = '#f3f3f3', backgroundOpacity = 0.4, isGlobal = false, margin = '0 10px' } = this.props
     let {
       size = isGlobal ? 40 : 'middle',
       loading = false,
@@ -34,7 +34,7 @@ class Circle extends Component {
     return (
       loading ? (
         isGlobal ? (
-          <div className={styles.loadingContainer} >
+          <div className={styles.loadingContainer} style={{ background: `rgba(29, 34, 46, ${backgroundOpacity})` }} >
             {v}
           </div >
         ) : v
