@@ -17,24 +17,6 @@ export default class EnsureRecord extends Component {
     dis: ''
   }
 
-  changeState = (payload = {}) => {
-    this.setState(payload)
-  }
-  // 趋势改为后端写,转移到K线详情
-  // componentDidUpdate(prevProps) {
-  //   const { model: { latestPrice: prevLatestPrice } } = prevProps
-  //   const { model: { latestPrice }, dispatch, modelName } = this.props
-  //   if (!isEqual(prevLatestPrice, latestPrice)) {
-  //     const result = Number(latestPrice) > Number(prevLatestPrice) ? 1 : 0
-  //     dispatch({
-  //       type: `${modelName}/changeState`,
-  //       payload: {
-  //         latestPriceTrend: result
-  //       }
-  //     })
-  //   }
-  // }
-
   startInit = () => {
     this.getEnsureRecord()
   }

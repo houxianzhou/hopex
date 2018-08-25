@@ -35,12 +35,6 @@ export default class RecentRecord extends Component {
     )
   }
 
-  changeState = (payload = {}, callback) => {
-    this.setState(payload, () => {
-      _.isFunction(callback) && callback()
-    })
-  }
-
   render() {
     const { activeLi } = this.state
     const { changeState, getHistory } = this

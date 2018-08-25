@@ -12,14 +12,6 @@ export default class BuySell extends Component {
     this.getAllDetail()
   }
 
-  changeState = (payload, callback) => {
-    if (this._isMounted) {
-      this.setState(payload, () => {
-        _.isFunction(callback) && callback()
-      })
-    }
-  }
-
   getAllDetail = () => {
     this.getBuyDetail()
     this.getSellDetail()
@@ -545,10 +537,6 @@ class RenderModal extends Component {
         })
       }
     })
-  }
-
-  changeState = (payload) => {
-    this.setState(payload)
   }
 
   render() {

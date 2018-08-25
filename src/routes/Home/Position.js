@@ -45,9 +45,6 @@ export default class Position extends Component {
     })
   }
 
-  changeState = (payload) => {
-    this.setState(payload)
-  }
 
   render() {
     const { changeState, postOrder } = this

@@ -20,16 +20,6 @@ export class MixinParent extends React.Component {
     const { model: { userInfo } = {}, dispatch, modelName } = this.props
     const getCurrentUser = new Promise((resolve, reject) => {
       resolve()
-      // if (_.isEmpty(userInfo)) {
-      //   return dispatch({
-      //     type: `${modelName}/getCurrentUser`,
-      //     payload: {
-      //       resolve, reject
-      //     }
-      //   })
-      // } else {
-      //   return resolve(userInfo)
-      // }
     })
     getCurrentUser.then(res => {
       this.startInit()
@@ -62,6 +52,13 @@ export class MixinChild extends React.Component {
     super(props)
     const { that = {} } = this.props
     that._isMounted = true
+    that.changeState = (payload = {}, callback) => {
+      if (that._isMounted) {
+        that.setState(payload, () => {
+          _.isFunction(callback) && callback()
+        })
+      }
+    }
     // if (!that.props.that.childInitStacks) that.props.that.childInitStacks = []
   }
 
@@ -80,9 +77,6 @@ export class MixinChild extends React.Component {
     if (_.isFunction(startInit) && _.isArray(childInitStacks)) {
       childInitStacks.push(() => {
         startInit()
-        // this.startUnMount().then(
-        //
-        // )
       })
     }
   }

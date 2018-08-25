@@ -29,9 +29,6 @@ export default class Pure extends Component {
     })
   }
 
-  changeState = (payload) => {
-    this.setState(payload)
-  }
 
   render() {
     const { currentPurse } = this.state

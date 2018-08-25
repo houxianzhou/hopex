@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { classNames, isEqual, _, dealInterval } from '@utils'
 import { COLORS } from '@constants'
-// import Worker from 'worker-loader!../file.worker.js'
 //
 // const worker = new Worker()
 

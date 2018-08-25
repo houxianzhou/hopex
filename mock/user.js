@@ -674,4 +674,4 @@ export default delay({
       }
     )
   },
-}, 300)
+}, 0)

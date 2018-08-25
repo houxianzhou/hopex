@@ -54,10 +54,6 @@ export default class TradeChart extends Component {
     this.startKlineDetailWs()
   }
 
-  changeState = (payload) => {
-    this.setState(payload)
-  }
-
   startDeepMap = () => {
     const { model: { ensure_records: { asks = [], bids = [] } = {} } } = this.props
     const deepChart = document.getElementById('deepChart')
@@ -770,7 +766,6 @@ export default class TradeChart extends Component {
                   ) : (
                     <>
                       <div style={{ display: 'none', visibility: 'hidden' }} ></div >
-
                       <div id="deepChart" className={styles.deepChart} style={{ width: '100%', height: '100%' }} />
                     </>
                   )
