@@ -68,5 +68,6 @@ export const PATH = {
   register: '/user/register',
   forgetPassword: '/user/forgetPassword',
   myaccount: '/myaccount',
+  history: '/history'
 }
 

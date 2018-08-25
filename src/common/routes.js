@@ -27,7 +27,7 @@ export default [
   },
   {
     name: '历史',
-    path: '/history',
+    path: PATH.history,
     model: ['history/index', 'home/index'],
     route: 'History'
   },

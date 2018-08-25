@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { PATH } from '@constants'
 
-@connect(({ theme: model, loading, dispatch,}) => ({
+@connect(({ theme: model, loading, dispatch, }) => ({
   model,
   modelName: 'theme',
   loading,
@@ -12,14 +12,16 @@ class SwitchRoute extends Component {
   render() {
     const { children, Ele = 'span', dispatch, modelName, value } = this.props
     return (
-      <Ele onClick={() => {
-        dispatch(
-          {
-            type: `${modelName}/routerGo`,
-            payload: value
-          }
-        )
-      }} >{children}</Ele >
+      <Ele
+        style={{ cursor: 'pointer' }}
+        onClick={() => {
+          dispatch(
+            {
+              type: `${modelName}/routerGo`,
+              payload: value
+            }
+          )
+        }} >{children}</Ele >
     )
   }
 }

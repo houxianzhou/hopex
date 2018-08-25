@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { classNames, dealInterval, } from '@utils'
-import { Table, Mixin, } from '@components'
-import { SCROLLX, } from '@constants'
+import { classNames, dealInterval } from '@utils'
+import { Table, Mixin, RouterGo } from '@components'
+import { SCROLLX, PATH, } from '@constants'
 import { getColumns, Tabs, RenderModal } from '@routes/Components/HistoryTable'
 import ScrollPannel from './components/ScrollPanel'
 
@@ -133,7 +133,9 @@ export default class RecentRecord extends Component {
                     })
                   }
                 </ul >
-                <div ><span className='blue' >查看完整历史</span ></div >
+                <div ><span className='blue' >
+                  <RouterGo.SwitchRoute value={PATH.history} >查看完整历史</RouterGo.SwitchRoute >
+                </span ></div >
               </div >
             }
           >
