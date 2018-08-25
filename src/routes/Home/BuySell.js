@@ -526,6 +526,10 @@ class RenderModal extends Component {
     fee: {}
   }
 
+  changeState = (payload) => {
+    this.setState(payload)
+  }
+
   componentDidMount() {
     const { dispatch, modelName } = this.props
     dispatch({
