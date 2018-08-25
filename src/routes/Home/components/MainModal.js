@@ -5,6 +5,7 @@ import * as styles from './MainModal.less'
 
 export default function (Props) {
   const { children, title, dispatch, modelName, className, modalProps = {}, } = Props
+
   return (
     <Modal {...modalProps}>
       <div className={

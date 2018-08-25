@@ -21,8 +21,6 @@
   padding: 10px;
 }
 
-
-
 .latestRecord {
   min-width: @view_width;
   max-width: @view_width;
@@ -493,7 +491,7 @@
     align-items: center;
     justify-content: space-between;
     display: flex;
-    width:100%;
+    width: 100%;
     height: 100%;
   }
   .recentrecord_tab {
@@ -900,6 +898,42 @@
       }
       div:nth-child(2n) {
         color: @c_active_yellow;
+      }
+    }
+  }
+}
+
+// 成交明细模态框
+.detailModal {
+  :global {
+    .table {
+      :global {
+        .tr {
+          padding-left: 40px;
+          color: white;
+        }
+        .thead {
+          .tr {
+            height: @header2;
+            background: #24262A;
+          }
+          font-size: 12px;
+        }
+        .tbody {
+          font-size: 13px;
+          .tr {
+            height: @header2;
+            &:hover {
+              // background: #eff1f3 !important;
+            }
+            &.even {
+             // background: white;
+            }
+            &.odd {
+              background: #24262A;
+            }
+          }
+        }
       }
     }
   }

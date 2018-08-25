@@ -10,6 +10,13 @@ import { ROOT } from '@constants'
   dispatch,
 }))
 export default class View extends Component {
+  componentWillUnmount() {
+    const { dispatch } = this.props
+    dispatch({
+      type: 'closeModal'
+    })
+  }
+
   render() {
     const {
       children,
@@ -21,6 +28,7 @@ export default class View extends Component {
       <Modal
         style={{
           overlay: {
+            zIndex: 3,
             background: style.background || 'rgba(0,0,0,.4)',
           },
           content: {

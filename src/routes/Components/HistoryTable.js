@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import RedGreenSwitch from '@routes/Home/components/RedGreenSwitch'
 import MainModal from '@routes/Home/components/MainModal'
-import { Button, Table } from '@components'
+import { Button, Table, Loading } from '@components'
 import { _, classNames } from '@utils'
 import SwitchMarket from '../Components/SwitchMarket'
 import * as styles from './HistoryTable.less'
@@ -175,10 +175,10 @@ export class RenderModal extends Component {
   }
 
   render() {
-    const { className } = this.props
+    const { className, style = {}, loading = false } = this.props
     const props = {
       ...this.props,
-      title: '持仓占用保证金',
+      title: '成交明细',
       modalProps: {
         style: {
           width: 1000
@@ -226,8 +226,13 @@ export class RenderModal extends Component {
 
     return (
       <MainModal {...props}>
-        <div className={styles.tablecr} >
+        <div className={styles.tablecr} style={style} >
           <Table {...tableProps} />
+          {
+            loading ? (
+              <Loading.Circle loading={loading} isGlobal color={'white'} backgroundOpacity={0.1} />
+            ) : null
+          }
         </div >
       </MainModal >
     )

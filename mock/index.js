@@ -218,7 +218,7 @@ export default delay({
     res.send({
       "data": {
         "total": "0",
-        "records": (new Array(6)).fill().map(item => (
+        "records": (new Array(20)).fill().map(item => (
           {
             "time": "2018-08-02 17:49:27",
             "role": "2",

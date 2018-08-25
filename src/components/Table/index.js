@@ -211,7 +211,7 @@ export default class Table1 extends Component {
                     </Tbody >
                     {
                       loading ? (
-                        <Loading.Circle loading={loading} isGlobal color={'white'} backgroundOpacity={0.1} />
+                        <Loading.Circle loading={loading} isGlobal color={'#c1c1c1'} backgroundOpacity={0.01} />
                       ) : null
                     }
                     {

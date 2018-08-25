@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { classNames, dealInterval, _, formatNumber } from '@utils'
 import { Table, Mixin, Button } from '@components'
 import { SCROLLX, TABLE } from '@constants'
-import { getColumns, Tabs } from '@routes/Components/HistoryTable'
+import { getColumns, Tabs, RenderModal } from '@routes/Components/HistoryTable'
 import ScrollPannel from './components/ScrollPanel'
 
 import styles from './index.less'
@@ -39,8 +39,8 @@ export default class RecentRecord extends Component {
     const { activeLi } = this.state
     const { changeState, getHistory } = this
     const {
-      model: { personalEnsureHistory = [] }, noDataTip, calculateTableHeight, expandedRowRender,
-      modelName, dispatch,
+      model: { personalEnsureHistory = [] }, modal: { name, data }, noDataTip, calculateTableHeight, expandedRowRender,
+      openModal, loading, modelName
     } = this.props
     const columns = getColumns({
       ...this.props,
@@ -54,14 +54,9 @@ export default class RecentRecord extends Component {
                   ['1', '2'].indexOf(record.orderStatus) !== -1 ? (
                     <span onClick={(e) => {
                       e.stopPropagation()
-                      dispatch({
-                        type: `${modelName}/getPersonEnsureDetail`,
-                        payload: {
-                          type: '1',
-                          side: record.side,
-                          market: record.market,
-                          orderId: record.orderId
-                        }
+                      openModal({
+                        name: 'dealDetail',
+                        data: record
                       })
                     }} >
                     <Button loading={record.loading} layer={false} loadingSize={16} >成交明细</Button >
@@ -144,6 +139,13 @@ export default class RecentRecord extends Component {
           >
             <Table {...tableProp} />
           </ScrollPannel >
+          {
+            name === 'dealDetail' ? (<RenderModal
+              {...this.props}
+              loading={loading.effects[`${modelName}/getOrderDetail`]}
+              data={data}
+              className={styles.detailModal} />) : null
+          }
         </div >
       </Mixin.Child >
     )

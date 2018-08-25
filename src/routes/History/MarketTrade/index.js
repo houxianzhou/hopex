@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { classNames, dealInterval, _, formatNumber } from '@utils'
-import { Table, Mixin, Button, PagiNation } from '@components'
-import { SCROLLX, TABLE } from '@constants'
+import { classNames, _, } from '@utils'
+import { Table, PagiNation } from '@components'
 import { getColumns, Tabs, RenderModal } from '@routes/Components/HistoryTable'
 
 import styles from './index.less'
@@ -195,7 +194,13 @@ export default class View extends Component {
           <PagiNation {...pageProp} />
         </div >
         {
-          name === 'dealDetail' ? (<RenderModal {...this.props} data={data} className={styles.detailModal} />) : null
+          name === 'dealDetail' ? (<RenderModal
+            {...this.props}
+            data={data}
+            loading={loading.effects[`${modelName1}/getOrderDetail`]}
+            className={styles.detailModal}
+            style={{background:'#F6F8FA'}}
+          />) : null
         }
       </div >
     )
