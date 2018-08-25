@@ -3,7 +3,7 @@ import { _, moment } from '@utils'
 import { SOCKETURL } from '@constants'
 
 class MockServer {
-  constructor(url, INTERVAL = 2000) {
+  constructor(url, INTERVAL = 5000) {
     this.interval = null
     this.subScribes = []
     this.server = new Server(url)

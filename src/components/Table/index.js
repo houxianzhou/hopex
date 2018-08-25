@@ -100,7 +100,6 @@ export default class Table1 extends Component {
     const {
       className = {},
       style = {},
-      children,
       columns = [],
       dataSource = [],
       expandedRowRender,

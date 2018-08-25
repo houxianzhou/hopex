@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson, isEqual, dealInterval } from '@utils'
+import { classNames, _, } from '@utils'
 import { Mixin, Table } from "@components"
 import { COLORS } from '@constants'
 import wss from '@services/SocketClient'
@@ -78,7 +78,7 @@ export default class LatestRecord extends Component {
   }
 
   render() {
-    const { model: { latest_records = [] }, RG, dispatch, modelName, loading } = this.props
+    const { model: { latest_records = [] }, modelName, loading } = this.props
     const columns = [
       {
         title: '时间',
@@ -135,6 +135,7 @@ export default class LatestRecord extends Component {
     ]
     const dataSource = latest_records
     const tableProps = {
+      uKey:'id',
       className: styles.tableContainer,
       columns,
       dataSource: _.merge((new Array(18)).fill(), dataSource),
