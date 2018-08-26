@@ -81,6 +81,7 @@ export default class RecentRecord extends Component {
         dataSource = []
     }
 
+
     const tableProp = {
       className: styles.tableContainer,
       columns,

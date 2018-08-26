@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { COLORS } from '@constants'
 import { Mixin, Slider, Toast } from "@components"
-import { classNames, getPercent, formatNumber, _ } from '@utils'
+import { classNames, getPercent, _ } from '@utils'
 import grayangle from '@assets/grayangle.png'
 import activeangle from '@assets/activeangle.png'
+import MainModal from '@routes/Components/MainModal'
 import ScrollPannel from './components/ScrollPanel'
-import MainModal from './components/MainModal'
 import styles from './index.less'
 
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { classNames, _, localSave, getRes, resOk, formatNumber, formatJson, isEqual, dealInterval } from '@utils'
+import { classNames, _, getRes, resOk, formatNumber, formatJson, isEqual, } from '@utils'
 import { Mixin } from "@components"
 import wss from '@services/SocketClient'
-import RedGreenSwitch from './components/RedGreenSwitch'
+import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
 

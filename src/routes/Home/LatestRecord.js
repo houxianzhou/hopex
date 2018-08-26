@@ -3,7 +3,7 @@ import { classNames, _, } from '@utils'
 import { Mixin, Table } from "@components"
 import { COLORS } from '@constants'
 import wss from '@services/SocketClient'
-import RedGreenSwitch from './components/RedGreenSwitch'
+import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
 import styles from './index.less'

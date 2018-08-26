@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import RedGreenSwitch from '@routes/Home/components/RedGreenSwitch'
-import MainModal from '@routes/Home/components/MainModal'
+import MainModal from '@routes/Components/MainModal'
 import { Button, Table, Loading, RouterGo } from '@components'
 import { _, classNames } from '@utils'
+import RedGreenSwitch from './RedGreenSwitch'
 import * as styles from './HistoryTable.less'
 
 export const Tabs = [

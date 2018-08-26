@@ -3,7 +3,7 @@ import { classNames, dealInterval, } from '@utils'
 import { Table, Mixin, } from '@components'
 import { SCROLLX, } from '@constants'
 import ScrollPannel from './components/ScrollPanel'
-import RedGreenSwitch from './components/RedGreenSwitch'
+import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
 import { RenderModal } from '@routes/Components/HistoryTable'
 import styles from './index.less'
 

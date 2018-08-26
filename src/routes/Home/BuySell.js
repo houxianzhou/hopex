@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Mixin, InputNumber, Slider, Loading, Button } from "@components"
+import { Mixin, InputNumber, Slider, Button } from "@components"
 import { COLORS } from '@constants'
-import { classNames, _, formatNumber, isEqual } from '@utils'
-import MainModal from './components/MainModal'
+import { classNames, _, isEqual } from '@utils'
+import MainModal from '@routes/Components/MainModal'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 

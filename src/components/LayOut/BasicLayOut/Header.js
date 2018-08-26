@@ -9,7 +9,7 @@ import account from '@assets/account.png'
 import help from '@assets/help.png'
 import notice from '@assets/notice.png'
 import network from '@assets/network.png'
-import RedGreenSwitch from '@routes/Home/components/RedGreenSwitch'
+import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
 import * as styles from './index.less'
 
 @connect(({ home, user, theme, loading, dispatch }) => ({

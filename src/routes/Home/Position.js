@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { classNames, dealInterval, _, formatNumber, getPercent, Patterns } from '@utils'
+import { classNames, dealInterval, _, formatNumber, Patterns } from '@utils'
 import { Table, Mixin, Button, Toast, ToolTip, } from '@components'
 import { SCROLLX, TABLE, } from '@constants'
 import add from '@assets/add.png'
 import substract from '@assets/substract.png'
 import { editIcon } from '@assets'
+import MainModal from '@routes/Components/MainModal'
+import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
-import RedGreenSwitch from './components/RedGreenSwitch'
-import MainModal from './components/MainModal'
 import styles from './index.less'
 
 
@@ -310,7 +310,7 @@ class RenderModal extends Component {
           <div className={styles.input} >
             <div className={styles.edit} >
               {editIcon}
-              <input value={formatNumber(inputValue,'p')} onChange={
+              <input value={formatNumber(inputValue, 'p')} onChange={
                 _.throttle((e) => {
                   const value = e.target.value
                   changeStateInModal({

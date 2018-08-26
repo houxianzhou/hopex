@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { classNames, _, dealInterval, getPercent, formatNumber, isEqual } from '@utils'
+import { classNames, _, getPercent, formatNumber, } from '@utils'
 import { Mixin, Table } from "@components"
 import wss from '@services/SocketClient'
 import ensure from '@assets/ensure.png'
 import { triangle } from '@assets'
 import { COLORS } from '@constants'
+import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
 import ColorChange from './components/ColorChange'
-import RedGreenSwitch from './components/RedGreenSwitch'
 import styles from './index.less'
 
 let max = null

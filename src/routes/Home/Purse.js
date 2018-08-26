@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Mixin } from "@components"
 import { classNames, dealInterval } from '@utils'
-import ScrollPannel from './components/ScrollPanel'
-import RedGreenSwitch from './components/RedGreenSwitch'
+import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
 import logogray from '@assets/logo4.png'
+import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
 export default class Pure extends Component {
