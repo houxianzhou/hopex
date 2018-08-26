@@ -45,7 +45,6 @@ export default class View extends Component {
         classNames(
           styles.header,
           styles.dark,
-          // switchTheme(theme) ? styles.dark : styles.dark//styles.light
         )
       } >
         <div className={styles.left} >

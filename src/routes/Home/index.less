@@ -1,4 +1,4 @@
-@import '../common.less';
+@import '~@styles/index.less';
 
 .views {
   display: flex;
@@ -17,9 +17,20 @@
 }
 
 .home {
-  background: @c_back_dark;
+  // background: @c_back_dark;
   padding: 10px;
+  :global(.deepT) & {
+    .mixinDeepC();
+     background: @c_back_dark;
+  }
 }
+
+//:global(.deepT) {
+//
+//  .home {
+//    background: @c_back_dark;
+//  }
+//}
 
 .latestRecord {
   min-width: @view_width;
@@ -927,7 +938,7 @@
               // background: #eff1f3 !important;
             }
             &.even {
-             // background: white;
+              // background: white;
             }
             &.odd {
               background: #24262A;

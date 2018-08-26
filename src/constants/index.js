@@ -5,7 +5,8 @@ export const BREACKPOINT = {
 }
 
 export const THEME = {
-  DARK: 'dark',
+  DARK: 'darkT',
+  DEEPDARK:'deepT'
 }
 
 export const API = {

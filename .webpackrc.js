@@ -35,7 +35,8 @@ export default {
     "@constants": path.resolve(__dirname, "./src/constants"),
     "@common": path.resolve(__dirname, "./src/common"),
     "@mock": path.resolve(__dirname, "./mock"),
-    "@plugins": path.resolve(__dirname, "./src/plugins")
+    "@plugins": path.resolve(__dirname, "./src/plugins"),
+    "@styles": path.resolve(__dirname, "./src/styles")
   },
   ignoreMomentLocale: true,
   theme: './src/utils/lessvar.js'
