@@ -108,19 +108,14 @@ export default class RecentRecord extends Component {
             tableHeight={calculateTableHeight(dataSource)}
             header={
               <div className={styles.header} >
-                <ul className={classNames(
-                  styles.tab,
-                  styles.recentrecord_tab
-                )} >
+                <ul >
                   {
                     Tabs.map((item = {}, index) => {
                       return (
                         <li
                           key={index}
                           className={classNames(
-                            {
-                              'active': activeLi === item.type
-                            }
+                            activeLi === item.type ? styles.active : null
                           )}
                           onClick={() => {
                             changeState({

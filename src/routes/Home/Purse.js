@@ -57,19 +57,17 @@ export default class Pure extends Component {
                 <div >
                   钱包
                 </div >
-                <div >
-                  <ul className={styles.tab} >
-                    {
-                      assetList.map((item, index) => <li key={index} onClick={() => {
-                        this.changeState({
-                          currentPurse: index
-                        })
-                      }} className={classNames(
-                        index === currentPurse ? 'active' : null
-                      )} >{item.assetName}</li >)
-                    }
-                  </ul >
-                </div >
+                <ul>
+                  {
+                    assetList.map((item, index) => <li key={index} onClick={() => {
+                      this.changeState({
+                        currentPurse: index
+                      })
+                    }} className={classNames(
+                      index === currentPurse ? styles.active : null
+                    )} >{item.assetName}</li >)
+                  }
+                </ul >
               </div >
             }
           >

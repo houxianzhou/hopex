@@ -37,11 +37,6 @@
       }
     }
   }
-  .record_header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
 }
 
 .tradeChart {
@@ -59,10 +54,9 @@
       background: @c_pannel_dark;
       height: 66px;
       display: flex;
-      justify-content: space-between;
+      .mixin_flex(space-between);
       :global(div) {
-        display: flex;
-        align-items: center;
+        .mixin_flex(_, center);
       }
       .left {
         display: flex;
@@ -339,16 +333,7 @@
       align-items: center;
       height: 100%;
     }
-    ul {
-      height: 100%;
-      display: flex;
-      li {
-        height: 100%;
-      }
-      li + li {
-        margin-left: 20px;
-      }
-    }
+    .mixin_tab_margin();
   }
   .content {
     &.login {
@@ -445,7 +430,7 @@
 
 .position {
   min-height: 242px;
-  .input{
+  .input {
     border: 1px solid #4B556D !important;
     background: #373F4F !important;
   }
@@ -500,13 +485,7 @@
     display: flex;
     width: 100%;
     height: 100%;
-  }
-  .recentrecord_tab {
-    display: flex;
-    align-items: center;
-    li + li {
-      margin-left: 70px;
-    }
+    .mixin_tab_margin(70px);
   }
 }
 
@@ -517,6 +496,7 @@
     height: 100%;
     display: flex;
     justify-content: space-between;
+    .mixin_tab_margin(42px);
     .right {
       display: flex;
       align-items: center;
@@ -528,11 +508,7 @@
       }
     }
   }
-  .buyselltab {
-    li + li {
-      margin-left: 42px;
-    }
-  }
+
   .content {
     display: flex;
     color: @c_like_white;
@@ -834,29 +810,7 @@
   .header {
     height: 40px;
     background: @c_pannel_header_dark;
-    ul {
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      li {
-        height: 100%;
-        flex-grow: 1;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-        > div {
-          display: flex;
-          align-items: center;
-          height: 100%;
-          font-size: 16px;
-          color: @c_like_white;
-          &.active {
-            color: @c_active_yellow;
-            border-bottom: 2px solid @c_active_yellow;
-          }
-        }
-      }
-    }
+    .mixin_tab()
   }
   .content {
     padding: 0 38px;
@@ -928,6 +882,23 @@
         color: @c_active_yellow;
       }
     }
+  }
+}
+
+//价格超出提示模态框
+.priceWarn_Modal {
+  .content {
+    line-height: 22px;
+    color: white;
+    padding: 70px 40px;
+  }
+}
+
+.calculator_modal {
+  .header {
+    background: @c_pannel_header_dark;
+    height: 40px;
+    .mixin_tab()
   }
 }
 

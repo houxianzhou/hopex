@@ -122,11 +122,13 @@
 }
 
 // tab公共部分
-.tab {
+.mixin_tab_margin(@margin_li:20px) {
   cursor: pointer;
   display: flex;
   height: 100%;
-  :global {
+  ul {
+    height: 100%;
+    display: flex;
     li {
       display: flex;
       align-items: center;
@@ -137,7 +139,43 @@
         border-bottom: 2px solid @c_active_yellow;
       }
     }
+    li + li {
+      margin-left: @margin_li;
+    }
   }
+}
+
+//tab 横向100%，根据tab个数平分
+.mixin_tab() {
+  ul {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    li {
+      height: 100%;
+      flex-grow: 1;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      > div {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        font-size: 16px;
+        color: @c_like_white;
+        &.active {
+          color: @c_active_yellow;
+          border-bottom: 2px solid @c_active_yellow;
+        }
+      }
+    }
+  }
+}
+
+.mixin_flex(@left_right:flex-start,@align-items:center) {
+  dispaly: flex;
+  align-items: @align-items;
+  justify-content: @left_right;
 }
 
 // table分页公共部分

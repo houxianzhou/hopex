@@ -14,19 +14,24 @@ export default function (Props) {
           className
         )
       } >
-        <div className='header'>
-          {title}
-          <div
-            className='close'
-            onClick={() => {
-              dispatch({
-                type: `${modelName}/closeModal`
-              })
-            }}
-          >
-            <img alt='close' src={close} />
-          </div >
-        </div >
+        {
+          title ? (
+            <div className='header' >
+              {title}
+              <div
+                className='close'
+                onClick={() => {
+                  dispatch({
+                    type: `${modelName}/closeModal`
+                  })
+                }}
+              >
+                <img alt='close' src={close} />
+              </div >
+            </div >
+          ) : null
+        }
+
         <div className='content' >
           {children}
         </div >

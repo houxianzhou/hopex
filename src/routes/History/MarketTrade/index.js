@@ -163,25 +163,24 @@ export default class View extends Component {
             <div className={styles.title} >合约交易历史</div >
             <div className={styles.desc} ><span >*</span >为保证系统性能，只保留最近60天的历史记录</div >
           </div >
-          <ul className={classNames(
-            styles.tab,
-            styles.markettradetabs,
-          )} >
-            {
-              Tabs.map((item, index) => (
-                <li key={index} className={classNames(
-                  activeLi === item.type ? 'active' : null
-                )} onClick={() => {
-                  changeState({
-                    currentPage: 0,
-                    activeLi: item.type
-                  }, () => {
-                    getHistory()
-                  })
-                }} >{item.name}</li >
-              ))
-            }
-          </ul >
+          <div className={styles.header} >
+            <ul >
+              {
+                Tabs.map((item, index) => (
+                  <li key={index} className={classNames(
+                    activeLi === item.type ? styles.active : null
+                  )} onClick={() => {
+                    changeState({
+                      currentPage: 0,
+                      activeLi: item.type
+                    }, () => {
+                      getHistory()
+                    })
+                  }} >{item.name}</li >
+                ))
+              }
+            </ul >
+          </div >
           <div style={{ height: calculateTableHeight(dataSource) }} >
             <Table {...tableProp} />
           </div >

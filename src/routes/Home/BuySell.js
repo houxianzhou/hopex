@@ -450,12 +450,12 @@ export default class BuySell extends Component {
             header={
               <div className={styles.buysellheader} >
                 <ul className={classNames(
-                  styles.tab,
+                  // styles.tab,
                   styles.buyselltab
                 )} >
                   <li
                     className={classNames(
-                      isLimitPrice() ? 'active' : null
+                      isLimitPrice() ? styles.active : null
                     )}
                     onClick={() => {
                       changeState({
@@ -469,7 +469,7 @@ export default class BuySell extends Component {
                   </li >
                   <li
                     className={classNames(
-                      !isLimitPrice() ? 'active' : null
+                      !isLimitPrice() ? styles.active : null
                     )}
                     onClick={() => {
                       changeState({
@@ -511,6 +511,12 @@ export default class BuySell extends Component {
         </div >
         {
           name === 'fee' ? (<RenderModal {...this.props} {...this.state}  />) : null
+        }
+        {
+          name === 'priceWarn' ? (<RenderModal2 {...this.props}  />) : null
+        }
+        {
+          name === 'calculator' ? (<RenderModal3 {...this.props}  />) : null
         }
       </Mixin.Child >
     )
@@ -571,6 +577,100 @@ class RenderModal extends Component {
           {/*<div >{deliveryRateDisplay}</div >*/}
           {/*</li >*/}
         </ul >
+      </MainModal >
+    )
+  }
+}
+
+class RenderModal2 extends Component {
+  render() {
+    const props = {
+      ...this.props
+    }
+    const { closeModal } = this.props
+    return (
+      <MainModal {...props} className={styles.priceWarn_Modal} >
+        <div >
+          <div className={styles.content} >
+            您的下单价格已超出价格限制范围，请确认以目前允许的最高买入/最低卖出价格6331.04下单
+          </div >
+          <div className={styles.buttons} >
+
+            <div
+              onClick={() => {
+                closeModal()
+              }}
+            >
+              取消
+            </div >
+            <div
+              className={styles.confirm}
+              onClick={() => {
+
+              }}
+            >
+              <Button >
+                确定
+              </Button >
+
+            </div >
+          </div >
+        </div >
+
+      </MainModal >
+    )
+  }
+}
+
+class RenderModal3 extends Component {
+  state = {
+    active: 0,
+  }
+
+  changeState = (payload) => {
+    this.setState(payload)
+  }
+
+  render() {
+    const { active } = this.state
+    const props = {
+      title: '计算器',
+      ...this.props
+    }
+    const { closeModal } = this.props
+    const { changeState } = this
+    const lis = [
+      { name: '收益' },
+      { name: '平仓价格' },
+      { name: '强平价格' }
+    ]
+    return (
+      <MainModal {...props} className={styles.calculator_modal} >
+        <div className={styles.header} >
+          <ul >
+            {
+              lis.map((item, index) => (
+                <li >
+                  <div
+                    className={classNames(
+                      active === index ? styles.active : null
+                    )}
+                    onClick={() => {
+                      changeState({
+                        active: index
+                      })
+                    }} >
+                    {item.name}
+                  </div >
+                </li >
+              ))
+            }
+          </ul >
+        </div >
+        <div className={styles.content} >
+
+        </div >
+
       </MainModal >
     )
   }
