@@ -193,7 +193,7 @@ export default class BuySell extends Component {
     }
     return (
       <div className={styles.ensuremoney} >
-        <Slider  {...props} />
+        {/*<Slider  {...props} />*/}
         <div className={styles.description} >
           <div >
             <span >{label_action}</span >

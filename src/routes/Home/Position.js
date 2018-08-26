@@ -150,7 +150,7 @@ export default class Position extends Component {
           return {
             value: (
               <div >
-                <input value={record.inputValue || ''} onChange={(e) => {
+                <input className={styles.input} value={record.inputValue || ''} onChange={(e) => {
                   if (Patterns.decimalNumber.test(e.target.value) || e.target.value === '') {
                     dispatch({
                       type: `${modelName}/doInputChangePosition`,

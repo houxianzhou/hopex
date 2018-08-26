@@ -1,3 +1,5 @@
+@import './variable.less';
+
 @pannel_li_height: 26px;
 @view_width: 400px;
 @padding_li_left: 30px;
@@ -6,6 +8,7 @@
 
 // 所有table公共部分
 .tableContainer {
+  .mixinC();
   :global {
     .default {
       // background: red;
@@ -39,7 +42,7 @@
     .tbody {
       .tr {
         &:hover {
-          background: #1C222E !important;
+          background: #1D222E !important;
         }
         height: 26px;
         //&:nth-child(2n+1) {
@@ -50,16 +53,6 @@
         }
       }
       .td {
-        &.red {
-          color: @_red;
-        }
-        &.blue {
-          color: @_blue;
-        }
-        &.green {
-          color: @_green;
-        }
-
         &.action {
           input {
             color: white;
@@ -93,17 +86,17 @@
 }
 
 // 红绿颜色切换
+
 :global {
-  span {
-    &.red {
-      color: @_red;
-    }
-    &.green {
-      color: @_green;
-    }
-    &.blue {
-      color: @_blue;
-    }
+  .mixinC();
+  .red {
+    color: @_red;
+  }
+  .green {
+    color: @_green;
+  }
+  .blue {
+    color: @_blue;
   }
 }
 

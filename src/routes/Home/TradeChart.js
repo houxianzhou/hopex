@@ -284,7 +284,7 @@ export default class TradeChart extends Component {
         // 'chart_property_page_style',
 
       ],
-      toolbar_bg: '#232833',
+      toolbar_bg: '#1D1D1D',
       library_path: '/',
       width: '100%',
       height: '100%',
@@ -292,7 +292,7 @@ export default class TradeChart extends Component {
       // interval: 'D',
       'container_id': 'tradeView',
       overrides: {
-        "paneProperties.background": "#232833",
+        "paneProperties.background": "#1D1D1D",
         "paneProperties.vertGridProperties.color": "transparent",
         "paneProperties.horzGridProperties.color": "transparent",
         "paneProperties.topMargin": "15",
@@ -300,7 +300,7 @@ export default class TradeChart extends Component {
         "scalesProperties.backgroundColor": "red"
       },
 
-      loading_screen: { backgroundColor: "#232833" },
+      loading_screen: { backgroundColor: "#1D1D1D" },
       datafeed: {
         onReady(callback) {
           setTimeout(() => {

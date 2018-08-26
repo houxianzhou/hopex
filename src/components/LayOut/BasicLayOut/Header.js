@@ -44,7 +44,6 @@ export default class View extends Component {
       <div className={
         classNames(
           styles.header,
-          styles.dark,
         )
       } >
         <div className={styles.left} >

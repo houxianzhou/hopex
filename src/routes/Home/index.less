@@ -17,20 +17,10 @@
 }
 
 .home {
-  // background: @c_back_dark;
+  .mixinC();
+  background: @c_back_dark;
   padding: 10px;
-  :global(.deepT) & {
-    .mixinDeepC();
-     background: @c_back_dark;
-  }
 }
-
-//:global(.deepT) {
-//
-//  .home {
-//    background: @c_back_dark;
-//  }
-//}
 
 .latestRecord {
   min-width: @view_width;
@@ -55,6 +45,7 @@
 }
 
 .tradeChart {
+  .mixinC();
   :global(iframe) {
     height: 100% !important;
   }
@@ -206,7 +197,7 @@
         align-items: center;
         justify-content: center;
         &.active {
-          background: #1c2030;
+          background: #2b2b2b;
           color: white;
         }
       }
@@ -222,6 +213,7 @@
 }
 
 .ensureRecord {
+  .mixinC();
   max-width: @view_width;
   min-width: @view_width;
   font-size: 13px;
@@ -453,6 +445,10 @@
 
 .position {
   min-height: 242px;
+  .input{
+    border: 1px solid #4B556D !important;
+    background: #373F4F !important;
+  }
   .changepositionMoney {
     display: flex;
     > div {
@@ -515,6 +511,7 @@
 }
 
 .buySell {
+  .mixinC();
   .buysellheader {
     width: 100%;
     height: 100%;
@@ -539,15 +536,17 @@
   .content {
     display: flex;
     color: @c_like_white;
-    padding: 20px 25px;
+    padding: 30px 32px;
+    padding-right: 20px;
     .area + .area {
       margin-left: 40px;
     }
+
     .area {
       width: 50%;
       flex-grow: 1;
       .priceitem + .priceitem {
-        margin-top: 20px;
+        margin-top: 30px;
       }
       .priceitem {
         .priceinput {
@@ -619,6 +618,11 @@
           }
         }
       }
+      .label {
+        > div:first-of-type {
+          color: #FFFFFF;
+        }
+      }
 
       .submit {
         display: flex;
@@ -628,7 +632,12 @@
         border-radius: @border_radius;
         height: 40px;
         margin-top: 30px;
+        span {
+          color: #FFFFFF;
+          font-size: 13px;
+        }
         span.text {
+          color: #D7DAEE;
           font-size: 16px;
         }
         span + span {
@@ -637,16 +646,23 @@
 
         &.haslogin {
           &.buy {
-            background-image: linear-gradient(90deg, #62A48C 0%, #579880 100%);
+            background: @_green;
           }
           &.sell {
-            background-image: linear-gradient(90deg, #C3696E 0%, #AF565B 100%);
+            background: @_red;
           }
         }
         &.notlogin {
-          background-image: linear-gradient(90deg, #4A5365 0%, #41495A 100%);
+          background: #373A41;
           pointer-events: none;
           color: #7D879F;
+          span {
+            color: #7D879F;
+          }
+          span.text {
+            font-weight: 500;
+            color: #7D879F;
+          }
           > div {
             pointer-events: auto;
             cursor: pointer;
@@ -814,6 +830,7 @@
 
 // 持仓占用保证金模态框
 .position_modal {
+  .mixinC();
   .header {
     height: 40px;
     background: @c_pannel_header_dark;
@@ -916,6 +933,7 @@
 
 // 成交明细模态框
 .detailModal {
+  .mixinC();
   :global {
     .table {
       :global {
@@ -926,7 +944,7 @@
         .thead {
           .tr {
             height: @header2;
-            background: #24262A;
+            background: @c_pannel_header_dark;
           }
           font-size: 12px;
         }
@@ -934,6 +952,7 @@
           font-size: 13px;
           .tr {
             height: @header2;
+            background: unset !important;
             &:hover {
               // background: #eff1f3 !important;
             }
@@ -941,7 +960,7 @@
               // background: white;
             }
             &.odd {
-              background: #24262A;
+              background: @c_pannel_header_dark !important;
             }
           }
         }
