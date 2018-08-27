@@ -24,7 +24,7 @@ export async function getLatestRecord(payload) {
 
 // 委托列表
 export async function getEnsureRecord(payload) {
-  return request(`${UserIp3}/market.active_delegate`, {
+  return request(`${UserIp3}/contract.order_book`, {
     method: 'post',
     body: payload,
     needLoop: true,

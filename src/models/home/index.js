@@ -148,7 +148,7 @@ export default joinModel(modelExtend, {
         type: 'createRequestParams',
         payload: {
           "head": {
-            "method": "market.active_delegate",
+            "method": "contract.order_book",
           },
           "param": {
             "pageSize": "100", //不能大于101
@@ -187,27 +187,38 @@ export default joinModel(modelExtend, {
     * updateEnsureRecord({ payload = {} }, { call, put, select }) {
       const ensure_records = yield select(({ home: { ensure_records = [] } }) => ensure_records) || {}
       let { result = {} } = payload
-      let asks = [...(ensure_records.asks ? ensure_records.asks : [])]
-      let bids = [...(ensure_records.bids ? ensure_records.bids : [])]
-      if (_.has(result, 'asks')) {
-        result.asks.map((item = {}) => {
-          const filterOne = _.findIndex(asks, (one = {}) => String(one.price) === String(item.price))
-          if (filterOne !== -1) {
-            asks.splice(filterOne, 1, item)
-          } else {
-            asks.push(item)
+      const Mapping = (result = []) => {
+        return result.map((item = {}) => {
+          const { orderPrice, orderQuantity, orderQuantityShow, exist } = item
+          return {
+            price: orderPrice,
+            amount: orderQuantity,
+            amountShow: orderQuantityShow,
+            exist,
+            ...item
+
           }
         })
       }
-      if (_.has(result, 'bids')) {
-        result.bids.map((item = {}) => {
-          const filterOne = _.findIndex(bids, (one = {}) => String(one.price) === item.price)
+      result.asks = Mapping(result.asks)
+      result.bids = Mapping(result.bids)
+      let asks = [...(ensure_records.asks ? ensure_records.asks : [])]
+      let bids = [...(ensure_records.bids ? ensure_records.bids : [])]
+      const Filtering = (result = [], side = []) => {
+        result.map((item = {}) => {
+          const filterOne = _.findIndex(asks, (one = {}) => String(one.price) === String(item.price))
           if (filterOne !== -1) {
-            bids.splice(filterOne, 1, item)
+            side.splice(filterOne, 1, item)
           } else {
-            bids.push(item)
+            side.push(item)
           }
         })
+      }
+      if (_.has(result, 'asks')) {
+        Filtering(result.asks, asks)
+      }
+      if (_.has(result, 'bids')) {
+        Filtering(result.bids, bids)
       }
 
       const remove = (result) => _.remove(result, (item = {}) => Number(item.amount) !== 0)

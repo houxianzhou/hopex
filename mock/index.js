@@ -97,7 +97,7 @@ export default delay({
     })
   },
   //最新成交
-  'Post /mock/api/v1/quote/market.deals': (req, res) => {
+  'Post /mock/api/v1/quote/contract.deals': (req, res) => {
     res.send({
       "head": {
         "method": "market.deals",
@@ -147,18 +147,18 @@ export default delay({
           const res = _.random(10000, 20000)
           return {
             "exist": ['0', '1'][_.random(0, 1)],
-            "price": index + 10 + _.random(10, 20),
-            "amountShow": res,//randomStr()
-            "amount": res,//randomStr()
+            "orderPrice": index + 10 + _.random(10, 20),
+            "orderQuantityShow": res,//randomStr()
+            "orderQuantity": res,//randomStr()
           }
         }),
         "bids": randomArrayMap(5).map((item, index) => {
           const res = _.random(10000, 20000)
           return {
             "exist": ['0', '1'][_.random(0, 1)],
-            "price": index + '.0',
-            "amountShow": res,//randomStr()
-            "amount": res //randomStr()
+            "orderPrice": index + 10 + _.random(10, 20),
+            "orderQuantityShow": res,//randomStr()
+            "orderQuantity": res,//randomStr()
           }
         })
       },
