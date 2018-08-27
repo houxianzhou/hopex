@@ -81,7 +81,7 @@ export default joinModel(modelExtend, {
         type: 'createRequestParams',
         payload: {
           "head": {
-            "method": "market.deals",
+            "method": "contract.deals",
           },
           "param": {
             "pageSize": "100",
@@ -128,7 +128,17 @@ export default joinModel(modelExtend, {
           latest_records: [
             ...result,
             ...latest_records,
-          ].slice(0, 100)
+          ].map((item = {}) => {
+            const { id, time, fillPrice, fillQuantity, side } = item
+            return {
+              id,
+              time,
+              price: fillPrice,
+              amount: fillQuantity,
+              type: side,
+              ...item,
+            }
+          }).slice(0, 100)
         }
       })
     },
@@ -891,7 +901,7 @@ export default joinModel(modelExtend, {
         }
       }
     },
-    * getOrderDetail({ payload = {} }, { call, put,}) {
+    * getOrderDetail({ payload = {} }, { call, put, }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {

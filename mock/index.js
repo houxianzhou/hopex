@@ -113,16 +113,16 @@ export default delay({
       "data": [{
         "id": _.random(101, 200),
         "time": "任意值",
-        "price": randomStr(1000, 10000),
-        "amount": randomStr(10000, 20000),
-        "type": ["2", '1'][_.random(0, 1)]
+        "fillPrice": randomStr(1000, 10000),
+        "fillQuantity": randomStr(10000, 20000),
+        "side": ["2", '1'][_.random(0, 1)]
       }].concat(randomArrayMap(4).map((item, index) => (
         {
-          "id": index,
-          "time": "13:09:23",
-          "price": randomStr(1000, 10000),
-          "amount": randomStr(10000, 20000),
-          "type": ["2", '1'][_.random(0, 1)]
+          "id": _.random(101, 200),
+          "time": "任意值",
+          "fillPrice": randomStr(1000, 10000),
+          "fillQuantity": randomStr(10000, 20000),
+          "side": ["2", '1'][_.random(0, 1)]
         }
       ))),
       ...other

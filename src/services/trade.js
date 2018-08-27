@@ -14,7 +14,7 @@ if (MODE === 'mock') {
 
 // 最新成交列表
 export async function getLatestRecord(payload) {
-  return request(`${UserIp3}/market.deals`, {
+  return request(`${UserIp3}/contract.deals`, {
     method: 'post',
     body: payload,
     needLoop: true,

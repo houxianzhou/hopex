@@ -91,9 +91,9 @@ mockServer2.onMessage = (e) => {
             "data": [{
               "id": `${_.random(1000, 10000)}`,
               "time": "12:59:56",
-              "price": `${_.random(10, 100)}`,
-              "amount": "1",
-              "type": "1"
+              "fillPrice": `${_.random(10, 100)}`,
+              "fillQuantity": "1",
+              "side": "1"
             }]
           }
         )
