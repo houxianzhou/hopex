@@ -129,10 +129,10 @@ export default delay({
     })
   },
   //委托列表
-  'Post /mock/api/v1/quote/market.active_delegate': (req, res) => {
+  'Post /mock/api/v1/quote/contract.order_book': (req, res) => {
     res.send({
       "head": {
-        "method": "market.active_delegate",
+        "method": "contract.order_book",
         "msgType": "response",
         "packType": "1",
         "lang": "cn",
@@ -570,9 +570,9 @@ export default delay({
             "fee": "0.0008837178",
             "closedPNL": "0.0000000000",
             "withdrawFreeze": "0.0000000000",
-            "floatingPNL": "-5036.3089753631",
+            "floatingPNL": "+0.0000",
             "positionMargin": "265.3114237312",
-            "roe": "-1898.2631446974",
+            "roe": "-0.0000",
             "delegateMargin": "1.0200000000",
             "walletBalance": "119946.2641417538",
             "totalWealth": "118048.0009970564",

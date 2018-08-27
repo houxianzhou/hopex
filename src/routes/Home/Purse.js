@@ -81,23 +81,10 @@ export default class Pure extends Component {
                     <div className={styles.top} >
                       <div className={styles.tip} >浮动盈亏</div >
                       <div className={styles.number} >
-                        {
-                          Number(floatingPNL) >= 0 ? (
-                            <RedGreenSwitch.GreenText value={floatingPNL} />
-                          ) : (
-                            <RedGreenSwitch.RedText value={floatingPNL} />
-                          )
-                        }
-
+                        <RedGreenSwitch.MarkText value={floatingPNL}  />
                       </div >
                       <div className={styles.percent} >
-                        {
-                          Number(roe) >= 0 ? (
-                            <RedGreenSwitch.GreenText value={`${roe}%`} />
-                          ) : (
-                            <RedGreenSwitch.RedText value={`${roe}%`} />
-                          )
-                        }
+                        <RedGreenSwitch.MarkText value={roe}  />
                       </div >
                     </div >
                     <div className={styles.down} >

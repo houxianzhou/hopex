@@ -113,17 +113,17 @@ mockServer2.onMessage = (e) => {
               "asks": [
                 {
                   "priceD": 0.0,
-                  "price": `${_.random(1, 3)}`,
-                  "amount": value1,
-                  "amountShow": `${value1}`,
+                  "orderPrice": `${_.random(1, 3)}`,
+                  "orderQuantity": value1,
+                  "orderQuantityShow": `${value1}`,
                   "exist": 0
                 }
               ],
               "bids": [{
                 "priceD": 0.0,
-                "price": `${_.random(1, 3)}`,
-                "amount": value2,
-                "amountShow": `${value2}`,
+                "orderPrice": `${_.random(1, 3)}`,
+                "orderQuantity": value2,
+                "orderQuantityShow": `${value2}`,
                 "exist": 0
               }]
             }
