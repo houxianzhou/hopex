@@ -347,7 +347,7 @@ export default class BuySell extends Component {
       label_price: buy.orderValueDisplay,
       className: RG ? styles.buy : styles.sell,
       onSubmit: () => {
-        if (Number(buy.price) > Number(maxLimitPrice)) {
+        if (isLimitPrice() && Number(buy.price) > Number(maxLimitPrice)) {
           openModal({
             name: 'priceWarn',
             data: {
@@ -427,7 +427,7 @@ export default class BuySell extends Component {
           label_price: sell.orderValueDisplay,
           className: RG ? styles.sell : styles.buy,
           onSubmit: () => {
-            if (Number(sell.price) < Number(minLimitPrice)) {
+            if (isLimitPrice() && Number(sell.price) < Number(minLimitPrice)) {
               openModal({
                 name: 'priceWarn',
                 data: {
