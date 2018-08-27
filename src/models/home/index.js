@@ -195,8 +195,7 @@ export default joinModel(modelExtend, {
             amount: orderQuantity,
             amountShow: orderQuantityShow,
             exist,
-            ...item
-
+            // ...item
           }
         })
       }
@@ -206,7 +205,7 @@ export default joinModel(modelExtend, {
       let bids = [...(ensure_records.bids ? ensure_records.bids : [])]
       const Filtering = (result = [], side = []) => {
         result.map((item = {}) => {
-          const filterOne = _.findIndex(asks, (one = {}) => String(one.price) === String(item.price))
+          const filterOne = _.findIndex(side, (one = {}) => String(one.price) === String(item.price))
           if (filterOne !== -1) {
             side.splice(filterOne, 1, item)
           } else {
