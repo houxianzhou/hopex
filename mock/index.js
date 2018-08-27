@@ -18,14 +18,16 @@ export default delay({
       "data": [{
         "name": "BTC",
         "list": [{
-          "price24h": "6079.00",
-          "priceLast": "6000.00",
+          "price24h": "6600.00",
+          "priceLast": "6600.0",
           "direction": -1,
           "marketCode": "BTCUSDT",
           "marketName": "BTCUSDT永续",
-          "percent": "-1.29",
-          "dollarPrice": "6000.00",
-          "position": true
+          "percent": "0.00%",
+          "dollarPrice": "$6600.00",
+          "totalPrice24h": "0BTC",
+          "position": false,
+          "pause": false
         }]
       }, {
         "name": "ETH",
@@ -36,26 +38,33 @@ export default delay({
           "priceLast": "",
           "percent": "",
           "dollarPrice": "",
-          "position": false
+          "position": false,
+          "pause": true
         }, {
+          "price24h": "270.00000",
+          "priceLast": "270.0",
+          "direction": -1,
           "marketCode": "ETHUSDT",
           "marketName": "ETHUSDT永续",
-          "price24h": "",
-          "priceLast": "",
-          "percent": "",
-          "dollarPrice": "",
-          "position": false
+          "percent": "0.00%",
+          "dollarPrice": "$270.00",
+          "totalPrice24h": "0ETH",
+          "position": false,
+          "pause": false
         }]
       }, {
         "name": "XRP",
         "list": [{
+          "price24h": "0.00006780",
+          "priceLast": "0.0000678",
+          "direction": 1,
           "marketCode": "XRPBTC",
           "marketName": "XRPBTC永续",
-          "price24h": "",
-          "priceLast": "",
-          "percent": "",
-          "dollarPrice": "",
-          "position": false
+          "percent": "0.00%",
+          "dollarPrice": "$0.44",
+          "totalPrice24h": "0BTC",
+          "position": false,
+          "pause": false
         }, {
           "marketCode": "XRPETH",
           "marketName": "XRPETH永续",
@@ -63,7 +72,8 @@ export default delay({
           "priceLast": "",
           "percent": "",
           "dollarPrice": "",
-          "position": false
+          "position": false,
+          "pause": true
         }, {
           "marketCode": "XRPUSDT",
           "marketName": "XRPUSDT永续",
@@ -71,27 +81,77 @@ export default delay({
           "priceLast": "",
           "percent": "",
           "dollarPrice": "",
-          "position": false
+          "position": false,
+          "pause": false
         }]
       }, {
         "name": "EOS",
         "list": [{
+          "price24h": "0.017500",
+          "priceLast": "0.01750",
+          "direction": 1,
           "marketCode": "EOSETH",
           "marketName": "EOSETH永续",
+          "percent": "0.00%",
+          "dollarPrice": "$7.89",
+          "totalPrice24h": "0ETH",
+          "position": false,
+          "pause": false
+        }, {
+          "price24h": "0.0007501",
+          "priceLast": "0.0007501",
+          "direction": 1,
+          "marketCode": "EOSBTC",
+          "marketName": "EOSBTC永续",
+          "percent": "0.00%",
+          "dollarPrice": "$5.02",
+          "totalPrice24h": "0BTC",
+          "position": false,
+          "pause": true
+        }]
+      }, {
+        "name": "LTC",
+        "list": [{
+          "price24h": "0.008580",
+          "priceLast": "0.00858",
+          "direction": 1,
+          "marketCode": "LTCBTC",
+          "marketName": "LTCBTC永续",
+          "percent": "0.00%",
+          "dollarPrice": "$54.77",
+          "totalPrice24h": "0BTC",
+          "position": false,
+          "pause": false
+        }]
+      }, {
+        "name": "BCH",
+        "list": [{
+          "marketCode": "BCHUSDT",
+          "marketName": "BCHUSDT永续",
           "price24h": "",
           "priceLast": "",
           "percent": "",
           "dollarPrice": "",
-          "position": false
+          "position": false,
+          "pause": true
         }, {
-          "price24h": "0.0007989",
-          "priceLast": "0.0007400",
-          "direction": -1,
-          "marketCode": "EOSBTC",
-          "marketName": "EOSBTC永续",
-          "percent": "-7.37",
-          "dollarPrice": "4.46",
-          "position": true
+          "marketCode": "BCHBTC",
+          "marketName": "BCHBTC永续",
+          "price24h": "",
+          "priceLast": "",
+          "percent": "",
+          "dollarPrice": "",
+          "position": false,
+          "pause": false
+        }, {
+          "marketCode": "BCHETH",
+          "marketName": "BCHETH永续",
+          "price24h": "",
+          "priceLast": "",
+          "percent": "",
+          "dollarPrice": "",
+          "position": false,
+          "pause": false
         }]
       }], "ret": "0", "errCode": "0", "errStr": "success"
     })
@@ -204,7 +264,7 @@ export default delay({
         "dealAmount": "0",
         "dealMoney": "0",
         "dealFee": "0",
-        "orderStatus": ['1', '2', '3'][_.random(0,3)],
+        "orderStatus": ['1', '2', '3'][_.random(0, 3)],
         "leverage": "10",
         "avgDealMoney": "0",
         "delegateMoney": "0.006"
@@ -649,7 +709,7 @@ export default delay({
         "dealAmount": "5",
         "dealMoney": "0.0008171937566397",
         "dealFee": "-0.00",
-        "orderStatus":['1', '2', '3'][_.random(0,3)],
+        "orderStatus": ['1', '2', '3'][_.random(0, 3)],
         "leverage": _.random(10, 90) + '',
         "avgDealMoney": "6118.5",
         "delegateMoney": "0.00004209",

@@ -80,26 +80,10 @@ export default class View extends Component {
                                               {item2.marketName}
                                             </div >
                                             <div className={styles.price} >
-                                              {
-                                                /[\+]/.test(item2.priceLast) ? (
-                                                  <RedGreenSwitch.GreenText
-                                                    value={item2.priceLast} />
-                                                ) : (
-                                                  <RedGreenSwitch.RedText
-                                                    value={item2.priceLast} />
-                                                )
-                                              }
+                                              <RedGreenSwitch.MarkText value={item2.priceLast}  />
                                             </div >
                                             <div className={styles.percent} >
-                                              {
-                                                /[\+]/.test(item2.percent) ? (
-                                                  <RedGreenSwitch.GreenText
-                                                    value={item2.percent} />
-                                                ) : (
-                                                  <RedGreenSwitch.RedText
-                                                    value={item2.percent} />
-                                                )
-                                              }
+                                              <RedGreenSwitch.MarkText value={item2.percent}  />
                                             </div >
                                           </RouterGo.SwitchMarket >
                                         )
