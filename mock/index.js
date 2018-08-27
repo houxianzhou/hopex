@@ -424,8 +424,8 @@ export default delay({
         "userAllowTrade": true,
         "marketAllowTrade": true,
         "marketCode": "BTCUSDT",
-        "minPriceMovement": 0.5,
-        "minPriceMovementDisplay": "0.5BTC",
+        "minPriceMovement": 0.000000001,
+        "minPriceMovementDisplay": "0.000000001",
         "maintenanceMarginRate": 0.005,
         "maintenanceMarginRateDisplay": "0.005%",
         "minTradeNum": 1,
@@ -704,6 +704,6 @@ export default delay({
     )
   },
 
-}, 1000)
+}, 100)
 
 

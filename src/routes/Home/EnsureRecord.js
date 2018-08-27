@@ -18,7 +18,7 @@ export default class EnsureRecord extends Component {
   }
 
   startInit = () => {
-    this.getEnsureRecord()
+     this.getEnsureRecord()
   }
 
 

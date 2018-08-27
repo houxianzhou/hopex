@@ -16,22 +16,28 @@ export default class View extends Component {
       // step = scientificToNumber(step)
       max = Number(max)
       min = Number(min)
+
+      // console.log(value, '-------------')
     }
+    // const pos = (String(value.toLocaleString()).split('.')[1] || '').length
 
     if (!_.isNil(value) && value !== '') {
       let test1 = /\.$/.test(value)
       let test2 = /^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$/.test(value)
-
-
       if (test1) {
       } else {
         if (value < min) value = min
         if (value > max) value = max
         const int = Math.floor((new BigNumber(value)).div(step).toFixed(prec))
-        value = int * step
-        if (_.isInteger(value)) {
-          prec = 0
+        value = (new BigNumber(int)). multipliedBy (step).valueOf()
+        const pos = (String(value).split('.')[1] || '').length
+        // console.log(value, pos, prec, '------------')
+        if (/e/.test(value)) {
+          prec = prec
+        } else if (Number(pos) < Number(prec)) {
+          prec = pos
         }
+        // console.log(value, prec, '+++++++++=')
         value = (new BigNumber(value)).toFixed(prec)
       }
       onChange(value)
@@ -69,7 +75,7 @@ export default class View extends Component {
           onClick={
             () => {
               if (!_.isNil(value)) {
-                let result = Number(value) - step
+                let result = (new BigNumber(value || 0)).minus(step).valueOf()
                 // result = result.minus(step)
                 rules(result)
               }
@@ -85,7 +91,7 @@ export default class View extends Component {
         <div onClick={
           () => {
             if (!_.isNil(value)) {
-              let result = Number(value) + Number(step)
+              let result = (new BigNumber(value || 0)).plus(step).valueOf()
               // result = result.plus(step).valueOf()
               rules(result)
             }
