@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { COLORS } from '@constants'
 import { Mixin, Slider, Toast } from "@components"
-import { classNames, getPercent, _ } from '@utils'
+import { classNames, getPercent, _, dealInterval } from '@utils'
 import grayangle from '@assets/grayangle.png'
 import activeangle from '@assets/activeangle.png'
 import MainModal from '@routes/Components/MainModal'
@@ -19,6 +19,11 @@ export default class CurrentContract extends Component {
     const { dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getLeverage`
+    }).then(res => {
+      if (!this._isMounted) return
+      this.interval = dealInterval(() => {
+        this.getLeverage()
+      })
     })
   }
 
@@ -74,7 +79,7 @@ export default class CurrentContract extends Component {
                 </div >
               </div >
               <div className={styles.down} >
-                <div >自动减仓队列</div >
+                <div >自动减仓列队</div >
                 <ul >
                   {
                     colors.map((item, index) => (
