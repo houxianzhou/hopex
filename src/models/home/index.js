@@ -195,7 +195,7 @@ export default joinModel(modelExtend, {
             amount: orderQuantity,
             amountShow: orderQuantityShow,
             exist,
-            // ...item
+            ...item
           }
         })
       }
