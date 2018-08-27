@@ -536,7 +536,7 @@ export default delay({
         "totalPrice24h": randomStr(10000, 100000),
         reasonablePrice: randomStr(10000, 100000),
         "marketPrice": "7388.47741901",
-        "percent": "+50.00",
+        "percent": "0.00%",
         "dollarPrice": randomStr(100, 1000),
         "price24h": randomStr(100, 1000),
         "priceLast": '+' + randomStr(100, 1000),

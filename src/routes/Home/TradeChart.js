@@ -594,22 +594,10 @@ export default class TradeChart extends Component {
                           </div >
                           <div className={styles.compare} >
                             <div className={styles.percent} >
-                              {
-                                (/[+-]/.test(latestPriceChangePercent)) ? (
-                                  <RedGreenSwitch.GreenText value={`${latestPriceChangePercent}`} />
-                                ) : (
-                                  <RedGreenSwitch.RedText value={`${latestPriceChangePercentShown}`} />
-                                )
-                              }
+                              <RedGreenSwitch.MarkText value={latestPriceChangePercent} />
                             </div >
                             <div className={styles.dollar} >
-                              {
-                                (/[+-]/.test(latestPriceChangePercent)) ? (
-                                  <RedGreenSwitch.GreenText value={dollarPrice} />
-                                ) : (
-                                  <RedGreenSwitch.RedText value={dollarPrice} />
-                                )
-                              }
+                              <RedGreenSwitch.MarkText value={dollarPrice} mark={latestPriceChangePercent} />
                             </div >
                           </div >
                         </>
