@@ -204,7 +204,7 @@ export default delay({
         "dealAmount": "0",
         "dealMoney": "0",
         "dealFee": "0",
-        "orderStatus": "1",
+        "orderStatus": ['1', '2', '3'][_.random(0,3)],
         "leverage": "10",
         "avgDealMoney": "0",
         "delegateMoney": "0.006"
@@ -479,9 +479,11 @@ export default delay({
 
   // 设置杠杆
   'Post /mock/api/v1/trade/market.leverage_set': (req, res) => {
-    res.send({ "errCode": "0",
+    res.send({
+      "errCode": "0",
       "errStr": "success",
-      "ret": "0"})
+      "ret": "0"
+    })
   },
 
   //k线图
@@ -647,7 +649,7 @@ export default delay({
         "dealAmount": "5",
         "dealMoney": "0.0008171937566397",
         "dealFee": "-0.00",
-        "orderStatus": "2",
+        "orderStatus":['1', '2', '3'][_.random(0,3)],
         "leverage": _.random(10, 90) + '',
         "avgDealMoney": "6118.5",
         "delegateMoney": "0.00004209",
