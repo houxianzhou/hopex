@@ -69,7 +69,6 @@ export default class BuySell extends Component {
     })
   }
 
-
   state = {
     side: '',
     orderChannel: 0,// 限价还是市价
@@ -288,7 +287,7 @@ export default class BuySell extends Component {
         minDealAmountDisplay = '', maxLimitPrice = '', minLimitPrice = '', availableMoney = '', availableMoneyDisplay,
       },
       modal: {
-        name
+        name, data
       }
         = {}, openModal, isLogin
     }
@@ -348,18 +347,29 @@ export default class BuySell extends Component {
       label_price: buy.orderValueDisplay,
       className: RG ? styles.buy : styles.sell,
       onSubmit: () => {
-        changeState({
-          side: '2'
-        })
-        dispatch({
-          type: `${modelName}/postSideOrder`,
-          payload: {
-            side: '2',
-            method: isLimitPrice() ? 'order.put_limit' : 'order.put_market',
-            price: String(buy.price),
-            amount: String(buy.amount)
-          }
-        })
+        if (Number(buy.price) > Number(maxLimitPrice)) {
+          openModal({
+            name: 'priceWarn',
+            data: {
+              side: 2,
+              price: maxLimitPrice
+            }
+          })
+        } else {
+          changeState({
+            side: '2'
+          })
+          dispatch({
+            type: `${modelName}/postSideOrder`,
+            payload: {
+              side: '2',
+              method: isLimitPrice() ? 'order.put_limit' : 'order.put_market',
+              price: String(buy.price),
+              amount: String(buy.amount)
+            }
+          })
+        }
+
       }
     }
     const configBuy = {
@@ -417,18 +427,28 @@ export default class BuySell extends Component {
           label_price: sell.orderValueDisplay,
           className: RG ? styles.sell : styles.buy,
           onSubmit: () => {
-            changeState({
-              side: '1'
-            })
-            dispatch({
-              type: `${modelName}/postSideOrder`,
-              payload: {
-                side: '1',
-                method: isLimitPrice() ? 'order.put_limit' : 'order.put_market',
-                price: String(sell.price),
-                amount: String(sell.amount)
-              }
-            })
+            if (Number(sell.price) < Number(minLimitPrice)) {
+              openModal({
+                name: 'priceWarn',
+                data: {
+                  side: 1,
+                  price: minLimitPrice
+                }
+              })
+            } else {
+              changeState({
+                side: '1'
+              })
+              dispatch({
+                type: `${modelName}/postSideOrder`,
+                payload: {
+                  side: '1',
+                  method: isLimitPrice() ? 'order.put_limit' : 'order.put_market',
+                  price: String(sell.price),
+                  amount: String(sell.amount)
+                }
+              })
+            }
           }
         }
       }
@@ -450,7 +470,6 @@ export default class BuySell extends Component {
             header={
               <div className={styles.buysellheader} >
                 <ul className={classNames(
-                  // styles.tab,
                   styles.buyselltab
                 )} >
                   <li
@@ -587,12 +606,16 @@ class RenderModal2 extends Component {
     const props = {
       ...this.props
     }
-    const { closeModal } = this.props
+    const { closeModal, modal: { data: { side, price } = {} } } = this.props
     return (
       <MainModal {...props} className={styles.priceWarn_Modal} >
         <div >
           <div className={styles.content} >
-            您的下单价格已超出价格限制范围，请确认以目前允许的最高买入/最低卖出价格6331.04下单
+            您的下单价格已超出价格限制范围，请确认以目前允许的
+            {
+              String(side) === '2' ? '最高买入' : '最低卖出'
+            }
+            价格{price}下单
           </div >
           <div className={styles.buttons} >
 
@@ -606,7 +629,7 @@ class RenderModal2 extends Component {
             <div
               className={styles.confirm}
               onClick={() => {
-
+                closeModal()
               }}
             >
               <Button >
