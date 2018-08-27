@@ -60,10 +60,32 @@ class GreenText extends Component {
 }
 
 
+@connect(({ theme: model }) => ({
+  model,
+}))
+class MarkText extends Component {
+  render() {
+    const { model: { RG = 1 }, value, mark = value } = this.props
+    const green = RG ? 'green' : 'red'
+    const red = RG ? 'red' : 'green'
+    return (
+      <span className={
+        classNames(
+          (/[\+\-]/.test(mark)) ? (
+            (/\+/.test(mark)) ? green : red
+          ) : null
+        )
+      } >{value}</span >
+    )
+  }
+}
+
+
 export default {
   RedGreenArrow,
   RedText,
   GreenText,
+  MarkText,
   SwitchColor: (color1, color2, RG = 1) => {
     return RG ? color1 : color2
   }

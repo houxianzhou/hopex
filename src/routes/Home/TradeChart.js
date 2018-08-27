@@ -587,15 +587,7 @@ export default class TradeChart extends Component {
                             {marketName}
                           </div >
                           < div className={styles.latestprice} >
-                            {
-                              (/\+/.test(latestPrice)) ? (
-                                <RedGreenSwitch.GreenText
-                                  value={latestPriceShown} />
-                              ) : (
-                                <RedGreenSwitch.RedText
-                                  value={latestPriceShown} />
-                              )
-                            }
+                            <RedGreenSwitch.MarkText value={`${latestPriceShown}`} mark={latestPrice} />
                             <RedGreenSwitch.RedGreenArrow style={{ marginLeft: 10 }} alt={
                               latestPriceTrend !== '' ? (latestPriceTrend ? 'top' : 'down') : null
                             } />
