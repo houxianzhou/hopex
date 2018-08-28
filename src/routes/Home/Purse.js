@@ -20,11 +20,11 @@ export default class Pure extends Component {
       type: `${modelName}/getPurseAssetList`
     }).then((res) => {
       if (res) {
-        if (!this._isMounted) return
+        if (!this._isMounted || this.interval) return
         this.interval = dealInterval(() => {
+          this.interval = null
           this.getPurseAssetList()
         })
-
       }
     })
   }
@@ -57,7 +57,7 @@ export default class Pure extends Component {
                 <div >
                   钱包
                 </div >
-                <ul>
+                <ul >
                   {
                     assetList.map((item, index) => <li key={index} onClick={() => {
                       this.changeState({
@@ -81,10 +81,10 @@ export default class Pure extends Component {
                     <div className={styles.top} >
                       <div className={styles.tip} >浮动盈亏</div >
                       <div className={styles.number} >
-                        <RedGreenSwitch.MarkText value={floatingPNL}  />
+                        <RedGreenSwitch.MarkText value={floatingPNL} />
                       </div >
                       <div className={styles.percent} >
-                        <RedGreenSwitch.MarkText value={roe}  />
+                        <RedGreenSwitch.MarkText value={roe} />
                       </div >
                     </div >
                     <div className={styles.down} >

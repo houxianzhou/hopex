@@ -25,10 +25,11 @@ export default class RecentRecord extends Component {
         type: activeLi
       }
     }).then((res) => {
-        if (!this._isMounted) return
+        if (!this._isMounted || this.interval) return
         if (activeLi === '1') {
           this.interval = dealInterval(() => {
-            this.getHistory(activeLi)
+            this.interval = null
+            this.getHistory()
           })
         }
       }

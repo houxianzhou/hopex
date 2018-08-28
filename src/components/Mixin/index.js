@@ -59,7 +59,6 @@ export class MixinChild extends React.Component {
         })
       }
     }
-    // if (!that.props.that.childInitStacks) that.props.that.childInitStacks = []
   }
 
   componentDidMount() {
@@ -67,37 +66,20 @@ export class MixinChild extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.that._isMounted=false
-    // this.startUnMount()
+    this.props.that._isMounted = false
   }
 
   startInit = () => {
     const { that = {} } = this.props
-    const [startInit, childInitStacks] = [_.get(that, 'startInit'), _.get(that, 'props.that.childInitStacks')]
+    const [startInit, childInitStacks] = [
+      _.get(that, 'startInit'),
+      _.get(that, 'props.that.childInitStacks')
+    ]
     if (_.isFunction(startInit) && _.isArray(childInitStacks)) {
       childInitStacks.push(() => {
         startInit()
       })
     }
-  }
-
-  startUnMount = () => {
-    const { that = {} } = this.props
-    that._isMounted = false
-    // return Promise.resolve()
-    // if (that.interval) {
-    //   return new Promise((resolve) => {
-    //     if (_.isArray(that.interval)) {
-    //       that.interval.map(item => clearTimeout(item))
-    //     } else {
-    //       clearTimeout(that.interval)
-    //     }
-    //     that.interval = null
-    //     resolve()
-    //   })
-    // } else {
-    //   return Promise.resolve()
-    // }
   }
 
   render() {

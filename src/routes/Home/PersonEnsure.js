@@ -20,10 +20,10 @@ export default class PersonEnsure extends Component {
       type: `${modelName}/getPersonalEnsure`,
       payload
     }).then((res) => {
-        if (!this._isMounted) return
-        if (callback) return callback()
+        if (!this._isMounted || this.interval) return
         this.interval = dealInterval(() => {
-          this.getPersonalEnsure(payload)
+          this.interval = null
+          this.getPersonalEnsure()
         })
       }
     )

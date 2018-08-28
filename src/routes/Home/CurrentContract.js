@@ -20,8 +20,9 @@ export default class CurrentContract extends Component {
     dispatch({
       type: `${modelName}/getLeverage`
     }).then(res => {
-      if (!this._isMounted) return
+      if (!this._isMounted || this.interval) return
       this.interval = dealInterval(() => {
+        this.interval = null
         this.getLeverage()
       })
     })

@@ -317,8 +317,8 @@ export default class TradeChart extends Component {
         "scalesProperties.textColor": "#778094",
 
         //-----------面积图，分时图的颜色
-        "mainSeriesProperties.areaStyle.color1":"rgba(62,108,174,.5)",// "#3278DD",
-        "mainSeriesProperties.areaStyle.color2":"rgba(62,108,174,.1)",// "#3278DD",
+        "mainSeriesProperties.areaStyle.color1": "rgba(62,108,174,.5)",// "#3278DD",
+        "mainSeriesProperties.areaStyle.color2": "rgba(62,108,174,.1)",// "#3278DD",
         // "mainSeriesProperties.areaStyle.color3": "rgba(62,108,174,0)",
         "mainSeriesProperties.areaStyle.linecolor": "#4077C6",
         //-------------
@@ -434,19 +434,19 @@ export default class TradeChart extends Component {
           //   })
           // })
 
-          // console.log('2')
-          // const a = _.debounce(() => {
+          // setInterval(() => {
           //   onRealtimeCallback({
-          //       "time": 1530464461000,
-          //       "close": 149.56,
+          //       "time": 1535385600000,
+          //       "close": _.random(100,300),
           //       "open": _.random(100, 500),
           //       "high": 150.9,
           //       "low": 148.57,
           //       "volume": 1000
           //     }
           //   )
-          // }, 1000)
-          // a()
+          // }, 2000)
+
+
         },
         unsubscribeBars(subscriberUID) {
         }

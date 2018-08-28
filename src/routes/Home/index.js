@@ -249,7 +249,6 @@ export default class View extends Component {
             }
           </div >
 
-
           {
             isLogin ? (
               <div className={styles.views} >
@@ -259,6 +258,7 @@ export default class View extends Component {
               </div >
             ) : null
           }
+
 
           {
             isLogin ? (

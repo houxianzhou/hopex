@@ -15,6 +15,7 @@ export default class Position extends Component {
   state = {
     active: 0
   }
+
   startInit = () => {
     this.getPosition()
   }
@@ -24,8 +25,9 @@ export default class Position extends Component {
     dispatch({
       type: `${modelName}/getPosition`
     }).then(() => {
-      if (!this._isMounted) return
+      if (!this._isMounted || this.interval) return
       this.interval = dealInterval(() => {
+        this.interval = null
         this.getPosition()
       })
     })
