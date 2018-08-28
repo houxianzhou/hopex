@@ -576,16 +576,16 @@ export default class TradeChart extends Component {
       },
     } = this.props
     const intervals = [
-      { name: '1min', value: '1' },
-      { name: '5min', value: '5' },
-      { name: '15min', value: '15' },
-      { name: '30min', value: '30' },
-      { name: '1hour', value: '60' },
-      { name: '4hour', value: '240' },
-      { name: '1day', value: 'D' },
-      { name: '5day', value: '5D' },
-      { name: '1week', value: 'W' },
-      { name: '1mon', value: 'M' }
+      { name: '1m', value: '1' },
+      { name: '5m', value: '5' },
+      { name: '15m', value: '15' },
+      { name: '30m', value: '30' },
+      { name: '1h', value: '60' },
+      { name: '4h', value: '240' },
+      { name: '1D', value: 'D' },
+      { name: '5D', value: '5D' },
+      { name: '1W', value: 'W' },
+      { name: '1M', value: 'M' }
     ]
 
     return (
@@ -682,23 +682,6 @@ export default class TradeChart extends Component {
                     loaded ? (
                       <>
                         <ul className={styles.interval} >
-                          <li
-                            key={0}
-                            onClick={() => {
-                              changeState({
-                                time: 'realtime'
-                              })
-                              this.widget.chart().setChartType(3)
-                              this.studies.forEach((id) => {
-                                this.widget.chart().setEntityVisibility(id, false)
-                              })
-                            }}
-                            className={classNames(
-                              time === 'realtime' ? styles.active : null
-                            )}
-                          >
-                            分时
-                          </li >
                           {
                             intervals.map((item, index) => (
                               <li
@@ -722,6 +705,23 @@ export default class TradeChart extends Component {
                               </li >
                             ))
                           }
+                          <li
+                            key={intervals.length}
+                            onClick={() => {
+                              changeState({
+                                time: 'realtime'
+                              })
+                              this.widget.chart().setChartType(3)
+                              this.studies.forEach((id) => {
+                                this.widget.chart().setEntityVisibility(id, false)
+                              })
+                            }}
+                            className={classNames(
+                              time === 'realtime' ? styles.active : null
+                            )}
+                          >
+                            分时图
+                          </li >
                         </ul >
                         <ul className={styles.utils} >
                           <li className={styles.indicator} onClick={() => {
