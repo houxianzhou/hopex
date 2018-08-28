@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, _, getRes, resOk, formatNumber, formatJson, isEqual, } from '@utils'
+import { classNames, _, getRes, resOk, formatNumber, formatJson, isEqual, localSave } from '@utils'
 import { Mixin } from "@components"
 import wss from '@services/SocketClient'
 import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
@@ -297,7 +297,53 @@ export default class TradeChart extends Component {
         "paneProperties.horzGridProperties.color": "transparent",
         "paneProperties.topMargin": "15",
         "paneProperties.bottomMargin": "5",
-        "scalesProperties.backgroundColor": "red"
+        "scalesProperties.backgroundColor": "red",
+
+
+//--------------------------------------蜡烛图
+        "mainSeriesProperties.candleStyle.upColor": "#00C087",
+        "mainSeriesProperties.candleStyle.borderUpColor": "#00C087",
+        "mainSeriesProperties.candleStyle.wickUpColor": '#00C087',
+
+        "mainSeriesProperties.candleStyle.downColor": "#FF7858",// "#d75442",
+        "mainSeriesProperties.candleStyle.borderDownColor": "#FF7858",
+        "mainSeriesProperties.candleStyle.wickDownColor": '#FF7858',
+
+        "mainSeriesProperties.candleStyle.drawWick": true,
+        "mainSeriesProperties.candleStyle.drawBorder": true,
+        "mainSeriesProperties.candleStyle.borderColor": "white",
+        "mainSeriesProperties.candleStyle.barColorsOnPrevClose": false,
+
+        //-----------volume的大小large,medium,small,tiny
+        volumePaneSize: "medium",
+        //----------------- x,y坐标轴的颜色，字体颜色
+        "scalesProperties.lineColor": "#778094",
+        "scalesProperties.textColor": "#778094",
+
+        //-----------面积图，分时图的颜色
+        "mainSeriesProperties.areaStyle.color1": "#606090",
+        "mainSeriesProperties.areaStyle.color2": "red",
+        "mainSeriesProperties.areaStyle.linecolor": "red",
+
+        //-------------
+        "mainSeriesProperties.lineStyle.color": "white",
+        "mainSeriesProperties.lineStyle.linestyle": 0,
+      },
+      studies_overrides: {
+        //--------------------volume的颜色设置
+        "volume.volume.color.0": "#FF7858",
+        "volume.volume.color.1": "#00C087",
+        "volume.volume.transparency": 0,
+        "volume.volume ma.color": "white",
+        "volume.volume ma.transparency": 100,
+        "volume.volume ma.linewidth": 5,
+        // "volume.show ma": true,
+        "volume.options.showStudyArguments": false,
+        "bollinger bands.median.color": "#33FF88",
+        "bollinger bands.upper.linewidth": 7,
+        //---------------
+        // "ma.plot.color": 'green',
+        // "ma.plot.color.1": 'blue',
       },
 
       loading_screen: { backgroundColor: "#1D1D1D" },
@@ -422,7 +468,7 @@ export default class TradeChart extends Component {
 
         }
       },
-      locale: 'zh',
+      // locale: 'zh',
     })
 
 

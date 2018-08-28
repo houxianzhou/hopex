@@ -536,7 +536,6 @@ export default delay({
     })
   },
 
-
   // 设置杠杆
   'Post /mock/api/v1/trade/market.leverage_set': (req, res) => {
     res.send({
@@ -562,11 +561,16 @@ export default delay({
       },
       "data": {
         "records": periods.map(item => {
-          const h = 160 + _.random(30, 40)
-          const o = h - _.random(10, 20)
-          const c = o - _.random(10, 30)
-          const l = c - _.random(10, 20)
+          const h = _.random(30, 40)
+          const o = _.random(10, 20)
+          const c =  _.random(10, 30)
+          const l =_.random(10, 20)
           const v = _.random(100, 3000)
+          // const h = 160 + _.random(30, 40)
+          // const o = h - _.random(10, 20)
+          // const c = o - _.random(10, 30)
+          // const l = c - _.random(10, 20)
+          // const v = _.random(100, 3000)
           return [item / 1000, o, c, h, l, v, 6, 'BTCUSD永续']
         }),
       },
