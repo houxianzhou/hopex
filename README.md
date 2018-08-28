@@ -1,7 +1,7 @@
 # Develop分支上是最新的代码，master分支不定期更新，本项目所有的接口都有mock服务,
 
 ## 重要文件
-tradeview文件 /src/routes/Home/TradeChart.js
+tradeview文件 /src/routes/Home/TradeChart.js   
 websocket文件  /services/SocketClient.js
 
 ## host配置
