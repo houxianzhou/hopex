@@ -1,9 +1,14 @@
 # 本项目所有的接口都有mock服务
+
+## 重要文件
+tradeview文件 /src/routes/Home/TradeChart.js
+websocket文件  /services/SocketClient.js
+
 ## host配置
 127.0.0.1 hopex.com  
 127.0.0.1 localhost
 
-## ngin配置
+## nginx配置
 ```
  http {
      include       mime.types;
