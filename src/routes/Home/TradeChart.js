@@ -22,14 +22,13 @@ export default class TradeChart extends Component {
     }
   }
 
-
   componentWillUnmount() {
     window.onresize = null
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { model: { ensure_records: prevEnsure_records } } = prevProps
-    const { model: { ensure_records: ensure_records } } = this.props
+    const { model: { ensure_records } } = this.props
     const { map: prevMap } = prevState
     const { map } = this.state
     if (!isEqual(prevEnsure_records, ensure_records) && prevEnsure_records && ensure_records && map === 2) {
@@ -45,7 +44,7 @@ export default class TradeChart extends Component {
   }
 
   componentDidMount() {
-    // localSave.clearAll()
+    localSave.clearAll()
   }
 
   startInit = () => {
@@ -250,6 +249,7 @@ export default class TradeChart extends Component {
   }
 
   startKline = () => {
+    const backColor = '#1D1D1D'
     const { model: { marketCode }, dispatch, modelName } = this.props
     const TradingView = window.TradingView
     const tradeView = document.getElementById('tradeView')
@@ -275,16 +275,13 @@ export default class TradeChart extends Component {
 
         'timeframes_toolbar',
         'chart_property_page_background',
-
-
         // "left_toolbar",
         // 'edit_buttons_in_legend',
         // 'context_menus',
         //'remove_library_container_border',
         // 'chart_property_page_style',
-
       ],
-      toolbar_bg: '#1D1D1D',
+      toolbar_bg: backColor,
       library_path: '/',
       width: '100%',
       height: '100%',
@@ -292,15 +289,14 @@ export default class TradeChart extends Component {
       // interval: 'D',
       'container_id': 'tradeView',
       overrides: {
-        "paneProperties.background": "#1D1D1D",
+        "paneProperties.background": backColor,
         "paneProperties.vertGridProperties.color": "transparent",
         "paneProperties.horzGridProperties.color": "transparent",
         "paneProperties.topMargin": "15",
         "paneProperties.bottomMargin": "5",
-        "scalesProperties.backgroundColor": "red",
+       // "scalesProperties.backgroundColor": "red",
 
-
-//--------------------------------------蜡烛图
+        //--------------------------------------蜡烛图
         "mainSeriesProperties.candleStyle.upColor": "#00C087",
         "mainSeriesProperties.candleStyle.borderUpColor": "#00C087",
         "mainSeriesProperties.candleStyle.wickUpColor": '#00C087',
@@ -324,29 +320,21 @@ export default class TradeChart extends Component {
         "mainSeriesProperties.areaStyle.color1": "#606090",
         "mainSeriesProperties.areaStyle.color2": "red",
         "mainSeriesProperties.areaStyle.linecolor": "red",
-
         //-------------
         "mainSeriesProperties.lineStyle.color": "white",
         "mainSeriesProperties.lineStyle.linestyle": 0,
       },
       studies_overrides: {
         //--------------------volume的颜色设置
-        "volume.volume.color.0": "#FF7858",
-        "volume.volume.color.1": "#00C087",
-        "volume.volume.transparency": 0,
-        "volume.volume ma.color": "white",
-        "volume.volume ma.transparency": 100,
-        "volume.volume ma.linewidth": 5,
-        // "volume.show ma": true,
-        "volume.options.showStudyArguments": false,
-        "bollinger bands.median.color": "#33FF88",
-        "bollinger bands.upper.linewidth": 7,
+        "volume.volume.color.0":'rgba(255,120,88,.85)',
+        "volume.volume.color.1": "rgba(0,192,135,.85)",
+        "volume.options.showStudyArguments": true,
         //---------------
-        // "ma.plot.color": 'green',
-        // "ma.plot.color.1": 'blue',
+        //  "ma.plot.color.0": 'white',
+        //  "ma.plot.color.1": 'rgba(0,192,135,1)',
       },
 
-      loading_screen: { backgroundColor: "#1D1D1D" },
+      loading_screen: { backgroundColor: backColor },
       datafeed: {
         onReady(callback) {
           setTimeout(() => {
@@ -418,7 +406,6 @@ export default class TradeChart extends Component {
               interval: String(interval)
             }
           }).then((result = []) => {
-            // console.log(result,'------------------')
             const data = result.map(item => ({
               time: Number(item[0]) * 1000,
               open: Number(item[1]),
@@ -476,7 +463,9 @@ export default class TradeChart extends Component {
       this.changeState({ loaded: true })
       this.widget = widget
       this.widget.chart().executeActionById('drawingToolbarAction')
-      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [5, "close", 0]))
+      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [5, "close", 0],null,{
+        "Plot.color" : "#FF0000",
+      }))
       this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [10, "close", 0]))
       this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [30, "close", 0]))
       this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [60, "close", 0]))
@@ -584,7 +573,6 @@ export default class TradeChart extends Component {
         marketName = '', maxPrice24h = '', minPrice24h = '', indexPrice = '',
         latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', reasonablePrice = '', latestPriceChangePercent = '', latestPriceChangePercentShown = '', dollarPrice = '', marketAllowTrade = ''
       },
-      RG
     } = this.props
     const intervals = [
       { name: '1min', value: '1' },
@@ -681,7 +669,7 @@ export default class TradeChart extends Component {
                         <div className={styles.title} >
                           <span className='blue' >更多</span >
                         </div >
-                        <div className={styles.desc} ></div >
+                        <div className={styles.desc} />
                       </li >
                     </ul >
                   </div >
@@ -765,7 +753,7 @@ export default class TradeChart extends Component {
                       map: 1
                     })
                   }} className={classNames(
-                    map == 1 ? styles.active : null
+                    map === 1 ? styles.active : null
                   )} >
                     k线图
                   </div >
@@ -774,7 +762,7 @@ export default class TradeChart extends Component {
                       map: 2
                     })
                   }} className={classNames(
-                    map == 2 ? styles.active : null
+                    map === 2 ? styles.active : null
                   )} >
                     深度图
                   </div >
@@ -791,7 +779,7 @@ export default class TradeChart extends Component {
                     </>
                   ) : (
                     <>
-                      <div style={{ display: 'none', visibility: 'hidden' }} ></div >
+                      <div style={{ display: 'none', visibility: 'hidden' }} />
                       <div id="deepChart" className={styles.deepChart} style={{ width: '100%', height: '100%' }} />
                     </>
                   )
