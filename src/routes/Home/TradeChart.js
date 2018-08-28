@@ -320,7 +320,7 @@ export default class TradeChart extends Component {
         "mainSeriesProperties.areaStyle.color1":"rgba(62,108,174,.5)",// "#3278DD",
         "mainSeriesProperties.areaStyle.color2":"rgba(62,108,174,.1)",// "#3278DD",
         // "mainSeriesProperties.areaStyle.color3": "rgba(62,108,174,0)",
-        "mainSeriesProperties.areaStyle.linecolor": "#3E6CAE",
+        "mainSeriesProperties.areaStyle.linecolor": "#4077C6",
         //-------------
         "mainSeriesProperties.lineStyle.color": "white",
         "mainSeriesProperties.lineStyle.linestyle": 0,
