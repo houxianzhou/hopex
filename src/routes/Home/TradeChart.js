@@ -176,7 +176,7 @@ export default class TradeChart extends Component {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: 'rgba(86,188,157,0.41)'
+                  offset: 0, color: 'rgba(0,192,135,0.41)'
                 }, {
                   offset: 1, color: 'rgba(86,188,157,0)'
                 }]
@@ -185,7 +185,7 @@ export default class TradeChart extends Component {
           },
           lineStyle: {
             normal: {
-              color: 'rgba(86,188,157,1)'
+              color: 'rgba(0,192,135,1)'
             }
           },
           itemStyle: {
@@ -215,7 +215,7 @@ export default class TradeChart extends Component {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: 'rgba(218,115,115,0.41)'
+                  offset: 0, color: 'rgba(255,120,88,0.41)'
                 }, {
                   offset: 1, color: 'rgba(218,115,115,0)'
                 }]
@@ -224,7 +224,7 @@ export default class TradeChart extends Component {
           },
           lineStyle: {
             normal: {
-              color: 'rgba(218,115,115,1)'
+              color: 'rgba(255,120,88,1)'
             }
           },
           itemStyle: {
