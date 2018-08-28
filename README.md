@@ -1,9 +1,9 @@
-#本项目所有的接口都有mock服务
-##host配置
+# 本项目所有的接口都有mock服务
+## host配置
 127.0.0.1 hopex.com  
 127.0.0.1 localhost
 
-##ngin配置
+## ngin配置
 ```
  http {
      include       mime.types;
@@ -81,6 +81,6 @@
  
      }
 ```
-##预览
+## 预览
 ![avatar](http://p09oq805j.bkt.clouddn.com/hopex.png)
 
