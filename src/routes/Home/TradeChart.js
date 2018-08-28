@@ -18,7 +18,7 @@ export default class TradeChart extends Component {
     this.state = {
       loaded: false,
       map: 1,
-      time: '1day'
+      time: '1D'
     }
   }
 
@@ -317,17 +317,18 @@ export default class TradeChart extends Component {
         "scalesProperties.textColor": "#778094",
 
         //-----------面积图，分时图的颜色
-        "mainSeriesProperties.areaStyle.color1": "#606090",
-        "mainSeriesProperties.areaStyle.color2": "rgba(147,158,183,.08)",
-        "mainSeriesProperties.areaStyle.linecolor": "rgba(147,158,183,1)",
+        "mainSeriesProperties.areaStyle.color1":"rgba(62,108,174,.5)",// "#3278DD",
+        "mainSeriesProperties.areaStyle.color2":"rgba(62,108,174,.1)",// "#3278DD",
+        // "mainSeriesProperties.areaStyle.color3": "rgba(62,108,174,0)",
+        "mainSeriesProperties.areaStyle.linecolor": "#3E6CAE",
         //-------------
         "mainSeriesProperties.lineStyle.color": "white",
         "mainSeriesProperties.lineStyle.linestyle": 0,
       },
       studies_overrides: {
         //--------------------volume的颜色设置
-        "volume.volume.color.0": 'rgba(255,120,88,.85)',
-        "volume.volume.color.1": "rgba(0,192,135,.85)",
+        "volume.volume.color.0": 'rgba(255,120,88,.4)',
+        "volume.volume.color.1": "rgba(0,192,135,.4)",
       },
 
       loading_screen: { backgroundColor: backColor },
