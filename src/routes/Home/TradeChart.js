@@ -44,7 +44,7 @@ export default class TradeChart extends Component {
   }
 
   componentDidMount() {
-    localSave.clearAll()
+    // localSave.clearAll()
   }
 
   startInit = () => {
@@ -294,7 +294,7 @@ export default class TradeChart extends Component {
         "paneProperties.horzGridProperties.color": "transparent",
         "paneProperties.topMargin": "15",
         "paneProperties.bottomMargin": "5",
-       // "scalesProperties.backgroundColor": "red",
+        // "scalesProperties.backgroundColor": "red",
 
         //--------------------------------------蜡烛图
         "mainSeriesProperties.candleStyle.upColor": "#00C087",
@@ -318,20 +318,16 @@ export default class TradeChart extends Component {
 
         //-----------面积图，分时图的颜色
         "mainSeriesProperties.areaStyle.color1": "#606090",
-        "mainSeriesProperties.areaStyle.color2": "red",
-        "mainSeriesProperties.areaStyle.linecolor": "red",
+        "mainSeriesProperties.areaStyle.color2": "rgba(147,158,183,.08)",
+        "mainSeriesProperties.areaStyle.linecolor": "rgba(147,158,183,1)",
         //-------------
         "mainSeriesProperties.lineStyle.color": "white",
         "mainSeriesProperties.lineStyle.linestyle": 0,
       },
       studies_overrides: {
         //--------------------volume的颜色设置
-        "volume.volume.color.0":'rgba(255,120,88,.85)',
+        "volume.volume.color.0": 'rgba(255,120,88,.85)',
         "volume.volume.color.1": "rgba(0,192,135,.85)",
-        "volume.options.showStudyArguments": true,
-        //---------------
-        //  "ma.plot.color.0": 'white',
-        //  "ma.plot.color.1": 'rgba(0,192,135,1)',
       },
 
       loading_screen: { backgroundColor: backColor },
@@ -452,10 +448,9 @@ export default class TradeChart extends Component {
           // a()
         },
         unsubscribeBars(subscriberUID) {
-
         }
       },
-      // locale: 'zh',
+      locale: 'zh',
     })
 
 
@@ -463,12 +458,18 @@ export default class TradeChart extends Component {
       this.changeState({ loaded: true })
       this.widget = widget
       this.widget.chart().executeActionById('drawingToolbarAction')
-      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [5, "close", 0],null,{
-        "Plot.color" : "#FF0000",
+      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [5, "close", 0], null, {
+        "Plot.color": "#684A95",
       }))
-      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [10, "close", 0]))
-      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [30, "close", 0]))
-      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [60, "close", 0]))
+      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [10, "close", 0], null, {
+        "Plot.color": "#5677A4",
+      }))
+      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [30, "close", 0], null, {
+        "Plot.color": "#417D57",
+      }))
+      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [60, "close", 0], null, {
+        "Plot.color": "#782C6C",
+      }))
     })
   }
 
