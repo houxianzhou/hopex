@@ -315,7 +315,7 @@ export default class TradeChart extends Component {
         //'remove_library_container_border',
         // 'chart_property_page_style',
       ],
-      toolbar_bg: 'transparent',
+      toolbar_bg:"transparent",
       library_path: '/',
       width: '100%',
       height: '100%',
