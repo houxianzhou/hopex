@@ -21,9 +21,9 @@ export default [
   },
   {
     name: '资金管理',
-    path: '/manage',
-    model: ['account'],
-    route: 'User/account'
+    path: '/asset',
+    model: ['asset/index','history/index', 'home/index'],
+    route: 'Asset'
   },
   {
     name: '历史',

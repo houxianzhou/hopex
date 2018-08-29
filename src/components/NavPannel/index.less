@@ -19,25 +19,32 @@
       ul.block {
         > li {
           .title {
+            display: flex;
+            align-items: center;
             padding-left: 32px;
             color: @c_active_yellow;
             font-size: 16px;
-            img {
+            img,svg{
               margin-right: 13px;
             }
           }
           ul.list {
             margin-top: 20px;
             li {
+              position: relative;
               display: flex;
               height: 40px;
               padding-left: 30%;
               align-items: center;
               color: #232833;
               &.active {
-                border-left:4px solid #E2B96F;
+                .border{
+                  height:100%;
+                  left:0;
+                  position: absolute;
+                  border-left:4px solid #E2B96F;
+                }
                 background: #FFFBF3;
-
               }
             }
           }

@@ -1,0 +1,96 @@
+@import '~@styles/index.less';
+
+.marketTradeHistory {
+  padding: 40px;
+
+  .top {
+    .title {
+      color: @c_active_yellow;
+      font-size: 18px;
+    }
+    .desc {
+      span {
+        margin-right: 6px;
+        color: @_red;
+      }
+      color: #999999;
+      margin: 12px 0 50px 0;
+    }
+  }
+  .pages {
+    margin-top: 20px;
+  }
+  .header {
+    height: 40px !important;
+    .mixin_tab_margin(70px);
+    li {
+      color: #999999 !important;
+    }
+  }
+  :global {
+    .table {
+      :global {
+        .tr {
+          color: #232833;
+          padding: 0 10px;
+        }
+        .thead {
+          .tr {
+            border: 1px solid #EBEBEB;
+            border-left: none;
+            border-right: none;
+            color: #999999;
+            height: @header2;
+          }
+          font-size: 12px;
+        }
+        .tbody {
+          font-size: 13px;
+          .tr {
+            height: @header2;
+            &:hover {
+              background: #eff1f3 !important;
+            }
+            &.even {
+              background: #F6F8FA;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.detailModal {
+  :global {
+    .table {
+      :global {
+        .tr {
+          padding-left: 40px;
+          color: #232833;
+        }
+        .thead {
+          .tr {
+            height: @header2;
+          }
+          font-size: 12px;
+        }
+        .tbody {
+          font-size: 13px;
+          .tr {
+            height: @header2;
+            &:hover {
+              background: #eff1f3 !important;
+            }
+            &.even {
+              background: white;
+            }
+            &.odd {
+              background: #F6F8FA;
+            }
+          }
+        }
+      }
+    }
+  }
+}

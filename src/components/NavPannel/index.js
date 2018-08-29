@@ -41,7 +41,9 @@ export default class View extends Component {
                 navList.map((item = {}, index) => (
                   <li key={index} >
                     <div className='title' >
-                      <img src={item.icon} />
+                      {
+                        item.svg ? item.svg : <img src={item.icon} />
+                      }
                       {item.title}
                     </div >
                     <ul className='list' >
@@ -52,10 +54,12 @@ export default class View extends Component {
                             className={classNames(
                               active === item.name ? 'active' : null
                             )}
-
                             onClick={() => {
                               this.changePage(item.onClick, item.name)
                             }} >
+                            <div className={classNames(
+                              'border',
+                            )} />
                             {item.title}
                           </li >
                         ))

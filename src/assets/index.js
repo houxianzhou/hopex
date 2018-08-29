@@ -36,6 +36,29 @@ export const email = (
   </svg >
 );
 
+//资金管理
+export const assetManage = (
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/1999/xlink" width="18px" height="16px" viewBox="0 0 18 16" version="1.1">
+    <title>asset management</title>
+    <desc>Created with Sketch.</desc>
+    <defs/>
+    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+      <g id="01-资产管理-钱包明细" transform="translate(-250.000000, -111.000000)">
+        <rect id="Rectangle-3" fill="#FFFFFF" x="220" y="90" width="280" height="460" rx="4"/>
+        <g id="Group-7" transform="translate(250.000000, 110.000000)">
+          <g id="Group-3">
+            <rect id="Rectangle-8" stroke="#E2B96F" strokeWidth="2" x="1" y="2" width="16" height="14"/>
+            <rect id="Rectangle-9" fill="#E2B96F" x="1" y="6" width="15" height="2"/>
+            <rect id="Rectangle-9-Copy" fill="#E2B96F" x="11" y="11" width="3" height="2"/>
+          </g>
+        </g>
+      </g>
+    </g>
+    <script xmlns=""/></svg>
+)
+
+//交易home页面---------
+
 export const editIcon = (
   <svg width="19" height="19" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 18"
        style={{ enableBackground: "new 0 0 17 18" }} xmlSpace="preserve" >
@@ -43,6 +66,8 @@ export const editIcon = (
           d="M15,15H8.8l6.9-7.8c0.7-0.8,0.7-2-0.1-2.7l-2.9-2.9c0,0,0,0,0,0c-0.8-0.8-2.1-0.7-2.8,0.1L1,11v6H7l0,0h8  c0.6,0,1-0.4,1-1S15.6,15,15,15z M11.3,3l2.9,2.9l-1.3,1.5L9.9,4.4L11.3,3z M8.5,5.9l3,3L6.1,15H3v-3.2L8.5,5.9z" />
   </svg >
 )
+
+
 // 账户页面对号图标
 export const rightIcon = (
   <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" >
