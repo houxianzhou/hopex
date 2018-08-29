@@ -42,6 +42,10 @@
     .tbody {
       .tr {
         &:hover {
+          :global(.lightT) & {
+            .mixinCL();
+            background: #F5F5F5 !important;
+          }
           background: #1D222E !important;
         }
         height: 26px;
@@ -49,6 +53,10 @@
         //  background: @c_panel_light;
         //}
         &.even {
+          :global(.lightT) & {
+            .mixinCL();
+            background: #F6F8FA;
+          }
           background: @c_panel_light;
         }
       }
@@ -130,6 +138,10 @@
     height: 100%;
     display: flex;
     li {
+      :global(.lightT) & {
+        .mixinCL();
+        color: @c_like_white_05;
+      }
       display: flex;
       align-items: center;
       height: 100%;

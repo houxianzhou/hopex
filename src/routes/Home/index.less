@@ -18,6 +18,12 @@
 
 .home {
   .mixinC();
+  :global(.lightT) & {
+    .mixinCL();
+    color: #232833;
+    background: @c_back_dark;
+  }
+  color: #FFFFFF;
   background: @c_back_dark;
   padding: 10px;
 }
@@ -50,6 +56,10 @@
   }
   .header {
     .content {
+      :global(.lightT) & {
+        .mixinCL();
+        background: white !important;
+      }
       padding: 15px 30px;
       background: @c_pannel_dark;
       height: 66px;
@@ -61,6 +71,9 @@
       .left {
         display: flex;
         .marketname {
+          :global(.lightT) & {
+            color:black;
+          }
           color: #FFFFFF;
           font-size: 18px;
           .notallowtrade {
@@ -285,6 +298,10 @@
   }
 
   .center {
+    :global(.lightT) & {
+      .mixinCL();
+      background: #F6F8FA;
+    }
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -342,6 +359,10 @@
           font-size: 18px;
           justify-content: center;
           &.tip {
+            :global(.lightT) & {
+              .mixinCL();
+              color: @c_like_white_07;
+            }
             color: @c_like_white_07;
             font-size: 12px;
             opacity: .7;
@@ -371,6 +392,10 @@
               display: flex;
               align-items: center;
               &:nth-child(2n+1) {
+                :global(.lightT) & {
+                  .mixinCL();
+                  color: @c_like_white_07;
+                }
                 font-size: 13px;
                 color: @c_like_white_07;
                 opacity: .7;
@@ -426,6 +451,12 @@
 .position {
   min-height: 242px;
   .input {
+    :global(.lightT) & {
+      .mixinCL();
+      background: #FFFFFF !important;
+      border: 1px solid #EBEBEB !important;
+      color: black !important;
+    }
     border: 1px solid #4B556D !important;
     background: #373F4F !important;
   }
@@ -499,20 +530,23 @@
         margin-left: 50px;
       }
       li {
-        color: @_blue;
+        color: @_blue !important;
       }
     }
   }
 
   .content {
     display: flex;
+    :global(.lightT) & {
+      .mixinCL();
+      color: @c_like_white;
+    }
     color: @c_like_white;
     padding: 30px 32px;
     padding-right: 20px;
     .area + .area {
       margin-left: 40px;
     }
-
     .area {
       width: 50%;
       flex-grow: 1;
@@ -523,6 +557,11 @@
         .priceinput {
           display: flex;
           .label {
+            div {
+              :global(.lightT) & {
+                color: black;
+              }
+            }
             div + div {
               margin-top: 10px;
             }
@@ -535,6 +574,12 @@
             }
           }
           .input_number {
+            :global(.lightT) & {
+              .mixinCL();
+              color: #495265;
+              border: 1px solid #EBEBEB;
+              background: white;
+            }
             display: flex;
             align-items: center;
             justify-content: center;
@@ -554,6 +599,10 @@
               opacity: .5;
             }
             input {
+              :global(.lightT) & {
+                .mixinCL();
+                color: #232833;
+              }
               color: white;
               text-align: center;
               outline: none;
@@ -624,6 +673,11 @@
           }
         }
         &.notlogin {
+          :global(.lightT) & {
+            .mixinCL();
+            background: #ECECEC;
+            background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.20) 100%, rgba(0, 0, 0, 0.20) 0%);
+          }
           background: #373A41;
           pointer-events: none;
           color: #7D879F;
@@ -670,6 +724,10 @@
       height: 123px;
       border-bottom: 1px solid rgba(215, 218, 238, .04);
       .desc {
+        :global(.lightT) & {
+          .mixinCL();
+          color: @c_like_white_07;
+        }
         color: @c_like_white_07;
         display: flex;
         justify-content: space-between;
@@ -685,6 +743,10 @@
         font-size: 28px;
         color: @c_active_yellow;
         span {
+          :global(.lightT) & {
+            .mixinCL();
+            color: @c_like_white_07;
+          }
           margin-left: 10px;
           top: 5px;
           position: relative;
@@ -699,6 +761,10 @@
     .down {
       padding-top: 30px;
       > div {
+        :global(.lightT) & {
+          .mixinCL();
+          color: @c_like_white_07;
+        }
         color: @c_like_white_07;
         margin-bottom: 10px;
       }

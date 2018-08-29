@@ -142,9 +142,11 @@ export default class View extends Component {
   }
 
   renderView = (name) => {
-    const { theme: { RG, viewPosition, calculateTableHeight }, dispatch, modelName } = this.props
+    const { theme: { RG, viewPosition, calculateTableHeight, theme }, dispatch, modelName } = this.props
 
     const props = {
+      ...this.props,
+      theme,
       RG,
       viewPosition,
       calculateTableHeight,
@@ -206,7 +208,6 @@ export default class View extends Component {
           </div >
         ) : null
       },
-      ...this.props,
       isLogin: this.isLogin(),
       routerGoLogin: this.routerGoLogin,
       routerGoRegister: this.routerGoRegister,

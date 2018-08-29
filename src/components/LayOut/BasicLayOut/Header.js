@@ -3,7 +3,7 @@ import { connect } from 'dva'
 import { NavLink } from 'dva/router'
 import { classNames, switchTheme, _ } from '@utils'
 import { RouterGo } from '@components'
-import { PATH } from '@constants'
+import { PATH, THEME } from '@constants'
 import logo from '@assets/logo.png'
 import account from '@assets/account.png'
 import help from '@assets/help.png'
@@ -74,16 +74,17 @@ export default class View extends Component {
                                     {
                                       sorted[item1].map((item2 = {}, index2) => {
                                         return (
-                                          <RouterGo.SwitchMarket key={index2} value={item2.marketCode} Ele='li' {...this.props}>
+                                          <RouterGo.SwitchMarket key={index2} value={item2.marketCode}
+                                                                 Ele='li' {...this.props}>
                                             <div className={styles.name} >
                                               {item2.pause ? <div >暂停</div > : null}
                                               {item2.marketName}
                                             </div >
                                             <div className={styles.price} >
-                                              <RedGreenSwitch.MarkText value={item2.priceLast}  />
+                                              <RedGreenSwitch.MarkText value={item2.priceLast} />
                                             </div >
                                             <div className={styles.percent} >
-                                              <RedGreenSwitch.MarkText value={item2.percent}  />
+                                              <RedGreenSwitch.MarkText value={item2.percent} />
                                             </div >
                                           </RouterGo.SwitchMarket >
                                         )
@@ -128,6 +129,30 @@ export default class View extends Component {
                   }
                   <div className={styles.accountContainer} >
                     <div className={styles.content} >
+                      <ul className={styles.themelist} >
+                        <li onClick={(e) => {
+                          e.preventDefault()
+                          dispatch({
+                            type: `${modelName3}/changeState`,
+                            payload: {
+                              theme: THEME.DEEPDARK
+                            }
+                          })
+                        }} >
+                          深色
+                        </li >
+                        <li onClick={(e) => {
+                          e.preventDefault()
+                          dispatch({
+                            type: `${modelName3}/changeState`,
+                            payload: {
+                              theme: THEME.LIGHT
+                            }
+                          })
+                        }} >
+                          浅色
+                        </li >
+                      </ul >
                       <ul className={styles.themelist} >
                         <li onClick={(e) => {
                           e.preventDefault()

@@ -9,7 +9,7 @@ export default joinModel(modelExtend, {
     version: "1.0.0",
     viewPosition: false,//最新成交列表和委托列表位置
     RG: 1,//红绿切换 1为正常的绿涨红跌，0为红涨绿跌
-    theme: THEME.DEEPDARK,
+    theme: THEME.LIGHT,
     dragIndex: [
       'LatestRecord'
     ],

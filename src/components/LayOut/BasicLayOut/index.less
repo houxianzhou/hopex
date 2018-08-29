@@ -1,4 +1,5 @@
 @import '~@styles/variable.less';
+
 :global(.device) {
   height: 100%;
 }
@@ -44,10 +45,10 @@
           }
           li.navli {
             position: relative;
-            .border{
+            .border {
               position: absolute;
-              width:100%;
-              bottom:-10px;
+              width: 100%;
+              bottom: -10px;
               border: 2px solid @c_active_yellow;
             }
             .dropdown {
@@ -55,7 +56,7 @@
               position: absolute;
               display: none;
             }
-            &:hover{
+            &:hover {
               .dropdown {
                 position: absolute;
                 z-index: 2;
@@ -72,7 +73,7 @@
                     margin-top: 20px;
                   }
                   .licontainer {
-                    .liheader{
+                    .liheader {
                       font-size: 16px;
                       color: black;
                       font-weight: 600;
@@ -81,7 +82,7 @@
                       margin-top: 10px;
                       li {
                         // background: red;
-                        &:hover{
+                        &:hover {
                           background: #DAE0E4;
                           border-radius: 4px;
                         }
@@ -93,9 +94,9 @@
                           align-items: center;
                           white-space: nowrap;
                           &.name {
-                            > div{
+                            > div {
                               margin-right: 5px;
-                              padding:3px 4px;
+                              padding: 3px 4px;
                               background: #D8D8D8;
                               border-radius: 2px;
                               color: #666666;
@@ -136,9 +137,7 @@
       &.right {
         display: flex;
         justify-content: flex-end;
-        // background: blue;
         ul {
-          // background: red;
           display: flex;
           align-items: center;
           height: 100%;
@@ -146,7 +145,7 @@
             border-left: 1px solid rgba(255, 255, 255, .2);
           }
           li {
-            cursor:pointer;
+            cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -176,6 +175,9 @@
                   width: 100%;
                   height: 100%;
                   background: rgba(255, 255, 255, 1);
+                  .themelist + .themelist {
+                    margin-top: 20px;
+                  }
                   .themelist {
                     display: flex;
                     li {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { classNames, _, getRes, resOk, formatNumber, formatJson, isEqual, localSave } from '@utils'
 import { Mixin } from "@components"
+import { THEME } from '@constants'
 import wss from '@services/SocketClient'
 import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
@@ -27,8 +28,8 @@ export default class TradeChart extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { model: { ensure_records: prevEnsure_records } } = prevProps
-    const { model: { ensure_records } } = this.props
+    const { model: { ensure_records: prevEnsure_records }, RG: prevRG, theme: prevTheme } = prevProps
+    const { model: { ensure_records }, RG, theme } = this.props
     const { map: prevMap } = prevState
     const { map } = this.state
     if (!isEqual(prevEnsure_records, ensure_records) && prevEnsure_records && ensure_records && map === 2) {
@@ -41,6 +42,15 @@ export default class TradeChart extends Component {
         this.startDeepMap()
       }
     }
+    if (!isEqual(prevRG, RG) || !isEqual(prevTheme, theme) && this.widget) {
+      const { overrides, studies_overrides } = this.getChangedStyle()
+      this.widget.applyOverrides(
+        overrides
+      )
+      this.widget.applyStudiesOverrides(
+        studies_overrides
+      )
+    }
   }
 
   componentDidMount() {
@@ -51,6 +61,33 @@ export default class TradeChart extends Component {
     this.startKline()
     this.startKlineDetail()
     this.startKlineDetailWs()
+  }
+
+  getChangedStyle = () => {
+    const { RG, theme } = this.props
+    const backColor = theme === THEME.LIGHT ? 'white' : '#1D1D1D'
+    const green = RG ? "#00C087" : "#FF7858"
+    const red = RG ? "#FF7858" : "#00C087"
+    const greenOpacity = RG ? "rgba(255,120,88,.4)" : "rgba(0,192,135,.4)"
+    const redOpacity = RG ? "rgba(0,192,135,.4)" : "rgba(255,120,88,.4)"
+    return {
+      overrides: {
+        "mainSeriesProperties.candleStyle.upColor": green,
+        "mainSeriesProperties.candleStyle.borderUpColor": green,
+        "mainSeriesProperties.candleStyle.wickUpColor": green,
+
+        "mainSeriesProperties.candleStyle.downColor": red,// "#d75442",
+        "mainSeriesProperties.candleStyle.borderDownColor": red,
+        "mainSeriesProperties.candleStyle.wickDownColor": red,
+
+        "paneProperties.background": backColor,
+      },
+      studies_overrides: {
+        //--------------------volume的颜色设置
+        "volume.volume.color.0": greenOpacity,
+        "volume.volume.color.1": redOpacity,
+      }
+    }
   }
 
   startDeepMap = () => {
@@ -255,9 +292,6 @@ export default class TradeChart extends Component {
     const tradeView = document.getElementById('tradeView')
 
     if (!tradeView) return
-    // const Datafeeds = window.Datafeeds
-    // window.$ = $
-    // const ws1 = wss.getSocket('ws1')
     const widget = new TradingView.widget({
       disabled_features: [
         "volume_force_overlay",
@@ -281,7 +315,7 @@ export default class TradeChart extends Component {
         //'remove_library_container_border',
         // 'chart_property_page_style',
       ],
-      toolbar_bg: backColor,
+      toolbar_bg: 'transparent',
       library_path: '/',
       width: '100%',
       height: '100%',
@@ -297,18 +331,7 @@ export default class TradeChart extends Component {
         // "scalesProperties.backgroundColor": "red",
 
         //--------------------------------------蜡烛图
-        "mainSeriesProperties.candleStyle.upColor": "#00C087",
-        "mainSeriesProperties.candleStyle.borderUpColor": "#00C087",
-        "mainSeriesProperties.candleStyle.wickUpColor": '#00C087',
-
-        "mainSeriesProperties.candleStyle.downColor": "#FF7858",// "#d75442",
-        "mainSeriesProperties.candleStyle.borderDownColor": "#FF7858",
-        "mainSeriesProperties.candleStyle.wickDownColor": '#FF7858',
-
-        "mainSeriesProperties.candleStyle.drawWick": true,
-        "mainSeriesProperties.candleStyle.drawBorder": true,
-        "mainSeriesProperties.candleStyle.borderColor": "white",
-        "mainSeriesProperties.candleStyle.barColorsOnPrevClose": false,
+        ...this.getChangedStyle().overrides,
 
         //-----------volume的大小large,medium,small,tiny
         volumePaneSize: "medium",
@@ -326,9 +349,7 @@ export default class TradeChart extends Component {
         "mainSeriesProperties.lineStyle.linestyle": 0,
       },
       studies_overrides: {
-        //--------------------volume的颜色设置
-        "volume.volume.color.0": 'rgba(255,120,88,.4)',
-        "volume.volume.color.1": "rgba(0,192,135,.4)",
+        ...this.getChangedStyle().studies_overrides,
       },
 
       loading_screen: { backgroundColor: backColor },
@@ -453,8 +474,6 @@ export default class TradeChart extends Component {
       },
       locale: 'zh',
     })
-
-
     widget.onChartReady(() => {
       this.changeState({ loaded: true })
       this.widget = widget
