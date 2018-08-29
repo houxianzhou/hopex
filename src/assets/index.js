@@ -38,23 +38,50 @@ export const email = (
 
 //资金管理
 export const assetManage = (
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/1999/xlink" width="18px" height="16px" viewBox="0 0 18 16" version="1.1">
-    <title>asset management</title>
-    <desc>Created with Sketch.</desc>
-    <defs/>
-    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g id="01-资产管理-钱包明细" transform="translate(-250.000000, -111.000000)">
-        <rect id="Rectangle-3" fill="#FFFFFF" x="220" y="90" width="280" height="460" rx="4"/>
-        <g id="Group-7" transform="translate(250.000000, 110.000000)">
-          <g id="Group-3">
-            <rect id="Rectangle-8" stroke="#E2B96F" strokeWidth="2" x="1" y="2" width="16" height="14"/>
-            <rect id="Rectangle-9" fill="#E2B96F" x="1" y="6" width="15" height="2"/>
-            <rect id="Rectangle-9-Copy" fill="#E2B96F" x="11" y="11" width="3" height="2"/>
-          </g>
-        </g>
-      </g>
-    </g>
-    <script xmlns=""/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/1999/xlink" width="18px" height="16px"
+       viewBox="0 0 18 16" version="1.1" >
+    <title >asset management</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="01-资产管理-钱包明细" transform="translate(-250.000000, -111.000000)" >
+        <rect id="Rectangle-3" fill="#FFFFFF" x="220" y="90" width="280" height="460" rx="4" />
+        <g id="Group-7" transform="translate(250.000000, 110.000000)" >
+          <g id="Group-3" >
+            <rect id="Rectangle-8" stroke="#E2B96F" strokeWidth="2" x="1" y="2" width="16" height="14" />
+            <rect id="Rectangle-9" fill="#E2B96F" x="1" y="6" width="15" height="2" />
+            <rect id="Rectangle-9-Copy" fill="#E2B96F" x="11" y="11" width="3" height="2" />
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
+)
+
+export const Rights = (
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="50px" height="50px"
+       viewBox="0 0 50 50" version="1.1" >
+    <title >account valuation</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="01-资产管理-钱包明细" transform="translate(-580.000000, -135.000000)" >
+        <g id="Group-5-Copy" transform="translate(580.000000, 135.000000)" >
+          <g id="Group-2" >
+            <g id="Group" transform="translate(4.000000, 0.000000)" >
+              <path d="M29.1715729,2 L2,2 L2,48 L40,48 L40,12.8284271 L29.1715729,2 Z" id="Combined-Shape"
+                    stroke="#232833" strokeWidth="4" />
+              <path
+                d="M11,29 L15,29 L15,39 L11,39 L11,29 Z M19,19 L23,19 L23,39 L19,39 L19,19 Z M27,23 L31,23 L31,39 L27,39 L27,23 Z"
+                id="Combined-Shape" fill="#E2B96F" />
+            </g >
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
 )
 
 //交易home页面---------
@@ -195,7 +222,7 @@ export const aboutUs = (
 );
 
 export const advantage = (
-  <svg width="619px" height="66px" viewBox="0 0 619 66" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <svg width="619px" height="66px" viewBox="0 0 619 66" version="1.1" xmlns="http://www.w3.org/2000/svg" >
     <title >PLATFORM ADVANTAGE</title >
     <desc >Created with Sketch.</desc >
     <g id="01_首页" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" opacity="0.04" >

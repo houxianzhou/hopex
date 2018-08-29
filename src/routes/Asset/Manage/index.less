@@ -1,92 +1,124 @@
 @import '~@styles/index.less';
 
-.marketTradeHistory {
+.deposit {
   padding: 40px;
-
-  .top {
-    .title {
-      color: @c_active_yellow;
-      font-size: 18px;
-    }
-    .desc {
-      span {
-        margin-right: 6px;
-        color: @_red;
-      }
-      color: #999999;
-      margin: 12px 0 50px 0;
-    }
-  }
-  .pages {
-    margin-top: 20px;
-  }
-  .header {
-    height: 40px !important;
-    .mixin_tab_margin(70px);
-    li {
-      color: #999999 !important;
-    }
-  }
-  :global {
-    .table {
-      :global {
-        .tr {
-          color: #232833;
-          padding: 0 10px;
-        }
-        .thead {
-          .tr {
-            border: 1px solid #EBEBEB;
-            border-left: none;
-            border-right: none;
-            color: #999999;
-            height: @header2;
-          }
-          font-size: 12px;
-        }
-        .tbody {
-          font-size: 13px;
-          .tr {
-            height: @header2;
-            &:hover {
-              background: #eff1f3 !important;
-            }
-            &.even {
-              background: #F6F8FA;
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
-.detailModal {
-  :global {
-    .table {
-      :global {
-        .tr {
-          padding-left: 40px;
-          color: #232833;
+.purseDetail {
+  width: 100%;
+  height: 100%;
+  background: #F5F5F5;
+  .header {
+    width: 100%;
+    display: flex;
+    li + li {
+      margin-left: 11px;
+    }
+    li {
+      border-radius: 4px;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      .left {
+        margin-right: 30px;
+      }
+      .right {
+        .title {
+          color: #999999;
+          font-size: 16px;
         }
-        .thead {
-          .tr {
-            height: @header2;
+        .value {
+          color: black;
+          font-size: 32px;
+          margin: 13px 0 4px;
+        }
+      }
+      height: 140px;
+      width: 33.3%;
+      background: white;
+    }
+  }
+  .down {
+    display: flex;
+    > li {
+      border-radius: 4px;
+      width: 100%;
+      background: white;
+      margin-top: 10px;
+      .liheader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 60px 10px 40px;
+        border: 1px solid #EBEBEB;
+        .left {
+          .desc {
+            color: #999999;
+            font-size: 16px;
           }
-          font-size: 12px;
+          .value {
+            display: flex;
+            > div {
+              display: flex;
+              align-items: center;
+            }
+            div:first-of-type {
+              margin-right: 12px;
+              color: @c_active_yellow;
+              font-size: 28px;
+              margin-top: 4px;
+            }
+          }
         }
-        .tbody {
-          font-size: 13px;
-          .tr {
-            height: @header2;
-            &:hover {
-              background: #eff1f3 !important;
+      }
+      .licontent {
+        width: 100%;
+        background: white;
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          li + li {
+            .leftdeco, .topdeco {
+              position: absolute;
             }
-            &.even {
-              background: white;
+            .leftdeco {
+              height: 40px;
+              left: 0;
+              border-left: 1px solid #EBEBEB;
             }
-            &.odd {
-              background: #F6F8FA;
+            .topdeco {
+              width: 100px;
+              top: 0;
+              border-top: 1px solid #EBEBEB;
+            }
+          }
+
+          li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: 165px;
+            width: 33.3%;
+            .leftdeco:nth-child(3n+1) {
+              display: none;
+            }
+            .contentdeco {
+              > div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+              div.name {
+                font-size: 16px;
+                color: #999999;
+              }
+              div.value {
+                font-size: 28px;
+                color: black;
+                margin-top: 7px;
+                margin-bottom: 3px;
+              }
             }
           }
         }

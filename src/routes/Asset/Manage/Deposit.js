@@ -22,7 +22,7 @@ export default class View extends Component {
   render() {
     return (
       <Mixin.Child that={this} >
-        <div >存款</div >
+        <div className={styles.deposit}>存款</div >
       </Mixin.Child >
     )
   }

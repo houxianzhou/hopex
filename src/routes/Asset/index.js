@@ -55,7 +55,7 @@ export default class View extends Component {
     return (
       <div >
         <NavPannel
-          defaultActive='PurseDetail'
+          defaultActive='Deposit'
           navList={[
             {
               svg: assetManage,
