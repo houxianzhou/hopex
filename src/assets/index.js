@@ -84,6 +84,25 @@ export const Rights = (
   </svg >
 )
 
+export const triangle2 = (
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="8px" height="6px"
+       viewBox="0 0 8 6" version="1.1" >
+    <title >Triangle</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="02-资产管理-存款BTC" transform="translate(-663.000000, -193.000000)" fill="#E2B96F" >
+        <g id="Group-7" transform="translate(663.000000, 193.000000)" >
+          <polygon id="Triangle-3"
+                   transform="translate(4.000000, 3.000000) scale(1, -1) translate(-4.000000, -3.000000) "
+                   points="4 0 8 6 0 6" />
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
+)
+
 //交易home页面---------
 
 export const editIcon = (
