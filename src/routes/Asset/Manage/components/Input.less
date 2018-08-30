@@ -1,0 +1,24 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  input {
+    color: black;
+    font-size: 14px;
+    padding: 17px 20px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #EBEBEB;
+    &.error {
+      border: 1px solid #F54B22;
+      background: rgba(245, 75, 34, 0.10);
+      color: #F54B22;
+    }
+  }
+  .errorMsg {
+    position: absolute;
+    padding: 7px 20px;
+    font-size: 14px;
+    color: #F54B22;
+  }
+}

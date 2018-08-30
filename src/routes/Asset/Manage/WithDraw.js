@@ -5,6 +5,7 @@ import { Mixin, } from '@components'
 import { classNames, _, } from '@utils'
 import { triangle2 } from '@assets'
 import MoneySelect from './components/MoneySelect'
+import Input from './components/Input'
 
 import styles from './index.less'
 
@@ -18,7 +19,7 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    console.log('存款')
+    console.log('提现')
   }
 
 
@@ -29,8 +30,8 @@ export default class View extends Component {
     ]
     return (
       <Mixin.Child that={this} >
-        <div className={styles.deposit} >
-          <div className={styles.title} >存款</div >
+        <div className={styles.withdraw} >
+          <div className={styles.title} >提现</div >
 
           <div className={styles.moneytype} >
             币种
@@ -41,14 +42,40 @@ export default class View extends Component {
               />
             </div >
           </div >
-          <div className={styles.address} >你的个人多重签名BTC存款地址</div >
-          <div className={styles.letter} >
-            18XAJd41s3xPYeQberLVEwUHPq1RVUdzmH
-            <div >复制</div >
+          <ul className={styles.userinput} >
+            <li >
+              <div className={styles.label} >目标地址</div >
+              <div className={styles.input} ><Input /></div >
+            </li >
+            <li >
+              <div className={styles.label} >金额(BTC)</div >
+              <div className={styles.input} ><Input /></div >
+            </li >
+          </ul >
+          <div className={styles.calcu} >
+            <div className={styles.elsemoney} >
+              <div >
+                <div >最大可提现金额：</div >
+                <div >0.00000000BTC</div >
+              </div >
+              <div className={styles.getall} >全部提现</div >
+            </div >
+            <div className={styles.charge} >
+              <div >
+                <div >手续费：</div >
+                <div >0.00000000BTC</div >
+              </div >
+              <div >
+                <div >实际到账金额：</div >
+                <div className={styles.fact}>0.00150000BTC</div >
+              </div >
+            </div >
+            <div className={styles.buton}>
+              <div>提交</div>
+            </div>
           </div >
-          <div className={styles.img} >
-            <img src={'http://pade1vej8.bkt.clouddn.com/1.JPG'} />
-          </div >
+
+
           <div className={styles.desc} >
             <div >重要提示</div >
             * 请不要向上述地址充值任何非BTC资产，否则将不可找回。<br />

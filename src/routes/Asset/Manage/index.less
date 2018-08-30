@@ -1,6 +1,6 @@
 @import '~@styles/index.less';
 
-.deposit {
+.withdraw_deposit_common {
   font-size: 16px;
   color: #999999;
   padding: 40px;
@@ -13,7 +13,7 @@
     margin-bottom: 50px;
     display: flex;
     > div {
-      width:70px;
+      width: 70px;
       color: #232833;
       display: flex;
       align-items: center;
@@ -23,6 +23,68 @@
       }
     }
   }
+  .desc {
+    color: #999999;
+    line-height: 26px;
+    > div {
+      color: #232833;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.withdraw {
+  .withdraw_deposit_common();
+  .moneytype {
+    margin-bottom: 30px;
+  }
+  .userinput {
+    li + li {
+      margin-top: 40px;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      .label {
+        color: #232833;
+        width: 132px;
+        // margin-right: 68px;
+      }
+      .input {
+        width: 600px;
+      }
+    }
+  }
+  .calcu {
+    width: 600px;
+    margin-left: 132px;
+    .getall, .fact {
+      color: @c_active_yellow;
+    }
+    > div {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 14px;
+      > div {
+        display: flex;
+      }
+    }
+  }
+  .buton {
+    margin: 40px 0 130px 0 !important;
+    display: flex;
+    color: #FFFFFF;
+    justify-content: center !important;
+    align-items: center;
+    width: 240px;
+    padding: 16px 0;
+    background-image: linear-gradient(90deg, #EBCB80 0%, #E0BD7E 100%);
+    border-radius: 2px;
+  }
+}
+
+.deposit {
+  .withdraw_deposit_common();
   .address {
     margin-bottom: 20px;
 
@@ -40,14 +102,6 @@
     margin-bottom: 70px;
     img {
       max-width: 160px;
-    }
-  }
-  .desc {
-    color: #999999;
-    line-height: 26px;
-    > div {
-      color: #232833;
-      margin-bottom: 20px;
     }
   }
 }
@@ -132,7 +186,7 @@
             .leftdeco {
               height: 40px;
               left: 0;
-              border-left: 1px solid #EBEBEB;
+              border-left: 1px solid #EBEBEB !important;
             }
             .topdeco {
               width: 100px;
@@ -148,8 +202,10 @@
             position: relative;
             height: 165px;
             width: 33.3%;
-            .leftdeco:nth-child(3n+1) {
-              display: none;
+            &:nth-child(3n+1) {
+              .leftdeco {
+                display: none;
+              }
             }
             .contentdeco {
               > div {

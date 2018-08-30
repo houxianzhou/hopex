@@ -3,11 +3,13 @@ import { connect } from 'dva'
 import { NavPannel } from '@components'
 import { default as PurseDetail } from './Manage/PurseDetail'
 import { default as Deposit } from './Manage/Deposit'
+import { default as WithDraw } from './Manage/WithDraw'
 import { assetManage } from '@assets'
 
 const Comp = {
   PurseDetail,
-  Deposit
+  Deposit,
+  WithDraw
 }
 @connect(({ home, theme, modal, history: model, loading, dispatch }) => ({
   model,
@@ -55,7 +57,7 @@ export default class View extends Component {
     return (
       <div >
         <NavPannel
-          defaultActive='Deposit'
+          defaultActive='WithDraw'
           navList={[
             {
               svg: assetManage,
@@ -73,6 +75,13 @@ export default class View extends Component {
                   title: '存款',
                   onClick: () => {
                     return renderPage('Deposit')
+                  }
+                },
+                {
+                  name: 'WithDraw',
+                  title: '提现',
+                  onClick: () => {
+                    return renderPage('WithDraw')
                   }
                 },
               ]
