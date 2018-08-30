@@ -33,6 +33,38 @@
   }
 }
 
+.assetrecord {
+  .withdraw_deposit_common();
+  .tablec{
+    margin-top: 40px;
+  }
+  :global {
+    .table {
+      :global {
+        .thead {
+          .tr {
+            color: #999999;
+            height: @header2;
+          }
+          font-size: 12px;
+        }
+        .tbody {
+          font-size: 13px;
+          .tr {
+            height: @header2;
+            &:hover {
+              background: @tr_hover !important;
+            }
+            &.even {
+              background: #F6F8FA !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .withdraw {
   .withdraw_deposit_common();
   .moneytype {

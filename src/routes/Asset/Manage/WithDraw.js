@@ -3,7 +3,6 @@ import { connect } from 'dva'
 import { COLORS } from "@constants"
 import { Mixin, } from '@components'
 import { classNames, _, } from '@utils'
-import { triangle2 } from '@assets'
 import MoneySelect from './components/MoneySelect'
 import Input from './components/Input'
 
