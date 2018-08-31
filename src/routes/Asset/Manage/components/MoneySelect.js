@@ -11,7 +11,7 @@ export default class MoneySelect extends Component {
         value={value}
         onChange={onChange}
         options={options}
-        placeholder={'请选择'}
+        placeholder={''}
         getOptionLabel={(option) => option.label}
         getOptionValue={(option) => option.value}
         DropdownIndicator={(
