@@ -35,7 +35,7 @@
 
 .assetrecord {
   .withdraw_deposit_common();
-  .tablec{
+  .tablec {
     margin-top: 40px;
   }
   :global {
@@ -67,6 +67,14 @@
 
 .withdraw {
   .withdraw_deposit_common();
+  .notpermit {
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    width: 130px;
+    font-size: 14px;
+    color: #F54B22;
+    background: rgba(245, 75, 34, 0.10);
+  }
   .moneytype {
     margin-bottom: 30px;
   }
@@ -85,6 +93,7 @@
       .input {
         width: 600px;
       }
+
     }
   }
   .calcu {
@@ -93,8 +102,14 @@
     .getall, .fact {
       color: @c_active_yellow;
     }
+    .notenougth {
+      margin-top: 10px;
+      color: #F54B22;
+      width: 100%;
+    }
     > div {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       margin-top: 14px;
       > div {
@@ -174,12 +189,15 @@
   }
   .down {
     display: flex;
+    flex-wrap: wrap;
     > li {
+      width:100%;
       border-radius: 4px;
       width: 100%;
       background: white;
       margin-top: 10px;
       .liheader {
+        color: #999999;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -187,7 +205,6 @@
         border: 1px solid #EBEBEB;
         .left {
           .desc {
-            color: #999999;
             font-size: 16px;
           }
           .value {
@@ -241,13 +258,13 @@
             }
             .contentdeco {
               > div {
+                color: #999999;
                 display: flex;
                 justify-content: center;
                 align-items: center;
               }
               div.name {
                 font-size: 16px;
-                color: #999999;
               }
               div.value {
                 font-size: 28px;

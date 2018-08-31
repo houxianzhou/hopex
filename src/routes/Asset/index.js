@@ -18,7 +18,7 @@ const Comp = {
   home,
   theme,
   modal,
-  modelName: 'history',
+  modelName: 'asset',
   modelName1: 'home',
   dispatch
 }))
@@ -59,7 +59,7 @@ export default class View extends Component {
     return (
       <div >
         <NavPannel
-          defaultActive='Record'
+          defaultActive='PurseDetail'
           navList={[
             {
               svg: assetManage,

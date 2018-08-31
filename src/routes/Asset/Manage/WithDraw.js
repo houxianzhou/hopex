@@ -8,7 +8,8 @@ import Input from './components/Input'
 
 import styles from './index.less'
 
-@connect(({ modal, Loading }) => ({
+@connect(({ modal, asset, Loading }) => ({
+  model: asset,
   modal,
   loading: Loading
 }))
@@ -23,6 +24,7 @@ export default class View extends Component {
 
 
   render() {
+    const { model: { withDrawPage } = {} } = this.props
     const selectList = [
       { label: 'BTC', value: 'BTC' },
       { label: 'USD', value: 'USD' },
@@ -30,6 +32,7 @@ export default class View extends Component {
     return (
       <Mixin.Child that={this} >
         <div className={styles.withdraw} >
+          <div className={styles.notpermit} >账户不允许提现</div >
           <div className={styles.title} >提现</div >
 
           <div className={styles.moneytype} >
@@ -58,6 +61,7 @@ export default class View extends Component {
                 <div >0.00000000BTC</div >
               </div >
               <div className={styles.getall} >全部提现</div >
+              <div className={styles.notenougth} >可提金额不足</div >
             </div >
             <div className={styles.charge} >
               <div >
@@ -66,12 +70,12 @@ export default class View extends Component {
               </div >
               <div >
                 <div >实际到账金额：</div >
-                <div className={styles.fact}>0.00150000BTC</div >
+                <div className={styles.fact} >0.00150000BTC</div >
               </div >
             </div >
-            <div className={styles.buton}>
-              <div>提交</div>
-            </div>
+            <div className={styles.buton} >
+              <div >提交</div >
+            </div >
           </div >
 
 

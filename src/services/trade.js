@@ -2,7 +2,7 @@ import { request } from '@utils'
 import { API } from "@constants"
 
 let { MOCKIP, UserIp0, USERIP, USERIP2, UserIp3, UserIp4 } = API
-const MODE = 'mock1'
+const MODE = 'mock'
 
 // mock数据
 if (MODE === 'mock') {
@@ -10,6 +10,13 @@ if (MODE === 'mock') {
   UserIp3 = `/mock${UserIp3}`
   UserIp4 = `/mock${UserIp4}`
   require('./socketServer')
+}
+
+//交易概况
+export async function getAssetSummary(payload) {
+  return request(`${UserIp0}/gateway/Trade/Summary`, {
+    query: payload
+  })
 }
 
 // 最新成交列表

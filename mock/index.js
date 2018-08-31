@@ -563,8 +563,8 @@ export default delay({
         "records": periods.map(item => {
           const h = _.random(30, 40)
           const o = _.random(10, 20)
-          const c =  _.random(10, 30)
-          const l =_.random(10, 20)
+          const c = _.random(10, 30)
+          const l = _.random(10, 20)
           const v = _.random(100, 3000)
           // const h = 160 + _.random(30, 40)
           // const o = h - _.random(10, 20)
@@ -766,6 +766,62 @@ export default delay({
         "errCode": "0",
         "errStr": "success",
         "ret": "0"
+      }
+    )
+  },
+
+  //概况
+  'Get /mock/api/v1/gateway/Trade/Summary': (req, res) => {
+    res.send(
+      {
+        "data": {
+          "summary": {
+            "profitRate": "-31.98% ",
+            "totalWealth": "9.67954696",
+            "totalWealthUSD": "65030.61USD",
+            "floatProfit": "-0.00009094",
+            "floatProfitUSD": "-0.61USD",
+            "availableBalance": "9.99896705",
+            "availableBalanceUSD": "67176.59USD"
+          },
+          "detail": [{
+            "assetName": "BTC",
+            "assetLogoUrl": "http://hopex.com/api/v1/gateway/files/logos/btc.png",
+            "floatProfit": "-0.00009094",
+            "floatProfitUSD": "-0.61USD",
+            "profitRate": "-0.32% ",
+            "totalWealth": "9.67954696",
+            "totalWealthUSD": "65030.61USD",
+            "availableBalance": "9.99896705",
+            "availableBalanceUSD": "67176.59USD",
+            "positionMargin": "0.00028439",
+            "positionMarginUSD": "1.91USD",
+            "delegateMargin": "0.00005753",
+            "delegateMarginUSD": "0.39USD",
+            "withdrawFreeze": "0.00000000",
+            "withdrawFreezeUSD": "0.00USD",
+            "walletBalance": "9.99930897",
+            "walletBalanceUSD": "67178.88USD"
+          }, {
+            "assetName": "ETH",
+            "assetLogoUrl": "http://hopex.com/api/v1/gateway/files/logos/eth.png",
+            "floatProfit": "0.00000000",
+            "floatProfitUSD": "0.00USD",
+            "profitRate": "0.00% ",
+            "totalWealth": "0.00000000",
+            "totalWealthUSD": "0.00USD",
+            "availableBalance": "0.00000000",
+            "availableBalanceUSD": "0.00USD",
+            "positionMargin": "0.00000000",
+            "positionMarginUSD": "0.00USD",
+            "delegateMargin": "0.00000000",
+            "delegateMarginUSD": "0.00USD",
+            "withdrawFreeze": "0.00000000",
+            "withdrawFreezeUSD": "0.00USD",
+            "walletBalance": "0.00000000",
+            "walletBalanceUSD": "0.00USD"
+          }]
+        }, "ret": 0, "errCode": "", "errStr": ""
       }
     )
   },

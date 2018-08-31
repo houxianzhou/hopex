@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin } from '@components'
 import { classNames, _, } from '@utils'
-import { Rights } from '@assets'
+import { Rights, $B, Home, $B2, Diamond } from '@assets'
 
 import styles from './index.less'
 
-@connect(({ modal, Loading }) => ({
+@connect(({ modal, Loading, asset }) => ({
   modal,
+  model: asset,
   loading: Loading
 }))
 export default class View extends Component {
@@ -16,26 +17,59 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    console.log('钱包明细')
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getAssetSummary`,
+      payload: {}
+    })
   }
 
   render() {
-    const list1 = [1, 2, 3]
-    const list2 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    const {
+      model: {
+        summary: {
+          totalWealth = '', totalWealthUSD = '', floatProfit = '', floatProfitUSD = '',
+          profitRate = ''
+        } = {},
+        detail = []
+      } = {}
+    } = this.props
+    const listSummary = [
+      {
+        icon: Rights,
+        title: '账户总权益估值(BTC)',
+        value: totalWealth,
+        usd: totalWealthUSD
+      },
+      {
+        icon: $B,
+        title: '总浮动盈亏估值(BTC)',
+        value: floatProfit,
+        usd: floatProfitUSD
+      },
+      {
+        icon: Home,
+        title: '当前持仓收益率',
+        value: profitRate,
+      }
+    ]
+
     return (
       <Mixin.Child that={this} >
         <div className={styles.purseDetail} >
           <ul className={styles.header} >
             {
-              list1.map((item, index) => (
+              listSummary.map((item = {}, index) => (
                 <li key={index} >
                   <div className={styles.left} >
-                    {Rights}
+                    {item.icon}
                   </div >
                   <div className={styles.right} >
-                    <div className={styles.title} >账户总权益估值（BTC）</div >
-                    <div className={styles.value} >8.12689356</div >
-                    <div >≈XXXX.XXUSD</div >
+                    <div className={styles.title} >{item.title}</div >
+                    <div className={styles.value} >{item.value}</div >
+                    {
+                      item.usd ? (<div >≈{item.usd}USD</div >) : null
+                    }
                   </div >
                 </li >
               ))
@@ -43,39 +77,78 @@ export default class View extends Component {
           </ul >
 
           <ul className={styles.down} >
-            <li >
-              <div className={styles.liheader} >
-                <div className={styles.left} >
-                  <div className={styles.desc} >BTC总权益</div >
-                  <div className={styles.value} >
-                    <div >8.12689356</div >
-                    <div >(≈XXXX.XXUSD)</div >
-                  </div >
-                </div >
-                <div >
-                  B
-                </div >
-              </div >
-              <div className={styles.licontent} >
-                <ul >
+            {
+              detail.map((item, index) => {
+                const list2 = [
                   {
-                    list2.map((item, index) => (
-                      <li key={index} >
-                        <div className={styles.leftdeco} />
-                        {
-                          index > 2 ? <div className={styles.topdeco} /> : null
-                        }
-                        <div className={styles.contentdeco} >
-                          <div className={styles.name}>浮动盈亏</div >
-                          <div className={styles.value}>8.12689356</div >
-                          <div className={styles.prec}>≈XXXX.XXUSD</div >
+                    name: '浮动盈亏',
+                    value: item.floatProfit,
+                    prec: item.floatProfitUSD,
+                  },
+                  {
+                    name: '钱包余额',
+                    value: item.walletBalance,
+                    prec: item.walletBalanceUSD,
+                  },
+                  {
+                    name: '可用金额',
+                    value: item.availableBalance,
+                    prec: item.availableBalanceUSD,
+                  },
+                  {
+                    name: '委托占用保证金',
+                    value: item.delegateMargin,
+                    prec: item.delegateMarginUSD,
+                  },
+                  {
+                    name: '持仓占用保证金',
+                    value: item.positionMargin,
+                    prec: item.positionMarginUSD,
+                  },
+                  {
+                    name: '冻结提现金额',
+                    value: item.withdrawFreeze,
+                    prec: item.withdrawFreezeUSD,
+                  },
+                ]
+                return (
+                  <li key={index} >
+                    <div className={styles.liheader} >
+                      <div className={styles.left} >
+                        <div className={styles.desc} >{item.assetName}总权益</div >
+                        <div className={styles.value} >
+                          <div >{item.totalWealth}</div >
+                          <div >(≈{item.totalWealthUSD})</div >
                         </div >
-                      </li >
-                    ))
-                  }
-                </ul >
-              </div >
-            </li >
+                      </div >
+                      <div >
+                        {[$B2, Diamond][index]}
+                      </div >
+                    </div >
+                    <div className={styles.licontent} >
+                      <ul >
+                        {
+                          list2.map((item2, index) => (
+                            <li key={index} >
+                              <div className={styles.leftdeco} />
+                              {
+                                index > 2 ? <div className={styles.topdeco} /> : null
+                              }
+                              <div className={styles.contentdeco} >
+                                <div className={styles.name} >{item2.name}</div >
+                                <div className={styles.value} >{item2.value}</div >
+                                <div className={styles.prec} >≈{item2.prec}</div >
+                              </div >
+                            </li >
+                          ))
+                        }
+                      </ul >
+                    </div >
+                  </li >
+                )
+              })
+            }
+
           </ul >
         </div >
       </Mixin.Child >
