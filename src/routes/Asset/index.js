@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { NavPannel } from '@components'
+import { NavPannel, ShowJsonTip } from '@components'
 import { default as PurseDetail } from './Manage/PurseDetail'
 import { default as Deposit } from './Manage/Deposit'
 import { default as WithDraw } from './Manage/WithDraw'
@@ -13,9 +13,8 @@ const Comp = {
   WithDraw,
   Record
 }
-@connect(({ home, theme, modal, history: model, loading, dispatch }) => ({
-  model,
-  home,
+@connect(({  theme, modal, asset, history, loading, dispatch }) => ({
+  model: asset,
   theme,
   modal,
   modelName: 'asset',
@@ -58,8 +57,9 @@ export default class View extends Component {
     const { renderPage } = this
     return (
       <div >
+        <ShowJsonTip data={{...this.props.model}} />
         <NavPannel
-          defaultActive='PurseDetail'
+          defaultActive='Deposit'
           navList={[
             {
               svg: assetManage,

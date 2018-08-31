@@ -9,7 +9,7 @@ export default class MoneySelect extends Component {
     return (
       <Select
         value={value}
-        // onChange={(option) => {}}
+        onChange={onChange}
         options={options}
         placeholder={'请选择'}
         getOptionLabel={(option) => option.label}

@@ -20,7 +20,7 @@ export default class View extends Component {
     const { dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getAssetSummary`,
-      payload: {}
+      payload: { forceUpdate: true }
     })
   }
 

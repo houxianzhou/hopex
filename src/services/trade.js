@@ -12,6 +12,14 @@ if (MODE === 'mock') {
   require('./socketServer')
 }
 
+
+//获取存款钱包地址
+export async function getAssetAddress(payload) {
+  return request(`${UserIp0}/User/GetUserAssetWalletAddr`, {
+    query: payload
+  })
+}
+
 //交易概况
 export async function getAssetSummary(payload) {
   return request(`${UserIp0}/gateway/Trade/Summary`, {
