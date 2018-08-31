@@ -12,6 +12,21 @@ if (MODE === 'mock') {
   require('./socketServer')
 }
 
+//获取资金记录
+export async function getAssetRecord(payload) {
+  return request(`${UserIp0}/User/GetTrans`, {
+    query: payload
+  })
+}
+
+//发送提现确认邮件
+export async function SendEmailToWithdraw(payload) {
+  return request(`${UserIp0}/User/SendEmailToWithdraw`, {
+    method: 'post',
+    body: payload
+  })
+}
+
 //取提现参数
 export async function getWithdrawParameter(payload) {
   return request(`${UserIp0}/User/GetWithdrawParameter`, {

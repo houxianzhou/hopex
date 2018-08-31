@@ -15,7 +15,9 @@ import styles from './index.less'
 }))
 export default class View extends Component {
   state = {
-    active: ''
+    active: '',
+    address: '',
+    amount: ''
   }
 
   componentDidMount() {
@@ -52,7 +54,7 @@ export default class View extends Component {
 
   getWithdrawParameter = () => {
     const { dispatch, modelName } = this.props
-    const { active } = this.state
+    const { active, } = this.state
     if (active) {
       dispatch({
         type: `${modelName}/getWithdrawParameter`,
@@ -63,10 +65,27 @@ export default class View extends Component {
     }
   }
 
+  SendEmailToWithdraw = () => {
+    const { dispatch, modelName } = this.props
+    const { active, address = '', amount = '' } = this.state
+    console.log(active,'---------')
+    if (active) {
+      dispatch({
+        type: `${modelName}/SendEmailToWithdraw`,
+        payload: {
+          asset: active,
+          address,
+          amount
+        }
+      })
+    }
+  }
+
 
   render() {
+    const { changeState } = this
     const { model: { detail = [] } } = this.props
-    const { active } = this.state
+    const { active, address, amount } = this.state
     const selectList = detail.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
 
     const selectOne = detail.filter((item = {}) => item.assetName === active)[0] || {}
@@ -78,7 +97,6 @@ export default class View extends Component {
               <div className={styles.notpermit} >账户不允许提现</div >
             )
           }
-
           <div className={styles.title} >提现</div >
 
           <div className={styles.moneytype} >
@@ -96,11 +114,15 @@ export default class View extends Component {
           <ul className={styles.userinput} >
             <li >
               <div className={styles.label} >目标地址</div >
-              <div className={styles.input} ><Input /></div >
+              <div className={styles.input} ><Input value={address} onChange={(value) => {
+                changeState({ address: value })
+              }} /></div >
             </li >
             <li >
               <div className={styles.label} >金额(BTC)</div >
-              <div className={styles.input} ><Input /></div >
+              <div className={styles.input} ><Input value={amount} onChange={(value) => {
+                changeState({ amount: value })
+              }} /></div >
             </li >
           </ul >
           <div className={styles.calcu} >
@@ -129,12 +151,13 @@ export default class View extends Component {
                 <div className={styles.fact} >0BTC</div >
               </div >
             </div >
-            <div className={styles.buton} >
-              <div >提交</div >
+            <div className={styles.buton} onClick={() => {
+              this.SendEmailToWithdraw()
+            }} >
+              <div >提交
+              </div >
             </div >
           </div >
-
-
           <div className={styles.desc} >
             <div >重要提示</div >
             <ul >

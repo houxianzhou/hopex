@@ -16,7 +16,13 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    console.log('资金记录')
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getAssetRecord`,
+      payload: {
+        page: '1'
+      }
+    })
   }
 
 

@@ -850,6 +850,72 @@ export default delay({
     )
   },
 
+  //提现获取依赖详情
+  'Get /mock/api/v1/User/GetWithdrawParameter': (req, res) => {
+    const asset = req.query.asset
+    let sendasset
+    if (asset === 'BTC') {
+      sendasset = {
+        "enableTwoFactories": false,
+        "commission": "0.00100000",
+        "minAmount": "0.01000000",
+        "maxAmount": "9.99896705",
+        "allowWithdraw": true,
+        "prompts": ["最小提现数量为:0.01000000BTC", "请勿直接提现至众筹或ICO地址.我们不会处理未来代币的发放。", "* 基于安全理由，Hopex每日只会人工审核并处理提现一次，有关我们的政策请参阅安全规范。", "* 在 13:00 UTC (大约 10 小时) 前提交的提款请求，会进入当天的批处理队列。"],
+        "isValid": true
+      }
+    } else {
+      sendasset = {
+        "enableTwoFactories": false,
+        "commission": "0.00500000",
+        "minAmount": "0.05000000",
+        "maxAmount": "0.00000000",
+        "allowWithdraw": true,
+        "prompts": ["最小提现数量为:0.05000000ETH", "请勿直接提现至众筹或ICO地址.我们不会处理未来代币的发放。", "* 基于安全理由，Hopex每日只会人工审核并处理提现一次，有关我们的政策请参阅安全规范。", "* 在 13:00 UTC (大约 10 小时) 前提交的提款请求，会进入当天的批处理队列。"],
+        "isValid": true
+      }
+    }
+    res.send(
+      {
+        "data": sendasset, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+  },
+
+  //发送提现确认邮件
+  'Post /mock/api/v1/User/SendEmailToWithdraw': (req, res) => {
+    res.send(
+      {
+        "ret": 0, "errCode": "", "errStr": "请先开启谷歌验证"
+      }
+    )
+
+  },
+
+  //获取资金记录
+  'Get /mock/api/v1/User/GetTrans': (req, res) => {
+    res.send(
+      {
+        data:[
+          {
+            "asset": "string",
+            "type": "string",
+            "status": "string",
+            "statusVal": 0,
+            "amount": "string",
+            "createdTime": "string",
+            "txid": "string",
+            "addr": "string",
+            "addrUrl": "string",
+            "txidUrl": "string"
+          }
+        ],
+        "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+
+  },
+
 }, 100)
 
 

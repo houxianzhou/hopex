@@ -2,7 +2,10 @@ import { _, getRes, resOk, joinModel, localSave, asyncPayload, delay } from '@ut
 import { PATH } from '@constants'
 import { Toast } from '@components'
 import modelExtend from '@models/modelExtend'
-import { getAssetSummary, getAssetAddress, getWithdrawParameter } from '@services/trade'
+import {
+  getAssetSummary, getAssetAddress, getWithdrawParameter,
+  SendEmailToWithdraw, getAssetRecord
+} from '@services/trade'
 
 
 export default joinModel(modelExtend, {
@@ -151,6 +154,109 @@ export default joinModel(modelExtend, {
             })
             return result
           }
+        }
+      }
+    },
+
+    // 发送提现确认邮件
+    * SendEmailToWithdraw({ payload = {} }, { call, put, select }) {
+      const email = yield select(({ user: { userInfo: { email } = {} } = {} }) => email) || []
+      const { address, asset, amount } = payload
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {
+            email,
+            addr: address,
+            asset,
+            amount
+          },
+          powerMsg: '发送提现确认邮件',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(SendEmailToWithdraw, repayload))
+        if (resOk(res)) {
+          console.log(res, '-')
+          // const result = _.get(res, 'data')
+          // if (result) {
+          //   const detail = yield select(({ asset: { detail = [] } }) => detail) || []
+          //   const { allowWithdraw, commission, enableTwoFactories, isValid, maxAmount, minAmount, prompts: promptsWithDraw } = result
+          //   const detailnew = detail.map((item = {}) => {
+          //     if (item.assetName === asset) {
+          //       return {
+          //         ...item,
+          //         allowWithdraw,
+          //         commission,
+          //         enableTwoFactories,
+          //         isValid,
+          //         maxAmount,
+          //         minAmount,
+          //         promptsWithDraw
+          //       }
+          //     }
+          //     return item
+          //   })
+          //   yield put({
+          //     type: 'changeState',
+          //     payload: {
+          //       detail: detailnew
+          //     }
+          //   })
+          //   return result
+          // }
+        }
+      }
+    },
+
+    // 资金记录
+    * getAssetRecord({ payload = {} }, { call, put, select }) {
+      const { page = '1' } = payload
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {},
+          powerMsg: '获取资金记录',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getAssetRecord, {
+          page,
+          limit: '20'
+        }))
+        if (resOk(res)) {
+          console.log(res, '-')
+          // const result = _.get(res, 'data')
+          // if (result) {
+          //   const detail = yield select(({ asset: { detail = [] } }) => detail) || []
+          //   const { allowWithdraw, commission, enableTwoFactories, isValid, maxAmount, minAmount, prompts: promptsWithDraw } = result
+          //   const detailnew = detail.map((item = {}) => {
+          //     if (item.assetName === asset) {
+          //       return {
+          //         ...item,
+          //         allowWithdraw,
+          //         commission,
+          //         enableTwoFactories,
+          //         isValid,
+          //         maxAmount,
+          //         minAmount,
+          //         promptsWithDraw
+          //       }
+          //     }
+          //     return item
+          //   })
+          //   yield put({
+          //     type: 'changeState',
+          //     payload: {
+          //       detail: detailnew
+          //     }
+          //   })
+          //   return result
+          // }
         }
       }
     }
