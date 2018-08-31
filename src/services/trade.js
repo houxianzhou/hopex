@@ -12,6 +12,13 @@ if (MODE === 'mock') {
   require('./socketServer')
 }
 
+//取提现参数
+export async function getWithdrawParameter(payload) {
+  return request(`${UserIp0}/User/GetWithdrawParameter`, {
+    query: payload
+  })
+}
+
 
 //获取存款钱包地址
 export async function getAssetAddress(payload) {
@@ -23,7 +30,8 @@ export async function getAssetAddress(payload) {
 //交易概况
 export async function getAssetSummary(payload) {
   return request(`${UserIp0}/gateway/Trade/Summary`, {
-    query: payload
+    query: payload,
+    needLoop: true
   })
 }
 

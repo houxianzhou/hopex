@@ -826,6 +826,30 @@ export default delay({
     )
   },
 
+  //存款
+  'Get /mock/api/v1/User/GetUserAssetWalletAddr': (req, res) => {
+    const asset = req.query.asset
+    let sendasset
+    if (asset === 'BTC') {
+      sendasset = {
+        "qrCodeImgUrl": "https://user.hopex.com/api/QRCode/wallet?addr=18WY7rBJYnNL16UzG4omYjqUy9jJHnoPo9&asset=BTC",
+        "address": "18WY7rBJYnNL16UzG4omYjqUy9jJHnoPo9",
+        "prompts": ["* 请不要向上述地址充值任何非BTC资产，否则将不可找回。", "* 最低存款额为 0.001BTC (100000 聪)。", "* 你的比特币会在6个网络确认后到帐。", "* 所有Hopex的存款地址都是多重签名冷钱包地址，所有钱包均不曾被联网的机器读取。"]
+      }
+    } else {
+      sendasset = {
+        "qrCodeImgUrl": "https://user.hopex.com/api/QRCode/wallet?addr=0xf0e1abd140d9e7df1bcf06f9879b0d3b76deee06&asset=ETH",
+        "address": "0xf0e1abd140d9e7df1bcf06f9879b0d3b76deee06",
+        "prompts": ["* 请不要向上述地址充值任何非ETH资产，否则将不可找回。", "* 最低存款额为 0.01ETH。", "* 你的ETH会在30个网络确认后到帐。", "* 所有Hopex的存款地址都是多重签名冷钱包地址，所有钱包均不曾被联网的机器读取。"]
+      }
+    }
+    res.send(
+      {
+        "data": sendasset, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+  },
+
 }, 100)
 
 

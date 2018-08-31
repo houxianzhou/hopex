@@ -14,32 +14,81 @@ import styles from './index.less'
   loading: Loading
 }))
 export default class View extends Component {
+  state = {
+    active: ''
+  }
+
   componentDidMount() {
     this.startInit()
   }
 
   startInit = () => {
-    console.log('提现')
+    this.getAssetSummary()
+  }
+
+  getAssetSummary = () => {
+    const { dispatch, modelName } = this.props
+    const { active } = this.state
+    dispatch({
+      type: `${modelName}/getAssetSummary`,
+    }).then(res => {
+      if (res) {
+        if (!active) {
+          this.changeMoney(res.detail[0].assetName)
+        } else {
+          this.getWithdrawParameter()
+        }
+      }
+    })
+  }
+
+  changeMoney = (payload) => {
+    this.changeState({ active: payload },
+      () => {
+        this.getWithdrawParameter()
+      }
+    )
+  }
+
+  getWithdrawParameter = () => {
+    const { dispatch, modelName } = this.props
+    const { active } = this.state
+    if (active) {
+      dispatch({
+        type: `${modelName}/getWithdrawParameter`,
+        payload: {
+          asset: active
+        }
+      })
+    }
   }
 
 
   render() {
-    const { model: { withDrawPage } = {} } = this.props
-    const selectList = [
-      { label: 'BTC', value: 'BTC' },
-      { label: 'USD', value: 'USD' },
-    ]
+    const { model: { detail = [] } } = this.props
+    const { active } = this.state
+    const selectList = detail.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
+
+    const selectOne = detail.filter((item = {}) => item.assetName === active)[0] || {}
     return (
       <Mixin.Child that={this} >
         <div className={styles.withdraw} >
-          <div className={styles.notpermit} >账户不允许提现</div >
+          {
+            (selectOne.allowWithdraw || true) ? null : (
+              <div className={styles.notpermit} >账户不允许提现</div >
+            )
+          }
+
           <div className={styles.title} >提现</div >
 
           <div className={styles.moneytype} >
             币种
             <div className={styles.select} >
               <MoneySelect
-                value={selectList[0]}
+                onChange={(option = {}) => {
+                  this.changeMoney(option.value)
+                }}
+                value={selectList.filter((item = {}) => item.value === active)}
                 options={selectList}
               />
             </div >
@@ -58,19 +107,26 @@ export default class View extends Component {
             <div className={styles.elsemoney} >
               <div >
                 <div >最大可提现金额：</div >
-                <div >0.00000000BTC</div >
+                {
+                  selectOne.maxAmount ? (
+                    <div >{selectOne.maxAmount}{active}</div >
+                  ) : null
+                }
               </div >
               <div className={styles.getall} >全部提现</div >
-              <div className={styles.notenougth} >可提金额不足</div >
+              {/*<div className={styles.notenougth} >可提金额不足</div >*/}
             </div >
             <div className={styles.charge} >
               <div >
                 <div >手续费：</div >
-                <div >0.00000000BTC</div >
+                {
+                  selectOne.commission ? (<div >{selectOne.commission}{active}</div >) : null
+                }
+
               </div >
               <div >
                 <div >实际到账金额：</div >
-                <div className={styles.fact} >0.00150000BTC</div >
+                <div className={styles.fact} >0BTC</div >
               </div >
             </div >
             <div className={styles.buton} >
@@ -81,10 +137,13 @@ export default class View extends Component {
 
           <div className={styles.desc} >
             <div >重要提示</div >
-            * 请不要向上述地址充值任何非BTC资产，否则将不可找回。<br />
-            * 最低存款额为 0.001BTC (100000 聪)。<br />
-            * 你的比特币会在6个网络确认后到帐。<br />
-            * 所有Hopex的存款地址都是多重签名冷钱包地址，所有钱包均不曾被联网的机器读取。
+            <ul >
+              {
+                (selectOne.promptsWithDraw || []).map((item = '', index) => {
+                  return <li key={index} >{item}</li >
+                })
+              }
+            </ul >
           </div >
         </div >
       </Mixin.Child >

@@ -2,7 +2,7 @@ import { _, getRes, resOk, joinModel, localSave, asyncPayload, delay } from '@ut
 import { PATH } from '@constants'
 import { Toast } from '@components'
 import modelExtend from '@models/modelExtend'
-import { getAssetSummary, getAssetAddress } from '@services/trade'
+import { getAssetSummary, getAssetAddress, getWithdrawParameter } from '@services/trade'
 
 
 export default joinModel(modelExtend, {
@@ -21,6 +21,7 @@ export default joinModel(modelExtend, {
   },
 
   effects: {
+    // 获取用户钱包明细
     * getAssetSummary({ payload = {} }, { call, put, select }) {
       const detail = yield select(({ asset: { detail = [] } }) => detail) || []
       const { forceUpdate = false } = payload
@@ -58,6 +59,7 @@ export default joinModel(modelExtend, {
       }
     },
 
+    // 获取存款钱包地址
     * getAssetAddress({ payload = {} }, { call, put, select }) {
       const { asset } = payload
       const repayload = yield (asyncPayload(yield put({
@@ -87,6 +89,56 @@ export default joinModel(modelExtend, {
                   address,
                   prompts,
                   qrCodeImgUrl
+                }
+              }
+              return item
+            })
+            yield put({
+              type: 'changeState',
+              payload: {
+                detail: detailnew
+              }
+            })
+            return result
+          }
+        }
+      }
+    },
+
+    // 获取提现参数
+    * getWithdrawParameter({ payload = {} }, { call, put, select }) {
+      const { asset } = payload
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {
+            asset
+          },
+          powerMsg: '获取提现参数',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getWithdrawParameter, {
+          asset: _.get(repayload, 'param.asset')
+        }))
+        if (resOk(res)) {
+          const result = _.get(res, 'data')
+          if (result) {
+            const detail = yield select(({ asset: { detail = [] } }) => detail) || []
+            const { allowWithdraw, commission, enableTwoFactories, isValid, maxAmount, minAmount, prompts: promptsWithDraw } = result
+            const detailnew = detail.map((item = {}) => {
+              if (item.assetName === asset) {
+                return {
+                  ...item,
+                  allowWithdraw,
+                  commission,
+                  enableTwoFactories,
+                  isValid,
+                  maxAmount,
+                  minAmount,
+                  promptsWithDraw
                 }
               }
               return item
