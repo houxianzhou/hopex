@@ -4,7 +4,7 @@ import { Toast } from '@components'
 import modelExtend from '@models/modelExtend'
 import {
   getAssetSummary, getAssetAddress, getWithdrawParameter,
-  SendEmailToWithdraw, getAssetRecord
+  SendEmailToWithdraw, getAssetRecord, doWithdrawApply
 } from '@services/trade'
 
 
@@ -16,7 +16,8 @@ export default joinModel(modelExtend, {
     detail: [],
 
     address: '',// BTC存款地址
-    CodeImage: ''//存款二维码地址
+    CodeImage: '',//存款二维码地址
+    record: [],//资金记录
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -161,48 +162,58 @@ export default joinModel(modelExtend, {
     // 发送提现确认邮件
     * SendEmailToWithdraw({ payload = {} }, { call, put, select }) {
       const email = yield select(({ user: { userInfo: { email } = {} } = {} }) => email) || []
-      const { address, asset, amount } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
           "head": {},
           "param": {
             email,
-            addr: address,
-            asset,
-            amount
+            ...payload
           },
           powerMsg: '发送提现确认邮件',
           power: [1]
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(SendEmailToWithdraw, repayload))
+        const res = getRes(yield call(SendEmailToWithdraw, repayload, (errStr) => {
+          if (errStr === '请先开启谷歌验证') {
+            return {
+              data: false
+            }
+          }
+        }))
         if (resOk(res)) {
-          console.log(res, '-')
+          const result = _.get(res, 'data')
+          if (result === '') {
+            return { data: true }
+          }
+        }
+      }
+    },
+
+    // 提现申请
+    * doWithdrawApply({ payload = {} }, { call, put, select }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {
+            ...payload
+          },
+          powerMsg: '获取资金记录',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(doWithdrawApply, repayload))
+        if (resOk(res)) {
+          console.log(res, '---------')
           // const result = _.get(res, 'data')
           // if (result) {
-          //   const detail = yield select(({ asset: { detail = [] } }) => detail) || []
-          //   const { allowWithdraw, commission, enableTwoFactories, isValid, maxAmount, minAmount, prompts: promptsWithDraw } = result
-          //   const detailnew = detail.map((item = {}) => {
-          //     if (item.assetName === asset) {
-          //       return {
-          //         ...item,
-          //         allowWithdraw,
-          //         commission,
-          //         enableTwoFactories,
-          //         isValid,
-          //         maxAmount,
-          //         minAmount,
-          //         promptsWithDraw
-          //       }
-          //     }
-          //     return item
-          //   })
           //   yield put({
           //     type: 'changeState',
           //     payload: {
-          //       detail: detailnew
+          //       record: result
           //     }
           //   })
           //   return result
@@ -210,6 +221,7 @@ export default joinModel(modelExtend, {
         }
       }
     },
+
 
     // 资金记录
     * getAssetRecord({ payload = {} }, { call, put, select }) {
@@ -229,37 +241,21 @@ export default joinModel(modelExtend, {
           limit: '20'
         }))
         if (resOk(res)) {
-          console.log(res, '-')
-          // const result = _.get(res, 'data')
-          // if (result) {
-          //   const detail = yield select(({ asset: { detail = [] } }) => detail) || []
-          //   const { allowWithdraw, commission, enableTwoFactories, isValid, maxAmount, minAmount, prompts: promptsWithDraw } = result
-          //   const detailnew = detail.map((item = {}) => {
-          //     if (item.assetName === asset) {
-          //       return {
-          //         ...item,
-          //         allowWithdraw,
-          //         commission,
-          //         enableTwoFactories,
-          //         isValid,
-          //         maxAmount,
-          //         minAmount,
-          //         promptsWithDraw
-          //       }
-          //     }
-          //     return item
-          //   })
-          //   yield put({
-          //     type: 'changeState',
-          //     payload: {
-          //       detail: detailnew
-          //     }
-          //   })
-          //   return result
-          // }
+          const result = _.get(res, 'data')
+          if (result) {
+            yield put({
+              type: 'changeState',
+              payload: {
+                record: result
+              }
+            })
+            return result
+          }
         }
       }
     }
+
+
   },
   reducers: {},
 })

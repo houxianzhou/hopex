@@ -1,37 +1,50 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { COLORS } from "@constants"
-import { Mixin, Table } from '@components'
+import { Mixin, Table, PagiNation } from '@components'
 import { classNames, _, } from '@utils'
 
 import styles from './index.less'
 
-@connect(({ modal, Loading }) => ({
+@connect(({ modal, Loading, asset }) => ({
   modal,
-  loading: Loading
+  loading: Loading,
+  model: asset
 }))
 export default class View extends Component {
+  state = {
+    totalPage: 10,
+    currentPage: 0
+  }
+
   componentDidMount() {
     this.startInit()
   }
 
   startInit = () => {
+    this.getAssetRecord()
+  }
+
+  getAssetRecord = () => {
     const { dispatch, modelName } = this.props
+    const { currentPage } = this.state
     dispatch({
       type: `${modelName}/getAssetRecord`,
       payload: {
-        page: '1'
+        page: currentPage
       }
     })
   }
 
 
   render() {
-    const { calculateTableHeight } = this.props
+    const { changeState, getAssetRecord } = this
+    const { calculateTableHeight, model: { record = [] } = {} } = this.props
+    const { totalPage, currentPage } = this.state
     const columns = [
       {
         title: '时间',
-        dataIndex: 'time',
+        dataIndex: 'createdTime',
         width: 100
       },
       {
@@ -41,16 +54,16 @@ export default class View extends Component {
       },
       {
         title: '金额',
-        dataIndex: 'money',
+        dataIndex: 'amount',
         width: 40
       },
       {
         title: '地址',
-        dataIndex: 'address',
+        dataIndex: 'addr',
       },
       {
         title: 'TxHash',
-        dataIndex: 'hash',
+        dataIndex: 'txid',
       },
       {
         title: '状态',
@@ -58,20 +71,28 @@ export default class View extends Component {
         width: 30
       },
     ]
-    const dataSource = (new Array(10)).fill().map(() => (
-      {
-        time: '2018-05-13 14:23:12',
-        type: '提现',
-        money: '0.00200000ETH',
-        address: '158NjzVvPC8vHrq41NvRJYSyW72XoszUL9',
-        hash: 'XXXXXXXXXXXXXXXXXXXXX',
-        status: '进行中'
-      }
-    ))
+    const dataSource = record
     const tableProp = {
       className: styles.tableContainer,
       columns,
       dataSource: dataSource,
+    }
+
+    const pageProp = {
+      total: totalPage,
+      currentPage,
+      onPageChange: (e) => {
+        changeState({
+          currentPage: e
+        }, () => {
+          getAssetRecord()
+        })
+      },
+      containerClassName: styles.paginationcontainerClassName,
+      pageClassName: 'paginationpageClassName',
+      activeClassName: 'paginationpageActiveClassName',
+      previousClassName: 'paginationpageClassName',
+      nextClassName: 'paginationpageClassName',
     }
     return (
       <Mixin.Child that={this} >
@@ -79,6 +100,9 @@ export default class View extends Component {
           <div className={styles.title} >资金记录</div >
           <div style={{ height: calculateTableHeight(dataSource) }} className={styles.tablec} >
             <Table {...tableProp} />
+          </div >
+          <div className={styles.pagenations} >
+            <PagiNation {...pageProp} />
           </div >
 
         </div >

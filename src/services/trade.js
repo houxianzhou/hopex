@@ -19,11 +19,21 @@ export async function getAssetRecord(payload) {
   })
 }
 
-//发送提现确认邮件
-export async function SendEmailToWithdraw(payload) {
-  return request(`${UserIp0}/User/SendEmailToWithdraw`, {
+//提现申请
+export async function doWithdrawApply(payload) {
+  return request(`${UserIp0}/User/WithdrawApply`, {
     method: 'post',
     body: payload
+  })
+}
+
+
+//发送提现确认邮件
+export async function SendEmailToWithdraw(payload, errHandler) {
+  return request(`${UserIp0}/User/SendEmailToWithdraw`, {
+    method: 'post',
+    body: payload,
+    errHandler
   })
 }
 

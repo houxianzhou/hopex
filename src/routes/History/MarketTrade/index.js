@@ -184,7 +184,7 @@ export default class View extends Component {
           <div style={{ height: calculateTableHeight(dataSource) }} >
             <Table {...tableProp} />
           </div >
-          <div className={styles.pages} >
+          <div className={styles.pagenations} >
             <PagiNation {...pageProp} />
           </div >
           {

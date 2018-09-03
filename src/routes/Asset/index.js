@@ -13,7 +13,7 @@ const Comp = {
   WithDraw,
   Record
 }
-@connect(({  theme, modal, asset, history, loading, dispatch }) => ({
+@connect(({ theme, modal, asset, history, loading, dispatch }) => ({
   model: asset,
   theme,
   modal,
@@ -55,11 +55,12 @@ export default class View extends Component {
 
   render() {
     const { renderPage } = this
+    const { dispatch, modelName } = this.props
     return (
       <div >
-        <ShowJsonTip data={{...this.props.model}} />
+        <ShowJsonTip data={{ ...this.props.model }} />
         <NavPannel
-          defaultActive='Record'
+          defaultActive='WithDraw'
           navList={[
             {
               svg: assetManage,
@@ -83,6 +84,12 @@ export default class View extends Component {
                   name: 'WithDraw',
                   title: '提现',
                   onClick: () => {
+                    dispatch({
+                      type: `${modelName}/changeState`,
+                      payload: {
+                        withDrawPage: 1
+                      }
+                    })
                     return renderPage('WithDraw')
                   }
                 },

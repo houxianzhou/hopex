@@ -886,8 +886,17 @@ export default delay({
   'Post /mock/api/v1/User/SendEmailToWithdraw': (req, res) => {
     res.send(
       {
-        "ret": 0, "errCode": "", "errStr": "请先开启谷歌验证"
+        "ret": -1, "errCode": "", "errStr": "请先开启谷歌验证"
       }
+    // {"data":"","ret":0,"errCode":"","errStr":""}
+    )
+
+  },
+
+  //提现申请
+  'Post /mock/api/v1/User/WithdrawApply': (req, res) => {
+    res.send(
+      {"data":"","ret":0,"errCode":"","errStr":""}
     )
 
   },

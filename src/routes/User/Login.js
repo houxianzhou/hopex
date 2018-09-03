@@ -227,6 +227,7 @@ export default class View extends Component {
                       dispatch({
                         type: `${modelName}/doVertifyLogin`,
                         payload: {
+                          email,
                           userId,
                           googleCode,
                           loginType: 'pcweb'
