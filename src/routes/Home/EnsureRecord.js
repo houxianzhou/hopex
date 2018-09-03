@@ -18,7 +18,8 @@ export default class EnsureRecord extends Component {
   }
 
   startInit = () => {
-     this.getEnsureRecord()
+    this.getEnsureRecord()
+    this.getIntervals()
   }
 
 
@@ -68,6 +69,13 @@ export default class EnsureRecord extends Component {
     })
   }
 
+  getIntervals = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getIntervals`,
+    })
+  }
+
   render() {
     const { dis } = this.state
     const { changeState } = this
@@ -77,7 +85,8 @@ export default class EnsureRecord extends Component {
       , _.get(ensure_records, 'bids')
     ]
 
-    let varyRanges = _.isString(varyRange) ? varyRange.split(' ') : []
+
+    let varyRanges = _.isString(varyRange) ? varyRange.split(' ') : varyRange || []
     const showDis = varyRanges.indexOf(dis) > 0 ? dis : varyRanges[0]
 
 

@@ -7,7 +7,7 @@ import {
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
   getPosition, getPersonEnsureDetail, getAllMarkets, getAllMarketDetails, getLeverage, doUpdateLeverage,
   getKlineAllList, getPersonalEnsureHistory, getKlineDetail, getBuySellDetail,
-  calculatePositionEnsureMoney, doUpdatePositionEnsureMoney, getMarketFee
+  calculatePositionEnsureMoney, doUpdatePositionEnsureMoney, getMarketFee, getIntervals
 } from "@services/trade"
 
 
@@ -242,6 +242,30 @@ export default joinModel(modelExtend, {
         }
       })
     },
+    //获取盘口区间
+    * getIntervals({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {},
+          param: {},
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getIntervals, _.get(repayload, 'param')))
+
+        if (resOk(res)) {
+          const { intervals = [] } = _.get(res, 'data')
+          yield put({
+            type: 'changeState',
+            payload: {
+              varyRange: intervals
+            }
+          })
+        }
+      }
+    },
+
 
     // K线图全量查询
     * getKlineAllList({ payload = {} }, { call, put }) {

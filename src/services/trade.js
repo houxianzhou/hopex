@@ -12,6 +12,14 @@ if (MODE === 'mock') {
   require('./socketServer')
 }
 
+
+//获取盘口区间
+export async function getIntervals(payload) {
+  return request(`${UserIp0}/gateway/OrderBook/Intervals`, {
+    query: payload
+  })
+}
+
 //获取资金记录
 export async function getAssetRecord(payload) {
   return request(`${UserIp0}/User/GetTrans`, {
@@ -72,7 +80,7 @@ export async function getLatestRecord(payload) {
 
 // 委托列表
 export async function getEnsureRecord(payload) {
-  return request(`${UserIp3}/contract.order_book`, {
+  return request(`${UserIp0}/gateway/OrderBook/Index`, {
     method: 'post',
     body: payload,
     needLoop: true,

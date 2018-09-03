@@ -189,7 +189,7 @@ export default delay({
     })
   },
   //委托列表
-  'Post /mock/api/v1/quote/contract.order_book': (req, res) => {
+  'Post /mock/api/v1/gateway/OrderBook/Index': (req, res) => {
     res.send({
       "head": {
         "method": "contract.order_book",
@@ -303,7 +303,7 @@ export default delay({
         const arryas = ['BTC', 'USDT', 'EOC', 'w', 'b']
         return {
           "allowFullClose": false,
-          "contractCode": "BTCUSDT",
+          "contractCode": arryas[index],
           "contractName": "BTCUSDT永续",
           "leverage": "20.00",
           "contractValue": "1",
