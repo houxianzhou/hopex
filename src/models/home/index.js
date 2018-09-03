@@ -676,32 +676,47 @@ export default joinModel(modelExtend, {
           "head": {
             "method": "user.position"
           },
-          "param": {
-            "marketList": [],
-            "pageIndex": "0",//页码
-            "pageSize": "100"//每页数量
-          },
+          "param": {},
           power: [1],
           powerMsg: '个人持仓列表'
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getPosition, repayload))
+        const res = getRes(yield call(getPosition, {}))
         if (resOk(res)) {
-          const positionList = yield select(({ home: { positionList = [] } }) => positionList)
-          const result = _.get(res, 'data.positionList')
-          // 解决轮训问题
-          result.map((item = {}) => {
-            const exsit = positionList.filter((one = {}) => one.market === item.market)[0] || {}
-            if (exsit && exsit.inputValue) {
-              item.inputValue = exsit.inputValue
-            }
-          })
+          const result = _.get(res, 'data')
           if (result) {
+            const positionList = yield select(({ home: { positionList = [] } }) => positionList)
+            // 解决轮训问题
+            result.map((item = {}) => {
+              const exsit = positionList.filter((one = {}) => one.contractCode === item.contractCode)[0] || {}
+              if (exsit && exsit.inputValue) {
+                item.inputValue = exsit.inputValue
+              }
+            })
             yield put({
               type: 'changeState',
               payload: {
-                positionList: result
+                positionList: result.map((item = {}) => {
+                  const {
+                    contractCode, contractName, lastPrice, fairPrice, positionQuantity,
+                    entryPrice, positionMargin, maintMarginRate, liquidationPrice, unrealisedPnl, unrealisedPnlPcnt
+                  } = item
+                  return {
+                    ...item,
+                    market: contractCode,
+                    marketName: contractName,
+                    lastPriceShow: lastPrice,
+                    reasonablePriceShow: fairPrice,
+                    amount: positionQuantity,
+                    averagePriceShow: entryPrice,
+                    positionMoneyShow: positionMargin,
+                    keepMoneyShow: maintMarginRate,
+                    overPriceShow: liquidationPrice,
+                    floatProfitShow: unrealisedPnl,
+                    profitRate: unrealisedPnlPcnt
+                  }
+                })
               }
             })
             return result

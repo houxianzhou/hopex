@@ -228,7 +228,7 @@ export default delay({
   //用户的委托列表
   'Get /mock/api/v1/gateway/User/OpenOrders': (req, res) => {
     res.send({
-      "data": (new Array(3)).fill().map(item=>(
+      "data": (new Array(3)).fill().map(item => (
         {
           "orderId": 870,
           "contractCode": "BTCUSDT",
@@ -286,7 +286,7 @@ export default delay({
     })
   },
   //用户持仓
-  'Post /mock/api/v1/trade/user.position': (req, res) => {
+  'Get /mock/api/v1/gateway/User/Positions': (req, res) => {
     res.send({
       "head": {
         "method": "user.position",
@@ -299,32 +299,27 @@ export default delay({
         "userId": "56",
         "userToken": "56"
       },
-      "data": {
-        "positionList": (new Array(5)).fill().map((item, index) => {
-          const arryas = ['BTC', 'USDT', 'EOC', 'w', 'b']
-          return {
-            amount: "-1227304",
-            averagePrice: _.random(10, 50) + '',
-            averagePriceShow: "234.75",
-            floatProfit: "-5035.2689034148",
-            floatProfitShow: "-5035.2689BTC",
-            keepMoney: "29.8839175526",
-            keepMoneyShow: "29.8839BTC",
-            lastPrice: "6000.0",
-            lastPriceShow: "6000.0",
-            leverage: "20.00",
-            market: arryas[index],
-            marketName: `${arryas[index]}永续`,
-            overPrice: "245.8305757134",
-            overPriceShow: "245.83",
-            positionMoney: "265.3165163631",
-            positionMoneyShow: "265.3165BTC",
-            profitRate: "-1897.83%",
-            reasonablePrice: "6370.8808454090",
-            reasonablePriceShow: _.random(10, 50) + '',
-          }
-        }),
-      },
+      "data": (new Array(5)).fill().map((item, index) => {
+        const arryas = ['BTC', 'USDT', 'EOC', 'w', 'b']
+        return {
+          "allowFullClose": false,
+          "contractCode": "BTCUSDT",
+          "contractName": "BTCUSDT永续",
+          "leverage": "20.00",
+          "contractValue": "1",
+          "maintMarginRate": "0.005",
+          "takerFee": "0.00075",
+          "positionQuantity": "-37",
+          "entryPrice": "6602.70",
+          "positionMargin": "0.0000BTC",
+          "liquidationPrice": "6564.77",
+          "maintMargin": "-1403.6722BTC",
+          "unrealisedPnl": "+4088.9804",
+          "unrealisedPnlPcnt": "-291.31%",
+          "fairPrice": "6713.2",
+          "lastPrice": "6713.2"
+        }
+      }),
       ...other
     })
   },

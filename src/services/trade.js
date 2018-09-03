@@ -137,9 +137,8 @@ export async function doUpdatePositionEnsureMoney(payload) {
 
 // 获取所有的个人持仓列表
 export async function getPosition(payload) {
-  return request(`${UserIp4}/user.position`, {
-    method: 'post',
-    body: payload
+  return request(`${UserIp0}/gateway/User/Positions`, {
+    query: payload
   })
 }
 

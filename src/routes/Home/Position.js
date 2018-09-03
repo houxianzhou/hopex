@@ -147,7 +147,7 @@ export default class Position extends Component {
       {
         title: '操作',
         width: 280,
-        dataIndex: 'overPrice',
+        dataIndex: 'overPriceShow',
         render: (value, record = {}, index) => {
           return {
             value: (
