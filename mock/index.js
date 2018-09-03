@@ -908,8 +908,8 @@ export default delay({
     const records = (new Array(total)).fill().map((item, index) => (
       {
         "asset": "BTC",
-        "type": "提现",
-        "status": "进行中",
+        "type": ["提现", '存款'][_.random(0, 1)],
+        "status": ["进行中",'已完成','已拒绝'][_.random(0, 2)],
         "statusVal": 0,
         "amount": "-1.00000000BTC",
         "createdTime": "2018-09-01 16:19:55" + index,

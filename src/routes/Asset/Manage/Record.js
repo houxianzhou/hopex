@@ -3,6 +3,7 @@ import { connect } from 'dva'
 import { COLORS } from "@constants"
 import { Mixin, Table, PagiNation } from '@components'
 import { classNames, _, } from '@utils'
+import { defaultPng2 } from '@assets'
 
 import styles from './index.less'
 
@@ -54,7 +55,7 @@ export default class View extends Component {
       {
         title: '金额',
         dataIndex: 'amount',
-        width: 40
+        width: 60
       },
       {
         title: '地址',
@@ -67,7 +68,22 @@ export default class View extends Component {
       {
         title: '状态',
         dataIndex: 'status',
-        width: 30
+        width: 30,
+        render: (value) => {
+          let cl
+          switch (value) {
+            case '进行中':
+              cl = 'blue'
+              break
+            case '已拒绝':
+              cl = 'red'
+              break
+          }
+          return {
+            value,
+            className: cl
+          }
+        }
       },
     ]
     const dataSource = record
@@ -99,7 +115,15 @@ export default class View extends Component {
         <div className={styles.assetrecord} >
           <div className={styles.title} >资金记录</div >
           <div style={{ height: calculateTableHeight(dataSource) }} className={styles.tablec} >
-            <Table {...tableProp} />
+            {
+              dataSource.length ? (<Table {...tableProp} />) : (
+                <div className={styles.defaultpngcontainer} >
+                  {defaultPng2}
+                  <div >暂无资金记录</div >
+                </div >
+              )
+            }
+
           </div >
           <div className={styles.pagenations} >
             <PagiNation {...pageProp} />
