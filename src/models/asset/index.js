@@ -218,6 +218,16 @@ export default joinModel(modelExtend, {
         if (resOk(res)) {
           console.log(res, '---------')
           const result = _.get(res, 'data')
+          if (result === '') {
+            yield put({
+              type: 'changeState',
+              payload: {
+                withDrawPage: 1
+              }
+            })
+            Toast.tip('提现申请成功')
+
+          }
 
         }
       }

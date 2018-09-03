@@ -60,7 +60,7 @@ export default class View extends Component {
       <div >
         <ShowJsonTip data={{ ...this.props.model }} />
         <NavPannel
-          defaultActive='Record'
+          defaultActive='WithDraw'
           navList={[
             {
               svg: assetManage,

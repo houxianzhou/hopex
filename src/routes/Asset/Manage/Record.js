@@ -38,7 +38,7 @@ export default class View extends Component {
 
   render() {
     const { changeState, getAssetRecord } = this
-    const { calculateTableHeight, model: { record = [], recordTotalPage: totalPage = 1 } = {} } = this.props
+    const { calculateTableHeight, model: { record = [], recordTotalPage: totalPage = 1 } = {}, loading, modelName } = this.props
     const { currentPage } = this.state
     const columns = [
       {
@@ -72,6 +72,7 @@ export default class View extends Component {
     ]
     const dataSource = record
     const tableProp = {
+      loading: loading.effects[`${modelName}/getAssetRecord`],
       className: styles.tableContainer,
       columns,
       dataSource: dataSource,
