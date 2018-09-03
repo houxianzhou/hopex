@@ -790,32 +790,37 @@ export default joinModel(modelExtend, {
           "head": {
             "method": "user.active_delegate"
           },
-          "param": {
-            marketList: [],
-            "pageIndex": String(pageIndex), //页码
-            "pageSize": String(pageSize) //每页数量
-          },
+          "param": {},
           power: [1],
           powerMsg: '个人合约列表'
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getPersonalEnsure, repayload))
+        const res = getRes(yield call(getPersonalEnsure, {}))
         if (resOk(res)) {
           const [result, pageIndex] = [_.get(res, 'data'), _.get(res, 'data.pageIndex')]
           const personalEnsures = yield select(({ home: { personalEnsures = [] } }) => personalEnsures)
           if (result) {
-            // 此处为解决轮询的问题
-            result.map((item = {}) => {
-              const exsit = personalEnsures.filter((one = {}) => one.orderId === item.orderId)[0] || {}
-              if (exsit && exsit.expand) {
-                item.expand = exsit.expand
-              }
-            })
             yield put({
               type: 'changeState',
               payload: {
-                personalEnsures: callback ? [...result, ...personalEnsures] : result,
+                personalEnsures: callback ? [...result, ...personalEnsures] : result.map((item = {}) => {
+                  const {
+                    contractName, contractCode, orderQuantity, orderPrice,
+                    fillQuantity, avgFillMoney, orderMargin, fee
+                  } = item
+                  return ({
+                    ...item,
+                    marketName: contractName,
+                    market: contractCode,
+                    amount: orderQuantity,
+                    price: orderPrice,
+                    dealAmount: fillQuantity,
+                    avgDealMoney: avgFillMoney,
+                    delegateMoney: orderMargin,
+                    dealFee: fee
+                  })
+                }),
                 personalEnsures_PageIndex: pageIndex
               }
             })
