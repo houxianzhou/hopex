@@ -18,6 +18,7 @@ export default joinModel(modelExtend, {
     address: '',// BTC存款地址
     CodeImage: '',//存款二维码地址
     record: [],//资金记录
+    recordTotalPage: '',//资金记录总页数
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -175,17 +176,25 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(SendEmailToWithdraw, repayload, (errStr) => {
-          if (errStr === '请先开启谷歌验证') {
+        const res = getRes(yield call(SendEmailToWithdraw, repayload, (error = {}) => {
+          if (error.errStr === '请先开启谷歌验证') {
             return {
               data: false
             }
           }
         }))
+
         if (resOk(res)) {
           const result = _.get(res, 'data')
           if (result === '') {
-            return { data: true }
+            return true
+          } else if (result === false) {
+            yield put({
+              type: 'openModal',
+              payload: {
+                name: 'googleCodeOpen'
+              }
+            })
           }
         }
       }
@@ -208,16 +217,8 @@ export default joinModel(modelExtend, {
         const res = getRes(yield call(doWithdrawApply, repayload))
         if (resOk(res)) {
           console.log(res, '---------')
-          // const result = _.get(res, 'data')
-          // if (result) {
-          //   yield put({
-          //     type: 'changeState',
-          //     payload: {
-          //       record: result
-          //     }
-          //   })
-          //   return result
-          // }
+          const result = _.get(res, 'data')
+
         }
       }
     },
@@ -241,12 +242,13 @@ export default joinModel(modelExtend, {
           limit: '20'
         }))
         if (resOk(res)) {
-          const result = _.get(res, 'data')
+          const { result = [], totalCount, pageSize } = _.get(res, 'data') || {}
           if (result) {
             yield put({
               type: 'changeState',
               payload: {
-                record: result
+                record: result,
+                recordTotalPage: Math.ceil(Number(totalCount) / Number(pageSize))
               }
             })
             return result

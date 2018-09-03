@@ -82,10 +82,8 @@ export default class View extends Component {
           addr: address,
           amount
         }
-      }).then((res = {}) => {
-        console.log(res)
-        const { data } = res
-        if (data) {
+      }).then((res) => {
+        if (res) {
           dispatch({
             type: `${modelName}/changeState`,
             payload: {
@@ -261,7 +259,7 @@ export default class View extends Component {
                         }} >
                         <CountDown
                           onClick={() => {
-
+                            this.SendEmailToWithdraw()
                           }}
                           beginText='发送'
                         />

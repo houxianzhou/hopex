@@ -13,7 +13,6 @@ import styles from './index.less'
 }))
 export default class View extends Component {
   state = {
-    totalPage: 10,
     currentPage: 0
   }
 
@@ -31,7 +30,7 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/getAssetRecord`,
       payload: {
-        page: currentPage
+        page: currentPage + 1
       }
     })
   }
@@ -39,8 +38,8 @@ export default class View extends Component {
 
   render() {
     const { changeState, getAssetRecord } = this
-    const { calculateTableHeight, model: { record = [] } = {} } = this.props
-    const { totalPage, currentPage } = this.state
+    const { calculateTableHeight, model: { record = [], recordTotalPage: totalPage = 1 } = {} } = this.props
+    const { currentPage } = this.state
     const columns = [
       {
         title: '时间',
@@ -59,11 +58,11 @@ export default class View extends Component {
       },
       {
         title: '地址',
-        dataIndex: 'addr',
+        dataIndex: 'addrUrl',
       },
       {
         title: 'TxHash',
-        dataIndex: 'txid',
+        dataIndex: 'txidUrl',
       },
       {
         title: '状态',

@@ -885,10 +885,10 @@ export default delay({
   //发送提现确认邮件
   'Post /mock/api/v1/User/SendEmailToWithdraw': (req, res) => {
     res.send(
-      {
-        "ret": -1, "errCode": "", "errStr": "请先开启谷歌验证"
-      }
-    // {"data":"","ret":0,"errCode":"","errStr":""}
+      // {
+      //   "ret": -1, "errCode": "", "errStr": "请先开启谷歌验证"
+      // }
+      { "data": "", "ret": 0, "errCode": "", "errStr": "" }
     )
 
   },
@@ -896,30 +896,37 @@ export default delay({
   //提现申请
   'Post /mock/api/v1/User/WithdrawApply': (req, res) => {
     res.send(
-      {"data":"","ret":0,"errCode":"","errStr":""}
+      { "data": "", "ret": 0, "errCode": "", "errStr": "" }
     )
 
   },
 
   //获取资金记录
   'Get /mock/api/v1/User/GetTrans': (req, res) => {
+    const { page: pageIndex, limit: pageSize = 10, } = req.query
+    const total = 99
+    const records = (new Array(total)).fill().map((item, index) => (
+      {
+        "asset": "BTC",
+        "type": "提现",
+        "status": "进行中",
+        "statusVal": 0,
+        "amount": "-1.00000000BTC",
+        "createdTime": "2018-09-01 16:19:55" + index,
+        "txid": "",
+        "addr": "",
+        "addrUrl": "https://btc.com/",
+        "txidUrl": "https://btc.com/"
+      }
+    ))
     res.send(
       {
-        data:[
-          {
-            "asset": "string",
-            "type": "string",
-            "status": "string",
-            "statusVal": 0,
-            "amount": "string",
-            "createdTime": "string",
-            "txid": "string",
-            "addr": "string",
-            "addrUrl": "string",
-            "txidUrl": "string"
-          }
-        ],
-        "ret": 0, "errCode": "", "errStr": ""
+        "data": {
+          "totalCount": records.length,
+          "page": 1,
+          "pageSize": pageSize,
+          "result": records.slice(Number(pageIndex - 1) * pageSize, (Number(pageIndex)) * pageSize),
+        }, "ret": 0, "errCode": "", "errStr": ""
       }
     )
 

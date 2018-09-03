@@ -23,7 +23,7 @@ export const getRes = function (res) {
     data: null,
     head: null,
     code: (res && res.errcode) || '',
-    msg: res && res.data && res.data.errormsg
+    msg: _.get(res, 'data.errormsg') || _.get(res, 'errStr')
   }
 }
 

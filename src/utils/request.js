@@ -73,9 +73,11 @@ export function request(url = '', options = {}) {
           window.location.reload()
         } else {
           if (errHandler) {
+            let result
             // 需要单独的错误处理器
             const err = _.get(error, 'response.data')
-            err ? errHandler(err) : errHandler(error)
+            result = err ? errHandler(err) : errHandler(error)
+            return result
           } else {
             if (_.has(error, 'response.data.errMsg') || _.has(error, 'response.data.errStr')) {
               const message = _.get(error, 'response.data.errMsg') || _.get(error, 'response.data.errStr')
