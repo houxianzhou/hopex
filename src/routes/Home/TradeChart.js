@@ -323,6 +323,7 @@ export default class TradeChart extends Component {
       // interval: 'D',
       'container_id': 'tradeView',
       overrides: {
+        "paneProperties.legendProperties.showLegend":false,
         "paneProperties.background": backColor,
         "paneProperties.vertGridProperties.color": "transparent",
         "paneProperties.horzGridProperties.color": "transparent",
