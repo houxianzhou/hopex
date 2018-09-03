@@ -65,7 +65,7 @@ class GreenText extends Component {
 }))
 class MarkText extends Component {
   render() {
-    const { model: { RG = 1 }, value, mark = value } = this.props
+    const { model: { RG = 1 }, value, mark = value ,} = this.props
     const green = RG ? 'green' : 'red'
     const red = RG ? 'red' : 'green'
     return (

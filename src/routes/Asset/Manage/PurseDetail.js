@@ -3,6 +3,7 @@ import { connect } from 'dva'
 import { Mixin } from '@components'
 import { classNames, _, } from '@utils'
 import { Rights, $B, Home, $B2, Diamond } from '@assets'
+import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
 
 import styles from './index.less'
 
@@ -66,7 +67,11 @@ export default class View extends Component {
                   </div >
                   <div className={styles.right} >
                     <div className={styles.title} >{item.title}</div >
-                    <div className={styles.value} >{item.value}</div >
+                    <div className={styles.value} >
+                      <RedGreenSwitch.MarkText
+                        mark={item.value}
+                        value={item.value.replace('+', '')} />
+                    </div >
                     {
                       item.usd ? (<div >≈{item.usd}USD</div >) : null
                     }
@@ -136,7 +141,11 @@ export default class View extends Component {
                               }
                               <div className={styles.contentdeco} >
                                 <div className={styles.name} >{item2.name}</div >
-                                <div className={styles.value} >{item2.value}</div >
+                                <div className={styles.value} >
+                                  <RedGreenSwitch.MarkText
+                                    mark={item2.value}
+                                    value={item2.value.replace('+', '')} />
+                                  </div >
                                 <div className={styles.prec} >≈{item2.prec}</div >
                               </div >
                             </li >

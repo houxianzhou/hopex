@@ -779,7 +779,7 @@ export default delay({
             "profitRate": "-31.98% ",
             "totalWealth": "9.67954696",
             "totalWealthUSD": "65030.61USD",
-            "floatProfit": "-0.00009094",
+            "floatProfit": "+0.00009094",
             "floatProfitUSD": "-0.61USD",
             "availableBalance": "9.99896705",
             "availableBalanceUSD": "67176.59USD"
