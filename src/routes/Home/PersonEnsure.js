@@ -48,9 +48,9 @@ export default class PersonEnsure extends Component {
         title: '类型',
         dataIndex: 'type',
         render: (value, record) => String(record.side) === '1' ? (
-          <RedGreenSwitch.RedText value={'卖出'} />
+          <RedGreenSwitch.RedText value={record.sideDisplay} />
         ) : (
-          <RedGreenSwitch.GreenText value={'买入'} />
+          <RedGreenSwitch.GreenText value={record.sideDisplay} />
         )
       },
       {
@@ -99,8 +99,7 @@ export default class PersonEnsure extends Component {
       {
         title: '状态',
         width: 130,
-        dataIndex: 'orderStatus',
-        render: (value) => value === '1' ? '部分成交' : '等待成交'
+        dataIndex: 'orderStatusDisplay',
       },
       {
         title: '操作',

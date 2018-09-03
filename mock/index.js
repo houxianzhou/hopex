@@ -226,50 +226,31 @@ export default delay({
     })
   },
   //用户的委托列表
-  'Post /mock/api/v1/trade/user.active_delegate': (req, res) => {
-    const { pageIndex, pageSize } = _.get(req.body, 'param')
+  'Get /mock/api/v1/gateway/User/OpenOrders': (req, res) => {
     res.send({
-      "head": {
-        "method": "user.active_delegate",
-        "userId": "3",
-        "userToken": "user.QC5LTHR6HOUZINUCE4YI.web",
-        "lang": "cn",
-        "request": "request",
-        "packType": "1",
-        "version": "1.0",
-        "timestamps": "1532175227023967",
-        "serialNumber": "49",
-        "msgType": "response"
-      },
-      "data": (new Array(Number(3))).fill({}).map((item, index) => ({
-        "orderId": String(index),
-        "marketName": 'BTCUSDT永续',
-        "market": "BTCUSDT" + '第' + pageIndex + '页',
-        "source": "我是现价测试单",
-        "type": _.random('1', '2'),
-        "side": _.random('1', '2'),
-        "userId": "3",
-        "ctime": "20:18:12",
-        "mtime": "20:18:12",
-        "price": "6",
-        "amount": _.random('5', '-5'),
-        "taker_fee": "0.01",
-        "maker_fee": "0.01",
-        "left": "2",
-        "deal_stock": "0",
-        "deal_money": "0",
-        "deal_fee": "0",
-        "takerFee": "0.01",
-        "makerFee": "0.01",
-        "dealAmount": "0",
-        "dealMoney": "0",
-        "dealFee": "0",
-        "orderStatus": ['1', '2', '3'][_.random(0, 3)],
-        "leverage": "10",
-        "avgDealMoney": "0",
-        "delegateMoney": "0.006"
-      })),
-      ...other
+      "data": (new Array(3)).fill().map(item=>(
+        {
+          "orderId": 870,
+          "contractCode": "BTCUSDT",
+          "contractName": "BTCUSDT永续",
+          "type": "1",
+          "side": "2",
+          "sideDisplay": "买入",
+          "ctime": "2018-09-03 10:18:02",
+          "mtime": "2018-09-03 10:18:02",
+          "orderQuantity": "1",
+          "leftQuantity": "1",
+          "fillQuantity": "0",
+          "orderStatus": "2",
+          "orderStatusDisplay": "等待成交",
+          "orderPrice": "0.5",
+          "leverage": "20.00",
+          "fee": "0.0000BTC",
+          "avgFillMoney": "0.00",
+          "orderMargin": "0.0000BTC"
+        }
+      )),
+      "ret": 0, "errCode": "", "errStr": ""
     })
   },
   //用户的委托明细
@@ -909,7 +890,7 @@ export default delay({
       {
         "asset": "BTC",
         "type": ["提现", '存款'][_.random(0, 1)],
-        "status": ["进行中",'已完成','已拒绝'][_.random(0, 2)],
+        "status": ["进行中", '已完成', '已拒绝'][_.random(0, 2)],
         "statusVal": 0,
         "amount": "-1.00000000BTC",
         "createdTime": "2018-09-01 16:19:55" + index,
