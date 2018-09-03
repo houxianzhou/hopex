@@ -20,6 +20,8 @@ export default joinModel(modelExtend, {
 
     latest_records: [],// 最新成交
     ensure_records: {},// 委托列表
+    asksFilter: '',
+    bidsFilter: '',
     clickSelectOne: {}, //从最新成交和委托列表点击选择而来
 
     maxPrice24h: '', // 24h最高
@@ -219,6 +221,7 @@ export default joinModel(modelExtend, {
       if (_.has(result, 'bids')) {
         Filtering(result.bids, bids)
       }
+      const { asksFilter, bidsFilter } = result
 
       const remove = (result) => _.remove(result, (item = {}) => Number(item.amount) !== 0)
 
@@ -239,6 +242,8 @@ export default joinModel(modelExtend, {
         type: 'changeState',
         payload: {
           ensure_records: result,
+          ...(asksFilter ? { asksFilter } : {}),
+          ...(bidsFilter ? { bidsFilter } : {})
         }
       })
     },

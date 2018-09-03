@@ -225,6 +225,17 @@ export default delay({
       ...other
     })
   },
+
+  //委托区间
+  'Get /mock/api/v1/gateway/OrderBook/Intervals': (req, res) => {
+    res.send({
+      "data": {
+        "contractCode": "BTCUSDT",
+        "contractName": "BTCUSDT永续",
+        "intervals": ["0.5", "5", "10", "50"]
+      }, "ret": 0, "errCode": "", "errStr": ""
+    })
+  },
   //用户的委托列表
   'Get /mock/api/v1/gateway/User/OpenOrders': (req, res) => {
     res.send({
