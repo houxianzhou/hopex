@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { COLORS, PATH } from "@constants"
 import { Mixin, CountDown, Button, RouterGo } from '@components'
-import { classNames, _, Patterns } from '@utils'
+import { classNames, _, Patterns, formatNumber } from '@utils'
 import MainModal from '@routes/Components/MainModal'
 import MoneySelect from './components/MoneySelect'
 import Input from './components/Input'
@@ -112,14 +112,40 @@ export default class View extends Component {
     }
   }
 
+  checkAmount = (value, selectOne) => {
+    const { changeState } = this
+    if (Patterns.decimalNumber.test(value)) {
+      if (value < Number(selectOne.minAmount)) {
+        changeState({
+          amountMsg: `最小提现数量${selectOne.minAmount}`
+        })
+      } else if (value > Number(selectOne.maxAmount)) {
+        changeState({
+          amountMsg: '可提现金额不足'
+        })
+      } else {
+        changeState({
+          amountMsg: ''
+        })
+      }
+    } else {
+      changeState({
+        amountMsg: ''
+      })
+    }
+  }
+
 
   render() {
-    const { changeState } = this
+    const { changeState, checkAmount } = this
     const { model: { detail = [], withDrawPage = 1 }, user: { userInfo: { email = '' } = {} } = {}, modal: { name }, loading, modelName } = this.props
     const { active, address, amount, addressMsg, amountMsg, googleCode, emailVerificationCode } = this.state
     const selectList = detail.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
 
     const selectOne = detail.filter((item = {}) => item.assetName === active)[0] || {}
+    const isNotAllow = () => {
+      return selectOne.allowWithdraw === false || selectOne.isValid === false
+    }
     return (
       <Mixin.Child that={this} >
         <div className={styles.withdraw} >
@@ -127,9 +153,9 @@ export default class View extends Component {
             withDrawPage === 1 ? (
               <>
                 {
-                  (selectOne.allowWithdraw || true) ? null : (
+                  isNotAllow() ? (
                     <div className={styles.notpermit} >账户不允许提现</div >
-                  )
+                  ) : null
                 }
                 <div className={styles.title} >提现</div >
                 <div className={styles.moneytype} >
@@ -138,6 +164,12 @@ export default class View extends Component {
                     <MoneySelect
                       onChange={(option = {}) => {
                         this.changeMoney(option.value)
+                        changeState({
+                          addressMsg: '',
+                          address: '',
+                          amountMsg: '',
+                          amount: '',
+                        })
                       }}
                       value={selectList.filter((item = {}) => item.value === active)}
                       options={selectList}
@@ -150,37 +182,31 @@ export default class View extends Component {
                     <div className={styles.input} >
                       <Input
                         value={address}
+                        errorMsg={addressMsg}
+                        onCheck={(value) => {
+                          if (value && value !== selectOne.address) {
+                            changeState({
+                              addressMsg: '地址错误'
+                            })
+                          } else {
+                            changeState({
+                              addressMsg: ''
+                            })
+                          }
+                        }}
                         onChange={(value) => {
                           changeState({ address: value })
                         }} />
                     </div >
                   </li >
                   <li >
-                    <div className={styles.label} >金额(BTC)</div >
+                    <div className={styles.label} >金额({active})</div >
                     <div className={styles.input} >
                       <Input
                         errorMsg={amountMsg}
                         value={amount}
                         onCheck={(value) => {
-                          if (Patterns.decimalNumber.test(value)) {
-                            if (value < Number(selectOne.minAmount)) {
-                              changeState({
-                                amountMsg: '最小提现数量'
-                              })
-                            } else if (value > Number(selectOne.maxAmount)) {
-                              changeState({
-                                amountMsg: '可用余额不足'
-                              })
-                            } else {
-                              changeState({
-                                amountMsg: ''
-                              })
-                            }
-                          } else {
-                            changeState({
-                              amountMsg: ''
-                            })
-                          }
+                          checkAmount(value, selectOne)
                         }}
                         onChange={(value) => {
                           if (Patterns.decimalNumber.test(value) || value === '') {
@@ -199,7 +225,14 @@ export default class View extends Component {
                         ) : null
                       }
                     </div >
-                    <div className={styles.getall} >全部提现</div >
+                    <div className={styles.getall} onClick={() => {
+                      changeState({
+                        amount: selectOne.maxAmount
+                      }, () => {
+                        checkAmount(selectOne.maxAmount, selectOne)
+                      })
+                    }} >全部提现
+                    </div >
                     {/*<div className={styles.notenougth} >可提金额不足</div >*/}
                   </div >
                   <div className={styles.charge} >
@@ -211,12 +244,17 @@ export default class View extends Component {
                     </div >
                     <div >
                       <div >实际到账金额：</div >
-                      <div className={styles.fact} >0BTC</div >
+                      <div
+                        className={styles.fact} >
+                        {
+                          formatNumber(Math.max(Number(selectOne.maxAmount || 0) - Number(amount) - Number(selectOne.commission), 0), 8)
+                        }{active}
+                      </div >
                     </div >
                   </div >
                   <div className={classNames(
                     styles.button,
-                    (address && !addressMsg && amount && !amountMsg) ? styles.permit : null
+                    (address && !addressMsg && amount && !amountMsg) && !isNotAllow() ? styles.permit : null
                   )} >
                     <Button
                       loading={loading.effects[`${modelName}/SendEmailToWithdraw`]}

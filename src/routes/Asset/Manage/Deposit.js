@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
+import ClipboardJS from 'clipboard'
 import { Mixin, } from '@components'
 import { classNames, _, } from '@utils'
 import {} from '@assets'
@@ -22,6 +23,7 @@ export default class View extends Component {
   }
 
   startInit = () => {
+    new ClipboardJS('.clipboard')
     this.getAssetSummary()
   }
 
@@ -88,8 +90,8 @@ export default class View extends Component {
           <div className={styles.address} >你的个人多重签名{selectOne.assetName}存款地址</div >
           {
             selectOne.address ? (<div className={styles.letter} >
-              {selectOne.address}
-              <div >复制</div >
+              <span id='address' >{selectOne.address}</span >
+              <div className="clipboard" data-clipboard-target="#address" style={{ cursor: 'pointer' }} >复制</div >
             </div >) : null
           }
           {
