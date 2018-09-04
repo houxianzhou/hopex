@@ -725,8 +725,9 @@ export default joinModel(modelExtend, {
                 positionList: result.map((item = {}) => {
                   const {
                     contractCode, contractName, lastPrice, fairPrice, positionQuantity,
-                    entryPrice, positionMargin, maintMarginRate, liquidationPrice, unrealisedPnl, unrealisedPnlPcnt
-                  } = item
+                    entryPrice, positionMargin, maintMarginRate, maintMargin, liquidationPrice, unrealisedPnl, unrealisedPnlPcnt
+                  }
+                    = item
                   return {
                     ...item,
                     market: contractCode,
@@ -736,7 +737,7 @@ export default joinModel(modelExtend, {
                     amount: positionQuantity,
                     averagePriceShow: entryPrice,
                     positionMoneyShow: positionMargin,
-                    keepMoneyShow: maintMarginRate,
+                    keepMoneyShow: maintMargin,
                     overPriceShow: liquidationPrice,
                     floatProfitShow: unrealisedPnl,
                     profitRate: unrealisedPnlPcnt
