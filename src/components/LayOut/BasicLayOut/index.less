@@ -147,9 +147,14 @@
             }
           }
           > li {
+            &.freeregister {
+              color: white;
+              background: @c_active_yellow;
+            }
             > div {
               display: flex;
               align-items: center;
+              justify-content: center;
               padding: 0 24px;
               &.user {
                 &:hover {
@@ -233,9 +238,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            svg, img {
+              margin-right: 13px;
+            }
 
             span {
-              margin-left: 13px;
+              // margin-left: 13px;
             }
 
           }

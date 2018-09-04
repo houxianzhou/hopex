@@ -226,16 +226,30 @@ export default class View extends Component {
                 </li >
               ) : null
             }
-            <li >
-              <div >
-                <span >登录</span >
-              </div >
-            </li >
-            <li >
-              <div >
-                <span >免费注册</span >
-              </div >
-            </li >
+            {
+              !isLogin ? (
+                <>
+                  <li >
+                    <div >
+                      <RouterGo.SwitchRoute value={PATH.login} >
+                   <span >
+                  登录
+                </span >
+                      </RouterGo.SwitchRoute >
+
+                    </div >
+                  </li >
+                  <li className={styles.freeregister} >
+                    <div >
+                      <RouterGo.SwitchRoute value={PATH.register} >
+                        <span >免费注册</span >
+                      </RouterGo.SwitchRoute >
+                    </div >
+                  </li >
+                </>
+              ) : null
+            }
+
           </ul >
         </div >
       </div >
