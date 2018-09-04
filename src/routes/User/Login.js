@@ -4,9 +4,7 @@ import { ShowJsonTip, Input, Toast, Button } from '@components'
 import { classNames, _, Patterns, localSave } from '@utils'
 import { PATH } from '@constants'
 import logo2 from '@assets/logo2.png'
-import { email as emailpng } from '@assets'
-import passwordpng from '@assets/password.png'
-import vertifycodepng from '@assets/vertifycode.png'
+import { email as emailpng, passwordpng, vertifycodepng } from '@assets'
 import { default as Structure } from './components/Structure'
 import styles from './index.less'
 
@@ -145,7 +143,7 @@ export default class View extends Component {
                     }}
 
                     iconPrefix={(
-                      <img alt='password' src={passwordpng} />
+                      passwordpng
                     )}
                   />
 
@@ -213,7 +211,7 @@ export default class View extends Component {
                     }}
 
                     iconPrefix={(
-                      <img alt='vertifycode' src={vertifycodepng} />
+                      vertifycodepng
                     )}
                   />
                   <Button

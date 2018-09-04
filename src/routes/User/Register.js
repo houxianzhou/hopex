@@ -5,12 +5,7 @@ import { ShowJsonTip, Select, Input, CountDown, Button } from '@components'
 import { PATH, COLORS } from '@constants'
 import { classNames, _, Patterns } from '@utils'
 import { default as Structure } from './components/Structure'
-import emailpng from '@assets/email.png'
-import passwordpng from '@assets/password.png'
-import countrypng from '@assets/country.png'
-import pulldownpng from '@assets/pulldown.png'
-import selectpng from '@assets/select.png'
-import vertifycodepng from '@assets/vertifycode.png'
+import { email as emailpng, passwordpng, countrypng, pulldownpng, selectpng,vertifycodepng } from '@assets'
 import styles from './index.less'
 
 @connect(({ user: model, Loading: loading, dispatch }) => ({
@@ -125,7 +120,7 @@ export default class View extends Component {
                         })
                       }}
                       iconPrefix={(
-                        <img alt='email' src={emailpng} />
+                        emailpng
                       )}
                     />
                     <Input
@@ -159,12 +154,12 @@ export default class View extends Component {
                       }}
 
                       iconPrefix={(
-                        <img alt='password' src={passwordpng} />
+                        passwordpng
                       )}
                     />
                     <Input
                       iconPrefix={(
-                        <img style={{ height: 26 }} alt='country' src={countrypng} />
+                        countrypng
                       )}
                     >
                       <Select
@@ -176,7 +171,7 @@ export default class View extends Component {
                         getOptionValue={(option) => option.code}
                         DropdownIndicator={(
                           <div style={{ width: 60 }} >
-                            <img alt='pulldown' src={pulldownpng} />
+                            {pulldownpng}
                           </div >
                         )}
                         styles={{
@@ -209,7 +204,7 @@ export default class View extends Component {
                            style={{ border: '1px solid #EBEBEB' }}
                       >
                         {
-                          agentId ? (<img alt='select' src={selectpng} />) : null
+                          agentId ? (selectpng) : null
                         }
                       </div >
                       <div >接受<span >服务条款</span ></div >
@@ -239,7 +234,7 @@ export default class View extends Component {
                         })
                       }}
                     >
-                      <button>注册</button>
+                      <button >注册</button >
                     </Button >
                     <div className={styles.loginentry} >已经有账户 ?
                       <span
@@ -277,7 +272,7 @@ export default class View extends Component {
                         })
                       }}
                       iconPrefix={(
-                        <img alt='vertifycode' src={vertifycodepng} />
+                        vertifycodepng
                       )}
                       iconPost={(
                         <div className={styles.resend} >
@@ -308,7 +303,7 @@ export default class View extends Component {
                         })
                       }}
                     >
-                      <button>注册</button>
+                      <button >注册</button >
                     </Button >
                   </form >
                 </div >
