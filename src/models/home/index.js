@@ -1039,8 +1039,26 @@ export default joinModel(modelExtend, {
           "limit": String(pageSize)
         }))
         if (resOk(res)) {
-          const [result, total] = [_.get(res, 'data.result'), _.get(res, 'data.totalCount')]
+          let [result, total] = [_.get(res, 'data.result'), _.get(res, 'data.totalCount')]
           if (result) {
+            result = result.map((item = {}) => {
+              const {
+                contractCode: market, contractName: marketName, orderQuantity: amount,
+                orderPrice: price, fillQuantity: dealAmount, avgFillMoney: avgDealMoney,
+                closePosPNL: unwindProfit, fee: dealFee
+              } = item
+              return {
+                ...item,
+                market,
+                marketName,
+                amount,
+                price,
+                dealAmount,
+                avgDealMoney,
+                unwindProfit,
+                dealFee
+              }
+            })
             // 区分有分页的和没有分页的两种
             if (page) {
               return {
@@ -1059,24 +1077,7 @@ export default joinModel(modelExtend, {
               yield put({
                 type: 'changeState',
                 payload: {
-                  [historyList]: result.map((item = {}) => {
-                    const {
-                      contractCode: market, contractName: marketName, orderQuantity: amount,
-                      orderPrice: price, fillQuantity: dealAmount, avgFillMoney: avgDealMoney,
-                      closePosPNL: unwindProfit, fee: dealFee
-                    } = item
-                    return {
-                      ...item,
-                      market,
-                      marketName,
-                      amount,
-                      price,
-                      dealAmount,
-                      avgDealMoney,
-                      unwindProfit,
-                      dealFee
-                    }
-                  })
+                  [historyList]: result
                 }
               })
             }

@@ -40,15 +40,16 @@ export default class View extends Component {
     dispatch({
       type: `${modelName1}/getHistory`,
       payload: {
+        pageSize: 20,
         type: activeLi,
-        page: currentPage
+        page: currentPage + 1
       }
     }).then(res => {
       if (res) {
         this.changeState(
           {
             [res['historyList']]: res['result'],
-            [`${res['historyList']}Total`]: res.total
+            [`${res['historyList']}Total`]: res.total - 1
           }
         )
       }
