@@ -212,6 +212,8 @@ export default delay({
             "orderQuantity": res,//randomStr()
           }
         }),
+        asksFilter: "10116.0",
+        bidsFilter: "3372.0",
         "bids": randomArrayMap(5).map((item, index) => {
           const res = _.random(10000, 20000)
           return {

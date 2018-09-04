@@ -91,16 +91,16 @@ export default class TradeChart extends Component {
   }
 
   startDeepMap = () => {
-    const { model: { ensure_records: { asks = [], bids = [] } = {} } } = this.props
+    const { model: { ensure_records: { asks = [], bids = [] } = {}, asksFilter = '', bidsFilter = '' } } = this.props
     const deepChart = document.getElementById('deepChart')
     if (!deepChart) return
     const myChart = echarts.init(deepChart)
 
-    const dataAsks = asks.reduce((sum, item) => {
+    const dataAsks = asks.filter((item = {}) => Number(item.price) < Number(asksFilter)).reduce((sum, item) => {
       return [[item.price, item.sum]].concat(sum)
     }, [])
 
-    const dataBids = bids.reduce((sum, item) => {
+    const dataBids = bids.filter((item = {}) => Number(item.price) > Number(bidsFilter)).reduce((sum, item) => {
       return [[item.price, item.sum]].concat(sum)
     }, [])
 
@@ -315,7 +315,7 @@ export default class TradeChart extends Component {
         //'remove_library_container_border',
         // 'chart_property_page_style',
       ],
-      toolbar_bg:"transparent",
+      toolbar_bg: "transparent",
       library_path: '/',
       width: '100%',
       height: '100%',
@@ -323,7 +323,7 @@ export default class TradeChart extends Component {
       // interval: 'D',
       'container_id': 'tradeView',
       overrides: {
-        "paneProperties.legendProperties.showLegend":false,
+        "paneProperties.legendProperties.showLegend": false,
         "paneProperties.background": backColor,
         "paneProperties.vertGridProperties.color": "transparent",
         "paneProperties.horzGridProperties.color": "transparent",
