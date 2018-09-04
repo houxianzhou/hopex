@@ -989,7 +989,7 @@ export default joinModel(modelExtend, {
 
     //最近10条委托历史
     * getHistory({ payload = {} }, { call, put, select }) {
-      const { type, page = '', pageSize = 10 } = payload
+      const { type, page, pageSize = 10 } = payload
       let prev
       let historyType
       let historyList
@@ -1021,29 +1021,28 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "user.order_history"
-          },
+          "head": {},
           "param": {
-            marketList: [],
+            contractCodeList: [],
             typeList: historyType,
             "side": "0",
             "startTime": "0",
             "endTime": "0",
-            "pageIndex": String(page),
-            "pageSize": String(pageSize)
           },
           power: [1],
           powerMsg: '最近十条'
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getPersonalEnsureHistory, repayload))
+        const res = getRes(yield call(getPersonalEnsureHistory, repayload.param, {
+          "page": page,
+          "limit": String(pageSize)
+        }))
         if (resOk(res)) {
-          const [result, total] = [_.get(res, 'data.records'), _.get(res, 'data.total')]
+          const [result, total] = [_.get(res, 'data.result'), _.get(res, 'data.totalCount')]
           if (result) {
             // 区分有分页的和没有分页的两种
-            if (String(page)) {
+            if (page) {
               return {
                 result,
                 historyList,
@@ -1060,7 +1059,24 @@ export default joinModel(modelExtend, {
               yield put({
                 type: 'changeState',
                 payload: {
-                  [historyList]: result
+                  [historyList]: result.map((item = {}) => {
+                    const {
+                      contractCode: market, contractName: marketName, orderQuantity: amount,
+                      orderPrice: price, fillQuantity: dealAmount, avgFillMoney: avgDealMoney,
+                      closePosPNL: unwindProfit, fee: dealFee
+                    } = item
+                    return {
+                      ...item,
+                      market,
+                      marketName,
+                      amount,
+                      price,
+                      dealAmount,
+                      avgDealMoney,
+                      unwindProfit,
+                      dealFee
+                    }
+                  })
                 }
               })
             }

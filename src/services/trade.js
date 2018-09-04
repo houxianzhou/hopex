@@ -206,10 +206,11 @@ export async function getKlineDetail(payload) {
 }
 
 // 用户历史委托
-export async function getPersonalEnsureHistory(payload) {
-  return await request(`${UserIp4}/user.order_history`, {
+export async function getPersonalEnsureHistory(payload, payload2) {
+  return await request(`${UserIp0}/gateway/User/HistoryOrders`, {
     method: 'post',
-    body: payload
+    body: payload,
+    query: payload2
   })
 }
 
