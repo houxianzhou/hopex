@@ -29,7 +29,7 @@ export default class View extends Component {
             <div className={styles.logo} >
               <img src={logo3} />Hopex
             </div >
-            <div className={styles.desc} >全球领先的数字资产衍生品交易平台</div >
+            <div className={styles.desc} >专注数字衍生品</div >
             <ul >
               <li ><img src={facebook} /></li >
               <li ><img src={ins} /></li >

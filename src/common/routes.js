@@ -10,7 +10,8 @@ export default [
     name: '首页',
     path: PATH.dashboard,
     model: ['dashboard'],
-    route: 'DashBoard'
+    route: 'DashBoard',
+    show: false
   },
   {
     dest: 'trade',
@@ -22,7 +23,7 @@ export default [
   {
     name: '资金管理',
     path: '/asset',
-    model: ['asset/index','history/index', 'home/index'],
+    model: ['asset/index', 'history/index', 'home/index'],
     route: 'Asset'
   },
   {
@@ -56,6 +57,7 @@ export default [
     name: '我的账户',
     model: ['account'],
     path: PATH.myaccount,
-    route: 'User/account'
+    route: 'User/account',
+    show: false
   },
 ]
