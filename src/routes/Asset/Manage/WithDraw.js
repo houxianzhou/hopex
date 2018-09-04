@@ -184,15 +184,15 @@ export default class View extends Component {
                         value={address}
                         errorMsg={addressMsg}
                         onCheck={(value) => {
-                          if (value && value !== selectOne.address) {
-                            changeState({
-                              addressMsg: '地址错误'
-                            })
-                          } else {
-                            changeState({
-                              addressMsg: ''
-                            })
-                          }
+                          // if (value && value !== selectOne.address) {
+                          //   changeState({
+                          //     addressMsg: '地址错误'
+                          //   })
+                          // } else {
+                          //   changeState({
+                          //     addressMsg: ''
+                          //   })
+                          // }
                         }}
                         onChange={(value) => {
                           changeState({ address: value })
@@ -247,7 +247,7 @@ export default class View extends Component {
                       <div
                         className={styles.fact} >
                         {
-                          formatNumber(Math.max(Number(selectOne.maxAmount || 0) - Number(amount) - Number(selectOne.commission), 0), 8)
+                          formatNumber(Math.min(Number(amount) - Number(selectOne.commission), selectOne.maxAmount-Number(selectOne.commission)), 8)
                         }{active}
                       </div >
                     </div >

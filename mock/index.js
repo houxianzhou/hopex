@@ -665,38 +665,37 @@ export default delay({
   },
 
   //最近委托历史
-  'Post /mock/api/v1/trade/user.order_history': (req, res) => {
-    const { pageIndex, pageSize = 10, typeList = [] } = req.body.param
+  'Post /mock/api/v1/gateway/User/HistoryOrders': (req, res) => {
+    const { typeList = [] } = req.body
+    const { page: pageIndex = 1, limit: pageSize = 10, } = req.query
     const type = typeList[0]
     const total = Number(type) * 20 + 30
     const records = (new Array(pageIndex ? total : 3)).fill().map((item, index) => (
       {
-        "ctime": "2018-08-09 17:06:27",
-        "ftime": "2018-08-09 17:06:46",
-        "orderId": "19654" + index,
-        "user": "3",
-        "marketName": 'BTCUSDT永续' + (index),
-        "market": "BTCUSDT",
-        "source": "浏览器，我是现价测试买单,数量10,价格6118.5,用户id：3,邮箱：xiaoyi.wei@bcsystech.com",
+        "orderId": 886,
+        "contractCode": "BTCUSDT",
+        "contractName": "BTCUSDT永续",
         "type": "1",
-        "side": "2",
-        "price": "6118.50",
-        "amount": "10",
-        "dealAmount": "5",
-        "dealMoney": "0.0008171937566397",
-        "dealFee": "-0.00",
+        "side": "1",
+        "sideDisplay": "卖出",
+        "ctime": "2018-09-04 17:56:36",
+        "ftime": "2018-09-04 17:56:36",
+        "orderQuantity": "1",
+        "fillQuantity": "0",
         "orderStatus": ['1', '2', '3'][_.random(0, 3)],
+        "orderStatusDisplay": "已撤销",
+        "orderPrice": "7890.0",
         "leverage": _.random(10, 90) + '',
-        "avgDealMoney": "6118.5",
-        "delegateMoney": "0.00004209",
-        "unwindProfit": "--"
+        "fee": "--",
+        "avgFillMoney": "--",
+        "closePosPNL": "--"
       }
     ))
     res.send(
       {
         "data": {
           "total": records.length + '',
-          "records": records.slice(Number(pageIndex) * pageSize, (Number(pageIndex) + 1) * pageSize),
+          "result": records.slice(Number(pageIndex) * pageSize, (Number(pageIndex) + 1) * pageSize),
           "pageIndex": "",
           "pageSize": "10"
         },
