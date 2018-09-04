@@ -70,9 +70,9 @@ export async function getAssetSummary(payload) {
 
 // 最新成交列表
 export async function getLatestRecord(payload) {
-  return request(`${UserIp3}/contract.deals`, {
-    method: 'post',
-    body: payload,
+  return request(`${UserIp0}/gateway/Home/GetDeals`, {
+    // method: 'post',
+    query: payload,
     needLoop: true,
     needWatch: false
   })
@@ -200,9 +200,9 @@ export async function getKlineAllList(payload) {
 
 // tradeviewK上面的价格指数，24小时最高最低
 export async function getKlineDetail(payload) {
-  return await request(`${UserIp3}/market.detail`, {
-    method: 'post',
-    body: payload
+  return await request(`${UserIp0}/gateway/Home/ContractSummary`, {
+    // method: 'post',
+    query: payload
   })
 }
 

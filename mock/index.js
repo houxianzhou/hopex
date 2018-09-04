@@ -157,7 +157,7 @@ export default delay({
     })
   },
   //最新成交
-  'Post /mock/api/v1/quote/contract.deals': (req, res) => {
+  'Get /mock/api/v1/gateway/Home/GetDeals': (req, res) => {
     res.send({
       "head": {
         "method": "market.deals",
@@ -569,35 +569,25 @@ export default delay({
     })
   },
 
-  //k线图数据详情
-  'Post /mock/api/v1/quote/market.detail': (req, res) => {
-    const { body: { param: { startTime, endTime } = {} } = {} } = req
-    const periods = helper.getdays(startTime * 1000, endTime * 1000)
+  //k线图依赖数据详情
+  'Get /mock/api/v1/gateway/Home/ContractSummary': (req, res) => {
+
     res.send({
-      "head": {
-        "method": "market.kline",
-        "timestamps": "1533181070062",
-        "version": "1.0",
-        "lang": "cn",
-        "msgType": "request",
-        "packType": "1",
-        "serialNumber": "56"
-      },
       "data": {
-        "maxPrice24h": randomStr(100, 1000),
-        "minPrice24h": randomStr(100, 1000),
-        "totalPrice24h": randomStr(10000, 100000),
-        reasonablePrice: randomStr(10000, 100000),
-        "marketPrice": "7388.47741901",
-        "percent": "0.00%",
-        "dollarPrice": randomStr(100, 1000),
-        "price24h": randomStr(100, 1000),
-        "priceLast": '+' + randomStr(100, 1000),
-        "marketName": "BTCUSDT永续"
-      },
-      "errCode": "0",
-      "errStr": "success",
-      "ret": "0"
+        "contractCode": "BTCUSDT",
+        "contractName": "BTCUSDT永续",
+        "allowTrade": true,
+        "pause": false,
+        "lastPrice": "+6700.0",
+        "lastPriceToUSD": "$6700.00",
+        "direction": 0,
+        "changePercent24": "0.00%",
+        "marketPrice": "7276.60",
+        "fairPrice": "6713.22",
+        "price24Max": "6700.0",
+        "price24Min": "6700.0",
+        "amount24h": "0BTC"
+      }, "ret": 0, "errCode": "", "errStr": ""
     })
   },
 

@@ -82,16 +82,14 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "contract.deals",
-          },
+          "head": {},
           "param": {
             "pageSize": "100",
             "lastId": "1"
           },
         }
       })))
-      const res = getRes(yield call(getLatestRecord, repayload))
+      const res = getRes(yield call(getLatestRecord, repayload.param))
       if (resOk(res)) {
         yield put({
           type: 'updateLatestRecord',
@@ -334,14 +332,12 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          head: {
-            "method": "market.detail",
-          },
+          head: {},
           param: {}
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getKlineDetail, repayload))
+        const res = getRes(yield call(getKlineDetail, repayload.param))
         if (resOk(res)) {
           const result = _.get(res, 'data') || {}
           yield put({
@@ -371,17 +367,12 @@ export default joinModel(modelExtend, {
     },
     * updateKlineDetail({ payload = {} }, { call, put }) {
       const { result = {}, request } = payload
-      let {
-        direction, maxPrice24h, minPrice24h, marketPrice,
-        priceLast, totalPrice24h, percent, dollarPrice, reasonablePrice
+      const {
+        direction, marketPrice: indexPrice,
+        lastPrice: latestPrice, lastPriceToUSD: dollarPrice, changePercent24: percent,
+        fairPrice: reasonablePrice, price24Max: maxPrice24h, price24Min: minPrice24h,
+        amount24h: totalPrice24h
       } = result
-      if (request === 'ws') {
-        ({
-          lastPrice: priceLast, lastPriceToUSD: dollarPrice, changePercent24: percent,
-          fairPrice: reasonablePrice, price24Max: maxPrice24h, price24Min: minPrice24h,
-          amount24h: totalPrice24h
-        } = result)
-      }
 
       yield put({
         type: 'changeState',
@@ -389,10 +380,10 @@ export default joinModel(modelExtend, {
           ...direction !== '0' ? { latestPriceTrend: Number(direction) } : {},
           maxPrice24h,
           minPrice24h,
-          indexPrice: marketPrice,
-          latestPrice: priceLast,
+          indexPrice,
+          latestPrice,
           reasonablePrice,
-          latestPriceShown: _.isString(priceLast) ? priceLast.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
+          latestPriceShown: _.isString(latestPrice) ? latestPrice.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
           totalPrice24h,
           latestPriceChangePercent: percent,
           latestPriceChangePercentShown: _.isString(percent) ? percent.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
