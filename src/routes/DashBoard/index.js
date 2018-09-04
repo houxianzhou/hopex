@@ -13,7 +13,7 @@ import icon06 from '@assets/icon06.png';
 import provide from '@assets/provide.png';
 import Swiper from 'swiper/dist/js/swiper.js'
 import 'swiper/dist/css/swiper.min.css'
-import { btIcon, moreIcon, yzIcon, ytIcon, aboutUs, advantage } from '@assets'
+import { btIcon, moreIcon, rbIcon, yzIcon, ytIcon, aboutUs, advantage } from '@assets'
 
 const itemList = [
   {
@@ -238,7 +238,7 @@ export default class View extends Component {
                   </div >
                   <div className={styles.iconItem} >
                     <div className={styles.bitIcon} >
-                      {btIcon}
+                      {rbIcon}
                     </div >
                     <p className={styles.iconDes} >瑞波币</p >
                   </div >
