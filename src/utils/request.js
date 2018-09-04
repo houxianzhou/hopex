@@ -55,13 +55,11 @@ export function request(url = '', options = {}) {
       return res
     })
     .catch((error) => {
-
       if (_.has(error, 'response.status')) {
         switch (error.response.status) {
           case 401:
-            return new Promise((resolve) => {
-
-            })
+            localSave.remove('userInfo')
+            return Promise.reject(error)
           default:
         }
       }
@@ -70,7 +68,7 @@ export function request(url = '', options = {}) {
           || _.get(error, 'response.data.errStr') === 'token expired') {
           // token失效
           localSave.remove('userInfo')
-          window.location.reload()
+          // window.location.reload()
         } else {
           if (errHandler) {
             let result

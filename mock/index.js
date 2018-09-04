@@ -158,6 +158,7 @@ export default delay({
   },
   //最新成交
   'Get /mock/api/v1/gateway/Home/GetDeals': (req, res) => {
+    // res.send(401)
     res.send({
       "head": {
         "method": "market.deals",

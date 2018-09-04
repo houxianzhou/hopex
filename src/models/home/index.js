@@ -1081,8 +1081,8 @@ export default joinModel(modelExtend, {
           },
           "param": {
             "side": side,// 1:sell 2:buy
-            "amount": amount,//买卖数量
-            "price": priceAfter,//价格
+            "orderQuantity": amount,//买卖数量
+            "orderPrice": priceAfter,//价格
 
             "source": url === postLimitOrder ? `我是现价测试${side === 1 ? '卖' : '买'}单,数量${amount},价格${price}` : '我是市价测试单'//备注
           },

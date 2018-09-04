@@ -216,7 +216,7 @@ export async function getPersonalEnsureHistory(payload) {
 
 // 下限价单
 export async function postLimitOrder(payload) {
-  return await request(`${UserIp4}/order.put_limit`, {
+  return await request(`${UserIp0}/gateway/User/Order`, {
     method: 'post',
     body: payload
   })
@@ -224,7 +224,7 @@ export async function postLimitOrder(payload) {
 
 // 下市价单
 export async function postMarketOrder(payload) {
-  return await request(`${UserIp4}/order.put_market`, {
+  return await request(`${UserIp0}/gateway/User/Order`, {
     method: 'post',
     body: payload
   })

@@ -4,9 +4,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import { ShowJsonTip, Select, Input, CountDown, Button } from '@components'
 import { classNames, _, Patterns } from '@utils'
 import { default as Structure } from './components/Structure'
-import emailpng from '@assets/email.png'
-import vertifycodepng from '@assets/vertifycode.png'
-import passwordpng from '@assets/password.png'
+import { email as emailpng, passwordpng, vertifycodepng } from '@assets'
 import styles from './index.less'
 
 @connect(({ user: model, Loading: loading, dispatch }) => ({
@@ -83,7 +81,7 @@ export default class View extends Component {
                         })
                       }}
                       iconPrefix={(
-                        <img alt='email' src={emailpng} />
+                        emailpng
                       )}
                     />
 
@@ -109,9 +107,9 @@ export default class View extends Component {
                         })
                       }}
                     >
-                      <button>
+                      <button >
                         下一步
-                      </button>
+                      </button >
                     </Button >
                   </form >
                 </div >
@@ -141,7 +139,7 @@ export default class View extends Component {
                         })
                       }}
                       iconPrefix={(
-                        <img alt='vertifycode' src={vertifycodepng} />
+                        vertifycodepng
                       )}
                       iconPost={(
                         <div className={styles.resend} >
@@ -177,7 +175,7 @@ export default class View extends Component {
                         })
                       }}
                     >
-                      <button>提交</button>
+                      <button >提交</button >
                     </Button >
                   </form >
                 </div >
@@ -235,7 +233,7 @@ export default class View extends Component {
                       }}
 
                       iconPrefix={(
-                        <img alt='newPassword' src={passwordpng} />
+                        passwordpng
                       )}
                     />
                     <Input
@@ -280,7 +278,7 @@ export default class View extends Component {
                       }}
 
                       iconPrefix={(
-                        <img alt='password' src={passwordpng} />
+                        passwordpng
                       )}
                     />
 
@@ -301,7 +299,7 @@ export default class View extends Component {
                         })
                       }}
                     >
-                      <button>提交</button>
+                      <button >提交</button >
                     </Button >
                   </form >
                 </div >
