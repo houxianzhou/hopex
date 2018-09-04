@@ -12,12 +12,21 @@ import { ROOT } from '@constants'
 import './index.less'
 
 
-
 moment.locale('zh-cn')
 // 1. Initialize
 const app = dva({
   history: createHistory(),
-
+  onError(err = {}, dispatch) {
+    const { response: { status } = {} } = err
+    if (status === 401) {
+      dispatch({
+        type: 'user/changeState',
+        payload: {
+          userInfo: {}
+        }
+      })
+    }
+  },
 })
 
 

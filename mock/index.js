@@ -270,20 +270,15 @@ export default delay({
   //用户的委托明细
   'Get /mock/api/v1/gateway/User/OrderDeals': (req, res) => {
     res.send({
-      "data": {
-        "total": "0",
-        "records": (new Array(20)).fill().map(item => (
-          {
-            "time": "2018-08-02 17:49:27",
-            "role": "2",
-            "fillPrice": "222",
-            "fillQuantity": "11",
-            "fee": "0.0004954954954955"
-          }
-        )),
-        "pageIndex": "0",
-        "pageSize": "100"
-      },
+      "data": (new Array(20)).fill().map(item => (
+        {
+          "time": "2018-08-02 17:49:27",
+          "role": "2",
+          "fillPrice": "222",
+          "fillQuantity": "11",
+          "fee": "0.0004954954954955"
+        }
+      )),
       "head": {
         "method": "order.deals",
         "userId": "3",

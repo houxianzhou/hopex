@@ -971,7 +971,7 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(getPersonEnsureDetail, repayload.param))
         if (resOk(res)) {
-          const result = _.get(res, 'data.records')
+          const result = _.get(res, 'data')
           if (result) {
             return result.map((item = {}) => {
               const { fillPrice: price, fillQuantity: amount } = item

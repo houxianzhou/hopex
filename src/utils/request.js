@@ -66,9 +66,6 @@ export function request(url = '', options = {}) {
       if (needWatch) {
         if (_.get(error, 'response.data.ret') === '100100'
           || _.get(error, 'response.data.errStr') === 'token expired') {
-          // token失效
-          localSave.remove('userInfo')
-          // window.location.reload()
         } else {
           if (errHandler) {
             let result
