@@ -192,9 +192,9 @@ export async function doUpdateLeverage(payload) {
 
 // tradeviewK线图及其上面的价格指数，24小时最高最低
 export async function getKlineAllList(payload) {
-  return await request(`${UserIp3}/market.kline`, {
-    method: 'post',
-    body: payload
+  return await request(`${UserIp0}/gateway/Home/KLines`, {
+    // method: 'post',
+    query: payload
   })
 }
 

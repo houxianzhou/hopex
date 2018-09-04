@@ -276,9 +276,7 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          head: {
-            "method": "market.kline",
-          },
+          head: {},
           param: {
             "startTime": startTime,
             "endTime": endTime,
@@ -287,13 +285,10 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getKlineAllList, repayload))
+        const res = getRes(yield call(getKlineAllList, repayload.param))
         if (resOk(res)) {
-          const result = _.get(res, 'data') || {}
-          const {
-            records = []
-          } = result
-          return records
+          const result = _.get(res, 'data') || []
+          return result
         }
       }
     },

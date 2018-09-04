@@ -535,8 +535,8 @@ export default delay({
   },
 
   //k线图
-  'Post /mock/api/v1/quote/market.kline': (req, res) => {
-    const { body: { param: { startTime, endTime } = {} } = {} } = req
+  'Get /mock/api/v1/gateway/Home/KLines': (req, res) => {
+    const { query: { startTime, endTime } = {} } = req
     const periods = helper.getdays(startTime * 1000, endTime * 1000)
     res.send({
       "head": {
@@ -548,21 +548,19 @@ export default delay({
         "packType": "1",
         "serialNumber": "56"
       },
-      "data": {
-        "records": periods.map(item => {
-          const h = _.random(30, 40)
-          const o = _.random(10, 20)
-          const c = _.random(10, 30)
-          const l = _.random(10, 20)
-          const v = _.random(100, 3000)
-          // const h = 160 + _.random(30, 40)
-          // const o = h - _.random(10, 20)
-          // const c = o - _.random(10, 30)
-          // const l = c - _.random(10, 20)
-          // const v = _.random(100, 3000)
-          return [item / 1000, o, c, h, l, v, 6, 'BTCUSD永续']
-        }),
-      },
+      "data": periods.map(item => {
+        const h = _.random(30, 40)
+        const o = _.random(10, 20)
+        const c = _.random(10, 30)
+        const l = _.random(10, 20)
+        const v = _.random(100, 3000)
+        // const h = 160 + _.random(30, 40)
+        // const o = h - _.random(10, 20)
+        // const c = o - _.random(10, 30)
+        // const l = c - _.random(10, 20)
+        // const v = _.random(100, 3000)
+        return [item / 1000, o, c, h, l, v, 6, 'BTCUSD永续']
+      }),
       "errCode": "0",
       "errStr": "success",
       "ret": "0"
