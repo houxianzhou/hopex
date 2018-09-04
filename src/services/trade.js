@@ -159,17 +159,16 @@ export async function getPersonalEnsure(payload) {
 
 //个人合约详情
 export async function getPersonEnsureDetail(payload) {
-  return request(`${UserIp4}/order.deals`, {
-    method: 'post',
-    body: payload
+  return request(`${UserIp0}/gateway/User/OrderDeals`, {
+    // method: 'post',
+    query: payload
   })
 }
 
 // 撤单
 export async function doCancelPersonEnsure(payload) {
-  return request(`${UserIp4}/order.cancel`, {
-    method: 'post',
-    body: payload
+  return request(`${UserIp0}/gateway/User/CancelOrder`, {
+    query: payload
   })
 }
 

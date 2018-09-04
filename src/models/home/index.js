@@ -875,9 +875,7 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "order.cancel",
-          },
+          "head": {},
           "param": {
             ...payload
           },
@@ -886,7 +884,7 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(doCancelPersonEnsure, repayload))
+        const res = getRes(yield call(doCancelPersonEnsure, repayload.param))
         if (resOk(res)) {
           // Message.error('ahhaah')
           Toast.tip('撤销成功')
@@ -960,9 +958,7 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "order.deals",
-          },
+          "head": {},
           "param": {
             ...payload,
             pageIndex: '0',
@@ -973,11 +969,18 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getPersonEnsureDetail, repayload))
+        const res = getRes(yield call(getPersonEnsureDetail, repayload.param))
         if (resOk(res)) {
           const result = _.get(res, 'data.records')
           if (result) {
-            return result
+            return result.map((item = {}) => {
+              const { fillPrice: price, fillQuantity: amount } = item
+              return {
+                ...item,
+                price,
+                amount
+              }
+            })
           }
         }
       }
