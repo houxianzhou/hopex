@@ -105,9 +105,9 @@ export async function getAllMarkets(payload) {
 }
 
 export async function getAllMarketDetails(payload) {
-  return request(`${UserIp3}/market.detail_list`, {
-    method: 'post',
-    body: payload
+  return request(`${UserIp0}/gateway/Home/Contracts`, {
+    // method: 'post',
+    query: payload
   })
 }
 

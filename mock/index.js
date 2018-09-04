@@ -13,39 +13,38 @@ const other = {
 
 export default delay({
   // 合约列表
-  'Post /mock/api/v1/quote/market.detail_list': (req, res) => {
+  'Get /mock/api/v1/gateway/Home/Contracts': (req, res) => {
     res.send({
       "data": [{
         "name": "BTC",
         "list": [{
-          "price24h": "6600.00",
-          "priceLast": "6600.0",
-          "direction": -1,
-          "marketCode": "BTCUSDT",
-          "marketName": "BTCUSDT永续",
+          "priceLast": "+6700.0",
+          "direction": 0,
+          "contractCode": "BTCUSDT",
+          "contractName": "BTCUSDT永续",
           "percent": "0.00%",
-          "dollarPrice": "$6600.00",
+          "dollarPrice": "$6700.00",
           "totalPrice24h": "0BTC",
-          "position": false,
+          "position": true,
           "pause": false
         }]
       }, {
         "name": "ETH",
         "list": [{
-          "marketCode": "ETHBTC",
-          "marketName": "ETHBTC永续",
-          "price24h": "",
-          "priceLast": "",
+          "priceLast": "0.0",
+          "direction": 0,
+          "contractCode": "ETHBTC",
+          "contractName": "ETHBTC永续",
           "percent": "",
-          "dollarPrice": "",
+          "dollarPrice": "$0.00",
+          "totalPrice24h": "",
           "position": false,
           "pause": true
         }, {
-          "price24h": "270.00000",
-          "priceLast": "270.0",
-          "direction": -1,
-          "marketCode": "ETHUSDT",
-          "marketName": "ETHUSDT永续",
+          "priceLast": "+270.0",
+          "direction": 0,
+          "contractCode": "ETHUSDT",
+          "contractName": "ETHUSDT永续",
           "percent": "0.00%",
           "dollarPrice": "$270.00",
           "totalPrice24h": "0ETH",
@@ -55,68 +54,66 @@ export default delay({
       }, {
         "name": "XRP",
         "list": [{
-          "price24h": "0.00006780",
-          "priceLast": "0.0000678",
-          "direction": 1,
-          "marketCode": "XRPBTC",
-          "marketName": "XRPBTC永续",
-          "percent": "0.00%",
-          "dollarPrice": "$0.44",
-          "totalPrice24h": "0BTC",
-          "position": false,
-          "pause": false
-        }, {
-          "marketCode": "XRPETH",
-          "marketName": "XRPETH永续",
-          "price24h": "",
-          "priceLast": "",
+          "priceLast": "0",
+          "direction": 0,
+          "contractCode": "XRPUSDT",
+          "contractName": "XRPUSDT永续",
           "percent": "",
-          "dollarPrice": "",
+          "dollarPrice": "$0.00",
+          "totalPrice24h": "",
           "position": false,
           "pause": true
         }, {
-          "marketCode": "XRPUSDT",
-          "marketName": "XRPUSDT永续",
-          "price24h": "",
-          "priceLast": "",
+          "priceLast": "0",
+          "direction": 0,
+          "contractCode": "XRPETH",
+          "contractName": "XRPETH永续",
           "percent": "",
-          "dollarPrice": "",
+          "dollarPrice": "$0.00",
+          "totalPrice24h": "",
+          "position": false,
+          "pause": true
+        }, {
+          "priceLast": "+0.0000678",
+          "direction": 0,
+          "contractCode": "XRPBTC",
+          "contractName": "XRPBTC永续",
+          "percent": "0.00%",
+          "dollarPrice": "$0.44",
+          "totalPrice24h": "0BTC",
           "position": false,
           "pause": false
         }]
       }, {
         "name": "EOS",
         "list": [{
-          "price24h": "0.017500",
-          "priceLast": "0.01750",
-          "direction": 1,
-          "marketCode": "EOSETH",
-          "marketName": "EOSETH永续",
+          "priceLast": "+0.0007501",
+          "direction": 0,
+          "contractCode": "EOSBTC",
+          "contractName": "EOSBTC永续",
+          "percent": "0.00%",
+          "dollarPrice": "$5.42",
+          "totalPrice24h": "0BTC",
+          "position": false,
+          "pause": true
+        }, {
+          "priceLast": "+0.01750",
+          "direction": 0,
+          "contractCode": "EOSETH",
+          "contractName": "EOSETH永续",
           "percent": "0.00%",
           "dollarPrice": "$7.89",
           "totalPrice24h": "0ETH",
           "position": false,
           "pause": false
-        }, {
-          "price24h": "0.0007501",
-          "priceLast": "0.0007501",
-          "direction": 1,
-          "marketCode": "EOSBTC",
-          "marketName": "EOSBTC永续",
-          "percent": "0.00%",
-          "dollarPrice": "$5.02",
-          "totalPrice24h": "0BTC",
-          "position": false,
-          "pause": true
         }]
       }, {
         "name": "LTC",
         "list": [{
-          "price24h": "0.008580",
-          "priceLast": "0.00858",
-          "direction": 1,
-          "marketCode": "LTCBTC",
-          "marketName": "LTCBTC永续",
+          "priceLast": "+0.00858",
+          "direction": 0,
+          "contractCode": "LTCBTC",
+          "contractName": "LTCBTC永续",
           "percent": "0.00%",
           "dollarPrice": "$54.77",
           "totalPrice24h": "0BTC",
@@ -126,34 +123,37 @@ export default delay({
       }, {
         "name": "BCH",
         "list": [{
-          "marketCode": "BCHUSDT",
-          "marketName": "BCHUSDT永续",
-          "price24h": "",
-          "priceLast": "",
+          "priceLast": "0",
+          "direction": 0,
+          "contractCode": "BCHUSDT",
+          "contractName": "BCHUSDT永续",
           "percent": "",
-          "dollarPrice": "",
+          "dollarPrice": "$0.00",
+          "totalPrice24h": "",
           "position": false,
           "pause": true
         }, {
-          "marketCode": "BCHBTC",
-          "marketName": "BCHBTC永续",
-          "price24h": "",
-          "priceLast": "",
+          "priceLast": "0.00000",
+          "direction": 0,
+          "contractCode": "BCHBTC",
+          "contractName": "BCHBTC永续",
           "percent": "",
-          "dollarPrice": "",
+          "dollarPrice": "$0.00",
+          "totalPrice24h": "",
           "position": false,
           "pause": false
         }, {
-          "marketCode": "BCHETH",
-          "marketName": "BCHETH永续",
-          "price24h": "",
-          "priceLast": "",
+          "priceLast": "0.0000",
+          "direction": 0,
+          "contractCode": "BCHETH",
+          "contractName": "BCHETH永续",
           "percent": "",
-          "dollarPrice": "",
+          "dollarPrice": "$0.00",
+          "totalPrice24h": "",
           "position": false,
           "pause": false
         }]
-      }], "ret": "0", "errCode": "0", "errStr": "success"
+      }], "ret": 0, "errCode": "", "errStr": ""
     })
   },
   //最新成交
@@ -213,7 +213,7 @@ export default delay({
           }
         }),
         asksFilter: "10116.0",
-        bidsFilter: "3372.0",
+        bidsFilter: "3",
         "bids": randomArrayMap(5).map((item, index) => {
           const res = _.random(10000, 20000)
           return {

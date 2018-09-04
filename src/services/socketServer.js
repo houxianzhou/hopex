@@ -140,8 +140,8 @@ mockServer2.onMessage = (e) => {
             "method": "market.update",
             "timestamp": 1535020483778,
             "data": [{
-              "marketCode": "BTCUSDT",
-              "marketName": "BTCUSDT永续",
+              "contractCode": "BTCUSDT",
+              "contractName": "BTCUSDT永续",
               "priceLast": `${_.random(1, 100)}`,
               "dollarPrice": "$55.09",
               "totalPrice24h": "0BTC",

@@ -558,15 +558,13 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "market.detail_list"
-          },
+          "head": {},
           "param": {},
         }
       })))
-      const res = getRes(yield call(getAllMarketDetails, repayload))
+      const res = getRes(yield call(getAllMarketDetails, {}))
       if (resOk(res)) {
-        const result = []
+        let result = []
         _.get(res, 'data').map((item = {}) => {
           const { name, list = [] } = item
           list.forEach((item2 = {}) => {
@@ -574,14 +572,14 @@ export default joinModel(modelExtend, {
             result.push(item2)
           })
         })
+
         if (result) {
           const { search } = payload
-          const filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
           yield put({
             type: 'updateAllMarketDetails',
             payload: {
               result,
-              filterOne
+              search,
             }
           })
           return result
@@ -607,12 +605,24 @@ export default joinModel(modelExtend, {
     },
     * updateAllMarketDetails({ payload = {} }, { call, put, select }) {
       const marketList = yield select(({ home: { marketList = [] } }) => marketList) || {}
-      const { result = [], filterOne } = payload
+      let { result = [], search } = payload
+
+      result = result.map((item = {}) => {
+        const { contractCode, contractName } = item
+        return {
+          ...item,
+          marketCode: contractCode,
+          marketName: contractName,
+        }
+      })
+
+      const filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
+
       result.map((item = {}) => {
-        const filterOne = _.findIndex(marketList, (one = {}) => String(one.marketCode) === String(item.marketCode))
-        if (filterOne !== -1) {
-          marketList.splice(filterOne, 1, {
-            ...marketList[filterOne],
+        const filterItem = _.findIndex(marketList, (one = {}) => String(one.marketCode) === String(item.marketCode))
+        if (filterItem !== -1) {
+          marketList.splice(filterItem, 1, {
+            ...marketList[filterItem],
             ...item,
           })
         } else {
