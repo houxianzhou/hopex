@@ -11,7 +11,6 @@ import { ROOT } from '@constants'
 
 import './index.less'
 
-
 moment.locale('zh-cn')
 // 1. Initialize
 const app = dva({
@@ -19,7 +18,7 @@ const app = dva({
   onError(err = {}, dispatch) {
     const { response: { status } = {} } = err
     if (status === 401) {
-      dispatch({
+      return dispatch({
         type: 'user/changeState',
         payload: {
           userInfo: {}

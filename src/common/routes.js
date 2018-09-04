@@ -24,13 +24,15 @@ export default [
     name: '资金管理',
     path: '/asset',
     model: ['asset/index', 'history/index', 'home/index'],
-    route: 'Asset'
+    route: 'Asset',
+    authority:[1]
   },
   {
     name: '历史',
     path: PATH.history,
     model: ['history/index', 'home/index'],
-    route: 'History'
+    route: 'History',
+    authority:[1]
   },
   {
     name: '解释说明',
@@ -51,13 +53,14 @@ export default [
   {
     name: '忘记密码',
     path: PATH.forgetPassword,
-    route: 'User/ForgetPassword'
+    route: 'User/ForgetPassword',
   },
   {
     name: '我的账户',
     model: ['account'],
     path: PATH.myaccount,
     route: 'User/account',
-    show: false
+    show: false,
+    authority:[1]
   },
 ]

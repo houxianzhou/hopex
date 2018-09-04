@@ -3,7 +3,7 @@ import { connect } from 'dva'
 import { Route, Redirect, Switch } from 'dva/router'
 import dynamic from 'dva/dynamic'
 import { classNames, switchTheme } from '@utils'
-import { Responsive } from '@components'
+import { Responsive, Authority } from '@components'
 import Header from './Header'
 import Content from './Content'
 import Footer from './Footer'
@@ -29,12 +29,15 @@ export default class View extends Component {
           <Switch >
             <Redirect exact from="/" to='/home' />
             {
-              routesBasic.map(({ path, ...dynamics }) => {
+              routesBasic.map(({ path, authority, ...dynamics }) => {
                 return (
-                  <Route key={path} path={path} exact component={dynamic({
+                  <Authority.Router
+                    authority={authority}
+                    key={path} path={path} exact component={dynamic({
                     app,
                     ...dynamics
-                  })} />
+                  })}
+                  />
                 )
               })
             }
@@ -44,6 +47,15 @@ export default class View extends Component {
       </div >
     )
   }
+}
+
+{/*<Route key={path} path={path} exact component={dynamic({*/
+}
+{/*app,*/
+}
+{/*...dynamics*/
+}
+{/*})} />*/
 }
 
 {/*<Responsive common_cN="device" >*/

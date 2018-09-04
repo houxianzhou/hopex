@@ -1,23 +1,57 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { classNames } from '@utils'
+import { Route, Redirect, } from 'dva/router'
+import { _, } from '@utils'
+import { Toast } from '@components'
+import { PATH } from "@constants"
 
 @connect(({ user, dispatch }) => ({
-  user,
+  model: user,
   dispatch,
 }))
-class Route extends Component {
+class Router extends Component {
   render() {
-    const { user: { userInfo = {} } = {} } = this.props
+    const { location: { pathname } = {} } = this.props
+    const {
+      model: { userInfo = {} } = {}, component: Component, authority = [], noMatch = () => {
+        return <Redirect
+          to={{
+            pathname: PATH.login,
+            state: { redirect: pathname }
+          }}
+        />
+      }, ...rest
+    } = this.props
+    const isLogin = !_.isEmpty(userInfo)
+    let isAuthenticated = true
+    switch (authority[0]) {
+      case 1: {//1 代表该权限需要登录,未登录就默认重定向
+        if (!isLogin) {
+          Toast.tip('账户过期，请重新登录')
+          isAuthenticated = false
+        }
+      }
+        break
+      default:
+    }
     return (
-      <div >hahaah</div >
+      <Route
+        {...rest}
+        render={props =>
+          isAuthenticated ? (
+            <Component {...props} />
+          ) : (
+            noMatch()
+          )
+        }
+      />
     )
   }
 }
 
 
 export default {
-  Route,
+  Router,
 }
 
 

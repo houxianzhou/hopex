@@ -34,9 +34,10 @@ export default joinModel(modelExtend, {
 
   effects: {
     * doLogin({ payload = {} }, { call, put, select }) {
+      const { redirect, ...rest } = payload
       const res = getRes(yield call(doLogin, {
           param: {
-            ...payload, loginType: "pcweb"
+            ...rest, loginType: "pcweb"
           },
         },
         (err) => {
@@ -56,30 +57,19 @@ export default joinModel(modelExtend, {
             const payload = {
               userId,
               userToken: token,
-              email
+              email,
+              redirect
             }
             yield put({
               type: 'doLoginPrepare',
               payload
             })
-            // yield put({
-            //   type: 'changeState',
-            //   payload: {
-            //     userInfo: payload
-            //   }
-            // })
-            // localSave.set('userInfo', payload)
-            // localSave.set('recordEmail', { email })
-            // yield put({
-            //   type: 'routerGo',
-            //   payload: PATH.home
-            // })
           }
         }
       }
     },
     * doVertifyLogin({ payload = {} }, { call, put, select }) {
-      const { email, userId } = payload
+      const { email, userId, redirect } = payload
       const res = getRes(yield call(doVertifyLogin, payload, (err) => {
         Toast.tip(err.errStr)
       }))
@@ -91,7 +81,8 @@ export default joinModel(modelExtend, {
             payload: {
               email,
               userId,
-              userToken: data
+              userToken: data,
+              redirect
             }
           })
           Toast.tip('登录成功')
@@ -99,6 +90,7 @@ export default joinModel(modelExtend, {
       }
     },
     * doLoginPrepare({ payload = {} }, { call, put }) {
+      const { redirect } = payload
       yield put({
         type: 'changeState',
         payload: {
@@ -109,7 +101,7 @@ export default joinModel(modelExtend, {
       localSave.set('recordEmail', { email: payload.email })
       yield put({
         type: 'routerGo',
-        payload: PATH.home
+        payload: redirect || PATH.home
       })
     },
     * doLoginOut({ payload = {} }, { call, put, select }) {

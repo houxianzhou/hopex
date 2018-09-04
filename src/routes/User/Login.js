@@ -51,7 +51,8 @@ export default class View extends Component {
       type: `${modelName}/doLogin`,
       payload: {
         email,
-        password
+        password,
+        redirect: this.getLocationState()
       }
     }).then(res => {
       if (res) {
@@ -62,6 +63,26 @@ export default class View extends Component {
         // 说明需要谷歌验证码
       }
     })
+  }
+
+  doVertifyLogin = () => {
+    const { email, userId, googleCode } = this.state
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/doVertifyLogin`,
+      payload: {
+        email,
+        userId,
+        googleCode,
+        loginType: 'pcweb',
+        redirect: this.getLocationState()
+      }
+    })
+  }
+
+  getLocationState = () => {
+    const { location: { state: { redirect } = {} } = {} } = this.props
+    return redirect
   }
 
   render() {
@@ -222,15 +243,7 @@ export default class View extends Component {
                     )}
                     onClick={(e) => {
                       e.preventDefault()
-                      dispatch({
-                        type: `${modelName}/doVertifyLogin`,
-                        payload: {
-                          email,
-                          userId,
-                          googleCode,
-                          loginType: 'pcweb'
-                        }
-                      })
+                      this.doVertifyLogin()
                     }} >
                     <button >登录</button >
                   </Button >
