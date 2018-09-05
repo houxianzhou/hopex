@@ -7,7 +7,7 @@ import {
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
   getPosition, getPersonEnsureDetail, getAllMarkets, getAllMarketDetails, getLeverage, doUpdateLeverage,
   getKlineAllList, getPersonalEnsureHistory, getKlineDetail, getBuySellDetail,
-  calculatePositionEnsureMoney, doUpdatePositionEnsureMoney, getMarketFee, getIntervals
+  calculatePositionEnsureMoney, doUpdatePositionEnsureMoney, getMarketFee, getIntervals, doFullClose
 } from "@services/trade"
 
 
@@ -1077,6 +1077,30 @@ export default joinModel(modelExtend, {
         }
       }
     },
+
+    // 全平
+    * doFullClose({ payload = {} }, { call, put, select }) {
+      const { market, price } = payload
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {
+            "orderPrice": price,//价格
+          },
+          powerMsg: '全平',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        repayload.param.contractCode = market
+        const res = getRes(yield call(doFullClose, repayload))
+        if (resOk(res)) {
+          Toast.success('委托成功')
+        }
+      }
+    },
+
   },
   reducers: {
     clearState(state, { payload }) {

@@ -34,16 +34,10 @@ export default class Position extends Component {
   }
 
   postOrder = (payload) => {
-    const { price, amount, method } = payload
     const { dispatch, modelName } = this.props
     dispatch({
-      type: `${modelName}/postSideOrder`,
-      payload: {
-        side: Number(amount) > 0 ? '1' : '2',
-        method: method,
-        price: price,
-        amount: String(Math.abs(Number(amount)))
-      }
+      type: `${modelName}/doFullClose`,
+      payload: payload
     })
   }
 
@@ -166,18 +160,16 @@ export default class Position extends Component {
                 <span onClick={() => {
                   if (!record.inputValue) return Toast.tip('请填写价格')
                   postOrder({
-                    method: 'order.put_limit',
                     price: record.inputValue,
-                    amount: record.amount
+                    market: record.market,
                   })
                 }} >
                   <Button layer={false} loading={false} loadingMargin='0 0 0 2px' >限价全平</Button >
                 </span >
                 <span onClick={() => {
                   postOrder({
-                    method: 'order.put_market',
-                    price: '',
-                    amount: record.amount
+                    price: undefined,
+                    market: record.market,
                   })
                 }} >
                   <ToolTip >市价全平</ToolTip >

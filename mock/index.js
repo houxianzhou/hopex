@@ -333,33 +333,13 @@ export default delay({
   },
 
   //查询持仓占用保证金
-  'Post /mock/api/v1/trade/user.append_position_margin_query': (req, res) => {
+  'Get /mock/api/v1/gateway/User/AppendPositionMarginQuery': (req, res) => {
     res.send({
-      "head": {
-        "method": "user.append_position_margin_query",
-        "userId": "3",
-        "userToken": "user.QC5LTHR6HOUZINUCE4YI.pcweb",
-        "lang": "cn",
-        "packType": "1",
-        "version": "1.0",
-        "msgType": "response",
-        "timestamps": "1534259459422383",
-        "serialNumber": "1369"
-      },
       "data": {
-        "increase": {
-          "maxChange": "-97880319.9709580707",
-          "overPrice": "245.9290217635"
-        },
-        "reduce": {
-          "maxChange": "0.0000000000",
-          "overPrice": "245.9290217635"
-        },
+        "increase": { "maxChange": "7.9987BTC", "liquidationPrice": "1000000.00" },
+        "reduce": { "maxChange": "2.0000BTC", "liquidationPrice": "1000000.00" },
         "dealcurrency": "BTC"
-      },
-      "errCode": "0",
-      "errStr": "success",
-      "ret": "0"
+      }, "ret": 0, "errCode": "", "errStr": ""
     })
   },
 
@@ -418,46 +398,35 @@ export default delay({
   },
 
   // 查询用户杠杆
-  'Post /mock/api/v1/trade/market.leverage_select': (req, res) => {
+  'Get /mock/api/v1/gateway/Trade/GetLeverageSetting': (req, res) => {
     res.send({
-      "ret": "0",
-      "errCode": "0",
-      "errStr": "Success",
       "data": {
-        "leverage": 10.0,
-        "isModify": true,
+        "leverage": 10.0000,
+        "editable": true,
         "varyRange": "0.5 5 10 50",
+        "maintenanceMarginRate": 0.005,
         "leverages": [{
-          "id": 1,
-          "settingId": 1,
-          "initialMarginRate": 10.0,
-          "leverage": 10.0,
-          "createdTime": "2018-07-17 18:39:28",
-          "creator": 1
+          "initialMarginRate": "20",
+          "initialMarginRateDisplay": "20%",
+          "leverage": "5.00",
+          "leverageDisplay": "5.00倍"
         }, {
-          "id": 2,
-          "settingId": 1,
-          "initialMarginRate": 20.0,
-          "leverage": 5.0,
-          "createdTime": "2018-07-17 18:39:28",
-          "creator": 1
+          "initialMarginRate": "10",
+          "initialMarginRateDisplay": "10%",
+          "leverage": "10.00",
+          "leverageDisplay": "10.00倍"
         }, {
-          "id": 3,
-          "settingId": 1,
-          "initialMarginRate": 5.0,
-          "leverage": 20.0,
-          "createdTime": "2018-07-17 18:39:28",
-          "creator": 1
+          "initialMarginRate": "5",
+          "initialMarginRateDisplay": "5%",
+          "leverage": "20.00",
+          "leverageDisplay": "20.00倍"
         }, {
-          "id": 10,
-          "settingId": 1,
-          "initialMarginRate": 2.0,
-          "leverage": 50.0,
-          "createdTime": "2018-08-05 10:53:24",
-          "creator": 1
-        }],
-        "keepBailRate": "0.5%"
-      }
+          "initialMarginRate": "2",
+          "initialMarginRateDisplay": "2%",
+          "leverage": "50.00",
+          "leverageDisplay": "50.00倍"
+        }]
+      }, "ret": 0, "errCode": "", "errStr": ""
     })
   },
 
@@ -521,7 +490,7 @@ export default delay({
   },
 
   // 设置杠杆
-  'Post /mock/api/v1/trade/market.leverage_set': (req, res) => {
+  'Get /mock/api/v1/gateway/Trade/SetLeverage': (req, res) => {
     res.send({
       "errCode": "0",
       "errStr": "success",
@@ -666,7 +635,7 @@ export default delay({
 
   //最近委托历史
   'Post /mock/api/v1/gateway/User/HistoryOrders': (req, res) => {
-    const { typeList = [] } = req.body
+    const { typeList = [] } = req.body.param
     const { page: pageIndex = 1, limit: pageSize = 10, } = req.query
     const type = typeList[0]
     const total = Number(type) * 20 + 30

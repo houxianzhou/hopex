@@ -13,6 +13,7 @@ if (MODE === 'mock') {
 }
 
 
+
 //获取盘口区间
 export async function getIntervals(payload) {
   return request(`${UserIp0}/gateway/OrderBook/Intervals`, {
@@ -223,6 +224,14 @@ export async function postLimitOrder(payload) {
 // 下市价单
 export async function postMarketOrder(payload) {
   return await request(`${UserIp0}/gateway/User/Order`, {
+    method: 'post',
+    body: payload
+  })
+}
+
+//全平
+export async function doFullClose(payload) {
+  return request(`${UserIp0}/gateway/User/FullClose`, {
     method: 'post',
     body: payload
   })
