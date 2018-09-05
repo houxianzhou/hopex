@@ -319,10 +319,10 @@ class RenderModal extends Component {
           <ul className={styles.desc} >
             <li >
               最多{active === 0 ? '增加' : '减少'} :
-              <div >{`${maxChange}${dealCurrency}`}</div >
+              <div >{`${maxChange}`}</div >
             </li >
             <li >追加后的强平价格为 :
-              <div >{`${overPrice}${dealCurrency}`}</div >
+              <div >{`${overPrice}`}</div >
             </li >
           </ul >
         </div >
