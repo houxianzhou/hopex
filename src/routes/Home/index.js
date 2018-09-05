@@ -29,10 +29,11 @@ const Comp = {
   RecentRecord
 }
 let throttle
-@connect(({ home: model, modal, user, theme, Loading, dispatch }) => ({
+@connect(({ home: model, modal, user, theme, asset, Loading, dispatch }) => ({
   model,
   modal,
   user,
+  asset,
   modelName: 'home',
   theme,
   loading: Loading,

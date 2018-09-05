@@ -54,7 +54,6 @@ export default joinModel(modelExtend, {
     leverage: null, //当前用户的杠杆
     leverageIsModify: null,//当前用户是否可以编辑杠杆
 
-    assetList: [],//钱包资产列表
     personalEnsures: [],//个人委托列表
     positionList: [],//个人持仓列表
     personalEnsures_PageIndex: null, //未曾用过
@@ -507,37 +506,6 @@ export default joinModel(modelExtend, {
       }
     },
 
-    //钱包列表 asset.list
-    * getPurseAssetList({ payload = {} }, { call, put }) {
-      const repayload = yield (asyncPayload(yield put({
-        type: 'createRequestParams',
-        payload: {
-          "head": {
-            "method": "balance.query"
-          },
-          "param": {
-            "assetNameList": []
-          },
-          powerMsg: '钱包balance.query',
-          power: [1]
-        }
-      })))
-      if (repayload) {
-        const res = getRes(yield call(getPurseAssetList, repayload))
-        if (resOk(res)) {
-          const result = _.get(res, 'data')
-          if (result) {
-            yield put({
-              type: 'changeState',
-              payload: {
-                assetList: result
-              }
-            })
-            return result
-          }
-        }
-      }
-    },
 
     //合约列表 market.list
     * getAllMarketDetails({ payload = {} }, { call, put }) {

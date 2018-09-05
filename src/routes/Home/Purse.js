@@ -17,7 +17,8 @@ export default class Pure extends Component {
   getPurseAssetList = () => {
     const { dispatch, modelName, model: {} } = this.props
     dispatch({
-      type: `${modelName}/getPurseAssetList`
+      type: `asset/getAssetSummary`,
+      payload: { forceUpdate: true }
     }).then((res) => {
       if (res) {
         if (!this._isMounted || this.interval) return
@@ -32,10 +33,13 @@ export default class Pure extends Component {
 
   render() {
     const { currentPurse } = this.state
-    const { model: { assetList = [], }, isLogin, routerGoLogin, routerGoRegister } = this.props
-    const filterOne = assetList[currentPurse] || {}
     const {
-      roe = '', floatPercent = '', walletBalance = '', positionMargin = '', floatingPNL = '',
+      model: { assetList = [], }, asset: { summary = {}, detail = [] } = {},
+      isLogin, routerGoLogin, routerGoRegister
+    } = this.props
+    const filterOne = detail[currentPurse] || {}
+    const {
+      profitRate = '', walletBalance = '', positionMargin = '', floatProfit = '',
       withdrawFreeze = '', totalWealth = '', delegateMargin = '', availableBalance = ''
     } = filterOne
     return (
@@ -59,7 +63,7 @@ export default class Pure extends Component {
                 </div >
                 <ul >
                   {
-                    assetList.map((item, index) => <li key={index} onClick={() => {
+                    detail.map((item, index) => <li key={index} onClick={() => {
                       this.changeState({
                         currentPurse: index
                       })
@@ -81,10 +85,10 @@ export default class Pure extends Component {
                     <div className={styles.top} >
                       <div className={styles.tip} >浮动盈亏</div >
                       <div className={styles.number} >
-                        <RedGreenSwitch.MarkText value={floatingPNL} />
+                        <RedGreenSwitch.MarkText value={floatProfit} />
                       </div >
                       <div className={styles.percent} >
-                        <RedGreenSwitch.MarkText value={roe} />
+                        <RedGreenSwitch.MarkText value={profitRate} />
                       </div >
                     </div >
                     <div className={styles.down} >

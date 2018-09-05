@@ -17,7 +17,7 @@ export default [
     dest: 'trade',
     name: '合约交易',
     path: PATH.home,
-    model: ['home/index'],
+    model: ['home/index', 'asset/index'],
     route: 'Home'
   },
   {
@@ -25,14 +25,14 @@ export default [
     path: '/asset',
     model: ['asset/index', 'history/index', 'home/index'],
     route: 'Asset',
-    authority:[1]
+    authority: [1]
   },
   {
     name: '历史',
     path: PATH.history,
     model: ['history/index', 'home/index'],
     route: 'History',
-    authority:[1]
+    authority: [1]
   },
   {
     name: '解释说明',
@@ -61,6 +61,6 @@ export default [
     path: PATH.myaccount,
     route: 'User/account',
     show: false,
-    authority:[1]
+    authority: [1]
   },
 ]
