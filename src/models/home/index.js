@@ -555,6 +555,7 @@ export default joinModel(modelExtend, {
       }
     },
     * updateAllMarketDetails({ payload = {} }, { call, put, select }) {
+      const { request } = payload
       const marketList = yield select(({ home: { marketList = [] } }) => marketList) || {}
       let { result = [], search } = payload
 
@@ -566,8 +567,12 @@ export default joinModel(modelExtend, {
           marketName: contractName,
         }
       })
+      let filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
+      if (request === 'ws') {
+        // 注意ws的更新会导致getCurrentMarket执行
+        filterOne = null
+      }
 
-      const filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
 
       result.map((item = {}) => {
         const filterItem = _.findIndex(marketList, (one = {}) => String(one.marketCode) === String(item.marketCode))
