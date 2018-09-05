@@ -60,10 +60,26 @@ export default class View extends Component {
       {
         title: '地址',
         dataIndex: 'addrUrl',
+        render: (value, record = {}) => (
+          {
+            value: (<span className={styles.overflowHidden} onClick={() => {
+              window.open(record.addrUrl)
+            }} >{record.addr}</span >),
+            className: 'blue'
+          }
+        )
       },
       {
         title: 'TxHash',
-        dataIndex: 'txidUrl',
+        dataIndex: 'txid',
+        render: (value, record = {}) => (
+          {
+            value: (<span className={styles.overflowHidden} onClick={() => {
+              window.open(record.txidUrl)
+            }} >{record.txid}</span >),
+            className: 'blue'
+          }
+        )
       },
       {
         title: '状态',
