@@ -408,22 +408,20 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          head: {
-            "method": "market.leverage_select"
-          },
+          head: {},
           param: {},
           power: [2]
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getLeverage, repayload))
+        const res = getRes(yield call(getLeverage, repayload.param))
         if (resOk(res)) {
-          const { leverage, isModify, varyRange, leverages, keepBailRate } = _.get(res, 'data')
+          const { leverage, editable, varyRange, leverages, maintenanceMarginRate: keepBailRate } = _.get(res, 'data')
           yield put({
             type: 'changeState',
             payload: {
               leverage,
-              leverageIsModify: isModify,
+              leverageIsModify: editable,
               varyRange,
               leverages,
               keepBailRate

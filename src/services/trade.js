@@ -175,9 +175,8 @@ export async function doCancelPersonEnsure(payload) {
 
 // 查询杠杆倍数
 export async function getLeverage(payload) {
-  return await request(`${UserIp4}/market.leverage_select`, {
-    method: 'post',
-    body: payload
+  return await request(`${UserIp0}/gateway/Trade/GetLeverageSetting`, {
+    query: payload
   })
 }
 

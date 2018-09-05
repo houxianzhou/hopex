@@ -172,7 +172,7 @@ class RenderModal extends Component {
                 <div >维持保证金率</div >
               </li >
               {
-                _.orderBy(leverages, (item = {}) => item.leverage).map((item, index) => {
+                _.orderBy(leverages, (item = {}) => Number(item.leverage)).map((item, index) => {
                   const isMatch = (item = {}) => {
                     return currentValue && Number(currentValue) !== Number(leverage) && Number(item.leverage) === Number(currentValue)
                   }

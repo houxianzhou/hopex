@@ -34,7 +34,7 @@ export default class Pure extends Component {
   render() {
     const { currentPurse } = this.state
     const {
-      model: { assetList = [], }, asset: { summary = {}, detail = [] } = {},
+      asset: { detail = [] } = {},
       isLogin, routerGoLogin, routerGoRegister
     } = this.props
     const filterOne = detail[currentPurse] || {}
