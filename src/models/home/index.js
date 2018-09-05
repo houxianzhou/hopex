@@ -365,7 +365,7 @@ export default joinModel(modelExtend, {
         direction, marketPrice: indexPrice,
         lastPrice: latestPrice, lastPriceToUSD: dollarPrice, changePercent24: percent,
         fairPrice: reasonablePrice, price24Max: maxPrice24h, price24Min: minPrice24h,
-        amount24h: totalPrice24h
+        amount24h: totalPrice24h, allowTrade,
       } = result
 
       yield put({
@@ -382,6 +382,7 @@ export default joinModel(modelExtend, {
           latestPriceChangePercent: percent,
           latestPriceChangePercentShown: _.isString(percent) ? percent.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
           dollarPrice: dollarPrice,
+          marketAllowTrade: allowTrade
         }
       })
     },
