@@ -107,7 +107,7 @@ export default class View extends Component {
               <img alt='logo' src={logo2} />
             </div >
             <div className={styles.name} >Hopex</div >
-            <div className={styles.desc} >全球领先的数字资产衍生品交易平台</div >
+            <div className={styles.desc} >专注数字衍生品</div >
           </div >
           {
             page === 1 ? (

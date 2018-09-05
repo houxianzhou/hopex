@@ -168,26 +168,20 @@ export const netWork = (
 )
 
 export const notice = (
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="17px" height="18px"
-       viewBox="0 0 17 18" version="1.1" >
-    <title >通知</title >
-    <desc >Created with Sketch.</desc >
-    <defs />
-    <g id="01_首页" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
-      <g id="首页" transform="translate(-1173.000000, -27.000000)" >
-        <g id="Group-4" transform="translate(1173.000000, 27.000000)" >
-          <g id="Group-2" >
-            <path d="M4.44444444,5 L10,6.123234e-16 L10,18 L4.44444444,13 L0,13 L0,5 L4.44444444,5 Z"
-                  id="Combined-Shape" fill="#D7DAEE" />
-            <path
-              d="M14.012712,13.1960048 C15.2519688,12.1471837 16,10.6267027 16,8.98082028 C16,7.36189797 15.2763977,5.86358698 14.0716457,4.81623723 L14.012712,13.1960048 Z"
-              id="Oval" stroke="#D7DAEE" strokeWidth="2" />
-          </g >
-        </g >
-      </g >
-    </g >
-    <script xmlns="" />
-  </svg >
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="17px" height="18px" viewBox="0 0 17 18" version="1.1">
+    <title>通知</title>
+    <desc>Created with Sketch.</desc>
+    <defs/>
+    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+      <g id="01-资产管理-钱包明细" transform="translate(-1242.000000, -27.000000)" fill="#D7DAEE">
+        <g id="Group-4" transform="translate(1242.000000, 27.000000)">
+          <g id="Group-2">
+            <path d="M4.44444444,5 L10,6.123234e-16 L10,18 L4.44444444,13 L0,13 L0,5 L4.44444444,5 Z M13.0682486,5.29575762 L13.0843943,3 C15.4012248,4.07159313 17,6.34699222 17,8.98082028 C17,11.64651 15.3623098,13.9450463 13,15 L13.0161545,12.7029937 C14.2459551,11.8407971 15,10.4705729 15,8.98082028 C15,7.51292074 14.2681387,6.16047093 13.0682486,5.29575762 Z" id="Combined-Shape"/>
+          </g>
+        </g>
+      </g>
+    </g>
+    <script xmlns=""/></svg>
 )
 
 export const help = (
