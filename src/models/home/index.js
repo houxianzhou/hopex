@@ -731,22 +731,20 @@ export default joinModel(modelExtend, {
 
     // 计算持仓保证金
     * calculatePositionEnsureMoney({ payload = {} }, { call, put }) {
+      const { marginChange } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "user.append_position_margin_query"
-          },
+          "head": {},
           "param": {
-            "marketList": [],
-            ...payload
+            change: marginChange
           },
           power: [1],
           powerMsg: '计算持仓保证金'
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(calculatePositionEnsureMoney, repayload))
+        const res = getRes(yield call(calculatePositionEnsureMoney, repayload.param))
         if (resOk(res)) {
           const result = _.get(res, 'data')
           if (result) {
@@ -762,15 +760,10 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "position_margin_update"
-          },
+          "head": {},
           "param": {
             assetName,
-            "businessType": "position",//持仓保证金充值,固定值
             assetChange,
-            businessId: _.uniqueId(),
-            detail: { desc: '增加或减少持仓保证金' }
           },
           power: [1],
           powerMsg: '增加或减少持仓保证金'
@@ -999,7 +992,7 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getPersonalEnsureHistory, repayload.param, {
+        const res = getRes(yield call(getPersonalEnsureHistory, repayload, {
           "page": page,
           "limit": String(pageSize)
         }))

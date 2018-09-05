@@ -234,7 +234,7 @@ class RenderModal extends Component {
     this.calculatePositionEnsureMoney()
   }
 
-  calculatePositionEnsureMoney = (value = '') => {
+  calculatePositionEnsureMoney = (value) => {
     const { dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/calculatePositionEnsureMoney`,
@@ -275,7 +275,7 @@ class RenderModal extends Component {
     const { changeState, active, dispatch, modelName, loading, closeModal } = this.props
 
     const currentObj = active === 0 ? increase : reduce
-    const { maxChange = '', overPrice = '' } = currentObj || {}
+    const { maxChange = '', liquidationPrice: overPrice = '' } = currentObj || {}
     return (
       <MainModal {...props} className={styles.position_modal} >
         <div className={styles.header} >

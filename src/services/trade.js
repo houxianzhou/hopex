@@ -128,15 +128,15 @@ export async function getMarketFee(payload) {
 
 //查询最多添加或减少的保证金及强平价格
 export async function calculatePositionEnsureMoney(payload) {
-  return request(`${UserIp4}/user.append_position_margin_query`, {
-    method: 'post',
-    body: payload
+  return request(`${UserIp0}/gateway/User/AppendPositionMarginQuery`, {
+    // method: 'post',
+    query: payload
   })
 }
 
 //增加或减少持仓保证金
 export async function doUpdatePositionEnsureMoney(payload) {
-  return request(`${UserIp4}/position_margin_update`, {
+  return request(`${UserIp0}/gateway/User/UpdatePositionMargin`, {
     method: 'post',
     body: payload
   })
