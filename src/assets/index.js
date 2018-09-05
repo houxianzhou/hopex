@@ -229,28 +229,23 @@ export const assetManage = (
 )
 
 export const Rights = (
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="50px" height="50px"
-       viewBox="0 0 50 50" version="1.1" >
-    <title >account valuation</title >
-    <desc >Created with Sketch.</desc >
-    <defs />
-    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
-      <g id="01-资产管理-钱包明细" transform="translate(-580.000000, -135.000000)" >
-        <g id="Group-5-Copy" transform="translate(580.000000, 135.000000)" >
-          <g id="Group-2" >
-            <g id="Group" transform="translate(4.000000, 0.000000)" >
-              <path d="M29.1715729,2 L2,2 L2,48 L40,48 L40,12.8284271 L29.1715729,2 Z" id="Combined-Shape"
-                    stroke="#232833" strokeWidth="4" />
-              <path
-                d="M11,29 L15,29 L15,39 L11,39 L11,29 Z M19,19 L23,19 L23,39 L19,39 L19,19 Z M27,23 L31,23 L31,39 L27,39 L27,23 Z"
-                id="Combined-Shape" fill="#E2B96F" />
-            </g >
-          </g >
-        </g >
-      </g >
-    </g >
-    <script xmlns="" />
-  </svg >
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 40 40" version="1.1">
+    <title>account valuation</title>
+    <desc>Created with Sketch.</desc>
+    <defs/>
+    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+      <g id="01-资产管理-钱包明细" transform="translate(-580.000000, -130.000000)">
+        <g id="Group-5-Copy" transform="translate(580.000000, 130.000000)">
+          <g id="Group-2">
+            <g id="Group" transform="translate(3.200000, 0.000000)">
+              <path d="M23.464211,2 L2,2 L2,38 L32,38 L32,10.435368 L23.464211,2 Z" id="Combined-Shape" stroke="#232833" strokeWidth="4"/>
+              <path d="M8,22 L12,22 L12,30 L8,30 L8,22 Z M15,14 L19,14 L19,30 L15,30 L15,14 Z M22,18 L26,18 L26,30 L22,30 L22,18 Z" id="Combined-Shape" fill="#E2B96F"/>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <script xmlns=""/></svg>
 )
 
 export const defaultPng2 = (
@@ -285,25 +280,27 @@ export const defaultPng2 = (
 
 
 export const $B = (
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="50px" height="50px"
-       viewBox="0 0 50 50" version="1.1" >
-    <title >money</title >
-    <desc >Created with Sketch.</desc >
-    <defs />
-    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
-      <g id="01-资产管理-钱包明细" transform="translate(-971.000000, -135.000000)" >
-        <g id="Group-6" transform="translate(971.000000, 135.000000)" >
-          <g id="Group-6-Copy" >
-            <circle id="Oval" stroke="#232833" strokeWidth="4" cx="25" cy="25" r="23" />
-            <path
-              d="M22.1715729,21 L16,14.8284271 L18.8284271,12 L24.6568542,17.8284271 L30.4852814,12 L33.3137085,14.8284271 L27.1421356,21 L33,21 L33,25 L27,25 L27,30 L33,30 L33,34 L27,34 L27,39 L23,39 L23,34 L17,34 L17,30 L23,30 L23,25 L17,25 L17,21 L22.1715729,21 Z"
-              id="Combined-Shape" fill="#E2B96F" />
-          </g >
-        </g >
-      </g >
-    </g >
-    <script xmlns="" />
-  </svg >
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 40 40" version="1.1">
+    <title>money</title>
+    <desc>Created with Sketch.</desc>
+    <defs/>
+    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+      <g id="01-资产管理-钱包明细" transform="translate(-977.000000, -130.000000)">
+        <g id="Group-6" transform="translate(977.000000, 130.000000)">
+          <g id="Group-6-Copy">
+            <circle id="Oval" stroke="#232833" strokeWidth="4" cx="20" cy="20" r="18"/>
+            <g id="Group-11" transform="translate(13.000000, 11.000000)" fill="#E2B96F">
+              <path d="M5,12 L5,9 L1,9 L1,5 L13,5 L13,9 L9,9 L9,12 L13,12 L13,16 L9,16 L9,19 L5,19 L5,16 L1,16 L1,12 L5,12 Z" id="Combined-Shape"/>
+              <g id="Group-10">
+                <rect id="Rectangle-7-Copy" x="3.93187553" y="2.24264069" width="9.42809042" height="4"/>
+                <rect id="Rectangle-7-Copy-2" x="1.16264476" y="2.24264069" width="9.42809042" height="4"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <script xmlns=""/></svg>
 )
 
 export const $B2 = (
@@ -345,29 +342,23 @@ export const Diamond = (
 )
 
 export const Home = (
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="50px" height="50px"
-       viewBox="0 0 50 50" version="1.1" >
-    <title >hold</title >
-    <desc >Created with Sketch.</desc >
-    <defs />
-    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
-      <g id="01-资产管理-钱包明细" transform="translate(-1374.000000, -135.000000)" >
-        <g id="Group-7-Copy" transform="translate(1374.000000, 135.000000)" >
-          <g id="持仓" >
-            <path
-              d="M22.1066017,2.93502884 L22,2.82842712 L24.8284271,-1.77635684e-15 L24.9350288,0.106601718 L25.0416306,-3.55271368e-15 L27.8700577,2.82842712 L27.763456,2.93502884 L48.8700577,24.0416306 L46.0416306,26.8700577 L24.9350288,5.76345597 L3.82842712,26.8700577 L1,24.0416306 L22.1066017,2.93502884 Z"
-              id="Combined-Shape" fill="#232833" />
-            <path d="M6,20 L10,20 L10,50 L6,50 L6,20 Z M40,20 L44,20 L44,50 L40,50 L40,20 Z" id="Combined-Shape"
-                  fill="#232833" />
-            <path
-              d="M24.0355339,33.863961 L22.6568542,32.4852814 L16.8284271,38.3137085 L14,35.4852814 L22.4852814,27 L22.6568542,27.1715729 L22.8284271,27 L26.863961,31.0355339 L33.8994949,24 L36.7279221,26.8284271 L29.6923882,33.863961 L29.8994949,34.0710678 L27.0710678,36.8994949 L26.863961,36.6923882 L26.8284271,36.7279221 L24,33.8994949 L24.0355339,33.863961 Z"
-              id="Combined-Shape" fill="#E2B96F" />
-            <rect id="Rectangle-12" fill="#232833" x="9" y="46" width="32" height="4" />
-          </g >
-        </g >
-      </g >
-    </g >
-  </svg >
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 40 40" version="1.1">
+    <title>hold</title>
+    <desc>Created with Sketch.</desc>
+    <defs/>
+    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+      <g id="01-资产管理-钱包明细" transform="translate(-1374.000000, -130.000000)">
+        <g id="Group-7-Copy" transform="translate(1374.000000, 130.000000)">
+          <g id="持仓">
+            <path d="M19.9281767,0.129567898 L39.2601551,19.131728 L36.431728,21.9601551 L19.9,5.42842712 L3.36827202,21.9601551 L0.539844892,19.131728 L19.9281767,0.129567898 Z" id="Combined-Shape" fill="#232833"/>
+            <path d="M4,16 L8,16 L8,40 L4,40 L4,16 Z M31,16 L35,16 L35,40 L31,40 L31,16 Z" id="Combined-Shape" fill="#232833"/>
+            <path d="M20.7558559,24.9274288 L25.6773124,20 L28.5057395,22.8284271 L20.739005,30.5976657 L18.8181065,28.6465337 L16.5980761,26.4265032 L12.8284271,30.1923882 L10,27.363961 L16.6019996,20.7587352 L19.4303616,23.5970456 L19.427916,23.5994889 L20.7558559,24.9274288 Z" id="Combined-Shape" fill="#E2B96F"/>
+            <rect id="Rectangle-12" fill="#232833" x="7" y="36" width="25" height="4"/>
+          </g>
+        </g>
+      </g>
+    </g>
+    <script xmlns=""/></svg>
 )
 
 export const triangle2 = (

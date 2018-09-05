@@ -247,7 +247,7 @@ export default class View extends Component {
                       <div
                         className={styles.fact} >
                         {
-                          formatNumber(Math.min(Number(amount) - Number(selectOne.commission), selectOne.maxAmount-Number(selectOne.commission)), 8)
+                          formatNumber(Math.max(Math.min(Number(amount) - Number(selectOne.commission), selectOne.maxAmount - Number(selectOne.commission)), 0), 8)
                         }{active}
                       </div >
                     </div >
