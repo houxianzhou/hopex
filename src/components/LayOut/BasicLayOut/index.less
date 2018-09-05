@@ -58,6 +58,7 @@
             }
             &:hover {
               .dropdown {
+                width: 327px;
                 position: absolute;
                 z-index: 2;
                 display: block;
@@ -65,10 +66,9 @@
                 .dropdowncontent {
                   font-size: 13px;
                   padding: 20px 20px;
-                  min-width: 330px;
                   background: white;
                   border-radius: 4px;
-                  color: black;
+                  color: #333333;
                   .licontainer + .licontainer {
                     margin-top: 20px;
                   }
@@ -87,33 +87,38 @@
                           border-radius: 4px;
                         }
                         display: flex;
-                        justify-content: space-between;
-                        padding: 10px;
+                        padding: 9px 10px 8px;
                         > div {
                           display: flex;
                           align-items: center;
                           white-space: nowrap;
                           &.name {
+
                             > div {
-                              margin-right: 5px;
+                              // margin-right: 4px;
                               padding: 3px 4px;
-                              background: #D8D8D8;
+                              background: #ECECEC;
+                              font-size: 13px;
                               border-radius: 2px;
                               color: #666666;
                             }
                             display: flex;
+                            // background: blue;
                             // background: red;
-                            width: 33%;
-                            min-width: 120px;
+
+                            width: 130px;
                           }
                           &.price {
+                            // min-width: 50px;
+                            flex-grow: 1;
                             // background: red;
-                            width: 33%;
-                            min-width: 80px;
+                            // background: red;
+
                           }
-                          //&.percent {
-                          //  // width: 30%;
-                          //}
+                          &.percent {
+                            display: flex;
+                            justify-content: flex-end;
+                          }
                         }
                         div + div {
                           // margin-left: 10%;
