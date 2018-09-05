@@ -568,12 +568,11 @@ export default joinModel(modelExtend, {
         }
       })
       let filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
+
       if (request === 'ws') {
         // 注意ws的更新会导致getCurrentMarket执行
         filterOne = null
       }
-
-
       result.map((item = {}) => {
         const filterItem = _.findIndex(marketList, (one = {}) => String(one.marketCode) === String(item.marketCode))
         if (filterItem !== -1) {

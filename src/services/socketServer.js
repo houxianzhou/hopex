@@ -135,13 +135,14 @@ mockServer2.onMessage = (e) => {
     mockServer2.subScribe({
       name: 'market.update',
       func: () => {
+        const selectOne = ["BTCUSDT", "ETHBTC"][_.random(0, 1)]
         mockServer2.sendJson(
           {
             "method": "market.update",
             "timestamp": 1535020483778,
             "data": [{
-              "contractCode": "BTCUSDT",
-              "contractName": "BTCUSDT永续",
+              "contractCode": selectOne,
+              "contractName": selectOne,
               "priceLast": `${_.random(1, 100)}`,
               "dollarPrice": "$55.09",
               "totalPrice24h": "0BTC",

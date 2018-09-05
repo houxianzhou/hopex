@@ -48,6 +48,7 @@ export default class View extends Component {
   componentDidUpdate(prevProps) {
     const { model: { marketCode: prevMarketCode } } = prevProps
     const { model: { marketCode }, dispatch, modelName } = this.props
+
     if (!isEqual(prevMarketCode, marketCode) && marketCode && prevMarketCode) {
       if (!throttle) {
         // 暂时失效
