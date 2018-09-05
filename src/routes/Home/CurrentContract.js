@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { COLORS } from '@constants'
-import { Mixin, Slider, Toast } from "@components"
+import { Mixin, Slider, Toast, Button } from "@components"
 import { classNames, getPercent, _, dealInterval } from '@utils'
 import grayangle from '@assets/grayangle.png'
 import activeangle from '@assets/activeangle.png'
@@ -29,7 +29,7 @@ export default class CurrentContract extends Component {
   }
 
   render() {
-    const { model: { marketName, leverage, leverageIsModify = false }, modal: { name }, isLogin, openModal } = this.props
+    const { model: { marketName, leverage, leverageIsModify = false }, modal: { name }, isLogin, openModal, } = this.props
 
     const colors = [
       '#52AA64', '#52AA64', '#8CB152', '#8CB152', '#CABA70', '#CABA70', '#D69555', '#D69555', '#D47D5A', ' #D47D5A'
@@ -114,7 +114,7 @@ class RenderModal extends Component {
       title: '设置杠杆倍数'
     }
 
-    const { model: { leverages = [], keepBailRate, leverage, }, getLeverage, dispatch, modelName, closeModal } = this.props
+    const { model: { leverages = [], keepBailRate, leverage, }, getLeverage, dispatch, modelName, closeModal, loading } = this.props
     const { currentValue } = this.state
     const marks = leverages.reduce((sum, next = {}) => {
       const leverage = next.leverage
@@ -241,7 +241,10 @@ class RenderModal extends Component {
               })
             }}
           >
-            确定
+            <Button loading={loading.effects[`${modelName}/doUpdateLeverage`]} layer={false} >
+              确定
+            </Button >
+
           </div >
         </div >
       </MainModal >

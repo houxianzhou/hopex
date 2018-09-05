@@ -182,9 +182,8 @@ export async function getLeverage(payload) {
 
 // 更新杠杆倍数
 export async function doUpdateLeverage(payload) {
-  return await request(`${UserIp4}/market.leverage_set`, {
-    method: 'post',
-    body: payload
+  return await request(`${UserIp0}/gateway/Trade/SetLeverage`, {
+    query: payload
   })
 }
 

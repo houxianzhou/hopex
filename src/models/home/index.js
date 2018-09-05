@@ -438,9 +438,7 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          head: {
-            "method": "market.leverage_set"
-          },
+          head: {},
           param: {
             leverage
           },
@@ -449,7 +447,7 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(doUpdateLeverage, repayload))
+        const res = getRes(yield call(doUpdateLeverage, repayload.param))
         if (resOk(res)) {
           Toast.tip('杠杆修改成功')
           return res
