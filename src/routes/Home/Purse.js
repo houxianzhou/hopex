@@ -18,7 +18,10 @@ export default class Pure extends Component {
     const { dispatch, modelName, model: {} } = this.props
     dispatch({
       type: `asset/getAssetSummary`,
-      payload: { forceUpdate: true }
+      payload: {
+        forceUpdate: true,
+        fetchAllAsset: true
+      }
     }).then((res) => {
       if (res) {
         if (!this._isMounted || this.interval) return

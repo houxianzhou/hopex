@@ -28,6 +28,7 @@ export default joinModel(modelExtend, {
   effects: {
     // 获取用户钱包明细
     * getAssetSummary({ payload = {} }, { call, put, select }) {
+      const { fetchAllAsset } = payload
       const detail = yield select(({ asset: { detail = [] } }) => detail) || []
       const { forceUpdate = false } = payload
       if (forceUpdate || _.isEmpty(detail)) {
@@ -42,7 +43,8 @@ export default joinModel(modelExtend, {
         })))
         if (repayload) {
           const res = getRes(yield call(getAssetSummary, {
-            lang: _.get(repayload, 'param.lang')
+            lang: _.get(repayload, 'param.lang'),
+            fetchAllAsset
           }))
           if (resOk(res)) {
             const result = _.get(res, 'data')
