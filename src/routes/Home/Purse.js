@@ -8,7 +8,7 @@ import styles from './index.less'
 
 export default class Pure extends Component {
   state = {
-    currentPurse: 0
+    currentPurse: 0,
   }
   startInit = () => {
     this.getPurseAssetList()
@@ -37,10 +37,10 @@ export default class Pure extends Component {
   render() {
     const { currentPurse } = this.state
     const {
-      asset: { detail = [] } = {},
+      asset: { detailAll = [] } = {},
       isLogin, routerGoLogin, routerGoRegister
     } = this.props
-    const filterOne = detail[currentPurse] || {}
+    const filterOne = detailAll[currentPurse] || {}
     const {
       profitRate = '', walletBalance = '', positionMargin = '', floatProfit = '',
       withdrawFreeze = '', totalWealth = '', delegateMargin = '', availableBalance = ''
@@ -66,7 +66,7 @@ export default class Pure extends Component {
                 </div >
                 <ul >
                   {
-                    detail.map((item, index) => <li key={index} onClick={() => {
+                    detailAll.map((item, index) => <li key={index} onClick={() => {
                       this.changeState({
                         currentPurse: index
                       })

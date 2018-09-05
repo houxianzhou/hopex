@@ -12,6 +12,8 @@ export default joinModel(modelExtend, {
   namespace: 'asset',
   state: {
     withDrawPage: 1,
+    summaryAll: {},
+    detailAll: [],
     summary: {},
     detail: [],
 
@@ -53,8 +55,8 @@ export default joinModel(modelExtend, {
               yield put({
                 type: 'changeState',
                 payload: {
-                  summary,
-                  detail
+                  ...fetchAllAsset ? { summaryAll: summary } : { summary },
+                  ...fetchAllAsset ? { detailAll: detail } : { detail },
                 }
               })
               return result
