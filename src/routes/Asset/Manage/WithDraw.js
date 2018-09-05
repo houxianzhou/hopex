@@ -103,7 +103,7 @@ export default class View extends Component {
         type: `${modelName}/doWithdrawApply`,
         payload: {
           asset: active,
-          addr: address,
+          toAddress: address,
           amount,
           googleCode,
           emailVerificationCode
