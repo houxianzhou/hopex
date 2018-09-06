@@ -569,10 +569,6 @@ export default joinModel(modelExtend, {
       })
       let filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
 
-      if (request === 'ws') {
-        // 注意ws的更新会导致getCurrentMarket执行
-        filterOne = null
-      }
       result.map((item = {}) => {
         const filterItem = _.findIndex(marketList, (one = {}) => String(one.marketCode) === String(item.marketCode))
         if (filterItem !== -1) {
@@ -590,7 +586,8 @@ export default joinModel(modelExtend, {
           marketList
         }
       })
-      if (filterOne) {
+      if (request !== 'ws' && filterOne) {
+        // 注意ws的更新会导致getCurrentMarket执行
         yield put({
           type: 'getCurrentMarket',
           payload: filterOne
@@ -648,13 +645,13 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          param1: {},
+          param: {},
           power: [1],
           powerMsg: '获取当前用户合约的费率'
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getMarketFee, repayload.param1))
+        const res = getRes(yield call(getMarketFee, repayload.param))
         if (resOk(res)) {
           const result = _.get(res, 'data') || {}
           return result

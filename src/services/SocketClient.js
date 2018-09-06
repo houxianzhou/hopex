@@ -51,7 +51,7 @@ class Ws {
 
   repeatConnect = (e) => {
     if (e.type === 'close' || e.type === 'error') {
-      if (_.get(e, 'reason') === 'selfClose') return console.log('主动断开不再重新连接')
+      if (_.get(e, 'reason') === 'selfClose') return console.log('主动断开')
       if (this.suddenDead) this.suddenDead()
     }
   }
