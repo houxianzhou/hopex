@@ -154,6 +154,14 @@ mockServer2.onMessage = (e) => {
         )
       }
     })
+  } else if (method === 'kline.unsubscribe') {
+    mockServer2.sendJson({
+      "data": true,
+      "head": { "method": "kline.unsubscribe", "timestamps": 1536235920331 },
+      "ret": 0,
+      "errCode": "",
+      "errStr": ""
+    })
   }
 }
 
