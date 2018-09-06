@@ -27,7 +27,7 @@ class Router extends Component {
     switch (authority[0]) {
       case 1: {//1 代表该权限需要登录,未登录就默认重定向
         if (!isLogin) {
-          Toast.tip('账户过期，请重新登录')
+          // Toast.tip('账户过期，请重新登录')
           isAuthenticated = false
         }
       }

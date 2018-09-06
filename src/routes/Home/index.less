@@ -79,6 +79,10 @@
           color: #FFFFFF;
           font-size: 18px;
           .notallowtrade {
+            :global(.lightT) & {
+              background: #ECECEC;
+              color: #666666;
+            }
             margin-right: 10px;
             color: #7D879F;
             font-size: 14px;
@@ -170,6 +174,15 @@
     height: 30px;
 
     .switchmap {
+      :global(.lightT) & {
+        .mixinCL();
+        color: @c_active_yellow;
+        > div {
+          &.active {
+            color: white;
+          }
+        }
+      }
       color: #6B7186;
       right: 60px;
       z-index: 3;
