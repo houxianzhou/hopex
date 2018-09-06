@@ -148,7 +148,7 @@ mockServer2.onMessage = (e) => {
               "totalPrice24h": "0BTC",
               "pause": false,
               "percent": `${_.random(1, 100)}%`,
-              "position": false
+              "position": true
             }]
           }
         )

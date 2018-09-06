@@ -23,7 +23,7 @@ class Ws {
         const res = formatJson(e.data)
         this.listeners.forEach(item => item.subscribe && item.subscribe(e, res))
         this.sendJsonPromiseLists.forEach(([resolve, func], index) => {
-          const result = func(e)
+          const result = func(e, res)
           if (!!result) {
             resolve(result)
             this.sendJsonPromiseLists.splice(index, 1)

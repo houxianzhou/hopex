@@ -320,7 +320,29 @@ export default joinModel(modelExtend, {
         }
       })
     },
+    * doUnSubKlineAllListFromWs({ payload = {} }, { call, put }) {
+      const ws = wss.getSocket('ws')
+      return ws.sendJsonPromise({
+        head: {
+          "method": "kline.unsubscribe"
+        },
+        param: {}
+      }, (e, data) => {
+        let res
+        if (e && e.data) {
+          res = formatJson(e.data)
+        }
+        res = getRes(res)
+        if (resOk(res)) {
+          if (_.get(res, 'head.method') === 'kline.unsubscribe') {
+            return _.get(res, 'data.records')
+          }
+        }
+      })
+    },
     * getKlineFromWs({ payload = {} }, { call, put, select }) {
+      const { interval } = payload
+      // console.log(interval,'-------------')
       const ws = wss.getSocket('ws')
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
@@ -328,10 +350,13 @@ export default joinModel(modelExtend, {
           head: {
             "method": "kline.subscribe",
           },
-          param: {},
+          param: {
+            interval
+          },
         }
       })))
       if (repayload) {
+        console.log(repayload)
         return ws.sendJson(repayload)
       }
     },

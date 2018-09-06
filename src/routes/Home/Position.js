@@ -145,7 +145,9 @@ export default class Position extends Component {
         render: (value, record = {}, index) => {
           return {
             value: (
-              <div >
+              <div className={classNames(
+                // record.allowFullClose ? null : styles.gray
+              )} >
                 <input className={styles.input} value={record.inputValue || ''} onChange={(e) => {
                   if (Patterns.decimalNumber.test(e.target.value) || e.target.value === '') {
                     dispatch({
@@ -158,15 +160,19 @@ export default class Position extends Component {
                   }
                 }} />
                 <span onClick={() => {
+                  if (!record.allowFullClose) return
                   if (!record.inputValue) return Toast.tip('请填写价格')
                   postOrder({
                     price: record.inputValue,
                     market: record.market,
                   })
                 }} >
-                  <Button layer={false} loading={false} loadingMargin='0 0 0 2px' >限价全平</Button >
+                  <Button layer={false} loading={false} loadingMargin='0 0 0 2px' >
+                    限价全平
+                  </Button >
                 </span >
                 <span onClick={() => {
+                  if (!record.allowFullClose) return
                   postOrder({
                     price: undefined,
                     market: record.market,

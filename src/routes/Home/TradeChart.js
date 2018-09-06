@@ -285,8 +285,41 @@ export default class TradeChart extends Component {
     }
   }
 
+  getInterval = (resolution) => {
+    let interval
+    switch (resolution) {
+      case '1':
+      case '5':
+      case '15':
+      case '30':
+      case '60':
+      case '240': {
+        interval = 60 * (Number(resolution))
+      }
+        break
+      case 'D': {
+        interval = 1 * 24 * 60 * 60
+      }
+        break
+      case '5D': {
+        interval = 5 * 24 * 60 * 60
+      }
+        break
+      case 'W': {
+        interval = 6 * 24 * 60 * 60
+      }
+        break
+      case 'M': {
+        interval = 30 * 24 * 60 * 60
+      }
+        break
+    }
+    return interval
+  }
+
   startKline = () => {
     const backColor = '#1D1D1D'
+    const { getInterval } = this
     const { model: { marketCode }, dispatch, modelName } = this.props
     const TradingView = window.TradingView
     const tradeView = document.getElementById('tradeView')
@@ -363,9 +396,6 @@ export default class TradeChart extends Component {
         searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
         },
         resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
-          // ws1.onConnectPromise().then(() => {
-          //
-          // })
           setTimeout(() => {
             onSymbolResolvedCallback({
               "name": "",
@@ -387,36 +417,12 @@ export default class TradeChart extends Component {
             })
           })
         },
-        getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
+        getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest = true) => {
+          // dispatch({
+          //   type: `${modelName}/doUnSubKlineAllListFromWs`
+          // })
           const [startTime, endTime] = [String(Math.min(from, to)), String(Math.max(from, to))]
-          let interval
-          switch (resolution) {
-            case '1':
-            case '5':
-            case '15':
-            case '30':
-            case '60':
-            case '240': {
-              interval = 60 * (Number(resolution))
-            }
-              break
-            case 'D': {
-              interval = 1 * 24 * 60 * 60
-            }
-              break
-            case '5D': {
-              interval = 5 * 24 * 60 * 60
-            }
-              break
-            case 'W': {
-              interval = 6 * 24 * 60 * 60
-            }
-              break
-            case 'M': {
-              interval = 30 * 24 * 60 * 60
-            }
-              break
-          }
+          const interval = getInterval(resolution)
           dispatch({
             type: `${modelName}/getKlineAllList`,
             payload: {
@@ -445,8 +451,10 @@ export default class TradeChart extends Component {
           ws.onConnectPromise().then(() => {
             dispatch({
               type: `${modelName}/getKlineFromWs`,
+              payload: {
+                interval: getInterval(resolution)
+              }
             }).then(res => {
-              console.log(res, '---------')
               if (res) {
                 ws.listen({
                   name: 'kline.update',
@@ -550,59 +558,6 @@ export default class TradeChart extends Component {
           })
         }
       })
-    })
-  }
-
-  getImportantPriceFromWs = () => {
-    let chanId
-    const ws2 = wss.getSocket('ws2')
-    const { dispatch, modelName } = this.props
-    ws2.onConnectPromise().then(() => {
-      dispatch({
-        type: `${modelName}/getImportantPriceFromWs`,
-        payload: {
-          method: 'sub'
-        }
-      }).then(res => {
-        console.log('getImportantPrice订阅成功')
-        chanId = res
-      })
-    })
-    ws2.listen({
-      name: 'getImportantPrice',
-      subscribe: (e) => {
-        let res
-        if (e && e.data) res = formatJson(e.data)
-        res = getRes(res)
-        if (resOk(res)) {
-          const result = formatJson(res.data)
-          const { minPrice24h, maxPrice24h, price } = result
-          if (minPrice24h || maxPrice24h || price) {
-            dispatch({
-              type: `${modelName}/changeState`,
-              payload: {
-                ...maxPrice24h ? { maxPrice24h: formatNumber(maxPrice24h, 4) } : {},
-                ...minPrice24h ? { minPrice24h: formatNumber(minPrice24h, 4) } : {},
-                ...price ? { indexPrice: formatNumber(price, 4) } : {}
-              }
-            })
-          }
-        }
-      },
-      unsubscribe: () => {
-        if (chanId) {
-          return dispatch({
-            type: `${modelName}/getImportantPrice`,
-            payload: {
-              method: 'unsub',
-              chanId
-            }
-          }).then(res => console.log('getImportantPrice 取消订阅成功'))
-        }
-      },
-      restart: () => {
-        this.getImportantPrice()
-      }
     })
   }
 
