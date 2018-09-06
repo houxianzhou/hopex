@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { NavPannel } from '@components'
+import { history } from '@assets'
 import { default as MarketTrade } from './MarketTrade'
+
 
 const Comp = {
   MarketTrade
@@ -55,6 +57,7 @@ export default class View extends Component {
           defaultActive='marketTradeHistory'
           navList={[
             {
+              svg: history,
               title: '历史',
               list: [
                 {

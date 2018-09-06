@@ -710,6 +710,18 @@ export default delay({
     )
   },
 
+  //全平
+  'Post /mock/api/v1/gateway/User/FullClose': (req, res) => {
+    res.send(
+      {
+        "data": '',
+        "errCode": "0",
+        "errStr": "success",
+        "ret": "0"
+      }
+    )
+  },
+
   //概况
   'Get /mock/api/v1/gateway/Trade/Summary': (req, res) => {
     res.send(

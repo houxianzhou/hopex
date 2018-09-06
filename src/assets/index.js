@@ -65,79 +65,100 @@ export const passwordpng = (
     <script xmlns="" />
   </svg >
 )
-export const vertifycodepng=(
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="28px" height="26px" viewBox="0 0 28 26" version="1.1">
-    <title>vertifycode</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-      <circle id="path-1" cx="9.20101013" cy="23.0710678" r="9"/>
-    </defs>
-    <g id="00_全局" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g id="05-注册" transform="translate(-733.000000, -455.000000)">
-        <g id="Group-4" transform="translate(728.000000, 448.000000)">
-          <g id="Group-7" transform="translate(19.000000, 19.292893) rotate(45.000000) translate(-19.000000, -19.292893) translate(9.500000, 2.792893)">
-            <rect id="Rectangle-12" fill="#E2B96F" x="8" y="7.81597009e-14" width="2" height="16" rx="1"/>
-            <g id="Oval">
-              <use fill="#FFF6E5" fillRule="evenodd" xlinkHref="#path-1"/>
-              <circle stroke="#E2B96F" strokeWidth="2" cx="9.20101013" cy="23.0710678" r="8"/>
-            </g>
-            <rect id="Rectangle-13" fill="#E2B96F" x="9" y="3" width="7" height="2" rx="1"/>
-            <rect id="Rectangle-13-Copy" fill="#E2B96F" x="9" y="8" width="5" height="2" rx="1"/>
-          </g>
-        </g>
-      </g>
-    </g>
-    <script xmlns=""/></svg>
+export const vertifycodepng = (
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="28px" height="26px"
+       viewBox="0 0 28 26" version="1.1" >
+    <title >vertifycode</title >
+    <desc >Created with Sketch.</desc >
+    <defs >
+      <circle id="path-1" cx="9.20101013" cy="23.0710678" r="9" />
+    </defs >
+    <g id="00_全局" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="05-注册" transform="translate(-733.000000, -455.000000)" >
+        <g id="Group-4" transform="translate(728.000000, 448.000000)" >
+          <g id="Group-7"
+             transform="translate(19.000000, 19.292893) rotate(45.000000) translate(-19.000000, -19.292893) translate(9.500000, 2.792893)" >
+            <rect id="Rectangle-12" fill="#E2B96F" x="8" y="7.81597009e-14" width="2" height="16" rx="1" />
+            <g id="Oval" >
+              <use fill="#FFF6E5" fillRule="evenodd" xlinkHref="#path-1" />
+              <circle stroke="#E2B96F" strokeWidth="2" cx="9.20101013" cy="23.0710678" r="8" />
+            </g >
+            <rect id="Rectangle-13" fill="#E2B96F" x="9" y="3" width="7" height="2" rx="1" />
+            <rect id="Rectangle-13-Copy" fill="#E2B96F" x="9" y="8" width="5" height="2" rx="1" />
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
 )
-export const countrypng=(
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 30 30" version="1.1">
-    <title>country</title>
-    <desc>Created with Sketch.</desc>
-    <defs/>
-    <g id="00_全局" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g id="05-注册" transform="translate(-730.000000, -580.000000)">
-        <g id="Group-7" transform="translate(730.000000, 580.000000)">
-          <g id="地球">
-            <path d="M2.03420407,9.51287823 C4.39795448,11.0726498 5.75326263,11.8525355 6.10012852,11.8525355 C6.44699441,11.8525355 7.71530485,11.6766651 9.90505984,11.3249244 L11.5129239,6.96988252 L12.9672294,5.65591704 L14.9921762,6.96988252 L16.2524244,4.78490866 L19.7825816,4.78490866 L21.8019036,2.28494308 C18.9952898,1.44721508 16.7253807,1.02835108 14.9921762,1.02835108 C12.3923695,1.02835108 8.21338552,2.33612923 6.78523553,4.17489344 C5.83313554,5.40073624 4.24945838,7.1800645 2.03420407,9.51287823 Z" id="Path-3" fill="#FFF6E5"/>
-            <polygon id="Path-4" fill="#FFF6E5" points="15.2288608 11.0099421 12.2362949 12.7722128 11.3686359 15.5167595 13.7595306 19.0638976 14.4995046 20.740682 14.8531566 25.2050285 16.617333 25.2050285 17.281894 21.3213901 20.8404665 16.3250682"/>
-            <path d="M15,30 C6.71571729,30 0,23.2842827 0,15 C0,6.71571729 6.71571729,0 15,0 C23.2842827,0 30,6.71571729 30,15 C29.9897316,23.2800545 23.2800545,29.9897316 15,30 Z M15,1.88032836 C7.75744388,1.88032836 1.88589401,7.75118791 1.88503112,14.993744 C1.88421137,22.2363433 7.75425118,28.1085403 14.9968073,28.110223 C22.239536,28.1120782 28.1124233,22.2425561 28.1149689,15 C28.1072028,7.75994627 22.2400537,1.89279715 15,1.88503112 L15,1.88032836 Z" id="Fill-1" fill="#E2B96F"/>
-            <path d="M8.94827969,12.7272711 L6.07643292,12.7272711 C5.82732654,12.7250878 5.58145812,12.6708902 5.35480154,12.5684027 L1.81818182,10.9551461 L2.61048687,9.25763917 L6.1045815,10.8568113 L8.93407588,10.8568113 L9.69331066,10.3564894 L9.69331066,9.04727023 C9.69313797,8.74040728 9.77443212,8.43872435 9.92907667,8.17283068 L11.1598435,6.06391846 C11.6288283,5.26324075 12.6462789,4.96374114 13.479857,5.38131107 L14.6917574,5.98917199 C14.786176,5.11473244 15.0500906,3.84280091 16.111232,3.84280091 L18.9405537,3.84280091 L21.5718854,1.81818182 L22.7272727,3.29581598 L20.0581217,5.34385221 C19.7485304,5.58012127 19.368913,5.70825197 18.9783298,5.70855164 L16.6441124,5.70855164 C16.6063363,5.86759124 16.5591485,6.09671101 16.5120903,6.41928528 C16.4304508,6.97650183 16.0835583,7.46059868 15.5796467,7.72015645 C15.0759079,7.97967141 14.4768869,7.98283936 13.9702987,7.72867567 L12.7112106,7.11610563 L11.555996,9.08001997 L11.555996,10.4220317 C11.556989,11.0061758 11.263242,11.5521333 10.7731458,11.8762487 L9.92907667,12.4327803 C9.6388699,12.6252546 9.29733082,12.727742 8.94827969,12.7272711 Z" id="Fill-2" fill="#E2B96F"/>
-            <path d="M15.4075632,26.3636354 C15.271934,26.363766 15.1364311,26.3510463 15.0030751,26.3256502 C14.2744577,26.1815506 13.7178813,25.5691272 13.6236313,24.8078561 L12.9983143,19.9450168 L10.3315299,16.1387047 C9.97818688,15.6404981 9.90153241,14.987563 10.1293069,14.4163483 L11.0487818,12.0752959 C11.2305046,11.6410368 11.5710509,11.2988655 11.9960812,11.1237505 L14.3731277,10.1293412 C14.8417681,9.93331691 15.3699305,9.96123947 15.8168501,10.2053986 L17.6422032,11.1759801 C17.8960764,11.3138069 18.1124854,11.5149278 18.2721506,11.7613521 L19.5043892,13.6645735 L20.566481,13.9737691 C21.096285,14.128759 21.5223256,14.5369686 21.7124254,15.0716357 C21.902483,15.6062592 21.8337423,16.2028699 21.5274191,16.676421 L17.6422032,22.7332659 L17.6422032,24.1178507 C17.6221661,25.362387 16.6426221,26.3612395 15.4398077,26.3636354 L15.4075632,26.3636354 Z M11.8627252,15.0870998 L14.5064837,18.8459305 C14.675031,19.0873888 14.782583,19.3688361 14.8190791,19.6644407 L15.4213703,24.4556223 C15.5004662,24.451876 15.5762788,24.4219061 15.6374424,24.370025 C15.7210004,24.3002404 15.7699987,24.195607 15.7707985,24.084483 L15.7707985,22.6572085 C15.7775336,22.3179123 15.8780137,21.9876332 16.0605364,21.7054889 L19.9411219,15.7818969 L18.9939908,15.5058948 C18.5988898,15.3920265 18.2563651,15.1354525 18.0284643,14.7826959 L16.7915953,12.8794745 L15.0489583,11.9277549 L12.7499976,12.8794745 L11.8627252,15.0870998 Z" id="Fill-3" fill="#E2B96F"/>
-          </g>
-        </g>
-      </g>
-    </g>
-    <script xmlns=""/></svg>
+export const countrypng = (
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="30px" height="30px"
+       viewBox="0 0 30 30" version="1.1" >
+    <title >country</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="00_全局" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="05-注册" transform="translate(-730.000000, -580.000000)" >
+        <g id="Group-7" transform="translate(730.000000, 580.000000)" >
+          <g id="地球" >
+            <path
+              d="M2.03420407,9.51287823 C4.39795448,11.0726498 5.75326263,11.8525355 6.10012852,11.8525355 C6.44699441,11.8525355 7.71530485,11.6766651 9.90505984,11.3249244 L11.5129239,6.96988252 L12.9672294,5.65591704 L14.9921762,6.96988252 L16.2524244,4.78490866 L19.7825816,4.78490866 L21.8019036,2.28494308 C18.9952898,1.44721508 16.7253807,1.02835108 14.9921762,1.02835108 C12.3923695,1.02835108 8.21338552,2.33612923 6.78523553,4.17489344 C5.83313554,5.40073624 4.24945838,7.1800645 2.03420407,9.51287823 Z"
+              id="Path-3" fill="#FFF6E5" />
+            <polygon id="Path-4" fill="#FFF6E5"
+                     points="15.2288608 11.0099421 12.2362949 12.7722128 11.3686359 15.5167595 13.7595306 19.0638976 14.4995046 20.740682 14.8531566 25.2050285 16.617333 25.2050285 17.281894 21.3213901 20.8404665 16.3250682" />
+            <path
+              d="M15,30 C6.71571729,30 0,23.2842827 0,15 C0,6.71571729 6.71571729,0 15,0 C23.2842827,0 30,6.71571729 30,15 C29.9897316,23.2800545 23.2800545,29.9897316 15,30 Z M15,1.88032836 C7.75744388,1.88032836 1.88589401,7.75118791 1.88503112,14.993744 C1.88421137,22.2363433 7.75425118,28.1085403 14.9968073,28.110223 C22.239536,28.1120782 28.1124233,22.2425561 28.1149689,15 C28.1072028,7.75994627 22.2400537,1.89279715 15,1.88503112 L15,1.88032836 Z"
+              id="Fill-1" fill="#E2B96F" />
+            <path
+              d="M8.94827969,12.7272711 L6.07643292,12.7272711 C5.82732654,12.7250878 5.58145812,12.6708902 5.35480154,12.5684027 L1.81818182,10.9551461 L2.61048687,9.25763917 L6.1045815,10.8568113 L8.93407588,10.8568113 L9.69331066,10.3564894 L9.69331066,9.04727023 C9.69313797,8.74040728 9.77443212,8.43872435 9.92907667,8.17283068 L11.1598435,6.06391846 C11.6288283,5.26324075 12.6462789,4.96374114 13.479857,5.38131107 L14.6917574,5.98917199 C14.786176,5.11473244 15.0500906,3.84280091 16.111232,3.84280091 L18.9405537,3.84280091 L21.5718854,1.81818182 L22.7272727,3.29581598 L20.0581217,5.34385221 C19.7485304,5.58012127 19.368913,5.70825197 18.9783298,5.70855164 L16.6441124,5.70855164 C16.6063363,5.86759124 16.5591485,6.09671101 16.5120903,6.41928528 C16.4304508,6.97650183 16.0835583,7.46059868 15.5796467,7.72015645 C15.0759079,7.97967141 14.4768869,7.98283936 13.9702987,7.72867567 L12.7112106,7.11610563 L11.555996,9.08001997 L11.555996,10.4220317 C11.556989,11.0061758 11.263242,11.5521333 10.7731458,11.8762487 L9.92907667,12.4327803 C9.6388699,12.6252546 9.29733082,12.727742 8.94827969,12.7272711 Z"
+              id="Fill-2" fill="#E2B96F" />
+            <path
+              d="M15.4075632,26.3636354 C15.271934,26.363766 15.1364311,26.3510463 15.0030751,26.3256502 C14.2744577,26.1815506 13.7178813,25.5691272 13.6236313,24.8078561 L12.9983143,19.9450168 L10.3315299,16.1387047 C9.97818688,15.6404981 9.90153241,14.987563 10.1293069,14.4163483 L11.0487818,12.0752959 C11.2305046,11.6410368 11.5710509,11.2988655 11.9960812,11.1237505 L14.3731277,10.1293412 C14.8417681,9.93331691 15.3699305,9.96123947 15.8168501,10.2053986 L17.6422032,11.1759801 C17.8960764,11.3138069 18.1124854,11.5149278 18.2721506,11.7613521 L19.5043892,13.6645735 L20.566481,13.9737691 C21.096285,14.128759 21.5223256,14.5369686 21.7124254,15.0716357 C21.902483,15.6062592 21.8337423,16.2028699 21.5274191,16.676421 L17.6422032,22.7332659 L17.6422032,24.1178507 C17.6221661,25.362387 16.6426221,26.3612395 15.4398077,26.3636354 L15.4075632,26.3636354 Z M11.8627252,15.0870998 L14.5064837,18.8459305 C14.675031,19.0873888 14.782583,19.3688361 14.8190791,19.6644407 L15.4213703,24.4556223 C15.5004662,24.451876 15.5762788,24.4219061 15.6374424,24.370025 C15.7210004,24.3002404 15.7699987,24.195607 15.7707985,24.084483 L15.7707985,22.6572085 C15.7775336,22.3179123 15.8780137,21.9876332 16.0605364,21.7054889 L19.9411219,15.7818969 L18.9939908,15.5058948 C18.5988898,15.3920265 18.2563651,15.1354525 18.0284643,14.7826959 L16.7915953,12.8794745 L15.0489583,11.9277549 L12.7499976,12.8794745 L11.8627252,15.0870998 Z"
+              id="Fill-3" fill="#E2B96F" />
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
 )
-export const pulldownpng=(
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="16px" height="10px" viewBox="0 0 16 10" version="1.1">
-    <title>pulldown</title>
-    <desc>Created with Sketch.</desc>
-    <defs/>
-    <g id="00_全局" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g id="05-注册" transform="translate(-1167.000000, -599.000000)" fill="#999999">
-        <g id="Group-10" transform="translate(1167.000000, 599.000000)">
-          <polygon id="Triangle" transform="translate(8.000000, 5.000000) scale(1, -1) translate(-8.000000, -5.000000) " points="8 0 16 10 0 10"/>
-        </g>
-      </g>
-    </g>
-    <script xmlns=""/></svg>
+export const pulldownpng = (
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="16px" height="10px"
+       viewBox="0 0 16 10" version="1.1" >
+    <title >pulldown</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="00_全局" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="05-注册" transform="translate(-1167.000000, -599.000000)" fill="#999999" >
+        <g id="Group-10" transform="translate(1167.000000, 599.000000)" >
+          <polygon id="Triangle" transform="translate(8.000000, 5.000000) scale(1, -1) translate(-8.000000, -5.000000) "
+                   points="8 0 16 10 0 10" />
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
 )
-export const selectpng=(
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="13px" height="10px" viewBox="0 0 13 10" version="1.1">
-    <title>Combined Shape</title>
-    <desc>Created with Sketch.</desc>
-    <defs/>
-    <g id="00_全局" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g id="05-注册" transform="translate(-714.000000, -637.000000)" fill="#E2B96F">
-        <g id="Group-9" transform="translate(712.000000, 633.000000)">
-          <g id="对勾">
-            <path d="M6.32106781,11.6390873 L13.9601551,4 L14.6672619,4.70710678 L6.18198052,13.1923882 L5.47487373,12.4852814 L5.61396103,12.3461941 L2,8.73223305 L2.70710678,8.02512627 L6.32106781,11.6390873 Z" id="Combined-Shape"/>
-          </g>
-        </g>
-      </g>
-    </g>
-    <script xmlns=""/></svg>
+export const selectpng = (
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="13px" height="10px"
+       viewBox="0 0 13 10" version="1.1" >
+    <title >Combined Shape</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="00_全局" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="05-注册" transform="translate(-714.000000, -637.000000)" fill="#E2B96F" >
+        <g id="Group-9" transform="translate(712.000000, 633.000000)" >
+          <g id="对勾" >
+            <path
+              d="M6.32106781,11.6390873 L13.9601551,4 L14.6672619,4.70710678 L6.18198052,13.1923882 L5.47487373,12.4852814 L5.61396103,12.3461941 L2,8.73223305 L2.70710678,8.02512627 L6.32106781,11.6390873 Z"
+              id="Combined-Shape" />
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
 )
 // header
 export const netWork = (
@@ -168,20 +189,24 @@ export const netWork = (
 )
 
 export const notice = (
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="17px" height="18px" viewBox="0 0 17 18" version="1.1">
-    <title>通知</title>
-    <desc>Created with Sketch.</desc>
-    <defs/>
-    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g id="01-资产管理-钱包明细" transform="translate(-1242.000000, -27.000000)" fill="#D7DAEE">
-        <g id="Group-4" transform="translate(1242.000000, 27.000000)">
-          <g id="Group-2">
-            <path d="M4.44444444,5 L10,6.123234e-16 L10,18 L4.44444444,13 L0,13 L0,5 L4.44444444,5 Z M13.0682486,5.29575762 L13.0843943,3 C15.4012248,4.07159313 17,6.34699222 17,8.98082028 C17,11.64651 15.3623098,13.9450463 13,15 L13.0161545,12.7029937 C14.2459551,11.8407971 15,10.4705729 15,8.98082028 C15,7.51292074 14.2681387,6.16047093 13.0682486,5.29575762 Z" id="Combined-Shape"/>
-          </g>
-        </g>
-      </g>
-    </g>
-    <script xmlns=""/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="17px" height="18px"
+       viewBox="0 0 17 18" version="1.1" >
+    <title >通知</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="01-资产管理-钱包明细" transform="translate(-1242.000000, -27.000000)" fill="#D7DAEE" >
+        <g id="Group-4" transform="translate(1242.000000, 27.000000)" >
+          <g id="Group-2" >
+            <path
+              d="M4.44444444,5 L10,6.123234e-16 L10,18 L4.44444444,13 L0,13 L0,5 L4.44444444,5 Z M13.0682486,5.29575762 L13.0843943,3 C15.4012248,4.07159313 17,6.34699222 17,8.98082028 C17,11.64651 15.3623098,13.9450463 13,15 L13.0161545,12.7029937 C14.2459551,11.8407971 15,10.4705729 15,8.98082028 C15,7.51292074 14.2681387,6.16047093 13.0682486,5.29575762 Z"
+              id="Combined-Shape" />
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
 )
 
 export const help = (
@@ -197,6 +222,28 @@ export const help = (
             <path
               d="M2,0 L14,0 C15.1045695,-2.02906125e-16 16,0.8954305 16,2 L16,14 C16,15.1045695 15.1045695,16 14,16 L2,16 C0.8954305,16 1.3527075e-16,15.1045695 0,14 L0,2 C-1.3527075e-16,0.8954305 0.8954305,2.02906125e-16 2,0 Z M8.288,2.352 C7.104,2.352 6.176,2.688 5.488,3.36 C4.784,4.032 4.448,4.96 4.448,6.144 L6.272,6.144 C6.272,5.456 6.4,4.928 6.672,4.56 C6.992,4.128 7.488,3.92 8.176,3.92 C8.72,3.92 9.152,4.064 9.456,4.368 C9.744,4.672 9.904,5.088 9.904,5.616 C9.904,6.016 9.76,6.4 9.472,6.752 C9.344,6.896 9.024,7.2 8.512,7.664 C7.984,8.128 7.616,8.576 7.408,9.008 C7.184,9.44 7.088,9.968 7.088,10.576 L7.088,10.8 L8.928,10.8 L8.928,10.576 C8.928,10.192 9.008,9.84 9.168,9.52 C9.312,9.232 9.52,8.96 9.808,8.736 C10.576,8.064 11.04,7.632 11.184,7.472 C11.568,6.96 11.776,6.304 11.776,5.504 C11.776,4.528 11.456,3.76 10.816,3.2 C10.176,2.624 9.328,2.352 8.288,2.352 Z M8,11.584 C7.648,11.584 7.36,11.696 7.136,11.92 C6.88,12.144 6.768,12.432 6.768,12.784 C6.768,13.136 6.88,13.424 7.136,13.648 C7.36,13.872 7.648,14 8,14 C8.352,14 8.64,13.888 8.896,13.664 C9.12,13.44 9.248,13.136 9.248,12.784 C9.248,12.432 9.12,12.144 8.896,11.92 C8.656,11.696 8.352,11.584 8,11.584 Z"
               id="Combined-Shape" />
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
+)
+
+export const history = (
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="18px" height="18px"
+       viewBox="0 0 18 18" version="1.1" >
+    <title >history</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="04_交易历史" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="01-交易历史" transform="translate(-250.000000, -110.000000)" >
+        <g id="Group-6" transform="translate(250.000000, 110.000000)" >
+          <g id="Group-3" >
+            <circle id="Oval-2" stroke="#E2B96F" strokeWidth="2" cx="9" cy="9" r="8" />
+            <path
+              d="M10,8 L12,8 C12.5522847,8 13,8.44771525 13,9 C13,9.55228475 12.5522847,10 12,10 L9,10 C8.44771525,10 8,9.55228475 8,9 L8,5 C8,4.44771525 8.44771525,4 9,4 C9.55228475,4 10,4.44771525 10,5 L10,8 Z"
+              id="Combined-Shape" fill="#E2B96F" />
           </g >
         </g >
       </g >
@@ -229,23 +276,28 @@ export const assetManage = (
 )
 
 export const Rights = (
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 40 40" version="1.1">
-    <title>account valuation</title>
-    <desc>Created with Sketch.</desc>
-    <defs/>
-    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g id="01-资产管理-钱包明细" transform="translate(-580.000000, -130.000000)">
-        <g id="Group-5-Copy" transform="translate(580.000000, 130.000000)">
-          <g id="Group-2">
-            <g id="Group" transform="translate(3.200000, 0.000000)">
-              <path d="M23.464211,2 L2,2 L2,38 L32,38 L32,10.435368 L23.464211,2 Z" id="Combined-Shape" stroke="#232833" strokeWidth="4"/>
-              <path d="M8,22 L12,22 L12,30 L8,30 L8,22 Z M15,14 L19,14 L19,30 L15,30 L15,14 Z M22,18 L26,18 L26,30 L22,30 L22,18 Z" id="Combined-Shape" fill="#E2B96F"/>
-            </g>
-          </g>
-        </g>
-      </g>
-    </g>
-    <script xmlns=""/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40px" height="40px"
+       viewBox="0 0 40 40" version="1.1" >
+    <title >account valuation</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="01-资产管理-钱包明细" transform="translate(-580.000000, -130.000000)" >
+        <g id="Group-5-Copy" transform="translate(580.000000, 130.000000)" >
+          <g id="Group-2" >
+            <g id="Group" transform="translate(3.200000, 0.000000)" >
+              <path d="M23.464211,2 L2,2 L2,38 L32,38 L32,10.435368 L23.464211,2 Z" id="Combined-Shape" stroke="#232833"
+                    strokeWidth="4" />
+              <path
+                d="M8,22 L12,22 L12,30 L8,30 L8,22 Z M15,14 L19,14 L19,30 L15,30 L15,14 Z M22,18 L26,18 L26,30 L22,30 L22,18 Z"
+                id="Combined-Shape" fill="#E2B96F" />
+            </g >
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
 )
 
 export const defaultPng2 = (
@@ -280,27 +332,31 @@ export const defaultPng2 = (
 
 
 export const $B = (
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 40 40" version="1.1">
-    <title>money</title>
-    <desc>Created with Sketch.</desc>
-    <defs/>
-    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g id="01-资产管理-钱包明细" transform="translate(-977.000000, -130.000000)">
-        <g id="Group-6" transform="translate(977.000000, 130.000000)">
-          <g id="Group-6-Copy">
-            <circle id="Oval" stroke="#232833" strokeWidth="4" cx="20" cy="20" r="18"/>
-            <g id="Group-11" transform="translate(13.000000, 11.000000)" fill="#E2B96F">
-              <path d="M5,12 L5,9 L1,9 L1,5 L13,5 L13,9 L9,9 L9,12 L13,12 L13,16 L9,16 L9,19 L5,19 L5,16 L1,16 L1,12 L5,12 Z" id="Combined-Shape"/>
-              <g id="Group-10">
-                <rect id="Rectangle-7-Copy" x="3.93187553" y="2.24264069" width="9.42809042" height="4"/>
-                <rect id="Rectangle-7-Copy-2" x="1.16264476" y="2.24264069" width="9.42809042" height="4"/>
-              </g>
-            </g>
-          </g>
-        </g>
-      </g>
-    </g>
-    <script xmlns=""/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40px" height="40px"
+       viewBox="0 0 40 40" version="1.1" >
+    <title >money</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="01-资产管理-钱包明细" transform="translate(-977.000000, -130.000000)" >
+        <g id="Group-6" transform="translate(977.000000, 130.000000)" >
+          <g id="Group-6-Copy" >
+            <circle id="Oval" stroke="#232833" strokeWidth="4" cx="20" cy="20" r="18" />
+            <g id="Group-11" transform="translate(13.000000, 11.000000)" fill="#E2B96F" >
+              <path
+                d="M5,12 L5,9 L1,9 L1,5 L13,5 L13,9 L9,9 L9,12 L13,12 L13,16 L9,16 L9,19 L5,19 L5,16 L1,16 L1,12 L5,12 Z"
+                id="Combined-Shape" />
+              <g id="Group-10" >
+                <rect id="Rectangle-7-Copy" x="3.93187553" y="2.24264069" width="9.42809042" height="4" />
+                <rect id="Rectangle-7-Copy-2" x="1.16264476" y="2.24264069" width="9.42809042" height="4" />
+              </g >
+            </g >
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
 )
 
 export const $B2 = (
@@ -342,23 +398,30 @@ export const Diamond = (
 )
 
 export const Home = (
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 40 40" version="1.1">
-    <title>hold</title>
-    <desc>Created with Sketch.</desc>
-    <defs/>
-    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g id="01-资产管理-钱包明细" transform="translate(-1374.000000, -130.000000)">
-        <g id="Group-7-Copy" transform="translate(1374.000000, 130.000000)">
-          <g id="持仓">
-            <path d="M19.9281767,0.129567898 L39.2601551,19.131728 L36.431728,21.9601551 L19.9,5.42842712 L3.36827202,21.9601551 L0.539844892,19.131728 L19.9281767,0.129567898 Z" id="Combined-Shape" fill="#232833"/>
-            <path d="M4,16 L8,16 L8,40 L4,40 L4,16 Z M31,16 L35,16 L35,40 L31,40 L31,16 Z" id="Combined-Shape" fill="#232833"/>
-            <path d="M20.7558559,24.9274288 L25.6773124,20 L28.5057395,22.8284271 L20.739005,30.5976657 L18.8181065,28.6465337 L16.5980761,26.4265032 L12.8284271,30.1923882 L10,27.363961 L16.6019996,20.7587352 L19.4303616,23.5970456 L19.427916,23.5994889 L20.7558559,24.9274288 Z" id="Combined-Shape" fill="#E2B96F"/>
-            <rect id="Rectangle-12" fill="#232833" x="7" y="36" width="25" height="4"/>
-          </g>
-        </g>
-      </g>
-    </g>
-    <script xmlns=""/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40px" height="40px"
+       viewBox="0 0 40 40" version="1.1" >
+    <title >hold</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="03_资产管理" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="01-资产管理-钱包明细" transform="translate(-1374.000000, -130.000000)" >
+        <g id="Group-7-Copy" transform="translate(1374.000000, 130.000000)" >
+          <g id="持仓" >
+            <path
+              d="M19.9281767,0.129567898 L39.2601551,19.131728 L36.431728,21.9601551 L19.9,5.42842712 L3.36827202,21.9601551 L0.539844892,19.131728 L19.9281767,0.129567898 Z"
+              id="Combined-Shape" fill="#232833" />
+            <path d="M4,16 L8,16 L8,40 L4,40 L4,16 Z M31,16 L35,16 L35,40 L31,40 L31,16 Z" id="Combined-Shape"
+                  fill="#232833" />
+            <path
+              d="M20.7558559,24.9274288 L25.6773124,20 L28.5057395,22.8284271 L20.739005,30.5976657 L18.8181065,28.6465337 L16.5980761,26.4265032 L12.8284271,30.1923882 L10,27.363961 L16.6019996,20.7587352 L19.4303616,23.5970456 L19.427916,23.5994889 L20.7558559,24.9274288 Z"
+              id="Combined-Shape" fill="#E2B96F" />
+            <rect id="Rectangle-12" fill="#232833" x="7" y="36" width="25" height="4" />
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
 )
 
 export const triangle2 = (

@@ -87,7 +87,12 @@ export default class View extends Component {
           width: 180
         },
         {
+          title: '状态',
+          // width: 100,
+        },
+        {
           title: '操作',
+          width: 60,
           dataIndex: 'orderStatus',
           render: (value, record = {}) => {
             return ({
