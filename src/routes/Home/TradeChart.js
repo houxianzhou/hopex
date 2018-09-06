@@ -352,6 +352,7 @@ export default class TradeChart extends Component {
       library_path: '/',
       width: '100%',
       height: '100%',
+      timezone: 'Asia/Hong_Kong',
       ...marketCode ? { symbol: marketCode } : {},
       // interval: 'D',
       'container_id': 'tradeView',
@@ -505,7 +506,7 @@ export default class TradeChart extends Component {
     })
   }
 
-  startKlineDetail = () => {
+  startKlineDetail = () => { // 合约基础信息
     const { dispatch, modelName } = this.props
     dispatch({
       type: `${modelName}/getKlineDetail`,
@@ -666,6 +667,7 @@ export default class TradeChart extends Component {
                               <li
                                 key={index + 1}
                                 onClick={() => {
+                                  if (!this.widget) return
                                   changeState({
                                     time: item.name
                                   })
@@ -679,7 +681,6 @@ export default class TradeChart extends Component {
                                     this.widget.chart().setResolution(item.value, () => {
                                     })
                                   })
-
                                 }}
                                 className={classNames(
                                   time === item.name ? styles.active : null

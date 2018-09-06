@@ -291,6 +291,7 @@ export default joinModel(modelExtend, {
         }
       }
     },
+    // 取消订阅
     * doUnSubKlineAllListFromWs({ payload = {} }, { call, put }) {
       const ws = wss.getSocket('ws')
       return ws.sendJsonPromise({
@@ -306,7 +307,6 @@ export default joinModel(modelExtend, {
         res = getRes(res)
         if (resOk(res)) {
           if (_.get(res, 'head.method') === 'kline.unsubscribe') {
-            console.log('取消订阅成功')
             return true
           }
         }
