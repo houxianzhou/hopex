@@ -13,7 +13,6 @@ if (MODE === 'mock') {
 }
 
 
-
 //获取盘口区间
 export async function getIntervals(payload) {
   return request(`${UserIp0}/gateway/OrderBook/Intervals`, {
@@ -234,6 +233,14 @@ export async function doFullClose(payload) {
   return request(`${UserIp0}/gateway/User/FullClose`, {
     method: 'post',
     body: payload
+  })
+}
+
+
+//检查网络状态
+export async function getNetWork(payload) {
+  return request(`${UserIp0}/gateway/home/ping`, {
+    method: 'head'
   })
 }
 

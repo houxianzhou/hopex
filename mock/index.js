@@ -884,6 +884,11 @@ export default delay({
 
   },
 
+  //网络状态
+  'Head /mock/api/v1/gateway/home/ping': (req, res) => {
+    res.sendStatus(200)
+  },
+
 }, 100)
 
 

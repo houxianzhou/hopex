@@ -49,7 +49,7 @@ export function request(url = '', options = {}) {
   })
     .then((res) => {
       if (String(_.get(res, 'data.ret')) !== '0') {
-        console.log('接口ret不为0，判断为错误')
+        if(method !== 'head') console.log('接口ret不为0，判断为错误')
         return Promise.reject({ response: res })
       }
       return res
@@ -62,6 +62,10 @@ export function request(url = '', options = {}) {
             return Promise.reject(error)
           default:
         }
+      }
+      if (method === 'head') {
+        // 网络状态检测
+        return Promise.resolve(_.get(error, 'response.status'))
       }
       if (needWatch) {
         if (_.get(error, 'response.data.ret') === '100100'

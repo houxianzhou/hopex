@@ -432,8 +432,8 @@ export default class TradeChart extends Component {
               high: Number(item[3]),
               low: Number(item[4]),
               volume: Number(item[5]),
-              price: Number(item[6]),
-              name: item[7]
+              // price: Number(item[6]),
+              // name: item[7]
             }))
             onHistoryCallback(data, { noData: true })
           })
