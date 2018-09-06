@@ -291,35 +291,6 @@ export default joinModel(modelExtend, {
         }
       }
     },
-    * getKlineAllListFromWs({ payload = {} }, { call, put }) {
-      const ws1 = wss.getSocket('ws1')
-      const { startTime, endTime } = payload
-      const repayload = yield (asyncPayload(yield put({
-        type: 'createRequestParams',
-        payload: {
-          head: {
-            "method": "kline.query",
-          },
-          param: {
-            "startTime": startTime,
-            "endTime": endTime,
-            "interval": "86400"
-          }
-        }
-      })))
-      return ws1.sendJsonPromise(repayload, (e) => {
-        let res
-        if (e && e.data) {
-          res = formatJson(e.data)
-        }
-        res = getRes(res)
-        if (resOk(res)) {
-          if (_.get(res, 'head.method') === 'kline.query') {
-            return _.get(res, 'data.records')
-          }
-        }
-      })
-    },
     * doUnSubKlineAllListFromWs({ payload = {} }, { call, put }) {
       const ws = wss.getSocket('ws')
       return ws.sendJsonPromise({
@@ -335,14 +306,14 @@ export default joinModel(modelExtend, {
         res = getRes(res)
         if (resOk(res)) {
           if (_.get(res, 'head.method') === 'kline.unsubscribe') {
-            return _.get(res, 'data.records')
+            console.log('取消订阅成功')
+            return true
           }
         }
       })
     },
     * getKlineFromWs({ payload = {} }, { call, put, select }) {
       const { interval } = payload
-      // console.log(interval,'-------------')
       const ws = wss.getSocket('ws')
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
@@ -356,7 +327,6 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
-        console.log(repayload)
         return ws.sendJson(repayload)
       }
     },
@@ -498,52 +468,6 @@ export default joinModel(modelExtend, {
         }
       }
     },
-
-    //现货价格指数，24最高，24h最低
-    * getImportantPriceFromWs({ payload = {} }, { call, put }) {
-      const { method } = payload
-      const ws2 = wss.getSocket('ws2')
-      if (method === 'sub') {
-        // 订阅三个价格
-        const repayload = yield (asyncPayload(yield put({
-          type: 'createRequestParams',
-          payload: {
-            "event": "subscribe",
-            "channel": "market",
-            "pair": "BTCUSD",
-            "type": 1
-          }
-        })))
-        return ws2.sendJsonPromise(repayload, (e) => {
-          const res = getRes(e)
-          if (resOk(res)) {
-            const result = formatJson(res.data)
-            return result.chanId
-          }
-        }).then(res => {
-          return res
-        })
-      } else if (method === 'unsub') {
-        // 取消订阅三个价格
-        const { chanId } = payload
-        const repayload = {
-          "event": "unsubscribe",
-          chanId
-        }
-        return ws2.sendJsonPromise(repayload, (e) => {
-          const res = getRes(e)
-          if (resOk(res)) {
-            const result = formatJson(res.data)
-            if (_.get(result, 'event') === 'unsubscribed'
-              && _.get(result, 'status') === 'OK'
-              && _.get(result, 'chanId') === chanId) {
-              return true
-            }
-          }
-        }).then(res => res)
-      }
-    },
-
 
     //合约列表 market.list
     * getAllMarketDetails({ payload = {} }, { call, put }) {

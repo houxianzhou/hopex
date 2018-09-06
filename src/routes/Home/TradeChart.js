@@ -418,9 +418,6 @@ export default class TradeChart extends Component {
           })
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest = true) => {
-          // dispatch({
-          //   type: `${modelName}/doUnSubKlineAllListFromWs`
-          // })
           const [startTime, endTime] = [String(Math.min(from, to)), String(Math.max(from, to))]
           const interval = getInterval(resolution)
           dispatch({
@@ -483,20 +480,6 @@ export default class TradeChart extends Component {
               }
             })
           })
-
-          // setInterval(() => {
-          //   onRealtimeCallback({
-          //       "time": 1535385600000,
-          //       "close": _.random(100,300),
-          //       "open": _.random(100, 500),
-          //       "high": 150.9,
-          //       "low": 148.57,
-          //       "volume": 1000
-          //     }
-          //   )
-          // }, 2000)
-
-
         },
         unsubscribeBars(subscriberUID) {
         }
@@ -568,8 +551,8 @@ export default class TradeChart extends Component {
     const {
       model: {
         marketName = '', maxPrice24h = '', minPrice24h = '', indexPrice = '',
-        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', reasonablePrice = '', latestPriceChangePercent = '', latestPriceChangePercentShown = '', dollarPrice = '', marketAllowTrade = ''
-      },
+        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', reasonablePrice = '', latestPriceChangePercent = '', dollarPrice = '', marketAllowTrade = ''
+      }, dispatch, modelName
     } = this.props
     const intervals = [
       { name: '1m', value: '1' },
@@ -690,8 +673,13 @@ export default class TradeChart extends Component {
                                   this.studies.forEach((id) => {
                                     this.widget.chart().setEntityVisibility(id, true)
                                   })
-                                  this.widget.chart().setResolution(item.value, () => {
+                                  dispatch({
+                                    type: `${modelName}/doUnSubKlineAllListFromWs`
+                                  }).then(() => {
+                                    this.widget.chart().setResolution(item.value, () => {
+                                    })
                                   })
+
                                 }}
                                 className={classNames(
                                   time === item.name ? styles.active : null
