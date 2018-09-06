@@ -441,20 +441,40 @@ export default class TradeChart extends Component {
         getMarks(symbolInfo, startDate, endDate, onDataCallback, resolution) {
         },
         subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) {
-          // dispatch({
-          //   type: `${modelName}/getKlineAddMore`
-          // })
-          // ws1.onConnectPromise().then(() => {
-          //   dispatch({
-          //     type: `${modelName}/getImportantPrice`,
-          //     payload: {
-          //       method: 'sub'
-          //     }
-          //   }).then(res => {
-          //     console.log('getImportantPrice订阅成功')
-          //     chanId = res
-          //   })
-          // })
+          const ws = wss.getSocket('ws')
+          ws.onConnectPromise().then(() => {
+            dispatch({
+              type: `${modelName}/getKlineFromWs`,
+            }).then(res => {
+              console.log(res, '---------')
+              if (res) {
+                ws.listen({
+                  name: 'kline.update',
+                  subscribe: (e, res) => {
+                    if (_.get(res, 'method') === 'kline.update') {
+                      const result = _.get(res, 'data')
+                      result.map((item = {}) => {
+                        onRealtimeCallback(
+                          {
+                            time: Number(item[0]) * 1000,
+                            open: Number(item[1]),
+                            close: Number(item[2]),
+                            high: Number(item[3]),
+                            low: Number(item[4]),
+                            volume: Number(item[5]),
+                          }
+                        )
+                      })
+                    }
+                  },
+                  unsubscribe: () => {
+                  },
+                  restart: () => {
+                  }
+                })
+              }
+            })
+          })
 
           // setInterval(() => {
           //   onRealtimeCallback({

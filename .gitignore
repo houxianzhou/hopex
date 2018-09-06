@@ -12,3 +12,4 @@
 npm-debug.log*
 
 /.idea
+/public/charting_library.min.js

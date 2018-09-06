@@ -320,6 +320,22 @@ export default joinModel(modelExtend, {
         }
       })
     },
+    * getKlineFromWs({ payload = {} }, { call, put, select }) {
+      const ws = wss.getSocket('ws')
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {
+            "method": "kline.subscribe",
+          },
+          param: {},
+        }
+      })))
+      if (repayload) {
+        return ws.sendJson(repayload)
+      }
+    },
+
 
     // k线详情数据
     * getKlineDetail({ payload = {} }, { call, put }) {
