@@ -37,7 +37,7 @@ export default class TradeChart extends Component {
     }
     if (!isEqual(prevMap, map)) {
       if (map === 1) {
-        this.startKline()
+        // this.startKline()
       } else {
         this.startDeepMap()
       }
@@ -285,38 +285,6 @@ export default class TradeChart extends Component {
     }
   }
 
-  getInterval = (resolution) => {
-    let interval
-    switch (resolution) {
-      case '1':
-      case '5':
-      case '15':
-      case '30':
-      case '60':
-      case '240': {
-        interval = 60 * (Number(resolution))
-      }
-        break
-      case 'D': {
-        interval = 1 * 24 * 60 * 60
-      }
-        break
-      case '5D': {
-        interval = 5 * 24 * 60 * 60
-      }
-        break
-      case 'W': {
-        interval = 6 * 24 * 60 * 60
-      }
-        break
-      case 'M': {
-        interval = 30 * 24 * 60 * 60
-      }
-        break
-    }
-    return interval
-  }
-
   startKline = () => {
     const backColor = '#1D1D1D'
     const { getInterval } = this
@@ -508,6 +476,38 @@ export default class TradeChart extends Component {
         "Plot.color": "#782C6C",
       }))
     })
+  }
+
+  getInterval = (resolution) => {
+    let interval
+    switch (resolution) {
+      case '1':
+      case '5':
+      case '15':
+      case '30':
+      case '60':
+      case '240': {
+        interval = 60 * (Number(resolution))
+      }
+        break
+      case 'D': {
+        interval = 1 * 24 * 60 * 60
+      }
+        break
+      case '5D': {
+        interval = 5 * 24 * 60 * 60
+      }
+        break
+      case 'W': {
+        interval = 6 * 24 * 60 * 60
+      }
+        break
+      case 'M': {
+        interval = 30 * 24 * 60 * 60
+      }
+        break
+    }
+    return interval
   }
 
   startKlineDetail = () => { // 合约基础信息
@@ -763,6 +763,7 @@ export default class TradeChart extends Component {
                   map === 1 ? (
                     <>
                       <div id='tradeView' className={styles.tradeView} style={{
+                        display: map === 1 ? 'block' : 'none',
                         width: '100%',
                         height: '100%'
                       }} />
@@ -770,7 +771,11 @@ export default class TradeChart extends Component {
                   ) : (
                     <>
                       <div style={{ display: 'none', visibility: 'hidden' }} />
-                      <div id="deepChart" className={styles.deepChart} style={{ width: '100%', height: '100%' }} />
+                      <div id="deepChart" className={styles.deepChart} style={{
+                        display: map === 2 ? 'block' : 'none',
+                        width: '100%',
+                        height: '100%',
+                      }} />
                     </>
                   )
                 }
