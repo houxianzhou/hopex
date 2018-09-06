@@ -8,6 +8,9 @@ class MockServer {
     this.subScribes = []
     this.server = new Server(url)
     this.server.on('connection', socket => {
+      // setTimeout(() => {
+      //   socket.close()
+      // }, 5000)
       clearTimeout(this.interval)
       this.socket = socket
       if (this.onConnection) {
@@ -75,6 +78,8 @@ mockServer2.onMessage = (e) => {
               "price24Max": `${_.random(500, 600)}`,
               "price24Min": `${_.random(600, 700)}`,
               "amount24h": `${_.random(700, 800)}BTC`,
+              userAllowTrade: true,
+              allowTrade: true
             }
           }
         )
@@ -161,6 +166,22 @@ mockServer2.onMessage = (e) => {
       "ret": 0,
       "errCode": "",
       "errStr": ""
+    })
+  } else if (method === 'kline.subscribe') {
+    mockServer2.subScribe({
+      name: 'kline.update',
+      func: () => {
+
+        mockServer2.sendJson(
+          {
+            "method": "kline.update",
+            "timestamp": 1536247693121,
+            "data": [
+              [1536160698, _.random(100, 200), _.random(200, 300), _.random(400, 500), _.random(500, 600), 2438, 6, "BTCUSD永续"]
+            ]
+          }
+        )
+      }
     })
   }
 }

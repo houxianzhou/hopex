@@ -344,7 +344,7 @@ export default delay({
   },
 
   //更新持仓占用保证金
-  'Post /mock/api/v1/trade/position_margin_update': (req, res) => {
+  'Post /mock/api/v1/gateway/User/UpdatePositionMargin': (req, res) => {
     res.send({
       "head": {
         "method": "position_margin_update",
@@ -363,7 +363,7 @@ export default delay({
     })
   },
   //用户撤单
-  'Post /mock/api/v1/trade/order.cancel': (req, res) => {
+  'Get /mock/api/v1/gateway/User/CancelOrder': (req, res) => {
     res.send({
       "head": {
         "method": "order.cancel",
@@ -638,7 +638,7 @@ export default delay({
     const { typeList = [] } = req.body.param
     const { page: pageIndex = 1, limit: pageSize = 10, } = req.query
     const type = typeList[0]
-    const total = Number(type) * 20 + 30
+    const total = 200
     const records = (new Array(pageIndex ? total : 3)).fill().map((item, index) => (
       {
         "orderId": 886,
@@ -663,10 +663,10 @@ export default delay({
     res.send(
       {
         "data": {
-          "total": records.length + '',
+          "totalCount": records.length + '',
           "result": records.slice(Number(pageIndex) * pageSize, (Number(pageIndex) + 1) * pageSize),
-          "pageIndex": "",
-          "pageSize": "10"
+          "page": pageIndex,
+          "pageSize": pageSize
         },
         "head": {
           "method": "user.order_history",
@@ -686,20 +686,8 @@ export default delay({
     )
   },
 
-  //下限价单
-  'Post /mock/api/v1/trade/order.put_limit': (req, res) => {
-    res.send(
-      {
-        "data": '',
-        "errCode": "0",
-        "errStr": "success",
-        "ret": "0"
-      }
-    )
-  },
-
-  //下市价单
-  'Post /mock/api/v1/trade/order.put_market': (req, res) => {
+  //下限价、市价单
+  'Post /mock/api/v1/gateway/User/Order ': (req, res) => {
     res.send(
       {
         "data": '',

@@ -118,6 +118,8 @@ export default class PersonEnsure extends Component {
                           market: record.market,
                           orderId: record.orderId
                         }
+                      }).then(() => {
+                        this.getPersonalEnsure()
                       })
                     }} >
                     撤销

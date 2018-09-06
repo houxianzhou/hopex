@@ -38,12 +38,14 @@ export default class Position extends Component {
     dispatch({
       type: `${modelName}/doFullClose`,
       payload: payload
+    }).then(() => {
+      this.getPosition()
     })
   }
 
 
   render() {
-    const { changeState, postOrder } = this
+    const { changeState, postOrder, } = this
     const { model: { positionList = [], }, modal: { name }, noDataTip, modelName, dispatch, openModal: prevOpenModal, switchMarket } = this.props
 
 
@@ -160,7 +162,6 @@ export default class Position extends Component {
                   }
                 }} />
                 <span onClick={() => {
-                  if (!record.allowFullClose) return
                   if (!record.inputValue) return Toast.tip('请填写价格')
                   postOrder({
                     price: record.inputValue,
@@ -172,7 +173,6 @@ export default class Position extends Component {
                   </Button >
                 </span >
                 <span onClick={() => {
-                  if (!record.allowFullClose) return
                   postOrder({
                     price: undefined,
                     market: record.market,
@@ -219,7 +219,8 @@ export default class Position extends Component {
           </ScrollPannel >
         </div >
         {
-          name === 'positionMoney' ? (<RenderModal {...this.props} {...this.state} changeState={changeState} />) : null
+          name === 'positionMoney' ? (
+            <RenderModal {...this} {...this.props} {...this.state} changeState={changeState} />) : null
         }
       </Mixin.Child >
     )
@@ -270,7 +271,7 @@ class RenderModal extends Component {
     }
     const { changeState: changeStateInModal, calculatePositionEnsureMoney } = this
     const { inputValue, dealCurrency = '', increase = {}, reduce = {} } = this.state
-    const { changeState, active, dispatch, modelName, loading, closeModal } = this.props
+    const { changeState, active, dispatch, modelName, loading, closeModal, getPosition } = this.props
 
     const currentObj = active === 0 ? increase : reduce
     const { maxChange = '', liquidationPrice: overPrice = '' } = currentObj || {}
@@ -350,6 +351,7 @@ class RenderModal extends Component {
                   assetChange: active === 1 ? `-${inputValue}` : inputValue
                 }
               }).then((res) => {
+                getPosition()
                 if (res) {
                   closeModal()
                 }

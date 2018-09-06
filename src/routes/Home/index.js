@@ -123,6 +123,7 @@ export default class View extends Component {
             unsubscribe: () => {
             },
             restart: () => {
+              this.getAllMarketsFromWs()
             }
           })
         }

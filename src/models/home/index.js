@@ -269,7 +269,7 @@ export default joinModel(modelExtend, {
     },
 
 
-    // K线图全量查询
+    // K线图全量查询，取消订阅，订阅
     * getKlineAllList({ payload = {} }, { call, put }) {
       const { startTime, endTime, interval } = payload
       const repayload = yield (asyncPayload(yield put({
@@ -291,7 +291,6 @@ export default joinModel(modelExtend, {
         }
       }
     },
-    // 取消订阅
     * doUnSubKlineAllListFromWs({ payload = {} }, { call, put }) {
       const ws = wss.getSocket('ws')
       return ws.sendJsonPromise({
@@ -332,7 +331,7 @@ export default joinModel(modelExtend, {
     },
 
 
-    // k线详情数据
+    // k线详情数据，基础合约信息
     * getKlineDetail({ payload = {} }, { call, put }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
@@ -398,22 +397,6 @@ export default joinModel(modelExtend, {
       })
     },
 
-    //K线图增量订阅
-    * getKlineAddMore({ payload = {} }, { call, put }) {
-      const ws1 = wss.getSocket('ws1')
-      const repayload = yield (asyncPayload(yield put({
-        type: 'createRequestParams',
-        payload: {
-          head: {
-            "method": "kline.subscribe"
-          },
-          param: {
-            "interval": "86400"
-          }
-        }
-      })))
-      ws1.sendJson(repayload)
-    },
 
     // 获取杠杆
     * getLeverage({ payload = {} }, { call, put }) {
@@ -811,8 +794,8 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(doCancelPersonEnsure, repayload.param))
         if (resOk(res)) {
-          // Message.error('ahhaah')
           Toast.tip('撤销成功')
+          return true
         }
       }
     },
@@ -1064,6 +1047,7 @@ export default joinModel(modelExtend, {
         const res = getRes(yield call(doFullClose, repayload))
         if (resOk(res)) {
           Toast.success('委托成功')
+          return true
         }
       }
     },

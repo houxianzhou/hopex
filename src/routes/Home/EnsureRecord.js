@@ -62,6 +62,7 @@ export default class EnsureRecord extends Component {
             unsubscribe: () => {
             },
             restart: () => {
+              this.getEnsureRecordFromWs()
             }
           })
         }
