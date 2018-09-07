@@ -322,7 +322,7 @@ export default delay({
           "positionMargin": "0.0000BTC",
           "liquidationPrice": "6564.77",
           "maintMargin": "-1403.6722BTC",
-          "unrealisedPnl": "+4088.9804",
+          "unrealisedPnl": "+4088.9804BTC",
           "unrealisedPnlPcnt": "-291.31%",
           "fairPrice": "6713.2",
           "lastPrice": "6713.2"
