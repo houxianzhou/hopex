@@ -20,10 +20,6 @@ let interval = null
 
 
 export function request(url = '', options = {}) {
-  // if(/\/api\/v1\/gateway\//){
-  //   url=`https://api.hopex.com${url}`
-  // }
-  // console.log(url,'-----')
 
   const { method = 'get', formData = false, params, query, body, needLoop = false, needWatch = true, errHandler, ...rest } = options
   if (params) {

@@ -316,7 +316,7 @@ class RenderModal extends Component {
               {editIcon}
               <input autoFocus value={inputValue} onChange={
                 _.throttle((e) => {
-                  const value = e.target.value
+                  const value = _.get(e, 'target.value')
                   if (Patterns.decimalNumber4.test(value) || value === '') {
                     changeStateInModal({
                       inputValue: value.replace(/。/, '')
