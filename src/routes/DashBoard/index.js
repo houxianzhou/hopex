@@ -67,7 +67,7 @@ export default class View extends Component {
     notifies: []
   }
   componentDidMount = () => {
-    console.log(this.props);
+    // console.log(this.props);
     const _this = this;
     this.props.dispatch({
       type: `${this.props.modelName}/getIndexInfo`
@@ -119,7 +119,7 @@ export default class View extends Component {
   }
 
   render() {
-    console.log('123');
+    // console.log('123');
     const { model: { myname } = {}, user: { userInfo } = {}, dispatch, modelName } = this.props;
     const { bannerList, notifies } = this.state;
 
