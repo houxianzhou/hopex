@@ -1,16 +1,18 @@
-.pannelContainer{
+.pannelContainer {
   display: flex;
   justify-content: center;
   padding: 18px;
-  width:100%;
+  width: 100%;
   background: @c_back;
 }
+
 .navpannel {
   width: 79%;
   display: flex;
   .nav {
     border-radius: 4px;
     width: 19%;
+    height: 500px;
     min-width: 19%;
     max-width: 19%;
     min-height: 500px;
@@ -26,7 +28,7 @@
             padding-left: 32px;
             color: @c_active_yellow;
             font-size: 16px;
-            img,svg{
+            img, svg {
               margin-right: 13px;
             }
           }
@@ -40,11 +42,11 @@
               align-items: center;
               color: #232833;
               &.active {
-                .border{
-                  height:100%;
-                  left:0;
+                .border {
+                  height: 100%;
+                  left: 0;
                   position: absolute;
-                  border-left:4px solid #E2B96F;
+                  border-left: 4px solid #E2B96F;
                 }
                 background: #FFFBF3;
               }
