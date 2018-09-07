@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { _, classNames } from '@utils';
+import { PATH } from '@constants'
 import * as styles from './index.less';
-import { Toast } from "@components";
+import { Toast, RouterGo } from "@components";
 import phone from '@assets/iphone11.png';
 import icon01 from '@assets/icon01.png';
 import icon02 from '@assets/icon02.png';
@@ -54,7 +55,8 @@ const itemList = [
   }
 ];
 
-@connect(({ dashboard: model, dispatch }) => ({
+@connect(({ user, dashboard: model, dispatch }) => ({
+  user,
   model,
   dispatch,
   modelName: 'dashboard'
@@ -72,18 +74,22 @@ export default class View extends Component {
     }).then((res) => {
       if (!res.data) return;
       const { banners = '', notifies = '' } = res.data;
-      // console.log();
-
       this.setState({
         bannerList: banners,
         notifies: notifies,
       })
-      new Swiper(this.refs.swiperContainer, {
+      const swiperConfig = new Swiper(this.refs.swiperContainer, {
         loop: true,
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false,
-        },//可选选项，自动滑动
+        autoplay: banners && banners.length === 1 ?
+          false
+          : {
+            delay: 3000,
+            disableOnInteraction: false,
+          },
+        // autoplay: {
+        //   delay: 3000,
+        //   disableOnInteraction: false,
+        // },//可选选项，自动滑动
         speed: 500,
         navigation: {
           nextEl: '.swiper-button-next',
@@ -94,11 +100,27 @@ export default class View extends Component {
         }
         // effect : 'fade',
       })
+      // if (banners && +banners.length === 1) {
+      //   swiperConfig.autoplay.stop && swiperConfig.autoplay.stop();
+      // }
     })
+  }
+  routerGoHome = (value) => {
+    return <RouterGo.SwitchRoute value={PATH.home} >{value}</RouterGo.SwitchRoute >
+  }
+
+  routerGoRegister = (value) => {
+    return <RouterGo.SwitchRoute value={PATH.register} >{value}</RouterGo.SwitchRoute >
+  }
+
+  isLogin() {
+    const { user: { userInfo } = {} } = this.props;
+    return !_.isEmpty(userInfo);
   }
 
   render() {
-    const { model: { myname } = {} } = this.props;
+    console.log('123');
+    const { model: { myname } = {}, user: { userInfo } = {}, dispatch, modelName } = this.props;
     const { bannerList, notifies } = this.state;
 
     return (
@@ -266,10 +288,14 @@ export default class View extends Component {
           <div className={styles.footerTitle} >
             时不我待，开启全新投资之旅
           </div >
-          <button className={styles.signButton} onClick={() => {
-            Toast.tip('暂未开放')
-          }} >免费注册实盘账户
-          </button >
+          {
+            <button className={styles.signButton} >
+              {
+                this.isLogin() ? this.routerGoHome('实盘交易') : this.routerGoRegister('免费注册实盘账户')
+              }
+            </button >
+          }
+
         </div >
       </div >
     )

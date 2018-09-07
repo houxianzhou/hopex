@@ -306,6 +306,9 @@ export default class View extends Component {
                       googleIdentifyingCode: value
                     })
                   }}
+                  style={
+                    { fontSize: '14px' }
+                  }
                   value={googleIdentifyingCode}
                   placeholder="请输入谷歌验证码" />
               </div >
