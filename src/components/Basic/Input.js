@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { classNames, _, } from '@utils'
-import clearpng from '@assets/clear.png'
+import { clearpng } from '@assets'
 import * as styles from './Input.less'
 
 export default class View extends Component {
@@ -54,7 +54,9 @@ export default class View extends Component {
                       iconPost
                     ) : (
                       value && onClear ? (
-                        <img src={clearpng} onClick={onClear} style={{ cursor: 'pointer' }} />
+                        <span onClick={onClear} style={{ cursor: 'pointer' }} >
+                          {clearpng}
+                        </span >
                       ) : null
                     )
                   }

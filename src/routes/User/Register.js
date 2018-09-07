@@ -246,7 +246,8 @@ export default class View extends Component {
                           })
                         }}
 
-                      >登录</span >
+                      >
+                        <span>登录</span></span >
                     </div >
                   </form >
                 </div >

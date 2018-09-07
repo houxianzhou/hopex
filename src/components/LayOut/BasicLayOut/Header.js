@@ -4,9 +4,7 @@ import { NavLink } from 'dva/router'
 import { classNames, switchTheme, _, dealInterval } from '@utils'
 import { RouterGo, Mixin, Select } from '@components'
 import { PATH, THEME, } from '@constants'
-import { netWorkBest, netWorkGood, netWorkBad, notice, help } from '@assets'
-import logo from '@assets/logo.png'
-import account from '@assets/account.png'
+import { netWorkBest, netWorkGood, netWorkBad, notice, help, account, logo } from '@assets'
 import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
 import * as styles from './index.less'
 
@@ -85,7 +83,7 @@ export default class View extends Component {
         } >
           <div className={styles.left} >
             <RouterGo.SwitchRoute value={PATH.dashboard} >
-              <img alt='logo' src={logo} />
+              {logo}
             </RouterGo.SwitchRoute >
             <ul className={styles.nav} >
               {
@@ -176,7 +174,7 @@ export default class View extends Component {
                 isLogin ? (
                   <li >
                     <div className={styles.user} >
-                      <img alt='account' src={account} />
+                      {account}
                       {
                         email ? (<span >{email}</span >) : null
                       }
@@ -289,7 +287,7 @@ export default class View extends Component {
               }
             </ul >
             {/*<div >*/}
-              {/*<Select />*/}
+            {/*<Select />*/}
             {/*</div >*/}
           </div >
         </div >

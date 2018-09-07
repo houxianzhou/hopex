@@ -3,8 +3,7 @@ import { connect } from 'dva'
 import { ShowJsonTip, Input, Toast, Button } from '@components'
 import { classNames, _, Patterns, localSave } from '@utils'
 import { PATH } from '@constants'
-import logo2 from '@assets/logo2.png'
-import { email as emailpng, passwordpng, vertifycodepng } from '@assets'
+import { email as emailpng, passwordpng, vertifycodepng, logo2 } from '@assets'
 import { default as Structure } from './components/Structure'
 import styles from './index.less'
 
@@ -104,7 +103,7 @@ export default class View extends Component {
         <div className={styles.login} >
           <div className={styles.top} >
             <div className={styles.logo} >
-              <img alt='logo' src={logo2} />
+              {logo2}
             </div >
             <div className={styles.name} >Hopex</div >
             <div className={styles.desc} >专注数字衍生品</div >

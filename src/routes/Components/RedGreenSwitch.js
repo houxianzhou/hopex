@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { _, classNames } from '@utils'
-import arrow_down from '@assets/arrow_down.png'
-import arrow_top from '@assets/arrow_top.png'
-import arrow_down2 from '@assets/arrow_down2.png'
-import arrow_top2 from '@assets/arrow_top2.png'
+import { arrow_down, arrow_down2, arrow_top, arrow_top2 } from '@assets'
 
 
 @connect(({ theme: model }) => ({
@@ -15,10 +12,10 @@ class RedGreenArrow extends Component {
     const { model: { RG = 1 }, alt, style = {} } = this.props
     if (alt === 'top') {
       return (
-        <img style={style} alt='top' src={RG ? arrow_top : arrow_top2} />
+        RG ? <span style={style} >{arrow_top}</span > : <span style={style} >{arrow_top2}</span >
       )
     } else if (alt === 'down') {
-      return <img style={style} alt='down' src={RG ? arrow_down : arrow_down2} />
+      return RG ? <span style={style} >{arrow_down}</span > : <span style={style} >{arrow_down2}</span >
     } else {
       return null
     }
@@ -65,7 +62,7 @@ class GreenText extends Component {
 }))
 class MarkText extends Component {
   render() {
-    const { model: { RG = 1 }, value, mark = value ,} = this.props
+    const { model: { RG = 1 }, value, mark = value, } = this.props
     const green = RG ? 'green' : 'red'
     const red = RG ? 'red' : 'green'
     return (
