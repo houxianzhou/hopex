@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { NavLink } from 'dva/router'
 import { classNames, switchTheme, _, dealInterval } from '@utils'
-import { RouterGo, Mixin } from '@components'
+import { RouterGo, Mixin, Select } from '@components'
 import { PATH, THEME, } from '@constants'
 import { netWorkBest, netWorkGood, netWorkBad, notice, help } from '@assets'
 import logo from '@assets/logo.png'
@@ -287,8 +287,10 @@ export default class View extends Component {
                   </>
                 ) : null
               }
-
             </ul >
+            {/*<div >*/}
+              {/*<Select />*/}
+            {/*</div >*/}
           </div >
         </div >
       </Mixin.Child >

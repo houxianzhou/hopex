@@ -11,7 +11,7 @@ export default delay({
     res.send(
       {
         userInfo: {
-          email: '2278095567@qq.com',
+          email: 'xiaoyi.wei@bcsystech.com',
           userId: '56',
           userToken: "56",
         },
@@ -23,7 +23,7 @@ export default delay({
     res.send(
       {
         data: {
-          email: '2278095567@qq.com',
+          email: 'xiaoyi.wei@bcsystech.com',
           enabledTwoFactories: false,
           userId: 'mockId',
           token: "mockToken",

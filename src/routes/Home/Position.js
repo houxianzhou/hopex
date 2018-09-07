@@ -254,7 +254,7 @@ class RenderModal extends Component {
 
 
   state = {
-    inputValue: '0',
+    inputValue: '',
     dealCurrency: '',
     increase: {},
     reduce: {}
@@ -311,13 +311,16 @@ class RenderModal extends Component {
           <div className={styles.input} >
             <div className={styles.edit} >
               {editIcon}
-              <input value={formatNumber(inputValue, 'p')} onChange={
+              <input autofocus="autofocus" value={inputValue} onChange={
                 _.throttle((e) => {
                   const value = e.target.value
-                  changeStateInModal({
-                    inputValue: value
-                  })
-                  calculatePositionEnsureMoney(value)
+                  if (Patterns.decimalNumber4.test(value) || value === '') {
+                    changeStateInModal({
+                      inputValue: value.replace(/。/, '')
+                    })
+                    calculatePositionEnsureMoney(value)
+                  }
+
                 }, 10)
               } />
               <div >BTC</div >
