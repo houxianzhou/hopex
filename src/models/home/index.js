@@ -784,19 +784,21 @@ export default joinModel(modelExtend, {
 
     //撤销委托订单 order cancel(撤单)
     * doCancelPersonEnsure({ payload = {} }, { call, put }) {
+      const { market, orderId } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
           "head": {},
-          "param": {
-            ...payload
-          },
+          "param": {},
           power: [1],
           powerMsg: '撤销个人委托订单'
         }
       })))
-      if (repayload) {
-        const res = getRes(yield call(doCancelPersonEnsure, repayload.param))
+      if (repayload && market) {
+        const res = getRes(yield call(doCancelPersonEnsure, {
+          contractCode: market,
+          orderId
+        }))
         if (resOk(res)) {
           Toast.tip('撤销成功')
           return true

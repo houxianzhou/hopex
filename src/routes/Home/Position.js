@@ -228,6 +228,9 @@ export default class Position extends Component {
 }
 
 class RenderModal extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   componentDidMount() {
     this.calculatePositionEnsureMoney()
@@ -311,7 +314,7 @@ class RenderModal extends Component {
           <div className={styles.input} >
             <div className={styles.edit} >
               {editIcon}
-              <input autofocus="autofocus" value={inputValue} onChange={
+              <input autoFocus value={inputValue} onChange={
                 _.throttle((e) => {
                   const value = e.target.value
                   if (Patterns.decimalNumber4.test(value) || value === '') {
