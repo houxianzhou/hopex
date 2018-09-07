@@ -188,6 +188,27 @@ export const netWorkBest = (
   </svg >
 )
 
+export const back = (
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="23px" height="18px"
+       viewBox="0 0 23 18" version="1.1" >
+    <title >back</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="00_全局" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="04-登录页" transform="translate(-460.000000, -52.000000)" fill="#E2B96F" >
+        <g id="Group-6" transform="translate(460.000000, 52.000000)" >
+          <g id="返回箭头" >
+            <path
+              d="M4.11421356,10 L9.94974747,15.8355339 L8.53553391,17.2497475 L1.5,10.2142136 L1.46446609,10.2497475 L0.0502525317,8.83553391 L0.0857864376,8.8 L0.0502525317,8.76446609 L1.46446609,7.35025253 L1.5,7.38578644 L8.53553391,0.350252532 L9.94974747,1.76446609 L3.71421356,8 L23,8 L23,10 L4.11421356,10 Z"
+              id="Combined-Shape" />
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
+)
+
 export const account = (
   <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="14px" height="14px"
        viewBox="0 0 14 14" version="1.1" >
@@ -417,20 +438,24 @@ export const logo2 = (
 )
 
 export const clearpng = (
-  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="19px" height="19px" viewBox="0 0 19 19" version="1.1">
-    <title>clear</title>
-    <desc>Created with Sketch.</desc>
-    <defs/>
-    <g id="00_全局" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g id="05-注册" transform="translate(-1167.000000, -412.000000)" fill="#D8D8D8">
-        <g id="Group-14" transform="translate(1167.000000, 412.000000)">
-          <g id="Group-13">
-            <path d="M9.5,8.79289322 L6.67157288,5.96446609 L5.96446609,6.67157288 L8.79289322,9.5 L5.96446609,12.3284271 L6.67157288,13.0355339 L9.5,10.2071068 L12.3284271,13.0355339 L13.0355339,12.3284271 L10.2071068,9.5 L13.0355339,6.67157288 L12.3284271,5.96446609 L9.5,8.79289322 Z M9.5,19 C4.25329488,19 0,14.7467051 0,9.5 C0,4.25329488 4.25329488,0 9.5,0 C14.7467051,0 19,4.25329488 19,9.5 C19,14.7467051 14.7467051,19 9.5,19 Z" id="Combined-Shape"/>
-          </g>
-        </g>
-      </g>
-    </g>
-    <script xmlns=""/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="19px" height="19px"
+       viewBox="0 0 19 19" version="1.1" >
+    <title >clear</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="00_全局" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="05-注册" transform="translate(-1167.000000, -412.000000)" fill="#D8D8D8" >
+        <g id="Group-14" transform="translate(1167.000000, 412.000000)" >
+          <g id="Group-13" >
+            <path
+              d="M9.5,8.79289322 L6.67157288,5.96446609 L5.96446609,6.67157288 L8.79289322,9.5 L5.96446609,12.3284271 L6.67157288,13.0355339 L9.5,10.2071068 L12.3284271,13.0355339 L13.0355339,12.3284271 L10.2071068,9.5 L13.0355339,6.67157288 L12.3284271,5.96446609 L9.5,8.79289322 Z M9.5,19 C4.25329488,19 0,14.7467051 0,9.5 C0,4.25329488 4.25329488,0 9.5,0 C14.7467051,0 19,4.25329488 19,9.5 C19,14.7467051 14.7467051,19 9.5,19 Z"
+              id="Combined-Shape" />
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
 )
 
 export const logo3 = (
@@ -663,14 +688,10 @@ export const $B = (
         <g id="Group-6" transform="translate(977.000000, 130.000000)" >
           <g id="Group-6-Copy" >
             <circle id="Oval" stroke="#232833" strokeWidth="4" cx="20" cy="20" r="18" />
-            <g id="Group-11" transform="translate(13.000000, 11.000000)" fill="#E2B96F" >
+            <g id="Group-11" transform="translate(14.000000, 10.000000)" fill="#E2B96F" >
               <path
-                d="M5,12 L5,9 L1,9 L1,5 L13,5 L13,9 L9,9 L9,12 L13,12 L13,16 L9,16 L9,19 L5,19 L5,16 L1,16 L1,12 L5,12 Z"
+                d="M2.80562216,6 L0.129143075,3.32352092 L2.9575702,0.495093791 L6.26130536,3.79882895 L9.56504051,0.495093791 L12.3934676,3.32352092 L9.71698855,6 L12,6 L12,10 L8,10 L8,13 L12,13 L12,17 L8,17 L8,20 L4,20 L4,17 L0,17 L0,13 L4,13 L4,10 L0,10 L0,6 L2.80562216,6 Z"
                 id="Combined-Shape" />
-              <g id="Group-10" >
-                <rect id="Rectangle-7-Copy" x="3.93187553" y="2.24264069" width="9.42809042" height="4" />
-                <rect id="Rectangle-7-Copy-2" x="1.16264476" y="2.24264069" width="9.42809042" height="4" />
-              </g >
             </g >
           </g >
         </g >

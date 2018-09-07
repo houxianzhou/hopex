@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { classNames,_ } from '@utils'
-import back from '@assets/back.png'
+import { classNames, _ } from '@utils'
+import { back } from '@assets'
 import * as styles from './Structure.less'
 
 @connect(({ user: model, loading, dispatch }) => ({
@@ -25,7 +25,7 @@ export default class View extends Component {
               })
             }
           }} >
-            <img alt={'back'} src={back} />
+            {back}
             返回
           </div >
           {children}
