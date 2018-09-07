@@ -177,7 +177,7 @@ mockServer2.onMessage = (e) => {
             "method": "kline.update",
             "timestamp": 1536247693121,
             "data": [
-              [1536160698, _.random(100, 200), _.random(200, 300), _.random(400, 500), _.random(500, 600), 2438, 6, "BTCUSD永续"]
+              [((new Date).getTime())/1000, _.random(100, 200), _.random(200, 300), _.random(400, 500), _.random(500, 600), 2438, 6, "BTCUSD永续"]
             ]
           }
         )

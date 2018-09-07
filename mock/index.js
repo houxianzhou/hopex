@@ -255,7 +255,7 @@ export default delay({
           "orderQuantity": "1",
           "leftQuantity": "1",
           "fillQuantity": "0",
-          "orderStatus": "2",
+          "orderStatus": ['1', '2', '3'][_.random(0, 3)],
           "orderStatusDisplay": "等待成交",
           "orderPrice": "0.5",
           "leverage": "20.00",

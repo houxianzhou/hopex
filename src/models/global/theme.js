@@ -1,7 +1,7 @@
 import { joinModel } from '@utils'
 import modelExtend from '@models/modelExtend'
 import { _, getRes, resOk, asyncPayload, } from '@utils'
-import { THEME } from '@constants'
+import { THEME, } from '@constants'
 import {
   getNetWork
 } from '@services/trade'

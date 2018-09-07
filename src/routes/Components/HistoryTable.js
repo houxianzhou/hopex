@@ -114,7 +114,7 @@ export const getColumns = (props = {}) => {
                 <span onClick={(e) => {
                   e.stopPropagation()
                   dispatch({
-                    type: `${modelName}/getPersonEnsureDetail`,
+                    type: `${modelName}/getOrderDetail`,
                     payload: {
                       type: '1',
                       market: record.market,

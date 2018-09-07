@@ -2,6 +2,7 @@ import { Toast } from '@components'
 import { joinModel, getRes, resOk, formatNumber, _, formatJson, asyncPayload, deepClone } from '@utils'
 import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
+import { PATH } from '@constants'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
@@ -66,6 +67,12 @@ export default joinModel(modelExtend, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
+      const { location: { pathname } } = history
+      if (pathname !== PATH.home) {
+        dispatch({
+          type: 'getAllMarketDetails'
+        })
+      }
       dispatch({
         type: 'startInit'
       })
@@ -268,7 +275,6 @@ export default joinModel(modelExtend, {
       }
     },
 
-
     // K线图全量查询，取消订阅，订阅
     * getKlineAllList({ payload = {} }, { call, put }) {
       const { startTime, endTime, interval } = payload
@@ -329,7 +335,6 @@ export default joinModel(modelExtend, {
         return ws.sendJson(repayload)
       }
     },
-
 
     // k线详情数据，基础合约信息
     * getKlineDetail({ payload = {} }, { call, put }) {
@@ -396,7 +401,6 @@ export default joinModel(modelExtend, {
         }
       })
     },
-
 
     // 获取杠杆
     * getLeverage({ payload = {} }, { call, put }) {
@@ -801,67 +805,6 @@ export default joinModel(modelExtend, {
     },
 
     //查看订单明细
-    * getPersonEnsureDetail({ payload = {} }, { call, put, select }) {
-      const { orderId, type } = payload
-      const isCurrentOrder = (item = {}) => (item.orderId || item.id) === orderId
-      let ensures = null
-      let sort
-      if (type === '0') {
-        sort = 'personalEnsures'
-        ensures = yield select(({ home: { personalEnsures = [] } }) => deepClone(personalEnsures))
-      } else if (type === '1') {
-        sort = 'personalEnsureHistory'
-        ensures = yield select(({ home: { personalEnsureHistory = [] } }) => deepClone(personalEnsureHistory))
-      }
-      const filterOne = deepClone(ensures).filter((item = {}) => isCurrentOrder(item))[0] || {}
-      ensures.map((item = {}) => {
-        if (isCurrentOrder(item) && !item.expand) {
-          item.loading = true
-        } else {
-          delete item.loading
-        }
-        delete item.expand
-      })
-      yield put({
-        type: 'changeState',
-        payload: {
-          [sort]: ensures,
-        }
-      })
-      if (!_.get(filterOne, 'expand')) {
-        const repayload = yield (asyncPayload(yield put({
-          type: 'createRequestParams',
-          payload: {
-            "head": {
-              "method": "order.deals",
-            },
-            "param": {
-              ...payload,
-              pageIndex: '0',
-              pageSize: '100'
-            },
-            power: [1],
-            powerMsg: '查看订单明细'
-          }
-        })))
-        if (repayload) {
-          const res = getRes(yield call(getPersonEnsureDetail, repayload))
-          if (resOk(res)) {
-            const result = ensures.filter((item = {}) => isCurrentOrder(item))[0]
-            if (result) {
-              result.expand = _.get(res, 'data.records')
-              result.loading = false
-              yield put({
-                type: 'changeState',
-                payload: {
-                  [sort]: ensures,
-                }
-              })
-            }
-          }
-        }
-      }
-    },
     * getOrderDetail({ payload = {} }, { call, put, }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
@@ -893,7 +836,6 @@ export default joinModel(modelExtend, {
         }
       }
     },
-
 
     //最近10条委托历史
     * getHistory({ payload = {} }, { call, put, select }) {
@@ -1070,7 +1012,6 @@ export default joinModel(modelExtend, {
         minLimitPrice: '',//最低允许卖价
         maxLimitPrice: '',//最高允许卖价
         availableMoney: '',//可用金额
-
 
         personalEnsureHistory: [],//最近10条委托历史
         personalEnsures: [],//个人委托列表
