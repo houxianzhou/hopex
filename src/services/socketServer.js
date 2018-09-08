@@ -108,8 +108,8 @@ mockServer2.onMessage = (e) => {
     mockServer2.subScribe({
       name: 'orderbook.update',
       func: () => {
-        const value1 = _.random(0, 5)
-        const value2 = _.random(0, 5)
+        const value1 = _.random(1000,15000)
+        const value2 = _.random(1000,15000)
         mockServer2.sendJson(
           {
             "method": "orderbook.update",
@@ -118,7 +118,7 @@ mockServer2.onMessage = (e) => {
               "asks": [
                 {
                   "priceD": 0.0,
-                  "orderPrice": `${_.random(1, 3)}`,
+                  "orderPrice": `${_.random(10000, 10003)}`,
                   "orderQuantity": value1,
                   "orderQuantityShow": `${value1}`,
                   "exist": 0
@@ -126,7 +126,7 @@ mockServer2.onMessage = (e) => {
               ],
               "bids": [{
                 "priceD": 0.0,
-                "orderPrice": `${_.random(1, 3)}`,
+                "orderPrice": `${_.random(9000, 9003)}`,
                 "orderQuantity": value2,
                 "orderQuantityShow": `${value2}`,
                 "exist": 0

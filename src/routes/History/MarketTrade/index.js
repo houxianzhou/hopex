@@ -3,6 +3,7 @@ import { connect } from 'dva'
 import { classNames, _, } from '@utils'
 import { Table, PagiNation, Mixin } from '@components'
 import { getColumns, Tabs, RenderModal } from '@routes/Components/HistoryTable'
+import NoDataTip from '@routes/Components/NoDataTip'
 
 import styles from './index.less'
 
@@ -187,9 +188,16 @@ export default class View extends Component {
               }
             </ul >
           </div >
-          <div style={{ height: calculateTableHeight(dataSource) }} >
-            <Table {...tableProp} />
-          </div >
+          {
+            dataSource.length ? (
+              <div style={{ height: calculateTableHeight(dataSource) }} >
+                <Table {...tableProp} />
+              </div >
+            ) : (
+              <div className={styles.defaultContainer} ><NoDataTip text={'当前无交易历史'} /></div >
+            )
+          }
+
           <div className={styles.pagenations} >
             <PagiNation {...pageProp} />
           </div >

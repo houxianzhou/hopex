@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { COLORS } from "@constants"
 import { Mixin, Table, PagiNation } from '@components'
-import { classNames, _, } from '@utils'
-import { defaultPng2 } from '@assets'
+import NoDataTip from '@routes/Components/NoDataTip'
 
 import styles from './index.less'
 
@@ -133,10 +131,8 @@ export default class View extends Component {
           <div style={{ height: calculateTableHeight(dataSource) }} className={styles.tablec} >
             {
               dataSource.length ? (<Table {...tableProp} />) : (
-                <div className={styles.defaultpngcontainer} >
-                  {defaultPng2}
-                  <div >暂无资金记录</div >
-                </div >
+
+                <NoDataTip text={'暂无资金记录'} />
               )
             }
 

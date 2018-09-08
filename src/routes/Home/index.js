@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, ShowJsonTip, Table, RouterGo } from '@components'
 import { isEqual, _, parsePathSearch, } from '@utils'
-import { PATH } from '@constants'
+import { PATH, THEME } from '@constants'
 import wss from '@services/SocketClient'
 import LatestRecord from './LatestRecord'
 import TradeChart from './TradeChart'
@@ -13,7 +13,7 @@ import CurrentContract from './CurrentContract'
 import Position from './Position'
 import PersonEnsure from './PersonEnsure'
 import RecentRecord from './RecentRecord'
-import defaultpng from '@assets/default.png'
+import NoDataTip from '@routes/Components/NoDataTip'
 import styles from './index.less'
 
 
@@ -169,10 +169,7 @@ export default class View extends Component {
       },
       noDataTip: (dataSource = [], text) => {
         if (!dataSource.length) {
-          return <div >
-            <img src={defaultpng} />
-            <div style={{ marginTop: 8 }} >{text}</div >
-          </div >
+          return <NoDataTip text={text} change={true} />
         }
       },
       expandedRowRender: (record = {}) => {

@@ -30,8 +30,8 @@ export default class TradeChart extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { model: { ensure_records: prevEnsure_records }, RG: prevRG, theme: prevTheme } = prevProps
-    const { model: { ensure_records }, RG, theme } = this.props
+    const { model: { ensure_records: prevEnsure_records, }, RG: prevRG, theme: prevTheme } = prevProps
+    const { model: { ensure_records, }, RG, theme } = this.props
     const { map: prevMap } = prevState
     const { map } = this.state
     if (!isEqual(prevEnsure_records, ensure_records) && prevEnsure_records && ensure_records && map === 2) {
@@ -53,6 +53,7 @@ export default class TradeChart extends Component {
         studies_overrides
       )
     }
+
   }
 
   componentDidMount() {
@@ -124,7 +125,7 @@ export default class TradeChart extends Component {
         }
       },
       grid: {
-        left: 10,
+        left: 20,
         right: 60,
         top: 10,
         bottom: 35
@@ -140,7 +141,7 @@ export default class TradeChart extends Component {
         },
         axisLabel: {
           textStyle: {
-            color:  XYcolor
+            color: XYcolor
           }
         },
       },
@@ -159,7 +160,7 @@ export default class TradeChart extends Component {
           axisLabel: {
             show: true,
             textStyle: {
-              color:  XYcolor
+              color: XYcolor
             }
           },
           axisLine: { show: true },
@@ -349,8 +350,8 @@ export default class TradeChart extends Component {
         //-----------volume的大小large,medium,small,tiny
         volumePaneSize: "medium",
         //----------------- x,y坐标轴的颜色，字体颜色
-        "scalesProperties.lineColor":  XYcolor,
-        "scalesProperties.textColor":  XYcolor,
+        "scalesProperties.lineColor": XYcolor,
+        "scalesProperties.textColor": XYcolor,
 
         //-----------面积图，分时图的颜色
         "mainSeriesProperties.areaStyle.color1": "rgba(62,108,174,.5)",// "#3278DD",
@@ -470,21 +471,23 @@ export default class TradeChart extends Component {
       locale: 'zh',
     })
     widget.onChartReady(() => {
-      this.changeState({ loaded: true })
-      this.widget = widget
-      this.widget.chart().executeActionById('drawingToolbarAction')
-      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [5, "close", 0], null, {
-        "Plot.color": "#684A95",
-      }))
-      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [10, "close", 0], null, {
-        "Plot.color": "#5677A4",
-      }))
-      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [30, "close", 0], null, {
-        "Plot.color": "#417D57",
-      }))
-      this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [60, "close", 0], null, {
-        "Plot.color": "#782C6C",
-      }))
+      if (widget) {
+        this.changeState({ loaded: true })
+        this.widget = widget
+        this.widget.chart().executeActionById('drawingToolbarAction')
+        this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [5, "close", 0], null, {
+          "Plot.color": "#684A95",
+        }))
+        this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [10, "close", 0], null, {
+          "Plot.color": "#5677A4",
+        }))
+        this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [30, "close", 0], null, {
+          "Plot.color": "#417D57",
+        }))
+        this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [60, "close", 0], null, {
+          "Plot.color": "#782C6C",
+        }))
+      }
     })
   }
 

@@ -51,14 +51,14 @@ export default class View extends Component {
             classNames(
               styles.previousClassName,
               previousClassName,
-              currentPage === 0 ? styles.hide : null
+              currentPage === 0 || Number(total) <= 0 ? styles.hide : null
             )
           }
           nextClassName={
             classNames(
               styles.nextClassName,
               nextClassName,
-              currentPage === total - 1 ? styles.hide : null
+              currentPage === total - 1 || Number(total) <= 0 ? styles.hide : null
             )
           }
         />

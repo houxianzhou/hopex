@@ -7,7 +7,6 @@ import { classNames } from '@utils'
 // https://www.html5tricks.com/demo/svg-css3-loading-icons/index.html
 class Circle extends Component {
   render() {
-
     const { color = '#f3f3f3', backgroundOpacity = 0.4, isGlobal = false, margin = '0 10px' } = this.props
     let {
       size = isGlobal ? 40 : 'middle',

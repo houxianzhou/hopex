@@ -1,12 +1,20 @@
 import React, { Component } from 'react'
-import { Scroller, Loading } from '@components'
+import { connect } from 'dva'
+import { THEME } from "@constants";
+import { Loading } from '@components'
 import { classNames } from '@utils'
 import * as styles from './ScrollPanel.less'
 
+@connect(({ theme }) => ({
+  model: theme
+}))
 export default class View extends Component {
 
   render() {
-    const { header, children, className = {}, style = {}, tableHeight = 'auto', loading = false } = this.props
+    const {
+      model: { theme }, header, children, className = {}, style = {}, tableHeight = 'auto', loading = false
+    }
+      = this.props
 
     return (
       <div className={
@@ -22,7 +30,9 @@ export default class View extends Component {
           <div className={styles.scrollPannelContent} >
             {
               loading ? (
-                <Loading.Circle loading={loading} isGlobal />
+                <Loading.Circle loading={loading} isGlobal backgroundOpacity={
+                  theme === THEME.DEEPDARK ? undefined : 0.08
+                } />
               ) : null
             }
             {children}
