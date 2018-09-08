@@ -12,7 +12,7 @@ export default class Content extends Component {
     const { theme: { theme } } = this.props
     const { children } = this.props
     return (
-      <div className={
+      <div id='overContent' className={
         classNames(
           styles.content,
           theme

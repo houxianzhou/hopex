@@ -262,6 +262,7 @@
           }
         }
         .select {
+          box-shadow: 0 2px 14px 0 rgba(0,0,0,0.08);
           display: none;
           z-index: 3;
           width: 100px;
@@ -283,9 +284,18 @@
               height: 30px;
               &:nth-child(2n+1) {
                 background: @c_pannel_dark;
+                :global(.lightT) & {
+                  .mixinCL();
+                  background: white;
+
+                }
               }
               &:nth-child(2n) {
                 background: @c_panel_light;
+                :global(.lightT) & {
+                  .mixinCL();
+                  background: #F6F8FA;
+                }
               }
             }
           }
@@ -806,7 +816,13 @@
 
 // 当前合约模态框
 .currentContract_modal {
+
   .content {
+    color: @c_like_white_05;
+    :global(.lightT) & {
+      .mixinCL();
+      color: @c_like_white;
+    }
     padding: 0 35px;
     height: 100%;
     .top {
@@ -816,7 +832,6 @@
         justify-content: center;
       }
       .current {
-        color: @c_like_white_05;
         margin-bottom: 9px;
       }
       .number {
@@ -825,10 +840,14 @@
         span {
           position: relative;
           top: 20px;
-          left: 3px;
+          left: 10px;
           font-size: 14px;
           color: #FFFFFF;
           vertical-align: baseline;
+          :global(.lightT) & {
+            .mixinCL();
+            color: #1D222E;
+          }
         }
       }
     }
@@ -847,16 +866,29 @@
               justify-content: flex-start;
               width: unset;
               padding: 15px;
-              color: @c_like_white_05;
             }
           }
           &.ismatch {
             > div {
-              color: @c_active_yellow;
+              &.needli {
+                color: @c_active_yellow !important;
+              }
             }
           }
           > div {
+            &.needli {
+              color: white;
+              :global(.lightT) & {
+                .mixinCL();
+                color: #1D222E;
+              }
+            }
+
             &.symbol {
+              border: unset !important;
+              > div {
+
+              }
               display: unset;
               border: unset;
               height: unset;
@@ -864,7 +896,6 @@
               top: -50px;
               text-align: center;
               div {
-                color: @c_like_white_05;
                 font-size: 12px;
                 margin-bottom: 6px;
               }
@@ -872,14 +903,17 @@
                 text-align: center;
               }
             }
-            color: #FFFFFF;
             width: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 40px;
-            border: 1px solid #1D222E;
+            border: 1px solid #24262A;
             min-width: 60px;
+            :global(.lightT) & {
+              .mixinCL();
+              border: 1px solid #EBEBEB;
+            }
           }
         }
       }
@@ -889,11 +923,20 @@
 
 // 持仓占用保证金模态框
 .position_modal {
+  color: @c_like_white;
+  :global(.lightT) & {
+    .mixinCL();
+    color: @c_like_white;
+  }
   .mixinC();
   .header {
     height: 40px;
     background: @c_pannel_header_dark;
-    .mixin_tab()
+    .mixin_tab();
+    :global(.lightT) & {
+      .mixinCL();
+      background: white;
+    }
   }
   .content {
     padding: 0 38px;
@@ -909,6 +952,10 @@
       .edit {
         width: 200px;
         position: relative;
+        :global(.lightT) & {
+          .mixinCL();
+          border-bottom: 1px solid #EBEBEB;
+        }
         border-bottom: 1px solid @c_pannel_header_dark;
         color: @c_active_yellow;
         input {
@@ -924,14 +971,12 @@
           font-size: 38px;
         }
         > div {
-          color: @c_like_white;
           position: absolute;
           right: -25px;
         }
       }
     }
     .desc {
-      color: white;
       li + li {
         margin-top: 20px;
       }
@@ -958,8 +1003,13 @@
     li {
       display: flex;
       justify-content: space-between;
+
       div:nth-child(2n+1) {
         color: white;
+        :global(.lightT) & {
+          .mixinCL();
+          color: @c_like_white;
+        }
       }
       div:nth-child(2n) {
         color: @c_active_yellow;
@@ -971,6 +1021,10 @@
 //价格超出提示模态框
 .priceWarn_Modal {
   .content {
+    :global(.lightT) & {
+      .mixinCL();
+      color: @c_black;
+    }
     line-height: 22px;
     color: white;
     padding: 70px 40px;
@@ -999,12 +1053,20 @@
           .tr {
             height: @header2;
             background: @c_pannel_header_dark;
+            :global(.lightT) & {
+              .mixinCL();
+              background: #F6F8FA;
+            }
           }
           font-size: 12px;
         }
         .tbody {
           font-size: 13px;
           .tr {
+            :global(.lightT) & {
+              .mixinCL();
+              color: @c_black;
+            }
             height: @header2;
             background: unset !important;
             &:hover {
@@ -1015,6 +1077,10 @@
             }
             &.odd {
               background: @c_pannel_header_dark !important;
+              :global(.lightT) & {
+                .mixinCL();
+                background: #F6F8FA !important;
+              }
             }
           }
         }

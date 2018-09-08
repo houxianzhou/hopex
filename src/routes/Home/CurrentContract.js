@@ -200,9 +200,9 @@ class RenderModal extends Component {
                           </div >
                         ) : null
                       }
-                      <div >{item.leverage}</div >
-                      <div >{getPercent(Number(1), Number(item.leverage))}</div >
-                      <div >{keepBailRate}</div >
+                      <div className={styles.needli}>{item.leverage}</div >
+                      <div className={styles.needli}>{getPercent(Number(1), Number(item.leverage))}</div >
+                      <div className={styles.needli}>{keepBailRate}</div >
                     </li >
                   )
                 })

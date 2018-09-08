@@ -6,7 +6,7 @@ export default joinModel(modelExtend, {
   state: {
     data: null,
     name: '',
-    state: false,
+    state: true,
   },
 
   effects: {
