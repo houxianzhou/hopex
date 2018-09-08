@@ -12,6 +12,7 @@ const echarts = require('echarts/lib/echarts')
 require('echarts/lib/chart/line')
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/title')
+const XYcolor = '#778094'
 
 export default class TradeChart extends Component {
   constructor(props) {
@@ -109,8 +110,7 @@ export default class TradeChart extends Component {
     const dims = {
       time: 0,
       waveHeight: 1,
-    };
-
+    }
 
     const option = {
       tooltip: {
@@ -124,9 +124,9 @@ export default class TradeChart extends Component {
         }
       },
       grid: {
-        left: 0,
-        right: 30,
-        top: 0,
+        left: 10,
+        right: 60,
+        top: 10,
         bottom: 35
       },
       xAxis: {
@@ -137,25 +137,33 @@ export default class TradeChart extends Component {
           lineStyle: {
             color: 'transparent'
           }
-        }
+        },
+        axisLabel: {
+          textStyle: {
+            color:  XYcolor
+          }
+        },
       },
       yAxis: [
         {
           type: 'value',
-          //name: '浪高（米）',
           nameLocation: 'middle',
-          //nameGap: 35,
           max: 'dataMax',
-          // axisLine: {
-          //   lineStyle: {
-          //     color: '#015DD5'
-          //   }
-          // },
+          axisLine: {
+            lineStyle: {
+              color: 'transparent'
+            },
+          },
           splitLine: { show: false }
         }, {
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color:  XYcolor
+            }
+          },
           axisLine: { show: true },
           axisTick: { show: true },
-          axisLabel: { show: true },
           splitLine: { show: false }
         }],
 
@@ -287,9 +295,9 @@ export default class TradeChart extends Component {
   }
 
   startKline = () => {
-    const backColor = '#1D1D1D'
+    const { model: { marketCode }, theme, dispatch, modelName } = this.props
+    const backColor = (theme === THEME.DEEPDARK ? '#1D1D1D' : 'white')
     const { getInterval } = this
-    const { model: { marketCode }, dispatch, modelName } = this.props
     const TradingView = window.TradingView
     const tradeView = document.getElementById('tradeView')
 
@@ -317,8 +325,9 @@ export default class TradeChart extends Component {
         //'remove_library_container_border',
         // 'chart_property_page_style',
       ],
-      toolbar_bg: "transparent",
+      toolbar_bg: 'transparent',
       library_path: '/',
+      custom_css_url: '/override.css',
       width: '100%',
       height: '100%',
       timezone: 'Asia/Hong_Kong',
@@ -340,8 +349,8 @@ export default class TradeChart extends Component {
         //-----------volume的大小large,medium,small,tiny
         volumePaneSize: "medium",
         //----------------- x,y坐标轴的颜色，字体颜色
-        "scalesProperties.lineColor": "#778094",
-        "scalesProperties.textColor": "#778094",
+        "scalesProperties.lineColor":  XYcolor,
+        "scalesProperties.textColor":  XYcolor,
 
         //-----------面积图，分时图的颜色
         "mainSeriesProperties.areaStyle.color1": "rgba(62,108,174,.5)",// "#3278DD",

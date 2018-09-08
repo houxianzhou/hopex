@@ -21,7 +21,7 @@
   .mixinC();
   :global(.lightT) & {
     .mixinCL();
-    color: #232833;
+    color: @c_black;
     background: @c_back_dark;
   }
   color: #FFFFFF;
@@ -74,7 +74,7 @@
         .marketname {
           display: flex;
           :global(.lightT) & {
-            color: black;
+            color: @c_black;
           }
           color: #FFFFFF;
           font-size: 18px;
@@ -135,6 +135,10 @@
                 color: @c_pannel_theader_color;
               }
               &.desc {
+                :global(.lightT) & {
+                  .mixinCL();
+                  color: @c_black;
+                }
                 min-height: 15px;
                 color: #FFFFFF;
               }
@@ -193,7 +197,7 @@
       > div {
         &.active {
           background: @c_active_yellow;
-          color: #232833;
+          color: @c_black;
         }
         font-size: 13px;
         padding: 3px 8px
@@ -473,7 +477,7 @@
       .mixinCL();
       background: #FFFFFF !important;
       border: 1px solid #EBEBEB !important;
-      color: black !important;
+      color: @c_black !important;
     }
     border: 1px solid #4B556D !important;
     background: #373F4F !important;
@@ -577,7 +581,7 @@
           .label {
             div {
               :global(.lightT) & {
-                color: black;
+                color: @c_black;
               }
             }
             div + div {
@@ -619,7 +623,7 @@
             input {
               :global(.lightT) & {
                 .mixinCL();
-                color: #232833;
+                color: @c_black;
               }
               color: white;
               text-align: center;

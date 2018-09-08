@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { NavLink } from 'dva/router'
-import { classNames, switchTheme, _, dealInterval } from '@utils'
+import { classNames, switchTheme, _, dealInterval, localSave } from '@utils'
 import { RouterGo, Mixin, Select } from '@components'
 import { PATH, THEME, } from '@constants'
 import { netWorkBest, netWorkGood, netWorkBad, notice, help, account, logo } from '@assets'
@@ -57,7 +57,19 @@ export default class View extends Component {
     )
   }
 
+  changeTheme = (theme) => {
+    const { dispatch, modelName3 } = this.props
+    dispatch({
+      type: `${modelName3}/changeState`,
+      payload: {
+        theme: theme
+      }
+    })
+    localSave.set('theme',theme)
+  }
+
   render() {
+    const { changeTheme } = this
     const { home: { marketList = [] } = {}, user: { userInfo = {}, userInfo: { email } } = {}, theme: { RG, theme, netWorkStatus } = {}, modelName2, modelName3, dispatch, routesBasic, location: { pathname } = {} } = this.props
 
     const isLogin = !_.isEmpty(userInfo)
@@ -184,12 +196,7 @@ export default class View extends Component {
                           <ul className={styles.themelist} >
                             <li onClick={(e) => {
                               e.preventDefault()
-                              dispatch({
-                                type: `${modelName3}/changeState`,
-                                payload: {
-                                  theme: THEME.DEEPDARK
-                                }
-                              })
+                              changeTheme(THEME.DEEPDARK)
                             }} >
                               <div className={classNames(
                                 theme === THEME.DEEPDARK ? styles.active : null
@@ -198,12 +205,7 @@ export default class View extends Component {
                             </li >
                             <li onClick={(e) => {
                               e.preventDefault()
-                              dispatch({
-                                type: `${modelName3}/changeState`,
-                                payload: {
-                                  theme: THEME.LIGHT
-                                }
-                              })
+                              changeTheme(THEME.LIGHT)
                             }} >
                               <div className={classNames(
                                 theme !== THEME.DEEPDARK ? styles.active : null

@@ -315,7 +315,7 @@ class RenderModal extends Component {
             <div className={styles.edit} >
               {editIcon}
               <input autoFocus value={inputValue} onChange={
-                _.throttle((e) => {
+                (e)=>{
                   const value = _.get(e, 'target.value')
                   if (Patterns.decimalNumber4.test(value) || value === '') {
                     changeStateInModal({
@@ -323,8 +323,7 @@ class RenderModal extends Component {
                     })
                     calculatePositionEnsureMoney(value)
                   }
-
-                }, 10)
+                }
               } />
               <div >BTC</div >
             </div >

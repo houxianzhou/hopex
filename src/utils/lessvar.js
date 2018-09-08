@@ -17,5 +17,6 @@ export default {
   "@border_radius": '4px',
   "@c_obvious": '#353D4F',
   "@c_back": '#F5F5F5',
+  "@c_black": '#232833',
   "@tr_hover": '#eff1f3'
 }

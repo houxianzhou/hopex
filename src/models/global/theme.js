@@ -1,6 +1,6 @@
 import { joinModel } from '@utils'
 import modelExtend from '@models/modelExtend'
-import { _, getRes, resOk, asyncPayload, } from '@utils'
+import { _, getRes, resOk, asyncPayload, localSave } from '@utils'
 import { THEME, } from '@constants'
 import {
   getNetWork
@@ -14,7 +14,7 @@ export default joinModel(modelExtend, {
     version: "1.0.0",
     viewPosition: false,//最新成交列表和委托列表位置
     RG: 1,//红绿切换 1为正常的绿涨红跌，0为红涨绿跌
-    theme: THEME.DEEPDARK,//THEME.LIGHT,
+    theme: localSave.get('theme') || THEME.DEEPDARK,//THEME.LIGHT,
     dragIndex: [
       'LatestRecord'
     ],
