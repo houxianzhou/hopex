@@ -23,6 +23,7 @@ export default class TradeChart extends Component {
       map: 1,
       time: '1D'
     }
+    this.ApplayPromiseList = []
   }
 
   componentWillUnmount() {
@@ -44,17 +45,31 @@ export default class TradeChart extends Component {
         this.startDeepMap()
       }
     }
-    if (!isEqual(prevRG, RG) || !isEqual(prevTheme, theme) && this.widget) {
+    if (!isEqual(prevRG, RG) || !isEqual(prevTheme, theme)) {
       const { overrides, studies_overrides } = this.getChangedStyle()
-      this.widget.applyOverrides(
-        overrides
-      )
-      this.widget.applyStudiesOverrides(
-        studies_overrides
-      )
+      this.widgetApplayPromise(() => {
+        this.widget.applyOverrides(
+          overrides
+        )
+      })
+      this.widgetApplayPromise(() => {
+        this.widget.applyStudiesOverrides(
+          studies_overrides
+        )
+      })
     }
-
   }
+
+  widgetApplayPromise = (func) => {
+    if (_.isFunction(func)) {
+      if (this.widget) {
+        func()
+      } else {
+        this.ApplayPromiseList.push(func)
+      }
+    }
+  }
+
 
   componentDidMount() {
     // localSave.clearAll()
@@ -472,8 +487,9 @@ export default class TradeChart extends Component {
     })
     widget.onChartReady(() => {
       if (widget) {
-        this.changeState({ loaded: true })
         this.widget = widget
+        this.ApplayPromiseList.forEach(item => item())
+        this.changeState({ loaded: true })
         this.widget.chart().executeActionById('drawingToolbarAction')
         this.studies.push(this.widget.chart().createStudy('Moving Average', true, false, [5, "close", 0], null, {
           "Plot.color": "#684A95",
