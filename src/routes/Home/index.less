@@ -231,6 +231,30 @@
       }
     }
   }
+
+  .floatdiv {
+    color: #6A7286;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    padding: 20px;
+    background: #1D222E;
+    :global(.lightT) & {
+      .mixinCL();
+      background: white;
+      box-shadow:3px 3px 13px #B0B0B0;
+    }
+    > div + div {
+      margin-top: 10px;
+    }
+    > div {
+      span {
+        margin-left: 42px;
+        color: @c_active_yellow;
+      }
+
+    }
+  }
 }
 
 .ensureRecord {
@@ -262,7 +286,7 @@
           }
         }
         .select {
-          box-shadow: 0 2px 14px 0 rgba(0,0,0,0.08);
+          box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.08);
           display: none;
           z-index: 3;
           width: 100px;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, _, getRes, resOk, formatNumber, formatJson, isEqual, localSave } from '@utils'
+import { classNames, _, isEqual, } from '@utils'
 import { Mixin } from "@components"
 import { THEME } from '@constants'
 import wss from '@services/SocketClient'
@@ -109,7 +109,8 @@ export default class TradeChart extends Component {
   }
 
   startDeepMap = () => {
-    const { model: { ensure_records: { asks = [], bids = [] } = {}, asksFilter = '', bidsFilter = '' } } = this.props
+    const { model: { ensure_records: { asks = [], bids = [] } = {}, asksFilter = '', bidsFilter = '', } } = this.props
+
     const deepChart = document.getElementById('deepChart')
     if (!deepChart) return
     const myChart = echarts.init(deepChart)
@@ -122,21 +123,101 @@ export default class TradeChart extends Component {
       return [[item.price, item.sum]].concat(sum)
     }, [])
 
-
-    const dims = {
-      time: 0,
-      waveHeight: 1,
+    const getSeries = (config = {}) => {
+      const { name, step = '', colorStops = [], lineStyleColors = '', itemStyleColors = '', data = [] } = config
+      return {
+        name,
+        type: 'line',
+        yAxisIndex: 1,
+        step: step,
+        showSymbol: false,
+        hoverAnimation: false,
+        symbolSize: 10,
+        tooltip: {
+          formatter: () => {
+            return 'ssssssss'
+          }
+        },
+        label: {
+          formatter: () => {
+            return 'jjjjjjjjjjjj'
+          }
+        },
+        areaStyle: {
+          normal: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [{
+                offset: 0, color: colorStops[0]
+              }, {
+                offset: 1, color: colorStops[1]
+              }]
+            }
+          }
+        },
+        lineStyle: {
+          normal: {
+            color: lineStyleColors
+          }
+        },
+        itemStyle: {
+          normal: {
+            color: itemStyleColors,
+            borderWidth: 4
+          }
+        },
+        data
+      }
     }
 
     const option = {
       tooltip: {
         trigger: 'axis',
+        axisPointer: {
+          type: 'line',
+          lineStyle: {
+            type: 'dashed',
+            globalCoord: true,
+            color: {
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                {
+                  offset: 0, color: 'transparent' // 0% 处的颜色
+                },
+                {
+                  offset: .5, color: 'transparent' // 0% 处的颜色
+                },
+                {
+                  offset: 1, color: 'white' // 100% 处的颜色
+                }
+              ],
+            }
+          },
+        },
+        padding: 0,
+        backgroundColor: 'transparent',
+        position: function (pos, params, dom, rect, size) {
+          const { seriesName } = params[0]
+          const obj = { top: pos[1] - 60 }
+          if (seriesName === 'green') {
+            obj.left = pos[0] + 20
+          } else {
+            obj.right = size.viewSize[0] - pos[0] + 20
+          }
+          return obj
+        },
         formatter: function (params) {
-          const data = _.get(params[0], 'data')
-          return [
-            `价格${data[0]}`,
-            `累计${data[1]}`,
-          ].join('<br>');
+          const { data, seriesName } = params[0]
+          const border = seriesName === 'green' ? 'border-left:3px solid #00C087' : 'border-right:3px solid #FF7858'
+          const style = `${border};`
+          return `<div style="${style}" class="${styles.floatdiv}"><div>价格<span>${data[0]}</span></div><div>累计<span>${data[1]}</span></div></div >`
         }
       },
       grid: {
@@ -170,7 +251,6 @@ export default class TradeChart extends Component {
               color: 'transparent'
             },
           },
-          splitLine: { show: false }
         }, {
           axisLabel: {
             show: true,
@@ -184,126 +264,24 @@ export default class TradeChart extends Component {
         }],
 
       series: [
-        {
-          type: 'line',
-          yAxisIndex: 1,
-          showSymbol: false,
-          hoverAnimation: false,
-          symbolSize: 10,
-          areaStyle: {
-            normal: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0, color: 'rgba(86,188,157,0.41)'
-                }, {
-                  offset: 1, color: 'rgba(86,188,157,0)'
-                }]
-              }
-            }
-          },
-          lineStyle: {
-            normal: {
-              color: 'rgba(86,188,157,1)'
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: 'rgba(88,160,253,1)'
-            }
-          },
-          encode: {
-            x: dims.time,
-            y: dims.waveHeight
-          },
-          // data: data,
-          z: 2
-        },
-        {
-          type: 'line',
-          yAxisIndex: 1,
-          showSymbol: false,
-          hoverAnimation: false,
-          symbolSize: 10,
-          areaStyle: {
-            normal: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0, color: 'rgba(0,192,135,0.41)'
-                }, {
-                  offset: 1, color: 'rgba(86,188,157,0)'
-                }]
-              }
-            }
-          },
-          lineStyle: {
-            normal: {
-              color: 'rgba(0,192,135,1)'
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: 'rgba(88,160,253,1)'
-            }
-          },
-          encode: {
-            x: dims.time,
-            y: dims.waveHeight
-          },
-          data: dataBids,
-          z: 2
-        },
-        {
-          type: 'line',
-          yAxisIndex: 1,
-          showSymbol: false,
-          hoverAnimation: false,
-          symbolSize: 10,
-          areaStyle: {
-            normal: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0, color: 'rgba(255,120,88,0.41)'
-                }, {
-                  offset: 1, color: 'rgba(218,115,115,0)'
-                }]
-              }
-            }
-          },
-          lineStyle: {
-            normal: {
-              color: 'rgba(255,120,88,1)'
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: 'rgba(86,188,157,1)'
-            }
-          },
-          encode: {
-            x: dims.time,
-            y: dims.waveHeight
-          },
+        getSeries({
+          name: 'green',
+          step: 'start',
+          colorStops: ['rgba(0,192,135,0.41)', 'rgba(86,188,157,0)'],
+          lineStyleColors: 'rgba(0,192,135,1)',
+          itemStyleColors: 'rgba(0,192,135,1)',
+          data: dataBids
+        }),
+        getSeries({
+          name: 'red',
+          step: 'end',
+          colorStops: ['rgba(255,120,88,0.41)', 'rgba(218,115,115,0)'],
+          lineStyleColors: 'rgba(255,120,88,1)',
+          itemStyleColors: 'rgba(255,120,88,1)',
           data: dataAsks,
-          z: 2
-        }
+        })
       ],
-
-    };
+    }
     myChart.setOption(option)
     window.onresize = () => {
       myChart.resize()
