@@ -323,7 +323,6 @@ export default class TradeChart extends Component {
       custom_css_url: '/override.css',
       width: '100%',
       height: '100%',
-      fullscreen: true,
       timezone: 'Asia/Hong_Kong',
       ...marketCode ? { symbol: marketCode } : {},
       // interval: 'D',
