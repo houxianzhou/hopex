@@ -87,5 +87,6 @@ websocket文件  /services/SocketClient.js
      }
 ```
 ## 预览
-![avatar](http://p09oq805j.bkt.clouddn.com/hopex.png)
+![avatar](http://p09oq805j.bkt.clouddn.com/hopex.png)   
+![avatar](http://p09oq805j.bkt.clouddn.com/hopex2.png)
 
