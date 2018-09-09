@@ -118,11 +118,13 @@ class RenderModal extends Component {
     const { currentValue } = this.state
     const marks = leverages.reduce((sum, next = {}) => {
       const leverage = next.leverage
-      sum[leverage] = String(leverage)
+      sum[Number(leverage)] = String(leverage)
       return sum
     }, {})
     const marksProps = {
-      marks,
+      marks:{
+        ...marks,
+      },
       defaultValue: leverage,
       min: _.min(_.keys(marks).map(item => Number(item))) || 0,
       max: _.max(_.keys(marks).map(item => Number(item))) || 0,
@@ -144,6 +146,7 @@ class RenderModal extends Component {
         width: '20px',
         height: '20px',
         border: 'solid 6px white',
+        boxShadow:'1px 1px 10px #CCCCCC',
         backgroundColor: COLORS.yellow
       },
       onChange: (v) => {
@@ -162,7 +165,9 @@ class RenderModal extends Component {
             <div className={styles.number} >{leverage}<span >倍</span ></div >
           </div >
           <div className={styles.middle} >
-            <Slider {...marksProps} />
+            {
+              !_.isEmpty(marks) ? <Slider {...marksProps} /> : null
+            }
           </div >
           <div className={styles.down} >
             <ul >
@@ -200,9 +205,9 @@ class RenderModal extends Component {
                           </div >
                         ) : null
                       }
-                      <div className={styles.needli}>{item.leverage}</div >
-                      <div className={styles.needli}>{getPercent(Number(1), Number(item.leverage))}</div >
-                      <div className={styles.needli}>{keepBailRate}</div >
+                      <div className={styles.needli} >{item.leverage}</div >
+                      <div className={styles.needli} >{getPercent(Number(1), Number(item.leverage))}</div >
+                      <div className={styles.needli} >{keepBailRate}</div >
                     </li >
                   )
                 })
