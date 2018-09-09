@@ -563,7 +563,7 @@ export default class TradeChart extends Component {
     const {
       model: {
         marketName = '', maxPrice24h = '', minPrice24h = '', indexPrice = '',
-        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', reasonablePrice = '', latestPriceChangePercent = '', dollarPrice = '', marketAllowTrade = ''
+        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', reasonablePrice = '', latestPriceChangePercent = '', dollarPrice = '', marketAllowTrade = '', userAllowTrade = ''
       }, dispatch, modelName
     } = this.props
     const intervals = [
@@ -736,6 +736,10 @@ export default class TradeChart extends Component {
                   ) : null
                 }
                 {
+                  !marketAllowTrade || !userAllowTrade ? (<div className={styles.notallowtradeTip} >不允许交易</div >) : null
+                }
+
+                {
                   loaded ? (
                     <div className={styles.switchmap} >
                       <div onClick={() => {
@@ -759,8 +763,8 @@ export default class TradeChart extends Component {
                     </div >
                   ) : null
                 }
-
               </div >
+
               <div className={styles.kmap} >
                 {
                   map === 1 ? (

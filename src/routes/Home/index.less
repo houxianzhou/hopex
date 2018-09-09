@@ -47,6 +47,7 @@
 }
 
 .tradeChart {
+  position: relative;
   .mixinC();
   :global(iframe) {
     height: 100% !important;
@@ -153,7 +154,23 @@
         }
       }
     }
-
+  }
+  .notallowtradeTip {
+    border-radius: 4px;
+    top: 80px;
+    z-index: 10;
+    margin: auto;
+    left: 0;
+    right: 0;
+    width: 180px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: @c_like_white;
+    font-size: 16px;
+    background: #1D222E;;
+    position: absolute;
   }
   .kmap {
     position: relative;
@@ -242,7 +259,7 @@
     :global(.lightT) & {
       .mixinCL();
       background: white;
-      box-shadow:3px 3px 13px #B0B0B0;
+      box-shadow: 3px 3px 13px #B0B0B0;
     }
     > div + div {
       margin-top: 10px;
