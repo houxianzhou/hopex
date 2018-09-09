@@ -171,6 +171,16 @@ export const clearIntervals = (params) => {
   }
 }
 
+export const SetFullScreen = (Ele) => {
+  if (document.documentElement.requestFullscreen) {
+    Ele.requestFullscreen()
+  } else if (document.documentElement.mozRequestFullScreen) {
+    Ele.mozRequestFullScreen()
+  } else if (document.documentElement.webkitRequestFullscreen) {
+    Ele.webkitRequestFullscreen()
+  }
+}
+
 
 
 

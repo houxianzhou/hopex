@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { classNames, _, isEqual, } from '@utils'
+import { classNames, _, isEqual, SetFullScreen } from '@utils'
 import { Mixin } from "@components"
 import { THEME } from '@constants'
 import wss from '@services/SocketClient'
-import { chartProperties, insertIndicator } from '@assets'
+import { chartProperties, insertIndicator, fullScreen } from '@assets'
 import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
 import ScrollPannel from './components/ScrollPanel'
 import * as styles from './index.less'
@@ -109,8 +109,7 @@ export default class TradeChart extends Component {
   }
 
   startDeepMap = () => {
-    const { model: { ensure_records: { asks = [], bids = [] } = {}, asksFilter = '', bidsFilter = '', } } = this.props
-
+    const { model: { ensure_records: { asks = [], bids = [] } = {}, asksFilter = '', bidsFilter = '' } } = this.props
     const deepChart = document.getElementById('deepChart')
     if (!deepChart) return
     const myChart = echarts.init(deepChart)
@@ -324,6 +323,7 @@ export default class TradeChart extends Component {
       custom_css_url: '/override.css',
       width: '100%',
       height: '100%',
+      fullscreen: true,
       timezone: 'Asia/Hong_Kong',
       ...marketCode ? { symbol: marketCode } : {},
       // interval: 'D',
@@ -729,6 +729,12 @@ export default class TradeChart extends Component {
                             this.widget && this.widget.chart().executeActionById('insertIndicator')
                           }} >
                             {insertIndicator}
+                          </li >
+                          <li onClick={() => {
+                            const ifra = document.getElementsByTagName('iframe')[0]
+                            ifra && SetFullScreen(ifra)
+                          }} >
+                            {fullScreen}
                           </li >
                         </ul >
                       </>
