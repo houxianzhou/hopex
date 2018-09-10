@@ -135,7 +135,8 @@ export default class Position extends Component {
           return (
             <>
               <RedGreenSwitch.MarkText mark={value} value={value.replace(/['+']/, '')} />
-                ({format})
+
+              <span style={{ marginLeft: 5}} >({format})</span >
             </>
           )
         }
