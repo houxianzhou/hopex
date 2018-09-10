@@ -20,19 +20,17 @@ export default class View extends Component {
       let test2 = /^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$/.test(value)
 
       const pos = (String(value).split('.')[1] || '').length
-      if (pos<prec) {
+      if (pos < prec && !/e/.test(value)) {
         onChange(value)
       } else {
         if (value < min) value = min
         if (value > max) value = max
         const int = Math.floor((new BigNumber(value)).div(step).toFixed(prec))
         value = (new BigNumber(int)).multipliedBy(step).valueOf()
-       // const pos = (String(value).split('.')[1] || '').length
-        console.log(value, pos, prec, '------------')
+        // const pos = (String(value).split('.')[1] || '').length
         if (/e/.test(value)) {
           prec = prec
         } else if (Number(pos) <= Number(prec)) {
-          console.log('++++++')
           prec = pos
         }
         value = (new BigNumber(value)).toFixed(prec)
