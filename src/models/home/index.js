@@ -847,25 +847,25 @@ export default joinModel(modelExtend, {
       let historyList
       switch (type) {
         case '1': {
-          historyType = ["1", "2"] //限价单，市价单一起就是最近委托
+          historyType = ["1", "2", '3', '4'] //1限价单，2市价单,"3": 限价全平单,"4":市价全平单一起就是最近委托
           historyList = 'personalEnsureHistory'
           prev = yield select(({ home: { personalEnsureHistory = [] } }) => personalEnsureHistory)
         }
           break
-        case '3': {
-          historyType = ['3'] //交割单
+        case '5': {
+          historyType = ['5'] //交割单
           historyList = 'deliveryHistory'
           prev = yield select(({ home: { deliveryHistory = [] } }) => deliveryHistory)
         }
           break
-        case '4': {
-          historyType = ['4'] //强平单
+        case '6': {
+          historyType = ['6'] //强平单
           historyList = 'highlevelHistory'
           prev = yield select(({ home: { highlevelHistory = [] } }) => highlevelHistory)
         }
           break
-        case '5': {
-          historyType = ['5'] //自动减仓
+        case '7': {
+          historyType = ['7'] //自动减仓
           historyList = 'reduceHistory'
           prev = yield select(({ home: { reduceHistory = [] } }) => reduceHistory)
         }

@@ -16,11 +16,11 @@ export const Tabs = [
   // },
   {
     name: '最近10条强平历史',
-    type: '4'
+    type: '6'
   },
   {
     name: '最近10条自动减仓历史',
-    type: '5'
+    type: '7'
   }
 ]
 
