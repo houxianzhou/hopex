@@ -53,11 +53,7 @@ export const getColumns = (props = {}) => {
     {
       title: '数量(张)',
       dataIndex: 'amount',
-      render: (value, record = {}) => String(record.side) === '1' ? (
-        <RedGreenSwitch.RedText value={value} />
-      ) : (
-        <RedGreenSwitch.GreenText value={value} />
-      )
+      render: (value, record = {}) => <RedGreenSwitch.MarkText mark={value} value={value.replace(/['+']/, '')} />
     },
     {
       title: '委托价格',

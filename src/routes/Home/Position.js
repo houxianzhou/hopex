@@ -79,9 +79,7 @@ export default class Position extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render: (value) => Number(value) >= 0 ? (
-          <RedGreenSwitch.GreenText value={value} />
-        ) : (<RedGreenSwitch.RedText value={value} />)
+        render: (value) => <RedGreenSwitch.MarkText mark={value} value={value.replace(/['+']/, '')} />
       },
       {
         title: '开仓均价',
@@ -132,11 +130,13 @@ export default class Position extends Component {
         dataIndex: 'floatProfitShow',
         width: 250,
         render: (value, record = {}) => {
-          const v = `${value}(${record.profitRate})`
-          return Number(record.floatProfit) >= 0 ? (
-            <RedGreenSwitch.GreenText value={v} />
-          ) : (
-            <RedGreenSwitch.RedText value={v} />
+          const v = record.profitRate
+          const format = <RedGreenSwitch.MarkText value={v} />
+          return (
+            <>
+              <RedGreenSwitch.MarkText mark={value} value={value.replace(/['+']/, '')} />
+              ({format})
+            </>
           )
         }
       },
@@ -315,7 +315,7 @@ class RenderModal extends Component {
             <div className={styles.edit} >
               {editIcon}
               <input autoFocus value={inputValue} onChange={
-                (e)=>{
+                (e) => {
                   const value = _.get(e, 'target.value')
                   if (Patterns.decimalNumber4.test(value) || value === '') {
                     changeStateInModal({
