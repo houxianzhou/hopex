@@ -65,7 +65,7 @@ export default class View extends Component {
         theme: theme
       }
     })
-    localSave.set('theme',theme)
+    localSave.set('theme', theme)
   }
 
   render() {
@@ -132,10 +132,13 @@ export default class View extends Component {
                                                   {item2.marketName}
                                                 </div >
                                                 <div className={styles.price} >
-                                                  <RedGreenSwitch.MarkText value={item2.priceLast} />
+                                                  <RedGreenSwitch.MarkText mark={item2.priceLast}
+                                                                           value={item2.priceLast.replace(/['+','-']/, '')} />
                                                 </div >
                                                 <div className={styles.percent} >
-                                                  <RedGreenSwitch.MarkText value={item2.percent} />
+                                                  <RedGreenSwitch.MarkText
+                                                    mark={item2.percent}
+                                                    value={item2.percent.replace(/['+','-']/, '')} />
                                                 </div >
                                               </RouterGo.SwitchMarket >
                                             )

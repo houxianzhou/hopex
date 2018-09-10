@@ -61,10 +61,8 @@ export default class PersonEnsure extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render: (value, record) => String(record.side) === '1' ? (
-          <RedGreenSwitch.RedText value={value} />
-        ) : (
-          <RedGreenSwitch.GreenText value={value} />
+        render: (value, record) => (
+          <RedGreenSwitch.MarkText mark={value} value={value.replace(/['+']/, '')} />
         )
       },
       {

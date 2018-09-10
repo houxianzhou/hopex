@@ -45,7 +45,7 @@ export default delay({
           "direction": 0,
           "contractCode": "ETHUSDT",
           "contractName": "ETHUSDT永续",
-          "percent": "0.00%",
+          "percent": "-8.00%",
           "dollarPrice": "$270.00",
           "totalPrice24h": "0ETH",
           "position": false,
@@ -252,7 +252,7 @@ export default delay({
           "sideDisplay": "买入",
           "ctime": "2018-09-03 10:18:02",
           "mtime": "2018-09-03 10:18:02",
-          "orderQuantity": "1",
+          "orderQuantity": ["+","-"][_.random(0,1)]+_.random(1,10),
           "leftQuantity": "1",
           "fillQuantity": "0",
           "orderStatus": ['1', '2', '3'][_.random(0, 3)],
@@ -307,7 +307,7 @@ export default delay({
         "userId": "56",
         "userToken": "56"
       },
-      "data": (new Array(5)).fill().map((item, index) => {
+      "data": (new Array(3)).fill().map((item, index) => {
         const arryas = ['BTC', 'USDT', 'EOC', 'w', 'b']
         return {
           "allowFullClose": false,
@@ -317,13 +317,13 @@ export default delay({
           "contractValue": "1",
           "maintMarginRate": "0.005",
           "takerFee": "0.00075",
-          "positionQuantity": "-37",
+          "positionQuantity": ["+","-"][_.random(0,1)]+_.random(10,100),
           "entryPrice": "6602.70",
           "positionMargin": "0.0000BTC",
           "liquidationPrice": "6564.77",
           "maintMargin": "-1403.6722BTC",
-          "unrealisedPnl": "+4088.9804BTC",
-          "unrealisedPnlPcnt": "-291.31%",
+          "unrealisedPnl": ["+","-"][_.random(0,1)]+_.random(100,1000)+'BTC',
+          "unrealisedPnlPcnt": ["+","-"][_.random(0,1)]+_.random(100,1000)+'%',
           "fairPrice": "6713.2",
           "lastPrice": "6713.2"
         }
@@ -338,7 +338,7 @@ export default delay({
       "data": {
         "increase": { "maxChange": "7.9987BTC", "liquidationPrice": "1000000.00" },
         "reduce": { "maxChange": "2.0000BTC", "liquidationPrice": "1000000.00" },
-        "dealcurrency": "BTC"
+        "closeCurrency": "BTC"
       }, "ret": 0, "errCode": "", "errStr": ""
     })
   },
@@ -649,7 +649,7 @@ export default delay({
         "sideDisplay": "卖出",
         "ctime": "2018-09-04 17:56:36",
         "ftime": "2018-09-04 17:56:36",
-        "orderQuantity": "1",
+        "orderQuantity": ["+","-"][_.random(0,1)]+_.random(1,10),
         "fillQuantity": "0",
         "orderStatus": ['1', '2', '3'][_.random(0, 3)],
         "orderStatusDisplay": "已撤销",

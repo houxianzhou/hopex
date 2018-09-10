@@ -325,7 +325,7 @@ class RenderModal extends Component {
                   }
                 }
               } />
-              <div >BTC</div >
+              <div >{dealCurrency}</div >
             </div >
           </div >
           <ul className={styles.desc} >
