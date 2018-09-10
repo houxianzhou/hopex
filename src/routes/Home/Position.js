@@ -48,7 +48,6 @@ export default class Position extends Component {
     const { changeState, postOrder, } = this
     const { model: { positionList = [], }, modal: { name, data }, noDataTip, modelName, dispatch, openModal: prevOpenModal, switchMarket } = this.props
 
-
     const openModal = (payload) => {
       prevOpenModal({
         name: 'positionMoney',
@@ -110,7 +109,6 @@ export default class Position extends Component {
                 changeState({
                   active: 0
                 })
-
               }} >
                 <img src={add} />
               </div >
@@ -355,6 +353,7 @@ class RenderModal extends Component {
           <div
             className={styles.confirm}
             onClick={() => {
+              if(!Math.abs(inputValue)) return
               dispatch({
                 type: `${modelName}/doUpdatePositionEnsureMoney`,
                 payload: {
