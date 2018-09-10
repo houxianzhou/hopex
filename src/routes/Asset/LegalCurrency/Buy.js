@@ -3,9 +3,8 @@ import { connect } from 'dva'
 import { PATH } from "@constants"
 import { Mixin, Button, RouterGo } from '@components'
 import { classNames, _, Patterns, } from '@utils'
-import MainModal from '@routes/Components/MainModal'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
-import Input from '@routes/Asset/components/Input'
+import Input from '@routes/Components/Input'
 
 import styles from '@routes/Asset/index.less'
 

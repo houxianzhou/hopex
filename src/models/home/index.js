@@ -685,20 +685,21 @@ export default joinModel(modelExtend, {
 
     // 计算持仓保证金
     * calculatePositionEnsureMoney({ payload = {} }, { call, put }) {
-      const { marginChange } = payload
+      const { marginChange, market } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
           "head": {},
-          "param": {
-            change: marginChange
-          },
+          "param": {},
           power: [1],
           powerMsg: '计算持仓保证金'
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(calculatePositionEnsureMoney, repayload.param))
+        const res = getRes(yield call(calculatePositionEnsureMoney, {
+          change: marginChange,
+          contractCode: market
+        }))
         if (resOk(res)) {
           const result = _.get(res, 'data')
           if (result) {
@@ -710,7 +711,7 @@ export default joinModel(modelExtend, {
 
     // 增加或减少持仓保证金
     * doUpdatePositionEnsureMoney({ payload = {} }, { call, put }) {
-      const { assetName, assetChange } = payload
+      const { assetName, assetChange, market } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
@@ -724,6 +725,7 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
+        repayload.param.contractCode = market
         const res = getRes(yield call(doUpdatePositionEnsureMoney, repayload))
         if (resOk(res)) {
           const action = Number(assetChange) > 0 ? '增加' : '减少'

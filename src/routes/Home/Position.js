@@ -23,7 +23,7 @@ export default class Position extends Component {
   getPosition = () => {
     const { dispatch, modelName } = this.props
     dispatch({
-      type: `${modelName}/getPosition`
+      type: `${modelName}/getPosition`,
     }).then(() => {
       if (!this._isMounted || this.interval) return
       this.interval = dealInterval(() => {
@@ -46,11 +46,14 @@ export default class Position extends Component {
 
   render() {
     const { changeState, postOrder, } = this
-    const { model: { positionList = [], }, modal: { name }, noDataTip, modelName, dispatch, openModal: prevOpenModal, switchMarket } = this.props
+    const { model: { positionList = [], }, modal: { name, data }, noDataTip, modelName, dispatch, openModal: prevOpenModal, switchMarket } = this.props
 
 
-    const openModal = () => {
-      prevOpenModal({ name: 'positionMoney' })
+    const openModal = (payload) => {
+      prevOpenModal({
+        name: 'positionMoney',
+        data: payload
+      })
     }
 
     const columns = [
@@ -89,11 +92,11 @@ export default class Position extends Component {
       {
         title: '持仓占用保证金',
         dataIndex: 'positionMoneyShow',
-        render: (v) => {
+        render: (v, record) => {
           return (
             <div className={styles.changepositionMoney} >
               <div onClick={() => {
-                openModal()
+                openModal(record.market)
                 changeState({
                   active: 1
                 })
@@ -103,7 +106,7 @@ export default class Position extends Component {
               </div >
               <div className={styles.positionMoney} >{v}</div >
               <div onClick={() => {
-                openModal()
+                openModal(record.market)
                 changeState({
                   active: 0
                 })
@@ -136,7 +139,7 @@ export default class Position extends Component {
             <>
               <RedGreenSwitch.MarkText mark={value} value={value.replace(/['+']/, '')} />
 
-              <span style={{ marginLeft: 5}} >({format})</span >
+              <span style={{ marginLeft: 5 }} >({format})</span >
             </>
           )
         }
@@ -221,7 +224,7 @@ export default class Position extends Component {
         </div >
         {
           name === 'positionMoney' ? (
-            <RenderModal {...this} {...this.props} {...this.state} changeState={changeState} />) : null
+            <RenderModal {...this} {...this.props} {...this.state} changeState={changeState} data={data} />) : null
         }
       </Mixin.Child >
     )
@@ -238,11 +241,12 @@ class RenderModal extends Component {
   }
 
   calculatePositionEnsureMoney = (value) => {
-    const { dispatch, modelName } = this.props
+    const { dispatch, modelName, data } = this.props
     dispatch({
       type: `${modelName}/calculatePositionEnsureMoney`,
       payload: {
-        marginChange: value
+        marginChange: value,
+        market: data
       }
     }).then((res) => {
       if (res) {
@@ -275,7 +279,8 @@ class RenderModal extends Component {
     }
     const { changeState: changeStateInModal, calculatePositionEnsureMoney } = this
     const { inputValue, dealCurrency = '', increase = {}, reduce = {} } = this.state
-    const { changeState, active, dispatch, modelName, loading, closeModal, getPosition } = this.props
+    const { changeState, active, dispatch, modelName, loading, closeModal, getPosition, data } = this.props
+
 
     const currentObj = active === 0 ? increase : reduce
     const { maxChange = '', liquidationPrice: overPrice = '' } = currentObj || {}
@@ -353,6 +358,7 @@ class RenderModal extends Component {
               dispatch({
                 type: `${modelName}/doUpdatePositionEnsureMoney`,
                 payload: {
+                  market: data,
                   assetName: dealCurrency,
                   assetChange: active === 1 ? `-${inputValue}` : inputValue
                 }
