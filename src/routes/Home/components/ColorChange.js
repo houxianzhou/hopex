@@ -1,28 +1,10 @@
 import React, { Component } from 'react'
 import { classNames, isEqual, _, dealInterval } from '@utils'
 import { COLORS } from '@constants'
-//
-// const worker = new Worker()
 
 let throttle
 export default class ColorChange extends Component {
   componentDidMount() {
-    // worker.addEventListener('message', (event) => {
-    //   const { prevDataValue, dataValue, prevTotal, total, RG } = event.data
-    //   if (!_.isNil(dataValue) && !isEqual(prevTotal, total)) {
-    //     const { colorChange } = this
-    //     let color = null
-    //     if (_.isNil(prevDataValue)) {
-    //       color = COLORS.yellowOpacity
-    //       colorChange(color)
-    //     } else if (!isEqual(prevDataValue, dataValue)) {
-    //       color = Number(dataValue) > Number(prevDataValue) ?
-    //         (RG ? COLORS.greenOpacity : COLORS.redOpacity) :
-    //         (RG ? COLORS.redOpacity : COLORS.greenOpacity)
-    //       colorChange(color)
-    //     }
-    //   }
-    // })
   }
 
   state = {
@@ -39,7 +21,6 @@ export default class ColorChange extends Component {
 
     this.interval = dealInterval(() => {
       this.setState({
-        // percent: '0',
         color: null
       })
       this.interval = null
@@ -48,7 +29,7 @@ export default class ColorChange extends Component {
 
   componentDidUpdate(prevProps) {
     const { data: prevData = {}, total: prevTotal = [] } = prevProps
-    const { data = {}, total = [], RG, color: prevColor } = this.props
+    const { data = {}, total = [], RG, color: prevColor, all = false } = this.props
     if (prevColor) return
     const dataValue = data.dataValue
     if (!_.isNil(dataValue) && !isEqual(prevTotal, total)) {
@@ -59,7 +40,11 @@ export default class ColorChange extends Component {
             const { colorChange } = this
             let color = null
             if (_.isNil(prevDataValue)) {
-              color = COLORS.yellowOpacity
+              if (all) {
+                color = COLORS.yellowOpacity
+              } else {
+                color = RG ? COLORS.greenOpacity : COLORS.redOpacity
+              }
               colorChange(color)
             } else if (!isEqual(String(prevDataValue), String(dataValue))) {
               color = Number(dataValue) > Number(prevDataValue) ?
