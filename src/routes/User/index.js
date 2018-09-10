@@ -3,9 +3,11 @@ import { connect } from 'dva'
 import { ShowJsonTip,  NavPannel } from '@components'
 import accountyellow from '@assets/accountyellow.png'
 import MyAccount from './account/MyAccount'
+import SuperVertify from './SuperVertify/index'
 
 const Comp = {
-  MyAccount
+  MyAccount,
+  SuperVertify
 }
 @connect(({ user, account: model, loading, dispatch }) => ({
   model,
@@ -30,7 +32,7 @@ export default class View extends Component {
       <div >
         <ShowJsonTip data={this.props.model} />
         <NavPannel
-          defaultActive='MyAccount'
+          defaultActive='SuperVertify'
           navList={[
             {
               title: '账户',
@@ -47,6 +49,19 @@ export default class View extends Component {
                       }
                     })
                     return renderPage('MyAccount')
+                  }
+                },
+                {
+                  name: 'SuperVertify',
+                  title: '高级认证',
+                  onClick: () => {
+                    dispatch({
+                      type: `${modelName}/changeState`,
+                      payload: {
+                        superVertifyPage: 1
+                      }
+                    })
+                    return renderPage('SuperVertify')
                   }
                 }
               ]

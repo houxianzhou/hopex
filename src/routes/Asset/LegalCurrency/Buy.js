@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { PATH } from "@constants"
-import { Mixin, Button, RouterGo } from '@components'
+import { Mixin, Button, RouterGo, Table } from '@components'
 import { classNames, _, Patterns, } from '@utils'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
 import Input from '@routes/Components/Input'
@@ -99,6 +99,76 @@ export default class View extends Component {
     const isNotAllow = () => {
       return selectOne.allowWithdraw === false || selectOne.isValid === false
     }
+    const columns = [
+      {
+        title: '时间',
+        dataIndex: 'createdTime',
+        width: 100
+      },
+      {
+        title: '类型',
+        dataIndex: 'type',
+        width: 10
+      },
+      {
+        title: '金额',
+        dataIndex: 'amount',
+        width: 60
+      },
+      {
+        title: '地址',
+        dataIndex: 'addrUrl',
+        render: (value, record = {}) => (
+          {
+            value: (<span className={styles.overflowHidden} onClick={() => {
+              window.open(record.addrUrl)
+            }} >{record.addr}</span >),
+            className: 'blue'
+          }
+        )
+      },
+      {
+        title: 'TxHash',
+        dataIndex: 'txid',
+        render: (value, record = {}) => (
+          {
+            value: (<span className={styles.overflowHidden} onClick={() => {
+              window.open(record.txidUrl)
+            }} >{record.txid}</span >),
+            className: 'blue'
+          }
+        )
+      },
+      {
+        title: '状态',
+        dataIndex: 'status',
+        width: 30,
+        render: (value) => {
+          let cl
+          switch (value) {
+            case '进行中':
+              cl = 'blue'
+              break
+            case '已拒绝':
+              cl = 'red'
+              break
+          }
+          return {
+            value,
+            className: cl
+          }
+        }
+      },
+    ]
+    const dataSource = [{
+
+    },{}]
+    const tableProp = {
+      loading: loading.effects[`${modelName}/getAssetRecord`],
+      className: styles.tableContainer,
+      columns,
+      dataSource: dataSource,
+    }
     return (
       <Mixin.Child that={this} >
         <div className={styles.Buy} >
@@ -163,7 +233,11 @@ export default class View extends Component {
               </div >
             </li >
           </ul >
-          <div >hahah</div >
+          <div >
+            <div >最近10条资金记录</div >
+            <div >完整资金记录</div >
+          </div >
+          <div><Table {...tableProp} /></div>
         </div >
       </Mixin.Child >
     )

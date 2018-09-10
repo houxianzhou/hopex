@@ -13,9 +13,10 @@ import {
   SendEmailToDisableTwoFacotires,
   doDisbaleGoogleVertify
 } from '@services/user'
+import supevertify from './supervertify'
 
 
-export default joinModel(modelExtend, {
+export default joinModel(modelExtend, supevertify, {
   namespace: 'account',
   state: {
     myAccountPage: 2, // 1首页  2启用google二次验证  3. 修改密码  4.开启google验证 邮箱页面  5. 关闭google验证code页面  6 关闭google验证邮箱页面
