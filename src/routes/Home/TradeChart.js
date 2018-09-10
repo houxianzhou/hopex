@@ -706,7 +706,13 @@ export default class TradeChart extends Component {
                               changeState({
                                 time: 'realtime'
                               })
-                              this.widget.chart().setChartType(3)
+                              if (time === '1m') {
+                                this.widget.chart().setChartType(3)
+                              } else {
+                                this.widget.chart().setResolution("1", () => {
+                                  this.widget.chart().setChartType(3)
+                                })
+                              }
                               this.studies.forEach((id) => {
                                 this.widget.chart().setEntityVisibility(id, false)
                               })

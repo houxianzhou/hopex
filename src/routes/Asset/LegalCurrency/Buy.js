@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { COLORS, PATH } from "@constants"
-import { Mixin, CountDown, Button, RouterGo } from '@components'
-import { classNames, _, Patterns, formatNumber } from '@utils'
+import { PATH } from "@constants"
+import { Mixin, Button, RouterGo } from '@components'
+import { classNames, _, Patterns, } from '@utils'
 import MainModal from '@routes/Components/MainModal'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
 import Input from '@routes/Asset/components/Input'
@@ -104,7 +104,6 @@ export default class View extends Component {
       <Mixin.Child that={this} >
         <div className={styles.Buy} >
           <div className={styles.title} >买入数字货币</div >
-
           <div className={styles.moneytype} >
             币种
             <div className={styles.select} >
@@ -148,7 +147,7 @@ export default class View extends Component {
                 </Input >
               </div >
             </li >
-            <li className={styles.inputbutton}>
+            <li className={styles.inputbutton} >
               <div className={styles.label} ></div >
               <div className={
                 classNames(
@@ -160,14 +159,12 @@ export default class View extends Component {
                   loading={loading.effects[`${modelName}/doWithdrawApply`]}
                   onClick={() => {
                   }} >
-                  提交
+                  去支付
                 </Button >
               </div >
             </li >
           </ul >
-          {
-            name === 'googleCodeOpen' ? <RenderModal {...this.props} /> : null
-          }
+          <div >hahah</div >
         </div >
       </Mixin.Child >
     )
@@ -175,45 +172,5 @@ export default class View extends Component {
 }
 
 
-class RenderModal extends Component {
-  render() {
-    const props = {
-      ...this.props
-    }
-    const { closeModal, } = this.props
-    return (
-      <MainModal {...props}  >
-        <div className={styles.googleCodeOpen_Modal} >
-          <div className={styles.content} >
-            请先开启谷歌验证
-          </div >
-          <div className={styles.buttons} >
-
-            <div
-              onClick={() => {
-                closeModal()
-              }}
-              className={styles.cancel}
-            >
-              取消
-            </div >
-            <div
-              className={styles.confirm}
-              onClick={() => {
-                closeModal()
-              }}
-            >
-              <Button >
-                <RouterGo.SwitchRoute value={PATH.myaccount} >去开启</RouterGo.SwitchRoute >
-              </Button >
-
-            </div >
-          </div >
-        </div >
-
-      </MainModal >
-    )
-  }
-}
 
 
