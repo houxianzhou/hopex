@@ -300,6 +300,7 @@ export default class View extends Component {
                           changeState({ emailVerificationCode: value })
                         }} >
                         <CountDown
+                          action={false}
                           onClick={() => {
                             this.SendEmailToWithdraw()
                           }}

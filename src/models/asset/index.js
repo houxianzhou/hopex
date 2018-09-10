@@ -6,6 +6,7 @@ import {
   getAssetSummary, getAssetAddress, getWithdrawParameter,
   SendEmailToWithdraw, getAssetRecord, doWithdrawApply
 } from '@services/trade'
+import { GetUserInfo } from '@services/user'
 
 
 export default joinModel(modelExtend, {
@@ -180,18 +181,17 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(SendEmailToWithdraw, repayload, (error = {}) => {
-          if (error.errStr === '请先开启谷歌验证') {
-            return {
-              data: false
-            }
-          }
-        }))
-
+        const res = getRes(yield call(GetUserInfo, {}))
         if (resOk(res)) {
-          const result = _.get(res, 'data')
-          if (result === '') {
-            return true
+          const result = _.get(res, 'data.enabledTwoFactories')
+          if (result === true) {
+            const res = getRes(yield call(SendEmailToWithdraw, repayload))
+            if (resOk(res)) {
+              const result = _.get(res, 'data')
+              if (result === '') {
+                return true
+              }
+            }
           } else if (result === false) {
             yield put({
               type: 'openModal',
