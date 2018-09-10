@@ -3,7 +3,7 @@ import { connect } from 'dva'
 import { Mixin, Table, PagiNation } from '@components'
 import NoDataTip from '@routes/Components/NoDataTip'
 
-import styles from './index.less'
+import styles from '@routes/Asset/index.less'
 
 @connect(({ modal, Loading, asset }) => ({
   modal,

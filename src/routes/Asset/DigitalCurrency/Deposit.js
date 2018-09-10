@@ -3,10 +3,9 @@ import { connect } from 'dva'
 import ClipboardJS from 'clipboard'
 import { Mixin, } from '@components'
 import { classNames, _, } from '@utils'
-import {} from '@assets'
-import MoneySelect from './components/MoneySelect'
+import MoneySelect from '@routes/Asset/components/MoneySelect'
 
-import styles from './index.less'
+import styles from '@routes/Asset/index.less'
 
 @connect(({ modal, Loading, asset }) => ({
   modal,

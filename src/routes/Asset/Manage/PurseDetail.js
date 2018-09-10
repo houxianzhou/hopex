@@ -5,7 +5,7 @@ import { classNames, _, } from '@utils'
 import { Rights, $B, Home, $B2, Diamond } from '@assets'
 import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
 
-import styles from './index.less'
+import styles from '../index.less'
 
 @connect(({ modal, Loading, asset }) => ({
   modal,

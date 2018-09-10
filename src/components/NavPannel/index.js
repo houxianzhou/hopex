@@ -7,7 +7,7 @@ export default class View extends Component {
   componentDidMount() {
     const { navList = [], defaultActive = '' } = this.props
     const lists = navList.reduce((sum, next) => {
-      return [].concat(next.list)
+      return sum.concat(next.list)
     }, [])
     const filterOne = lists.filter(item => item.name === defaultActive)[0]
     this.changePage(filterOne.onClick, defaultActive)

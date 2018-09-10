@@ -4,10 +4,10 @@ import { COLORS, PATH } from "@constants"
 import { Mixin, CountDown, Button, RouterGo } from '@components'
 import { classNames, _, Patterns, formatNumber } from '@utils'
 import MainModal from '@routes/Components/MainModal'
-import MoneySelect from './components/MoneySelect'
-import Input from './components/Input'
+import MoneySelect from '@routes/Asset/components/MoneySelect'
+import Input from '@routes/Asset/components/Input'
 
-import styles from './index.less'
+import styles from '@routes/Asset/index.less'
 
 @connect(({ modal, asset, user, Loading }) => ({
   user,

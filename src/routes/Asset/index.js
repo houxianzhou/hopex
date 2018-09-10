@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { NavPannel, ShowJsonTip } from '@components'
 import { default as PurseDetail } from './Manage/PurseDetail'
-import { default as Deposit } from './Manage/Deposit'
-import { default as WithDraw } from './Manage/WithDraw'
-import { default as Record } from './Manage/Record'
+import { default as Deposit } from './DigitalCurrency/Deposit'
+import { default as WithDraw } from './DigitalCurrency/WithDraw'
+import { default as Record } from './DigitalCurrency/Record'
 import { assetManage } from '@assets'
 
 const Comp = {
@@ -72,7 +72,14 @@ export default class View extends Component {
                   onClick: () => {
                     return renderPage('PurseDetail')
                   }
-                },
+                }
+              ]
+            },
+            {
+              svg: assetManage,
+              title: '数字货币',
+              list: [
+
                 {
                   name: 'Deposit',
                   title: '存款',

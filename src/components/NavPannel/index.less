@@ -21,6 +21,9 @@
     padding-top: 21px;
     :global {
       ul.block {
+        > li + li {
+          margin-top: 12px;
+        }
         > li {
           .title {
             display: flex;
@@ -35,6 +38,7 @@
           ul.list {
             margin-top: 20px;
             li {
+              cursor: pointer;
               position: relative;
               display: flex;
               height: 40px;

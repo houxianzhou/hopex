@@ -338,7 +338,7 @@ export default delay({
       "data": {
         "increase": { "maxChange": "7.9987BTC", "liquidationPrice": "1000000.00" },
         "reduce": { "maxChange": "2.0000BTC", "liquidationPrice": "1000000.00" },
-        "closeCurrency": "BTC"
+        "dealcurrency": "BTC"
       }, "ret": 0, "errCode": "", "errStr": ""
     })
   },
