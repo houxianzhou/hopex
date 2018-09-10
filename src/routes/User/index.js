@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { ShowJsonTip, Input, NavPannel } from '@components'
-import { classNames, _, Patterns } from '@utils'
-import { PATH } from '@constants'
+import { ShowJsonTip,  NavPannel } from '@components'
 import accountyellow from '@assets/accountyellow.png'
 import MyAccount from './account/MyAccount'
 

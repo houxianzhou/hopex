@@ -1,84 +1,13 @@
 @import '~@styles/index.less';
-
-.withdraw_deposit_common {
-  color: #999999;
-  padding: 40px;
-  .title {
-    font-size: 16px;
-    color: @c_active_yellow;
-  }
-  .moneytype {
-    margin-top: 40px;
-    margin-bottom: 50px;
-    display: flex;
-    > div {
-      width: 70px;
-      color: @c_black;
-      display: flex;
-      align-items: center;
-      margin-left: 30px;
-      svg {
-        margin-left: 8px;
-      }
-    }
-  }
-  .desc {
-    color: #999999;
-    li {
-      line-height: 26px;
-    }
-    > div {
-      color: @c_black;
-      margin-bottom: 20px;
-    }
-  }
-  .button {
-    // margin: 40px 0 130px 0 !important;
-    display: flex;
-    color: #FFFFFF;
-    justify-content: center !important;
-    align-items: center;
-    width: 220px;
-    height: 40px;
-    background-image: linear-gradient(90deg, #EFEFEF 0%, #ECECEC 100%);
-    color: black;
-    pointer-events: none;
-    &.permit {
-      pointer-events: auto;
-      color: white;
-      background-image: linear-gradient(-90deg, #EBCB80 0%, #E0BD7E 100%);
-    }
-
-    border-radius: 2px;
-  }
-  .userinput {
-    li + li {
-    }
-    li {
-      color: @c_black;
-      margin-bottom: 40px;
-      display: flex;
-      align-items: center;
-      .label {
-        width: 132px;
-      }
-      .countdown {
-        color: #CCCCCC;
-      }
-      .input {
-        width: 600px;
-      }
-    }
-  }
-}
+@import '~@routes/Components/common.less';
 
 .Buy {
-  .withdraw_deposit_common();
+  .Input_Title_Button_Select();
 }
 
 .assetrecord {
 
-  .withdraw_deposit_common();
+  .Input_Title_Button_Select();
   .tablec {
     margin-top: 40px;
   }
@@ -115,7 +44,7 @@
 
 .withdraw {
   font-size: 14px;
-  .withdraw_deposit_common();
+  .Input_Title_Button_Select();
   .notpermit {
     margin-bottom: 20px;
     padding: 8px 16px;
@@ -171,7 +100,7 @@
 
 .deposit {
   font-size: 14px;
-  .withdraw_deposit_common();
+  .Input_Title_Button_Select();
   .address {
     margin-bottom: 20px;
   }
