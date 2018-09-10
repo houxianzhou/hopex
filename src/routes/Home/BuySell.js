@@ -615,7 +615,7 @@ class RenderModal2 extends Component {
             {
               String(side) === '2' ? '最高买入' : '最低卖出'
             }
-            价格{price}下单
+            价格<span className={styles.warnprice}>{price}</span >下单
           </div >
           <div className={styles.buttons} >
 
