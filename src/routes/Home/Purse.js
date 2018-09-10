@@ -15,7 +15,7 @@ export default class Pure extends Component {
   }
 
   getPurseAssetList = () => {
-    const { dispatch, model: {} } = this.props
+    const { dispatch, } = this.props
     dispatch({
       type: `asset/getAssetSummary`,
       payload: {

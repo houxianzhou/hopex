@@ -5,13 +5,15 @@ import { default as PurseDetail } from './Manage/PurseDetail'
 import { default as Deposit } from './DigitalCurrency/Deposit'
 import { default as WithDraw } from './DigitalCurrency/WithDraw'
 import { default as Record } from './DigitalCurrency/Record'
-import { assetManage } from '@assets'
+import { default as Buy } from './LegalCurrency/Buy'
+import { assetManage, $B3, $B4 } from '@assets'
 
 const Comp = {
   PurseDetail,
   Deposit,
   WithDraw,
-  Record
+  Record,
+  Buy
 }
 @connect(({ theme, modal, asset, history, loading, dispatch }) => ({
   model: asset,
@@ -60,7 +62,7 @@ export default class View extends Component {
       <div >
         <ShowJsonTip data={{ ...this.props.model }} />
         <NavPannel
-          defaultActive='PurseDetail'
+          defaultActive='Buy'
           navList={[
             {
               svg: assetManage,
@@ -76,7 +78,7 @@ export default class View extends Component {
               ]
             },
             {
-              svg: assetManage,
+              svg: $B3,
               title: '数字货币',
               list: [
 
@@ -105,6 +107,19 @@ export default class View extends Component {
                   title: '资金记录',
                   onClick: () => {
                     return renderPage('Record')
+                  }
+                },
+              ]
+            },
+            {
+              svg: $B4,
+              title: '法币',
+              list: [
+                {
+                  name: 'Buy',
+                  title: '买入数字货币',
+                  onClick: () => {
+                    return renderPage('Buy')
                   }
                 },
               ]

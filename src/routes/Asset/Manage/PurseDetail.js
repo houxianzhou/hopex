@@ -81,6 +81,7 @@ export default class View extends Component {
             }
           </ul >
 
+
           <ul className={styles.down} >
             {
               detail.map((item, index) => {
@@ -145,7 +146,7 @@ export default class View extends Component {
                                   <RedGreenSwitch.MarkText
                                     mark={item2.value}
                                     value={item2.value.replace('+', '')} />
-                                  </div >
+                                </div >
                                 <div className={styles.prec} >≈{item2.prec}</div >
                               </div >
                             </li >
@@ -157,7 +158,6 @@ export default class View extends Component {
                 )
               })
             }
-
           </ul >
         </div >
       </Mixin.Child >

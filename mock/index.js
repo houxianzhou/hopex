@@ -18,6 +18,7 @@ export default delay({
       "data": [{
         "name": "BTC",
         "list": [{
+          minPriceMovementPrecision: 1,
           "priceLast": "+6700.0",
           "direction": 0,
           "contractCode": "BTCUSDT",
@@ -31,6 +32,7 @@ export default delay({
       }, {
         "name": "ETH",
         "list": [{
+          minPriceMovementPrecision: 2,
           "priceLast": "0.0",
           "direction": 0,
           "contractCode": "ETHBTC",
@@ -54,6 +56,7 @@ export default delay({
       }, {
         "name": "XRP",
         "list": [{
+          minPriceMovementPrecision: 3,
           "priceLast": "0",
           "direction": 0,
           "contractCode": "XRPUSDT",
@@ -64,6 +67,7 @@ export default delay({
           "position": false,
           "pause": true
         }, {
+          minPriceMovementPrecision: 4,
           "priceLast": "0",
           "direction": 0,
           "contractCode": "XRPETH",
@@ -74,6 +78,7 @@ export default delay({
           "position": false,
           "pause": true
         }, {
+          minPriceMovementPrecision: 5,
           "priceLast": "+0.0000678",
           "direction": 0,
           "contractCode": "XRPBTC",
@@ -252,7 +257,7 @@ export default delay({
           "sideDisplay": "买入",
           "ctime": "2018-09-03 10:18:02",
           "mtime": "2018-09-03 10:18:02",
-          "orderQuantity": ["+","-"][_.random(0,1)]+_.random(1,10),
+          "orderQuantity": ["+", "-"][_.random(0, 1)] + _.random(1, 10),
           "leftQuantity": "1",
           "fillQuantity": "0",
           "orderStatus": ['1', '2', '3'][_.random(0, 3)],
@@ -317,13 +322,13 @@ export default delay({
           "contractValue": "1",
           "maintMarginRate": "0.005",
           "takerFee": "0.00075",
-          "positionQuantity": ["+","-"][_.random(0,1)]+_.random(10,100),
+          "positionQuantity": ["+", "-"][_.random(0, 1)] + _.random(10, 100),
           "entryPrice": "6602.70",
           "positionMargin": "0.0000BTC",
           "liquidationPrice": "6564.77",
           "maintMargin": "-1403.6722BTC",
-          "unrealisedPnl": ["+","-"][_.random(0,1)]+_.random(100,1000)+'BTC',
-          "unrealisedPnlPcnt": ["+","-"][_.random(0,1)]+_.random(100,1000)+'%',
+          "unrealisedPnl": ["+", "-"][_.random(0, 1)] + _.random(100, 1000) + 'BTC',
+          "unrealisedPnlPcnt": ["+", "-"][_.random(0, 1)] + _.random(100, 1000) + '%',
           "fairPrice": "6713.2",
           "lastPrice": "6713.2"
         }
@@ -437,8 +442,8 @@ export default delay({
         "userAllowTrade": true,
         "marketAllowTrade": true,
         "marketCode": "BTCUSDT",
-        "minPriceMovement": 0.5,
-        "minPriceMovementDisplay": "0.5BTC",
+        "minPriceMovement": 0.0000005,
+        "minPriceMovementDisplay": "0.0000005BTC",
         "maintenanceMarginRate": 0.005,
         "maintenanceMarginRateDisplay": "0.005%",
         "minTradeNum": 1,
@@ -446,7 +451,7 @@ export default delay({
         "availableBalance": _.random(10, 10000),
         "availableBalanceDisplay": "12345.0987BTC",
         "maxBuyPrice": 6296.1,
-        "minPricePrecision": 9,
+        "minPricePrecision": 7,
         "minSellPrice": 5929.3,
         "orderValue": _.random(10, 10000),
         "orderValueDisplay": _.random(10, 10000) + 'BTC',
@@ -649,7 +654,7 @@ export default delay({
         "sideDisplay": "卖出",
         "ctime": "2018-09-04 17:56:36",
         "ftime": "2018-09-04 17:56:36",
-        "orderQuantity": ["+","-"][_.random(0,1)]+_.random(1,10),
+        "orderQuantity": ["+", "-"][_.random(0, 1)] + _.random(1, 10),
         "fillQuantity": "0",
         "orderStatus": ['1', '2', '3'][_.random(0, 3)],
         "orderStatusDisplay": "已撤销",

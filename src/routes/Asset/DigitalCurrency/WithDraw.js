@@ -214,57 +214,61 @@ export default class View extends Component {
                           }
                         }} /></div >
                   </li >
-                </ul >
-                <div className={styles.calcu} >
-                  <div className={styles.elsemoney} >
-                    <div >
-                      <div >最大可提现金额：</div >
-                      {
-                        selectOne.maxAmount ? (
-                          <div >{selectOne.maxAmount}{active}</div >
-                        ) : null
-                      }
-                    </div >
-                    <div className={styles.getall} onClick={() => {
-                      changeState({
-                        amount: selectOne.maxAmount
-                      }, () => {
-                        checkAmount(selectOne.maxAmount, selectOne)
-                      })
-                    }} >全部提现
-                    </div >
-                    {/*<div className={styles.notenougth} >可提金额不足</div >*/}
-                  </div >
-                  <div className={styles.charge} >
-                    <div >
-                      <div >手续费：</div >
-                      {
-                        selectOne.commission ? (<div >{selectOne.commission}{active}</div >) : null
-                      }
-                    </div >
-                    <div >
-                      <div >实际到账金额：</div >
-                      <div
-                        className={styles.fact} >
-                        {
-                          formatNumber(Math.max(Math.min(Number(amount) - Number(selectOne.commission), selectOne.maxAmount - Number(selectOne.commission)), 0), 8)
-                        }{active}
+                  <li >
+                    <div className={styles.label} ></div >
+                    <div className={styles.calcu} >
+                      <div className={styles.elsemoney} >
+                        <div >
+                          <div >最大可提现金额：</div >
+                          {
+                            selectOne.maxAmount ? (
+                              <div >{selectOne.maxAmount}{active}</div >
+                            ) : null
+                          }
+                        </div >
+                        <div className={styles.getall} onClick={() => {
+                          changeState({
+                            amount: selectOne.maxAmount
+                          }, () => {
+                            checkAmount(selectOne.maxAmount, selectOne)
+                          })
+                        }} >全部提现
+                        </div >
+                        {/*<div className={styles.notenougth} >可提金额不足</div >*/}
+                      </div >
+                      <div className={styles.charge} >
+                        <div >
+                          <div >手续费：</div >
+                          {
+                            selectOne.commission ? (<div >{selectOne.commission}{active}</div >) : null
+                          }
+                        </div >
+                        <div >
+                          <div >实际到账金额：</div >
+                          <div
+                            className={styles.fact} >
+                            {
+                              formatNumber(Math.max(Math.min(Number(amount) - Number(selectOne.commission), selectOne.maxAmount - Number(selectOne.commission)), 0), 8)
+                            }{active}
+                          </div >
+                        </div >
+                      </div >
+                      <div className={classNames(
+                        styles.button,
+                        (address && !addressMsg && amount && !amountMsg) && !isNotAllow() ? styles.permit : null
+                      )} >
+                        <Button
+                          loading={loading.effects[`${modelName}/SendEmailToWithdraw`]}
+                          onClick={() => {
+                            this.SendEmailToWithdraw()
+                          }} >
+                          提交
+                        </Button >
                       </div >
                     </div >
-                  </div >
-                  <div className={classNames(
-                    styles.button,
-                    (address && !addressMsg && amount && !amountMsg) && !isNotAllow() ? styles.permit : null
-                  )} >
-                    <Button
-                      loading={loading.effects[`${modelName}/SendEmailToWithdraw`]}
-                      onClick={() => {
-                        this.SendEmailToWithdraw()
-                      }} >
-                      提交
-                    </Button >
-                  </div >
-                </div >
+                  </li >
+                </ul >
+
                 <div className={styles.desc} >
                   <div >重要提示</div >
                   <ul >
@@ -314,24 +318,28 @@ export default class View extends Component {
                           changeState({ googleCode: value })
                         }} /></div >
                   </li >
-                </ul >
-                <div className={styles.calcu} >
-                  <div className={
-                    classNames(
-                      styles.button,
-                      (email && googleCode && emailVerificationCode) ? styles.permit : null
-                    )
-                  } >
-                    <Button
-                      loading={loading.effects[`${modelName}/doWithdrawApply`]}
-                      onClick={() => {
-                        this.doWithdrawApply()
-                      }} >
-                      提交
-                    </Button >
-                  </div >
+                  <li >
+                    <div className={styles.label} ></div >
+                    <div className={styles.calcu} >
+                      <div className={
+                        classNames(
+                          styles.button,
+                          (email && googleCode && emailVerificationCode) ? styles.permit : null
+                        )
+                      } >
+                        <Button
+                          loading={loading.effects[`${modelName}/doWithdrawApply`]}
+                          onClick={() => {
+                            this.doWithdrawApply()
+                          }} >
+                          提交
+                        </Button >
+                      </div >
 
-                </div >
+                    </div >
+                  </li >
+                </ul >
+
               </div >
             )
           }

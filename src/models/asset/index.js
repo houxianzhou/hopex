@@ -220,7 +220,6 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(doWithdrawApply, repayload))
         if (resOk(res)) {
-          console.log(res, '---------')
           const result = _.get(res, 'data')
           if (result === '') {
             yield put({

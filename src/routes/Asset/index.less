@@ -4,7 +4,7 @@
   color: #999999;
   padding: 40px;
   .title {
-    font-size: 18px;
+    font-size: 16px;
     color: @c_active_yellow;
   }
   .moneytype {
@@ -33,13 +33,13 @@
     }
   }
   .button {
-    margin: 40px 0 130px 0 !important;
+    // margin: 40px 0 130px 0 !important;
     display: flex;
     color: #FFFFFF;
     justify-content: center !important;
     align-items: center;
-    width: 240px;
-    height: 48px;
+    width: 220px;
+    height: 40px;
     background-image: linear-gradient(90deg, #EFEFEF 0%, #ECECEC 100%);
     color: black;
     pointer-events: none;
@@ -51,6 +51,29 @@
 
     border-radius: 2px;
   }
+  .userinput {
+    li + li {
+    }
+    li {
+      color: @c_black;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      .label {
+        width: 132px;
+      }
+      .countdown {
+        color: #CCCCCC;
+      }
+      .input {
+        width: 600px;
+      }
+    }
+  }
+}
+
+.Buy {
+  .withdraw_deposit_common();
 }
 
 .assetrecord {
@@ -63,7 +86,7 @@
     .table {
       color: black;
       :global {
-        .td{
+        .td {
 
         }
         .thead {
@@ -104,30 +127,15 @@
   .moneytype {
     margin-bottom: 30px;
   }
-  .userinput {
-    li + li {
 
-    }
-    li {
-      margin-bottom: 40px;
-      display: flex;
-      align-items: center;
-      .label {
-        color: @c_black;
-        width: 132px;
-        // margin-right: 68px;
-      }
-      .input {
-        width: 600px;
-      }
-
-    }
-  }
   .calcu {
     width: 600px;
-    margin-left: 132px;
     .getall, .fact {
       color: @c_active_yellow;
+    }
+    .button {
+      margin-top: 50px;
+      margin-bottom: 98px;
     }
     .notenougth {
       margin-top: 10px;
@@ -151,6 +159,12 @@
     }
     .email {
       color: black;
+    }
+    .calcu {
+      .button {
+        margin-top: 0;
+
+      }
     }
   }
 }
@@ -297,7 +311,7 @@
                 margin-top: 7px;
                 margin-bottom: 3px;
               }
-              div.prec{
+              div.prec {
                 font-size: 12px;
               }
             }
