@@ -131,11 +131,11 @@ export default class Position extends Component {
         width: 250,
         render: (value, record = {}) => {
           const v = record.profitRate
-          const format = <RedGreenSwitch.MarkText value={v} />
+          const format = <RedGreenSwitch.MarkText mark={v} value={v.replace(/['+']/, '')} />
           return (
             <>
               <RedGreenSwitch.MarkText mark={value} value={value.replace(/['+']/, '')} />
-              ({format})
+                ({format})
             </>
           )
         }
