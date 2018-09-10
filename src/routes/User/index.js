@@ -4,8 +4,7 @@ import { ShowJsonTip, Input, NavPannel } from '@components'
 import { classNames, _, Patterns } from '@utils'
 import { PATH } from '@constants'
 import accountyellow from '@assets/accountyellow.png'
-import MyAccount from './MyAccount'
-import styles from './index.less'
+import MyAccount from './account/MyAccount'
 
 const Comp = {
   MyAccount
@@ -30,7 +29,7 @@ export default class View extends Component {
     const { dispatch, modelName } = this.props
     const { renderPage } = this
     return (
-      <div className={styles.accountpage} >
+      <div >
         <ShowJsonTip data={this.props.model} />
         <NavPannel
           defaultActive='MyAccount'

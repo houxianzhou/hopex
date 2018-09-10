@@ -126,7 +126,7 @@ export async function doDisbaleGoogleVertify(payload) {
 
 // 获取用户最近十条登录记录
 export async function GetLast10LoginLog(payload) {
-  return await request('/api/v1/User/GetLast10LoginLog', {
+  return await request(`${prefix}/api/v1/User/GetLast10LoginLog`, {
     query: payload
   })
 }
@@ -154,7 +154,7 @@ export async function CheckGoogleCode(payload) {
 
 // 获取用户信息
 export async function GetUserInfo(payload) {
-  return await request('/api/v1/User/GetUserInfo', {
+  return await request(`${prefix}/api/v1/User/GetUserInfo`, {
     query: payload
   })
 }

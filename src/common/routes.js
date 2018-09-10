@@ -43,23 +43,23 @@ export default [
   {
     name: '登录',
     path: PATH.login,
-    route: 'User/Login'
+    route: 'Entry/Login'
   },
   {
     name: '注册',
     path: PATH.register,
-    route: 'User/Register'
+    route: 'Entry/Register'
   },
   {
     name: '忘记密码',
     path: PATH.forgetPassword,
-    route: 'User/ForgetPassword',
+    route: 'Entry/ForgetPassword',
   },
   {
     name: '我的账户',
     model: ['account'],
     path: PATH.myaccount,
-    route: 'User/account',
+    route: 'User/index',
     show: false,
     authority: [1]
   },

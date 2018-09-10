@@ -46,7 +46,6 @@ export default class View extends Component {
     userInfo: {}
   };
   componentDidMount = () => {
-    console.log(this.props);
     this.props.dispatch({
       type: `${this.props.modelName}/GetLast10LoginLog`
     }).then((res = {}) => {

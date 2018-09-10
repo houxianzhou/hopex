@@ -674,4 +674,36 @@ export default delay({
       }
     )
   },
+  'Get /mock/api/v1/User/GetLast10LoginLog': (req, res) => {
+    res.send(
+      {
+        "data": [{
+          "time": "2018-09-09 19:16:37",
+          "ip": "192.168.70.55",
+          "ipCountry": "局域网"
+        }, { "time": "2018-09-09 17:54:44", "ip": "111.222.169.90", "ipCountry": "" }, {
+          "time": "2018-09-09 16:16:56",
+          "ip": "192.168.70.55",
+          "ipCountry": "局域网"
+        }, { "time": "2018-09-09 10:28:14", "ip": "111.222.169.90", "ipCountry": "" }],
+        "ret": 0,
+        "errCode": "",
+        "errStr": ""
+      }
+    )
+  },
+  'Get /mock/api/v1/User/GetUserInfo': (req, res) => {
+    res.send(
+      {
+        "data": {
+          "id": 3,
+          "email": "xiaoyi.wei@bcsystech.com",
+          "country": "",
+          "enabledTwoFactories": true,
+          "lastLoginTime": "2018-09-10 21:06:20",
+          "lastLoginIp": "111.222.169.90"
+        }, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+  },
 }, 0)
