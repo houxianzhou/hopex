@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, ShowJsonTip, Table, RouterGo } from '@components'
 import { isEqual, _, parsePathSearch, } from '@utils'
-import { PATH, THEME } from '@constants'
+import { PATH } from '@constants'
 import wss from '@services/SocketClient'
 import LatestRecord from './LatestRecord'
 import TradeChart from './TradeChart'
@@ -51,8 +51,7 @@ export default class View extends Component {
 
     if (!isEqual(prevMarketCode, marketCode) && marketCode && prevMarketCode) {
       if (!throttle) {
-
-        // 暂时失效
+        // 暂时失效,startInt自己会重新执行，这里不用再执行一遍了
         throttle = _.throttle(
           () => {
             // dispatch({
@@ -77,20 +76,20 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/clearState`,
     })
-    wss.closeAll(true).then(()=>{
+    wss.closeAll(true).then(() => {
       dispatch({
         type: `${modelName}/clearState`,
       })
       this.getAllMarkets().then((res) => {
         this.childInitStacks.map(item => item && item())
       })
-    }).catch(()=>{
+    }).catch(() => {
       console.log('关闭失效----')
     })
   }
 
   getAllMarkets = () => {
-    const { dispatch, modelName, model: { marketList = [] }, location: { search } } = this.props
+    const { dispatch, modelName, location: { search } } = this.props
     return new Promise((resolve) => {
       setTimeout(() => {
         return dispatch({
