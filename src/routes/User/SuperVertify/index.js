@@ -21,8 +21,10 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    console.log('hhhh')
+
   }
+
+
 
   changePage = (page) => {
     const { dispatch, modelName } = this.props

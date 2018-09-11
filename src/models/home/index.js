@@ -560,7 +560,7 @@ export default joinModel(modelExtend, {
             side,
             price: Number(price),
             amount: Number(amount),
-            "leverage": 0
+            // "leverage":
           },
         }
       })))

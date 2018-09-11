@@ -126,12 +126,16 @@ class Wss {
     const url = _.get(SOCKETURL, [name])
     if (url) {
       if (!_.get(this.sockets, [url])) {
-        const ws = new Ws(url)
+        let ws = new Ws(url)
         ws.suddenDead = () => {
+          const listeners = ws.listeners
           delete this.sockets[url]
           clearTimeout(this.interval)
+
           this.interval = setTimeout(() => {
-            this.getSocket(name)
+            //console.log(listeners.length, ws.listeners.length, '长度---------------------')
+            ws = this.getSocket(name)
+            ws.listeners = listeners
             ws.listeners.forEach(item => item.restart && item.restart())
           }, this.reconnectInterval)
         }

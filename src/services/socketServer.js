@@ -8,9 +8,9 @@ class MockServer {
     this.subScribes = []
     this.server = new Server(url)
     this.server.on('connection', socket => {
-      // setTimeout(() => {
-      //   socket.close()
-      // }, 5000)
+      setTimeout(() => {
+        socket.close()
+      }, 5000)
       clearTimeout(this.interval)
       this.socket = socket
       if (this.onConnection) {
@@ -20,6 +20,7 @@ class MockServer {
         if (this.onMessage) this.onMessage(e)
       })
       socket.on('close', (e) => {
+        this.subScribes = []
         if (this.onClose) this.onClose()
       })
 
@@ -108,8 +109,8 @@ mockServer2.onMessage = (e) => {
     mockServer2.subScribe({
       name: 'orderbook.update',
       func: () => {
-        const value1 = _.random(1000,15000)
-        const value2 = _.random(1000,15000)
+        const value1 = _.random(1000, 15000)
+        const value2 = _.random(1000, 15000)
         mockServer2.sendJson(
           {
             "method": "orderbook.update",
@@ -177,7 +178,7 @@ mockServer2.onMessage = (e) => {
             "method": "kline.update",
             "timestamp": 1536247693121,
             "data": [
-              [((new Date).getTime())/1000, _.random(100, 200), _.random(200, 300), _.random(400, 500), _.random(500, 600), 2438, 6, "BTCUSD永续"]
+              [((new Date).getTime()) / 1000, _.random(100, 200), _.random(200, 300), _.random(400, 500), _.random(500, 600), 2438, 6, "BTCUSD永续"]
             ]
           }
         )
