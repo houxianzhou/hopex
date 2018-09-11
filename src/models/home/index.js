@@ -848,12 +848,6 @@ export default joinModel(modelExtend, {
       let historyType
       let historyList
       switch (type) {
-        case '1': {
-          historyType = ["1", "2", '3', '4'] //1限价单，2市价单,"3": 限价全平单,"4":市价全平单一起就是最近委托
-          historyList = 'personalEnsureHistory'
-          prev = yield select(({ home: { personalEnsureHistory = [] } }) => personalEnsureHistory)
-        }
-          break
         case '5': {
           historyType = ['5'] //交割单
           historyList = 'deliveryHistory'
@@ -870,6 +864,13 @@ export default joinModel(modelExtend, {
           historyType = ['7'] //自动减仓
           historyList = 'reduceHistory'
           prev = yield select(({ home: { reduceHistory = [] } }) => reduceHistory)
+        }
+          break
+        default: {
+          //默认为‘1
+          historyType = ["1", "2", '3', '4'] //1限价单，2市价单,"3": 限价全平单,"4":市价全平单一起就是最近委托
+          historyList = 'personalEnsureHistory'
+          prev = yield select(({ home: { personalEnsureHistory = [] } }) => personalEnsureHistory)
         }
       }
       const repayload = yield (asyncPayload(yield put({
@@ -969,6 +970,15 @@ export default joinModel(modelExtend, {
         _.set(repayload, 'param.source', `浏览器，${prev},用户id：${_.get(repayload, 'head.userId')},邮箱：${model.userInfo.email}`)
         const res = getRes(yield call(url, repayload))
         if (resOk(res)) {
+          yield put({
+            type: 'getPosition'
+          })
+          yield put({
+            type: 'getPersonalEnsure'
+          })
+          yield put({
+            type: 'getHistory'
+          })
           Toast.success('委托成功')
         }
       }

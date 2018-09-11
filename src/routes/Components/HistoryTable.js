@@ -24,6 +24,11 @@ export const Tabs = [
   }
 ]
 
+export const getTabs = (isTen = true) => {
+  // const
+
+}
+
 export const getColumns = (props = {}) => {
   const { dispatch, modelName, columns = [] } = props
   const cols = [

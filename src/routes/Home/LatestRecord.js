@@ -142,7 +142,7 @@ export default class LatestRecord extends Component {
       dataSource: _.merge((new Array(18)).fill(), dataSource),
       scroll: {
         mouseWheel: true,
-        scrollY: true
+        scrollY: true,
       },
     }
     return (
