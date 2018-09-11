@@ -8,9 +8,9 @@ class MockServer {
     this.subScribes = []
     this.server = new Server(url)
     this.server.on('connection', socket => {
-      setTimeout(() => {
-        socket.close()
-      }, 5000)
+      // setTimeout(() => {
+      //   socket.close()
+      // }, 5000)
       clearTimeout(this.interval)
       this.socket = socket
       if (this.onConnection) {

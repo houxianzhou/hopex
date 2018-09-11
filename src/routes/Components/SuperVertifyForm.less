@@ -1,0 +1,54 @@
+@import '~@styles/index.less';
+@import '~@routes/Components/common.less';
+
+.supervertifyform{
+  .Input_Title_Button_Select();
+  .title {
+    margin-bottom: 50px;
+  }
+  .super {
+    li + li {
+      margin-top: 30px;
+    }
+    li {
+      > div {
+        &.label {
+          width: 20%;
+        }
+        &.status {
+          color: @c_black;
+          align-items: center;
+          display: flex;
+          width: 45%;
+          .statusIcon {
+            margin-left: 23px;
+            width: 17px;
+            height: 17px;
+            border-radius: 17px;
+            &.error {
+              background: rgba(218, 115, 115, .2);
+            }
+          }
+        }
+        &.action {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 140px;
+          height: 40px;
+          border-radius: 4px;
+          color: #FFFFFF;
+          background-image: linear-gradient(270deg, #EBCB80 0%, #E0BD7E 100%);
+        }
+      }
+      display: flex;
+      align-items: center;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #EBEBEB;;
+    }
+  }
+}
+
+
+
+

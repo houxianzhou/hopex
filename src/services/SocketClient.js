@@ -131,12 +131,16 @@ class Wss {
           const listeners = ws.listeners
           delete this.sockets[url]
           clearTimeout(this.interval)
-
           this.interval = setTimeout(() => {
-            //console.log(listeners.length, ws.listeners.length, '长度---------------------')
+            console.log(listeners.length, ws.listeners.length, 'websocket订阅长度---------------------')
             ws = this.getSocket(name)
             ws.listeners = listeners
             ws.listeners.forEach(item => item.restart && item.restart())
+
+            //错误做法
+            // this.getSocket(name)
+            // ws.listeners.forEach(item => item.restart && item.restart())
+
           }, this.reconnectInterval)
         }
         this.sockets[url] = ws
