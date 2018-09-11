@@ -57,7 +57,7 @@ export default [
   },
   {
     name: '我的账户',
-    model: ['account'],
+    model: ['account', 'home/index'],
     path: PATH.myaccount,
     route: 'User/index',
     show: false,

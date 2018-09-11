@@ -11,15 +11,21 @@ import Input from '@routes/Components/Input'
 //   // modelName: 'account'
 // }))
 export default class View extends Component {
-  state = {
-
-  }
+  state = {}
 
   componentDidMount() {
     this.startInit()
   }
 
   startInit = () => {
+    this.getCertificationALL()
+  }
+
+  getCertificationALL = () => {
+    const { dispatch, modelName } = this.props
+    dispatch({
+      type: `${modelName}/getCertificationAll`
+    })
   }
 
 
@@ -59,7 +65,7 @@ export default class View extends Component {
 
   render() {
     const { changeState, changePage } = this
-    const { model: { superVertifyPage }, loading, dispatch, modelName,styles } = this.props
+    const { model: { superVertifyPage }, loading, dispatch, modelName, styles } = this.props
     return (
       <Mixin.Child that={this} >
         <div className={styles.supervertifyform} >

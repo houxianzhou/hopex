@@ -51,20 +51,21 @@ export default class View extends Component {
 
     if (!isEqual(prevMarketCode, marketCode) && marketCode && prevMarketCode) {
       if (!throttle) {
+
         // 暂时失效
         throttle = _.throttle(
           () => {
-            dispatch({
-              type: `${modelName}/clearState`,
-            })
-            wss.closeAll(true).then((res) => {
-              if (res) {
-                this.startInit()
-                throttle = null
-              }
-            }).catch((err) => {
-              console.log('关闭失败')
-            })
+            // dispatch({
+            //   type: `${modelName}/clearState`,
+            // })
+            // wss.closeAll(true).then((res) => {
+            //   if (res) {
+            //     // this.startInit()
+            //     throttle = null
+            //   }
+            // }).catch((err) => {
+            //   console.log('关闭失败')
+            // })
           }, 1000)
         throttle()
       }
@@ -76,8 +77,15 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/clearState`,
     })
-    this.getAllMarkets().then((res) => {
-      this.childInitStacks.map(item => item && item())
+    wss.closeAll(true).then(()=>{
+      dispatch({
+        type: `${modelName}/clearState`,
+      })
+      this.getAllMarkets().then((res) => {
+        this.childInitStacks.map(item => item && item())
+      })
+    }).catch(()=>{
+      console.log('关闭失效----')
     })
   }
 

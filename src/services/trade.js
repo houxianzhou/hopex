@@ -12,6 +12,12 @@ if (MODE === 'mock') {
   require('./socketServer')
 }
 
+//获取用户的认证信息
+export async function getCertificationAll(payload) {
+  return request(`${UserIp0}/gateway/Certification/All`, {
+    query: payload
+  })
+}
 
 //获取盘口区间
 export async function getIntervals(payload) {

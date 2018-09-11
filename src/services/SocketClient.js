@@ -132,7 +132,7 @@ class Wss {
           delete this.sockets[url]
           clearTimeout(this.interval)
           this.interval = setTimeout(() => {
-            console.log(listeners.length, ws.listeners.length, 'websocket订阅长度---------------------')
+            // console.log(listeners.length, ws.listeners.length, 'websocket订阅长度---------------------')
             ws = this.getSocket(name)
             ws.listeners = listeners
             ws.listeners.forEach(item => item.restart && item.restart())
@@ -157,6 +157,7 @@ class Wss {
       const promiseAll = _.values(this.sockets)
       return new Promise((resolve) => {
         let i = 0
+        if (!promiseAll.length) return resolve(true)
         promiseAll.forEach((item = {}) => item.closePromise().then(
           (res) => {
             if (res) {
