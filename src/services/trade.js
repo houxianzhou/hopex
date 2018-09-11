@@ -12,6 +12,30 @@ if (MODE === 'mock') {
   require('./socketServer')
 }
 
+
+// 解除绑定
+export async function doRemoveBindBank(payload) {
+  return request(`${UserIp0}/gateway/Certification/BankUnBind`, {
+    query: payload
+  })
+}
+
+// 银行卡认证
+export async function doVertifyBank(payload) {
+  return request(`${UserIp0}/gateway/Certification/BankVerify`, {
+    method: 'post',
+    body: payload
+  })
+}
+
+//实名认证
+export async function doVertifyIdCard(payload) {
+  return request(`${UserIp0}/gateway/Certification/IdCardVerify`, {
+    method: 'post',
+    body: payload
+  })
+}
+
 //获取用户的认证信息
 export async function getCertificationAll(payload) {
   return request(`${UserIp0}/gateway/Certification/All`, {

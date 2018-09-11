@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, Button, } from '@components'
 import { classNames, _, Patterns, } from '@utils'
-import { errorIcon } from '@assets'
+import { errorIcon2, rightIcon2 } from '@assets'
 import Input from '@routes/Components/Input'
 
 // @connect(({ account, Loading }) => ({
@@ -11,7 +11,12 @@ import Input from '@routes/Components/Input'
 //   // modelName: 'account'
 // }))
 export default class View extends Component {
-  state = {}
+  state = {
+    name: '',
+    card: '',
+    bank: '',
+    bankName: ''
+  }
 
   componentDidMount() {
     this.startInit()
@@ -31,6 +36,9 @@ export default class View extends Component {
 
   changePage = (page) => {
     const { dispatch, modelName } = this.props
+    if (page === 1) {
+      this.getCertificationALL()
+    }
     dispatch({
       type: `${modelName}/changeState`,
       payload: {
@@ -38,6 +46,55 @@ export default class View extends Component {
       }
     })
   }
+
+  vertifyIdCard = () => {
+    const { dispatch, modelName } = this.props
+    const { name, card } = this.state
+    dispatch({
+      type: `${modelName}/doVertifyIdCard`,
+      payload: {
+        name,
+        card
+      }
+    }).then(res => {
+      if (res) {
+        this.changePage(1)
+      }
+    })
+  }
+
+  vertifyBank = () => {
+    const { dispatch, modelName } = this.props
+    const { bank, bankName } = this.state
+    dispatch({
+      type: `${modelName}/doVertifyBank`,
+      payload: {
+        bank,
+        bankName
+      }
+    }).then(res => {
+      if (res) {
+        this.changePage(1)
+      }
+    })
+  }
+
+  removeBindBank = () => {
+    const { dispatch, modelName } = this.props
+    const { bank, bankName } = this.state
+    dispatch({
+      type: `${modelName}/doRemoveBindBank`,
+      payload: {
+        bank,
+        bankName
+      }
+    }).then(res => {
+      if (res) {
+        this.changePage(1)
+      }
+    })
+  }
+
 
   checkAmount = (value, selectOne) => {
     const { changeState } = this
@@ -64,8 +121,15 @@ export default class View extends Component {
 
 
   render() {
-    const { changeState, changePage } = this
-    const { model: { superVertifyPage }, loading, dispatch, modelName, styles } = this.props
+    const { changeState, changePage, vertifyIdCard, vertifyBank, removeBindBank } = this
+    const { name, card, bank, bankName } = this.state
+    const {
+      model: {
+        superVertifyPage,
+        idCard: { verified: verified_idCard = false, realName = '', idCardNo = '' } = {},//实名
+        bank: { verified: verified_bank = false, bankName: bank_Name = '', bankNo = '', owner = '' } = {},//银行卡
+      }, loading, modelName, styles
+    } = this.props
     return (
       <Mixin.Child that={this} >
         <div className={styles.supervertifyform} >
@@ -77,38 +141,83 @@ export default class View extends Component {
                   <li >
                     <div className={styles.label} >实名认证</div >
                     <div className={styles.status} >
-                      <span >未认证</span >
+                      {
+                        verified_idCard ? (
+                          <>
+                            {realName}
+                            <span >{idCardNo}</span >
+                          </>
+                        ) : (
+                          <span >未认证</span >
+                        )
+                      }
+
                       <div className={
                         classNames(
                           styles.statusIcon,
-                          styles.error
                         )
 
-                      } >{errorIcon}</div >
+                      } >{verified_idCard ? rightIcon2 : errorIcon2}</div >
 
                     </div >
-                    <div className={styles.action} onClick={() => {
-                      changePage(2)
-                    }} >认证
-                    </div >
+                    {
+                      verified_idCard ? '' : (
+                        <div className={styles.action} onClick={() => {
+                          changePage(2)
+                        }} >
+                          认证
+                        </div >
+                      )
+                    }
                   </li >
                   <li >
                     <div className={styles.label} >银行卡</div >
                     <div className={styles.status} >
-                      <span >未绑定</span >
+                      {
+                        verified_bank ? (
+                          <>
+                            {owner}
+                            <span >{bank_Name}</span >
+                            <span >{bankNo}</span >
+                          </>
+                        ) : (
+                          '未绑定'
+                        )
+                      }
                       <div className={
                         classNames(
                           styles.statusIcon,
-                          styles.error
                         )
-                      } >{errorIcon}</div >
+                      } >{verified_bank ? rightIcon2 : errorIcon2}</div >
 
                     </div >
-                    <div className={styles.action} onClick={() => {
-                      changePage(3)
-                    }} >
-                      绑定
-                    </div >
+                    {
+                      verified_idCard ? (
+                        verified_bank ? (
+                          <div className={
+                            classNames(
+                              styles.action,
+                              styles.removebind
+                            )
+                          } >
+                            <Button
+                              loading={loading.effects[`${modelName}/doRemoveBindBank`]}
+                              onClick={() => {
+                                removeBindBank()
+                              }} >
+                              解除绑定
+                            </Button >
+
+                          </div >
+                        ) : (
+                          <div className={styles.action} onClick={() => {
+                            changePage(3)
+                          }} >
+                            绑定
+                          </div >
+                        )
+                      ) : null
+                    }
                   </li >
                 </ul >
               </>
@@ -125,9 +234,9 @@ export default class View extends Component {
                     <div className={styles.input} >
                       <Input
                         placeholder={'请填写姓名'}
-                        value={''}
+                        value={name}
                         onChange={(value) => {
-                          changeState({ emailVerificationCode: value })
+                          changeState({ name: value })
                         }} >
                       </Input >
                     </div >
@@ -137,9 +246,9 @@ export default class View extends Component {
                     <div className={styles.input} >
                       <Input
                         placeholder={'请填写身份证号'}
-                        value={''}
+                        value={card}
                         onChange={(value) => {
-                          changeState({ emailVerificationCode: value })
+                          changeState({ card: value })
                         }} >
                       </Input >
                     </div >
@@ -153,8 +262,9 @@ export default class View extends Component {
                       )
                     } >
                       <Button
-                        loading={loading.effects[`${modelName}/doWithdrawApply`]}
+                        loading={loading.effects[`${modelName}/doVertifyIdCard`]}
                         onClick={() => {
+                          vertifyIdCard()
                         }} >
                         确认
                       </Button >
@@ -173,7 +283,7 @@ export default class View extends Component {
                   <li >
                     <div className={styles.label} >持卡人姓名</div >
                     <div >
-                      某某
+                      {realName}
                     </div >
                   </li >
                   <li >
@@ -181,9 +291,9 @@ export default class View extends Component {
                     <div className={styles.input} >
                       <Input
                         placeholder={'请填写银行卡号'}
-                        value={''}
+                        value={bank}
                         onChange={(value) => {
-                          changeState({ emailVerificationCode: value })
+                          changeState({ bank: value })
                         }} >
                       </Input >
                     </div >
@@ -193,9 +303,9 @@ export default class View extends Component {
                     <div className={styles.input} >
                       <Input
                         placeholder={'请填写银行名称，例如“中国银行”'}
-                        value={''}
+                        value={bankName}
                         onChange={(value) => {
-                          changeState({ emailVerificationCode: value })
+                          changeState({ bankName: value })
                         }} >
                       </Input >
                     </div >
@@ -209,8 +319,9 @@ export default class View extends Component {
                       )
                     } >
                       <Button
-                        loading={loading.effects[`${modelName}/doWithdrawApply`]}
+                        loading={loading.effects[`${modelName}/doVertifyBank`]}
                         onClick={() => {
+                          vertifyBank()
                         }} >
                         确认
                       </Button >

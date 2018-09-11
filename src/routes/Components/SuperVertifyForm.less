@@ -1,7 +1,7 @@
 @import '~@styles/index.less';
 @import '~@routes/Components/common.less';
 
-.supervertifyform{
+.supervertifyform {
   .Input_Title_Button_Select();
   .title {
     margin-bottom: 50px;
@@ -20,17 +20,16 @@
           align-items: center;
           display: flex;
           width: 45%;
-          .statusIcon {
+          .statusIcon, span {
             margin-left: 23px;
-            width: 17px;
-            height: 17px;
-            border-radius: 17px;
-            &.error {
-              background: rgba(218, 115, 115, .2);
-            }
           }
         }
         &.action {
+          &.removebind {
+            color: @c_active_yellow;
+            border: 1px solid #E2B96F;
+            background-image: unset;
+          }
           display: flex;
           justify-content: center;
           align-items: center;

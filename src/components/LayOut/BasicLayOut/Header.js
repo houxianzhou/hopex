@@ -10,7 +10,7 @@ import * as styles from './index.less'
 
 @connect(({ home, user, theme, loading, dispatch }) => ({
   home,
-  modelName1: 'home',
+  modelName: 'home',
   modelName2: 'user',
   modelName3: 'theme',
   theme,
@@ -154,8 +154,6 @@ export default class View extends Component {
                         }
                       </li >
                     )
-
-
                   )
                 })
               }

@@ -188,6 +188,47 @@ export const netWorkBest = (
   </svg >
 )
 
+export const errorIcon2 = (
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="22px" height="22px"
+       viewBox="0 0 22 22" version="1.1" >
+    <title >cha</title >
+    <desc >Created with Sketch.</desc >
+    <defs />
+    <g id="06_我的账户" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+      <g id="01-我的账户" transform="translate(-1098.000000, -466.000000)" >
+        <g id="Group-11" transform="translate(1098.000000, 466.000000)" >
+          <g id="Group-4" >
+            <circle id="Oval-4" fill="#FBF1F1" cx="11" cy="11" r="11" />
+            <path
+              d="M12,10 L16,10 C16.5522847,10 17,10.4477153 17,11 C17,11.5522847 16.5522847,12 16,12 L12,12 L12,16 C12,16.5522847 11.5522847,17 11,17 C10.4477153,17 10,16.5522847 10,16 L10,12 L6,12 C5.44771525,12 5,11.5522847 5,11 C5,10.4477153 5.44771525,10 6,10 L10,10 L10,6 C10,5.44771525 10.4477153,5 11,5 C11.5522847,5 12,5.44771525 12,6 L12,10 Z"
+              id="Combined-Shape" fill="#DA7373"
+              transform="translate(11.000000, 11.000000) rotate(45.000000) translate(-11.000000, -11.000000) " />
+          </g >
+        </g >
+      </g >
+    </g >
+    <script xmlns="" />
+  </svg >
+)
+
+export const rightIcon2 = (
+  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="22px" height="22px" viewBox="0 0 22 22" version="1.1">
+    <title>gou</title>
+    <desc>Created with Sketch.</desc>
+    <defs/>
+    <g id="06_我的账户" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+      <g id="01-我的账户" transform="translate(-818.000000, -365.000000)">
+        <g id="Group-4" transform="translate(818.000000, 365.000000)">
+          <g id="Group-10">
+            <circle id="Oval-4" fill="#EEF8F5" cx="11" cy="11" r="11"/>
+            <path d="M12,14 L12,5 C12,4.44771525 12.4477153,4 13,4 C13.5522847,4 14,4.44771525 14,5 L14,15 C14,15.5522847 13.5522847,16 13,16 L8,16 C7.44771525,16 7,15.5522847 7,15 C7,14.4477153 7.44771525,14 8,14 L12,14 Z" id="Combined-Shape" fill="#56BC9D" transform="translate(10.500000, 10.000000) rotate(45.000000) translate(-10.500000, -10.000000) "/>
+          </g>
+        </g>
+      </g>
+    </g>
+    <script xmlns=""/></svg>
+)
+
 export const back = (
   <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="23px" height="18px"
        viewBox="0 0 23 18" version="1.1" >
