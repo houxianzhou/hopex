@@ -5,7 +5,7 @@ import modelExtend from '@models/modelExtend'
 import {
   getAssetSummary, getAssetAddress, getWithdrawParameter,
   SendEmailToWithdraw, getAssetRecord, doWithdrawApply,
-  getExchangeRate, getBuyParameter, buyOTC
+  getExchangeRate, getBuyParameter, buyOTC, getOrder
 } from '@services/trade'
 import { GetUserInfo } from '@services/user'
 
@@ -38,10 +38,8 @@ export default joinModel(modelExtend, {
       }
     ],
 
-    address: '',// BTC存款地址
-    CodeImage: '',//存款二维码地址
-    record: [],//资金记录
-    recordTotalPage: '',//资金记录总页数
+    record: [],// 数字货币资金记录
+    recordTotalPage: '',// 数字货币资金记录总页数
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -91,6 +89,27 @@ export default joinModel(modelExtend, {
     },
 
     //----------------------------------------------------------------------------------法币
+
+    // 人民币购买数字货币
+    * getOrder({ payload = {} }, { call, put, select }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {},
+          powerMsg: '获取订单',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getOrder, { ...payload }))
+        if (resOk(res)) {
+          const result = _.get(res, 'data.result')
+          return result
+        }
+      }
+    },
+
     // 人民币购买数字货币
     * buyOTC({ payload = {} }, { call, put, select }) {
       const repayload = yield (asyncPayload(yield put({
@@ -106,7 +125,6 @@ export default joinModel(modelExtend, {
       })))
       if (repayload) {
         const res = getRes(yield call(buyOTC, repayload))
-        console.log(res, '----------')
         if (resOk(res)) {
           const result = _.get(res, 'data')
           if (result) {

@@ -12,9 +12,18 @@ if (MODE === 'mock') {
   require('./socketServer')
 }
 
+
+// 获取订单
+export async function getOrder(payload) {
+  return request(`${UserIp0}/User/otc/GetOrders`, {
+    query: payload
+  })
+}
+
+
 // 人民币购买数字货币
 export async function buyOTC(payload) {
-  return request(`${UserIp0}/user/otc/Buy`, {
+  return request(`${UserIp0}/User/otc/Buy`, {
     method: 'post',
     body: payload
   })
@@ -23,14 +32,14 @@ export async function buyOTC(payload) {
 
 // 获取法币买入数字货币参数
 export async function getBuyParameter(payload) {
-  return request(`${UserIp0}/user/otc/GetBuyParameter`, {
+  return request(`${UserIp0}/User/otc/GetBuyParameter`, {
     query: payload
   })
 }
 
 // 获取对人民币汇率
 export async function getExchangeRate(payload) {
-  return request(`${UserIp0}/user/otc/GetToCNYExchangeRate`, {
+  return request(`${UserIp0}/User/otc/GetToCNYExchangeRate`, {
     query: payload
   })
 }

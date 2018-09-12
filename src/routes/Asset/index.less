@@ -1,12 +1,39 @@
 @import '~@styles/index.less';
 @import '~@routes/Components/common.less';
 
-.Buy {
+.buy {
   .Input_Title_Button_Select();
+  .tableheader {
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #EBEBEB;
+    span {
+      color: @c_active_yellow;
+    }
+  }
+  :global {
+    .table {
+      color: black;
+      :global {
+        .tbody {
+          .tr {
+            height: @header2;
+            &:hover {
+              background: @tr_hover !important;
+            }
+            &.even {
+              background: #F6F8FA;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .assetrecord {
-
   .Input_Title_Button_Select();
   .tablec {
     margin-top: 40px;

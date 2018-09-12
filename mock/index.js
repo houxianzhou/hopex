@@ -917,6 +917,34 @@ export default delay({
 
   },
 
+  //个高级认证获取实名认证和银行卡的信息
+  'Get /mock/api/v1/user/otc/GetToCNYExchangeRate': (req, res) => {
+    const { coinCode } = req.query
+    res.send(
+      {
+        "data": {
+          "idCard": {
+            "realName": "魏晓一",
+            "idCardNo": "421***********1750",
+            "name": "实名认证",
+            "code": "IdCard",
+            "verified": true
+          },
+          "bank": {
+            "idCardVerified": true,
+            "owner": "魏晓一",
+            "bankNo": "**** **** **** 0899",
+            "bankName": "CMB-招商银行",
+            "name": "银行卡",
+            "code": "Bank",
+            "verified": true
+          }
+        }, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+
+  },
+
 }, 100)
 
 

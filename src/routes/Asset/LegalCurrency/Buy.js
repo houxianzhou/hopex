@@ -5,6 +5,7 @@ import { Mixin, Button, Table } from '@components'
 import { classNames, _, Patterns, } from '@utils'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
 import Input from '@routes/Components/Input'
+import { getColumns } from '@routes/Components/LegalAssetRecordTable'
 
 import styles from '@routes/Asset/index.less'
 
@@ -20,7 +21,10 @@ export default class View extends Component {
     const { model: { detailLegal } } = this.props
     this.state = {
       active: detailLegal[0].assetName,
-      rmbAmount: ''
+      rmbAmount: '',
+      page: 1,
+      pageSize: 10,
+      record: []
     }
   }
 
@@ -44,6 +48,7 @@ export default class View extends Component {
   getParams = () => {
     this.getExchangeRate()
     this.getBuyParameter()
+    this.getOrder()
   }
 
   getExchangeRate = () => {
@@ -65,6 +70,24 @@ export default class View extends Component {
       type: `${modelName}/getBuyParameter`,
       payload: {
         coinCode: active,
+      }
+    })
+  }
+
+  getOrder = () => {
+    const { dispatch, modelName } = this.props
+    const { page, pageSize } = this.state
+    dispatch({
+      type: `${modelName}/getOrder`,
+      payload: {
+        page,
+        limit: pageSize
+      }
+    }).then(res => {
+      if (res) {
+        this.changeState({
+          record: res
+        })
       }
     })
   }
@@ -108,77 +131,17 @@ export default class View extends Component {
 
 
   render() {
-    const { changeState, buyOTC} = this
-    const { model: { detailLegal = [], }, user: { userInfo: { email = '' } = {} } = {}, loading, modelName } = this.props
-    const { active, rmbAmount } = this.state
+    const { changeState, buyOTC } = this
+    const { model: { detailLegal = [], }, user: { userInfo: { email = '' } = {} } = {}, theme: { calculateTableHeight }, loading, modelName } = this.props
+    const { active, rmbAmount, record } = this.state
     const selectList = detailLegal.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
     const selectItem = selectList.filter((item = {}) => item.label === active)[0]
     const selectOne = detailLegal.filter((item = {}) => item.assetName === active)[0]
     const isNotAllow = () => {
       return selectOne.allowWithdraw === false || selectOne.isValid === false
     }
-    const columns = [
-      {
-        title: '时间',
-        dataIndex: 'createdTime',
-        width: 100
-      },
-      {
-        title: '类型',
-        dataIndex: 'type',
-        width: 10
-      },
-      {
-        title: '金额',
-        dataIndex: 'amount',
-        width: 60
-      },
-      {
-        title: '地址',
-        dataIndex: 'addrUrl',
-        render: (value, record = {}) => (
-          {
-            value: (<span className={styles.overflowHidden} onClick={() => {
-              window.open(record.addrUrl)
-            }} >{record.addr}</span >),
-            className: 'blue'
-          }
-        )
-      },
-      {
-        title: 'TxHash',
-        dataIndex: 'txid',
-        render: (value, record = {}) => (
-          {
-            value: (<span className={styles.overflowHidden} onClick={() => {
-              window.open(record.txidUrl)
-            }} >{record.txid}</span >),
-            className: 'blue'
-          }
-        )
-      },
-      {
-        title: '状态',
-        dataIndex: 'status',
-        width: 30,
-        render: (value) => {
-          let cl
-          switch (value) {
-            case '进行中':
-              cl = 'blue'
-              break
-            case '已拒绝':
-              cl = 'red'
-              break
-          }
-          return {
-            value,
-            className: cl
-          }
-        }
-      },
-    ]
-    const dataSource = [{}, {}]
+    const columns = getColumns()
+    const dataSource = record
     const tableProp = {
       loading: loading.effects[`${modelName}/getAssetRecord`],
       className: styles.tableContainer,
@@ -187,7 +150,7 @@ export default class View extends Component {
     }
     return (
       <Mixin.Child that={this} >
-        <div className={styles.Buy} >
+        <div className={styles.buy} >
           <div className={styles.title} >买入数字货币</div >
           <div className={styles.moneytype} >
             币种
@@ -250,11 +213,13 @@ export default class View extends Component {
               </div >
             </li >
           </ul >
-          <div >
+          <div className={styles.tableheader} >
             <div >最近10条资金记录</div >
-            <div >完整资金记录</div >
+            <div >
+              <span >完整资金记录</span >
+            </div >
           </div >
-          <div ><Table {...tableProp} /></div >
+          <div style={{ height: calculateTableHeight(dataSource) }} ><Table {...tableProp} /></div >
         </div >
       </Mixin.Child >
     )
