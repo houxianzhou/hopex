@@ -176,7 +176,7 @@ export default joinModel(modelExtend, {
       }
     },
 
-    // 获取法币买入数字货币参数
+    // 获取法币卖出数字货币参数
     * getSellParameter({ payload = {} }, { call, put, select }) {
       const { coinCode = '', } = payload
       const repayload = yield (asyncPayload(yield put({
@@ -243,9 +243,10 @@ export default joinModel(modelExtend, {
             const detailLegal = yield select(({ asset: { detailLegal = [] } }) => detailLegal) || []
             const detailLegalNew = detailLegal.map((item = {}) => {
               if (item.assetName === coinCode) {
+                const arrow = (priceArrow === 'BUY' ? 'exchangeRate' : 'sell_exchangeRate')
                 return {
                   ...item,
-                  exchangeRate: result
+                  [arrow]: result
                 }
               }
               return item

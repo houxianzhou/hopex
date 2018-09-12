@@ -11,6 +11,7 @@ const other = {
   "ret": "0"
 }
 
+
 export default delay({
   // 合约列表
   'Get /mock/api/v1/gateway/Home/Contracts': (req, res) => {
@@ -917,31 +918,147 @@ export default delay({
 
   },
 
-  //个高级认证获取实名认证和银行卡的信息
-  'Get /mock/api/v1/user/otc/GetToCNYExchangeRate': (req, res) => {
-    const { coinCode } = req.query
+  //费率
+  'Get /mock/api/v1/User/otc/GetToCNYExchangeRate': (req, res) => {
+    const { coinCode, priceArrow } = req.query
+    let data
+    switch (coinCode) {
+      case 'BTC': {
+        data = 1
+      }
+        break
+      case 'ETH': {
+        data = 2
+      }
+        break
+      case 'USDT': {
+        data = 3
+      }
+        break
+    }
+    switch (priceArrow) {
+      case 'BUY': {
+        data = data + 'buy'
+      }
+        break
+      case 'SELL': {
+        data = data + 'sell'
+      }
+    }
+    res.send(
+      {
+        "data": data, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+
+  },
+
+  //用户购买参数
+  'Get /mock/api/v1/User/otc/GetBuyParameter': (req, res) => {
+    const { coinCode, priceArrow } = req.query
+    let data
+    switch (coinCode) {
+      case 'BTC': {
+        data = 1
+      }
+        break
+      case 'ETH': {
+        data = 2
+      }
+        break
+      case 'USDT': {
+        data = 3
+      }
+        break
+    }
     res.send(
       {
         "data": {
-          "idCard": {
-            "realName": "魏晓一",
-            "idCardNo": "421***********1750",
-            "name": "实名认证",
-            "code": "IdCard",
-            "verified": true
-          },
-          "bank": {
-            "idCardVerified": true,
-            "owner": "魏晓一",
-            "bankNo": "**** **** **** 0899",
-            "bankName": "CMB-招商银行",
-            "name": "银行卡",
-            "code": "Bank",
-            "verified": true
-          }
+          "minBuyRMB": "100.00",
+          "maxBuyRMB": "500000.00",
+          "hasOpenBuyOrder": false,
+          "forbidden": false,
+          "idCardVerified": true,
+          "realName": "魏晓一",
+          "allowLegalBuy": true,
+          "remarks": [`* 最小单次买入金额${data}人民币。`, `* 最大单次买入金额${data}人民币。`, "* 付款时使用的银行卡持卡人姓名必须与实名认证一致"]
         }, "ret": 0, "errCode": "", "errStr": ""
       }
     )
+
+  },
+
+  //订单记录
+  'Get /mock/api/v1/User/otc/GetOrders': (req, res) => {
+    res.send(
+      {
+        "data": {
+          "totalCount": 1,
+          "page": 1,
+          "pageSize": 10,
+          "result": [{
+            "id": 24,
+            "amount": "+0.00223185BTC",
+            "no": "OB201809120022",
+            "orderType": "Buy",
+            "orderTypeDisplay": "买入",
+            "rmbAmount": "100.00CNY",
+            "bankNo": "--",
+            "orderStatus": "Processing",
+            "orderStatusDisplay": "进行中",
+            "time": "2018-09-12 20:31:36",
+            "detailUrl": "https://user.hopex.com/otc/order?orderId=24"
+          }]
+        }, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+
+  },
+
+  //卖出参数
+  'Get /mock/api/v1/User/otc/GetSellParameter': (req, res) => {
+    const { coinCode, priceArrow } = req.query
+    let data
+    switch (coinCode) {
+      case 'BTC': {
+        data = 1
+      }
+        break
+      case 'ETH': {
+        data = 2
+      }
+        break
+      case 'USDT': {
+        data = 3
+      }
+        break
+    }
+    res.send(
+      {
+        "data": {
+          "userEmail": "xiaoyi.wei@bcsystech.com",
+          "allowLegalSell": true,
+          "idCardVerified": true,
+          "bankVerified": true,
+          "realName": "魏晓一",
+          "bankName": "CMB-招商银行",
+          "bankNo": "**** **** **** 0899",
+          "forbidden": false,
+          "minSellAmount": "0.00100000",
+          "maxSellAmount": "573.49949427",
+          "enableTwoFactories": true,
+          "changePwdIn24h": false,
+          "disabledTwoFactoriesIn24h": false,
+          "remarks": [`* 最小单次卖出数量${data}BTC。`]
+        }, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+
+  },
+
+  //买入
+  'post /mock/api/v1/User/otc/Buy': (req, res) => {
+
 
   },
 

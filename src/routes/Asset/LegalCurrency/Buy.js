@@ -292,13 +292,13 @@ export default class View extends Component {
                   <li >
                     <div className={styles.label} >银行卡</div >
                     <div >
-                      {selectOne.sell_realName}<span>{selectOne.sell_bankNo}</span>
+                      {selectOne.sell_realName}<span >{selectOne.sell_bankNo}</span >
                     </div >
                   </li >
                   <li >
                     <div className={styles.label} >汇率</div >
                     <div >
-                      1{active} ≈ {selectOne.exchangeRate} 人民币
+                      1{active} ≈ {selectOne.sell_exchangeRate} 人民币
                     </div >
                   </li >
 
