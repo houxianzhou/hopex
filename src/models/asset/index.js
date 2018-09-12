@@ -4,7 +4,8 @@ import { Toast } from '@components'
 import modelExtend from '@models/modelExtend'
 import {
   getAssetSummary, getAssetAddress, getWithdrawParameter,
-  SendEmailToWithdraw, getAssetRecord, doWithdrawApply
+  SendEmailToWithdraw, getAssetRecord, doWithdrawApply,
+  getExchangeRate, getBuyParameter, buyOTC
 } from '@services/trade'
 import { GetUserInfo } from '@services/user'
 
@@ -17,15 +18,25 @@ export default joinModel(modelExtend, {
     detailAll: [],//交易页面钱包
     summary: {},//资产管理页面钱包明细
     detail: [],//资产管理页面钱包明细
-    detailDigital: [
+    detailDigital: [//资产管理数字货币,只有两个
       {
         assetName: 'BTC'
       },
       {
         assetName: 'ETH'
       }
-    ],//资产管理数字货币
-    detailLegal: [],//资产管理页面法币
+    ],
+    detailLegal: [//资产管理页面法币，三个都要
+      {
+        assetName: 'BTC'
+      },
+      {
+        assetName: 'ETH'
+      },
+      {
+        assetName: 'USDT'
+      }
+    ],
 
     address: '',// BTC存款地址
     CodeImage: '',//存款二维码地址
@@ -38,6 +49,7 @@ export default joinModel(modelExtend, {
   },
 
   effects: {
+
     // 获取用户钱包明细
     * getAssetSummary({ payload = {} }, { call, put, select }) {
       const { fetchAllAsset } = payload //此参数用来区分合约交易页面的钱包模块，那个需要所有的钱包，这里只有两个钱包
@@ -77,6 +89,119 @@ export default joinModel(modelExtend, {
         return Promise.resolve({ detail })
       }
     },
+
+    //----------------------------------------------------------------------------------法币
+    // 人民币购买数字货币
+    * buyOTC({ payload = {} }, { call, put, select }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {
+            ...payload
+          },
+          powerMsg: '人民币购买数字货币',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(buyOTC, repayload))
+        console.log(res, '----------')
+        if (resOk(res)) {
+          const result = _.get(res, 'data')
+          if (result) {
+            window.location.href = result
+          }
+        }
+      }
+    },
+
+    // 获取法币买入数字货币参数
+    * getBuyParameter({ payload = {} }, { call, put, select }) {
+      const { coinCode = '', } = payload
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {},
+          powerMsg: '获取法币买入数字货币参数',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getBuyParameter, {
+          coinCode,
+        }))
+        if (resOk(res)) {
+          const result = _.get(res, 'data')
+          if (result) {
+            const { minBuyRMB, maxBuyRMB, hasOpenBuyOrder, forbidden, idCardVerified, realName, allowLegalBuy, remarks } = result
+            const detailLegal = yield select(({ asset: { detailLegal = [] } }) => detailLegal) || []
+            const detailLegalNew = detailLegal.map((item = {}) => {
+              if (item.assetName === coinCode) {
+                return {
+                  ...item,
+                  ...result
+                }
+              }
+              return item
+            })
+            yield put({
+              type: 'changeState',
+              payload: {
+                detailLegal: detailLegalNew
+              }
+            })
+            return result
+          }
+        }
+      }
+    },
+
+    // 获取对人民币汇率
+    * getExchangeRate({ payload = {} }, { call, put, select }) {
+      const { coinCode = '', priceArrow = '' } = payload
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {},
+          powerMsg: '获取对人民币汇率',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getExchangeRate, {
+          coinCode,
+          priceArrow
+        }))
+        if (resOk(res)) {
+          const result = _.get(res, 'data')
+          if (result) {
+            const detailLegal = yield select(({ asset: { detailLegal = [] } }) => detailLegal) || []
+            const detailLegalNew = detailLegal.map((item = {}) => {
+              if (item.assetName === coinCode) {
+                return {
+                  ...item,
+                  exchangeRate: result
+                }
+              }
+              return item
+            })
+            yield put({
+              type: 'changeState',
+              payload: {
+                detailLegal: detailLegalNew
+              }
+            })
+            return result
+          }
+        }
+      }
+    },
+
+
+    //----------------------------------------------------------------------------------数字货币
 
     // 获取存款钱包地址
     * getAssetAddress({ payload = {} }, { call, put, select }) {
@@ -124,7 +249,7 @@ export default joinModel(modelExtend, {
       }
     },
 
-    // 获取提现参数
+    // 数字货币获取提现参数
     * getWithdrawParameter({ payload = {} }, { call, put, select }) {
       const { asset } = payload
       const repayload = yield (asyncPayload(yield put({
@@ -213,7 +338,7 @@ export default joinModel(modelExtend, {
       }
     },
 
-    // 提现申请
+    // 数字货币提现申请
     * doWithdrawApply({ payload = {} }, { call, put, select }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
@@ -245,8 +370,7 @@ export default joinModel(modelExtend, {
       }
     },
 
-
-    // 资金记录
+    // 数字货币资金记录
     * getAssetRecord({ payload = {} }, { call, put, select }) {
       const { page = '1' } = payload
       const repayload = yield (asyncPayload(yield put({
@@ -277,8 +401,7 @@ export default joinModel(modelExtend, {
           }
         }
       }
-    }
-
+    },
 
   },
   reducers: {},

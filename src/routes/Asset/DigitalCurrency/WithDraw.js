@@ -252,7 +252,6 @@ export default class View extends Component {
                         <Button
                           loading={loading.effects[`${modelName}/SendEmailToWithdraw`]}
                           onClick={() => {
-                            console.log('hahahha')
                             this.SendEmailToWithdraw()
                           }} >
                           提交

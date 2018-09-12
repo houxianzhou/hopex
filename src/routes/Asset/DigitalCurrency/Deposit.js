@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import ClipboardJS from 'clipboard'
 import { Mixin, } from '@components'
-import { classNames, _, } from '@utils'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
 
 import styles from '@routes/Asset/index.less'
