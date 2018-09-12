@@ -1,10 +1,20 @@
 @import '~@styles/index.less';
 @import '~@routes/Components/common.less';
+@import '~@routes/Components/SuperVertifyForm.less';
+
+:global(.supervertifyform) {
+  padding: 0;
+}
 
 .buy {
   .Input_Title_Button_Select();
-  .page1{
-    .title{
+  .desc {
+    height: 72px;
+    min-height: 72px;
+  }
+
+  .page1 {
+    .title {
       margin-bottom: 13px;
     }
   }
@@ -281,6 +291,11 @@
       }
     }
   }
+}
+
+.idCardVertify_modal {
+  background: white;
+  padding-top: 50px;
 }
 
 .googleCodeOpen_Modal {

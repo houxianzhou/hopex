@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { PATH } from "@constants"
-import { Mixin, CountDown, Button, RouterGo } from '@components'
+import { Mixin, CountDown, Button, } from '@components'
 import { classNames, _, Patterns, formatNumber } from '@utils'
-import MainModal from '@routes/Components/MainModal'
 import Input from '@routes/Components/Input'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
+import GoogleCodeOpenModal from '@routes/Components/GoogleCodeOpenModal'
 
 import styles from '@routes/Asset/index.less'
 
@@ -302,7 +301,7 @@ export default class View extends Component {
                     </div >
                   </li >
                   <li >
-                    <div className={styles.label} >谷歌验证器</div >
+                    <div className={styles.label} >谷歌验证码</div >
                     <div className={styles.input} >
                       <Input
                         value={googleCode}
@@ -338,7 +337,7 @@ export default class View extends Component {
           }
 
           {
-            name === 'googleCodeOpen' ? <RenderModal {...this.props} /> : null
+            name === 'googleCodeOpen' ? <GoogleCodeOpenModal {...this.props} /> : null
           }
 
         </div >
@@ -347,46 +346,5 @@ export default class View extends Component {
   }
 }
 
-
-class RenderModal extends Component {
-  render() {
-    const props = {
-      ...this.props
-    }
-    const { closeModal, } = this.props
-    return (
-      <MainModal {...props}  >
-        <div className={styles.googleCodeOpen_Modal} >
-          <div className={styles.content} >
-            请先开启谷歌验证
-          </div >
-          <div className={styles.buttons} >
-
-            <div
-              onClick={() => {
-                closeModal()
-              }}
-              className={styles.cancel}
-            >
-              取消
-            </div >
-            <div
-              className={styles.confirm}
-              onClick={() => {
-                closeModal()
-              }}
-            >
-              <Button >
-                <RouterGo.SwitchRoute value={PATH.myaccount} >去开启</RouterGo.SwitchRoute >
-              </Button >
-
-            </div >
-          </div >
-        </div >
-
-      </MainModal >
-    )
-  }
-}
 
 

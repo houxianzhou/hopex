@@ -23,7 +23,7 @@ export default [
   {
     name: '资金管理',
     path: '/asset',
-    model: ['asset/index', 'history/index', 'home/index'],
+    model: ['asset/index', 'history/index', 'home/index', 'account/index'],
     route: 'Asset',
     authority: [1]
   },

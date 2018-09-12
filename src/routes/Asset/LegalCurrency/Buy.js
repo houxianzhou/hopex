@@ -1,18 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { PATH } from "@constants"
-import { Mixin, Button, Table } from '@components'
+import { Mixin, Button, Table, Toast } from '@components'
 import { classNames, _, Patterns, isEqual } from '@utils'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
 import Input from '@routes/Components/Input'
+import MainModal from '@routes/Components/MainModal'
 import { getColumns } from '@routes/Components/LegalAssetRecordTable'
+import { default as SuperVertifyForm } from '@routes/Components/SuperVertifyForm'
+import GoogleCodeOpenModal from '@routes/Components/GoogleCodeOpenModal'
 
 import styles from '@routes/Asset/index.less'
 
-@connect(({ modal, asset, user, Loading }) => ({
+@connect(({ modal, asset, user, Loading, account }) => ({
   user,
   model: asset,
   modal,
+  account,
   loading: Loading
 }))
 export default class View extends Component {
@@ -21,7 +25,10 @@ export default class View extends Component {
     const { model: { detailLegal } } = this.props
     this.state = {
       active: detailLegal[0].assetName,
-      rmbAmount: '',
+      buy_rmbAmount: '',
+      buy_rmbAmount_errMsg: '',
+      sell_rmbAmount: '',
+      sell_rmbAmount_errMsg: '',
       page: 1,
       pageSize: 10,
       record: []
@@ -32,50 +39,52 @@ export default class View extends Component {
     this.startInit()
   }
 
-  startInit = () => {
-    this.getBuyParams()
-    this.getSellParams()
-  }
-
-  componentDidUpdate(prevProps) {
-    const { model: { buyPage: prevBuyPage } } = prevProps
-    const { model: { buyPage, detailLegal = [] } } = this.props
-
-    if (!isEqual(prevBuyPage, buyPage) && buyPage) {
-      this.changeState({
-        active: detailLegal[0].assetName
-      }, () => {
-        if (buyPage === 1) {
-          this.getBuyParams()
-        } else if (buyPage === 2) {
-          this.getSellParams()
-        }
-      })
-
-    }
-  }
-
-
   changeMoney = (payload) => {
-    this.changeState({ active: payload },
+    this.changeState({
+        active: payload,
+        buy_rmbAmount: '',
+        buy_rmbAmount_errMsg: '',
+        sell_rmbAmount: '',
+        sell_rmbAmount_errMsg: '',
+      },
       () => {
         this.startInit()
       }
     )
   }
 
-  getBuyParams = () => {
+  startInit = () => {
+    this.doBuy()
+    this.doSell()
+  }
+
+  componentDidUpdate(prevProps) {
+    const { model: { buyPage: prevBuyPage } } = prevProps
+    const { model: { buyPage, detailLegal = [] } } = this.props
+    if (!isEqual(prevBuyPage, buyPage) && buyPage) {
+      this.changeState({
+        active: detailLegal[0].assetName
+      }, () => {
+        if (buyPage === 1) {
+          this.doBuy()
+        } else if (buyPage === 2) {
+          this.doSell()
+        }
+      })
+    }
+  }
+
+  doBuy = () => {
     this.getExchangeRate('BUY')
     this.getBuyParameter()
     this.getOrder()
   }
 
-  getSellParams = () => {
+  doSell = () => {
     this.getExchangeRate('SELL')
     this.getSellParameter()
     this.getOrder()
   }
-
 
   getBuyParameter = () => {
     const { dispatch, modelName } = this.props
@@ -129,48 +138,179 @@ export default class View extends Component {
     })
   }
 
+  checkAllConditions = (type, selectOne = {}) => {
+    const { openModal, dispatch, } = this.props
+    let result = false
+    const {
+      hasOpenBuyOrder, forbidden, allowLegalBuy, idCardVerified,
+      sell_forbidden, sell_allowLegalSell, sell_idCardVerified, sell_bankVerified,
+      sell_changePwdIn24h, sell_disabledTwoFactoriesIn24h, sell_enableTwoFactories
+
+    } = selectOne
+    if (type === 'buy') {
+      if (hasOpenBuyOrder) {
+        return openModal({
+          name: 'hasOpenOrder',
+          data: 'buy'
+        })
+      } else if (forbidden) {
+        return Toast.tip('账户被禁用')
+      } else if (!allowLegalBuy) {
+        return Toast.tip('账户不允许法币买入数字货币')
+      } else if (!idCardVerified) {
+        dispatch({
+          type: `account/changeState`,
+          payload: {
+            superVertifyPage: 4
+          }
+        })
+        return openModal({
+          name: 'idCardVertify'
+        })
+      }
+
+    } else {
+      if (sell_forbidden) {
+        return Toast.tip('账户被禁用')
+      } else if (!sell_allowLegalSell) {
+        return Toast.tip('账户不允许法币卖出数字货币')
+      } else if (!sell_idCardVerified) {
+        dispatch({
+          type: `account/changeState`,
+          payload: {
+            superVertifyPage: 4
+          }
+        })
+        return openModal({
+          name: 'idCardVertify',
+          data: 'sell'
+        })
+      } else if (!sell_bankVerified) {
+        dispatch({
+          type: `account/changeState`,
+          payload: {
+            superVertifyPage: 5
+          }
+        })
+        return openModal({
+          name: 'idCardVertify',
+          data: 'sell'
+        })
+      } else if (sell_changePwdIn24h) {
+        return Toast.tip('修改登录密码后24小时内不能卖出数字货币')
+      } else if (sell_disabledTwoFactoriesIn24h) {
+        return Toast.tip('关闭谷歌验证后24小时内不能卖出数字货币')
+      } else if (!sell_enableTwoFactories) {
+        return openModal({
+          name: 'googleCodeOpen',
+        })
+      }
+    }
+    return true
+  }
+
   buyOTC = () => {
     const { dispatch, modelName } = this.props
-    const { active, rmbAmount } = this.state
+    const { active, buy_rmbAmount } = this.state
     dispatch({
       type: `${modelName}/buyOTC`,
       payload: {
         coinCode: active,
-        rmbAmount,
+        rmbAmount: buy_rmbAmount,
         returnUrl: window.location.href
       }
     })
   }
 
+  BeforesellOTCSendMail = (selectOne = {}) => {
+    const { dispatch, modelName } = this.props
+    const { email, sell_realName, sell_bankName, sell_bankNo } = selectOne
+    const { sell_rmbAmount, active } = this.state
+    dispatch({
+      type: `${modelName}/BeforesellOTCSendMail`,
+      payload: {
+        email,
+        coinCode: active,
+        amount: sell_rmbAmount,
+        rmbAmount: '',
+        realName: sell_rmbAmount,
+        bankName: sell_bankName,
+        bankNo: sell_bankNo
+      }
+    }).then(res => {
+      if (res) {
 
-  checkAmount = (value, selectOne) => {
+      }
+    })
+  }
+
+  sellOTC = () => {
+    const { dispatch, modelName } = this.props
+    const { active, sell_rmbAmount } = this.state
+    dispatch({
+      type: `${modelName}/sellOTC`,
+      payload: {
+        coinCode: active,
+        amount: sell_rmbAmount,
+      }
+    })
+  }
+
+  doCheckBuy = (value, selectOne) => {
     const { changeState } = this
     if (Patterns.decimalNumber.test(value)) {
-      if (value < Number(selectOne.minAmount)) {
+      if (value < Number(selectOne.minBuyRMB)) {
         changeState({
-          amountMsg: `最小提现数量${selectOne.minAmount}`
+          buy_rmbAmount_errMsg: `最小单次买入金额${selectOne.minBuyRMB}人民币`
         })
-      } else if (value > Number(selectOne.maxAmount)) {
+      } else if (value > Number(selectOne.maxBuyRMB)) {
         changeState({
-          amountMsg: '可提现金额不足'
+          buy_rmbAmount_errMsg: `最大单次买入金额${selectOne.maxBuyRMB}人民币`
         })
       } else {
         changeState({
-          amountMsg: ''
+          buy_rmbAmount_errMsg: ''
         })
       }
     } else {
       changeState({
-        amountMsg: ''
+        buy_rmbAmount_errMsg: ''
+      })
+    }
+  }
+
+  doCheckSell = (value, selectOne) => {
+    const { changeState } = this
+    if (Patterns.decimalNumber.test(value)) {
+      if (value < Number(selectOne.sell_minSellAmount)) {
+        changeState({
+          sell_rmbAmount_errMsg: `最小单次卖出数量${selectOne.sell_minSellAmount}${selectOne.assetName}`
+        })
+      } else if (value > Number(selectOne.sell_maxSellAmount)) {
+        changeState({
+          sell_rmbAmount_errMsg: `可卖出金额不足`
+        })
+      } else {
+        changeState({
+          sell_rmbAmount_errMsg: ''
+        })
+      }
+    } else {
+      changeState({
+        sell_rmbAmount_errMsg: ''
       })
     }
   }
 
 
   render() {
-    const { changeState, buyOTC } = this
-    const { model: { detailLegal = [], buyPage }, user: { userInfo: { email = '' } = {} } = {}, theme: { calculateTableHeight }, loading, modelName } = this.props
-    const { active, rmbAmount, record } = this.state
+    const { startInit, changeState, buyOTC, BeforesellOTCSendMail, checkAllConditions, doCheckBuy, doCheckSell } = this
+    const {
+      modal: { name, data },
+      model: { detailLegal = [], buyPage },
+      user: { userInfo: { email = '' } = {} } = {}, theme: { calculateTableHeight }, loading, modelName
+    } = this.props
+    const { active, buy_rmbAmount, buy_rmbAmount_errMsg, sell_rmbAmount, sell_rmbAmount_errMsg, record, } = this.state
     const selectList = detailLegal.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
     const selectItem = selectList.filter((item = {}) => item.label === active)[0]
     const selectOne = detailLegal.filter((item = {}) => item.assetName === active)[0]
@@ -207,7 +347,6 @@ export default class View extends Component {
                     <MoneySelect
                       onChange={(option = {}) => {
                         this.changeMoney(option.value)
-                        changeState({})
                       }}
                       value={selectItem}
                       options={selectList}
@@ -233,9 +372,15 @@ export default class View extends Component {
                     <div className={styles.input} >
                       <Input
                         placeholder={''}
-                        value={rmbAmount}
+                        value={buy_rmbAmount}
+                        errorMsg={buy_rmbAmount_errMsg}
+                        onCheck={(value) => {
+                          doCheckBuy(value, selectOne)
+                        }}
                         onChange={(value) => {
-                          changeState({ rmbAmount: value })
+                          if (Patterns.decimalNumber.test(value) || value === '') {
+                            changeState({ buy_rmbAmount: value })
+                          }
                         }} >
                       </Input >
                     </div >
@@ -245,13 +390,15 @@ export default class View extends Component {
                     <div className={
                       classNames(
                         styles.button,
-                        true ? styles.permit : null
+                        buy_rmbAmount && !buy_rmbAmount_errMsg ? styles.permit : null
                       )
                     } >
                       <Button
                         loading={loading.effects[`${modelName}/buyOTC`]}
                         onClick={() => {
-                          buyOTC()
+                          if (checkAllConditions('buy', selectOne)) {
+                            buyOTC()
+                          }
                         }} >
                         去支付
                       </Button >
@@ -281,7 +428,6 @@ export default class View extends Component {
                     <MoneySelect
                       onChange={(option = {}) => {
                         this.changeMoney(option.value)
-                        changeState({})
                       }}
                       value={selectItem}
                       options={selectList}
@@ -307,9 +453,15 @@ export default class View extends Component {
                     <div className={styles.input} >
                       <Input
                         placeholder={''}
-                        value={rmbAmount}
+                        value={sell_rmbAmount}
+                        errorMsg={sell_rmbAmount_errMsg}
+                        onCheck={(value) => {
+                          doCheckSell(value, selectOne)
+                        }}
                         onChange={(value) => {
-                          changeState({ rmbAmount: value })
+                          if (Patterns.decimalNumber.test(value) || value === '') {
+                            changeState({ sell_rmbAmount: value })
+                          }
                         }} >
                       </Input >
                     </div >
@@ -319,15 +471,22 @@ export default class View extends Component {
                     <div className={
                       classNames(
                         styles.button,
-                        true ? styles.permit : null
+                        sell_rmbAmount && !sell_rmbAmount_errMsg ? styles.permit : null
                       )
                     } >
                       <Button
-                        loading={loading.effects[`${modelName}/buyOTC`]}
+                        loading={loading.effects[`${modelName}/BeforesellOTCSendMail`]}
                         onClick={() => {
-                          buyOTC()
+                          if (checkAllConditions('sell', selectOne)) {
+                            BeforesellOTCSendMail(
+                              {
+                                ...selectOne,
+                                email
+                              }
+                            )
+                          }
                         }} >
-                        去支付
+                        卖出
                       </Button >
                     </div >
                   </li >
@@ -343,8 +502,106 @@ export default class View extends Component {
             </div >
           </div >
           <div style={{ height: calculateTableHeight(dataSource) }} ><Table {...tableProp} /></div >
+          {
+            name === 'hasOpenOrder' ? <RenderModal1 {...this.props} /> : null
+          }
+          {
+            name === 'idCardVertify' ?
+              <RenderModal2 {...this.props} startInit={startInit} selectOne={selectOne} data={data} /> : null
+          }
+          {
+            name === 'googleCodeOpen' ? <GoogleCodeOpenModal {...this.props} /> : null
+          }
         </div >
       </Mixin.Child >
+    )
+  }
+}
+
+//有未完成的订单
+class RenderModal1 extends Component {
+  render() {
+    const props = {
+      ...this.props
+    }
+    const { closeModal, } = this.props
+    return (
+      <MainModal {...props}  >
+        <div className={styles.googleCodeOpen_Modal} >
+          <div className={styles.content} >
+            有未完成的订单，不能发起新的订单
+          </div >
+          <div className={styles.buttons} >
+
+            <div
+              onClick={() => {
+                closeModal()
+              }}
+              className={styles.cancel}
+            >
+              取消
+            </div >
+            <div
+              className={styles.confirm}
+              onClick={() => {
+                closeModal()
+              }}
+            >
+              <Button >
+                查看
+              </Button >
+            </div >
+          </div >
+        </div >
+
+      </MainModal >
+    )
+  }
+}
+
+//实名认证
+class RenderModal2 extends Component {
+  render() {
+    const { startInit, selectOne = {}, data, dispatch, account: { superVertifyPage } } = this.props
+    const props = {
+      modalProps: {
+        style: {
+          width: 900,
+        },
+      },
+      ...this.props
+    }
+    const superVertifyFormProps = {
+      vertifyIdCardCallBack: (res) => {
+        if (res) {
+          startInit()
+          if (data === 'sell' && !selectOne.sell_bankVerified) {
+            dispatch({
+              type: `account/changeState`,
+              payload: {
+                superVertifyPage: 5
+              }
+            })
+          } else {
+            closeModal()
+          }
+        }
+      },
+      vertifyBankCallBack: (res) => {
+        if (res) {
+          startInit()
+          closeModal()
+        }
+      }
+    }
+    const { closeModal, } = this.props
+    return (
+      <MainModal {...props}
+                 title={superVertifyPage === 4 ? '实名认证' : '银行卡绑定'} >
+        <div className={styles.idCardVertify_modal} >
+          <SuperVertifyForm {...superVertifyFormProps} styles={styles} />
+        </div >
+      </MainModal >
     )
   }
 }

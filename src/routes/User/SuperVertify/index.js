@@ -14,7 +14,7 @@ export default class View extends Component {
     return (
       <Mixin.Child that={this} >
         <div className={styles.supervertify} >
-          <SuperVertifyForm  {...this.props} styles={styles} />
+          <SuperVertifyForm   styles={styles} />
         </div >
       </Mixin.Child >
     )

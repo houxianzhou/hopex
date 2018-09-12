@@ -5,7 +5,8 @@ import modelExtend from '@models/modelExtend'
 import {
   getAssetSummary, getAssetAddress, getWithdrawParameter,
   SendEmailToWithdraw, getAssetRecord, doWithdrawApply,
-  getExchangeRate, getBuyParameter, buyOTC, getOrder, getSellParameter
+  getExchangeRate, getBuyParameter, buyOTC, getOrder, getSellParameter,
+  BeforesellOTCSendMail
 } from '@services/trade'
 import { GetUserInfo } from '@services/user'
 
@@ -90,6 +91,27 @@ export default joinModel(modelExtend, {
     },
 
     //----------------------------------------------------------------------------------法币
+    // 提现发送邮箱验证码
+    * BeforesellOTCSendMail({ payload = {} }, { call, put, select }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {},
+          powerMsg: '提现发送邮箱验证码',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(BeforesellOTCSendMail, payload))
+        if (resOk(res)) {
+          const result = _.get(res, 'data')
+          if (result) {
+            return result
+          }
+        }
+      }
+    },
     // 获取订单
     * getOrder({ payload = {} }, { call, put, select }) {
       const repayload = yield (asyncPayload(yield put({
@@ -195,15 +217,21 @@ export default joinModel(modelExtend, {
         if (resOk(res)) {
           const result = _.get(res, 'data')
           if (result) {
-            const { remarks: sell_remarks, realName: sell_realName, bankNo: sell_bankNo } = result
+            const {
+              remarks: sell_remarks, realName: sell_realName, bankNo: sell_bankNo, bankName: sell_bankName,
+              allowLegalSell: sell_allowLegalSell, idCardVerified: sell_idCardVerified, bankVerified: sell_bankVerified,
+              forbidden: sell_forbidden, minSellAmount: sell_minSellAmount, maxSellAmount: sell_maxSellAmount,
+              enableTwoFactories: sell_enableTwoFactories, changePwdIn24h: sell_changePwdIn24h,
+              disabledTwoFactoriesIn24h: sell_disabledTwoFactoriesIn24h
+            } = result
             const detailLegal = yield select(({ asset: { detailLegal = [] } }) => detailLegal) || []
             const detailLegalNew = detailLegal.map((item = {}) => {
               if (item.assetName === coinCode) {
                 return {
                   ...item,
-                  sell_remarks,
-                  sell_realName,
-                  sell_bankNo
+                  sell_remarks, sell_realName, sell_bankNo, sell_bankName, sell_allowLegalSell,
+                  sell_idCardVerified, sell_bankVerified, sell_forbidden, sell_minSellAmount,
+                  sell_maxSellAmount, sell_enableTwoFactories, sell_changePwdIn24h, sell_disabledTwoFactoriesIn24h
                 }
               }
               return item
@@ -262,6 +290,7 @@ export default joinModel(modelExtend, {
         }
       }
     },
+
 
     //----------------------------------------------------------------------------------数字货币
 

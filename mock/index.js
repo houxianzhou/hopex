@@ -11,6 +11,25 @@ const other = {
   "ret": "0"
 }
 
+const users_vertify = {
+  "idCard": {
+    "realName": "",
+    "idCardNo": "",
+    "name": "实名认证",
+    "code": "IdCard",
+    "verified": false
+  },
+  "bank": {
+    "idCardVerified": false,
+    "owner": "",
+    "bankNo": "",
+    "bankName": "",
+    "name": "银行卡",
+    "code": "Bank",
+    "verified": false
+  }
+}
+
 
 export default delay({
   // 合约列表
@@ -803,7 +822,7 @@ export default delay({
     let sendasset
     if (asset === 'BTC') {
       sendasset = {
-        "enableTwoFactories": false,
+        "enableTwoFactories": true,
         "commission": "0.00100000",
         "minAmount": "0.01000000",
         "maxAmount": "9.99896705",
@@ -884,8 +903,31 @@ export default delay({
     res.sendStatus(200)
   },
 
-  //发送提现确认邮件
+  //实名认证
   'Post /mock/api/v1/gateway/Certification/IdCardVerify': (req, res) => {
+    users_vertify.idCard = {
+      "realName": "魏晓一",
+      "idCardNo": "421***********1750",
+      "name": "实名认证",
+      "code": "IdCard",
+      "verified": true
+    }
+    res.send(
+      { "data": true, "ret": 0, "errCode": "", "errStr": "" }
+    )
+  },
+
+  //银行卡认证
+  'Post /mock/api/v1/gateway/Certification/BankVerify': (req, res) => {
+    users_vertify.bank = {
+      "idCardVerified": true,
+      "owner": "魏晓一",
+      "bankNo": "**** **** **** 0899",
+      "bankName": "CMB-招商银行",
+      "name": "银行卡",
+      "code": "Bank",
+      "verified": true
+    }
     res.send(
       { "data": true, "ret": 0, "errCode": "", "errStr": "" }
     )
@@ -895,24 +937,7 @@ export default delay({
   'Get /mock/api/v1/gateway/Certification/All': (req, res) => {
     res.send(
       {
-        "data": {
-          "idCard": {
-            "realName": "魏晓一",
-            "idCardNo": "421***********1750",
-            "name": "实名认证",
-            "code": "IdCard",
-            "verified": true
-          },
-          "bank": {
-            "idCardVerified": true,
-            "owner": "魏晓一",
-            "bankNo": "**** **** **** 0899",
-            "bankName": "CMB-招商银行",
-            "name": "银行卡",
-            "code": "Bank",
-            "verified": true
-          }
-        }, "ret": 0, "errCode": "", "errStr": ""
+        "data": users_vertify, "ret": 0, "errCode": "", "errStr": ""
       }
     )
 
@@ -1058,8 +1083,16 @@ export default delay({
 
   //买入
   'post /mock/api/v1/User/otc/Buy': (req, res) => {
+    res.send({
+      data: 'https://www.baidu.com', "ret": 0, "errCode": "", "errStr": ""
+    })
+  },
 
-
+  //提现发送邮箱验证码
+  'post /mock/api/v1/User/otc/SendEmailToOTCWithdraw': (req, res) => {
+    res.send({
+      data: true, "ret": 0, "errCode": "", "errStr": ""
+    })
   },
 
 }, 100)

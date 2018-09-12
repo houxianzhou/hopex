@@ -2,7 +2,7 @@ import { request } from '@utils'
 import { API } from "@constants"
 
 let { MOCKIP, UserIp0, USERIP, USERIP2, UserIp3, UserIp4 } = API
-export const MODE = 'mock1'
+export const MODE = 'mock'
 
 // mock数据
 if (MODE === 'mock') {
@@ -10,6 +10,15 @@ if (MODE === 'mock') {
   UserIp3 = `/mock${UserIp3}`
   UserIp4 = `/mock${UserIp4}`
   require('./socketServer')
+}
+
+
+// 提现发送邮箱验证码
+export async function BeforesellOTCSendMail(payload) {
+  return request(`${UserIp0}/User/otc/SendEmailToOTCWithdraw`, {
+    method: 'post',
+    body: payload
+  })
 }
 
 
