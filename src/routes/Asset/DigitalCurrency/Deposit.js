@@ -13,8 +13,12 @@ import styles from '@routes/Asset/index.less'
   loading: Loading
 }))
 export default class View extends Component {
-  state = {
-    active: ''
+  constructor(props) {
+    super(props)
+    const { model: { detailDigital } } = this.props
+    this.state = {
+      active: detailDigital[0].assetName,
+    }
   }
 
   componentDidMount() {
@@ -36,14 +40,14 @@ export default class View extends Component {
   }
 
   getAssetAddress = () => {
-    const { dispatch, modelName, model: { detailDigital } } = this.props
+    const { dispatch, modelName } = this.props
     const { active } = this.state
-    const asset = active || detailDigital[0].assetName
-    if (asset) {
+
+    if (active) {
       dispatch({
         type: `${modelName}/getAssetAddress`,
         payload: {
-          asset
+          asset: active
         }
       })
     }
@@ -54,8 +58,8 @@ export default class View extends Component {
     const { model: { detailDigital = [] } } = this.props
     const { active } = this.state
     const selectList = detailDigital.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
-    const selectItem = selectList.filter((item = {}) => item.label === active)[0] || selectList[0]
-    const selectOne = detailDigital.filter((item = {}) => item.assetName === active)[0] || detailDigital[0]
+    const selectItem = selectList.filter((item = {}) => item.label === active)[0]
+    const selectOne = detailDigital.filter((item = {}) => item.assetName === active)[0]
     return (
       <Mixin.Child that={this} >
         <div className={styles.deposit} >

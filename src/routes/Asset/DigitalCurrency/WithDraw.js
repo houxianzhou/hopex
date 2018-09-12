@@ -16,14 +16,18 @@ import styles from '@routes/Asset/index.less'
   loading: Loading
 }))
 export default class View extends Component {
-  state = {
-    active: '',
-    addressMsg: '',
-    address: '',
-    amountMsg: '',
-    amount: '',
-    googleCode: '',
-    emailVerificationCode: ''
+  constructor(props) {
+    super(props)
+    const { model: { detailDigital } } = this.props
+    this.state = {
+      active: detailDigital[0].assetName,
+      addressMsg: '',
+      address: '',
+      amountMsg: '',
+      amount: '',
+      googleCode: '',
+      emailVerificationCode: ''
+    }
   }
 
   componentDidMount() {
@@ -47,14 +51,13 @@ export default class View extends Component {
   }
 
   getWithdrawParameter = () => {
-    const { dispatch, modelName, model: { detailDigital } } = this.props
+    const { dispatch, modelName, } = this.props
     const { active } = this.state
-    const asset = active || detailDigital[0].assetName
-    if (asset) {
+    if (active) {
       dispatch({
         type: `${modelName}/getWithdrawParameter`,
         payload: {
-          asset
+          asset: active
         }
       })
     }
@@ -127,11 +130,11 @@ export default class View extends Component {
 
   render() {
     const { changeState, checkAmount } = this
-    const { model: { detail = [], detailDigital = [], withDrawPage = 1 }, user: { userInfo: { email = '' } = {} } = {}, modal: { name }, loading, modelName } = this.props
+    const { model: { detailDigital = [], withDrawPage = 1 }, user: { userInfo: { email = '' } = {} } = {}, modal: { name }, loading, modelName } = this.props
     const { active, address, amount, addressMsg, amountMsg, googleCode, emailVerificationCode } = this.state
     const selectList = detailDigital.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
-    const selectItem = selectList.filter((item = {}) => item.label === active)[0] || selectList[0]
-    const selectOne = detailDigital.filter((item = {}) => item.assetName === active)[0] || detailDigital[0]
+    const selectItem = selectList.filter((item = {}) => item.label === active)[0]
+    const selectOne = detailDigital.filter((item = {}) => item.assetName === active)[0]
     const isNotAllow = () => {
       return selectOne.allowWithdraw === false || selectOne.isValid === false
     }
@@ -249,6 +252,7 @@ export default class View extends Component {
                         <Button
                           loading={loading.effects[`${modelName}/SendEmailToWithdraw`]}
                           onClick={() => {
+                            console.log('hahahha')
                             this.SendEmailToWithdraw()
                           }} >
                           提交
