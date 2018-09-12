@@ -5,7 +5,7 @@ import modelExtend from '@models/modelExtend'
 import {
   getAssetSummary, getAssetAddress, getWithdrawParameter,
   SendEmailToWithdraw, getAssetRecord, doWithdrawApply,
-  getExchangeRate, getBuyParameter, buyOTC, getOrder
+  getExchangeRate, getBuyParameter, buyOTC, getOrder, getSellParameter
 } from '@services/trade'
 import { GetUserInfo } from '@services/user'
 
@@ -14,6 +14,7 @@ export default joinModel(modelExtend, {
   namespace: 'asset',
   state: {
     withDrawPage: 1,
+    buyPage: 1,
     summaryAll: {},//交易页面钱包
     detailAll: [],//交易页面钱包
     summary: {},//资产管理页面钱包明细
@@ -89,8 +90,7 @@ export default joinModel(modelExtend, {
     },
 
     //----------------------------------------------------------------------------------法币
-
-    // 人民币购买数字货币
+    // 获取订单
     * getOrder({ payload = {} }, { call, put, select }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
@@ -176,6 +176,50 @@ export default joinModel(modelExtend, {
       }
     },
 
+    // 获取法币买入数字货币参数
+    * getSellParameter({ payload = {} }, { call, put, select }) {
+      const { coinCode = '', } = payload
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {},
+          powerMsg: '获取法币买出数字货币参数',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getSellParameter, {
+          coinCode,
+        }))
+        if (resOk(res)) {
+          const result = _.get(res, 'data')
+          if (result) {
+            const { remarks: sell_remarks, realName: sell_realName, bankNo: sell_bankNo } = result
+            const detailLegal = yield select(({ asset: { detailLegal = [] } }) => detailLegal) || []
+            const detailLegalNew = detailLegal.map((item = {}) => {
+              if (item.assetName === coinCode) {
+                return {
+                  ...item,
+                  sell_remarks,
+                  sell_realName,
+                  sell_bankNo
+                }
+              }
+              return item
+            })
+            yield put({
+              type: 'changeState',
+              payload: {
+                detailLegal: detailLegalNew
+              }
+            })
+            return result
+          }
+        }
+      }
+    },
+
     // 获取对人民币汇率
     * getExchangeRate({ payload = {} }, { call, put, select }) {
       const { coinCode = '', priceArrow = '' } = payload
@@ -217,7 +261,6 @@ export default joinModel(modelExtend, {
         }
       }
     },
-
 
     //----------------------------------------------------------------------------------数字货币
 

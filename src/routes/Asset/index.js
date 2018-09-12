@@ -119,11 +119,30 @@ export default class View extends Component {
                   name: 'Buy',
                   title: '买入数字货币',
                   onClick: () => {
+                    dispatch({
+                      type: `${modelName}/changeState`,
+                      payload: {
+                        buyPage: 1
+                      }
+                    })
+                    return renderPage('Buy')
+                  }
+                },
+                {
+                  name: 'Sell',
+                  title: '卖出数字货币',
+                  onClick: () => {
+                    dispatch({
+                      type: `${modelName}/changeState`,
+                      payload: {
+                        buyPage: 2
+                      }
+                    })
                     return renderPage('Buy')
                   }
                 },
               ]
-            }
+            },
           ]}
         />
       </div >

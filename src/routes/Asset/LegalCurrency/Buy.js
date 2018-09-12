@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { PATH } from "@constants"
 import { Mixin, Button, Table } from '@components'
-import { classNames, _, Patterns, } from '@utils'
+import { classNames, _, Patterns, isEqual } from '@utils'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
 import Input from '@routes/Components/Input'
 import { getColumns } from '@routes/Components/LegalAssetRecordTable'
@@ -33,35 +33,49 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    this.getParams()
+    this.getBuyParams()
+    this.getSellParams()
+  }
+
+  componentDidUpdate(prevProps) {
+    const { model: { buyPage: prevBuyPage } } = prevProps
+    const { model: { buyPage, detailLegal = [] } } = this.props
+
+    if (!isEqual(prevBuyPage, buyPage) && buyPage) {
+      this.changeState({
+        active: detailLegal[0].assetName
+      }, () => {
+        if (buyPage === 1) {
+          this.getBuyParams()
+        } else if (buyPage === 2) {
+          this.getSellParams()
+        }
+      })
+
+    }
   }
 
 
   changeMoney = (payload) => {
     this.changeState({ active: payload },
       () => {
-        this.getParams()
+        this.startInit()
       }
     )
   }
 
-  getParams = () => {
-    this.getExchangeRate()
+  getBuyParams = () => {
+    this.getExchangeRate('BUY')
     this.getBuyParameter()
     this.getOrder()
   }
 
-  getExchangeRate = () => {
-    const { dispatch, modelName } = this.props
-    const { active, } = this.state
-    dispatch({
-      type: `${modelName}/getExchangeRate`,
-      payload: {
-        coinCode: active,
-        priceArrow: 'BUY'
-      }
-    })
+  getSellParams = () => {
+    this.getExchangeRate('SELL')
+    this.getSellParameter()
+    this.getOrder()
   }
+
 
   getBuyParameter = () => {
     const { dispatch, modelName } = this.props
@@ -70,6 +84,29 @@ export default class View extends Component {
       type: `${modelName}/getBuyParameter`,
       payload: {
         coinCode: active,
+      }
+    })
+  }
+
+  getSellParameter = () => {
+    const { dispatch, modelName } = this.props
+    const { active, } = this.state
+    dispatch({
+      type: `${modelName}/getSellParameter`,
+      payload: {
+        coinCode: active,
+      }
+    })
+  }
+
+  getExchangeRate = (priceArrow) => {
+    const { dispatch, modelName } = this.props
+    const { active, } = this.state
+    dispatch({
+      type: `${modelName}/getExchangeRate`,
+      payload: {
+        coinCode: active,
+        priceArrow
       }
     })
   }
@@ -132,7 +169,7 @@ export default class View extends Component {
 
   render() {
     const { changeState, buyOTC } = this
-    const { model: { detailLegal = [], }, user: { userInfo: { email = '' } = {} } = {}, theme: { calculateTableHeight }, loading, modelName } = this.props
+    const { model: { detailLegal = [], buyPage }, user: { userInfo: { email = '' } = {} } = {}, theme: { calculateTableHeight }, loading, modelName } = this.props
     const { active, rmbAmount, record } = this.state
     const selectList = detailLegal.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
     const selectItem = selectList.filter((item = {}) => item.label === active)[0]
@@ -151,68 +188,154 @@ export default class View extends Component {
     return (
       <Mixin.Child that={this} >
         <div className={styles.buy} >
-          <div className={styles.title} >买入数字货币</div >
-          <div className={styles.moneytype} >
-            币种
-            <div className={styles.select} >
-              <MoneySelect
-                onChange={(option = {}) => {
-                  this.changeMoney(option.value)
-                  changeState({
-                    addressMsg: '',
-                    address: '',
-                    amountMsg: '',
-                    amount: '',
-                  })
-                }}
-                value={selectItem}
-                options={selectList}
-              />
-            </div >
-          </div >
-          <ul className={styles.userinput} >
-            <li >
-              <div className={styles.label} >汇率</div >
-              <div >
-                1{active} ≈ {selectOne.exchangeRate} 人民币
+          {
+            buyPage == 1 ? (
+              <div className={styles.page1} >
+                <div className={styles.title} >买入数字货币</div >
+                <div className={styles.desc} >
+                  <ul >
+                    {
+                      (selectOne.remarks || []).map((item = '', index) => {
+                        return <li key={index} >{item}</li >
+                      })
+                    }
+                  </ul >
+                </div >
+                <div className={styles.moneytype} >
+                  币种
+                  <div className={styles.select} >
+                    <MoneySelect
+                      onChange={(option = {}) => {
+                        this.changeMoney(option.value)
+                        changeState({})
+                      }}
+                      value={selectItem}
+                      options={selectList}
+                    />
+                  </div >
+                </div >
+                <ul className={styles.userinput} >
+                  <li >
+                    <div className={styles.label} >实名认证</div >
+                    <div >
+                      {selectOne.realName}
+                    </div >
+                  </li >
+                  <li >
+                    <div className={styles.label} >汇率</div >
+                    <div >
+                      1{active} ≈ {selectOne.exchangeRate} 人民币
+                    </div >
+                  </li >
+
+                  <li >
+                    <div className={styles.label} >我要买</div >
+                    <div className={styles.input} >
+                      <Input
+                        placeholder={''}
+                        value={rmbAmount}
+                        onChange={(value) => {
+                          changeState({ rmbAmount: value })
+                        }} >
+                      </Input >
+                    </div >
+                  </li >
+                  <li className={styles.inputbutton} >
+                    <div className={styles.label} ></div >
+                    <div className={
+                      classNames(
+                        styles.button,
+                        true ? styles.permit : null
+                      )
+                    } >
+                      <Button
+                        loading={loading.effects[`${modelName}/buyOTC`]}
+                        onClick={() => {
+                          buyOTC()
+                        }} >
+                        去支付
+                      </Button >
+                    </div >
+                  </li >
+                </ul >
               </div >
-            </li >
-            <li >
-              <div className={styles.label} >实名认证</div >
-              <div >
-                {selectOne.realName}
+            ) : null
+          }
+
+          {
+            buyPage == 2 ? (
+              <div className={styles.page1} >
+                <div className={styles.title} >卖出数字货币</div >
+                <div className={styles.desc} >
+                  <ul >
+                    {
+                      (selectOne.sell_remarks || []).map((item = '', index) => {
+                        return <li key={index} >{item}</li >
+                      })
+                    }
+                  </ul >
+                </div >
+                <div className={styles.moneytype} >
+                  币种
+                  <div className={styles.select} >
+                    <MoneySelect
+                      onChange={(option = {}) => {
+                        this.changeMoney(option.value)
+                        changeState({})
+                      }}
+                      value={selectItem}
+                      options={selectList}
+                    />
+                  </div >
+                </div >
+                <ul className={styles.userinput} >
+                  <li >
+                    <div className={styles.label} >银行卡</div >
+                    <div >
+                      {selectOne.sell_realName}<span>{selectOne.sell_bankNo}</span>
+                    </div >
+                  </li >
+                  <li >
+                    <div className={styles.label} >汇率</div >
+                    <div >
+                      1{active} ≈ {selectOne.exchangeRate} 人民币
+                    </div >
+                  </li >
+
+                  <li >
+                    <div className={styles.label} >我要卖</div >
+                    <div className={styles.input} >
+                      <Input
+                        placeholder={''}
+                        value={rmbAmount}
+                        onChange={(value) => {
+                          changeState({ rmbAmount: value })
+                        }} >
+                      </Input >
+                    </div >
+                  </li >
+                  <li className={styles.inputbutton} >
+                    <div className={styles.label} ></div >
+                    <div className={
+                      classNames(
+                        styles.button,
+                        true ? styles.permit : null
+                      )
+                    } >
+                      <Button
+                        loading={loading.effects[`${modelName}/buyOTC`]}
+                        onClick={() => {
+                          buyOTC()
+                        }} >
+                        去支付
+                      </Button >
+                    </div >
+                  </li >
+                </ul >
               </div >
-            </li >
-            <li >
-              <div className={styles.label} >我要买</div >
-              <div className={styles.input} >
-                <Input
-                  placeholder={''}
-                  value={rmbAmount}
-                  onChange={(value) => {
-                    changeState({ rmbAmount: value })
-                  }} >
-                </Input >
-              </div >
-            </li >
-            <li className={styles.inputbutton} >
-              <div className={styles.label} ></div >
-              <div className={
-                classNames(
-                  styles.button,
-                  true ? styles.permit : null
-                )
-              } >
-                <Button
-                  loading={loading.effects[`${modelName}/buyOTC`]}
-                  onClick={() => {
-                    buyOTC()
-                  }} >
-                  去支付
-                </Button >
-              </div >
-            </li >
-          </ul >
+            ) : null
+          }
+
           <div className={styles.tableheader} >
             <div >最近10条资金记录</div >
             <div >

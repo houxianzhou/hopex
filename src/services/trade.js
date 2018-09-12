@@ -37,6 +37,13 @@ export async function getBuyParameter(payload) {
   })
 }
 
+// 获取法币提现参数
+export async function getSellParameter(payload) {
+  return request(`${UserIp0}/User/otc/GetSellParameter`, {
+    query: payload
+  })
+}
+
 // 获取对人民币汇率
 export async function getExchangeRate(payload) {
   return request(`${UserIp0}/User/otc/GetToCNYExchangeRate`, {
