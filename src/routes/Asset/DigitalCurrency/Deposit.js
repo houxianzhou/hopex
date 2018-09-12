@@ -23,24 +23,9 @@ export default class View extends Component {
 
   startInit = () => {
     new ClipboardJS('.clipboard')
-    this.getAssetSummary()
+    this.getAssetAddress()
   }
 
-  getAssetSummary = () => {
-    const { dispatch, modelName } = this.props
-    const { active } = this.state
-    dispatch({
-      type: `${modelName}/getAssetSummary`,
-    }).then(res => {
-      if (res) {
-        if (!active) {
-          this.changeMoney(res.detail[0].assetName)
-        } else {
-          this.getAssetAddress()
-        }
-      }
-    })
-  }
 
   changeMoney = (payload) => {
     this.changeState({ active: payload },
@@ -51,13 +36,14 @@ export default class View extends Component {
   }
 
   getAssetAddress = () => {
-    const { dispatch, modelName } = this.props
+    const { dispatch, modelName, model: { detailDigital } } = this.props
     const { active } = this.state
-    if (active) {
+    const asset = active || detailDigital[0].assetName
+    if (asset) {
       dispatch({
         type: `${modelName}/getAssetAddress`,
         payload: {
-          asset: active
+          asset
         }
       })
     }
@@ -65,11 +51,11 @@ export default class View extends Component {
 
 
   render() {
-    const { model: { detail = [] } } = this.props
+    const { model: { detailDigital = [] } } = this.props
     const { active } = this.state
-    const selectList = detail.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
-
-    const selectOne = detail.filter((item = {}) => item.assetName === active)[0] || {}
+    const selectList = detailDigital.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
+    const selectItem = selectList.filter((item = {}) => item.label === active)[0] || selectList[0]
+    const selectOne = detailDigital.filter((item = {}) => item.assetName === active)[0] || detailDigital[0]
     return (
       <Mixin.Child that={this} >
         <div className={styles.deposit} >
@@ -81,7 +67,7 @@ export default class View extends Component {
                 onChange={(option = {}) => {
                   this.changeMoney(option.value)
                 }}
-                value={selectList.filter((item = {}) => item.value === active)}
+                value={selectItem}
                 options={selectList}
               />
             </div >

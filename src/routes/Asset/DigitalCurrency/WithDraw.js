@@ -35,19 +35,7 @@ export default class View extends Component {
   }
 
   getAssetSummary = () => {
-    const { dispatch, modelName } = this.props
-    const { active } = this.state
-    dispatch({
-      type: `${modelName}/getAssetSummary`,
-    }).then(res => {
-      if (res) {
-        if (!active) {
-          this.changeMoney(res.detail[0].assetName)
-        } else {
-          this.getWithdrawParameter()
-        }
-      }
-    })
+    this.getWithdrawParameter()
   }
 
   changeMoney = (payload) => {
@@ -59,13 +47,14 @@ export default class View extends Component {
   }
 
   getWithdrawParameter = () => {
-    const { dispatch, modelName } = this.props
-    const { active, } = this.state
-    if (active) {
+    const { dispatch, modelName, model: { detailDigital } } = this.props
+    const { active } = this.state
+    const asset = active || detailDigital[0].assetName
+    if (asset) {
       dispatch({
         type: `${modelName}/getWithdrawParameter`,
         payload: {
-          asset: active
+          asset
         }
       })
     }
@@ -138,11 +127,11 @@ export default class View extends Component {
 
   render() {
     const { changeState, checkAmount } = this
-    const { model: { detail = [], withDrawPage = 1 }, user: { userInfo: { email = '' } = {} } = {}, modal: { name }, loading, modelName } = this.props
+    const { model: { detail = [], detailDigital = [], withDrawPage = 1 }, user: { userInfo: { email = '' } = {} } = {}, modal: { name }, loading, modelName } = this.props
     const { active, address, amount, addressMsg, amountMsg, googleCode, emailVerificationCode } = this.state
-    const selectList = detail.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
-
-    const selectOne = detail.filter((item = {}) => item.assetName === active)[0] || {}
+    const selectList = detailDigital.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
+    const selectItem = selectList.filter((item = {}) => item.label === active)[0] || selectList[0]
+    const selectOne = detailDigital.filter((item = {}) => item.assetName === active)[0] || detailDigital[0]
     const isNotAllow = () => {
       return selectOne.allowWithdraw === false || selectOne.isValid === false
     }
@@ -171,7 +160,7 @@ export default class View extends Component {
                           amount: '',
                         })
                       }}
-                      value={selectList.filter((item = {}) => item.value === active)}
+                      value={selectItem}
                       options={selectList}
                     />
                   </div >

@@ -13,10 +13,19 @@ export default joinModel(modelExtend, {
   namespace: 'asset',
   state: {
     withDrawPage: 1,
-    summaryAll: {},
-    detailAll: [],
-    summary: {},
-    detail: [],
+    summaryAll: {},//交易页面钱包
+    detailAll: [],//交易页面钱包
+    summary: {},//资产管理页面钱包明细
+    detail: [],//资产管理页面钱包明细
+    detailDigital: [
+      {
+        assetName: 'BTC'
+      },
+      {
+        assetName: 'ETH'
+      }
+    ],//资产管理数字货币
+    detailLegal: [],//资产管理页面法币
 
     address: '',// BTC存款地址
     CodeImage: '',//存款二维码地址
@@ -31,7 +40,7 @@ export default joinModel(modelExtend, {
   effects: {
     // 获取用户钱包明细
     * getAssetSummary({ payload = {} }, { call, put, select }) {
-      const { fetchAllAsset } = payload
+      const { fetchAllAsset } = payload //此参数用来区分合约交易页面的钱包模块，那个需要所有的钱包，这里只有两个钱包
       const detail = yield select(({ asset: { detail = [] } }) => detail) || []
       const { forceUpdate = false } = payload
       if (forceUpdate || _.isEmpty(detail)) {
@@ -90,9 +99,9 @@ export default joinModel(modelExtend, {
         if (resOk(res)) {
           const result = _.get(res, 'data')
           if (result) {
-            const detail = yield select(({ asset: { detail = [] } }) => detail) || []
+            const detailDigital = yield select(({ asset: { detailDigital = [] } }) => detailDigital) || []
             const { address, prompts, qrCodeImgUrl } = result
-            const detailnew = detail.map((item = {}) => {
+            const detailDigitalNew = detailDigital.map((item = {}) => {
               if (item.assetName === asset) {
                 return {
                   ...item,
@@ -106,7 +115,7 @@ export default joinModel(modelExtend, {
             yield put({
               type: 'changeState',
               payload: {
-                detail: detailnew
+                detailDigital: detailDigitalNew
               }
             })
             return result
@@ -136,9 +145,9 @@ export default joinModel(modelExtend, {
         if (resOk(res)) {
           const result = _.get(res, 'data')
           if (result) {
-            const detail = yield select(({ asset: { detail = [] } }) => detail) || []
+            const detailDigital = yield select(({ asset: { detailDigital = [] } }) => detailDigital) || []
             const { allowWithdraw, commission, enableTwoFactories, isValid, maxAmount, minAmount, prompts: promptsWithDraw } = result
-            const detailnew = detail.map((item = {}) => {
+            const detailDigitalNew = detailDigital.map((item = {}) => {
               if (item.assetName === asset) {
                 return {
                   ...item,
@@ -156,7 +165,7 @@ export default joinModel(modelExtend, {
             yield put({
               type: 'changeState',
               payload: {
-                detail: detailnew
+                detailDigital: detailDigitalNew
               }
             })
             return result
