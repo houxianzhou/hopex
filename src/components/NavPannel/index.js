@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'dva'
+import { routerRedux } from 'dva/router';
 import * as styles from './index.less'
 
 import { classNames, _, } from '@utils'
@@ -31,7 +33,7 @@ export default class View extends Component {
 
   render() {
     const { page, active, } = this.state
-    const { navList = [], style: { widthPannel = '79%', widthNav = '19%' } = {} } = this.props
+    const { navList = [], style: { widthPannel = '79%', widthNav = '19%' } = {}, history } = this.props
     return (
       <div className={styles.pannelContainer} >
         <div className={styles.navpannel} style={{ width: widthPannel }} >
@@ -55,6 +57,7 @@ export default class View extends Component {
                               active === item.name ? 'active' : null
                             )}
                             onClick={() => {
+                              routerRedux.replace('?page=1')
                               this.changePage(item.onClick, item.name)
                             }} >
                             <div className={classNames(
