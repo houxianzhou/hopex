@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin } from '@components'
 
-import * as styles from '@routes/Question/index.less'
+import * as styles from '@routes/Help/index.less'
 
 @connect(({  Loading, dispatch, }) => ({
   dispatch,
