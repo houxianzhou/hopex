@@ -59,7 +59,9 @@ export default class View extends Component {
                               active === item.name ? 'active' : null
                             )}
                             onClick={() => {
-                              history.replace(`?page=${item.name}`)
+                              if (history && history.replace) {
+                                history.replace(`?page=${item.name}`)
+                              }
                               this.changePage(item.onClick, item.name)
                             }} >
                             <div className={classNames(
