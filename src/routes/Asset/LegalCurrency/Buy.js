@@ -9,6 +9,7 @@ import MainModal from '@routes/Components/MainModal'
 import { getColumns } from '@routes/Components/LegalAssetRecordTable'
 import { default as SuperVertifyForm } from '@routes/Components/SuperVertifyForm'
 import GoogleCodeOpenModal from '@routes/Components/GoogleCodeOpenModal'
+import GoogleCodeVertify from '@routes/Components/GoogleCodeVertify'
 
 import styles from '@routes/Asset/index.less'
 
@@ -29,6 +30,8 @@ export default class View extends Component {
       buy_rmbAmount_errMsg: '',
       sell_rmbAmount: '',
       sell_rmbAmount_errMsg: '',
+      emailVerificationCod: '',
+      googleCode: '',
       page: 1,
       pageSize: 10,
       record: []
@@ -223,7 +226,7 @@ export default class View extends Component {
   }
 
   BeforesellOTCSendMail = (selectOne = {}) => {
-    const { dispatch, modelName } = this.props
+    const { dispatch, modelName, openModal } = this.props
     const { email, sell_realName, sell_bankName, sell_bankNo } = selectOne
     const { sell_rmbAmount, active } = this.state
     dispatch({
@@ -239,7 +242,9 @@ export default class View extends Component {
       }
     }).then(res => {
       if (res) {
-
+        openModal({
+          name: 'googleCodeVertify',
+        })
       }
     })
   }
@@ -512,6 +517,10 @@ export default class View extends Component {
           {
             name === 'googleCodeOpen' ? <GoogleCodeOpenModal {...this.props} /> : null
           }
+          {
+            name === 'googleCodeVertify' ?
+              <RenderModal3 {...this.props} {...this.state} {...this} /> : null
+          }
         </div >
       </Mixin.Child >
     )
@@ -600,6 +609,72 @@ class RenderModal2 extends Component {
                  title={superVertifyPage === 4 ? '实名认证' : '银行卡绑定'} >
         <div className={styles.idCardVertify_modal} >
           <SuperVertifyForm {...superVertifyFormProps} styles={styles} />
+        </div >
+      </MainModal >
+    )
+  }
+}
+
+//谷歌验证码模态框
+class RenderModal3 extends Component {
+  render() {
+    const { startInit, selectOne = {}, data, dispatch, changeState, emailVerificationCode, googleCode, BeforesellOTCSendMail } = this.props
+    const props = {
+      modalProps: {
+        style: {
+          width: 900,
+        },
+      },
+      ...this.props
+    }
+    const superVertifyFormProps = {
+      vertifyIdCardCallBack: (res) => {
+        if (res) {
+          startInit()
+          if (data === 'sell' && !selectOne.sell_bankVerified) {
+            dispatch({
+              type: `account/changeState`,
+              payload: {
+                superVertifyPage: 5
+              }
+            })
+          } else {
+            closeModal()
+          }
+        }
+      },
+      vertifyBankCallBack: (res) => {
+        if (res) {
+          startInit()
+          closeModal()
+        }
+      }
+    }
+    const { closeModal, } = this.props
+    return (
+      <MainModal {...props}
+                 title={'谷歌验证码'} >
+        <div className={styles.googleCodeVertify_modal} >
+          <GoogleCodeVertify
+            emailCode={emailVerificationCode}
+            emailCodeChange={(value) => {
+              changeState({
+                emailVerificationCode: value
+              })
+            }}
+            googleCode={googleCode}
+            googleCodeChange={(value) => {
+              changeState({
+                googleCode: value
+              })
+            }}
+            countDown={() => {
+              BeforesellOTCSendMail()
+            }}
+            // loadingEffect={}
+            // onSubmit={}
+
+            className={styles.googleCodeVertify} />
         </div >
       </MainModal >
     )

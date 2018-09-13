@@ -1,46 +1,91 @@
 import React, { Component } from 'react'
-import { Button, RouterGo } from '@components'
-import { PATH } from "@constants"
-import MainModal from '@routes/Components/MainModal'
-import * as styles from './GoogleCodeOpenModal.less'
+import { Button, CountDown } from '@components'
+import { classNames, } from '@utils'
+import { connect } from 'dva'
+import Input from '@routes/Components/Input'
+import * as styles from './GoogleCodeVertify.less'
 
-export default class GoogleCodeOpenModal extends Component {
+
+@connect(({ modal, asset, user, Loading }) => ({
+  user,
+  model: asset,
+  modal,
+  loading: Loading
+}))
+export default class GoogleCodeVertify extends Component {
   render() {
-    const props = {
-      ...this.props
-    }
-    const { closeModal, } = this.props
+    const {
+      className,
+      user: { userInfo: { email = '' } = {} } = {},
+      emailCode = '', emailCodeChange,
+      googleCode = '', googleCodeChange,
+      countDown, loadingEffect, onSubmit
+    } = this.props
     return (
-      <MainModal {...props}  >
-        <div className={styles.googleCodeOpen_Modal} >
-          <div className={styles.content} >
-            请先开启谷歌验证
-          </div >
-          <div className={styles.buttons} >
-
-            <div
-              onClick={() => {
-                closeModal()
-              }}
-              className={styles.cancel}
-            >
-              取消
+      <div className={
+        classNames(
+          styles.googlecodevertify,
+          className
+        )
+      }>
+        <ul className={styles.userinput} >
+          <li >
+            <div className={styles.label} >邮箱</div >
+            <div className={styles.email} >
+              {email}
             </div >
-            <div
-              className={styles.confirm}
-              onClick={() => {
-                closeModal()
-              }}
-            >
-              <Button >
-                <RouterGo.SwitchRoute value={PATH.myaccount} >去开启</RouterGo.SwitchRoute >
-              </Button >
+          </li >
+          <li >
+            <div className={styles.label} >邮箱验证码</div >
+            <div className={styles.input} >
+              <Input
+                placeholder={'请输入邮箱验证码'}
+                value={emailCode}
+                onChange={(value) => {
+                  emailCodeChange(value)
+                }} >
+                <CountDown
+                  action={false}
+                  onClick={() => {
+                    countDown()
+                  }}
+                  beginText='发送'
+                />
+              </Input >
+            </div >
+          </li >
+          <li >
+            <div className={styles.label} >谷歌验证码</div >
+            <div className={styles.input} >
+              <Input
+                value={googleCode}
+                placeholder={'请输入谷歌验证码'}
+                onChange={(value) => {
+                  googleCodeChange(value)
+                }} /></div >
+          </li >
+          <li >
+            <div className={styles.label} ></div >
+            <div className={styles.calcu} >
+              <div className={
+                classNames(
+                  styles.button,
+                  (emailCode && googleCode) ? styles.permit : null
+                )
+              } >
+                <Button
+                  loading={loadingEffect}
+                  onClick={() => {
+                    onSubmit()
+                  }} >
+                  提交
+                </Button >
+              </div >
 
             </div >
-          </div >
-        </div >
-
-      </MainModal >
+          </li >
+        </ul >
+      </div >
     )
   }
 }

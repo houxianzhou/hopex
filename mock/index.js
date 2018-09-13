@@ -1063,13 +1063,13 @@ export default delay({
         "data": {
           "userEmail": "xiaoyi.wei@bcsystech.com",
           "allowLegalSell": true,
-          "idCardVerified": true,
+          "idCardVerified": false,
           "bankVerified": true,
           "realName": "魏晓一",
           "bankName": "CMB-招商银行",
           "bankNo": "**** **** **** 0899",
           "forbidden": false,
-          "minSellAmount": "0.00100000",
+          "minSellAmount": "0.00100000",//
           "maxSellAmount": "573.49949427",
           "enableTwoFactories": true,
           "changePwdIn24h": false,

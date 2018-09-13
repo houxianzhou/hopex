@@ -6,6 +6,14 @@
   padding: 0;
 }
 
+:global {
+  .googlecodevertify {
+    .input {
+      width: 500px;
+    }
+  }
+}
+
 .buy {
   .Input_Title_Button_Select();
   .desc {
@@ -287,6 +295,23 @@
               }
             }
           }
+        }
+      }
+    }
+  }
+}
+
+.googleCodeVertify_modal {
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  background: white;
+  .googleCodeVertify {
+    ul {
+      li {
+        > div:nth-child(2n) {
+          width: 500px;
         }
       }
     }

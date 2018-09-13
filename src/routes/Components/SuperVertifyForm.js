@@ -14,6 +14,7 @@ export default class View extends Component {
   state = {
     name: '',
     card: '',
+    card_errMsg: '',
     bank: '',
     bankName: ''
   }
@@ -99,33 +100,23 @@ export default class View extends Component {
     })
   }
 
-  checkAmount = (value, selectOne) => {
+  doCheckCard = (value) => {
     const { changeState } = this
-    if (Patterns.decimalNumber.test(value)) {
-      if (value < Number(selectOne.minAmount)) {
-        changeState({
-          amountMsg: `最小提现数量${selectOne.minAmount}`
-        })
-      } else if (value > Number(selectOne.maxAmount)) {
-        changeState({
-          amountMsg: '可提现金额不足'
-        })
-      } else {
-        changeState({
-          amountMsg: ''
-        })
-      }
+    if (Patterns.card.test(value) || value === '') {
+      changeState({
+        card_errMsg: ''
+      })
     } else {
       changeState({
-        amountMsg: ''
+        card_errMsg: '身份证号格式错误'
       })
     }
   }
 
 
   render() {
-    const { changeState, changePage, vertifyIdCard, vertifyBank, removeBindBank } = this
-    const { name, card, bank, bankName } = this.state
+    const { changeState, changePage, vertifyIdCard, vertifyBank, removeBindBank, doCheckCard } = this
+    const { name, card, card_errMsg, bank, bankName, } = this.state
     const {
       model: {
         superVertifyPage,
@@ -157,7 +148,7 @@ export default class View extends Component {
                             <span >{idCardNo}</span >
                           </>
                         ) : (
-                          <span >未认证</span >
+                          '未认证'
                         )
                       }
 
@@ -256,6 +247,10 @@ export default class View extends Component {
                       <Input
                         placeholder={'请填写身份证号'}
                         value={card}
+                        errorMsg={card_errMsg}
+                        onCheck={(value) => {
+                          doCheckCard(value)
+                        }}
                         onChange={(value) => {
                           changeState({ card: value })
                         }} >
@@ -267,7 +262,7 @@ export default class View extends Component {
                     <div className={
                       classNames(
                         styles.button,
-                        true ? styles.permit : null
+                        name && card && !card_errMsg ? styles.permit : null
                       )
                     } >
                       <Button
@@ -286,7 +281,7 @@ export default class View extends Component {
 
           {
             superVertifyPage === 4 ? (
-              <div className={styles.specialStyleForAsset}>
+              <div className={styles.specialStyleForAsset} >
                 <ul className={styles.userinput} >
                   <li >
                     <div className={styles.label} >姓名</div >
@@ -306,6 +301,10 @@ export default class View extends Component {
                       <Input
                         placeholder={'请填写身份证号'}
                         value={card}
+                        errorMsg={card_errMsg}
+                        onCheck={(value) => {
+                          doCheckCard(value)
+                        }}
                         onChange={(value) => {
                           changeState({ card: value })
                         }} >
@@ -316,7 +315,7 @@ export default class View extends Component {
                     <div className={
                       classNames(
                         styles.button,
-                        true ? styles.permit : null
+                        name && card && !card_errMsg ? styles.permit : null
                       )
                     } >
                       <Button
@@ -329,7 +328,7 @@ export default class View extends Component {
                     </div >
                   </li >
                 </ul >
-              </div>
+              </div >
             ) : null
           }
 
@@ -373,7 +372,7 @@ export default class View extends Component {
                     <div className={
                       classNames(
                         styles.button,
-                        true ? styles.permit : null
+                        bank && bankName ? styles.permit : null
                       )
                     } >
                       <Button
@@ -392,7 +391,7 @@ export default class View extends Component {
 
           {
             superVertifyPage === 5 ? (
-              <div className={styles.specialStyleForAsset}>
+              <div className={styles.specialStyleForAsset} >
                 <ul className={styles.userinput} >
                   <li >
                     <div className={styles.label} >持卡人姓名</div >
@@ -429,7 +428,7 @@ export default class View extends Component {
                     <div className={
                       classNames(
                         styles.button,
-                        true ? styles.permit : null
+                        bank && bankName ? styles.permit : null
                       )
                     } >
                       <Button
@@ -443,7 +442,7 @@ export default class View extends Component {
                     </div >
                   </li >
                 </ul >
-              </div>
+              </div >
             ) : null
           }
         </div >
