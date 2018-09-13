@@ -41,10 +41,10 @@ export default [
     route: 'Question'
   },
   {
-    name: '帮助',
-    path: '/help',
+    name: '关于',
+    path: '/about',
     model: ['home/index'],
-    route: 'Help'
+    route: 'About'
   },
   {
     name: '登录',
