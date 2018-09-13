@@ -97,13 +97,15 @@ export default joinModel(modelExtend, {
         type: 'createRequestParams',
         payload: {
           "head": {},
-          "param": {},
+          "param": {
+            ...payload
+          },
           powerMsg: '提现发送邮箱验证码',
           power: [1]
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(BeforesellOTCSendMail, payload))
+        const res = getRes(yield call(BeforesellOTCSendMail, repayload))
         if (resOk(res)) {
           const result = _.get(res, 'data')
           if (result) {

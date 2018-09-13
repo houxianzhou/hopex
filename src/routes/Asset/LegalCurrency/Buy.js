@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { PATH } from "@constants"
 import { Mixin, Button, Table, Toast } from '@components'
-import { classNames, _, Patterns, isEqual } from '@utils'
+import { classNames, _, Patterns, isEqual, formatNumber } from '@utils'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
 import Input from '@routes/Components/Input'
 import MainModal from '@routes/Components/MainModal'
@@ -226,8 +226,8 @@ export default class View extends Component {
   }
 
   BeforesellOTCSendMail = (selectOne = {}) => {
-    const { dispatch, modelName, openModal } = this.props
-    const { email, sell_realName, sell_bankName, sell_bankNo } = selectOne
+    const { dispatch, modelName, openModal, user: { userInfo: { email = '' } = {} } = {}, } = this.props
+    const { sell_realName, sell_bankName, sell_bankNo } = selectOne
     const { sell_rmbAmount, active } = this.state
     dispatch({
       type: `${modelName}/BeforesellOTCSendMail`,
@@ -235,8 +235,8 @@ export default class View extends Component {
         email,
         coinCode: active,
         amount: sell_rmbAmount,
-        rmbAmount: '',
-        realName: sell_rmbAmount,
+        rmbAmount: formatNumber(sell_rmbAmount * selectOne.sell_exchangeRate, 8),
+        realName: sell_realName,
         bankName: sell_bankName,
         bankNo: sell_bankNo
       }
@@ -313,7 +313,7 @@ export default class View extends Component {
     const {
       modal: { name, data },
       model: { detailLegal = [], buyPage },
-      user: { userInfo: { email = '' } = {} } = {}, theme: { calculateTableHeight }, loading, modelName
+      theme: { calculateTableHeight }, loading, modelName
     } = this.props
     const { active, buy_rmbAmount, buy_rmbAmount_errMsg, sell_rmbAmount, sell_rmbAmount_errMsg, record, } = this.state
     const selectList = detailLegal.map((item = {}) => ({ label: item.assetName, value: item.assetName }))
@@ -389,6 +389,9 @@ export default class View extends Component {
                         }} >
                       </Input >
                     </div >
+                    <span
+                      className={styles.exchange} >人民币 ≈ {formatNumber(buy_rmbAmount / selectOne.exchangeRate, 8)} {active}
+                    </span >
                   </li >
                   <li className={styles.inputbutton} >
                     <div className={styles.label} ></div >
@@ -470,6 +473,9 @@ export default class View extends Component {
                         }} >
                       </Input >
                     </div >
+                    <span
+                      className={styles.exchange} >{active} ≈ {formatNumber(sell_rmbAmount * selectOne.sell_exchangeRate, 8)} 人民币
+                    </span >
                   </li >
                   <li className={styles.inputbutton} >
                     <div className={styles.label} ></div >
@@ -483,12 +489,7 @@ export default class View extends Component {
                         loading={loading.effects[`${modelName}/BeforesellOTCSendMail`]}
                         onClick={() => {
                           if (checkAllConditions('sell', selectOne)) {
-                            BeforesellOTCSendMail(
-                              {
-                                ...selectOne,
-                                email
-                              }
-                            )
+                            BeforesellOTCSendMail(selectOne)
                           }
                         }} >
                         卖出
