@@ -37,7 +37,7 @@ export default [
   {
     name: '解释说明',
     path: '/question',
-    model: ['account'],
+    model: ['question/index'],
     route: 'Question'
   },
   {

@@ -674,7 +674,7 @@ class RenderModal3 extends Component {
             countDown={() => {
               BeforesellOTCSendMail(selectOne)
             }}
-            loadingEffect={loading.effects[`${modelName}/getAssetRecord`]}
+            // loadingEffect={loading.effects[`${modelName}/getAssetRecord`]}
             onSubmit={()=>{sellOTC()}}
 
             className={styles.googleCodeVertify} />
