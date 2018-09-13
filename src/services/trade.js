@@ -12,6 +12,14 @@ if (MODE === 'mock') {
   require('./socketServer')
 }
 
+// OTC卖出数字货币
+export async function sellOTC(payload) {
+  return request(`${UserIp0}/User/otc/Sell`, {
+    method: 'post',
+    body: payload
+  })
+}
+
 
 // 提现发送邮箱验证码
 export async function BeforesellOTCSendMail(payload) {

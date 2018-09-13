@@ -250,16 +250,21 @@ export default class View extends Component {
   }
 
   sellOTC = () => {
-    const { dispatch, modelName, user: { userInfo: { email = '' } = {} } = {}, } = this.props
-    const { active, sell_rmbAmount, emailVerificationCod = '', googleCode = '', } = this.state
+    const { dispatch, modelName, user: { userInfo: { email = '' } = {} } = {}, closeModal } = this.props
+    const { active, sell_rmbAmount, emailVerificationCode = '', googleCode = '', } = this.state
     dispatch({
       type: `${modelName}/sellOTC`,
       payload: {
         email,
-        emailVerificationCod,
+        emailVerificationCode,
         googleCode,
         coinCode: active,
         amount: sell_rmbAmount,
+      }
+    }).then(res => {
+      this.startInit()
+      if (res) {
+        closeModal()
       }
     })
   }
@@ -621,7 +626,10 @@ class RenderModal2 extends Component {
 //谷歌验证码模态框
 class RenderModal3 extends Component {
   render() {
-    const { startInit, selectOne = {}, data, dispatch, changeState, emailVerificationCode, googleCode, BeforesellOTCSendMail, sellOTC } = this.props
+    const {
+      startInit, selectOne = {}, data, dispatch, changeState, emailVerificationCode, googleCode,
+      BeforesellOTCSendMail, sellOTC, loading, modelName
+    } = this.props
     const props = {
       modalProps: {
         style: {
@@ -674,8 +682,10 @@ class RenderModal3 extends Component {
             countDown={() => {
               BeforesellOTCSendMail(selectOne)
             }}
-            // loadingEffect={loading.effects[`${modelName}/getAssetRecord`]}
-            onSubmit={()=>{sellOTC()}}
+            loadingEffect={loading.effects[`${modelName}/sellOTC`]}
+            onSubmit={() => {
+              sellOTC()
+            }}
 
             className={styles.googleCodeVertify} />
         </div >

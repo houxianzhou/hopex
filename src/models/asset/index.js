@@ -6,7 +6,7 @@ import {
   getAssetSummary, getAssetAddress, getWithdrawParameter,
   SendEmailToWithdraw, getAssetRecord, doWithdrawApply,
   getExchangeRate, getBuyParameter, buyOTC, getOrder, getSellParameter,
-  BeforesellOTCSendMail
+  BeforesellOTCSendMail, sellOTC
 } from '@services/trade'
 import { GetUserInfo } from '@services/user'
 
@@ -91,29 +91,30 @@ export default joinModel(modelExtend, {
     },
 
     //----------------------------------------------------------------------------------法币
-    // 下单
-    // * BeforesellOTCSendMail({ payload = {} }, { call, put, select }) {
-    //   const repayload = yield (asyncPayload(yield put({
-    //     type: 'createRequestParams',
-    //     payload: {
-    //       "head": {},
-    //       "param": {
-    //         ...payload
-    //       },
-    //       powerMsg: '提现发送邮箱验证码',
-    //       power: [1]
-    //     }
-    //   })))
-    //   if (repayload) {
-    //     const res = getRes(yield call(BeforesellOTCSendMail, repayload))
-    //     if (resOk(res)) {
-    //       const result = _.get(res, 'data')
-    //       if (result) {
-    //         return result
-    //       }
-    //     }
-    //   }
-    // },
+    // OTC卖出数字货币
+    * sellOTC({ payload = {} }, { call, put, select }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {
+            ...payload
+          },
+          powerMsg: '卖单',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(sellOTC, repayload))
+        if (resOk(res)) {
+          const result = _.get(res, 'data')
+          if (result) {
+            Toast.tip('卖出申请成功')
+            return result
+          }
+        }
+      }
+    },
 
     // 提现发送邮箱验证码
     * BeforesellOTCSendMail({ payload = {} }, { call, put, select }) {
