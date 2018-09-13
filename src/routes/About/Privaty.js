@@ -26,7 +26,7 @@ export default class View extends Component {
     return (
       <Mixin.Child that={this} >
         <div className={styles.service} >
-          <div className={styles.aboutTitle}>关于我们</div>
+          <div className={styles.aboutTitle}>隐私政策</div>
           <p className={styles.black}>本隐私声明适用Hopex的所有相关服务，Hopex尊重并保护所有使用Hopex平台服务用户的个人隐私权。为了给您提供更准确、更有个性化的服务，会按照本隐私权政策的规定使用和披露您的个人信息但Hopex将以高度的勤勉、审慎义务对待这些信息。除本隐私权政策另有规定外，在未征得您事先许可的情况下，Hopex不会将这些信息对外披露或向第三方提供。Hopex会不时更新本隐私权政策。 您在同意Hopex服务协议之时，即视为您已经同意本隐私权政策全部内容。本隐私权政策属于Hopex服务协议不可分割的一部分。</p>
           <p className={styles.title}>1、适用范围</p>
           <p className={styles.content}>在您注册或激活可以登录Hopex平台的账户时，您在Hopex平台或者其关联公司提供的其他平台提供的个人注册信息（应法律法规要求需公示的企业名称等相关工商注册信息以及自然人经营者的信息除外）； 在您使用Hopex平台服务，或访问Hopex平台网页时，Hopex自动接收并记录的您的浏览器和计算机上的信息，包括但不限于您的IP地址、浏览器的类型、使用的语言、访问日期和时间、软硬件特征信息及您需求的网页记录等数据； Hopex通过合法途径从商业伙伴处取得的用户个人数据。</p>
