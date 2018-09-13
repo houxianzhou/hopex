@@ -3,7 +3,6 @@ import { Button, Table, Loading, RouterGo } from '@components'
 import { _, classNames } from '@utils'
 
 
-
 export const getColumns = (props = {}) => {
   const { dispatch, modelName, columns = [] } = props
   const cols = [
@@ -16,7 +15,7 @@ export const getColumns = (props = {}) => {
     },
     {
       title: '类型',
-      dataIndex: 'orderType',
+      dataIndex: 'orderTypeDisplay',
       render: (value) => value
     },
     {
@@ -30,24 +29,27 @@ export const getColumns = (props = {}) => {
     },
     {
       title: '状态',
-      dataIndex: 'orderStatus',
+      dataIndex: 'orderStatusDisplay',
       render: (v) => {
         return v
-        // let result
-        // switch (v) {
-        //   case '0':
-        //     result = '未知状态'
-        //     break
-        //   case '1':
-        //     result = '部分成交，已撤销'
-        //     break
-        //   case '2':
-        //     result = '完全成交'
-        //     break
-        //   case '3':
-        //     result = '已撤销'
-        // }
-        // return result
+        let result
+        let color
+        switch (v) {
+          case 'Processing':
+            break
+          case 'Success':
+            color = "red"
+            break
+          case '2':
+            result = '完全成交'
+            break
+          case '3':
+            result = '已撤销'
+        }
+        return {
+          value: result,
+          classNames: 'red'
+        }
       }
     },
   ]
