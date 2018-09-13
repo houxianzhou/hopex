@@ -37,8 +37,14 @@ export default [
   {
     name: '解释说明',
     path: '/question',
-    model: ['question/index','home/index'],
+    model: ['question/index', 'home/index'],
     route: 'Question'
+  },
+  {
+    name: '帮助',
+    path: '/help',
+    model: ['home/index'],
+    route: 'Help'
   },
   {
     name: '登录',
