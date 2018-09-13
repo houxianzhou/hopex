@@ -1015,25 +1015,47 @@ export default delay({
 
   //订单记录
   'Get /mock/api/v1/User/otc/GetOrders': (req, res) => {
+    const { limit, page: pageIndex } = req.query
+    const pageSize = limit || 10
+    const status = [
+      {
+        a: 'Processing',
+        b: '进行中'
+      },
+      {
+        a: 'Success',
+        b: '完成'
+      },
+      {
+        a: 'Failure',
+        b: '失败'
+      },
+    ]
+    const total = (new Array(200)).fill().map((item, index) => {
+        const select = status[_.random(0, 3)] || {}
+        return {
+          "id": 24,
+          "amount": "+0.00223185BTC",
+          "no": "OB201809120022",
+          "orderType": "Buy",
+          "orderTypeDisplay": "买入" + index,
+          "rmbAmount": "100.00CNY",
+          "bankNo": "--",
+          "orderStatus": select.a,
+          "orderStatusDisplay": select.b,
+          "time": "2018-09-12 20:31:36",
+          "detailUrl": "https://user.hopex.com/otc/order?orderId=24"
+        }
+
+      }
+    )
     res.send(
       {
         "data": {
-          "totalCount": 1,
+          "totalCount": total.length,
           "page": 1,
-          "pageSize": 10,
-          "result": [{
-            "id": 24,
-            "amount": "+0.00223185BTC",
-            "no": "OB201809120022",
-            "orderType": "Buy",
-            "orderTypeDisplay": "买入",
-            "rmbAmount": "100.00CNY",
-            "bankNo": "--",
-            "orderStatus": "Processing",
-            "orderStatusDisplay": "进行中",
-            "time": "2018-09-12 20:31:36",
-            "detailUrl": "https://user.hopex.com/otc/order?orderId=24"
-          }]
+          "pageSize": pageSize,
+          "result": total.slice(Number(pageIndex - 1) * pageSize, (Number(pageIndex)) * pageSize)
         }, "ret": 0, "errCode": "", "errStr": ""
       }
     )

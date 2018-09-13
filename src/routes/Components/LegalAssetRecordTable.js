@@ -43,10 +43,23 @@ export const getColumns = (props = {}) => {
             break
         }
         return (
-          <>
-            <span className={color} >{v}</span >
-            <span className={color} >{v}</span >
-          </>
+          {
+            value: (
+              <>
+                <span className={color} >{v}</span >
+                {
+                  record.orderStatus === 'Processing' ? (
+                    <span className={'blue'} onClick={() => {
+                      window.location.href = record.detailUrl
+                    }} >查看</span >
+                  ) : null
+                }
+
+              </>
+            ),
+            className: 'action'
+          }
+
         )
       }
     },

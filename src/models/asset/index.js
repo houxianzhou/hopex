@@ -42,6 +42,9 @@ export default joinModel(modelExtend, {
 
     record: [],// 数字货币资金记录
     recordTotalPage: '',// 数字货币资金记录总页数
+
+    recordLegal: [],// 法币资金记录
+    recordLegalTotalPage: '',// 法币资金记录总页数
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -142,6 +145,7 @@ export default joinModel(modelExtend, {
 
     // 获取订单
     * getOrder({ payload = {} }, { call, put, select }) {
+      const { all, limit } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
@@ -154,8 +158,19 @@ export default joinModel(modelExtend, {
       if (repayload) {
         const res = getRes(yield call(getOrder, { ...payload }))
         if (resOk(res)) {
-          const result = _.get(res, 'data.result')
-          return result
+          const [result, totalCount] = [_.get(res, 'data.result'), _.get(res, 'data.totalCount')]
+          //区分10条记录和record页面
+          if (all) {
+            yield put({
+              type: 'changeState',
+              payload: {
+                recordLegal: result,// 法币资金记录
+                recordLegalTotalPage: Math.ceil(totalCount / limit),// 法币资金记录总页数
+              }
+            })
+          } else {
+            return result
+          }
         }
       }
     },
