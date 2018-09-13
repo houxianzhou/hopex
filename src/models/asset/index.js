@@ -91,6 +91,30 @@ export default joinModel(modelExtend, {
     },
 
     //----------------------------------------------------------------------------------法币
+    // 下单
+    // * BeforesellOTCSendMail({ payload = {} }, { call, put, select }) {
+    //   const repayload = yield (asyncPayload(yield put({
+    //     type: 'createRequestParams',
+    //     payload: {
+    //       "head": {},
+    //       "param": {
+    //         ...payload
+    //       },
+    //       powerMsg: '提现发送邮箱验证码',
+    //       power: [1]
+    //     }
+    //   })))
+    //   if (repayload) {
+    //     const res = getRes(yield call(BeforesellOTCSendMail, repayload))
+    //     if (resOk(res)) {
+    //       const result = _.get(res, 'data')
+    //       if (result) {
+    //         return result
+    //       }
+    //     }
+    //   }
+    // },
+
     // 提现发送邮箱验证码
     * BeforesellOTCSendMail({ payload = {} }, { call, put, select }) {
       const repayload = yield (asyncPayload(yield put({
@@ -114,6 +138,7 @@ export default joinModel(modelExtend, {
         }
       }
     },
+
     // 获取订单
     * getOrder({ payload = {} }, { call, put, select }) {
       const repayload = yield (asyncPayload(yield put({

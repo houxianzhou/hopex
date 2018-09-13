@@ -213,7 +213,7 @@ export default class View extends Component {
   }
 
   buyOTC = () => {
-    const { dispatch, modelName } = this.props
+    const { dispatch, modelName, } = this.props
     const { active, buy_rmbAmount } = this.state
     dispatch({
       type: `${modelName}/buyOTC`,
@@ -250,11 +250,14 @@ export default class View extends Component {
   }
 
   sellOTC = () => {
-    const { dispatch, modelName } = this.props
-    const { active, sell_rmbAmount } = this.state
+    const { dispatch, modelName, user: { userInfo: { email = '' } = {} } = {}, } = this.props
+    const { active, sell_rmbAmount, emailVerificationCod = '', googleCode = '', } = this.state
     dispatch({
       type: `${modelName}/sellOTC`,
       payload: {
+        email,
+        emailVerificationCod,
+        googleCode,
         coinCode: active,
         amount: sell_rmbAmount,
       }
@@ -309,7 +312,7 @@ export default class View extends Component {
 
 
   render() {
-    const { startInit, changeState, buyOTC, BeforesellOTCSendMail, checkAllConditions, doCheckBuy, doCheckSell } = this
+    const { startInit, changeState, buyOTC, sellOTC, BeforesellOTCSendMail, checkAllConditions, doCheckBuy, doCheckSell, } = this
     const {
       modal: { name, data },
       model: { detailLegal = [], buyPage },
@@ -563,7 +566,6 @@ class RenderModal1 extends Component {
             </div >
           </div >
         </div >
-
       </MainModal >
     )
   }
@@ -619,7 +621,7 @@ class RenderModal2 extends Component {
 //谷歌验证码模态框
 class RenderModal3 extends Component {
   render() {
-    const { startInit, selectOne = {}, data, dispatch, changeState, emailVerificationCode, googleCode, BeforesellOTCSendMail } = this.props
+    const { startInit, selectOne = {}, data, dispatch, changeState, emailVerificationCode, googleCode, BeforesellOTCSendMail, sellOTC } = this.props
     const props = {
       modalProps: {
         style: {
@@ -670,10 +672,10 @@ class RenderModal3 extends Component {
               })
             }}
             countDown={() => {
-              BeforesellOTCSendMail()
+              BeforesellOTCSendMail(selectOne)
             }}
-            // loadingEffect={}
-            // onSubmit={}
+            loadingEffect={loading.effects[`${modelName}/getAssetRecord`]}
+            onSubmit={()=>{sellOTC()}}
 
             className={styles.googleCodeVertify} />
         </div >

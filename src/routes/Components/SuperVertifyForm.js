@@ -113,7 +113,6 @@ export default class View extends Component {
     }
   }
 
-
   render() {
     const { changeState, changePage, vertifyIdCard, vertifyBank, removeBindBank, doCheckCard } = this
     const { name, card, card_errMsg, bank, bankName, } = this.state
