@@ -30,26 +30,24 @@ export const getColumns = (props = {}) => {
     {
       title: '状态',
       dataIndex: 'orderStatusDisplay',
-      render: (v) => {
-        return v
-        let result
+      render: (v, record = {}) => {
         let color
-        switch (v) {
+        switch (record.orderStatus) {
           case 'Processing':
             break
           case 'Success':
-            color = "red"
+            color = "gray"
             break
-          case '2':
-            result = '完全成交'
+          case 'Failure':
+            color = 'red'
             break
-          case '3':
-            result = '已撤销'
         }
-        return {
-          value: result,
-          classNames: 'red'
-        }
+        return (
+          <>
+            <span className={color} >{v}</span >
+            <span className={color} >{v}</span >
+          </>
+        )
       }
     },
   ]
