@@ -55,6 +55,7 @@ export default class View extends Component {
     return (
       <div >
         <NavPannel
+          {...this.props}
           defaultActive='AboutUs'
           navList={[
             {
