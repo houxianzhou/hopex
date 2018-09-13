@@ -480,10 +480,23 @@ export default class View extends Component {
                           }
                         }} >
                       </Input >
+
                     </div >
                     <span
                       className={styles.exchange} >{active} ≈ {formatNumber(sell_rmbAmount * selectOne.sell_exchangeRate, 8)} 人民币
                     </span >
+                  </li >
+                  <li className={styles.maxwidthdrawcontainer} >
+                    <div className={styles.label} ></div >
+                    <div className={styles.maxwidthdraw} >
+                      <div >最大可提现金额 :{selectOne.sell_maxSellAmount}{active}</div >
+                      <div className={styles.sellall} onClick={() => {
+                        changeState({ sell_rmbAmount: selectOne.sell_maxSellAmount }, () => {
+                          doCheckSell(selectOne.sell_maxSellAmount, selectOne)
+                        })
+                      }} >全部卖出
+                      </div >
+                    </div >
                   </li >
                   <li className={styles.inputbutton} >
                     <div className={styles.label} ></div >

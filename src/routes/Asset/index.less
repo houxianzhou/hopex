@@ -21,16 +21,30 @@
     min-height: 72px;
   }
 
-
   .page1 {
     .title {
       margin-bottom: 13px;
     }
     .userinput {
+      .maxwidthdrawcontainer {
+        margin: 0;
+        .maxwidthdraw {
+          width: 400px;
+          margin-bottom: 26px;
+          justify-content: space-between;
+          display: flex;
+          .sellall {
+            cursor: pointer;
+            color: @c_active_yellow;
+          }
+        }
+      }
+
       .input {
         width: 400px;
+
       }
-      .exchange{
+      .exchange {
         margin-left: 10px;
       }
     }
