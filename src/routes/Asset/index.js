@@ -64,6 +64,7 @@ export default class View extends Component {
       <div >
         <ShowJsonTip data={{ ...this.props.model }} />
         <NavPannel
+          {...this.props}
           defaultActive='PurseDetail'
           navList={[
             {

@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { routerRedux } from 'dva/router';
 import * as styles from './index.less'
 
-import { classNames, _, } from '@utils'
+import { classNames, _, parsePathSearch } from '@utils'
 
 export default class View extends Component {
   componentDidMount() {
+    const search = _.get(this.props, 'location.search')
+    const { page } = parsePathSearch(search)
+
     const { navList = [], defaultActive = '' } = this.props
     const lists = navList.reduce((sum, next) => {
       return sum.concat(next.list)
     }, [])
-    const filterOne = lists.filter(item => item.name === defaultActive)[0]
-    this.changePage(filterOne.onClick, defaultActive)
+    const filterOne = lists.filter(item => item.name === (page || defaultActive))[0]
+    this.changePage(filterOne.onClick, filterOne.name)
   }
 
   state = {
@@ -57,7 +59,7 @@ export default class View extends Component {
                               active === item.name ? 'active' : null
                             )}
                             onClick={() => {
-                              routerRedux.replace('?page=1')
+                              history.replace(`?page=${item.name}`)
                               this.changePage(item.onClick, item.name)
                             }} >
                             <div className={classNames(
