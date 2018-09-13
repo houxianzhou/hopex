@@ -6,8 +6,8 @@ export const BREACKPOINT = {
 
 export const THEME = {
   DARK: 'darkT',
-  DEEPDARK:'deepT',
-  LIGHT:'lightT'
+  DEEPDARK: 'deepT',
+  LIGHT: 'lightT'
 }
 
 export const API = {
@@ -64,6 +64,7 @@ export const NUMBER = {
 }
 
 export const PATH = {
+  about: '/about',
   login: '/user/login',
   dashboard: '/dashboard',
   home: '/home',

@@ -45,7 +45,8 @@ export default [
     name: '关于',
     path: '/about',
     model: ['home/index'],
-    route: 'About'
+    route: 'About',
+    show: false
   },
   {
     name: '登录',

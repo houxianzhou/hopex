@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
+import { PATH } from '@constants'
 import { RouterGo } from '@components'
 import { facebook, ins, twitter, telegram, logo3 } from '@assets'
 import { classNames, _ } from '@utils'
@@ -36,10 +37,30 @@ export default class View extends Component {
             <div className={styles.columns} >
               <div >关于</div >
               <ul >
-                <li >关于我们</li >
-                <li >服务条款</li >
-                <li >隐私政策</li >
-                <li >安全性</li >
+                <RouterGo.SwitchRoute Ele={'li'} value={{
+                  pathname: PATH.about,
+                  search: `?page=AboutUs`
+                }} >
+                  关于我们
+                </RouterGo.SwitchRoute >
+                <RouterGo.SwitchRoute Ele={'li'} value={{
+                  pathname: PATH.about,
+                  search: `?page=Service`
+                }} >
+                  服务条款
+                </RouterGo.SwitchRoute >
+                <RouterGo.SwitchRoute Ele={'li'} value={{
+                  pathname: PATH.about,
+                  search: `?page=Privaty`
+                }} >
+                  服务条款
+                </RouterGo.SwitchRoute >
+                <RouterGo.SwitchRoute Ele={'li'} value={{
+                  pathname: PATH.about,
+                  search: `?page=Safety`
+                }} >
+                  安全性
+                </RouterGo.SwitchRoute >
               </ul >
             </div >
             <div className={styles.columns} >

@@ -2,7 +2,7 @@ import { request } from '@utils'
 import { API } from "@constants"
 
 let { MOCKIP, UserIp0, USERIP, USERIP2, UserIp3, UserIp4 } = API
-export const MODE = 'mock1'
+export const MODE = 'mock'
 
 // mock数据
 if (MODE === 'mock') {
