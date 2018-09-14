@@ -231,7 +231,7 @@ export default class View extends Component {
     return (
       <Mixin.Parent that={this} >
         <div className={styles.home} >
-          <ShowJsonTip data={{ ...this.props.model, ...this.props.user, ...this.props.theme }} ></ShowJsonTip >
+          {/*<ShowJsonTip data={{ ...this.props.model, ...this.props.user, ...this.props.theme }} ></ShowJsonTip >*/}
 
           <div className={styles.views} >
             {

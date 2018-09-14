@@ -28,6 +28,11 @@ export const getColumns = (props = {}) => {
       render: (value, record = {}) => value
     },
     {
+      title: '银行卡号',
+      dataIndex: 'bankNo',
+      render: (value, record = {}) => value
+    },
+    {
       title: '状态',
       dataIndex: 'orderStatusDisplay',
       render: (v, record = {}) => {

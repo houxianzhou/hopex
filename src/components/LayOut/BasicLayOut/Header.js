@@ -169,20 +169,20 @@ export default class View extends Component {
                   {this.renderNetWork(netWorkStatus)}
                 </div >
               </li >
-              <li >
-                <div >
-                  {notice}
-                  <span >通知</span >
-                </div >
-              </li >
-              <li onClick={() => {
-                window.open('https://hopex.zendesk.com/')
-              }} >
-                <div >
-                  {help}
-                  <span >帮助中心</span >
-                </div >
-              </li >
+              {/*<li >*/}
+                {/*<div >*/}
+                  {/*{notice}*/}
+                  {/*<span >通知</span >*/}
+                {/*</div >*/}
+              {/*</li >*/}
+              {/*<li onClick={() => {*/}
+                {/*window.open('https://hopex.zendesk.com/')*/}
+              {/*}} >*/}
+                {/*<div >*/}
+                  {/*{help}*/}
+                  {/*<span >帮助中心</span >*/}
+                {/*</div >*/}
+              {/*</li >*/}
               {
                 isLogin ? (
                   <li >

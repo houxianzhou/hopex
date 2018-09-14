@@ -30,7 +30,7 @@ export default class View extends Component {
     const { renderPage } = this
     return (
       <div >
-        <ShowJsonTip data={this.props.model} />
+        {/*<ShowJsonTip data={this.props.model} />*/}
         <NavPannel
           {...this.props}
           defaultActive='MyAccount'

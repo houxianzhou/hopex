@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { classNames, _, } from '@utils'
 import { Table, PagiNation, Mixin } from '@components'
-import { getColumns, Tabs, RenderModal } from '@routes/Components/HistoryTable'
+import { getColumns, Tabs, RenderModal, getTabs } from '@routes/Components/HistoryTable'
 import NoDataTip from '@routes/Components/NoDataTip'
 
 import styles from './index.less'
@@ -173,7 +173,7 @@ export default class View extends Component {
           <div className={styles.header} >
             <ul >
               {
-                Tabs.map((item, index) => (
+                getTabs(false).map((item, index) => (
                   <li key={index} className={classNames(
                     activeLi === item.type ? styles.active : null
                   )} onClick={() => {

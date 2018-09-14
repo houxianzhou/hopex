@@ -10,10 +10,6 @@ export const Tabs = [
     name: '最近10条委托历史',
     type: '1'
   },
-  // {
-  //   name: '最近10条交割历史',
-  //   type: '3'
-  // },
   {
     name: '最近10条强平历史',
     type: '6'
@@ -25,7 +21,24 @@ export const Tabs = [
 ]
 
 export const getTabs = (isTen = true) => {
-  // const
+  const symbo = isTen ? '10条' : ''
+
+  const Tabs = [
+    {
+      name: `最近${symbo}委托历史`,
+      type: '1'
+    },
+    {
+      name: `最近${symbo}强平历史`,
+      type: '6'
+    },
+    {
+      name: `最近${symbo}自动减仓历史`,
+      type: '7'
+    }
+  ]
+
+  return Tabs
 
 }
 

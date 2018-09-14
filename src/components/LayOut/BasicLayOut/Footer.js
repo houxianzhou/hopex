@@ -75,15 +75,15 @@ export default class View extends Component {
                 }
               </ul >
             </div >
-            <div className={styles.columns} >
-              <div >帮助</div >
-              <ul >
-                <li >费用</li >
-                <li >永续合约指南</li >
-                <li >期货合约指南</li >
-                <li >帮助中心</li >
-              </ul >
-            </div >
+            {/*<div className={styles.columns} >*/}
+              {/*<div >帮助</div >*/}
+              {/*<ul >*/}
+                {/*<li >费用</li >*/}
+                {/*<li >永续合约指南</li >*/}
+                {/*<li >期货合约指南</li >*/}
+                {/*<li >帮助中心</li >*/}
+              {/*</ul >*/}
+            {/*</div >*/}
           </div >
         </div >
         <div className={styles.down} >©Copyright.All Rights Reserved.</div >

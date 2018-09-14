@@ -63,7 +63,7 @@ export default class View extends Component {
     const { dispatch, modelName, user: { showChain = false, showLegal = false } } = this.props
     return (
       <div >
-        <ShowJsonTip data={{ ...this.props.model }} />
+        {/*<ShowJsonTip data={{ ...this.props.model }} />*/}
         <NavPannel
           {...this.props}
           defaultActive='PurseDetail'
