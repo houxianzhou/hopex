@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ShowJsonTip, NavPannel } from '@components'
-import accountyellow from '@assets/accountyellow.png'
+import { mine } from '@assets'
 import MyAccount from './account/MyAccount'
 import SuperVertify from './SuperVertify/index'
 
@@ -37,7 +37,7 @@ export default class View extends Component {
           navList={[
             {
               title: '账户',
-              icon: accountyellow,
+              svg: mine,
               list: [
                 {
                   name: 'MyAccount',

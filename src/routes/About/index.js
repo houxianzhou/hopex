@@ -6,7 +6,7 @@ import { default as Service } from './Service.js'
 import { default as Privaty } from './Privaty.js'
 import { default as Safety } from './Safety.js'
 
-import { assetManage, $B3, $B4 } from '@assets'
+import { aboutus } from '@assets'
 
 const Comp = {
   AboutUs,
@@ -59,7 +59,7 @@ export default class View extends Component {
           defaultActive='AboutUs'
           navList={[
             {
-              svg: assetManage,
+              svg: aboutus,
               title: '关于',
               list: [
                 {
