@@ -81,116 +81,84 @@ export default class View extends Component {
               ))
             }
           </ul >
-          {/*<div className={styles.bottom} >*/}
-            {/*<div className={styles.title}>明细</div >*/}
-            {/*<div className={styles.lis} >{*/}
-              {/*[{*/}
-                {/*title: '钱包余额',*/}
-                {/*value: 'walletBalance',*/}
-                {/*display: 'walletBalanceUSD'*/}
-              {/*}].map((item = {}, index) => {*/}
-                {/*return (*/}
-                  {/*<ul key={index} >*/}
-                    {/*<li key={0} >{item.title}</li >*/}
-                    {/*{*/}
-                      {/*detail.map((item2 = {}, index2) => {*/}
-                        {/*return (*/}
-                          {/*<li key={index2 + 1} >*/}
-                            {/*<span>{item2[item.value]}</span>*/}
-                            {/*{*/}
-                              {/*item.display ? (*/}
-                                {/*<div >≈ {item2[item.display]}</div >*/}
-                              {/*) : null*/}
-                            {/*}*/}
-                          {/*</li >*/}
-                        {/*)*/}
-                      {/*})*/}
-                    {/*}*/}
-                  {/*</ul >*/}
-                {/*)*/}
-              {/*})*/}
-            {/*}*/}
-
-            {/*</div >*/}
-          {/*</div >*/}
-
-          <ul className={styles.down} >
-            {
-              detail.map((item, index) => {
-                const list2 = [
+          <div className={styles.bottom} >
+            <div className={styles.title} >明细</div >
+            <div className={styles.lis} >
+              <ul key={0} className={styles.tableheader}>
+                <li>
+                  <div ></div >
+                </li >
+                <li>
+                  <div >BTC</div >
+                </li >
+                <li>
+                  <div >ETH</div >
+                </li >
+                <li>
+                  <div >USDT</div >
+                </li >
+              </ul >
+              {
+                [
                   {
-                    name: '浮动盈亏',
-                    value: item.floatProfit,
-                    prec: item.floatProfitUSD,
+                    title: '钱包余额',
+                    value: 'walletBalance',
+                    display: 'walletBalanceUSD'
                   },
                   {
-                    name: '钱包余额',
-                    value: item.walletBalance,
-                    prec: item.walletBalanceUSD,
+                    title: '浮动盈亏',
+                    value: 'floatProfit',
+                    display: 'floatProfitUSD'
                   },
                   {
-                    name: '可用金额',
-                    value: item.availableBalance,
-                    prec: item.availableBalanceUSD,
+                    title: '总权益',
+                    value: 'totalWealth',
+                    display: 'totalWealthUSD'
                   },
                   {
-                    name: '委托占用保证金',
-                    value: item.delegateMargin,
-                    prec: item.delegateMarginUSD,
+                    title: '委托占用保证金',
+                    value: 'delegateMargin',
+                    display: 'delegateMarginUSD'
                   },
                   {
-                    name: '持仓占用保证金',
-                    value: item.positionMargin,
-                    prec: item.positionMarginUSD,
+                    title: '仓占用保证金',
+                    value: 'positionMargin',
+                    display: 'positionMarginUSD'
                   },
                   {
-                    name: '冻结提现金额',
-                    value: item.withdrawFreeze,
-                    prec: item.withdrawFreezeUSD,
+                    title: '提现冻结金额',
+                    value: 'withdrawFreeze',
+                    display: 'withdrawFreezeUSD'
                   },
-                ]
-                return (
-                  <li key={index} >
-                    <div className={styles.liheader} >
-                      <div className={styles.left} >
-                        <div className={styles.desc} >{item.assetName}总权益</div >
-                        <div className={styles.value} >
-                          <div >{item.totalWealth}</div >
-                          <div >(≈{item.totalWealthUSD})</div >
-                        </div >
-                      </div >
-                      <div >
-                        {[$B2, Diamond][index]}
-                      </div >
-                    </div >
-                    <div className={styles.licontent} >
-                      <ul >
-                        {
-                          list2.map((item2, index) => (
-                            <li key={index} >
-                              <div className={styles.leftdeco} />
+                  {
+                    title: '提现冻结金额',
+                    value: 'availableBalance',
+                    display: 'availableBalanceUSD'
+                  }
+                ].map((item = {}, index) => {
+                  return (
+                    <ul key={index + 1} >
+                      <li key={0} >{item.title}</li >
+                      {
+                        detail.map((item2 = {}, index2) => {
+                          return (
+                            <li key={index2 + 1} >
+                              <span >{item2[item.value]}</span >
                               {
-                                index > 2 ? <div className={styles.topdeco} /> : null
+                                item.display ? (
+                                  <div >≈ {item2[item.display]}</div >
+                                ) : null
                               }
-                              <div className={styles.contentdeco} >
-                                <div className={styles.name} >{item2.name}</div >
-                                <div className={styles.value} >
-                                  <RedGreenSwitch.MarkText
-                                    mark={item2.value}
-                                    value={item2.value.replace('+', '')} />
-                                </div >
-                                <div className={styles.prec} >≈{item2.prec}</div >
-                              </div >
                             </li >
-                          ))
-                        }
-                      </ul >
-                    </div >
-                  </li >
-                )
-              })
-            }
-          </ul >
+                          )
+                        })
+                      }
+                    </ul >
+                  )
+                })
+              }
+            </div >
+          </div >
         </div >
       </Mixin.Child >
     )

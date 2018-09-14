@@ -223,7 +223,7 @@
           margin: 10px 0 6px;
         }
       }
-      height: 140px;
+      height: 110px;
       width: 33.3%;
       background: white;
     }
@@ -239,7 +239,12 @@
     }
     .lis {
       ul {
-        &:nth-child(2n+1) {
+        &.tableheader{
+          background: unset !important;
+          height:unset;
+          margin-bottom: 20px;
+        }
+        &:nth-child(2n) {
           background: #F6F8FA;
         }
         height: 80px;
@@ -263,100 +268,6 @@
             width: 100%;
           }
 
-        }
-      }
-    }
-  }
-  .down {
-    display: flex;
-    flex-wrap: wrap;
-    > li {
-      width: 100%;
-      border-radius: 4px;
-      width: 100%;
-      background: white;
-      margin-top: 10px;
-      .liheader {
-        color: #999999;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 60px 10px 40px;
-        border-bottom: 1px solid #EBEBEB;
-        .left {
-          .desc {
-          }
-          .value {
-            display: flex;
-            > div {
-              font-size: 12px;
-              display: flex;
-              align-items: center;
-            }
-            div:first-of-type {
-              margin-right: 12px;
-              color: @c_active_yellow;
-              font-size: 22px;
-              margin-top: 6px;
-            }
-          }
-        }
-      }
-      .licontent {
-        width: 100%;
-        background: white;
-        ul {
-          display: flex;
-          flex-wrap: wrap;
-          li + li {
-            .leftdeco, .topdeco {
-              position: absolute;
-            }
-            .leftdeco {
-              height: 40px;
-              left: 0;
-              border-left: 1px solid #EBEBEB !important;
-            }
-            .topdeco {
-              width: 100px;
-              top: 0;
-              border-top: 1px solid #EBEBEB;
-            }
-          }
-
-          li {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            height: 144px;
-            width: 33.3%;
-            &:nth-child(3n+1) {
-              .leftdeco {
-                display: none;
-              }
-            }
-            .contentdeco {
-              > div {
-                color: #999999;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              }
-              div.name {
-
-              }
-              div.value {
-                font-size: 22px;
-                color: black;
-                margin-top: 7px;
-                margin-bottom: 3px;
-              }
-              div.prec {
-                font-size: 12px;
-              }
-            }
-          }
         }
       }
     }
