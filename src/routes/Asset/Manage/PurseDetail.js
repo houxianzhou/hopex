@@ -131,7 +131,7 @@ export default class View extends Component {
                     display: 'withdrawFreezeUSD'
                   },
                   {
-                    title: '提现冻结金额',
+                    title: '可用金额',
                     value: 'availableBalance',
                     display: 'availableBalanceUSD'
                   }
