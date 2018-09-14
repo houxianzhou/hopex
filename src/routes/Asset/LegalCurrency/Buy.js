@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { PATH } from "@constants"
-import { Mixin, Button, Table, Toast } from '@components'
+import { Mixin, Button, Table, Toast, RouterGo } from '@components'
 import { classNames, _, Patterns, isEqual, formatNumber } from '@utils'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
 import Input from '@routes/Components/Input'
@@ -525,7 +525,12 @@ export default class View extends Component {
           <div className={styles.tableheader} >
             <div >最近10条资金记录</div >
             <div >
-              <span >完整资金记录</span >
+              <RouterGo.SwitchRoute Ele={'span'} value={{
+                pathname: PATH.asset,
+                search: `?page=Record_Legal`
+              }} >
+                完整资金记录
+              </RouterGo.SwitchRoute >
             </div >
           </div >
           <div style={{ height: calculateTableHeight(dataSource) }} ><Table {...tableProp} /></div >
