@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { ToastContainer, toast } from 'react-toastify'
-import { ShowJsonTip, Select, Input, CountDown, Button } from '@components'
+import { ShowJsonTip, Select, Input, CountDown, Button, RouterGo } from '@components'
 import { PATH, COLORS } from '@constants'
 import { classNames, _, Patterns } from '@utils'
 import { default as Structure } from './components/Structure'
-import { email as emailpng, passwordpng, countrypng, pulldownpng, selectpng,vertifycodepng } from '@assets'
+import { email as emailpng, passwordpng, countrypng, pulldownpng, selectpng, vertifycodepng } from '@assets'
 import styles from './index.less'
 
 @connect(({ user: model, Loading: loading, dispatch }) => ({
@@ -207,7 +207,14 @@ export default class View extends Component {
                           agentId ? (selectpng) : null
                         }
                       </div >
-                      <div >接受<span >服务条款</span ></div >
+                      <div >接受
+                        <RouterGo.SwitchRoute Ele={'span'} value={{
+                          pathname: PATH.about,
+                          search: `?page=Service`
+                        }} >
+                          服务条款
+                        </RouterGo.SwitchRoute >
+                      </div >
                       {
                         !agentId ? <div className={styles.mustselect} >请勾选</div > : null
                       }
@@ -247,7 +254,7 @@ export default class View extends Component {
                         }}
 
                       >
-                        <span>登录</span></span >
+                        <span >登录</span ></span >
                     </div >
                   </form >
                 </div >
