@@ -172,7 +172,7 @@ export default class View extends Component {
                           }
                         })
                       }} >
-                      已启用
+                      修改
                     </div >
                   ) : (
                     <div

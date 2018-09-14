@@ -37,7 +37,7 @@ export default class View extends Component {
           </p >
           <p className={styles.title} >交易风险</p >
           <p
-            className={styles.content} >从事交易可能存在风险，使用复杂的交易选项时尤为如是。如果您不了解这些风险，请勿使用HOPEX或任何交易选项。当您注册前需充分了解HOPEX交易的风险，包括但不仅限于以下几点： <br />
+            className={styles.content} style={{marginBottom: '80px'}}>从事交易可能存在风险，使用复杂的交易选项时尤为如是。如果您不了解这些风险，请勿使用HOPEX或任何交易选项。当您注册前需充分了解HOPEX交易的风险，包括但不仅限于以下几点： <br />
             1.数字资产市场是全新的、未经确认的，而且可能不会增长；<br />
             2.数字资产主要由投机者大量使用，零售和商业市场使用相对较少，数字资产交易存在极高风险，其全天不间断交易，没有涨跌限制，价格容易受庄家、全球政府政策的影响而大幅波动；<br />
             3.因各国法律、法规和规范性文件的制定或者修改，数字资产交易随时可能被暂停或被禁止。<br />
@@ -45,7 +45,7 @@ export default class View extends Component {
             如您使用域名为
             https://www.Hopex.com/及关联网站上的各类服务时（包括但不仅限于注册、交易等），说明您已充分了解该交易风险并选择为风险负责。如您无法承担该风险，请您立即停止使用本网站提供的服务或不再登陆本网站。
           </p >
-          <p className={styles.title} >协议正文</p >
+          <p className={styles.title} style={{marginBottom: '30px'}}>协议正文</p >
           <p className={styles.title} >一、 账户注册</p >
           <p className={styles.title} >1.注册账户资格</p >
           <p
@@ -80,7 +80,7 @@ export default class View extends Component {
             对于您在HOPEX上实施的行为，包括您未在HOPEX上实施但已经对HOPEX及其用户产生影响的行为，HOPEX有权单方认定您行为的性质及是否构成对本协议和/或规则的违反，并据此作出相应处罚。您应自行保存与您行为有关的全部证据，并应对无法提供充要证据而承担的不利后果。
             对于您涉嫌违反承诺的行为对任意第三方造成损害的，您均应当以自己的名义独立承担所有的法律责任，并应确保HOPEX免于因此产生损失或增加费用。
             如您涉嫌违反有关法律或者本协议之规定，使HOPEX遭受任何损失，或受到任何第三方的索赔，或受到任何行政管理部门的处罚，您应当赔偿HOPEX因此造成的损失及（或）发生的费用，包括合理的律师费用。</p >
-          <p className={styles.title} >四、责任范围和免责</p >
+          <p className={styles.title} style={{marginBottom: '20px'}}>四、责任范围和免责</p >
           <p className={styles.title} >1.责任范围</p >
           <p
             className={styles.content} >HOPEX仅作为您获取数字货币信息、物色交易对象、就数字货币的交易进行协商及开展交易的场所，但HOPEX无法控制交易所涉及的数字货币的质量、安全或合法性，交易信息的真实性或准确性，以及交易各方履行其在交易协议中各项义务的能力。您应自行谨慎判断确定相关数字货币及/或信息的真实性、合法性和有效性，并自行承担因此产生的责任与损失。除非法律法规明确要求，或出现以下情况，否则，HOPEX没有义务对所有用户的信息数据、数字货币信息、交易行为以及与交易有关的其它事项进行事先审查：
