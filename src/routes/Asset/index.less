@@ -228,6 +228,45 @@
       background: white;
     }
   }
+  .bottom {
+    padding: 40px;
+    margin-top: 10px;
+    background: white;
+    .title {
+      margin-bottom: 40px;
+      color: @c_active_yellow;
+      font-size: 16px;
+    }
+    .lis {
+      ul {
+        &:nth-child(2n+1) {
+          background: #F6F8FA;
+        }
+        height: 80px;
+        display: flex;
+        li {
+          color: #999999;
+          &:first-of-type {
+            margin-left: 30px;
+          }
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          align-content: center;
+          width: 25%;
+          span {
+            font-size: 18px;
+            color: @c_black;
+          }
+          > div {
+            margin-top: 4px;
+            width: 100%;
+          }
+
+        }
+      }
+    }
+  }
   .down {
     display: flex;
     flex-wrap: wrap;

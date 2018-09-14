@@ -35,7 +35,9 @@ export default class View extends Component {
 
   render() {
     const { page, active, } = this.state
-    const { navList = [], style: { widthPannel = '79%', widthNav = '19%' } = {}, history } = this.props
+    let { navList = [], } = this.props
+    const { style: { widthPannel = '79%', widthNav = '19%' } = {}, history } = this.props
+    navList = navList.filter(item => item.show !== false)
     return (
       <div className={styles.pannelContainer} >
         <div className={styles.navpannel} style={{ width: widthPannel }} >

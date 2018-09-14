@@ -17,8 +17,9 @@ const Comp = {
   Buy,
   Record_Legal
 }
-@connect(({ theme, modal, asset, history, loading, dispatch }) => ({
+@connect(({ theme, modal, user, asset, history, loading, dispatch }) => ({
   model: asset,
+  user,
   theme,
   modal,
   modelName: 'asset',
@@ -59,7 +60,7 @@ export default class View extends Component {
 
   render() {
     const { renderPage } = this
-    const { dispatch, modelName } = this.props
+    const { dispatch, modelName, user: { showChain = false, showLegal = false } } = this.props
     return (
       <div >
         <ShowJsonTip data={{ ...this.props.model }} />
@@ -83,8 +84,8 @@ export default class View extends Component {
             {
               svg: $B3,
               title: '数字货币',
+              show: showChain ? true : false,
               list: [
-
                 {
                   name: 'Deposit',
                   title: '存款',
@@ -116,6 +117,7 @@ export default class View extends Component {
             },
             {
               svg: $B4,
+              show: showLegal ? true : false,
               title: '法币',
               list: [
                 {

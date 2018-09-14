@@ -785,6 +785,24 @@ export default delay({
             "withdrawFreezeUSD": "0.00USD",
             "walletBalance": "0.00000000",
             "walletBalanceUSD": "0.00USD"
+          },{
+            "assetName": "USDT",
+            "assetLogoUrl": "http://hopex.com/api/v1/gateway/files/logos/eth.png",
+            "floatProfit": "0.00000000",
+            "floatProfitUSD": "0.00USD",
+            "profitRate": "0.00% ",
+            "totalWealth": "0.00000000",
+            "totalWealthUSD": "0.00USD",
+            "availableBalance": "0.00000000",
+            "availableBalanceUSD": "0.00USD",
+            "positionMargin": "0.00000000",
+            "positionMarginUSD": "0.00USD",
+            "delegateMargin": "0.00000000",
+            "delegateMarginUSD": "0.00USD",
+            "withdrawFreeze": "0.00000000",
+            "withdrawFreezeUSD": "0.00USD",
+            "walletBalance": "0.00000000",
+            "walletBalanceUSD": "0.00USD"
           }]
         }, "ret": 0, "errCode": "", "errStr": ""
       }

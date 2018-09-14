@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { Mixin } from '@components'
+import { Mixin, Table } from '@components'
 import { classNames, _, } from '@utils'
 import { Rights, $B, Home, $B2, Diamond } from '@assets'
 import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
@@ -36,6 +36,7 @@ export default class View extends Component {
       } = {}
     } = this.props
     const listSummary = [
+
       {
         icon: Rights,
         title: '账户总权益估值(BTC)',
@@ -80,7 +81,38 @@ export default class View extends Component {
               ))
             }
           </ul >
+          {/*<div className={styles.bottom} >*/}
+            {/*<div className={styles.title}>明细</div >*/}
+            {/*<div className={styles.lis} >{*/}
+              {/*[{*/}
+                {/*title: '钱包余额',*/}
+                {/*value: 'walletBalance',*/}
+                {/*display: 'walletBalanceUSD'*/}
+              {/*}].map((item = {}, index) => {*/}
+                {/*return (*/}
+                  {/*<ul key={index} >*/}
+                    {/*<li key={0} >{item.title}</li >*/}
+                    {/*{*/}
+                      {/*detail.map((item2 = {}, index2) => {*/}
+                        {/*return (*/}
+                          {/*<li key={index2 + 1} >*/}
+                            {/*<span>{item2[item.value]}</span>*/}
+                            {/*{*/}
+                              {/*item.display ? (*/}
+                                {/*<div >≈ {item2[item.display]}</div >*/}
+                              {/*) : null*/}
+                            {/*}*/}
+                          {/*</li >*/}
+                        {/*)*/}
+                      {/*})*/}
+                    {/*}*/}
+                  {/*</ul >*/}
+                {/*)*/}
+              {/*})*/}
+            {/*}*/}
 
+            {/*</div >*/}
+          {/*</div >*/}
 
           <ul className={styles.down} >
             {

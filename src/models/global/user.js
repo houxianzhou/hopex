@@ -25,7 +25,9 @@ export default joinModel(modelExtend, {
   namespace: 'user',
   state: {
     userInfo: localSave.get('userInfo') || {},
-    isOnlie: true
+    isOnlie: true,
+    showChain: _.get(localSave.get('showOTC'), 'showChain') || false,
+    showLegal: _.get(localSave.get('showOTC'), 'showLegal') || false
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -45,11 +47,22 @@ export default joinModel(modelExtend, {
         }
       ))
       if (resOk(res)) {
-        const { enabledTwoFactories, token, userId, email } = res.data
+        const { enabledTwoFactories, token, userId, email, showChain = false, showLegal = false } = res.data
+        yield put({
+          type: 'changeState',
+          payload: {
+            showChain,
+            showLegal
+          }
+        })
+        localSave.set('showOTC', {
+          showChain,
+          showLegal
+        })
         if (enabledTwoFactories) {
           return {
             email,
-            userId
+            userId,
           }
           // 谷歌二次验证
         } else {
@@ -58,7 +71,7 @@ export default joinModel(modelExtend, {
               userId,
               userToken: token,
               email,
-              redirect
+              redirect,
             }
             yield put({
               type: 'doLoginPrepare',
@@ -69,7 +82,7 @@ export default joinModel(modelExtend, {
       }
     },
     * doVertifyLogin({ payload = {} }, { call, put, select }) {
-      const { email, userId, redirect } = payload
+      const { email, userId, redirect, } = payload
       const res = getRes(yield call(doVertifyLogin, payload, (err) => {
         Toast.tip(err.errStr)
       }))
@@ -82,7 +95,7 @@ export default joinModel(modelExtend, {
               email,
               userId,
               userToken: data,
-              redirect
+              redirect,
             }
           })
           Toast.tip('登录成功')
@@ -90,14 +103,14 @@ export default joinModel(modelExtend, {
       }
     },
     * doLoginPrepare({ payload = {} }, { call, put }) {
-      const { redirect } = payload
+      const { redirect, ...rest } = payload
       yield put({
         type: 'changeState',
         payload: {
-          userInfo: payload
+          userInfo: rest,
         }
       })
-      localSave.set('userInfo', payload)
+      localSave.set('userInfo', rest)
       localSave.set('recordEmail', { email: payload.email })
       yield put({
         type: 'routerGo',
