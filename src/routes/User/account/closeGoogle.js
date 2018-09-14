@@ -44,7 +44,7 @@ export default class CloseGoogle extends Component {
               e.preventDefault();
               if (!code) return;
               submitGoogleCode(code);
-            }} >关闭
+            }} >确认
           </button >
         </form >
 
