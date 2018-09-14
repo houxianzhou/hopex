@@ -13,7 +13,7 @@ export default class View extends Component {
     const lists = navList.reduce((sum, next) => {
       return sum.concat(next.list)
     }, [])
-    const filterOne = lists.filter(item => item.name === (page || defaultActive))[0]
+    const filterOne = lists.filter(item => item.name === (page || defaultActive))[0] || lists[0]
     this.changePage(filterOne.onClick, filterOne.name)
   }
 
