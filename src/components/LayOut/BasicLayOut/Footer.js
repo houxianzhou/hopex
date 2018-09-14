@@ -53,7 +53,7 @@ export default class View extends Component {
                   pathname: PATH.about,
                   search: `?page=Privaty`
                 }} >
-                  服务条款
+                  隐私政策
                 </RouterGo.SwitchRoute >
                 <RouterGo.SwitchRoute Ele={'li'} value={{
                   pathname: PATH.about,
