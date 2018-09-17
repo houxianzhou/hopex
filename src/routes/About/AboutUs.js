@@ -35,7 +35,7 @@ export default class View extends Component {
             通过对技术、安全性、用户体验不断钻研提升，我们致力于打造一个为用户提供创新、便捷、可靠的数字资产衍生品交易服务的世界级平台。
           </p >
           <p className={styles.black} >
-            Hopex在香港建立了完善的运营中心，积极配合相关监管机构，为机构与个人用户提供安全、可信任的的数字货币交易服务。
+            Hopex在香港建立了完善的运营中心，积极配合相关监管机构，为机构与个人用户提供安全、可信任的数字货币交易服务。
           </p >
           <div className={styles.team}>
             <img src={teamImg} alt="" />
