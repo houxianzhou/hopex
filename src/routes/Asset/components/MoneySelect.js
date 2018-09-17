@@ -21,11 +21,11 @@ export default class MoneySelect extends Component {
         )}
         styles={{
           container: {
-            width: 48,
+            width: 58,
             // background: 'red',
           },
           dropdownIndicator: {
-            width: 8,
+             width: 8,
             display: 'flex',
             alignItems: 'center'
           },
