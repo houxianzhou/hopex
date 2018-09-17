@@ -231,15 +231,18 @@ export default class BuySell extends Component {
     } = config
     const { isLogin, routerGoLogin, routerGoRegister, model: { userAllowTrade, marketAllowTrade } } = this.props
     const { isLimitPrice } = this
+    const allowClick = () => {
+      return isLogin && (isLimitPrice() ? (Number(valuePrice) && Number(valueAmount)) : Number(valueAmount)) && userAllowTrade && marketAllowTrade
+    }
     return <Button
       loading={loading}
       className={classNames(
         styles.submit,
-        isLogin && (isLimitPrice() ? (Number(valuePrice) && Number(valueAmount)) : Number(valueAmount)) && userAllowTrade && marketAllowTrade ? styles.haslogin : styles.notlogin,
+        allowClick() ? styles.haslogin : styles.notlogin,
         className
       )}
       onClick={() => {
-        if (_.isFunction(onSubmit)) onSubmit()
+        if (_.isFunction(onSubmit) && allowClick()) onSubmit()
       }}
     >
       {
@@ -263,11 +266,11 @@ export default class BuySell extends Component {
           </>
         ) : (
           <>
-            <div >
+            <div className={styles.userentry} >
               {routerGoLogin('登录')}
             </div >
             <div className={styles.center} >或</div >
-            <div >
+            <div className={styles.userentry} >
               {routerGoRegister('注册')}
             </div >
           </>
@@ -615,7 +618,7 @@ class RenderModal2 extends Component {
             {
               String(side) === '2' ? '最高买入' : '最低卖出'
             }
-            价格<span className={styles.warnprice}>{price}</span >下单
+            价格<span className={styles.warnprice} >{price}</span >下单
           </div >
           <div className={styles.buttons} >
 
