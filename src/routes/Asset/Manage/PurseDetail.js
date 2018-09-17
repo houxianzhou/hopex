@@ -47,7 +47,8 @@ export default class View extends Component {
         icon: $B,
         title: '总浮动盈亏估值(BTC)',
         value: floatProfit,
-        usd: floatProfitUSD
+        usd: floatProfitUSD,
+        symbol: true,// 这里需要正负号
       },
       {
         icon: Home,
@@ -71,7 +72,7 @@ export default class View extends Component {
                     <div className={styles.value} >
                       <RedGreenSwitch.MarkText
                         mark={item.value}
-                        value={item.value.replace('+', '')} />
+                        value={item.symbol ? item.value : item.value.replace('+', '')} />
                     </div >
                     {
                       item.usd ? (<div >≈{item.usd}USD</div >) : null
