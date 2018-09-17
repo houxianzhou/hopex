@@ -20,12 +20,15 @@ export default joinModel(modelExtend, {
     detailAll: [],//交易页面钱包
     summary: {},//资产管理页面钱包明细
     detail: [],//资产管理页面钱包明细
-    detailDigital: [//资产管理数字货币,只有两个
+    detailDigital: [//资产管理数字货币,也有两个
       {
         assetName: 'BTC'
       },
       {
         assetName: 'ETH'
+      },
+      {
+        assetName: 'USDT'
       }
     ],
     detailLegal: [//资产管理页面法币，三个都要

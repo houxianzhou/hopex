@@ -902,11 +902,14 @@
         position: relative;
         display: flex;
         li {
+          position: relative;
+          width: 69px;
           &:first-child {
+            width: 114px;
             div {
+
               justify-content: flex-start;
-              width: unset;
-              padding: 15px;
+              padding-left: 15px;
             }
           }
           &.ismatch {
@@ -926,6 +929,8 @@
             }
 
             &.symbol {
+              right: 0;
+              left: 0;
               border: unset !important;
               > div {
 
@@ -944,13 +949,12 @@
                 text-align: center;
               }
             }
-            width: 70px;
+            // width: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 40px;
             border: 1px solid #24262A;
-            min-width: 60px;
             :global(.lightT) & {
               .mixinCL();
               border: 1px solid #EBEBEB;

@@ -193,28 +193,28 @@ export default class EnsureRecord extends Component {
             header={
               <div className={styles.ensurerecord_header} >
                 <div >委托列表</div >
-                <div className={styles.distance} >
-                  <div className={styles.text} >区间</div >
-                  <div className={styles.number} >{showDis}</div >
-                  {triangle}
-                  <div className={styles.select} >
-                    <ul >
-                      {
-                        varyRanges.map((item, index) => {
-                          if (item !== showDis) {
-                            return (
-                              <li key={index} onClick={() => {
-                                changeState({
-                                  dis: item
-                                })
-                              }} >{item}</li >
-                            )
-                          }
-                        })
-                      }
-                    </ul >
-                  </div >
-                </div >
+                {/*<div className={styles.distance} >*/}
+                  {/*<div className={styles.text} >区间</div >*/}
+                  {/*<div className={styles.number} >{showDis}</div >*/}
+                  {/*{triangle}*/}
+                  {/*<div className={styles.select} >*/}
+                    {/*<ul >*/}
+                      {/*{*/}
+                        {/*varyRanges.map((item, index) => {*/}
+                          {/*if (item !== showDis) {*/}
+                            {/*return (*/}
+                              {/*<li key={index} onClick={() => {*/}
+                                {/*changeState({*/}
+                                  {/*dis: item*/}
+                                {/*})*/}
+                              {/*}} >{item}</li >*/}
+                            {/*)*/}
+                          {/*}*/}
+                        {/*})*/}
+                      {/*}*/}
+                    {/*</ul >*/}
+                  {/*</div >*/}
+                {/*</div >*/}
               </div >
             }
           >

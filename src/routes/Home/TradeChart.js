@@ -658,7 +658,7 @@ export default class TradeChart extends Component {
 
                       <li >
                         <div className={styles.title} >
-                          <span className='blue' >更多</span >
+                          {/*<span className='blue' >更多</span >*/}
                         </div >
                         <div className={styles.desc} />
                       </li >

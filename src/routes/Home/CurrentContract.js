@@ -110,19 +110,37 @@ class RenderModal extends Component {
 
   render() {
     const props = {
+      modalProps: {
+        style: {
+          width: 800,
+        },
+      },
       ...this.props,
       title: '设置杠杆倍数'
     }
 
-    const { model: { leverages = [], keepBailRate, leverage, }, getLeverage, dispatch, modelName, closeModal, loading } = this.props
+    let { model: { leverages = [], keepBailRate, leverage, }, getLeverage, dispatch, modelName, closeModal, loading } = this.props
     const { currentValue } = this.state
-    const marks = leverages.reduce((sum, next = {}) => {
+    leverages = _.orderBy(leverages, (item = {}) => Number(item.leverage))
+    let maxLeverge = leverages[leverages.length - 1] || {}
+
+    let marks = leverages.reduce((sum, next = {}, index) => {
+      const avarageLeverge = maxLeverge.leverage / ((leverages.length - 1) || 1)
       const leverage = next.leverage
-      sum[Number(leverage)] = String(leverage)
+      sum[Number(avarageLeverge * index)] = String(leverage)
+      // console.log(avarageLeverge * index, index)
       return sum
     }, {})
+    // console.log(marks,'----')
+    // let marks = leverages.reduce((sum, next = {}) => {
+    //   const leverage = next.leverage
+    //   sum[Number(leverage)] = String(leverage)
+    //   return sum
+    // }, {})
+
+
     const marksProps = {
-      marks:{
+      marks: {
         ...marks,
       },
       defaultValue: leverage,
@@ -146,12 +164,12 @@ class RenderModal extends Component {
         width: '20px',
         height: '20px',
         border: 'solid 6px white',
-        boxShadow:'1px 1px 10px #CCCCCC',
+        boxShadow: '1px 1px 10px #CCCCCC',
         backgroundColor: COLORS.yellow
       },
       onChange: (v) => {
         this.setState({
-          currentValue: v
+          currentValue: marks[v]
         })
       }
     }
@@ -177,7 +195,7 @@ class RenderModal extends Component {
                 <div >维持保证金率</div >
               </li >
               {
-                _.orderBy(leverages, (item = {}) => Number(item.leverage)).map((item, index) => {
+                leverages.map((item, index) => {
                   const isMatch = (item = {}) => {
                     return currentValue && Number(currentValue) !== Number(leverage) && Number(item.leverage) === Number(currentValue)
                   }
@@ -206,7 +224,7 @@ class RenderModal extends Component {
                         ) : null
                       }
                       <div className={styles.needli} >{item.leverage}</div >
-                      <div className={styles.needli} >{getPercent(Number(1), Number(item.leverage))}</div >
+                      <div className={styles.needli} >{item.initialMarginRateDisplay}</div >
                       <div className={styles.needli} >{keepBailRate}</div >
                     </li >
                   )

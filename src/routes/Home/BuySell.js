@@ -506,7 +506,7 @@ export default class BuySell extends Component {
                   </li >
                 </ul >
                 <ul className={styles.right} >
-                  <li >计算器</li >
+                  {/*<li >计算器</li >*/}
                   {
                     isLogin ? (
                       <li onClick={

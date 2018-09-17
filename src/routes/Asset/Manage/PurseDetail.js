@@ -84,19 +84,19 @@ export default class View extends Component {
           <div className={styles.bottom} >
             <div className={styles.title} >明细</div >
             <div className={styles.lis} >
-              <ul key={0} className={styles.tableheader}>
-                <li>
+              <ul key={0} className={styles.tableheader} >
+                <li >
                   <div ></div >
                 </li >
-                <li>
-                  <div >BTC</div >
-                </li >
-                <li>
-                  <div >ETH</div >
-                </li >
-                <li>
-                  <div >USDT</div >
-                </li >
+                {
+                  detail.map((item = {}, index) => {
+                    return (
+                      <li key={index + 1} >
+                        <div >{item.assetName}</div >
+                      </li >
+                    )
+                  })
+                }
               </ul >
               {
                 [

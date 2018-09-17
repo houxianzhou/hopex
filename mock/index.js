@@ -430,27 +430,14 @@ export default delay({
         "editable": true,
         "varyRange": "0.5 5 10 50",
         "maintenanceMarginRate": 0.005,
-        "leverages": [{
-          "initialMarginRate": "20",
-          "initialMarginRateDisplay": "20%",
-          "leverage": "5.00",
-          "leverageDisplay": "5.00倍"
-        }, {
-          "initialMarginRate": "10",
-          "initialMarginRateDisplay": "10%",
-          "leverage": "10.00",
-          "leverageDisplay": "10.00倍"
-        }, {
-          "initialMarginRate": "5",
-          "initialMarginRateDisplay": "5%",
-          "leverage": "20.00",
-          "leverageDisplay": "20.00倍"
-        }, {
-          "initialMarginRate": "2",
-          "initialMarginRateDisplay": "2%",
-          "leverage": "50.00",
-          "leverageDisplay": "50.00倍"
-        }]
+        "leverages": [1,6,3,4,15,10,7,8,50].map((item, index) => (
+          {
+            "initialMarginRate": "20",
+            "initialMarginRateDisplay": "20%",
+            "leverage": item,
+            "leverageDisplay": `${item}倍`
+          }
+        ))
       }, "ret": 0, "errCode": "", "errStr": ""
     })
   },
@@ -785,7 +772,7 @@ export default delay({
             "withdrawFreezeUSD": "0.00USD",
             "walletBalance": "0.00000000",
             "walletBalanceUSD": "0.00USD"
-          },{
+          }, {
             "assetName": "USDT",
             "assetLogoUrl": "http://hopex.com/api/v1/gateway/files/logos/eth.png",
             "floatProfit": "0.00000000",
