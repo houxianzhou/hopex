@@ -25,7 +25,7 @@ export default class MoneySelect extends Component {
             // background: 'red',
           },
           dropdownIndicator: {
-             width: 8,
+            width: 8,
             display: 'flex',
             alignItems: 'center'
           },
@@ -37,6 +37,21 @@ export default class MoneySelect extends Component {
           },
           menuList: {
             width: 200
+          },
+          // multiValue: {
+          //   background: 'red'
+          // },
+          // multiValueLabel:{
+          //   background: 'red'
+          // },
+          // singleValue:{
+          //   background: 'blue'
+          // },
+          // multiValueRemove:{
+          //   background: 'blue'
+          // },
+          valueContainer:{
+            // background: 'red'
           },
           option: {
             textAlign: 'center',

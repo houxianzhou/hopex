@@ -562,7 +562,7 @@ export default class TradeChart extends Component {
     const {
       model: {
         marketName = '', maxPrice24h = '', minPrice24h = '', indexPrice = '',
-        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', reasonablePrice = '', latestPriceChangePercent = '', dollarPrice = '', marketAllowTrade = '', userAllowTrade = ''
+        latestPrice = '', latestPriceShown = '', latestPriceTrend = '', totalPrice24h = '', reasonablePrice = '', latestPriceChangePercent = '', dollarPrice = '', marketAllowTrade = true, userAllowTrade = true
       }, dispatch, modelName, isLogin
     } = this.props
     const intervals = [
@@ -747,7 +747,7 @@ export default class TradeChart extends Component {
                   ) : null
                 }
                 {
-                  isLogin && (!marketAllowTrade || !userAllowTrade) ? (
+                  isLogin && (marketAllowTrade === false || userAllowTrade === false) ? (
                     <div className={styles.notallowtradeTip} >不允许交易</div >) : null
                 }
 

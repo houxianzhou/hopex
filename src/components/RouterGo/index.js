@@ -40,7 +40,10 @@ class SwitchMarket extends Component {
     if (pathname !== PATH.home) {
       dispatch({
         type: `${modelName}/routerGo`,
-        payload: PATH.home
+        payload: {
+          pathname: PATH.home,
+          search: `?marketCode=${value}`
+        }
       })
     } else {
       this.go(value)
@@ -57,7 +60,7 @@ class SwitchMarket extends Component {
         }} className={styles.gowhere} >{value}</span >
       ) : <Ele onClick={() => {
         switchMarket(value) //此时value就是marketCode
-      }} className={styles.gowhere}>{children}</Ele >
+      }} className={styles.gowhere} >{children}</Ele >
     )
   }
 }

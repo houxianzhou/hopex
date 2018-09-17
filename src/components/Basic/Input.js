@@ -12,7 +12,7 @@ export default class View extends Component {
     const {
       iconPrefix, iconPost, placeholder, value,
       onChange, onClear, type = 'text', msg = '', onCheck, children,
-      style = {}
+      style = {}, autoComplete
     } = this.props
 
     return (
@@ -29,17 +29,22 @@ export default class View extends Component {
                 children ? (
                   children
                 ) : (
-                  <input
-                    type={type}
-                    placeholder={placeholder}
-                    value={value}
-                    onChange={(e) => {
-                      const v = e.target.value
-                      onChange(v)
-                      if (_.isFunction(onCheck)) onCheck(v)
+                  <>
+                    {type === 'password' ? (<input type="password" name={type} style={{ display: 'none' }} />) : null}
+                    <input
+                      name={type}
+                      autoComplete={autoComplete}
+                      type={type}
+                      placeholder={placeholder}
+                      value={value}
+                      onChange={(e) => {
+                        const v = e.target.value
+                        onChange(v)
+                        if (_.isFunction(onCheck)) onCheck(v)
 
-                    }}
-                  />
+                      }}
+                    />
+                  </>
                 )
               }
             </div >

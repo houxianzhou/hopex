@@ -146,6 +146,7 @@ export default class View extends Component {
                   />
                   <Input
                     type='password'
+                    autoComplete="off"
                     placeholder={'请填写密码'}
                     value={password}
                     msg={passwordMsg}
