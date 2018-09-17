@@ -345,7 +345,7 @@ export default class BuySell extends Component {
         changeState({
           buy: {
             ...buy,
-            amount: value
+            amount: value.slice(0, 10)
           }
         }, getBuyDetail)
       },
@@ -420,7 +420,7 @@ export default class BuySell extends Component {
             changeState({
               sell: {
                 ...sell,
-                amount: value
+                amount: value.slice(0, 10)
               }
             }, getSellDetail)
           }
