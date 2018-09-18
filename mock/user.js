@@ -11,7 +11,7 @@ export default delay({
     res.send(
       {
         userInfo: {
-          email: 'xiaoyi.wei@bcsystech.com',
+          email: '2278095567@qq.com',
           userId: '56',
           userToken: "56",
         },
@@ -699,7 +699,7 @@ export default delay({
       {
         "data": {
           "id": 3,
-          "email": "xiaoyi.wei@bcsystech.com",
+          "email": "2278095567@qq.com",
           "country": "",
           "enabledTwoFactories": true,
           "lastLoginTime": "2018-09-10 21:06:20",

@@ -598,7 +598,7 @@ export default class TradeChart extends Component {
                         <>
                           <div className={styles.marketname} >
                             {
-                              !marketAllowTrade ? (<div className={styles.notallowtrade} >暂停交易</div >) : null
+                              isLogin && !marketAllowTrade ? (<div className={styles.notallowtrade} >暂停交易</div >) : null
                             }
                             {marketName}
                           </div >
