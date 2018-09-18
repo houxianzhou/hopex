@@ -598,7 +598,7 @@ export default class TradeChart extends Component {
                         <>
                           <div className={styles.marketname} >
                             {
-                              isLogin && !marketAllowTrade ? (<div className={styles.notallowtrade} >暂停交易</div >) : null
+                              !marketAllowTrade ? (<div className={styles.notallowtrade} >暂停交易</div >) : null
                             }
                             {marketName}
                           </div >
@@ -738,10 +738,9 @@ export default class TradeChart extends Component {
                   ) : null
                 }
                 {
-                  isLogin && (marketAllowTrade === false || userAllowTrade === false) ? (
+                  isLogin && marketAllowTrade === false ? (
                     <div className={styles.notallowtradeTip} >不允许交易</div >) : null
                 }
-
                 {
                   loaded ? (
                     <div className={styles.switchmap} >
