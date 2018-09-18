@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, _, isEqual, SetFullScreen, moment_helper } from '@utils'
+import { classNames, _, isEqual, SetFullScreen } from '@utils'
 import { Mixin } from "@components"
 import { THEME } from '@constants'
 import wss from '@services/SocketClient'
@@ -21,7 +21,7 @@ export default class TradeChart extends Component {
     this.state = {
       loaded: false,
       map: 1,
-      time: '1D'
+      time: '1D',
     }
     this.ApplayPromiseList = []
   }
@@ -371,6 +371,7 @@ export default class TradeChart extends Component {
               "pointvalue": 1,
               "session": "24x7",
               "has_intraday": true, // 是否具有日内（分钟）历史数据
+              has_weekly_and_monthly: true,
               "has_no_volume": false, //布尔表示商品是否拥有成交量数据
               has_empty_bars: true,
               "type": "stock",
@@ -381,7 +382,6 @@ export default class TradeChart extends Component {
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest = true) => {
           const [startTime, endTime] = [String(Math.min(from, to)), String(Math.max(from, to))]
-          // console.log(moment_helper.format(startTime*1000),moment_helper.format(endTime*1000),'-----------')
           const interval = getInterval(resolution)
           dispatch({
             type: `${modelName}/getKlineAllList`,
@@ -670,7 +670,7 @@ export default class TradeChart extends Component {
                                 onClick={() => {
                                   if (!this.widget) return
                                   changeState({
-                                    time: item.name
+                                    time: item.name,
                                   })
                                   this.widget.chart().setChartType(1)
                                   this.studies.forEach((id) => {
@@ -695,7 +695,7 @@ export default class TradeChart extends Component {
                             key={intervals.length}
                             onClick={() => {
                               changeState({
-                                time: 'realtime'
+                                time: 'realtime',
                               })
                               if (time === '1m') {
                                 this.widget.chart().setChartType(3)
