@@ -71,6 +71,8 @@ export const PATH = {
   register: '/user/register',
   forgetPassword: '/user/forgetPassword',
   myaccount: '/myaccount',
-  history: '/history'
+  history: '/history',
+  app_about: '/user/app_about',
+  app_question: '/user/app_question'
 }
 

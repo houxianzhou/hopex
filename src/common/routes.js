@@ -42,10 +42,24 @@ export default [
     show: false
   },
   {
+    name: 'App解释说明',
+    path: PATH.app_question,
+    model: [],
+    route: 'AppQuestion',
+    show: false
+  },
+  {
     name: '关于',
     path: '/about',
     model: ['home/index'],
     route: 'About',
+    show: false
+  },
+  {
+    name: 'App关于',
+    path: PATH.app_about,
+    model: [],
+    route: 'AppAbout',
     show: false
   },
   {
