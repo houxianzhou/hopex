@@ -200,9 +200,11 @@ class RenderModal extends Component {
                     return currentValue && Number(currentValue) !== Number(leverage) && Number(item.leverage) === Number(currentValue)
                   }
                   return (
-                    <li key={index + 1} className={classNames(
-                      isMatch(item) ? styles.ismatch : null
-                    )} >
+                    <li key={index + 1}
+                        style={{width:630/leverages.length}}
+                        className={classNames(
+                          isMatch(item) ? styles.ismatch : null
+                        )} >
                       {
                         Number(item.leverage) === Number(leverage) ? (
                           <div className={styles.symbol} >

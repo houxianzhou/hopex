@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Mixin } from "@components"
 import { classNames, dealInterval } from '@utils'
+import { THEME } from '@constants'
 import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
-import logogray from '@assets/logo4.png'
+import { logo4, logo5 } from '@assets'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -38,7 +39,8 @@ export default class Pure extends Component {
     const { currentPurse } = this.state
     const {
       asset: { detailAll = [] } = {},
-      isLogin, routerGoLogin, routerGoRegister
+      isLogin, routerGoLogin, routerGoRegister,
+      theme
     } = this.props
     const filterOne = detailAll[currentPurse] || {}
     const {
@@ -128,7 +130,9 @@ export default class Pure extends Component {
                   </>
                 ) : (
                   <div className={styles.container} >
-                    <div className={styles.top} ><img src={logogray} /></div >
+                    <div className={styles.top} >{
+                      theme === THEME.DEEPDARK ? logo4 : logo5
+                    }</div >
                     <div className={styles.center} >欢迎来到Hopex</div >
                     <div className={styles.down} >
                       <div >
@@ -142,7 +146,6 @@ export default class Pure extends Component {
                   </div >
                 )
               }
-
             </div >
           </ScrollPannel >
         </div >
