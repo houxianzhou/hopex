@@ -376,7 +376,7 @@ export default class View extends Component {
                   <li >
                     <div className={styles.label} >汇率</div >
                     <div >
-                      1{active} ≈ {selectOne.exchangeRate} 人民币
+                      1{active} ≈ {selectOne.exchangeRateDispaly} 人民币
                     </div >
                   </li >
 
@@ -460,7 +460,7 @@ export default class View extends Component {
                   <li >
                     <div className={styles.label} >汇率</div >
                     <div >
-                      1{active} ≈ {selectOne.sell_exchangeRate} 人民币
+                      1{active} ≈ {selectOne.sell_exchangeRateDispaly} 人民币
                     </div >
                   </li >
 
@@ -483,7 +483,7 @@ export default class View extends Component {
 
                     </div >
                     <span
-                      className={styles.exchange} >{active} ≈ {formatNumber(sell_rmbAmount * selectOne.sell_exchangeRate, 8)} 人民币
+                      className={styles.exchange} >{active} ≈ {formatNumber(sell_rmbAmount * selectOne.sell_exchangeRate, 2)} 人民币
                     </span >
                   </li >
                   <li className={styles.maxwidthdrawcontainer} >

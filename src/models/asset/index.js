@@ -314,13 +314,15 @@ export default joinModel(modelExtend, {
         if (resOk(res)) {
           const result = _.get(res, 'data')
           if (result) {
+            const { rate, rateDisplay } = result
             const detailLegal = yield select(({ asset: { detailLegal = [] } }) => detailLegal) || []
             const detailLegalNew = detailLegal.map((item = {}) => {
               if (item.assetName === coinCode) {
                 const arrow = (priceArrow === 'BUY' ? 'exchangeRate' : 'sell_exchangeRate')
                 return {
                   ...item,
-                  [arrow]: result
+                  [arrow]: rate,
+                  [`${arrow}Dispaly`]: rateDisplay
                 }
               }
               return item
