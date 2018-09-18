@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { classNames, _, isEqual, SetFullScreen } from '@utils'
+import { classNames, _, isEqual, SetFullScreen, moment_helper } from '@utils'
 import { Mixin } from "@components"
 import { THEME } from '@constants'
 import wss from '@services/SocketClient'
@@ -381,6 +381,7 @@ export default class TradeChart extends Component {
         },
         getBars: (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest = true) => {
           const [startTime, endTime] = [String(Math.min(from, to)), String(Math.max(from, to))]
+          // console.log(moment_helper.format(startTime*1000),moment_helper.format(endTime*1000),'-----------')
           const interval = getInterval(resolution)
           dispatch({
             type: `${modelName}/getKlineAllList`,
