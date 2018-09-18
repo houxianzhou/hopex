@@ -701,7 +701,7 @@ export default delay({
           "id": 3,
           "email": "xiaoyi.wei@bcsystech.com",
           "country": "",
-          "enabledTwoFactories": false,
+          "enabledTwoFactories": true,
           "lastLoginTime": "2018-09-10 21:06:20",
           "lastLoginIp": "111.222.169.90"
         }, "ret": 0, "errCode": "", "errStr": ""

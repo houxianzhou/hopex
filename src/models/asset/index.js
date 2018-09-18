@@ -459,7 +459,7 @@ export default joinModel(modelExtend, {
             const res = getRes(yield call(SendEmailToWithdraw, repayload))
             if (resOk(res)) {
               const result = _.get(res, 'data')
-              if (result === '') {
+              if (result === true) {
                 return true
               }
             }

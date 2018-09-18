@@ -63,6 +63,7 @@ export default delay({
           "position": false,
           "pause": true
         }, {
+          minPriceMovementPrecision: 2,
           "priceLast": "+270.0",
           "direction": 0,
           "contractCode": "ETHUSDT",
@@ -106,75 +107,6 @@ export default delay({
           "percent": "0.00%",
           "dollarPrice": "$0.44",
           "totalPrice24h": "0BTC",
-          "position": false,
-          "pause": false
-        }]
-      }, {
-        "name": "EOS",
-        "list": [{
-          "priceLast": "+0.0007501",
-          "direction": 0,
-          "contractCode": "EOSBTC",
-          "contractName": "EOSBTC永续",
-          "percent": "0.00%",
-          "dollarPrice": "$5.42",
-          "totalPrice24h": "0BTC",
-          "position": false,
-          "pause": true
-        }, {
-          "priceLast": "+0.01750",
-          "direction": 0,
-          "contractCode": "EOSETH",
-          "contractName": "EOSETH永续",
-          "percent": "0.00%",
-          "dollarPrice": "$7.89",
-          "totalPrice24h": "0ETH",
-          "position": false,
-          "pause": false
-        }]
-      }, {
-        "name": "LTC",
-        "list": [{
-          "priceLast": "+0.00858",
-          "direction": 0,
-          "contractCode": "LTCBTC",
-          "contractName": "LTCBTC永续",
-          "percent": "0.00%",
-          "dollarPrice": "$54.77",
-          "totalPrice24h": "0BTC",
-          "position": false,
-          "pause": false
-        }]
-      }, {
-        "name": "BCH",
-        "list": [{
-          "priceLast": "0",
-          "direction": 0,
-          "contractCode": "BCHUSDT",
-          "contractName": "BCHUSDT永续",
-          "percent": "",
-          "dollarPrice": "$0.00",
-          "totalPrice24h": "",
-          "position": false,
-          "pause": true
-        }, {
-          "priceLast": "0.00000",
-          "direction": 0,
-          "contractCode": "BCHBTC",
-          "contractName": "BCHBTC永续",
-          "percent": "",
-          "dollarPrice": "$0.00",
-          "totalPrice24h": "",
-          "position": false,
-          "pause": false
-        }, {
-          "priceLast": "0.0000",
-          "direction": 0,
-          "contractCode": "BCHETH",
-          "contractName": "BCHETH永续",
-          "percent": "",
-          "dollarPrice": "$0.00",
-          "totalPrice24h": "",
           "position": false,
           "pause": false
         }]
@@ -854,7 +786,7 @@ export default delay({
       // {
       //   "ret": -1, "errCode": "", "errStr": "请先开启谷歌验证"
       // }
-      { "data": "", "ret": 0, "errCode": "", "errStr": "" }
+      { "data": true, "ret": 0, "errCode": "", "errStr": "" }
     )
 
   },
