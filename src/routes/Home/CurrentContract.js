@@ -143,7 +143,7 @@ class RenderModal extends Component {
       marks: {
         ...marks,
       },
-      defaultValue: leverage,
+      defaultValue: Number(leverage),
       min: _.min(_.keys(marks).map(item => Number(item))) || 0,
       max: _.max(_.keys(marks).map(item => Number(item))) || 0,
       included: false,

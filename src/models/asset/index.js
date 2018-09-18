@@ -322,7 +322,7 @@ export default joinModel(modelExtend, {
                 return {
                   ...item,
                   [arrow]: rate,
-                  [`${arrow}Dispaly`]: rateDisplay
+                  [`${arrow}Display`]: rateDisplay
                 }
               }
               return item

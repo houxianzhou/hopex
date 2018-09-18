@@ -358,15 +358,15 @@ export default delay({
   'Get /mock/api/v1/gateway/Trade/GetLeverageSetting': (req, res) => {
     res.send({
       "data": {
-        "leverage": 10.0000,
+        "leverage": 10.0000 + '',
         "editable": true,
         "varyRange": "0.5 5 10 50",
-        "maintenanceMarginRate": 0.005,
+        "maintenanceMarginRate": '0.5%',
         "leverages": [1, 6, 3, 4, 15, 10, 7, 8, 50].map((item, index) => (
           {
             "initialMarginRate": "20",
             "initialMarginRateDisplay": "20%",
-            "leverage": item,
+            "leverage": item + '',
             "leverageDisplay": `${item}倍`
           }
         ))
