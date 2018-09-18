@@ -18,11 +18,12 @@ export default joinModel(modelExtend, {
     marketList: [], // 合约列表
     marketName: '', //当前合约名称
     marketCode: '', //当前合约code
+    minPriceMovementPrecision: 2,//合约精度,用来在k线图显示小数位数
 
     latest_records: [],// 最新成交
     ensure_records: {},// 委托列表
-    asksFilter: '',
-    bidsFilter: '',
+    asksFilter: '',//过滤器
+    bidsFilter: '',//过滤器
     clickSelectOne: {}, //从最新成交和委托列表点击选择而来
 
     maxPrice24h: '', // 24h最高
@@ -1038,6 +1039,7 @@ export default joinModel(modelExtend, {
         ...state,
         marketName: filterOne.marketName,
         marketCode: filterOne.marketCode,
+        minPriceMovementPrecision: filterOne.minPriceMovementPrecision
       }
     }
   },

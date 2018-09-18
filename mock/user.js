@@ -28,7 +28,7 @@ export default delay({
           userId: 'mockId',
           token: "mockToken",
           showChain: true,
-          showLegal: false
+          showLegal: true
         },
         ...other
 

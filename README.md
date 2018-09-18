@@ -4,6 +4,11 @@
 tradeview文件 /src/routes/Home/TradeChart.js   
 websocket文件  /services/SocketClient.js
 
+
+## 预览
+![avatar](http://p09oq805j.bkt.clouddn.com/hopex_black.png)   
+![avatar](http://p09oq805j.bkt.clouddn.com/hopex_white.png)
+
 ## host配置
 127.0.0.1 hopex.com  
 127.0.0.1 localhost
@@ -86,7 +91,5 @@ websocket文件  /services/SocketClient.js
  
      }
 ```
-## 预览
-![avatar](http://p09oq805j.bkt.clouddn.com/hopex.png)   
-![avatar](http://p09oq805j.bkt.clouddn.com/hopex2.png)
+
 

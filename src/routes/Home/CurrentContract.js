@@ -201,7 +201,7 @@ class RenderModal extends Component {
                   }
                   return (
                     <li key={index + 1}
-                        style={{width:630/leverages.length}}
+                        style={{ width: 630 / leverages.length }}
                         className={classNames(
                           isMatch(item) ? styles.ismatch : null
                         )} >
@@ -269,7 +269,6 @@ class RenderModal extends Component {
             <Button loading={loading.effects[`${modelName}/doUpdateLeverage`]} layer={false} >
               确定
             </Button >
-
           </div >
         </div >
       </MainModal >

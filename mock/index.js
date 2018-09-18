@@ -38,7 +38,7 @@ export default delay({
       "data": [{
         "name": "BTC",
         "list": [{
-          minPriceMovementPrecision: 1,
+          minPriceMovementPrecision: 6,
           "priceLast": "+6700.0",
           "direction": 0,
           "contractCode": "BTCUSDT",
@@ -430,7 +430,7 @@ export default delay({
         "editable": true,
         "varyRange": "0.5 5 10 50",
         "maintenanceMarginRate": 0.005,
-        "leverages": [1,6,3,4,15,10,7,8,50].map((item, index) => (
+        "leverages": [1, 6, 3, 4, 15, 10, 7, 8, 50].map((item, index) => (
           {
             "initialMarginRate": "20",
             "initialMarginRateDisplay": "20%",
@@ -530,12 +530,7 @@ export default delay({
         const c = _.random(10, 30)
         const l = _.random(10, 20)
         const v = _.random(100, 3000)
-        // const h = 160 + _.random(30, 40)
-        // const o = h - _.random(10, 20)
-        // const c = o - _.random(10, 30)
-        // const l = c - _.random(10, 20)
-        // const v = _.random(100, 3000)
-        return [item / 1000, o, c, h, l, v, 6, 'BTCUSD永续']
+        return [item / 1000, o, c, h, l, v]
       }),
       "errCode": "0",
       "errStr": "success",

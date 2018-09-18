@@ -88,8 +88,10 @@ export default class TradeChart extends Component {
     const red = RG ? "#FF7858" : "#00C087"
     const greenOpacity = RG ? "rgba(255,120,88,.4)" : "rgba(0,192,135,.4)"
     const redOpacity = RG ? "rgba(0,192,135,.4)" : "rgba(255,120,88,.4)"
+    const textLineColor = theme === THEME.LIGHT ? 'D5D5D5' : XYcolor
     return {
       overrides: {
+        // 蜡烛图
         "mainSeriesProperties.candleStyle.upColor": green,
         "mainSeriesProperties.candleStyle.borderUpColor": green,
         "mainSeriesProperties.candleStyle.wickUpColor": green,
@@ -99,6 +101,10 @@ export default class TradeChart extends Component {
         "mainSeriesProperties.candleStyle.wickDownColor": red,
 
         "paneProperties.background": backColor,
+
+        //----------------- x,y坐标轴的颜色，字体颜色
+        "scalesProperties.lineColor": textLineColor,
+        "scalesProperties.textColor": textLineColor,
       },
       studies_overrides: {
         //--------------------volume的颜色设置
@@ -288,7 +294,7 @@ export default class TradeChart extends Component {
   }
 
   startKline = () => {
-    const { model: { marketCode }, theme, dispatch, modelName } = this.props
+    const { model: { marketCode, minPriceMovementPrecision }, theme, dispatch, modelName } = this.props
     const backColor = (theme === THEME.DEEPDARK ? '#1D1D1D' : 'white')
     const { getInterval } = this
     const TradingView = window.TradingView
@@ -312,11 +318,6 @@ export default class TradeChart extends Component {
 
         'timeframes_toolbar',
         'chart_property_page_background',
-        // "left_toolbar",
-        // 'edit_buttons_in_legend',
-        // 'context_menus',
-        //'remove_library_container_border',
-        // 'chart_property_page_style',
       ],
       toolbar_bg: 'transparent',
       library_path: '/',
@@ -325,7 +326,6 @@ export default class TradeChart extends Component {
       height: '100%',
       timezone: 'Asia/Hong_Kong',
       ...marketCode ? { symbol: marketCode } : {},
-      // interval: 'D',
       'container_id': 'tradeView',
       overrides: {
         "paneProperties.legendProperties.showLegend": false,
@@ -334,17 +334,10 @@ export default class TradeChart extends Component {
         "paneProperties.horzGridProperties.color": "transparent",
         "paneProperties.topMargin": "15",
         "paneProperties.bottomMargin": "5",
-        // "scalesProperties.backgroundColor": "red",
-
         //--------------------------------------蜡烛图
         ...this.getChangedStyle().overrides,
-
         //-----------volume的大小large,medium,small,tiny
         volumePaneSize: "medium",
-        //----------------- x,y坐标轴的颜色，字体颜色
-        "scalesProperties.lineColor": XYcolor,
-        "scalesProperties.textColor": XYcolor,
-
         //-----------面积图，分时图的颜色
         "mainSeriesProperties.areaStyle.color1": "rgba(62,108,174,.5)",// "#3278DD",
         "mainSeriesProperties.areaStyle.color2": "rgba(62,108,174,.1)",// "#3278DD",
@@ -357,7 +350,6 @@ export default class TradeChart extends Component {
       studies_overrides: {
         ...this.getChangedStyle().studies_overrides,
       },
-
       loading_screen: { backgroundColor: backColor },
       datafeed: {
         onReady(callback) {
@@ -375,8 +367,7 @@ export default class TradeChart extends Component {
               description: '',
               "exchange": "", //交易所的略称
               "minmov": 1,//最小波动
-              "pricescale": 100,//价格精
-              "minmov2": 0, //格式化复杂情况下的价格
+              "pricescale": Math.pow(10, Number(minPriceMovementPrecision)),//价格精度
               "pointvalue": 1,
               "session": "24x7",
               "has_intraday": true, // 是否具有日内（分钟）历史数据
@@ -384,7 +375,6 @@ export default class TradeChart extends Component {
               has_empty_bars: true,
               "type": "stock",
               supported_resolutions: ['1', '5', '15', '30', '60', '240', "D", "5D", "W", "M"],// 分辨率选择器中启用一个分辨率数组
-              // "ticker": "AAPL", // 品体系中此商品的唯一标识符
               "data_status": "streaming" //数据状态码。状态显示在图表的右上角。streaming(实时)endofday(已收盘)pulsed(脉冲)
             })
           })
