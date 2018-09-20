@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, Button, } from '@components'
+import { PATH } from '@constants'
 import { classNames, _, Patterns, formatNumber } from '@utils'
 import Input from '@routes/Components/Input'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
@@ -99,6 +100,16 @@ export default class View extends Component {
           amount,
           googleCode,
           emailVerificationCode
+        }
+      }).then(res => {
+        if (res) {
+          dispatch({
+            type: `${modelName}/routerGo`,
+            payload: {
+              pathname: PATH.asset,
+              search: `?page=Record`
+            }
+          })
         }
       })
     }
