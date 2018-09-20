@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import ClipboardJS from 'clipboard'
-import { Mixin, } from '@components'
+import { Mixin, Toast } from '@components'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
 
 import styles from '@routes/Asset/index.less'
@@ -25,7 +25,10 @@ export default class View extends Component {
   }
 
   startInit = () => {
-    new ClipboardJS('.clipboard')
+    const clipboard = new ClipboardJS('.clipboard')
+    clipboard.on('success', function (e) {
+      Toast.tip('复制成功')
+    });
     this.getAssetAddress()
   }
 
