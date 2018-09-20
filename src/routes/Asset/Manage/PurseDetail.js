@@ -122,7 +122,7 @@ export default class View extends Component {
                     display: 'delegateMarginUSD'
                   },
                   {
-                    title: '仓占用保证金',
+                    title: '持仓占用保证金',
                     value: 'positionMargin',
                     display: 'positionMarginUSD'
                   },

@@ -760,7 +760,7 @@ export default delay({
         "maxAmount": "9.99896705",
         "allowWithdraw": true,
         "prompts": ["最小提现数量为:0.01000000BTC", "请勿直接提现至众筹或ICO地址.我们不会处理未来代币的发放。", "* 基于安全理由，Hopex每日只会人工审核并处理提现一次，有关我们的政策请参阅安全规范。", "* 在 13:00 UTC (大约 10 小时) 前提交的提款请求，会进入当天的批处理队列。"],
-        "isValid": true
+        "isValid": false
       }
     } else {
       sendasset = {
