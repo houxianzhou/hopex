@@ -54,7 +54,7 @@ export default class Table1 extends Component {
 
   changeState = (payload) => {
     if (this._isMount) {
-      this.setState(payload)
+      payload && this.setState(payload)
       clearTimeout(this.interval1)
       this.interval1 = setTimeout(() => {
         this.scroller && this.scroller.refresh()

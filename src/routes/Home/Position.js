@@ -91,6 +91,7 @@ export default class Position extends Component {
       {
         title: '持仓占用保证金',
         dataIndex: 'positionMoneyShow',
+        width: 200,
         render: (v, record) => {
           return (
             <div className={styles.changepositionMoney} >
@@ -118,6 +119,7 @@ export default class Position extends Component {
       },
       {
         title: '维持保证金',
+        width: 200,
         dataIndex: 'keepMoneyShow',
         //render: (v) => formatNumber(v, 10)
       },
@@ -129,7 +131,7 @@ export default class Position extends Component {
       {
         title: '浮动盈亏(收益率)',
         dataIndex: 'floatProfitShow',
-        width: 250,
+        width: 200,
         render: (value, record = {}) => {
           const v = record.profitRate
           const format = <RedGreenSwitch.MarkText mark={v} value={v.replace(/['+']/, '')} />
@@ -353,7 +355,7 @@ class RenderModal extends Component {
           <div
             className={styles.confirm}
             onClick={() => {
-              if(!Math.abs(inputValue)) return
+              if (!Math.abs(inputValue)) return
               dispatch({
                 type: `${modelName}/doUpdatePositionEnsureMoney`,
                 payload: {

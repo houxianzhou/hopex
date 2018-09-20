@@ -794,7 +794,7 @@ export default delay({
   //提现申请
   'Post /mock/api/v1/User/WithdrawApply': (req, res) => {
     res.send(
-      { "data": "", "ret": 0, "errCode": "", "errStr": "" }
+      { "data": true, "ret": 0, "errCode": "", "errStr": "" }
     )
 
   },

@@ -502,9 +502,7 @@ export default joinModel(modelExtend, {
               }
             })
             Toast.tip('提现申请成功')
-
           }
-
         }
       }
     },
