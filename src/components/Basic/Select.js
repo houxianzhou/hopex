@@ -72,14 +72,14 @@ export default class View extends Component {
             ...styles.menuList
           }),
           option: (style, { data, isDisabled, isFocused, isSelected }) => {
-            const focused = _.get(styles.option, 'focused') || {}
+            const focused = _.get(styles.option, 'focused') || { color: 'unset' }
             const selected = _.get(styles.option, 'selected') || {}
             return {
               textAlign: 'left',
               borderBottom: '1px solid black',
               padding: 20,
-              ...isFocused ? focused : {},
-              ...isSelected ? selected : {},
+              ...(isFocused ? focused : { color: 'unset !important' }),
+              ...(isSelected ? selected : {}),
               ...styles.option
             }
           },

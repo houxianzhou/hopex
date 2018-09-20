@@ -12,7 +12,7 @@ export default class View extends Component {
 
   render() {
     const {
-      model: { theme }, header, children, className = {}, style = {}, tableHeight = 'auto', loading = false
+      model: { theme }, header, children, className, style = {}, tableHeight = 'auto', loading = false
     }
       = this.props
 

@@ -57,7 +57,7 @@ export default class MoneySelect extends Component {
             textAlign: 'center',
             borderBottom: '1px solid #EBEBEB',
             selected: {
-              color: COLORS.yellow,
+              color: COLORS.yellow ,
             },
             focused: {
               color: COLORS.yellow,
