@@ -134,10 +134,10 @@ export default class Position extends Component {
         width: 200,
         render: (value, record = {}) => {
           const v = record.profitRate
-          const format = <RedGreenSwitch.MarkText mark={v} value={v.replace(/['+']/, '')} />
+          const format = <RedGreenSwitch.MarkText value={v}  />
           return (
             <>
-              <RedGreenSwitch.MarkText mark={value} value={value.replace(/['+']/, '')} />
+              <RedGreenSwitch.MarkText value={value} />
 
               <span style={{ marginLeft: 5 }} >({format})</span >
             </>
