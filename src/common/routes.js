@@ -21,7 +21,7 @@ export default [
     route: 'Home'
   },
   {
-    name: '资金管理',
+    name: '资产管理',
     path: '/asset',
     model: ['asset/index', 'history/index', 'home/index', 'account/index'],
     route: 'Asset',
@@ -39,7 +39,7 @@ export default [
     path: '/question',
     model: ['question/index', 'home/index'],
     route: 'Question',
-    show: false
+    show: true
   },
   {
     name: 'App解释说明',
