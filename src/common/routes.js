@@ -39,7 +39,7 @@ export default [
     path: '/question',
     model: ['question/index', 'home/index'],
     route: 'Question',
-    show: true
+    show: false
   },
   {
     name: 'App解释说明',
