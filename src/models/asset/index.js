@@ -494,7 +494,7 @@ export default joinModel(modelExtend, {
         const res = getRes(yield call(doWithdrawApply, repayload))
         if (resOk(res)) {
           const result = _.get(res, 'data')
-          if (result === '') {
+          if (result === true) {
             yield put({
               type: 'changeState',
               payload: {
