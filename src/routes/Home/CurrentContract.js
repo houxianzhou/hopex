@@ -5,6 +5,7 @@ import { classNames, getPercent, _, dealInterval } from '@utils'
 import grayangle from '@assets/grayangle.png'
 import activeangle from '@assets/activeangle.png'
 import MainModal from '@routes/Components/MainModal'
+import ColorStack from '@routes/Components/ColorStack'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -30,11 +31,6 @@ export default class CurrentContract extends Component {
 
   render() {
     const { model: { marketName, leverage, leverageIsModify = false }, modal: { name }, isLogin, openModal, } = this.props
-
-    const colors = [
-      '#52AA64', '#52AA64', '#8CB152', '#8CB152', '#CABA70', '#CABA70', '#D69555', '#D69555', '#D47D5A', ' #D47D5A'
-    ]
-
     return (
       <Mixin.Child that={this} >
         <div
@@ -81,16 +77,10 @@ export default class CurrentContract extends Component {
               </div >
               <div className={styles.down} >
                 <div >自动减仓列队</div >
-                <ul >
-                  {
-                    colors.map((item, index) => (
-                      <li key={index} style={{
-                        background: isLogin ? item : null,
-                        border: isLogin ? null : '1px solid #3E4555'
-                      }} />
-                    ))
-                  }
-                </ul >
+                <ColorStack getStyle={(item) => ({
+                  background: isLogin ? item : null,
+                  border: isLogin ? null : '1px solid #3E4555'
+                })} />
               </div >
             </div >
           </ScrollPannel >
@@ -128,17 +118,8 @@ class RenderModal extends Component {
       const avarageLeverge = maxLeverge.leverage / ((leverages.length - 1) || 1)
       const leverage = next.leverage
       sum[Number(avarageLeverge * index)] = String(leverage)
-      // console.log(avarageLeverge * index, index)
       return sum
     }, {})
-    // console.log(marks,'----')
-    // let marks = leverages.reduce((sum, next = {}) => {
-    //   const leverage = next.leverage
-    //   sum[Number(leverage)] = String(leverage)
-    //   return sum
-    // }, {})
-
-
     const marksProps = {
       marks: {
         ...marks,
