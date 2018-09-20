@@ -647,12 +647,12 @@ export default class TradeChart extends Component {
                         <div className={styles.desc} >{totalPrice24h}</div >
                       </li >
 
-                      <li >
-                        <div className={styles.title} >
+                      {/*<li >*/}
+                        {/*<div className={styles.title} >*/}
                           {/*<span className='blue' >更多</span >*/}
-                        </div >
-                        <div className={styles.desc} />
-                      </li >
+                        {/*</div >*/}
+                        {/*<div className={styles.desc} />*/}
+                      {/*</li >*/}
                     </ul >
                   </div >
                 </div >

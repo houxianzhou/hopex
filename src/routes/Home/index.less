@@ -57,12 +57,13 @@
     height: 100% !important;
   }
   .header {
+    padding: 0 10px;
     .content {
       :global(.lightT) & {
         .mixinCL();
         background: white !important;
       }
-      padding: 15px 30px;
+      padding: 15px 0px;
       background: @c_pannel_dark;
       height: 66px;
       display: flex;
@@ -106,10 +107,11 @@
       }
       .right {
         display: flex;
+
         align-items: center;
         // margin-right: 70px;
         ul {
-          // background: red;
+          justify-content: flex-end;
           display: flex;
           margin: 0;
           padding: 0;
@@ -188,11 +190,12 @@
     }
   }
   .utilsbuttons {
-    *{
+    padding: 0 10px;
+    * {
       cursor: pointer;
     }
     position: relative;
-    padding: 0px 30px;
+    // padding: 0px 0px;
     display: flex;
     align-items: center;
     height: 30px;
@@ -208,7 +211,7 @@
         }
       }
       color: #6B7186;
-      right: 60px;
+      right: 10px;
       z-index: 3;
       position: absolute;
       display: flex;
@@ -230,7 +233,6 @@
         margin-left: 10px;
       }
       li {
-        padding: 5px 5px;
         color: @c_pannel_theader_color;
         height: 30px;
         //  background: black;
@@ -700,13 +702,16 @@
       .ensuremoney {
         margin-top: 29px;
         .description {
+          *{
+            .overflowHidden()
+          }
           vertical-align: middle;
           margin-top: 8px;
           display: flex;
           justify-content: space-between;
           span {
             &:nth-child(2n) {
-              margin-left: 20px;
+              margin-left: 10px;
               color: @c_active_yellow;
             }
           }
