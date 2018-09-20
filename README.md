@@ -1,13 +1,15 @@
-# Develop分支上是最新的代码，master分支不定期更新，本项目所有的接口都有mock服务,本项目本地开启mock服务，需要把hopex/src/services/trade.js第5行MODE='mock1'改为MODE='mock'即可
+# Develop分支上是最新的代码，master分支不定期更新，本项目所有的接口都有mock服务。
 
 ## 重要文件
 tradeview文件 /src/routes/Home/TradeChart.js   
 websocket文件  /services/SocketClient.js
 
-
 ## 预览
 ![avatar](http://p09oq805j.bkt.clouddn.com/hopex_black.png)   
 ![avatar](http://p09oq805j.bkt.clouddn.com/hopex_white.png)
+
+## 开启mock服务
+本项目本地开启mock服务，需要把hopex/src/services/trade.js第5行MODE='mock1'改为MODE='mock'即可
 
 ## host配置
 127.0.0.1 hopex.com  
