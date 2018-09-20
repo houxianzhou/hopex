@@ -75,7 +75,7 @@ export default class View extends Component {
                         value={item.symbol ? item.value : item.value.replace('+', '')} />
                     </div >
                     {
-                      item.usd ? (<div >≈{item.usd}USD</div >) : null
+                      item.usd ? (<div >≈{item.usd}</div >) : null
                     }
                   </div >
                 </li >
