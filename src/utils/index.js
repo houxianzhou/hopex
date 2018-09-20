@@ -56,7 +56,7 @@ export const Patterns = {
   decimalNumber4: /^[0-9]+([.|。]{1}[0-9]{0,4}){0,1}?$/,
   email: /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/,
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/,
-  card:/(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}$)/
+  card: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}$)/
 }
 
 export const getPercent = (child = 1, parent = 1, min = 0) => {
@@ -106,10 +106,6 @@ const toFixed = (item = 0, tofixed, toformat) => {
     return (new BigNumber(Number(item))).toFixed(tofixed)
   }
 }
-// console.log((new BigNumber(1000)).toFormat(2))
-// console.log((new BigNumber((new BigNumber(1000)).toFixed(5))).toFormat(5))
-//console.log((new BigNumber((new BigNumber(1000)).toFormat(2))).toFixed(5))
-
 
 export const formatNumber = (...params) => {
   const [prev, propertys = [], tofixed, toformat] = params
@@ -147,13 +143,6 @@ export const formatJson = (string) => {
   return JSON.parse(string.replace(/\s+/g, ''))
 }
 
-// export const hasPower = (obj = {}) => {
-//   if (_.get(obj, 'userId') && _.get(obj, 'userToken')) {
-//     return true
-//   }
-//   console.log('无法获取到userId,userToken，无权限调用接口')
-//   return false
-// }
 
 export const parsePathSearch = (search = '') => {
   return qs.parse(search, { ignoreQueryPrefix: true })
@@ -179,6 +168,15 @@ export const SetFullScreen = (Ele) => {
   }
 }
 
+export const setDecimalPointLength = (value, length) => {
+  const [result1, result2 = ''] = String(value).split('.')
+  if (result2 || /\./.test(value)) {
+    const result = [result1, '.', result2.slice(0, length)]
+    return result.join('')
+  } else {
+    return result1
+  }
+}
 
 
 

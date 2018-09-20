@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { Mixin, Button, } from '@components'
 import { PATH } from '@constants'
-import { classNames, _, Patterns, formatNumber } from '@utils'
+import { classNames, _, Patterns, formatNumber, setDecimalPointLength } from '@utils'
 import Input from '@routes/Components/Input'
 import MoneySelect from '@routes/Asset/components/MoneySelect'
 import GoogleCodeOpenModal from '@routes/Components/GoogleCodeOpenModal'
@@ -204,7 +204,7 @@ export default class View extends Component {
                         }}
                         onChange={(value) => {
                           if (Patterns.decimalNumber.test(value) || value === '') {
-                            changeState({ amount: value })
+                            changeState({ amount: setDecimalPointLength(value, 8) })
                           }
                         }} /></div >
                   </li >
@@ -308,121 +308,6 @@ export default class View extends Component {
       </Mixin.Child >
     )
   }
-}
-
-
-{/*<ul className={styles.userinput} >*/
-}
-{/*<li >*/
-}
-{/*<div className={styles.label} >邮箱</div >*/
-}
-{/*<div className={styles.email} >*/
-}
-{/*{email}*/
-}
-{/*</div >*/
-}
-{/*</li >*/
-}
-{/*<li >*/
-}
-{/*<div className={styles.label} >邮箱验证码</div >*/
-}
-{/*<div className={styles.input} >*/
-}
-{/*<Input*/
-}
-{/*placeholder={'请输入邮箱验证码'}*/
-}
-{/*value={emailVerificationCode}*/
-}
-{/*onChange={(value) => {*/
-}
-{/*changeState({ emailVerificationCode: value })*/
-}
-{/*}} >*/
-}
-{/*<CountDown*/
-}
-{/*action={false}*/
-}
-{/*onClick={() => {*/
-}
-{/*this.SendEmailToWithdraw()*/
-}
-{/*}}*/
-}
-{/*beginText='发送'*/
-}
-{/*/>*/
-}
-{/*</Input >*/
-}
-{/*</div >*/
-}
-{/*</li >*/
-}
-{/*<li >*/
-}
-{/*<div className={styles.label} >谷歌验证码</div >*/
-}
-{/*<div className={styles.input} >*/
-}
-{/*<Input*/
-}
-{/*value={googleCode}*/
-}
-{/*placeholder={'请输入谷歌验证码'}*/
-}
-{/*onChange={(value) => {*/
-}
-{/*changeState({ googleCode: value })*/
-}
-{/*}} /></div >*/
-}
-{/*</li >*/
-}
-{/*<li >*/
-}
-{/*<div className={styles.label} ></div >*/
-}
-{/*<div className={styles.calcu} >*/
-}
-{/*<div className={*/
-}
-{/*classNames(*/
-}
-{/*styles.button,*/
-}
-{/*(email && googleCode && emailVerificationCode) ? styles.permit : null*/
-}
-{/*)*/
-}
-{/*} >*/
-}
-{/*<Button*/
-}
-{/*loading={loading.effects[`${modelName}/doWithdrawApply`]}*/
-}
-{/*onClick={() => {*/
-}
-{/*this.doWithdrawApply()*/
-}
-{/*}} >*/
-}
-{/*提交*/
-}
-{/*</Button >*/
-}
-{/*</div >*/
-}
-
-{/*</div >*/
-}
-{/*</li >*/
-}
-{/*</ul >*/
 }
 
 
