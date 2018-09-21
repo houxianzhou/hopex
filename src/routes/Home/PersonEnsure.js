@@ -73,6 +73,7 @@ export default class PersonEnsure extends Component {
       {
         title: '成交数量(张)',
         dataIndex: 'dealAmount',
+        render: (value) => <RedGreenSwitch.MarkText mark={''} value={value.replace(/['+']/, '')} />
       },
       {
         title: '成交均价',
