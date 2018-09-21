@@ -68,10 +68,9 @@
       height: 66px;
       display: flex;
       .mixin_flex(space-between);
-      :global(div) {
-        .mixin_flex(_, center);
-      }
       .left {
+        align-items: center;
+        align-content: center;
         display: flex;
         .marketname {
           display: flex;
@@ -99,10 +98,15 @@
           // color: @_green;
         }
         .compare {
+          // background: red;
           // color: @_green;
           margin-left: 20px;
           display: flex;
+          justify-content: flex-start;
           flex-direction: column;
+          .dollar{
+            margin-top: 6px;
+          }
         }
       }
       .right {

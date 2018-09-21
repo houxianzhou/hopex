@@ -1020,6 +1020,14 @@ export default joinModel(modelExtend, {
         maxPrice24h: null, // 24h最高
         minPrice24h: null, // 24最低
         indexPrice: null, // 现货价格指数
+        totalPrice24h: '',//z4小时交易总额
+        latestPrice: '', //最新交易价格,
+        latestPriceShown: '',//纯粹显示，去掉了加减号
+        latestPriceChangePercent: '',//最新价相比24小时前价格的涨跌幅
+        latestPriceChangePercentShown: '',//纯粹显示，去掉了加减号
+        dollarPrice: '',//换算成美元
+        latestPriceTrend: '',//1升，-1降
+        reasonablePrice: '',//合理价格，从market.deatl接口拉过来的
 
 
         minVaryPrice: '', //最小变动价位
@@ -1027,6 +1035,8 @@ export default joinModel(modelExtend, {
         minLimitPrice: '',//最低允许卖价
         maxLimitPrice: '',//最高允许卖价
         availableMoney: '',//可用金额
+
+
 
         personalEnsureHistory: [],//最近10条委托历史
         personalEnsures: [],//个人委托列表
