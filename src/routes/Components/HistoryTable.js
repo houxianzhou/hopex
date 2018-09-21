@@ -205,7 +205,7 @@ export class RenderModal extends Component {
         title: '成交数量(张)',
         dataIndex: 'amount',
         render: (value, record) => (
-          <RedGreenSwitch.MarkText mark={value} value={value.replace(/['+']/, '')} />
+          <RedGreenSwitch.MarkText mark={''} value={value.replace(/['+']/, '')} />
         )
       },
       {

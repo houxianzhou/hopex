@@ -140,7 +140,7 @@ export const formatNumber = (...params) => {
 
 export const formatJson = (string) => {
   if (_.isObjectLike(string)) return string
-  return JSON.parse(string.replace(/\s+/g, ''))
+  return JSON.parse(string)
 }
 
 

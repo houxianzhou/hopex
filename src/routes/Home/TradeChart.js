@@ -88,7 +88,7 @@ export default class TradeChart extends Component {
     const red = RG ? "#FF7858" : "#00C087"
     const greenOpacity = RG ? "rgba(255,120,88,.4)" : "rgba(0,192,135,.4)"
     const redOpacity = RG ? "rgba(0,192,135,.4)" : "rgba(255,120,88,.4)"
-    const textLineColor = theme === THEME.LIGHT ? 'D5D5D5' : XYcolor
+    const textLineColor = theme === THEME.LIGHT ? '#bec0cd' : XYcolor
     return {
       overrides: {
         // 蜡烛图

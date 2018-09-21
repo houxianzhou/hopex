@@ -383,7 +383,6 @@ export default joinModel(modelExtend, {
         fairPrice: reasonablePrice, price24Max: maxPrice24h, price24Min: minPrice24h,
         amount24h: totalPrice24h, allowTrade,
       } = result
-
       yield put({
         type: 'changeState',
         payload: {
@@ -1035,7 +1034,6 @@ export default joinModel(modelExtend, {
         minLimitPrice: '',//最低允许卖价
         maxLimitPrice: '',//最高允许卖价
         availableMoney: '',//可用金额
-
 
 
         personalEnsureHistory: [],//最近10条委托历史
