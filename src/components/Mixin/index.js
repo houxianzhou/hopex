@@ -52,6 +52,12 @@ export class MixinChild extends React.Component {
     super(props)
     const { that = {} } = this.props
     that._isMounted = true
+    that.shouldComponentUpdate = ((nextProps, nextState) => {
+      if (_.isEqual(nextProps, that.props) && _.isEqual(nextState, that.state)) {
+        return false
+      }
+      return true
+    })
     that.changeState = (payload = {}, callback) => {
       if (that._isMounted) {
         that.setState(payload, () => {
@@ -60,6 +66,7 @@ export class MixinChild extends React.Component {
       }
     }
   }
+
 
   componentDidMount() {
     this.startInit()
