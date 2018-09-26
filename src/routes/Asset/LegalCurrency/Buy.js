@@ -370,7 +370,7 @@ export default class View extends Component {
                   <li >
                     <div className={styles.label} >实名认证</div >
                     <div >
-                      {selectOne.realName}
+                      {selectOne.realName ? selectOne.realName : selectOne.idCardVerified === false ? '未认证' : ''}
                     </div >
                   </li >
                   <li >
@@ -454,7 +454,8 @@ export default class View extends Component {
                   <li >
                     <div className={styles.label} >银行卡</div >
                     <div >
-                      {selectOne.sell_realName}<span >{selectOne.sell_bankNo}</span >
+                      {selectOne.sell_realName}{selectOne.sell_bankNo ?
+                      <span >{selectOne.sell_bankNo}</span > : selectOne.sell_bankVerified === false ? '未绑定' : ''}
                     </div >
                   </li >
                   <li >
