@@ -1,5 +1,10 @@
 @import '~@styles/index.less';
 
+.mixin_resWidth (@width:20.8%) {
+  width: @width;
+  max-width: @width;
+}
+
 .views {
   display: flex;
   :global {
@@ -30,8 +35,9 @@
 }
 
 .latestRecord {
-  min-width: @view_width;
-  max-width: @view_width;
+  .mixin_resWidth();
+  //min-width: @view_width;
+  //max-width: @view_width;
   height: 560px;
   :global {
     .thead {
@@ -104,7 +110,7 @@
           display: flex;
           justify-content: flex-start;
           flex-direction: column;
-          .dollar{
+          .dollar {
             margin-top: 6px;
           }
         }
@@ -285,8 +291,7 @@
 
 .ensureRecord {
   .mixinC();
-  max-width: @view_width;
-  min-width: @view_width;
+  .mixin_resWidth();
   font-size: 13px;
   .ensurerecord_header {
     width: 100%;
@@ -410,8 +415,7 @@
 }
 
 .purse {
-  min-width: @view_width;
-  max-width: @view_width;
+  .mixin_resWidth();
   height: 344px;
   .purseheader {
     width: 100%;
@@ -706,7 +710,7 @@
       .ensuremoney {
         margin-top: 29px;
         .description {
-          *{
+          * {
             .overflowHidden()
           }
           vertical-align: middle;
@@ -788,8 +792,7 @@
 }
 
 .currentContract {
-  min-width: @view_width;
-  max-width: @view_width;
+  .mixin_resWidth();
   .header {
     span {
       color: @c_active_yellow;
