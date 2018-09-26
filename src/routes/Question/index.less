@@ -1,8 +1,173 @@
-.contractExplain{
-  background: red;
+@import '~@styles/index.less';
+@import '~@routes/Components/common.less';
+@import '~@routes/Components/SuperVertifyForm.less';
+
+@titleColor: #E2B96F;
+@mainColor: #232833;
+@grayColor: #999;
+@titleFontSize: 16px;
+@mainFontSize: 14px;
+@header2: 40px;
+
+//.contractExplain{
+//  background: red;
+//}
+
+.container {
+  padding: 41px 40px 40px 41px;
+
+  span.routerGo {
+    color: #789ED1;
+    cursor: pointer;
+
+  }
+
+  .colorContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .questionTitle {
+    font-size: @titleFontSize;
+    color: @titleColor;
+    margin-bottom: 40px;
+
+    p {
+      color: @grayColor;
+      font-size: @mainFontSize;
+
+      span {
+        color: #F54B22;
+        display: inline-block;
+        margin-right: 6px;
+      }
+    }
+  }
+  .contentTitle {
+    font-size: @mainFontSize;
+    margin-top: 40px;
+    color: @mainColor;
+    font-weight: bold;
+  }
+  .contentDetail {
+    padding: 20px 80px 40px 0;
+    color: @grayColor;
+    font-size: @mainFontSize;
+    line-height: 24px;
+    border-bottom: 1px solid #EBEBEB;
+
+    &.borderNone {
+      //border: none;
+      padding-top: 0;
+    }
+  }
+  .selectContainer {
+    width: 200px;
+    cursor: pointer;
+  }
+  &.exchangeGuide {
+    padding: 41px 0px 40px 41px;
+  }
+  &.settlement {
+    .tablec {
+      margin-top: 20px;
+    }
+    :global {
+      .table {
+        color: black;
+        :global {
+          .td {
+            border: none;
+            padding-left: 10px;
+            //width: 70%;
+            color: @mainColor;
+            //}
+          }
+          .thead {
+            .tr {
+              color: @grayColor;
+              height: @header2;
+
+              .th {
+                padding-left: 10px;
+              }
+            }
+            font-size: 12px;
+          }
+          .tbody {
+            font-size: 13px;
+            .tr {
+              height: @header2;
+              &:hover {
+                //background: @tr_hover !important;
+              }
+              //&.odd {
+              //  background: #F6F8FA;;
+              //}
+              &.even {
+                background: #F6F8FA;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .contractFooter {
+    color: @grayColor;
+
+    //span {
+    //  //color: blue;
+    //  cursor: pointer;
+    //}
+  }
+  &.contractExplain {
+    .tablec {
+        margin-top: 20px;
+      }
+    :global {
+        .table {
+          color: black;
+          :global {
+            .td {
+              border: 0.5px solid #EBEBEB;
+              padding-left: 50px;
+              width: 70%;
+              color: @mainColor;
+
+              &:nth-child(1) {
+                width: 20% !important;
+                color: @grayColor;
+              }
+            }
+            .thead {
+              .tr {
+                color: #F6F8FA;
+                height: 0;
+              }
+              font-size: 12px;
+            }
+            .tbody {
+              font-size: 13px;
+              .tr {
+                height: @header2;
+                &:hover {
+                  //background: @tr_hover !important;
+                }
+                //&.odd {
+                //  background: #F6F8FA;;
+                //}
+                &.even {
+                  background: #F6F8FA;
+                }
+              }
+            }
+          }
+        }
+      }
+  }
 }
 
 
-.contractExchange{
-  background: blue;
-}
+

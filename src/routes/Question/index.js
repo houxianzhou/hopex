@@ -3,12 +3,24 @@ import { connect } from 'dva'
 import { NavPannel } from '@components'
 import { default as ContractExplain } from './ContractExplain.js'
 import { default as ExchangeGuide } from './ExchangeGuide.js'
+import { default as Settlement } from './Settlement.js'
+import { default as MoneyTerms } from './MoneyTerms.js'
+import { default as ClosePosition } from './ClosePosition.js'
+import { default as ForwardContractCalculate } from './ForwardContractCalculate.js'
+import { default as ReverseContractCalculate } from './ReverseContractCalculate.js'
+import { default as InsuranceFund } from './InsuranceFund.js'
 
-import { assetManage, $B3, $B4 } from '@assets'
+import { assetManage, $B3, $B4, exchange, contract, caculator } from '@assets'
 
 const Comp = {
   ContractExplain,
-  ExchangeGuide
+  ExchangeGuide,
+  Settlement,
+  MoneyTerms,
+  ClosePosition,
+  ForwardContractCalculate,
+  ReverseContractCalculate,
+  InsuranceFund
 }
 @connect(({ theme, question, loading, dispatch }) => ({
   model: question,
@@ -49,14 +61,17 @@ export default class View extends Component {
   }
 
   render() {
-    const { renderPage } = this
+    // console.log(this.props)
+    const { renderPage } = this;
+    const { history } = this.props;
     return (
       <div >
         <NavPannel
+          {...this.props}
           defaultActive='ContractExplain'
           navList={[
             {
-              svg: assetManage,
+              svg: contract,
               title: '合约相关',
               list: [
                 {
@@ -65,11 +80,11 @@ export default class View extends Component {
                   onClick: () => {
                     return renderPage('ContractExplain')
                   }
-                }
+                },
               ]
             },
             {
-              svg: assetManage,
+              svg: exchange,
               title: '交易所相关',
               list: [
                 {
@@ -77,6 +92,47 @@ export default class View extends Component {
                   title: '交易所指南',
                   onClick: () => {
                     return renderPage('ExchangeGuide')
+                  }
+                },
+                {
+                  name: 'MoneyTerms',
+                  title: '资金相关术语',
+                  onClick: () => {
+                    return renderPage('MoneyTerms')
+                  }
+                },
+                {
+                  name: 'ClosePosition',
+                  title: '强制平仓&自动减仓',
+                  onClick: () => {
+                    return renderPage('ClosePosition')
+                  }
+                },
+                {
+                  name: 'InsuranceFund',
+                  title: '保险基金',
+                  onClick: () => {
+                    return renderPage('InsuranceFund')
+                  }
+                }
+              ]
+            },
+            {
+              svg: caculator,
+              title: '交易合约计算示例',
+              list: [
+                {
+                  name: 'ReverseContractCalculate',
+                  title: '反向合约计算示例',
+                  onClick: () => {
+                    return renderPage('ReverseContractCalculate')
+                  }
+                },
+                {
+                  name: 'ForwardContractCalculate',
+                  title: '正向合约计算示例',
+                  onClick: () => {
+                    return renderPage('ForwardContractCalculate')
                   }
                 }
               ]

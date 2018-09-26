@@ -100,10 +100,10 @@ export default class View extends Component {
           height: 200
         }
       },
-      classNames: styles.loginrecord,
+      // classNames: styles.loginrecord,
       scroll: {},
     }
-
+    // console.log(JSON.stringify(tableProps))
     const page1 = (
       <>
         <div className={styles.header} >
