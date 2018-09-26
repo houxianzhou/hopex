@@ -232,7 +232,7 @@ export default delay({
           "time": "2018-08-02 17:49:27",
           "role": "2",
           "fillPrice": "222",
-          "fillQuantity": `${['+','-'][_.random(0,1)]}11`,
+          "fillQuantity": `${['+', '-'][_.random(0, 1)]}11`,
           "fee": "0.0004954954954955"
         }
       )),
@@ -1046,6 +1046,63 @@ export default delay({
   'post /mock/api/v1/User/otc/SendEmailToOTCWithdraw': (req, res) => {
     res.send({
       data: true, "ret": 0, "errCode": "", "errStr": ""
+    })
+  },
+
+  //解释说明----------------
+  'get /mock/Contract/Index': (req, res) => {
+    res.send({
+      "data": [{
+        "direct": "Forward",
+        "code": "BTCUSDT",
+        "name": "BTCUSDT永续",
+        "type": "永续合约",
+        "closeCurrency": "USDT"
+      }, {
+        "direct": "Reverse",
+        "code": "BTCUSD",
+        "name": "BTCUSD永续",
+        "type": "永续合约",
+        "closeCurrency": "BTC"
+      }, {
+        "direct": "Forward",
+        "code": "ETHUSDT",
+        "name": "ETHUSDT永续",
+        "type": "永续合约",
+        "closeCurrency": "USDT"
+      }, { "direct": "Reverse", "code": "ETHUSD", "name": "ETHUSD永续", "type": "永续合约", "closeCurrency": "ETH" }],
+      "ret": 0,
+      "errCode": "",
+      "errStr": ""
+    })
+  },
+  'get /mock/Contract/Detail': (req, res) => {
+    res.send({
+      "data": {
+        "name": "",
+        "code": "",
+        "type": "",
+        "closeCurrency": "",
+        "price": "",
+        "marketPrice": "",
+        "endTime": null,
+        "closePrice": "",
+        "value": "",
+        "minPriceMovement": "",
+        "minTradeNum": "",
+        "leverage": "",
+        "maintenanceMarginRate": "",
+        "makerRate": "",
+        "takerRate": "",
+        "closeAllRate": "",
+        "deliveryRate": "",
+        "positionCnt": 0,
+        "positionVal": "",
+        "sum24hDealCnt": 0,
+        "sum24hDealAmount": "",
+        "sumDealsCnt": 0,
+        "sumAmount": ""
+      }, "ret": 0, "errCode": "", "errStr": ""
     })
   },
 

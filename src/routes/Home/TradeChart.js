@@ -46,6 +46,15 @@ export default class TradeChart extends Component {
       }
     }
     if (!isEqual(prevRG, RG) || !isEqual(prevTheme, theme)) {
+      if (_.get(window, 'frames[0].document')) {
+        const iframe = window.frames[0].document.getElementsByTagName('html')[0]
+        if (theme === THEME.LIGHT) {
+          iframe.setAttribute('class', '')
+        } else {
+          iframe.setAttribute('class', 'theme-dark')
+        }
+      }
+
       const { overrides, studies_overrides } = this.getChangedStyle()
       this.widgetApplayPromise(() => {
         this.widget.applyOverrides(
@@ -648,10 +657,10 @@ export default class TradeChart extends Component {
                       </li >
 
                       {/*<li >*/}
-                        {/*<div className={styles.title} >*/}
-                          {/*<span className='blue' >更多</span >*/}
-                        {/*</div >*/}
-                        {/*<div className={styles.desc} />*/}
+                      {/*<div className={styles.title} >*/}
+                      {/*<span className='blue' >更多</span >*/}
+                      {/*</div >*/}
+                      {/*<div className={styles.desc} />*/}
                       {/*</li >*/}
                     </ul >
                   </div >
