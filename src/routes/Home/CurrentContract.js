@@ -120,11 +120,12 @@ class RenderModal extends Component {
       sum[Number(avarageLeverge * index)] = String(leverage)
       return sum
     }, {})
+
     const marksProps = {
       marks: {
         ...marks,
       },
-      defaultValue: Number(leverage),
+      defaultValue: Number(_.get(_.invert(marks),Number(leverage))),
       min: _.min(_.keys(marks).map(item => Number(item))) || 0,
       max: _.max(_.keys(marks).map(item => Number(item))) || 0,
       included: false,
