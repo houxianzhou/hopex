@@ -55,7 +55,8 @@ export const getColumns = (props = {}) => {
                 {
                   record.orderStatus === 'Processing' ? (
                     <span className={'blue'} onClick={() => {
-                      window.location.href = record.detailUrl
+                      const url = encodeURIComponent(window.location.href)
+                      window.location.href = `${record.detailUrl}&returnUrl=${url}`
                     }} >查看</span >
                   ) : null
                 }
