@@ -5,7 +5,7 @@ import { COLORS } from "@constants"
 
 export default class MoneySelect extends Component {
   render() {
-    const { value, options, onChange } = this.props
+    const { value, options, onChange, styles = {} } = this.props
     return (
       <Select
         value={value}
@@ -62,7 +62,8 @@ export default class MoneySelect extends Component {
             focused: {
               color: COLORS.yellow,
             }
-          }
+          },
+          ...styles
         }}
       />
     )

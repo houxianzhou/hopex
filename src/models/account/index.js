@@ -74,7 +74,7 @@ export default joinModel(modelExtend, supevertify, {
         return res;
       }
     },
-    * ModifyPassword({ payload = {} }, { call, put, select }) { // 获取个人信息
+    * ModifyPassword({ payload = {} }, { call, put, select }) { // 修改密码
       const res = getRes(yield call(ModifyPassword, payload, (err) => {
         Toast.tip(err.errStr);
       }));

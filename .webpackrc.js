@@ -29,6 +29,11 @@ export default {
       // target: 'http://192.168.70.131:5001',
       target: 'http://192.168.70.131:5003',
       changeOrigin: true
+    },
+    "/api/v1/country/*": {
+      // target: 'http://192.168.70.131:5001',
+      target: 'http://192.168.70.131:5001',
+      changeOrigin: true
     }
   },
   alias: {
