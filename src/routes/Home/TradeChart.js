@@ -79,7 +79,6 @@ export default class TradeChart extends Component {
     }
   }
 
-
   componentDidMount() {
     // localSave.clearAll()
   }

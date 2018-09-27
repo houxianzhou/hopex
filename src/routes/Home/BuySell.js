@@ -107,7 +107,7 @@ export default class BuySell extends Component {
 
   componentDidUpdate(prevProps) {
     const { model: { clickSelectOne: prevClickSelectOne } = {} } = prevProps
-    const { model: { clickSelectOne } = {} } = this.props
+    const { model: { clickSelectOne } = {}, dispatch, modelName } = this.props
     if (!isEqual(prevClickSelectOne, clickSelectOne) && clickSelectOne) {
       const { type, price, amount } = clickSelectOne
       if (type) {
@@ -119,6 +119,12 @@ export default class BuySell extends Component {
           buy: {
             ...this.state.buy,
             price,
+          }
+        })
+        dispatch({
+          type: `${modelName}/changeState`,
+          payload: {
+            clickSelectOne: ''
           }
         })
       }
