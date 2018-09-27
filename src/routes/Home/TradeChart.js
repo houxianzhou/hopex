@@ -430,6 +430,7 @@ export default class TradeChart extends Component {
                     subscribe: (e, res) => {
                       if (_.get(res, 'method') === 'kline.update') {
                         const result = _.get(res, 'data')
+                        console.log(result,'----------')
                         result.map((item = {}) => {
                           onRealtimeCallback(
                             {
@@ -745,10 +746,10 @@ export default class TradeChart extends Component {
                     ) : null
                   ) : null
                 }
-                {
-                  isLogin && marketAllowTrade === false ? (
-                    <div className={styles.notallowtradeTip} >不允许交易</div >) : null
-                }
+                {/*{*/}
+                {/*isLogin && marketAllowTrade === false ? (*/}
+                {/*<div className={styles.notallowtradeTip} >不允许交易</div >) : null*/}
+                {/*}*/}
                 {
                   loaded ? (
                     <div className={styles.switchmap} >
