@@ -430,7 +430,7 @@ export default class TradeChart extends Component {
                     subscribe: (e, res) => {
                       if (_.get(res, 'method') === 'kline.update') {
                         const result = _.get(res, 'data')
-                        console.log(result,'----------')
+                        console.log(result, '----------')
                         result.map((item = {}) => {
                           onRealtimeCallback(
                             {
@@ -709,8 +709,12 @@ export default class TradeChart extends Component {
                               if (time === '1m') {
                                 this.widget.chart().setChartType(3)
                               } else {
-                                this.widget.chart().setResolution("1", () => {
-                                  this.widget.chart().setChartType(3)
+                                dispatch({
+                                  type: `${modelName}/doUnSubKlineAllListFromWs`
+                                }).then(() => {
+                                  this.widget.chart().setResolution("1", () => {
+                                    this.widget.chart().setChartType(3)
+                                  })
                                 })
                               }
                               this.studies.forEach((id) => {
