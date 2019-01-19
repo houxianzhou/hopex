@@ -1,30 +1,35 @@
 import React, { Component } from 'react'
 import { Mixin } from "@components"
 import { classNames, dealInterval } from '@utils'
+import { THEME } from '@constants'
 import RedGreenSwitch from '@routes/Components/RedGreenSwitch'
-import logogray from '@assets/logo4.png'
+import { logo4, logo5 } from '@assets'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
 export default class Pure extends Component {
   state = {
-    currentPurse: 0
+    currentPurse: 0,
   }
   startInit = () => {
     this.getPurseAssetList()
   }
 
   getPurseAssetList = () => {
-    const { dispatch, modelName, model: {} } = this.props
+    const { dispatch, } = this.props
     dispatch({
-      type: `${modelName}/getPurseAssetList`
+      type: `asset/getAssetSummary`,
+      payload: {
+        forceUpdate: true,
+        fetchAllAsset: true
+      }
     }).then((res) => {
       if (res) {
-        if (!this._isMounted) return
+        if (!this._isMounted || this.interval) return
         this.interval = dealInterval(() => {
+          this.interval = null
           this.getPurseAssetList()
         })
-
       }
     })
   }
@@ -32,10 +37,14 @@ export default class Pure extends Component {
 
   render() {
     const { currentPurse } = this.state
-    const { model: { assetList = [], }, isLogin, routerGoLogin, routerGoRegister } = this.props
-    const filterOne = assetList[currentPurse] || {}
     const {
-      roe = '', floatPercent = '', walletBalance = '', positionMargin = '', floatingPNL = '',
+      asset: { detailAll = [] } = {},
+      isLogin, routerGoLogin, routerGoRegister,
+      theme
+    } = this.props
+    const filterOne = detailAll[currentPurse] || {}
+    const {
+      profitRate = '', walletBalance = '', positionMargin = '', floatProfit = '',
       withdrawFreeze = '', totalWealth = '', delegateMargin = '', availableBalance = ''
     } = filterOne
     return (
@@ -57,9 +66,9 @@ export default class Pure extends Component {
                 <div >
                   钱包
                 </div >
-                <ul>
+                <ul >
                   {
-                    assetList.map((item, index) => <li key={index} onClick={() => {
+                    detailAll.map((item, index) => <li key={index} onClick={() => {
                       this.changeState({
                         currentPurse: index
                       })
@@ -81,10 +90,10 @@ export default class Pure extends Component {
                     <div className={styles.top} >
                       <div className={styles.tip} >浮动盈亏</div >
                       <div className={styles.number} >
-                        <RedGreenSwitch.MarkText value={floatingPNL}  />
+                        <RedGreenSwitch.MarkText value={floatProfit} />
                       </div >
                       <div className={styles.percent} >
-                        <RedGreenSwitch.MarkText value={roe}  />
+                        <RedGreenSwitch.MarkText value={profitRate} />
                       </div >
                     </div >
                     <div className={styles.down} >
@@ -121,7 +130,9 @@ export default class Pure extends Component {
                   </>
                 ) : (
                   <div className={styles.container} >
-                    <div className={styles.top} ><img src={logogray} /></div >
+                    <div className={styles.top} >{
+                      theme === THEME.DEEPDARK ? logo4 : logo5
+                    }</div >
                     <div className={styles.center} >欢迎来到Hopex</div >
                     <div className={styles.down} >
                       <div >
@@ -135,7 +146,6 @@ export default class Pure extends Component {
                   </div >
                 )
               }
-
             </div >
           </ScrollPannel >
         </div >

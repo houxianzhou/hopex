@@ -1,0 +1,23 @@
+@import '~@styles/index.less';
+
+.defaultpngcontainer {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  > div {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    color: rgba(35, 40, 51, .5);
+  }
+  .nodatatip {
+
+    :global(.lightT) & {
+      .mixinCL();
+      color: @c_front_dark !important;
+    }
+    color: @c_like_white;
+  }
+}
+

@@ -23,7 +23,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          color: #D7DAEE;
+          // color: #D7DAEE;
           opacity: .5;
         }
       }
@@ -42,6 +42,10 @@
     .tbody {
       .tr {
         &:hover {
+          :global(.lightT) & {
+            .mixinCL();
+            background: #F5F5F5 !important;
+          }
           background: #1D222E !important;
         }
         height: 26px;
@@ -49,6 +53,10 @@
         //  background: @c_panel_light;
         //}
         &.even {
+          :global(.lightT) & {
+            .mixinCL();
+            background: #F6F8FA;
+          }
           background: @c_panel_light;
         }
       }
@@ -96,6 +104,7 @@
     color: @_green;
   }
   .blue {
+    cursor:pointer !important;
     color: @_blue;
   }
 }
@@ -103,10 +112,19 @@
 // 模态框公共部分
 .buttons {
   border: 1px solid #1D222E;
+  :global(.lightT) & {
+    .mixinCL();
+    border: 1px solid #EBEBEB;
+  }
   display: flex;
   align-items: center;
   height: 60px;
   > div {
+    cursor:pointer;
+    :global(.lightT) & {
+      .mixinCL();
+      color: @c_like_white;
+    }
     max-width: 50%;
     height: 30px;
     color: white;
@@ -117,6 +135,10 @@
     &.confirm {
       border-left: 1px solid @c_pannel_header_dark;
       color: @c_active_yellow;
+      :global(.lightT) & {
+        .mixinCL();
+        border-left: 1px solid #EBEBEB;
+      }
     }
   }
 }
@@ -130,6 +152,10 @@
     height: 100%;
     display: flex;
     li {
+      :global(.lightT) & {
+        .mixinCL();
+        color: @c_like_white_05;
+      }
       display: flex;
       align-items: center;
       height: 100%;
@@ -151,6 +177,11 @@
     height: 100%;
     display: flex;
     justify-content: center;
+    :global(.lightT) & {
+      .mixinCL();
+      border-bottom: 1px solid #EBEBEB;
+    }
+
     li {
       height: 100%;
       flex-grow: 1;
@@ -158,11 +189,16 @@
       align-items: center;
       display: flex;
       > div {
+        cursor: pointer;
         display: flex;
         align-items: center;
         height: 100%;
         font-size: 16px;
         color: @c_like_white;
+        :global(.lightT) & {
+          .mixinCL();
+          color: @c_like_white;
+        }
         &.active {
           color: @c_active_yellow;
           border-bottom: 2px solid @c_active_yellow;
@@ -208,4 +244,28 @@
       justify-content: center;
     }
   }
+}
+
+.pagenations {
+  margin-top: 20px;
+}
+
+.mixin_notallow_userselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+
+  -khtml-user-select: none; /* Konqueror */
+
+  -moz-user-select: none; /* Firefox */
+
+  -ms-user-select: none; /* Internet Explorer/Edge */
+
+  user-select: none;
+}
+
+.overflowHidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

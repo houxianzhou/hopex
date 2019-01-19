@@ -9,7 +9,7 @@ import { Input } from './input';
 import { classNames, _, Patterns } from '@utils'
 import { PATH } from '@constants'
 import styles from './MyAccount.less'
-import { rightIcon, errorIcon } from '@assets/'
+import { rightIcon2, errorIcon2, andriodIcon, iosIcon } from '@assets/'
 
 @connect(({ account: model, dispatch, theme }) => ({
   model,
@@ -22,7 +22,7 @@ export default class View extends Component {
   renderStatus = (status) => {
     return status ? (
       <div className={styles.right} >
-        {rightIcon}
+        {rightIcon2}
       </div >
     ) : (
       <div className={
@@ -31,7 +31,7 @@ export default class View extends Component {
           styles.error
         )
       } >
-        {errorIcon}
+        {errorIcon2}
       </div >
     )
   }
@@ -46,7 +46,6 @@ export default class View extends Component {
     userInfo: {}
   };
   componentDidMount = () => {
-    console.log(this.props);
     this.props.dispatch({
       type: `${this.props.modelName}/GetLast10LoginLog`
     }).then((res = {}) => {
@@ -101,10 +100,10 @@ export default class View extends Component {
           height: 200
         }
       },
-      classNames: styles.loginrecord,
+      // classNames: styles.loginrecord,
       scroll: {},
     }
-
+    // console.log(JSON.stringify(tableProps))
     const page1 = (
       <>
         <div className={styles.header} >
@@ -173,7 +172,7 @@ export default class View extends Component {
                           }
                         })
                       }} >
-                      已启用
+                      修改
                     </div >
                   ) : (
                     <div
@@ -241,11 +240,17 @@ export default class View extends Component {
               <div className={styles.buttonContainer} >
                 <div className={styles.buttonItem} >
                   <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8"
-                     target="_blank" >iPhone下载</a >
+                     target="_blank" >
+                    <span >{iosIcon}</span >
+                    <span className={styles.phoneContent} >iPhone下载</span >
+                  </a >
                 </div >
                 <div className={styles.buttonItem} >
                   <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
-                     target="_blank" >Andriod下载</a >
+                     target="_blank" >
+                    <span >{andriodIcon}</span >
+                    <span className={styles.phoneContent} >Andriod下载</span >
+                  </a >
                 </div >
               </div >
             </div >
@@ -306,6 +311,9 @@ export default class View extends Component {
                       googleIdentifyingCode: value
                     })
                   }}
+                  style={
+                    { fontSize: '14px' }
+                  }
                   value={googleIdentifyingCode}
                   placeholder="请输入谷歌验证码" />
               </div >

@@ -13,7 +13,7 @@ import CurrentContract from './CurrentContract'
 import Position from './Position'
 import PersonEnsure from './PersonEnsure'
 import RecentRecord from './RecentRecord'
-import defaultpng from '@assets/default.png'
+import NoDataTip from '@routes/Components/NoDataTip'
 import styles from './index.less'
 
 
@@ -29,10 +29,11 @@ const Comp = {
   RecentRecord
 }
 let throttle
-@connect(({ home: model, modal, user, theme, Loading, dispatch }) => ({
+@connect(({ home: model, modal, user, theme, asset, Loading, dispatch }) => ({
   model,
   modal,
   user,
+  asset,
   modelName: 'home',
   theme,
   loading: Loading,
@@ -47,22 +48,23 @@ export default class View extends Component {
   componentDidUpdate(prevProps) {
     const { model: { marketCode: prevMarketCode } } = prevProps
     const { model: { marketCode }, dispatch, modelName } = this.props
+
     if (!isEqual(prevMarketCode, marketCode) && marketCode && prevMarketCode) {
       if (!throttle) {
-        // 暂时失效
+        // 暂时失效,startInt自己会重新执行，这里不用再执行一遍了
         throttle = _.throttle(
           () => {
-            dispatch({
-              type: `${modelName}/clearState`,
-            })
-            wss.closeAll(true).then((res) => {
-              if (res) {
-                this.startInit()
-                throttle = null
-              }
-            }).catch((err) => {
-              console.log('关闭失败')
-            })
+            // dispatch({
+            //   type: `${modelName}/clearState`,
+            // })
+            // wss.closeAll(true).then((res) => {
+            //   if (res) {
+            //     // this.startInit()
+            //     throttle = null
+            //   }
+            // }).catch((err) => {
+            //   console.log('关闭失败')
+            // })
           }, 1000)
         throttle()
       }
@@ -74,13 +76,20 @@ export default class View extends Component {
     dispatch({
       type: `${modelName}/clearState`,
     })
-    this.getAllMarkets().then((res) => {
-      this.childInitStacks.map(item => item && item())
+    wss.closeAll(true).then(() => {
+      dispatch({
+        type: `${modelName}/clearState`,
+      })
+      this.getAllMarkets().then((res) => {
+        this.childInitStacks.map(item => item && item())
+      })
+    }).catch(() => {
+      console.log('关闭失效----')
     })
   }
 
   getAllMarkets = () => {
-    const { dispatch, modelName, model: { marketList = [] }, location: { search } } = this.props
+    const { dispatch, modelName, location: { search } } = this.props
     return new Promise((resolve) => {
       setTimeout(() => {
         return dispatch({
@@ -121,6 +130,7 @@ export default class View extends Component {
             unsubscribe: () => {
             },
             restart: () => {
+              this.getAllMarketsFromWs()
             }
           })
         }
@@ -142,9 +152,11 @@ export default class View extends Component {
   }
 
   renderView = (name) => {
-    const { theme: { RG, viewPosition, calculateTableHeight }, dispatch, modelName } = this.props
+    const { theme: { RG, viewPosition, calculateTableHeight, theme }, dispatch, modelName } = this.props
 
     const props = {
+      ...this.props,
+      theme,
       RG,
       viewPosition,
       calculateTableHeight,
@@ -164,10 +176,7 @@ export default class View extends Component {
       },
       noDataTip: (dataSource = [], text) => {
         if (!dataSource.length) {
-          return <div >
-            <img src={defaultpng} />
-            <div style={{ marginTop: 8 }} >{text}</div >
-          </div >
+          return <NoDataTip text={text} change={true} />
         }
       },
       expandedRowRender: (record = {}) => {
@@ -206,7 +215,6 @@ export default class View extends Component {
           </div >
         ) : null
       },
-      ...this.props,
       isLogin: this.isLogin(),
       routerGoLogin: this.routerGoLogin,
       routerGoRegister: this.routerGoRegister,
@@ -223,7 +231,7 @@ export default class View extends Component {
     return (
       <Mixin.Parent that={this} >
         <div className={styles.home} >
-          <ShowJsonTip data={{ ...this.props.model, ...this.props.user, ...this.props.theme }} ></ShowJsonTip >
+          {/*<ShowJsonTip data={{ ...this.props.model, ...this.props.user, ...this.props.theme }} ></ShowJsonTip >*/}
 
           <div className={styles.views} >
             {
@@ -249,7 +257,6 @@ export default class View extends Component {
             }
           </div >
 
-
           {
             isLogin ? (
               <div className={styles.views} >
@@ -259,6 +266,7 @@ export default class View extends Component {
               </div >
             ) : null
           }
+
 
           {
             isLogin ? (

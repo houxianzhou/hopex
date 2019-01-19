@@ -1,5 +1,10 @@
 @import '~@styles/index.less';
 
+.mixin_resWidth (@width:20.8%) {
+  width: @width;
+  max-width: @width;
+}
+
 .views {
   display: flex;
   :global {
@@ -17,14 +22,22 @@
 }
 
 .home {
+  // .mixin_notallow_userselect();
   .mixinC();
+  :global(.lightT) & {
+    .mixinCL();
+    color: @c_black;
+    background: @c_back_dark;
+  }
+  color: #FFFFFF;
   background: @c_back_dark;
   padding: 10px;
 }
 
 .latestRecord {
-  min-width: @view_width;
-  max-width: @view_width;
+  .mixin_resWidth();
+  //min-width: @view_width;
+  //max-width: @view_width;
   height: 560px;
   :global {
     .thead {
@@ -40,35 +53,48 @@
 }
 
 .tradeChart {
+  position: relative;
   .mixinC();
   :global(iframe) {
-    height: 100% !important;
+    // height: 80% !important;
   }
-
   :global(.content) {
-    height: 100% !important;
+    // max-height: 100% !important;
+    // height: 100% !important;
   }
   .header {
+    padding: 0 10px;
     .content {
-      padding: 15px 30px;
+      :global(.lightT) & {
+        .mixinCL();
+        background: white !important;
+      }
+      padding: 15px 0px;
       background: @c_pannel_dark;
       height: 66px;
       display: flex;
       .mixin_flex(space-between);
-      :global(div) {
-        .mixin_flex(_, center);
-      }
       .left {
+        align-items: center;
+        align-content: center;
         display: flex;
         .marketname {
+          display: flex;
+          :global(.lightT) & {
+            color: @c_black;
+          }
           color: #FFFFFF;
           font-size: 18px;
           .notallowtrade {
+            :global(.lightT) & {
+              background: #ECECEC;
+              color: #666666;
+            }
             margin-right: 10px;
             color: #7D879F;
             font-size: 14px;
             padding: 5px 12px;
-            background: #41495A;
+            background: #373A41;
             border-radius: 4px;
           }
         }
@@ -78,18 +104,24 @@
           // color: @_green;
         }
         .compare {
+          // background: red;
           // color: @_green;
           margin-left: 20px;
           display: flex;
+          justify-content: flex-start;
           flex-direction: column;
+          .dollar {
+            margin-top: 6px;
+          }
         }
       }
       .right {
         display: flex;
+
         align-items: center;
         // margin-right: 70px;
         ul {
-          // background: red;
+          justify-content: flex-end;
           display: flex;
           margin: 0;
           padding: 0;
@@ -116,6 +148,10 @@
                 color: @c_pannel_theader_color;
               }
               &.desc {
+                :global(.lightT) & {
+                  .mixinCL();
+                  color: @c_black;
+                }
                 min-height: 15px;
                 color: #FFFFFF;
               }
@@ -130,7 +166,23 @@
         }
       }
     }
-
+  }
+  .notallowtradeTip {
+    border-radius: 4px;
+    top: 80px;
+    z-index: 10;
+    margin: auto;
+    left: 0;
+    right: 0;
+    width: 180px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: @c_like_white;
+    font-size: 16px;
+    background: #1D222E;;
+    position: absolute;
   }
   .kmap {
     position: relative;
@@ -140,7 +192,7 @@
     //padding: 10px;
     //padding-top: 20px;
     .tradeView, .deepChart {
-      top: 0;
+      //top: 0;
       // padding: 10px 10px;
       position: absolute;
       width: 100%;
@@ -148,15 +200,28 @@
     }
   }
   .utilsbuttons {
+    padding: 0 10px;
+    * {
+      cursor: pointer;
+    }
     position: relative;
-    padding: 0px 30px;
+    // padding: 0px 0px;
     display: flex;
     align-items: center;
     height: 30px;
 
     .switchmap {
+      :global(.lightT) & {
+        .mixinCL();
+        color: @c_active_yellow;
+        > div {
+          &.active {
+            color: white;
+          }
+        }
+      }
       color: #6B7186;
-      right: 60px;
+      right: 10px;
       z-index: 3;
       position: absolute;
       display: flex;
@@ -165,7 +230,7 @@
       > div {
         &.active {
           background: @c_active_yellow;
-          color: #232833;
+          color: @c_black;
         }
         font-size: 13px;
         padding: 3px 8px
@@ -178,7 +243,6 @@
         margin-left: 10px;
       }
       li {
-        padding: 5px 5px;
         color: @c_pannel_theader_color;
         height: 30px;
         //  background: black;
@@ -199,12 +263,35 @@
       }
     }
   }
+
+  .floatdiv {
+    color: #6A7286;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    padding: 20px;
+    background: #1D222E;
+    :global(.lightT) & {
+      .mixinCL();
+      background: white;
+      box-shadow: 3px 3px 13px #B0B0B0;
+    }
+    > div + div {
+      margin-top: 10px;
+    }
+    > div {
+      span {
+        margin-left: 42px;
+        color: @c_active_yellow;
+      }
+
+    }
+  }
 }
 
 .ensureRecord {
   .mixinC();
-  max-width: @view_width;
-  min-width: @view_width;
+  .mixin_resWidth();
   font-size: 13px;
   .ensurerecord_header {
     width: 100%;
@@ -230,6 +317,7 @@
           }
         }
         .select {
+          box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.08);
           display: none;
           z-index: 3;
           width: 100px;
@@ -251,9 +339,18 @@
               height: 30px;
               &:nth-child(2n+1) {
                 background: @c_pannel_dark;
+                :global(.lightT) & {
+                  .mixinCL();
+                  background: white;
+
+                }
               }
               &:nth-child(2n) {
                 background: @c_panel_light;
+                :global(.lightT) & {
+                  .mixinCL();
+                  background: #F6F8FA;
+                }
               }
             }
           }
@@ -285,6 +382,10 @@
   }
 
   .center {
+    :global(.lightT) & {
+      .mixinCL();
+      background: #F6F8FA;
+    }
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -314,8 +415,7 @@
 }
 
 .purse {
-  min-width: @view_width;
-  max-width: @view_width;
+  .mixin_resWidth();
   height: 344px;
   .purseheader {
     width: 100%;
@@ -342,6 +442,10 @@
           font-size: 18px;
           justify-content: center;
           &.tip {
+            :global(.lightT) & {
+              .mixinCL();
+              color: @c_like_white_07;
+            }
             color: @c_like_white_07;
             font-size: 12px;
             opacity: .7;
@@ -371,6 +475,10 @@
               display: flex;
               align-items: center;
               &:nth-child(2n+1) {
+                :global(.lightT) & {
+                  .mixinCL();
+                  color: @c_like_white_07;
+                }
                 font-size: 13px;
                 color: @c_like_white_07;
                 opacity: .7;
@@ -425,7 +533,16 @@
 
 .position {
   min-height: 242px;
+  .gray {
+    color: #6A7286 !important;
+  }
   .input {
+    :global(.lightT) & {
+      .mixinCL();
+      background: #FFFFFF !important;
+      border: 1px solid #EBEBEB !important;
+      color: @c_black !important;
+    }
     border: 1px solid #4B556D !important;
     background: #373F4F !important;
   }
@@ -499,20 +616,22 @@
         margin-left: 50px;
       }
       li {
-        color: @_blue;
+        color: @_blue !important;
       }
     }
   }
-
   .content {
     display: flex;
-    color: @c_like_white;
-    padding: 30px 32px;
-    padding-right: 20px;
-    .area + .area {
-      margin-left: 40px;
+    :global(.lightT) & {
+      .mixinCL();
+      color: @c_like_white;
     }
-
+    color: @c_like_white;
+    padding: 30px 2%;
+    // padding-right: 20px;
+    .area + .area {
+      margin-left: 2%;
+    }
     .area {
       width: 50%;
       flex-grow: 1;
@@ -523,6 +642,11 @@
         .priceinput {
           display: flex;
           .label {
+            div {
+              :global(.lightT) & {
+                color: @c_black;
+              }
+            }
             div + div {
               margin-top: 10px;
             }
@@ -535,6 +659,12 @@
             }
           }
           .input_number {
+            :global(.lightT) & {
+              .mixinCL();
+              color: #495265;
+              border: 1px solid #EBEBEB;
+              background: white;
+            }
             display: flex;
             align-items: center;
             justify-content: center;
@@ -544,6 +674,7 @@
             border: 1px solid #353D4F;
             background: #2A303C;
             div {
+              .mixin_notallow_userselect();
               line-height: 40px;
               vertical-align: center;
               display: flex;
@@ -554,6 +685,10 @@
               opacity: .5;
             }
             input {
+              :global(.lightT) & {
+                .mixinCL();
+                color: @c_black;
+              }
               color: white;
               text-align: center;
               outline: none;
@@ -566,7 +701,6 @@
           display: flex;
           justify-content: flex-end;
           .introduction_desc {
-
           }
           .introduction_price {
             margin-left: 13px;
@@ -577,13 +711,16 @@
       .ensuremoney {
         margin-top: 29px;
         .description {
+          * {
+            .overflowHidden()
+          }
           vertical-align: middle;
           margin-top: 8px;
           display: flex;
           justify-content: space-between;
           span {
             &:nth-child(2n) {
-              margin-left: 20px;
+              margin-left: 10px;
               color: @c_active_yellow;
             }
           }
@@ -624,6 +761,11 @@
           }
         }
         &.notlogin {
+          :global(.lightT) & {
+            .mixinCL();
+            background: #ECECEC;
+            background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.20) 100%, rgba(0, 0, 0, 0.20) 0%);
+          }
           background: #373A41;
           pointer-events: none;
           color: #7D879F;
@@ -651,8 +793,7 @@
 }
 
 .currentContract {
-  min-width: @view_width;
-  max-width: @view_width;
+  .mixin_resWidth();
   .header {
     span {
       color: @c_active_yellow;
@@ -670,10 +811,15 @@
       height: 123px;
       border-bottom: 1px solid rgba(215, 218, 238, .04);
       .desc {
+        :global(.lightT) & {
+          .mixinCL();
+          color: @c_like_white_07;
+        }
         color: @c_like_white_07;
         display: flex;
         justify-content: space-between;
         .edit {
+          cursor: pointer;
           color: @_blue;
         }
       }
@@ -685,6 +831,10 @@
         font-size: 28px;
         color: @c_active_yellow;
         span {
+          :global(.lightT) & {
+            .mixinCL();
+            color: @c_like_white_07;
+          }
           margin-left: 10px;
           top: 5px;
           position: relative;
@@ -699,18 +849,12 @@
     .down {
       padding-top: 30px;
       > div {
+        :global(.lightT) & {
+          .mixinCL();
+          color: @c_like_white_07;
+        }
         color: @c_like_white_07;
         margin-bottom: 10px;
-      }
-      ul {
-        display: flex;
-        li + li {
-          margin-left: 4px;
-        }
-        li {
-          width: 10px;
-          height: 20px;
-        }
       }
     }
   }
@@ -718,7 +862,13 @@
 
 // 当前合约模态框
 .currentContract_modal {
+
   .content {
+    color: @c_like_white_05;
+    :global(.lightT) & {
+      .mixinCL();
+      color: @c_like_white;
+    }
     padding: 0 35px;
     height: 100%;
     .top {
@@ -728,7 +878,6 @@
         justify-content: center;
       }
       .current {
-        color: @c_like_white_05;
         margin-bottom: 9px;
       }
       .number {
@@ -737,10 +886,14 @@
         span {
           position: relative;
           top: 20px;
-          left: 3px;
+          left: 10px;
           font-size: 14px;
           color: #FFFFFF;
           vertical-align: baseline;
+          :global(.lightT) & {
+            .mixinCL();
+            color: #1D222E;
+          }
         }
       }
     }
@@ -754,21 +907,39 @@
         position: relative;
         display: flex;
         li {
+          position: relative;
+          // width: 70px;
           &:first-child {
+            width: 114px;
             div {
+
               justify-content: flex-start;
-              width: unset;
-              padding: 15px;
-              color: @c_like_white_05;
+              padding-left: 15px;
             }
           }
           &.ismatch {
             > div {
-              color: @c_active_yellow;
+              &.needli {
+                color: @c_active_yellow !important;
+              }
             }
           }
           > div {
+            &.needli {
+              color: white;
+              :global(.lightT) & {
+                .mixinCL();
+                color: #1D222E;
+              }
+            }
+
             &.symbol {
+              right: 0;
+              left: 0;
+              border: unset !important;
+              > div {
+
+              }
               display: unset;
               border: unset;
               height: unset;
@@ -776,7 +947,6 @@
               top: -50px;
               text-align: center;
               div {
-                color: @c_like_white_05;
                 font-size: 12px;
                 margin-bottom: 6px;
               }
@@ -784,14 +954,16 @@
                 text-align: center;
               }
             }
-            color: #FFFFFF;
-            width: 70px;
+            // width: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 40px;
-            border: 1px solid #1D222E;
-            min-width: 60px;
+            border: 1px solid #24262A;
+            :global(.lightT) & {
+              .mixinCL();
+              border: 1px solid #EBEBEB;
+            }
           }
         }
       }
@@ -801,11 +973,20 @@
 
 // 持仓占用保证金模态框
 .position_modal {
+  color: @c_like_white;
+  :global(.lightT) & {
+    .mixinCL();
+    color: @c_like_white;
+  }
   .mixinC();
   .header {
     height: 40px;
     background: @c_pannel_header_dark;
-    .mixin_tab()
+    .mixin_tab();
+    :global(.lightT) & {
+      .mixinCL();
+      background: white;
+    }
   }
   .content {
     padding: 0 38px;
@@ -821,6 +1002,10 @@
       .edit {
         width: 200px;
         position: relative;
+        :global(.lightT) & {
+          .mixinCL();
+          border-bottom: 1px solid #EBEBEB;
+        }
         border-bottom: 1px solid @c_pannel_header_dark;
         color: @c_active_yellow;
         input {
@@ -836,14 +1021,12 @@
           font-size: 38px;
         }
         > div {
-          color: @c_like_white;
           position: absolute;
           right: -25px;
         }
       }
     }
     .desc {
-      color: white;
       li + li {
         margin-top: 20px;
       }
@@ -870,8 +1053,13 @@
     li {
       display: flex;
       justify-content: space-between;
+
       div:nth-child(2n+1) {
         color: white;
+        :global(.lightT) & {
+          .mixinCL();
+          color: @c_like_white;
+        }
       }
       div:nth-child(2n) {
         color: @c_active_yellow;
@@ -883,6 +1071,13 @@
 //价格超出提示模态框
 .priceWarn_Modal {
   .content {
+    :global(.lightT) & {
+      .mixinCL();
+      color: @c_black;
+    }
+    .warnprice {
+      color: @c_active_yellow;
+    }
     line-height: 22px;
     color: white;
     padding: 70px 40px;
@@ -911,12 +1106,21 @@
           .tr {
             height: @header2;
             background: @c_pannel_header_dark;
+            :global(.lightT) & {
+              .mixinCL();
+              color: #999999;
+              background: #F6F8FA;
+            }
           }
           font-size: 12px;
         }
         .tbody {
           font-size: 13px;
           .tr {
+            :global(.lightT) & {
+              .mixinCL();
+              color: @c_black;
+            }
             height: @header2;
             background: unset !important;
             &:hover {
@@ -927,6 +1131,10 @@
             }
             &.odd {
               background: @c_pannel_header_dark !important;
+              :global(.lightT) & {
+                .mixinCL();
+                background: #F6F8FA !important;
+              }
             }
           }
         }

@@ -28,7 +28,12 @@ export default class View extends Component {
       } : (scrollbar || false),
       scrollY: scrollY,
       scrollX: true,
-      // bounce: false,
+      bounce: {
+        top: true,
+        bottom: true,
+        left: false,
+        right: false
+      },
       mouseWheel,
       ...scroll,
       ...rest

@@ -1,0 +1,219 @@
+.normal {
+  width: 150px;
+}
+
+.login {
+  min-width: 300px;
+  width: 100%;
+  // height: 100%;
+  .top {
+
+    > div {
+      display: flex;
+      justify-content: center;
+    }
+    .logo {
+      img {
+        display: inline-block;
+        height: 89px;
+      }
+    }
+    .name {
+      font-size: 30px;
+      margin: 36px 0 18px 0;
+      color: @c_active_yellow;
+    }
+    .desc {
+      font-size: 14px;
+      color: #999999;
+    }
+    margin-bottom: 130px;
+  }
+  .down {
+    .othermethod {
+      margin-top: 20px;
+      color: #999999;
+      display: flex;
+      justify-content: space-between;
+      .registerentery {
+        color: @c_active_yellow;
+      }
+    }
+  }
+}
+
+.register {
+  width: 100%;
+  // height: 100%;
+  .top {
+    font-size: 34px;
+    color: @c_active_yellow;
+  }
+  .page1 {
+    .top {
+      margin-bottom: 120px;
+    }
+    .acceptence {
+      position: relative;
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      color: #999999;
+      .select {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        margin-right: 10px;
+        width: 16px;
+        height: 16px;
+      }
+      .mustselect {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        color: #F54B22;
+        margin-top: 24px;
+        width: 100%;
+      }
+      span {
+        color: #5088EB;
+      }
+    }
+    .loginentry {
+      span{
+        color: @c_active_yellow;
+      }
+      margin-top: 20px;
+      color: #999999;
+    }
+  }
+  .page2 {
+    .top {
+      margin-bottom: 94px;
+    }
+    .desc {
+      margin-bottom: 44px;
+      .name {
+        font-size: 18px;
+        color: #333333;
+        margin-bottom: 9px;
+      }
+      .email {
+        color: #999999;
+        font-size: 14px;
+      }
+    }
+    .resend {
+      padding: 0 20px;
+      color: @c_active_yellow;
+      font-size: 16px;
+    }
+  }
+
+}
+
+.forgetPassword {
+  width: 100%;
+  // height: 100%;
+  .top {
+    font-size: 34px;
+    color: @c_active_yellow;
+  }
+  .page1 {
+    .top {
+      margin-bottom: 110px;
+    }
+  }
+  .page2 {
+    .top {
+      .desc {
+        margin-top: 20px;
+        margin-bottom: 60px;
+        color: #999999;
+        font-size: 14px;
+        span {
+          color: #F54B22;
+          margin-right: 6px;
+        }
+      }
+    }
+    .info {
+      margin-bottom: 40px;
+      .name {
+        font-size: 18px;
+        color: #333333;
+        margin-bottom: 8px;
+      }
+      .email {
+        font-size: 14px;
+        color: #999999;
+      }
+    }
+    .resend {
+      color: @c_active_yellow;
+      font-size: 16px;
+    }
+  }
+}
+
+.formbutton {
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  width: 100%;
+  height: 48px;
+  margin-top: 60px;
+  button {
+    border: unset;
+    background: unset;
+    outline: unset;
+    color: unset;
+  }
+  span {
+    color: black;
+    line-height: 20px;
+    width: 20px;
+    height: 20px;
+    border-radius: 30px;
+    background: white;
+  }
+}
+
+.notpermit {
+  pointer-events: none;
+  background-image: linear-gradient(90deg, #EFEFEF 0%, #ECECEC 100%);
+}
+
+.permit {
+  button {
+    color: unset;
+  }
+  color: white !important;
+  background-image: linear-gradient(90deg, #EBCB80 0%, #E0BD7E 100%);
+}
+
+.toast {
+  // background: red;
+}
+
+:global {
+  //form {
+  //  .left{
+  //    img{
+  //      width: 28px;
+  //      height: 22px;
+  //    }
+  //  }
+  //}
+  .inputcontainer {
+    padding-left: 20px !important;
+  }
+  .inputmsgdesc {
+    justify-content: flex-start !important;
+    padding-left: 80px !important;
+  }
+
+}

@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'dva'
 import { classNames, _, } from '@utils'
 import { Table, PagiNation, Mixin } from '@components'
-import { getColumns, Tabs, RenderModal } from '@routes/Components/HistoryTable'
+import { getColumns, Tabs, RenderModal, getTabs } from '@routes/Components/HistoryTable'
+import NoDataTip from '@routes/Components/NoDataTip'
 
 import styles from './index.less'
 
@@ -40,15 +41,16 @@ export default class View extends Component {
     dispatch({
       type: `${modelName1}/getHistory`,
       payload: {
+        pageSize: 20,
         type: activeLi,
-        page: currentPage
+        page: currentPage + 1
       }
     }).then(res => {
       if (res) {
         this.changeState(
           {
             [res['historyList']]: res['result'],
-            [`${res['historyList']}Total`]: res.total
+            [`${res['historyList']}Total`]: res.total - 1
           }
         )
       }
@@ -86,7 +88,12 @@ export default class View extends Component {
           width: 180
         },
         {
+          title: '状态',
+          // width: 100,
+        },
+        {
           title: '操作',
+          width: 60,
           dataIndex: 'orderStatus',
           render: (value, record = {}) => {
             return ({
@@ -166,7 +173,7 @@ export default class View extends Component {
           <div className={styles.header} >
             <ul >
               {
-                Tabs.map((item, index) => (
+                getTabs(false).map((item, index) => (
                   <li key={index} className={classNames(
                     activeLi === item.type ? styles.active : null
                   )} onClick={() => {
@@ -181,10 +188,17 @@ export default class View extends Component {
               }
             </ul >
           </div >
-          <div style={{ height: calculateTableHeight(dataSource) }} >
-            <Table {...tableProp} />
-          </div >
-          <div className={styles.pages} >
+          {
+            dataSource.length ? (
+              <div style={{ height: calculateTableHeight(dataSource) }} >
+                <Table {...tableProp} />
+              </div >
+            ) : (
+              <div className={styles.defaultContainer} ><NoDataTip text={'当前无交易历史'} /></div >
+            )
+          }
+
+          <div className={styles.pagenations} >
             <PagiNation {...pageProp} />
           </div >
           {

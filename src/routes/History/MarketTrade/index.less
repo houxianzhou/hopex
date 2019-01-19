@@ -17,9 +17,7 @@
       margin: 12px 0 50px 0;
     }
   }
-  .pages {
-    margin-top: 20px;
-  }
+
   .header {
     height: 40px !important;
     .mixin_tab_margin(70px);
@@ -27,11 +25,14 @@
       color: #999999 !important;
     }
   }
+  .defaultContainer {
+    padding-top: 60px;
+  }
   :global {
     .table {
       :global {
         .tr {
-          color: #232833;
+          color: @c_black;
           padding: 0 10px;
         }
         .thead {
@@ -49,7 +50,7 @@
           .tr {
             height: @header2;
             &:hover {
-              background: #eff1f3 !important;
+              background: @tr_hover !important;
             }
             &.even {
               background: #F6F8FA;

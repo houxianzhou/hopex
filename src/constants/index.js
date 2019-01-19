@@ -6,7 +6,8 @@ export const BREACKPOINT = {
 
 export const THEME = {
   DARK: 'darkT',
-  DEEPDARK:'deepT'
+  DEEPDARK: 'deepT',
+  LIGHT: 'lightT'
 }
 
 export const API = {
@@ -21,7 +22,7 @@ export const API = {
 export const SPEED = {
   TOP: 0,
   MIDDLE: 10,
-  DOWM: 1500
+  DOWM: 5000
 }
 
 export const SOCKETURL = {
@@ -63,12 +64,15 @@ export const NUMBER = {
 }
 
 export const PATH = {
+  about: '/about',
   login: '/user/login',
   dashboard: '/dashboard',
   home: '/home',
   register: '/user/register',
   forgetPassword: '/user/forgetPassword',
   myaccount: '/myaccount',
-  history: '/history'
+  history: '/history',
+  app_about: '/user/app_about',
+  app_question: '/user/app_question'
 }
 

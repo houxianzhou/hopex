@@ -15,6 +15,7 @@ export default class Position extends Component {
   state = {
     active: 0
   }
+
   startInit = () => {
     this.getPosition()
   }
@@ -22,37 +23,36 @@ export default class Position extends Component {
   getPosition = () => {
     const { dispatch, modelName } = this.props
     dispatch({
-      type: `${modelName}/getPosition`
+      type: `${modelName}/getPosition`,
     }).then(() => {
-      if (!this._isMounted) return
+      if (!this._isMounted || this.interval) return
       this.interval = dealInterval(() => {
+        this.interval = null
         this.getPosition()
       })
     })
   }
 
   postOrder = (payload) => {
-    const { price, amount, method } = payload
     const { dispatch, modelName } = this.props
     dispatch({
-      type: `${modelName}/postSideOrder`,
-      payload: {
-        side: Number(amount) > 0 ? '1' : '2',
-        method: method,
-        price: price,
-        amount: String(Math.abs(Number(amount)))
-      }
+      type: `${modelName}/doFullClose`,
+      payload: payload
+    }).then(() => {
+      this.getPosition()
     })
   }
 
 
   render() {
-    const { changeState, postOrder } = this
-    const { model: { positionList = [], }, modal: { name }, noDataTip, modelName, dispatch, openModal: prevOpenModal, switchMarket } = this.props
+    const { changeState, postOrder, } = this
+    const { model: { positionList = [], }, modal: { name, data }, noDataTip, modelName, dispatch, openModal: prevOpenModal, switchMarket } = this.props
 
-
-    const openModal = () => {
-      prevOpenModal({ name: 'positionMoney' })
+    const openModal = (payload) => {
+      prevOpenModal({
+        name: 'positionMoney',
+        data: payload
+      })
     }
 
     const columns = [
@@ -81,9 +81,7 @@ export default class Position extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render: (value) => Number(value) >= 0 ? (
-          <RedGreenSwitch.GreenText value={value} />
-        ) : (<RedGreenSwitch.RedText value={value} />)
+        render: (value) => <RedGreenSwitch.MarkText mark={value} value={value.replace(/['+']/, '')} />
       },
       {
         title: '开仓均价',
@@ -93,11 +91,12 @@ export default class Position extends Component {
       {
         title: '持仓占用保证金',
         dataIndex: 'positionMoneyShow',
-        render: (v) => {
+        width: 200,
+        render: (v, record) => {
           return (
             <div className={styles.changepositionMoney} >
               <div onClick={() => {
-                openModal()
+                openModal(record.market)
                 changeState({
                   active: 1
                 })
@@ -107,11 +106,10 @@ export default class Position extends Component {
               </div >
               <div className={styles.positionMoney} >{v}</div >
               <div onClick={() => {
-                openModal()
+                openModal(record.market)
                 changeState({
                   active: 0
                 })
-
               }} >
                 <img src={add} />
               </div >
@@ -121,6 +119,7 @@ export default class Position extends Component {
       },
       {
         title: '维持保证金',
+        width: 200,
         dataIndex: 'keepMoneyShow',
         //render: (v) => formatNumber(v, 10)
       },
@@ -132,24 +131,29 @@ export default class Position extends Component {
       {
         title: '浮动盈亏(收益率)',
         dataIndex: 'floatProfitShow',
-        width: 250,
+        width: 200,
         render: (value, record = {}) => {
-          const v = `${value}(${record.profitRate})`
-          return Number(record.floatProfit) >= 0 ? (
-            <RedGreenSwitch.GreenText value={v} />
-          ) : (
-            <RedGreenSwitch.RedText value={v} />
+          const v = record.profitRate
+          const format = <RedGreenSwitch.MarkText value={v}  />
+          return (
+            <>
+              <RedGreenSwitch.MarkText value={value} />
+
+              <span style={{ marginLeft: 5 }} >({format})</span >
+            </>
           )
         }
       },
       {
         title: '操作',
         width: 280,
-        dataIndex: 'overPrice',
+        dataIndex: 'overPriceShow',
         render: (value, record = {}, index) => {
           return {
             value: (
-              <div >
+              <div className={classNames(
+                // record.allowFullClose ? null : styles.gray
+              )} >
                 <input className={styles.input} value={record.inputValue || ''} onChange={(e) => {
                   if (Patterns.decimalNumber.test(e.target.value) || e.target.value === '') {
                     dispatch({
@@ -164,18 +168,18 @@ export default class Position extends Component {
                 <span onClick={() => {
                   if (!record.inputValue) return Toast.tip('请填写价格')
                   postOrder({
-                    method: 'order.put_limit',
                     price: record.inputValue,
-                    amount: record.amount
+                    market: record.market,
                   })
                 }} >
-                  <Button layer={false} loading={false} loadingMargin='0 0 0 2px' >限价全平</Button >
+                  <Button layer={false} loading={false} loadingMargin='0 0 0 2px' >
+                    限价全平
+                  </Button >
                 </span >
                 <span onClick={() => {
                   postOrder({
-                    method: 'order.put_market',
-                    price: '',
-                    amount: record.amount
+                    price: undefined,
+                    market: record.market,
                   })
                 }} >
                   <ToolTip >市价全平</ToolTip >
@@ -219,7 +223,8 @@ export default class Position extends Component {
           </ScrollPannel >
         </div >
         {
-          name === 'positionMoney' ? (<RenderModal {...this.props} {...this.state} changeState={changeState} />) : null
+          name === 'positionMoney' ? (
+            <RenderModal {...this} {...this.props} {...this.state} changeState={changeState} data={data} />) : null
         }
       </Mixin.Child >
     )
@@ -227,17 +232,21 @@ export default class Position extends Component {
 }
 
 class RenderModal extends Component {
+  constructor(props) {
+    super(props)
+  }
 
   componentDidMount() {
     this.calculatePositionEnsureMoney()
   }
 
-  calculatePositionEnsureMoney = (value = '') => {
-    const { dispatch, modelName } = this.props
+  calculatePositionEnsureMoney = (value) => {
+    const { dispatch, modelName, data } = this.props
     dispatch({
       type: `${modelName}/calculatePositionEnsureMoney`,
       payload: {
-        marginChange: value
+        marginChange: value,
+        market: data
       }
     }).then((res) => {
       if (res) {
@@ -253,7 +262,7 @@ class RenderModal extends Component {
 
 
   state = {
-    inputValue: '0',
+    inputValue: '',
     dealCurrency: '',
     increase: {},
     reduce: {}
@@ -270,10 +279,11 @@ class RenderModal extends Component {
     }
     const { changeState: changeStateInModal, calculatePositionEnsureMoney } = this
     const { inputValue, dealCurrency = '', increase = {}, reduce = {} } = this.state
-    const { changeState, active, dispatch, modelName, loading, closeModal } = this.props
+    const { changeState, active, dispatch, modelName, loading, closeModal, getPosition, data } = this.props
+
 
     const currentObj = active === 0 ? increase : reduce
-    const { maxChange = '', overPrice = '' } = currentObj || {}
+    const { maxChange = '', liquidationPrice: overPrice = '' } = currentObj || {}
     return (
       <MainModal {...props} className={styles.position_modal} >
         <div className={styles.header} >
@@ -310,25 +320,27 @@ class RenderModal extends Component {
           <div className={styles.input} >
             <div className={styles.edit} >
               {editIcon}
-              <input value={formatNumber(inputValue, 'p')} onChange={
-                _.throttle((e) => {
-                  const value = e.target.value
-                  changeStateInModal({
-                    inputValue: value
-                  })
-                  calculatePositionEnsureMoney(value)
-                }, 10)
+              <input autoFocus value={inputValue} onChange={
+                (e) => {
+                  const value = _.get(e, 'target.value')
+                  if (Patterns.decimalNumber4.test(value) || value === '') {
+                    changeStateInModal({
+                      inputValue: value.replace(/。/, '')
+                    })
+                    calculatePositionEnsureMoney(value)
+                  }
+                }
               } />
-              <div >BTC</div >
+              <div >{dealCurrency}</div >
             </div >
           </div >
           <ul className={styles.desc} >
             <li >
               最多{active === 0 ? '增加' : '减少'} :
-              <div >{`${maxChange}${dealCurrency}`}</div >
+              <div >{`${maxChange}`}</div >
             </li >
-            <li >追加后的强平价格为 :
-              <div >{`${overPrice}${dealCurrency}`}</div >
+            <li >{active === 0 ? '追加' : '减少'}后的强平价格为 :
+              <div >{`${overPrice}`}</div >
             </li >
           </ul >
         </div >
@@ -343,13 +355,16 @@ class RenderModal extends Component {
           <div
             className={styles.confirm}
             onClick={() => {
+              if (!Math.abs(inputValue)) return
               dispatch({
                 type: `${modelName}/doUpdatePositionEnsureMoney`,
                 payload: {
+                  market: data,
                   assetName: dealCurrency,
                   assetChange: active === 1 ? `-${inputValue}` : inputValue
                 }
               }).then((res) => {
+                getPosition()
                 if (res) {
                   closeModal()
                 }

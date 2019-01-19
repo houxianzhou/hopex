@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { COLORS } from '@constants'
-import { Mixin, Slider, Toast } from "@components"
+import { Mixin, Slider, Toast, Button } from "@components"
 import { classNames, getPercent, _, dealInterval } from '@utils'
 import grayangle from '@assets/grayangle.png'
 import activeangle from '@assets/activeangle.png'
 import MainModal from '@routes/Components/MainModal'
+import ColorStack from '@routes/Components/ColorStack'
 import ScrollPannel from './components/ScrollPanel'
 import styles from './index.less'
 
@@ -20,20 +21,16 @@ export default class CurrentContract extends Component {
     dispatch({
       type: `${modelName}/getLeverage`
     }).then(res => {
-      if (!this._isMounted) return
+      if (!this._isMounted || this.interval) return
       this.interval = dealInterval(() => {
+        this.interval = null
         this.getLeverage()
       })
     })
   }
 
   render() {
-    const { model: { marketName, leverage, leverageIsModify = false }, modal: { name }, isLogin, openModal } = this.props
-
-    const colors = [
-      '#52AA64', '#52AA64', '#8CB152', '#8CB152', '#CABA70', '#CABA70', '#D69555', '#D69555', '#D47D5A', ' #D47D5A'
-    ]
-
+    const { model: { marketName, leverage, leverageIsModify = false }, modal: { name }, isLogin, openModal, } = this.props
     return (
       <Mixin.Child that={this} >
         <div
@@ -80,16 +77,10 @@ export default class CurrentContract extends Component {
               </div >
               <div className={styles.down} >
                 <div >自动减仓列队</div >
-                <ul >
-                  {
-                    colors.map((item, index) => (
-                      <li key={index} style={{
-                        background: isLogin ? item : null,
-                        border: isLogin ? null : '1px solid #3E4555'
-                      }} />
-                    ))
-                  }
-                </ul >
+                <ColorStack getStyle={(item) => ({
+                  background: isLogin ? item : null,
+                  border: isLogin ? null : '1px solid #3E4555'
+                })} />
               </div >
             </div >
           </ScrollPannel >
@@ -109,20 +100,32 @@ class RenderModal extends Component {
 
   render() {
     const props = {
+      modalProps: {
+        style: {
+          width: 800,
+        },
+      },
       ...this.props,
       title: '设置杠杆倍数'
     }
 
-    const { model: { leverages = [], keepBailRate, leverage, }, getLeverage, dispatch, modelName, closeModal } = this.props
+    let { model: { leverages = [], keepBailRate, leverage, }, getLeverage, dispatch, modelName, closeModal, loading } = this.props
     const { currentValue } = this.state
-    const marks = leverages.reduce((sum, next = {}) => {
+    leverages = _.orderBy(leverages, (item = {}) => Number(item.leverage))
+    let maxLeverge = leverages[leverages.length - 1] || {}
+
+    let marks = leverages.reduce((sum, next = {}, index) => {
+      const avarageLeverge = maxLeverge.leverage / ((leverages.length - 1) || 1)
       const leverage = next.leverage
-      sum[leverage] = String(leverage)
+      sum[Number(avarageLeverge * index)] = String(leverage)
       return sum
     }, {})
+
     const marksProps = {
-      marks,
-      defaultValue: leverage,
+      marks: {
+        ...marks,
+      },
+      defaultValue: Number(_.get(_.invert(marks),leverage)),
       min: _.min(_.keys(marks).map(item => Number(item))) || 0,
       max: _.max(_.keys(marks).map(item => Number(item))) || 0,
       included: false,
@@ -143,11 +146,12 @@ class RenderModal extends Component {
         width: '20px',
         height: '20px',
         border: 'solid 6px white',
+        boxShadow: '1px 1px 10px #CCCCCC',
         backgroundColor: COLORS.yellow
       },
       onChange: (v) => {
         this.setState({
-          currentValue: v
+          currentValue: marks[v]
         })
       }
     }
@@ -161,7 +165,9 @@ class RenderModal extends Component {
             <div className={styles.number} >{leverage}<span >倍</span ></div >
           </div >
           <div className={styles.middle} >
-            <Slider {...marksProps} />
+            {
+              !_.isEmpty(marks) ? <Slider {...marksProps} /> : null
+            }
           </div >
           <div className={styles.down} >
             <ul >
@@ -171,14 +177,16 @@ class RenderModal extends Component {
                 <div >维持保证金率</div >
               </li >
               {
-                _.orderBy(leverages, (item = {}) => item.leverage).map((item, index) => {
+                leverages.map((item, index) => {
                   const isMatch = (item = {}) => {
                     return currentValue && Number(currentValue) !== Number(leverage) && Number(item.leverage) === Number(currentValue)
                   }
                   return (
-                    <li key={index + 1} className={classNames(
-                      isMatch(item) ? styles.ismatch : null
-                    )} >
+                    <li key={index + 1}
+                        style={{ width: 630 / leverages.length }}
+                        className={classNames(
+                          isMatch(item) ? styles.ismatch : null
+                        )} >
                       {
                         Number(item.leverage) === Number(leverage) ? (
                           <div className={styles.symbol} >
@@ -199,9 +207,9 @@ class RenderModal extends Component {
                           </div >
                         ) : null
                       }
-                      <div >{item.leverage}</div >
-                      <div >{getPercent(Number(1), Number(item.leverage))}</div >
-                      <div >{keepBailRate}</div >
+                      <div className={styles.needli} >{item.leverage}</div >
+                      <div className={styles.needli} >{item.initialMarginRateDisplay}</div >
+                      <div className={styles.needli} >{keepBailRate}</div >
                     </li >
                   )
                 })
@@ -240,7 +248,9 @@ class RenderModal extends Component {
               })
             }}
           >
-            确定
+            <Button loading={loading.effects[`${modelName}/doUpdateLeverage`]} layer={false} >
+              确定
+            </Button >
           </div >
         </div >
       </MainModal >

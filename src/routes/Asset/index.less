@@ -1,0 +1,318 @@
+@import '~@styles/index.less';
+@import '~@routes/Components/common.less';
+@import '~@routes/Components/SuperVertifyForm.less';
+
+:global(.supervertifyform) {
+  padding: 0;
+}
+
+:global {
+  .googlecodevertify {
+    .input {
+      width: 400px;
+    }
+  }
+}
+
+.buy {
+  .Input_Title_Button_Select();
+  .desc {
+    height: 72px;
+    min-height: 72px;
+  }
+
+  .page1 {
+    .title {
+      margin-bottom: 13px;
+    }
+    .userinput {
+      .maxwidthdrawcontainer {
+        margin: 0;
+        .maxwidthdraw {
+          width: 400px;
+          margin-bottom: 26px;
+          justify-content: space-between;
+          display: flex;
+          .sellall {
+            cursor: pointer;
+            color: @c_active_yellow;
+          }
+        }
+      }
+
+      .input {
+        width: 400px;
+
+      }
+      .exchange {
+        margin-left: 10px;
+      }
+    }
+  }
+  .tableheader {
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #EBEBEB;
+    span {
+      color: @c_active_yellow;
+    }
+  }
+  :global {
+    .table {
+      color: black;
+      :global {
+        .tbody {
+          .tr {
+            height: @header2;
+            &:hover {
+              background: @tr_hover !important;
+            }
+            &.even {
+              background: #F6F8FA;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.assetrecord {
+  .Input_Title_Button_Select();
+  .tablec {
+    margin-top: 40px;
+  }
+  :global {
+    .table {
+      color: black;
+      :global {
+        .td {
+
+        }
+        .thead {
+          .tr {
+            color: #999999;
+            height: @header2;
+          }
+          font-size: 12px;
+        }
+        .tbody {
+          font-size: 13px;
+          .tr {
+            height: @header2;
+            &:hover {
+              background: @tr_hover !important;
+            }
+            &.even {
+              background: #F6F8FA;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.withdraw {
+  font-size: 14px;
+  .Input_Title_Button_Select();
+  .notpermit {
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    width: 130px;
+    font-size: 14px;
+    color: #F54B22;
+    background: rgba(245, 75, 34, 0.10);
+  }
+  .moneytype {
+    margin-bottom: 30px;
+  }
+
+  .calcu {
+    width: 600px;
+    .getall, .fact {
+      color: @c_active_yellow;
+    }
+    .button {
+      margin-top: 50px;
+      margin-bottom: 98px;
+    }
+    .notenougth {
+      margin-top: 10px;
+      color: #F54B22;
+      width: 100%;
+    }
+    > div {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 14px;
+      > div {
+        display: flex;
+      }
+    }
+  }
+
+  .page2 {
+    .title {
+      margin-bottom: 56px;
+    }
+    .email {
+      color: black;
+    }
+    .calcu {
+      .button {
+        margin-top: 0;
+
+      }
+    }
+  }
+}
+
+.deposit {
+  font-size: 14px;
+  .Input_Title_Button_Select();
+  .address {
+    margin-bottom: 20px;
+  }
+  .letter {
+    margin-bottom: 30px;
+    display: flex;
+    color: @c_black;
+    > div {
+      margin-left: 30px;
+      color: @c_active_yellow;
+    }
+  }
+  .img {
+    margin-bottom: 70px;
+    img {
+      max-width: 160px;
+    }
+  }
+}
+
+.purseDetail {
+  font-size: 14px;
+  width: 100%;
+  height: 100%;
+  background: #F5F5F5;
+  .header {
+    width: 100%;
+    display: flex;
+    li + li {
+      margin-left: 11px;
+    }
+    li {
+      border-radius: 4px;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      .left {
+        margin-right: 30px;
+      }
+      .right {
+        .title {
+          color: #999999;
+        }
+        .value {
+          color: black;
+          font-size: 22px;
+          margin: 10px 0 6px;
+        }
+      }
+      height: 110px;
+      width: 33.3%;
+      background: white;
+    }
+  }
+  .bottom {
+    padding: 40px;
+    margin-top: 10px;
+    background: white;
+    .title {
+      margin-bottom: 40px;
+      color: @c_active_yellow;
+      font-size: 16px;
+    }
+    .lis {
+      ul {
+        &.tableheader{
+          background: unset !important;
+          height:unset;
+          margin-bottom: 20px;
+        }
+        &:nth-child(2n) {
+          background: #F6F8FA;
+        }
+        height: 80px;
+        display: flex;
+        li {
+          color: #999999;
+          &:first-of-type {
+            margin-left: 30px;
+          }
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          align-content: center;
+          width: 25%;
+          span {
+            font-size: 18px;
+            color: @c_black;
+          }
+          > div {
+            margin-top: 4px;
+            width: 100%;
+          }
+
+        }
+      }
+    }
+  }
+}
+
+.googleCodeVertify_modal {
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  background: white;
+  .googleCodeVertify {
+    ul {
+      li {
+        > div:nth-child(2n) {
+          width: 500px;
+        }
+      }
+    }
+  }
+}
+
+.idCardVertify_modal {
+  background: white;
+  padding-top: 50px;
+}
+
+.googleCodeOpen_Modal {
+  background: white;
+  .content {
+    font-size: 14px;
+    color: @c_black;
+    display: flex;
+    justify-content: center;
+    padding: 70px;
+  }
+  .buttons {
+    border: none !important;
+    border-top: 1px solid #EBEBEB !important;
+  }
+  .cancel {
+    color: #999999;
+  }
+  .confirm {
+    border-left: 1px solid #EBEBEB !important;
+  }
+}

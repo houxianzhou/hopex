@@ -10,19 +10,37 @@ export const Tabs = [
     name: '最近10条委托历史',
     type: '1'
   },
-  // {
-  //   name: '最近10条交割历史',
-  //   type: '3'
-  // },
   {
     name: '最近10条强平历史',
-    type: '4'
+    type: '6'
   },
   {
     name: '最近10条自动减仓历史',
-    type: '5'
+    type: '7'
   }
 ]
+
+export const getTabs = (isTen = true) => {
+  const symbo = isTen ? '10条' : ''
+
+  const Tabs = [
+    {
+      name: `最近${symbo}委托历史`,
+      type: '1'
+    },
+    {
+      name: `最近${symbo}强平历史`,
+      type: '6'
+    },
+    {
+      name: `最近${symbo}自动减仓历史`,
+      type: '7'
+    }
+  ]
+
+  return Tabs
+
+}
 
 export const getColumns = (props = {}) => {
   const { dispatch, modelName, columns = [] } = props
@@ -53,11 +71,7 @@ export const getColumns = (props = {}) => {
     {
       title: '数量(张)',
       dataIndex: 'amount',
-      render: (value, record = {}) => String(record.side) === '1' ? (
-        <RedGreenSwitch.RedText value={value} />
-      ) : (
-        <RedGreenSwitch.GreenText value={value} />
-      )
+      render: (value, record = {}) => <RedGreenSwitch.MarkText mark={value} value={value.replace(/['+']/, '')} />
     },
     {
       title: '委托价格',
@@ -66,6 +80,7 @@ export const getColumns = (props = {}) => {
     {
       title: '成交数量(张)',
       dataIndex: 'dealAmount',
+      render: (value) => <RedGreenSwitch.MarkText mark={''} value={value.replace(/['+']/, '')} />
     },
     {
       title: '成交均价',
@@ -114,7 +129,7 @@ export const getColumns = (props = {}) => {
                 <span onClick={(e) => {
                   e.stopPropagation()
                   dispatch({
-                    type: `${modelName}/getPersonEnsureDetail`,
+                    type: `${modelName}/getOrderDetail`,
                     payload: {
                       type: '1',
                       market: record.market,
@@ -190,7 +205,9 @@ export class RenderModal extends Component {
       {
         title: '成交数量(张)',
         dataIndex: 'amount',
-        // maxWidth: 200,
+        render: (value, record) => (
+          <RedGreenSwitch.MarkText mark={''} value={value.replace(/['+']/, '')} />
+        )
       },
       {
         title: '成交价格',

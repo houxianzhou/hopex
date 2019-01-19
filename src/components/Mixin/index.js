@@ -52,6 +52,12 @@ export class MixinChild extends React.Component {
     super(props)
     const { that = {} } = this.props
     that._isMounted = true
+    that.shouldComponentUpdate = ((nextProps, nextState) => {
+      if (_.isEqual(nextProps, that.props) && _.isEqual(nextState, that.state)) {
+        return false
+      }
+      return true
+    })
     that.changeState = (payload = {}, callback) => {
       if (that._isMounted) {
         that.setState(payload, () => {
@@ -59,45 +65,28 @@ export class MixinChild extends React.Component {
         })
       }
     }
-    // if (!that.props.that.childInitStacks) that.props.that.childInitStacks = []
   }
+
 
   componentDidMount() {
     this.startInit()
   }
 
   componentWillUnmount() {
-    this.props.that._isMounted=false
-    // this.startUnMount()
+    this.props.that._isMounted = false
   }
 
   startInit = () => {
     const { that = {} } = this.props
-    const [startInit, childInitStacks] = [_.get(that, 'startInit'), _.get(that, 'props.that.childInitStacks')]
+    const [startInit, childInitStacks] = [
+      _.get(that, 'startInit'),
+      _.get(that, 'props.that.childInitStacks')
+    ]
     if (_.isFunction(startInit) && _.isArray(childInitStacks)) {
       childInitStacks.push(() => {
         startInit()
       })
     }
-  }
-
-  startUnMount = () => {
-    const { that = {} } = this.props
-    that._isMounted = false
-    // return Promise.resolve()
-    // if (that.interval) {
-    //   return new Promise((resolve) => {
-    //     if (_.isArray(that.interval)) {
-    //       that.interval.map(item => clearTimeout(item))
-    //     } else {
-    //       clearTimeout(that.interval)
-    //     }
-    //     that.interval = null
-    //     resolve()
-    //   })
-    // } else {
-    //   return Promise.resolve()
-    // }
   }
 
   render() {

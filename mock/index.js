@@ -11,42 +11,64 @@ const other = {
   "ret": "0"
 }
 
+const users_vertify = {
+  "idCard": {
+    "realName": "",
+    "idCardNo": "",
+    "name": "实名认证",
+    "code": "IdCard",
+    "verified": false
+  },
+  "bank": {
+    "idCardVerified": false,
+    "owner": "",
+    "bankNo": "",
+    "bankName": "",
+    "name": "银行卡",
+    "code": "Bank",
+    "verified": false
+  }
+}
+
+
 export default delay({
   // 合约列表
-  'Post /mock/api/v1/quote/market.detail_list': (req, res) => {
+  'Get /mock/api/v1/gateway/Home/Contracts': (req, res) => {
     res.send({
       "data": [{
         "name": "BTC",
         "list": [{
-          "price24h": "6600.00",
-          "priceLast": "6600.0",
-          "direction": -1,
-          "marketCode": "BTCUSDT",
-          "marketName": "BTCUSDT永续",
+          minPriceMovementPrecision: 6,
+          "priceLast": "+6700.0",
+          "direction": 0,
+          "contractCode": "BTCUSDT",
+          "contractName": "BTCUSDT永续",
           "percent": "0.00%",
-          "dollarPrice": "$6600.00",
+          "dollarPrice": "$6700.00",
           "totalPrice24h": "0BTC",
-          "position": false,
+          "position": true,
           "pause": false
         }]
       }, {
         "name": "ETH",
         "list": [{
-          "marketCode": "ETHBTC",
-          "marketName": "ETHBTC永续",
-          "price24h": "",
-          "priceLast": "",
+          minPriceMovementPrecision: 2,
+          "priceLast": "0.0",
+          "direction": 0,
+          "contractCode": "ETHBTC",
+          "contractName": "ETHBTC永续",
           "percent": "",
-          "dollarPrice": "",
+          "dollarPrice": "$0.00",
+          "totalPrice24h": "",
           "position": false,
           "pause": true
         }, {
-          "price24h": "270.00000",
-          "priceLast": "270.0",
-          "direction": -1,
-          "marketCode": "ETHUSDT",
-          "marketName": "ETHUSDT永续",
-          "percent": "0.00%",
+          minPriceMovementPrecision: 2,
+          "priceLast": "+270.0",
+          "direction": 0,
+          "contractCode": "ETHUSDT",
+          "contractName": "ETHUSDT永续",
+          "percent": "-8.00%",
           "dollarPrice": "$270.00",
           "totalPrice24h": "0ETH",
           "position": false,
@@ -55,109 +77,45 @@ export default delay({
       }, {
         "name": "XRP",
         "list": [{
-          "price24h": "0.00006780",
-          "priceLast": "0.0000678",
-          "direction": 1,
-          "marketCode": "XRPBTC",
-          "marketName": "XRPBTC永续",
+          minPriceMovementPrecision: 3,
+          "priceLast": "0",
+          "direction": 0,
+          "contractCode": "XRPUSDT",
+          "contractName": "XRPUSDT永续",
+          "percent": "",
+          "dollarPrice": "$0.00",
+          "totalPrice24h": "",
+          "position": false,
+          "pause": true
+        }, {
+          minPriceMovementPrecision: 4,
+          "priceLast": "0",
+          "direction": 0,
+          "contractCode": "XRPETH",
+          "contractName": "XRPETH永续",
+          "percent": "",
+          "dollarPrice": "$0.00",
+          "totalPrice24h": "",
+          "position": false,
+          "pause": true
+        }, {
+          minPriceMovementPrecision: 5,
+          "priceLast": "+0.0000678",
+          "direction": 0,
+          "contractCode": "XRPBTC",
+          "contractName": "XRPBTC永续",
           "percent": "0.00%",
           "dollarPrice": "$0.44",
           "totalPrice24h": "0BTC",
           "position": false,
           "pause": false
-        }, {
-          "marketCode": "XRPETH",
-          "marketName": "XRPETH永续",
-          "price24h": "",
-          "priceLast": "",
-          "percent": "",
-          "dollarPrice": "",
-          "position": false,
-          "pause": true
-        }, {
-          "marketCode": "XRPUSDT",
-          "marketName": "XRPUSDT永续",
-          "price24h": "",
-          "priceLast": "",
-          "percent": "",
-          "dollarPrice": "",
-          "position": false,
-          "pause": false
         }]
-      }, {
-        "name": "EOS",
-        "list": [{
-          "price24h": "0.017500",
-          "priceLast": "0.01750",
-          "direction": 1,
-          "marketCode": "EOSETH",
-          "marketName": "EOSETH永续",
-          "percent": "0.00%",
-          "dollarPrice": "$7.89",
-          "totalPrice24h": "0ETH",
-          "position": false,
-          "pause": false
-        }, {
-          "price24h": "0.0007501",
-          "priceLast": "0.0007501",
-          "direction": 1,
-          "marketCode": "EOSBTC",
-          "marketName": "EOSBTC永续",
-          "percent": "0.00%",
-          "dollarPrice": "$5.02",
-          "totalPrice24h": "0BTC",
-          "position": false,
-          "pause": true
-        }]
-      }, {
-        "name": "LTC",
-        "list": [{
-          "price24h": "0.008580",
-          "priceLast": "0.00858",
-          "direction": 1,
-          "marketCode": "LTCBTC",
-          "marketName": "LTCBTC永续",
-          "percent": "0.00%",
-          "dollarPrice": "$54.77",
-          "totalPrice24h": "0BTC",
-          "position": false,
-          "pause": false
-        }]
-      }, {
-        "name": "BCH",
-        "list": [{
-          "marketCode": "BCHUSDT",
-          "marketName": "BCHUSDT永续",
-          "price24h": "",
-          "priceLast": "",
-          "percent": "",
-          "dollarPrice": "",
-          "position": false,
-          "pause": true
-        }, {
-          "marketCode": "BCHBTC",
-          "marketName": "BCHBTC永续",
-          "price24h": "",
-          "priceLast": "",
-          "percent": "",
-          "dollarPrice": "",
-          "position": false,
-          "pause": false
-        }, {
-          "marketCode": "BCHETH",
-          "marketName": "BCHETH永续",
-          "price24h": "",
-          "priceLast": "",
-          "percent": "",
-          "dollarPrice": "",
-          "position": false,
-          "pause": false
-        }]
-      }], "ret": "0", "errCode": "0", "errStr": "success"
+      }], "ret": 0, "errCode": "", "errStr": ""
     })
   },
   //最新成交
-  'Post /mock/api/v1/quote/contract.deals': (req, res) => {
+  'Get /mock/api/v1/gateway/Home/GetDeals': (req, res) => {
+    // res.send(401)
     res.send({
       "head": {
         "method": "market.deals",
@@ -189,7 +147,7 @@ export default delay({
     })
   },
   //委托列表
-  'Post /mock/api/v1/quote/contract.order_book': (req, res) => {
+  'Post /mock/api/v1/gateway/OrderBook/Index': (req, res) => {
     res.send({
       "head": {
         "method": "contract.order_book",
@@ -207,16 +165,18 @@ export default delay({
           const res = _.random(10000, 20000)
           return {
             "exist": ['0', '1'][_.random(0, 1)],
-            "orderPrice": index + 10 + _.random(10, 20),
+            "orderPrice": index * 100 + 10000 + _.random(1, 20),
             "orderQuantityShow": res,//randomStr()
             "orderQuantity": res,//randomStr()
           }
         }),
+        asksFilter: "20116.0",
+        bidsFilter: "10",
         "bids": randomArrayMap(5).map((item, index) => {
           const res = _.random(10000, 20000)
           return {
             "exist": ['0', '1'][_.random(0, 1)],
-            "orderPrice": index + 10 + _.random(10, 20),
+            "orderPrice": index * 80 + 8000 + _.random(1, 20),
             "orderQuantityShow": res,//randomStr()
             "orderQuantity": res,//randomStr()
           }
@@ -225,71 +185,57 @@ export default delay({
       ...other
     })
   },
-  //用户的委托列表
-  'Post /mock/api/v1/trade/user.active_delegate': (req, res) => {
-    const { pageIndex, pageSize } = _.get(req.body, 'param')
+
+  //委托区间
+  'Get /mock/api/v1/gateway/OrderBook/Intervals': (req, res) => {
     res.send({
-      "head": {
-        "method": "user.active_delegate",
-        "userId": "3",
-        "userToken": "user.QC5LTHR6HOUZINUCE4YI.web",
-        "lang": "cn",
-        "request": "request",
-        "packType": "1",
-        "version": "1.0",
-        "timestamps": "1532175227023967",
-        "serialNumber": "49",
-        "msgType": "response"
-      },
-      "data": (new Array(Number(3))).fill({}).map((item, index) => ({
-        "orderId": String(index),
-        "marketName": 'BTCUSDT永续',
-        "market": "BTCUSDT" + '第' + pageIndex + '页',
-        "source": "我是现价测试单",
-        "type": _.random('1', '2'),
-        "side": _.random('1', '2'),
-        "userId": "3",
-        "ctime": "20:18:12",
-        "mtime": "20:18:12",
-        "price": "6",
-        "amount": _.random('5', '-5'),
-        "taker_fee": "0.01",
-        "maker_fee": "0.01",
-        "left": "2",
-        "deal_stock": "0",
-        "deal_money": "0",
-        "deal_fee": "0",
-        "takerFee": "0.01",
-        "makerFee": "0.01",
-        "dealAmount": "0",
-        "dealMoney": "0",
-        "dealFee": "0",
-        "orderStatus": ['1', '2', '3'][_.random(0, 3)],
-        "leverage": "10",
-        "avgDealMoney": "0",
-        "delegateMoney": "0.006"
-      })),
-      ...other
+      "data": {
+        "contractCode": "BTCUSDT",
+        "contractName": "BTCUSDT永续",
+        "intervals": ["0.5", "5", "10", "50"]
+      }, "ret": 0, "errCode": "", "errStr": ""
+    })
+  },
+  //用户的委托列表
+  'Get /mock/api/v1/gateway/User/OpenOrders': (req, res) => {
+    res.send({
+      "data": (new Array(3)).fill().map(item => (
+        {
+          "orderId": 870,
+          "contractCode": "BTCUSDT",
+          "contractName": "BTCUSDT永续",
+          "type": "1",
+          "side": "2",
+          "sideDisplay": "买入",
+          "ctime": "2018-09-03 10:18:02",
+          "mtime": "2018-09-03 10:18:02",
+          "orderQuantity": ["+", "-"][_.random(0, 1)] + _.random(1, 10),
+          "leftQuantity": "1",
+          "fillQuantity": "0",
+          "orderStatus": ['1', '2', '3'][_.random(0, 3)],
+          "orderStatusDisplay": "等待成交",
+          "orderPrice": "0.5",
+          "leverage": "20.00",
+          "fee": "0.0000BTC",
+          "avgFillMoney": "0.00",
+          "orderMargin": "0.0000BTC"
+        }
+      )),
+      "ret": 0, "errCode": "", "errStr": ""
     })
   },
   //用户的委托明细
-  'Post /mock/api/v1/trade/order.deals': (req, res) => {
-
+  'Get /mock/api/v1/gateway/User/OrderDeals': (req, res) => {
     res.send({
-      "data": {
-        "total": "0",
-        "records": (new Array(20)).fill().map(item => (
-          {
-            "time": "2018-08-02 17:49:27",
-            "role": "2",
-            "price": "222",
-            "amount": "11",
-            "fee": "0.0004954954954955"
-          }
-        )),
-        "pageIndex": "0",
-        "pageSize": "100"
-      },
+      "data": (new Array(20)).fill().map(item => (
+        {
+          "time": "2018-08-02 17:49:27",
+          "role": "2",
+          "fillPrice": "222",
+          "fillQuantity": `${['+', '-'][_.random(0, 1)]}11`,
+          "fee": "0.0004954954954955"
+        }
+      )),
       "head": {
         "method": "order.deals",
         "userId": "3",
@@ -305,7 +251,7 @@ export default delay({
     })
   },
   //用户持仓
-  'Post /mock/api/v1/trade/user.position': (req, res) => {
+  'Get /mock/api/v1/gateway/User/Positions': (req, res) => {
     res.send({
       "head": {
         "method": "user.position",
@@ -318,69 +264,44 @@ export default delay({
         "userId": "56",
         "userToken": "56"
       },
-      "data": {
-        "positionList": (new Array(5)).fill().map((item, index) => {
-          const arryas = ['BTC', 'USDT', 'EOC', 'w', 'b']
-          return {
-            amount: "-1227304",
-            averagePrice: _.random(10, 50) + '',
-            averagePriceShow: "234.75",
-            floatProfit: "-5035.2689034148",
-            floatProfitShow: "-5035.2689BTC",
-            keepMoney: "29.8839175526",
-            keepMoneyShow: "29.8839BTC",
-            lastPrice: "6000.0",
-            lastPriceShow: "6000.0",
-            leverage: "20.00",
-            market: arryas[index],
-            marketName: `${arryas[index]}永续`,
-            overPrice: "245.8305757134",
-            overPriceShow: "245.83",
-            positionMoney: "265.3165163631",
-            positionMoneyShow: "265.3165BTC",
-            profitRate: "-1897.83%",
-            reasonablePrice: "6370.8808454090",
-            reasonablePriceShow: _.random(10, 50) + '',
-          }
-        }),
-      },
+      "data": (new Array(3)).fill().map((item, index) => {
+        const arryas = ['BTC', 'USDT', 'EOC', 'w', 'b']
+        return {
+          "allowFullClose": false,
+          "contractCode": arryas[index],
+          "contractName": "BTCUSDT永续",
+          "leverage": "20.00",
+          "contractValue": "1",
+          "maintMarginRate": "0.005",
+          "takerFee": "0.00075",
+          "positionQuantity": ["+", "-"][_.random(0, 1)] + _.random(10, 100),
+          "entryPrice": "6602.70",
+          "positionMargin": "0.0000BTC",
+          "liquidationPrice": "6564.77",
+          "maintMargin": "-1403.6722BTC",
+          "unrealisedPnl": ["+", "-"][_.random(0, 1)] + _.random(100, 1000) + 'BTC',
+          "unrealisedPnlPcnt": ["+", "-"][_.random(0, 1)] + _.random(100, 1000) + '%',
+          "fairPrice": "6713.2",
+          "lastPrice": "6713.2"
+        }
+      }),
       ...other
     })
   },
 
   //查询持仓占用保证金
-  'Post /mock/api/v1/trade/user.append_position_margin_query': (req, res) => {
+  'Get /mock/api/v1/gateway/User/AppendPositionMarginQuery': (req, res) => {
     res.send({
-      "head": {
-        "method": "user.append_position_margin_query",
-        "userId": "3",
-        "userToken": "user.QC5LTHR6HOUZINUCE4YI.pcweb",
-        "lang": "cn",
-        "packType": "1",
-        "version": "1.0",
-        "msgType": "response",
-        "timestamps": "1534259459422383",
-        "serialNumber": "1369"
-      },
       "data": {
-        "increase": {
-          "maxChange": "-97880319.9709580707",
-          "overPrice": "245.9290217635"
-        },
-        "reduce": {
-          "maxChange": "0.0000000000",
-          "overPrice": "245.9290217635"
-        },
+        "increase": { "maxChange": "7.9987BTC", "liquidationPrice": "1000000.00" },
+        "reduce": { "maxChange": "2.0000BTC", "liquidationPrice": "1000000.00" },
         "dealcurrency": "BTC"
-      },
-      "errCode": "0",
-      "errStr": "success",
-      "ret": "0"
+      }, "ret": 0, "errCode": "", "errStr": ""
     })
   },
 
   //更新持仓占用保证金
-  'Post /mock/api/v1/trade/position_margin_update': (req, res) => {
+  'Post /mock/api/v1/gateway/User/UpdatePositionMargin': (req, res) => {
     res.send({
       "head": {
         "method": "position_margin_update",
@@ -399,7 +320,7 @@ export default delay({
     })
   },
   //用户撤单
-  'Post /mock/api/v1/trade/order.cancel': (req, res) => {
+  'Get /mock/api/v1/gateway/User/CancelOrder': (req, res) => {
     res.send({
       "head": {
         "method": "order.cancel",
@@ -434,46 +355,22 @@ export default delay({
   },
 
   // 查询用户杠杆
-  'Post /mock/api/v1/trade/market.leverage_select': (req, res) => {
+  'Get /mock/api/v1/gateway/Trade/GetLeverageSetting': (req, res) => {
     res.send({
-      "ret": "0",
-      "errCode": "0",
-      "errStr": "Success",
       "data": {
-        "leverage": 10.0,
-        "isModify": true,
+        "leverage": 10.0000 + '',
+        "editable": true,
         "varyRange": "0.5 5 10 50",
-        "leverages": [{
-          "id": 1,
-          "settingId": 1,
-          "initialMarginRate": 10.0,
-          "leverage": 10.0,
-          "createdTime": "2018-07-17 18:39:28",
-          "creator": 1
-        }, {
-          "id": 2,
-          "settingId": 1,
-          "initialMarginRate": 20.0,
-          "leverage": 5.0,
-          "createdTime": "2018-07-17 18:39:28",
-          "creator": 1
-        }, {
-          "id": 3,
-          "settingId": 1,
-          "initialMarginRate": 5.0,
-          "leverage": 20.0,
-          "createdTime": "2018-07-17 18:39:28",
-          "creator": 1
-        }, {
-          "id": 10,
-          "settingId": 1,
-          "initialMarginRate": 2.0,
-          "leverage": 50.0,
-          "createdTime": "2018-08-05 10:53:24",
-          "creator": 1
-        }],
-        "keepBailRate": "0.5%"
-      }
+        "maintenanceMarginRate": '0.5%',
+        "leverages": [1, 6, 3, 4, 15, 10, 7, 8, 50].map((item, index) => (
+          {
+            "initialMarginRate": "20",
+            "initialMarginRateDisplay": "20%",
+            "leverage": item + '',
+            "leverageDisplay": `${item}倍`
+          }
+        ))
+      }, "ret": 0, "errCode": "", "errStr": ""
     })
   },
 
@@ -484,8 +381,8 @@ export default delay({
         "userAllowTrade": true,
         "marketAllowTrade": true,
         "marketCode": "BTCUSDT",
-        "minPriceMovement": 0.000000001,
-        "minPriceMovementDisplay": "0.000000001",
+        "minPriceMovement": 0.5,
+        "minPriceMovementDisplay": "0.5BTC",
         "maintenanceMarginRate": 0.005,
         "maintenanceMarginRateDisplay": "0.005%",
         "minTradeNum": 1,
@@ -493,7 +390,7 @@ export default delay({
         "availableBalance": _.random(10, 10000),
         "availableBalanceDisplay": "12345.0987BTC",
         "maxBuyPrice": 6296.1,
-        "minPricePrecision": 9,
+        "minPricePrecision": 7,
         "minSellPrice": 5929.3,
         "orderValue": _.random(10, 10000),
         "orderValueDisplay": _.random(10, 10000) + 'BTC',
@@ -537,7 +434,7 @@ export default delay({
   },
 
   // 设置杠杆
-  'Post /mock/api/v1/trade/market.leverage_set': (req, res) => {
+  'Get /mock/api/v1/gateway/Trade/SetLeverage': (req, res) => {
     res.send({
       "errCode": "0",
       "errStr": "success",
@@ -546,8 +443,8 @@ export default delay({
   },
 
   //k线图
-  'Post /mock/api/v1/quote/market.kline': (req, res) => {
-    const { body: { param: { startTime, endTime } = {} } = {} } = req
+  'Get /mock/api/v1/gateway/Home/KLines': (req, res) => {
+    const { query: { startTime, endTime } = {} } = req
     const periods = helper.getdays(startTime * 1000, endTime * 1000)
     res.send({
       "head": {
@@ -559,56 +456,39 @@ export default delay({
         "packType": "1",
         "serialNumber": "56"
       },
-      "data": {
-        "records": periods.map(item => {
-          const h = _.random(30, 40)
-          const o = _.random(10, 20)
-          const c =  _.random(10, 30)
-          const l =_.random(10, 20)
-          const v = _.random(100, 3000)
-          // const h = 160 + _.random(30, 40)
-          // const o = h - _.random(10, 20)
-          // const c = o - _.random(10, 30)
-          // const l = c - _.random(10, 20)
-          // const v = _.random(100, 3000)
-          return [item / 1000, o, c, h, l, v, 6, 'BTCUSD永续']
-        }),
-      },
+      "data": periods.map(item => {
+        const h = _.random(30, 40)
+        const o = _.random(10, 20)
+        const c = _.random(10, 30)
+        const l = _.random(10, 20)
+        const v = _.random(100, 3000)
+        return [item / 1000, o, c, h, l, v]
+      }),
       "errCode": "0",
       "errStr": "success",
       "ret": "0"
     })
   },
 
-  //k线图数据详情
-  'Post /mock/api/v1/quote/market.detail': (req, res) => {
-    const { body: { param: { startTime, endTime } = {} } = {} } = req
-    const periods = helper.getdays(startTime * 1000, endTime * 1000)
+  //k线图依赖数据详情
+  'Get /mock/api/v1/gateway/Home/ContractSummary': (req, res) => {
+
     res.send({
-      "head": {
-        "method": "market.kline",
-        "timestamps": "1533181070062",
-        "version": "1.0",
-        "lang": "cn",
-        "msgType": "request",
-        "packType": "1",
-        "serialNumber": "56"
-      },
       "data": {
-        "maxPrice24h": randomStr(100, 1000),
-        "minPrice24h": randomStr(100, 1000),
-        "totalPrice24h": randomStr(10000, 100000),
-        reasonablePrice: randomStr(10000, 100000),
-        "marketPrice": "7388.47741901",
-        "percent": "0.00%",
-        "dollarPrice": randomStr(100, 1000),
-        "price24h": randomStr(100, 1000),
-        "priceLast": '+' + randomStr(100, 1000),
-        "marketName": "BTCUSDT永续"
-      },
-      "errCode": "0",
-      "errStr": "success",
-      "ret": "0"
+        "contractCode": "BTCUSDT",
+        "contractName": "BTCUSDT永续",
+        "allowTrade": true,
+        "pause": false,
+        "lastPrice": "+6700.0",
+        "lastPriceToUSD": "$6700.00",
+        "direction": 0,
+        "changePercent24": "0.00%",
+        "marketPrice": "7276.60",
+        "fairPrice": "6713.22",
+        "price24Max": "6700.0",
+        "price24Min": "6700.0",
+        "amount24h": "0BTC"
+      }, "ret": 0, "errCode": "", "errStr": ""
     })
   },
 
@@ -693,40 +573,39 @@ export default delay({
   },
 
   //最近委托历史
-  'Post /mock/api/v1/trade/user.order_history': (req, res) => {
-    const { pageIndex, pageSize = 10, typeList = [] } = req.body.param
+  'Post /mock/api/v1/gateway/User/HistoryOrders': (req, res) => {
+    const { typeList = [] } = req.body.param
+    const { page: pageIndex = 1, limit: pageSize = 10, } = req.query
     const type = typeList[0]
-    const total = Number(type) * 20 + 30
+    const total = 200
     const records = (new Array(pageIndex ? total : 3)).fill().map((item, index) => (
       {
-        "ctime": "2018-08-09 17:06:27",
-        "ftime": "2018-08-09 17:06:46",
-        "orderId": "19654" + index,
-        "user": "3",
-        "marketName": 'BTCUSDT永续' + (index),
-        "market": "BTCUSDT",
-        "source": "浏览器，我是现价测试买单,数量10,价格6118.5,用户id：3,邮箱：xiaoyi.wei@bcsystech.com",
+        "orderId": 886,
+        "contractCode": "BTCUSDT",
+        "contractName": "BTCUSDT永续",
         "type": "1",
-        "side": "2",
-        "price": "6118.50",
-        "amount": "10",
-        "dealAmount": "5",
-        "dealMoney": "0.0008171937566397",
-        "dealFee": "-0.00",
+        "side": "1",
+        "sideDisplay": "卖出",
+        "ctime": "2018-09-04 17:56:36",
+        "ftime": "2018-09-04 17:56:36",
+        "orderQuantity": ["+", "-"][_.random(0, 1)] + _.random(1, 10),
+        "fillQuantity": "0",
         "orderStatus": ['1', '2', '3'][_.random(0, 3)],
+        "orderStatusDisplay": "已撤销",
+        "orderPrice": "7890.0",
         "leverage": _.random(10, 90) + '',
-        "avgDealMoney": "6118.5",
-        "delegateMoney": "0.00004209",
-        "unwindProfit": "--"
+        "fee": "--",
+        "avgFillMoney": "--",
+        "closePosPNL": "--"
       }
     ))
     res.send(
       {
         "data": {
-          "total": records.length + '',
-          "records": records.slice(Number(pageIndex) * pageSize, (Number(pageIndex) + 1) * pageSize),
-          "pageIndex": "",
-          "pageSize": "10"
+          "totalCount": records.length + '',
+          "result": records.slice(Number(pageIndex) * pageSize, (Number(pageIndex) + 1) * pageSize),
+          "page": pageIndex,
+          "pageSize": pageSize
         },
         "head": {
           "method": "user.order_history",
@@ -746,8 +625,8 @@ export default delay({
     )
   },
 
-  //下限价单
-  'Post /mock/api/v1/trade/order.put_limit': (req, res) => {
+  //下限价、市价单
+  'Post /mock/api/v1/gateway/User/Order ': (req, res) => {
     res.send(
       {
         "data": '',
@@ -758,8 +637,8 @@ export default delay({
     )
   },
 
-  //下市价单
-  'Post /mock/api/v1/trade/order.put_market': (req, res) => {
+  //全平
+  'Post /mock/api/v1/gateway/User/FullClose': (req, res) => {
     res.send(
       {
         "data": '',
@@ -768,6 +647,463 @@ export default delay({
         "ret": "0"
       }
     )
+  },
+
+  //概况
+  'Get /mock/api/v1/gateway/Trade/Summary': (req, res) => {
+    res.send(
+      {
+        "data": {
+          "summary": {
+            "profitRate": "-31.98% ",
+            "totalWealth": "9.67954696",
+            "totalWealthUSD": "65030.61USD",
+            "floatProfit": "+0.00009094",
+            "floatProfitUSD": "-0.61USD",
+            "availableBalance": "9.99896705",
+            "availableBalanceUSD": "67176.59USD"
+          },
+          "detail": [{
+            "assetName": "BTC",
+            "assetLogoUrl": "http://hopex.com/api/v1/gateway/files/logos/btc.png",
+            "floatProfit": "-0.00009094",
+            "floatProfitUSD": "-0.61USD",
+            "profitRate": "-0.32% ",
+            "totalWealth": "9.67954696",
+            "totalWealthUSD": "65030.61USD",
+            "availableBalance": "9.99896705",
+            "availableBalanceUSD": "67176.59USD",
+            "positionMargin": "0.00028439",
+            "positionMarginUSD": "1.91USD",
+            "delegateMargin": "0.00005753",
+            "delegateMarginUSD": "0.39USD",
+            "withdrawFreeze": "0.00000000",
+            "withdrawFreezeUSD": "0.00USD",
+            "walletBalance": "9.99930897",
+            "walletBalanceUSD": "67178.88USD"
+          }, {
+            "assetName": "ETH",
+            "assetLogoUrl": "http://hopex.com/api/v1/gateway/files/logos/eth.png",
+            "floatProfit": "0.00000000",
+            "floatProfitUSD": "0.00USD",
+            "profitRate": "0.00% ",
+            "totalWealth": "0.00000000",
+            "totalWealthUSD": "0.00USD",
+            "availableBalance": "0.00000000",
+            "availableBalanceUSD": "0.00USD",
+            "positionMargin": "0.00000000",
+            "positionMarginUSD": "0.00USD",
+            "delegateMargin": "0.00000000",
+            "delegateMarginUSD": "0.00USD",
+            "withdrawFreeze": "0.00000000",
+            "withdrawFreezeUSD": "0.00USD",
+            "walletBalance": "0.00000000",
+            "walletBalanceUSD": "0.00USD"
+          }, {
+            "assetName": "USDT",
+            "assetLogoUrl": "http://hopex.com/api/v1/gateway/files/logos/eth.png",
+            "floatProfit": "0.00000000",
+            "floatProfitUSD": "0.00USD",
+            "profitRate": "0.00% ",
+            "totalWealth": "0.00000000",
+            "totalWealthUSD": "0.00USD",
+            "availableBalance": "0.00000000",
+            "availableBalanceUSD": "0.00USD",
+            "positionMargin": "0.00000000",
+            "positionMarginUSD": "0.00USD",
+            "delegateMargin": "0.00000000",
+            "delegateMarginUSD": "0.00USD",
+            "withdrawFreeze": "0.00000000",
+            "withdrawFreezeUSD": "0.00USD",
+            "walletBalance": "0.00000000",
+            "walletBalanceUSD": "0.00USD"
+          }]
+        }, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+  },
+
+  //存款
+  'Get /mock/api/v1/User/GetUserAssetWalletAddr': (req, res) => {
+    const asset = req.query.asset
+    let sendasset
+    if (asset === 'BTC') {
+      sendasset = {
+        "qrCodeImgUrl": "https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/home/img/qrcode/zbios_efde696.png",
+        "address": "18WY7rBJYnNL16UzG4omYjqUy9jJHnoPo9",
+        "prompts": ["* 请不要向上述地址充值任何非BTC资产，否则将不可找回。", "* 最低存款额为 0.001BTC (100000 聪)。", "* 你的比特币会在6个网络确认后到帐。", "* 所有Hopex的存款地址都是多重签名冷钱包地址，所有钱包均不曾被联网的机器读取。"]
+      }
+    } else {
+      sendasset = {
+        "qrCodeImgUrl": "https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/home/img/qrcode/zbios_efde696.png",
+        "address": "0xf0e1abd140d9e7df1bcf06f9879b0d3b76deee06",
+        "prompts": ["* 请不要向上述地址充值任何非ETH资产，否则将不可找回。", "* 最低存款额为 0.01ETH。", "* 你的ETH会在30个网络确认后到帐。", "* 所有Hopex的存款地址都是多重签名冷钱包地址，所有钱包均不曾被联网的机器读取。"]
+      }
+    }
+    res.send(
+      {
+        "data": sendasset, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+  },
+
+
+  //提现获取依赖详情
+  'Get /mock/api/v1/User/GetWithdrawParameter': (req, res) => {
+    const asset = req.query.asset
+    let sendasset
+    if (asset === 'BTC') {
+      sendasset = {
+        "enableTwoFactories": true,
+        "commission": "0.00100000",
+        "minAmount": "0.01000000",
+        "maxAmount": "9.99896705",
+        "allowWithdraw": true,
+        "prompts": ["最小提现数量为:0.01000000BTC", "请勿直接提现至众筹或ICO地址.我们不会处理未来代币的发放。", "* 基于安全理由，Hopex每日只会人工审核并处理提现一次，有关我们的政策请参阅安全规范。", "* 在 13:00 UTC (大约 10 小时) 前提交的提款请求，会进入当天的批处理队列。"],
+        "isValid": true
+      }
+    } else {
+      sendasset = {
+        "enableTwoFactories": false,
+        "commission": "0.00500000",
+        "minAmount": "0.05000000",
+        "maxAmount": "0.00000000",
+        "allowWithdraw": true,
+        "prompts": ["最小提现数量为:0.05000000ETH", "请勿直接提现至众筹或ICO地址.我们不会处理未来代币的发放。", "* 基于安全理由，Hopex每日只会人工审核并处理提现一次，有关我们的政策请参阅安全规范。", "* 在 13:00 UTC (大约 10 小时) 前提交的提款请求，会进入当天的批处理队列。"],
+        "isValid": true
+      }
+    }
+    res.send(
+      {
+        "data": sendasset, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+  },
+
+  //发送提现确认邮件
+  'Post /mock/api/v1/User/SendEmailToWithdraw': (req, res) => {
+    res.send(
+      // {
+      //   "ret": -1, "errCode": "", "errStr": "请先开启谷歌验证"
+      // }
+      { "data": true, "ret": 0, "errCode": "", "errStr": "" }
+    )
+
+  },
+
+  //提现申请
+  'Post /mock/api/v1/User/WithdrawApply': (req, res) => {
+    res.send(
+      { "data": true, "ret": 0, "errCode": "", "errStr": "" }
+    )
+
+  },
+
+  //获取资金记录
+  'Get /mock/api/v1/User/GetTrans': (req, res) => {
+    const { page: pageIndex, limit: pageSize = 10, } = req.query
+    const total = 99
+    const records = (new Array(total)).fill().map((item, index) => (
+      {
+        "asset": "BTC",
+        "type": ["提现", '存款'][_.random(0, 1)],
+        "status": ["进行中", '已完成', '已拒绝'][_.random(0, 2)],
+        "statusVal": 0,
+        "amount": "-1.00000000BTC",
+        "createdTime": "2018-09-01 16:19:55" + index,
+        "txid": "222222222223333333333",
+        "addr": "wwwwwwwwwwwwwwwwwwwww444444444444444444444222",
+        "addrUrl": "https://btc.com/",
+        "txidUrl": "https://btc.com/"
+      }
+    ))
+    res.send(
+      {
+        "data": {
+          "totalCount": records.length,
+          "page": 1,
+          "pageSize": pageSize,
+          "result": records.slice(Number(pageIndex - 1) * pageSize, (Number(pageIndex)) * pageSize),
+        }, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+
+  },
+
+  //网络状态
+  'Head /mock/api/v1/gateway/home/ping': (req, res) => {
+    res.sendStatus(200)
+  },
+
+  //实名认证
+  'Post /mock/api/v1/gateway/Certification/IdCardVerify': (req, res) => {
+    users_vertify.idCard = {
+      "realName": "魏晓一",
+      "idCardNo": "421***********1750",
+      "name": "实名认证",
+      "code": "IdCard",
+      "verified": true
+    }
+    res.send(
+      { "data": true, "ret": 0, "errCode": "", "errStr": "" }
+    )
+  },
+
+  //银行卡认证
+  'Post /mock/api/v1/gateway/Certification/BankVerify': (req, res) => {
+    users_vertify.bank = {
+      "idCardVerified": true,
+      "owner": "魏晓一",
+      "bankNo": "**** **** **** 0899",
+      "bankName": "CMB-招商银行",
+      "name": "银行卡",
+      "code": "Bank",
+      "verified": true
+    }
+    res.send(
+      { "data": true, "ret": 0, "errCode": "", "errStr": "" }
+    )
+  },
+
+  //个高级认证获取实名认证和银行卡的信息
+  'Get /mock/api/v1/gateway/Certification/All': (req, res) => {
+    res.send(
+      {
+        "data": users_vertify, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+
+  },
+
+  //费率
+  'Get /mock/api/v1/User/otc/GetToCNYExchangeRate': (req, res) => {
+    const { coinCode, priceArrow } = req.query
+    let data
+    switch (coinCode) {
+      case 'BTC': {
+        data = 1
+      }
+        break
+      case 'ETH': {
+        data = 2
+      }
+        break
+      case 'USDT': {
+        data = 3
+      }
+        break
+    }
+    switch (priceArrow) {
+      case 'BUY': {
+        data = data + 'buy'
+      }
+        break
+      case 'SELL': {
+        data = data + 'sell'
+      }
+    }
+    res.send(
+      {
+        "data": data, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+
+  },
+
+  //用户购买参数
+  'Get /mock/api/v1/User/otc/GetBuyParameter': (req, res) => {
+    const { coinCode, priceArrow } = req.query
+    let data
+    switch (coinCode) {
+      case 'BTC': {
+        data = 1
+      }
+        break
+      case 'ETH': {
+        data = 2
+      }
+        break
+      case 'USDT': {
+        data = 3
+      }
+        break
+    }
+    res.send(
+      {
+        "data": {
+          "minBuyRMB": "100.00",
+          "maxBuyRMB": "500000.00",
+          "hasOpenBuyOrder": false,
+          "forbidden": false,
+          "idCardVerified": true,
+          "realName": "魏晓一",
+          "allowLegalBuy": true,
+          "remarks": [`* 最小单次买入金额${data}人民币。`, `* 最大单次买入金额${data}人民币。`, "* 付款时使用的银行卡持卡人姓名必须与实名认证一致"]
+        }, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+
+  },
+
+  //订单记录
+  'Get /mock/api/v1/User/otc/GetOrders': (req, res) => {
+    const { limit, page: pageIndex } = req.query
+    const pageSize = limit || 10
+    const status = [
+      {
+        a: 'Processing',
+        b: '进行中'
+      },
+      {
+        a: 'Success',
+        b: '完成'
+      },
+      {
+        a: 'Failure',
+        b: '失败'
+      },
+    ]
+    const total = (new Array(200)).fill().map((item, index) => {
+        const select = status[_.random(0, 3)] || {}
+        return {
+          "id": 24,
+          "amount": "+0.00223185BTC",
+          "no": "OB201809120022",
+          "orderType": "Buy",
+          "orderTypeDisplay": "买入" + index,
+          "rmbAmount": "100.00CNY",
+          "bankNo": "--",
+          "orderStatus": select.a,
+          "orderStatusDisplay": select.b,
+          "time": "2018-09-12 20:31:36",
+          "detailUrl": "https://user.hopex.com/otc/order?orderId=24"
+        }
+
+      }
+    )
+    res.send(
+      {
+        "data": {
+          "totalCount": total.length,
+          "page": 1,
+          "pageSize": pageSize,
+          "result": total.slice(Number(pageIndex - 1) * pageSize, (Number(pageIndex)) * pageSize)
+        }, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+
+  },
+
+  //卖出参数
+  'Get /mock/api/v1/User/otc/GetSellParameter': (req, res) => {
+    const { coinCode, priceArrow } = req.query
+    let data
+    switch (coinCode) {
+      case 'BTC': {
+        data = 1
+      }
+        break
+      case 'ETH': {
+        data = 2
+      }
+        break
+      case 'USDT': {
+        data = 3
+      }
+        break
+    }
+    res.send(
+      {
+        "data": {
+          "userEmail": "xiaoyi.wei@bcsystech.com",
+          "allowLegalSell": true,
+          "idCardVerified": false,
+          "bankVerified": true,
+          "realName": "魏晓一",
+          "bankName": "CMB-招商银行",
+          "bankNo": "**** **** **** 0899",
+          "forbidden": false,
+          "minSellAmount": "0.00100000",//
+          "maxSellAmount": "573.49949427",
+          "enableTwoFactories": true,
+          "changePwdIn24h": false,
+          "disabledTwoFactoriesIn24h": false,
+          "remarks": [`* 最小单次卖出数量${data}BTC。`]
+        }, "ret": 0, "errCode": "", "errStr": ""
+      }
+    )
+
+  },
+
+  //买入
+  'post /mock/api/v1/User/otc/Buy': (req, res) => {
+    res.send({
+      data: 'https://www.baidu.com', "ret": 0, "errCode": "", "errStr": ""
+    })
+  },
+
+  //提现发送邮箱验证码
+  'post /mock/api/v1/User/otc/SendEmailToOTCWithdraw': (req, res) => {
+    res.send({
+      data: true, "ret": 0, "errCode": "", "errStr": ""
+    })
+  },
+
+  //解释说明----------------
+  'get /mock/Contract/Index': (req, res) => {
+    res.send({
+      "data": [{
+        "direct": "Forward",
+        "code": "BTCUSDT",
+        "name": "BTCUSDT永续",
+        "type": "永续合约",
+        "closeCurrency": "USDT"
+      }, {
+        "direct": "Reverse",
+        "code": "BTCUSD",
+        "name": "BTCUSD永续",
+        "type": "永续合约",
+        "closeCurrency": "BTC"
+      }, {
+        "direct": "Forward",
+        "code": "ETHUSDT",
+        "name": "ETHUSDT永续",
+        "type": "永续合约",
+        "closeCurrency": "USDT"
+      }, { "direct": "Reverse", "code": "ETHUSD", "name": "ETHUSD永续", "type": "永续合约", "closeCurrency": "ETH" }],
+      "ret": 0,
+      "errCode": "",
+      "errStr": ""
+    })
+  },
+  'get /mock/Contract/Detail': (req, res) => {
+    res.send({
+      "data": {
+        "name": "",
+        "code": "",
+        "type": "",
+        "closeCurrency": "",
+        "price": "",
+        "marketPrice": "",
+        "endTime": null,
+        "closePrice": "",
+        "value": "",
+        "minPriceMovement": "",
+        "minTradeNum": "",
+        "leverage": "",
+        "maintenanceMarginRate": "",
+        "makerRate": "",
+        "takerRate": "",
+        "closeAllRate": "",
+        "deliveryRate": "",
+        "positionCnt": 0,
+        "positionVal": "",
+        "sum24hDealCnt": 0,
+        "sum24hDealAmount": "",
+        "sumDealsCnt": 0,
+        "sumAmount": ""
+      }, "ret": 0, "errCode": "", "errStr": ""
+    })
   },
 
 }, 100)

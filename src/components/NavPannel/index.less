@@ -1,43 +1,58 @@
-.pannelContainer{
+.pannelContainer {
   display: flex;
   justify-content: center;
   padding: 18px;
-  width:100%;
+  width: 100%;
   background: @c_back;
 }
+
 .navpannel {
-  width: 79%;
+  width: 93%;
   display: flex;
   .nav {
     border-radius: 4px;
-    width: 19%;
+    width: 280px;
+    height: 500px;
+    min-width: 280px;
+     max-width: 280px;
     min-height: 500px;
     margin-right: 20px;
     background: white;
     padding-top: 21px;
     :global {
       ul.block {
+        > li + li {
+          margin-top: 12px;
+        }
         > li {
           .title {
+            display: flex;
+            align-items: center;
             padding-left: 32px;
             color: @c_active_yellow;
             font-size: 16px;
-            img {
+            img, svg {
               margin-right: 13px;
             }
           }
           ul.list {
             margin-top: 20px;
             li {
+              cursor: pointer;
+              position: relative;
               display: flex;
               height: 40px;
               padding-left: 30%;
               align-items: center;
-              color: #232833;
+              color: @c_black;
               &.active {
-                border-left:4px solid #E2B96F;
+                .border {
+                  height: 100%;
+                  left: 0;
+                  position: absolute;
+                  border-left: 4px solid #E2B96F;
+                }
                 background: #FFFBF3;
-
               }
             }
           }

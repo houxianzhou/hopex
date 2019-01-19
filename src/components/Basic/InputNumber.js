@@ -12,32 +12,27 @@ export default class View extends Component {
   rules = (value) => {
     let { step = 10, max, min, prec = 0, onChange } = this.props
     if (!_.isNil(value) && !_.isNil(step)) {
-      // value=Number(value)
-      // step = scientificToNumber(step)
       max = Number(max)
       min = Number(min)
-
-      // console.log(value, '-------------')
     }
-    // const pos = (String(value.toLocaleString()).split('.')[1] || '').length
-
     if (!_.isNil(value) && value !== '') {
       let test1 = /\.$/.test(value)
       let test2 = /^(((\\d+.?\\d+)|(\\d+))[Ee]{1}((-(\\d+))|(\\d+)))$/.test(value)
-      if (test1) {
+
+      const pos = (String(value).split('.')[1] || '').length
+      if (pos < prec && !/e/.test(value)) {
+        onChange(value)
       } else {
         if (value < min) value = min
         if (value > max) value = max
         const int = Math.floor((new BigNumber(value)).div(step).toFixed(prec))
-        value = (new BigNumber(int)). multipliedBy (step).valueOf()
-        const pos = (String(value).split('.')[1] || '').length
-        // console.log(value, pos, prec, '------------')
+        value = (new BigNumber(int)).multipliedBy(step).valueOf()
+        // const pos = (String(value).split('.')[1] || '').length
         if (/e/.test(value)) {
           prec = prec
-        } else if (Number(pos) < Number(prec)) {
+        } else if (Number(pos) <= Number(prec)) {
           prec = pos
         }
-        // console.log(value, prec, '+++++++++=')
         value = (new BigNumber(value)).toFixed(prec)
       }
       onChange(value)
@@ -60,10 +55,8 @@ export default class View extends Component {
     const {
       className = {}, style = {}
     } = this.props
-
     const { rules } = this
     step = Number(step)
-    // console.log(step)
     return (
       <div
         style={style}

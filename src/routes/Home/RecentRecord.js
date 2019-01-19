@@ -25,10 +25,11 @@ export default class RecentRecord extends Component {
         type: activeLi
       }
     }).then((res) => {
-        if (!this._isMounted) return
+        if (!this._isMounted || this.interval) return
         if (activeLi === '1') {
           this.interval = dealInterval(() => {
-            this.getHistory(activeLi)
+            this.interval = null
+            this.getHistory()
           })
         }
       }
@@ -39,7 +40,7 @@ export default class RecentRecord extends Component {
     const { activeLi } = this.state
     const { changeState, getHistory } = this
     const {
-      model: { personalEnsureHistory = [] }, modal: { name, data }, noDataTip, calculateTableHeight, expandedRowRender,
+      model: { personalEnsureHistory = [], highlevelHistory = [], reduceHistory = [] }, modal: { name, data }, noDataTip, calculateTableHeight, expandedRowRender,
       openModal, loading, modelName
     } = this.props
     const columns = getColumns({
@@ -76,6 +77,12 @@ export default class RecentRecord extends Component {
     switch (activeLi) {
       case '1':
         dataSource = personalEnsureHistory
+        break
+      case '6':
+        dataSource = highlevelHistory
+        break
+      case '7':
+        dataSource = reduceHistory
         break
       default:
         dataSource = []

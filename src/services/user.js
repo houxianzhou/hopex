@@ -1,6 +1,12 @@
 import { request } from '@utils'
+import { MODE } from "./trade"
 
-const prefix = '';
+
+let prefix = ''
+// mock数据
+if (MODE === 'mock') {
+  prefix = '/mock'
+}
 
 export async function getCurrentUser() {
   return await request(`${prefix}/api/user`)
@@ -19,7 +25,7 @@ export async function doLoginOut(payload) {
 }
 
 // 开启二次验证后的登录
-export async function doVertifyLogin(payload,errHandler) {
+export async function doVertifyLogin(payload, errHandler) {
   return await request('/api/v1/User/GoogleLogin', {
     query: payload,
     errHandler
@@ -120,7 +126,7 @@ export async function doDisbaleGoogleVertify(payload) {
 
 // 获取用户最近十条登录记录
 export async function GetLast10LoginLog(payload) {
-  return await request('/api/v1/User/GetLast10LoginLog', {
+  return await request(`${prefix}/api/v1/User/GetLast10LoginLog`, {
     query: payload
   })
 }
@@ -148,7 +154,7 @@ export async function CheckGoogleCode(payload) {
 
 // 获取用户信息
 export async function GetUserInfo(payload) {
-  return await request('/api/v1/User/GetUserInfo', {
+  return await request(`${prefix}/api/v1/User/GetUserInfo`, {
     query: payload
   })
 }

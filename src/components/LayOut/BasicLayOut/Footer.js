@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
+import { PATH } from '@constants'
 import { RouterGo } from '@components'
-import logo3 from '@assets/logo3.png'
-import facebook from '@assets/Facebook.png'
-import ins from '@assets/ins.png'
-import telegram from '@assets/telegram.png'
-import twitter from '@assets/Twitter.png'
+import { facebook, ins, twitter, telegram, logo3 } from '@assets'
 import { classNames, _ } from '@utils'
 
 import * as styles from './index.less'
-
 
 @connect(({ home, theme, loading, dispatch }) => ({
   home,
@@ -27,24 +23,44 @@ export default class View extends Component {
         <div className={styles.top} >
           <div className={styles.left} >
             <div className={styles.logo} >
-              <img src={logo3} />Hopex
+              {logo3}Hopex
             </div >
-            <div className={styles.desc} >全球领先的数字资产衍生品交易平台</div >
+            <div className={styles.desc} >专注数字衍生品</div >
             <ul >
-              <li ><img src={facebook} /></li >
-              <li ><img src={ins} /></li >
-              <li ><img src={telegram} /></li >
-              <li ><img src={twitter} /></li >
+              <li >{facebook}</li >
+              <li >{ins}</li >
+              <li >{telegram}</li >
+              <li >{twitter}</li >
             </ul >
           </div >
           <div className={styles.right} >
             <div className={styles.columns} >
               <div >关于</div >
               <ul >
-                <li >关于我们</li >
-                <li >服务条款</li >
-                <li >隐私政策</li >
-                <li >安全性</li >
+                <RouterGo.SwitchRoute Ele={'li'} value={{
+                  pathname: PATH.about,
+                  search: `?page=AboutUs`
+                }} >
+                  关于我们
+                </RouterGo.SwitchRoute >
+                <RouterGo.SwitchRoute Ele={'li'} value={{
+                  pathname: PATH.about,
+                  search: `?page=Service`
+                }} >
+                  服务条款
+                </RouterGo.SwitchRoute >
+                <RouterGo.SwitchRoute Ele={'li'} value={{
+                  pathname: PATH.about,
+                  search: `?page=Privaty`
+                }} >
+                  隐私政策
+                </RouterGo.SwitchRoute >
+                <RouterGo.SwitchRoute Ele={'li'} value={{
+                  pathname: PATH.about,
+                  search: `?page=Safety`
+                }} >
+                  安全性
+                </RouterGo.SwitchRoute >
               </ul >
             </div >
             <div className={styles.columns} >
@@ -59,15 +75,15 @@ export default class View extends Component {
                 }
               </ul >
             </div >
-            <div className={styles.columns} >
-              <div >帮助</div >
-              <ul >
-                <li >费用</li >
-                <li >永续合约指南</li >
-                <li >期货合约指南</li >
-                <li >帮助中心</li >
-              </ul >
-            </div >
+            {/*<div className={styles.columns} >*/}
+              {/*<div >帮助</div >*/}
+              {/*<ul >*/}
+                {/*<li >费用</li >*/}
+                {/*<li >永续合约指南</li >*/}
+                {/*<li >期货合约指南</li >*/}
+                {/*<li >帮助中心</li >*/}
+              {/*</ul >*/}
+            {/*</div >*/}
           </div >
         </div >
         <div className={styles.down} >©Copyright.All Rights Reserved.</div >

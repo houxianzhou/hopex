@@ -1,16 +1,20 @@
 import React, { Component } from 'react'
+import { connect } from 'dva'
 import * as styles from './index.less'
 
-import { classNames, _, } from '@utils'
+import { classNames, _, parsePathSearch } from '@utils'
 
 export default class View extends Component {
   componentDidMount() {
+    const search = _.get(this.props, 'location.search')
+    const { page } = parsePathSearch(search)
+
     const { navList = [], defaultActive = '' } = this.props
     const lists = navList.reduce((sum, next) => {
-      return [].concat(next.list)
+      return sum.concat(next.list)
     }, [])
-    const filterOne = lists.filter(item => item.name === defaultActive)[0]
-    this.changePage(filterOne.onClick, defaultActive)
+    const filterOne = lists.filter(item => item.name === (page || defaultActive))[0] || lists[0]
+    this.changePage(filterOne.onClick, filterOne.name)
   }
 
   state = {
@@ -31,7 +35,9 @@ export default class View extends Component {
 
   render() {
     const { page, active, } = this.state
-    const { navList = [], style: { widthPannel = '79%', widthNav = '19%' } = {} } = this.props
+    let { navList = [], } = this.props
+    const { style: { widthPannel = '', widthNav = '' } = {}, history } = this.props
+    navList = navList.filter(item => item.show !== false)
     return (
       <div className={styles.pannelContainer} >
         <div className={styles.navpannel} style={{ width: widthPannel }} >
@@ -41,7 +47,9 @@ export default class View extends Component {
                 navList.map((item = {}, index) => (
                   <li key={index} >
                     <div className='title' >
-                      <img src={item.icon} />
+                      {
+                        item.svg ? item.svg : <img src={item.icon} />
+                      }
                       {item.title}
                     </div >
                     <ul className='list' >
@@ -52,10 +60,15 @@ export default class View extends Component {
                             className={classNames(
                               active === item.name ? 'active' : null
                             )}
-
                             onClick={() => {
+                              if (history && history.replace) {
+                                history.replace(`?page=${item.name}`)
+                              }
                               this.changePage(item.onClick, item.name)
                             }} >
+                            <div className={classNames(
+                              'border',
+                            )} />
                             {item.title}
                           </li >
                         ))

@@ -20,10 +20,10 @@ export default class PersonEnsure extends Component {
       type: `${modelName}/getPersonalEnsure`,
       payload
     }).then((res) => {
-        if (!this._isMounted) return
-        if (callback) return callback()
+        if (!this._isMounted || this.interval) return
         this.interval = dealInterval(() => {
-          this.getPersonalEnsure(payload)
+          this.interval = null
+          this.getPersonalEnsure()
         })
       }
     )
@@ -48,9 +48,9 @@ export default class PersonEnsure extends Component {
         title: '类型',
         dataIndex: 'type',
         render: (value, record) => String(record.side) === '1' ? (
-          <RedGreenSwitch.RedText value={'卖出'} />
+          <RedGreenSwitch.RedText value={record.sideDisplay} />
         ) : (
-          <RedGreenSwitch.GreenText value={'买入'} />
+          <RedGreenSwitch.GreenText value={record.sideDisplay} />
         )
       },
       {
@@ -61,10 +61,8 @@ export default class PersonEnsure extends Component {
       {
         title: '数量(张)',
         dataIndex: 'amount',
-        render: (value, record) => String(record.side) === '1' ? (
-          <RedGreenSwitch.RedText value={value} />
-        ) : (
-          <RedGreenSwitch.GreenText value={value} />
+        render: (value, record) => (
+          <RedGreenSwitch.MarkText mark={value} value={value.replace(/['+']/, '')} />
         )
       },
       {
@@ -75,6 +73,7 @@ export default class PersonEnsure extends Component {
       {
         title: '成交数量(张)',
         dataIndex: 'dealAmount',
+        render: (value) => <RedGreenSwitch.MarkText mark={''} value={value.replace(/['+']/, '')} />
       },
       {
         title: '成交均价',
@@ -99,8 +98,7 @@ export default class PersonEnsure extends Component {
       {
         title: '状态',
         width: 130,
-        dataIndex: 'orderStatus',
-        render: (value) => value === '1' ? '部分成交' : '等待成交'
+        dataIndex: 'orderStatusDisplay',
       },
       {
         title: '操作',
@@ -119,6 +117,8 @@ export default class PersonEnsure extends Component {
                           market: record.market,
                           orderId: record.orderId
                         }
+                      }).then(() => {
+                        this.getPersonalEnsure()
                       })
                     }} >
                     撤销

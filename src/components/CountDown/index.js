@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { _ } from '@utils'
+import * as styles from './index.less'
 
 export default class View extends Component {
 
@@ -52,7 +53,8 @@ export default class View extends Component {
         if (!startNum) this.startUp()
       }} >
         {
-          startNum ? `${endText}(${startNum})` : beginText
+          startNum ? <span className={styles.active} >{endText}({startNum})</span > :
+            <span className={styles.notactive} >{beginText}</span >
         }
       </div >
     )

@@ -26,6 +26,7 @@ export default class View extends Component {
     } = this.props
     return (
       <Modal
+        parentSelector={() => document.getElementById('overContent') || document.body}
         style={{
           overlay: {
             zIndex: 3,

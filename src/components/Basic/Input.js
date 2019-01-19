@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { classNames, _, } from '@utils'
-import clearpng from '@assets/clear.png'
+import { clearpng } from '@assets'
 import * as styles from './Input.less'
 
 export default class View extends Component {
@@ -12,7 +12,7 @@ export default class View extends Component {
     const {
       iconPrefix, iconPost, placeholder, value,
       onChange, onClear, type = 'text', msg = '', onCheck, children,
-      style = {}
+      style = {}, autoComplete
     } = this.props
 
     return (
@@ -29,17 +29,22 @@ export default class View extends Component {
                 children ? (
                   children
                 ) : (
-                  <input
-                    type={type}
-                    placeholder={placeholder}
-                    value={value}
-                    onChange={(e) => {
-                      const v = e.target.value
-                      onChange(v)
-                      if (_.isFunction(onCheck)) onCheck(v)
+                  <>
+                    {type === 'password' ? (<input type="password" name={type} style={{ display: 'none' }} />) : null}
+                    <input
+                      name={type}
+                      autoComplete={autoComplete}
+                      type={type}
+                      placeholder={placeholder}
+                      value={value}
+                      onChange={(e) => {
+                        const v = e.target.value
+                        onChange(v)
+                        if (_.isFunction(onCheck)) onCheck(v)
 
-                    }}
-                  />
+                      }}
+                    />
+                  </>
                 )
               }
             </div >
@@ -54,7 +59,9 @@ export default class View extends Component {
                       iconPost
                     ) : (
                       value && onClear ? (
-                        <img src={clearpng} onClick={onClear} style={{ cursor: 'pointer' }} />
+                        <span onClick={onClear} style={{ cursor: 'pointer' }} >
+                          {clearpng}
+                        </span >
                       ) : null
                     )
                   }

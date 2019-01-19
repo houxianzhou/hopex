@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import { PATH } from '@constants'
+import * as styles from './index.less'
 
 @connect(({ theme: model, loading, dispatch, }) => ({
   model,
@@ -39,7 +40,10 @@ class SwitchMarket extends Component {
     if (pathname !== PATH.home) {
       dispatch({
         type: `${modelName}/routerGo`,
-        payload: PATH.home
+        payload: {
+          pathname: PATH.home,
+          search: `?marketCode=${value}`
+        }
       })
     } else {
       this.go(value)
@@ -53,10 +57,10 @@ class SwitchMarket extends Component {
       value && marketCode ? (
         <span onClick={() => {
           switchMarket(marketCode)
-        }} >{value}</span >
+        }} className={styles.gowhere} >{value}</span >
       ) : <Ele onClick={() => {
         switchMarket(value) //此时value就是marketCode
-      }} >{children}</Ele >
+      }} className={styles.gowhere} >{children}</Ele >
     )
   }
 }

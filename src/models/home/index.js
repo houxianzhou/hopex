@@ -2,12 +2,13 @@ import { Toast } from '@components'
 import { joinModel, getRes, resOk, formatNumber, _, formatJson, asyncPayload, deepClone } from '@utils'
 import wss from '@services/SocketClient'
 import modelExtend from '@models/modelExtend'
+import { PATH } from '@constants'
 import {
   getLatestRecord, getEnsureRecord, postLimitOrder, postMarketOrder,
   getKline, getPurseAssetList, getPersonalEnsure, doCancelPersonEnsure,
   getPosition, getPersonEnsureDetail, getAllMarkets, getAllMarketDetails, getLeverage, doUpdateLeverage,
   getKlineAllList, getPersonalEnsureHistory, getKlineDetail, getBuySellDetail,
-  calculatePositionEnsureMoney, doUpdatePositionEnsureMoney, getMarketFee
+  calculatePositionEnsureMoney, doUpdatePositionEnsureMoney, getMarketFee, getIntervals, doFullClose
 } from "@services/trade"
 
 
@@ -17,9 +18,12 @@ export default joinModel(modelExtend, {
     marketList: [], // 合约列表
     marketName: '', //当前合约名称
     marketCode: '', //当前合约code
+    minPriceMovementPrecision: 2,//合约精度,用来在k线图显示小数位数
 
     latest_records: [],// 最新成交
     ensure_records: {},// 委托列表
+    asksFilter: '',//过滤器
+    bidsFilter: '',//过滤器
     clickSelectOne: {}, //从最新成交和委托列表点击选择而来
 
     maxPrice24h: '', // 24h最高
@@ -52,7 +56,6 @@ export default joinModel(modelExtend, {
     leverage: null, //当前用户的杠杆
     leverageIsModify: null,//当前用户是否可以编辑杠杆
 
-    assetList: [],//钱包资产列表
     personalEnsures: [],//个人委托列表
     positionList: [],//个人持仓列表
     personalEnsures_PageIndex: null, //未曾用过
@@ -65,6 +68,12 @@ export default joinModel(modelExtend, {
   },
   subscriptions: {
     setup({ dispatch, history }) {
+      const { location: { pathname } } = history
+      if (pathname !== PATH.home) {
+        dispatch({
+          type: 'getAllMarketDetails'
+        })
+      }
       dispatch({
         type: 'startInit'
       })
@@ -80,16 +89,14 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "contract.deals",
-          },
+          "head": {},
           "param": {
             "pageSize": "100",
             "lastId": "1"
           },
         }
       })))
-      const res = getRes(yield call(getLatestRecord, repayload))
+      const res = getRes(yield call(getLatestRecord, repayload.param))
       if (resOk(res)) {
         yield put({
           type: 'updateLatestRecord',
@@ -219,6 +226,7 @@ export default joinModel(modelExtend, {
       if (_.has(result, 'bids')) {
         Filtering(result.bids, bids)
       }
+      const { asksFilter, bidsFilter } = result
 
       const remove = (result) => _.remove(result, (item = {}) => Number(item.amount) !== 0)
 
@@ -239,19 +247,42 @@ export default joinModel(modelExtend, {
         type: 'changeState',
         payload: {
           ensure_records: result,
+          ...(asksFilter ? { asksFilter } : {}),
+          ...(bidsFilter ? { bidsFilter } : {})
         }
       })
     },
+    //获取盘口区间
+    * getIntervals({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {},
+          param: {},
+        }
+      })))
+      if (repayload) {
+        const res = getRes(yield call(getIntervals, _.get(repayload, 'param')))
 
-    // K线图全量查询
+        if (resOk(res)) {
+          const { intervals = [] } = _.get(res, 'data')
+          yield put({
+            type: 'changeState',
+            payload: {
+              varyRange: intervals
+            }
+          })
+        }
+      }
+    },
+
+    // K线图全量查询，取消订阅，订阅
     * getKlineAllList({ payload = {} }, { call, put }) {
       const { startTime, endTime, interval } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          head: {
-            "method": "market.kline",
-          },
+          head: {},
           param: {
             "startTime": startTime,
             "endTime": endTime,
@@ -260,59 +291,63 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getKlineAllList, repayload))
+        const res = getRes(yield call(getKlineAllList, repayload.param))
         if (resOk(res)) {
-          const result = _.get(res, 'data') || {}
-          const {
-            records = []
-          } = result
-          return records
+          const result = _.get(res, 'data') || []
+          return result
         }
       }
     },
-    * getKlineAllListFromWs({ payload = {} }, { call, put }) {
-      const ws1 = wss.getSocket('ws1')
-      const { startTime, endTime } = payload
-      const repayload = yield (asyncPayload(yield put({
-        type: 'createRequestParams',
-        payload: {
-          head: {
-            "method": "kline.query",
-          },
-          param: {
-            "startTime": startTime,
-            "endTime": endTime,
-            "interval": "86400"
-          }
-        }
-      })))
-      return ws1.sendJsonPromise(repayload, (e) => {
+    * doUnSubKlineAllListFromWs({ payload = {} }, { call, put }) {
+      const ws = wss.getSocket('ws')
+      return ws.sendJsonPromise({
+        head: {
+          "method": "kline.unsubscribe"
+        },
+        param: {}
+      }, (e, data) => {
         let res
         if (e && e.data) {
           res = formatJson(e.data)
         }
         res = getRes(res)
         if (resOk(res)) {
-          if (_.get(res, 'head.method') === 'kline.query') {
-            return _.get(res, 'data.records')
+          if (_.get(res, 'head.method') === 'kline.unsubscribe') {
+            return true
           }
         }
       })
     },
-
-    // k线详情数据
-    * getKlineDetail({ payload = {} }, { call, put }) {
+    * getKlineFromWs({ payload = {} }, { call, put, select }) {
+      const { interval } = payload
+      const ws = wss.getSocket('ws')
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
           head: {
-            "method": "market.detail",
+            "method": "kline.subscribe",
           },
+          param: {
+            interval
+          },
+        }
+      })))
+      if (repayload) {
+        return ws.sendJson(repayload)
+      }
+    },
+
+    // k线详情数据，基础合约信息
+    * getKlineDetail({ payload = {} }, { call, put }) {
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          head: {},
           param: {}
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getKlineDetail, repayload))
+        const res = getRes(yield call(getKlineDetail, repayload.param))
         if (resOk(res)) {
           const result = _.get(res, 'data') || {}
           yield put({
@@ -342,51 +377,29 @@ export default joinModel(modelExtend, {
     },
     * updateKlineDetail({ payload = {} }, { call, put }) {
       const { result = {}, request } = payload
-      let {
-        direction, maxPrice24h, minPrice24h, marketPrice,
-        priceLast, totalPrice24h, percent, dollarPrice, reasonablePrice
+      const {
+        direction, marketPrice: indexPrice,
+        lastPrice: latestPrice, lastPriceToUSD: dollarPrice, changePercent24: percent,
+        fairPrice: reasonablePrice, price24Max: maxPrice24h, price24Min: minPrice24h,
+        amount24h: totalPrice24h, allowTrade,
       } = result
-      if (request === 'ws') {
-        ({
-          lastPrice: priceLast, lastPriceToUSD: dollarPrice, changePercent24: percent,
-          fairPrice: reasonablePrice, price24Max: maxPrice24h, price24Min: minPrice24h,
-          amount24h: totalPrice24h
-        } = result)
-      }
-
       yield put({
         type: 'changeState',
         payload: {
           ...direction !== '0' ? { latestPriceTrend: Number(direction) } : {},
           maxPrice24h,
           minPrice24h,
-          indexPrice: marketPrice,
-          latestPrice: priceLast,
+          indexPrice,
+          latestPrice,
           reasonablePrice,
-          latestPriceShown: _.isString(priceLast) ? priceLast.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
+          latestPriceShown: _.isString(latestPrice) ? latestPrice.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
           totalPrice24h,
           latestPriceChangePercent: percent,
           latestPriceChangePercentShown: _.isString(percent) ? percent.replace(/[+-]/, '') : null,//纯粹显示，去掉了加减号
           dollarPrice: dollarPrice,
+          marketAllowTrade: allowTrade
         }
       })
-    },
-
-    //K线图增量订阅
-    * getKlineAddMore({ payload = {} }, { call, put }) {
-      const ws1 = wss.getSocket('ws1')
-      const repayload = yield (asyncPayload(yield put({
-        type: 'createRequestParams',
-        payload: {
-          head: {
-            "method": "kline.subscribe"
-          },
-          param: {
-            "interval": "86400"
-          }
-        }
-      })))
-      ws1.sendJson(repayload)
     },
 
     // 获取杠杆
@@ -394,22 +407,20 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          head: {
-            "method": "market.leverage_select"
-          },
+          head: {},
           param: {},
           power: [2]
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getLeverage, repayload))
+        const res = getRes(yield call(getLeverage, repayload.param))
         if (resOk(res)) {
-          const { leverage, isModify, varyRange, leverages, keepBailRate } = _.get(res, 'data')
+          const { leverage, editable, varyRange, leverages, maintenanceMarginRate: keepBailRate } = _.get(res, 'data')
           yield put({
             type: 'changeState',
             payload: {
               leverage,
-              leverageIsModify: isModify,
+              leverageIsModify: editable,
               varyRange,
               leverages,
               keepBailRate
@@ -426,9 +437,7 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          head: {
-            "method": "market.leverage_set"
-          },
+          head: {},
           param: {
             leverage
           },
@@ -437,7 +446,7 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(doUpdateLeverage, repayload))
+        const res = getRes(yield call(doUpdateLeverage, repayload.param))
         if (resOk(res)) {
           Toast.tip('杠杆修改成功')
           return res
@@ -447,97 +456,18 @@ export default joinModel(modelExtend, {
       }
     },
 
-    //现货价格指数，24最高，24h最低
-    * getImportantPriceFromWs({ payload = {} }, { call, put }) {
-      const { method } = payload
-      const ws2 = wss.getSocket('ws2')
-      if (method === 'sub') {
-        // 订阅三个价格
-        const repayload = yield (asyncPayload(yield put({
-          type: 'createRequestParams',
-          payload: {
-            "event": "subscribe",
-            "channel": "market",
-            "pair": "BTCUSD",
-            "type": 1
-          }
-        })))
-        return ws2.sendJsonPromise(repayload, (e) => {
-          const res = getRes(e)
-          if (resOk(res)) {
-            const result = formatJson(res.data)
-            return result.chanId
-          }
-        }).then(res => {
-          return res
-        })
-      } else if (method === 'unsub') {
-        // 取消订阅三个价格
-        const { chanId } = payload
-        const repayload = {
-          "event": "unsubscribe",
-          chanId
-        }
-        return ws2.sendJsonPromise(repayload, (e) => {
-          const res = getRes(e)
-          if (resOk(res)) {
-            const result = formatJson(res.data)
-            if (_.get(result, 'event') === 'unsubscribed'
-              && _.get(result, 'status') === 'OK'
-              && _.get(result, 'chanId') === chanId) {
-              return true
-            }
-          }
-        }).then(res => res)
-      }
-    },
-
-    //钱包列表 asset.list
-    * getPurseAssetList({ payload = {} }, { call, put }) {
-      const repayload = yield (asyncPayload(yield put({
-        type: 'createRequestParams',
-        payload: {
-          "head": {
-            "method": "balance.query"
-          },
-          "param": {
-            "assetNameList": []
-          },
-          powerMsg: '钱包balance.query',
-          power: [1]
-        }
-      })))
-      if (repayload) {
-        const res = getRes(yield call(getPurseAssetList, repayload))
-        if (resOk(res)) {
-          const result = _.get(res, 'data')
-          if (result) {
-            yield put({
-              type: 'changeState',
-              payload: {
-                assetList: result
-              }
-            })
-            return result
-          }
-        }
-      }
-    },
-
     //合约列表 market.list
     * getAllMarketDetails({ payload = {} }, { call, put }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "market.detail_list"
-          },
+          "head": {},
           "param": {},
         }
       })))
-      const res = getRes(yield call(getAllMarketDetails, repayload))
+      const res = getRes(yield call(getAllMarketDetails, {}))
       if (resOk(res)) {
-        const result = []
+        let result = []
         _.get(res, 'data').map((item = {}) => {
           const { name, list = [] } = item
           list.forEach((item2 = {}) => {
@@ -545,14 +475,14 @@ export default joinModel(modelExtend, {
             result.push(item2)
           })
         })
+
         if (result) {
           const { search } = payload
-          const filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
           yield put({
             type: 'updateAllMarketDetails',
             payload: {
               result,
-              filterOne
+              search,
             }
           })
           return result
@@ -577,13 +507,25 @@ export default joinModel(modelExtend, {
       }
     },
     * updateAllMarketDetails({ payload = {} }, { call, put, select }) {
+      const { request } = payload
       const marketList = yield select(({ home: { marketList = [] } }) => marketList) || {}
-      const { result = [], filterOne } = payload
+      let { result = [], search } = payload
+
+      result = result.map((item = {}) => {
+        const { contractCode, contractName } = item
+        return {
+          ...item,
+          marketCode: contractCode,
+          marketName: contractName,
+        }
+      })
+      let filterOne = result.filter(item => item.marketCode === search)[0] || result[0]
+
       result.map((item = {}) => {
-        const filterOne = _.findIndex(marketList, (one = {}) => String(one.marketCode) === String(item.marketCode))
-        if (filterOne !== -1) {
-          marketList.splice(filterOne, 1, {
-            ...marketList[filterOne],
+        const filterItem = _.findIndex(marketList, (one = {}) => String(one.marketCode) === String(item.marketCode))
+        if (filterItem !== -1) {
+          marketList.splice(filterItem, 1, {
+            ...marketList[filterItem],
             ...item,
           })
         } else {
@@ -596,7 +538,8 @@ export default joinModel(modelExtend, {
           marketList
         }
       })
-      if (filterOne) {
+      if (request !== 'ws' && filterOne) {
+        // 注意ws的更新会导致getCurrentMarket执行
         yield put({
           type: 'getCurrentMarket',
           payload: filterOne
@@ -617,7 +560,7 @@ export default joinModel(modelExtend, {
             side,
             price: Number(price),
             amount: Number(amount),
-            "leverage": 0
+            // "leverage":
           },
         }
       })))
@@ -654,13 +597,13 @@ export default joinModel(modelExtend, {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          param1: {},
+          param: {},
           power: [1],
           powerMsg: '获取当前用户合约的费率'
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getMarketFee, repayload.param1))
+        const res = getRes(yield call(getMarketFee, repayload.param))
         if (resOk(res)) {
           const result = _.get(res, 'data') || {}
           return result
@@ -676,32 +619,48 @@ export default joinModel(modelExtend, {
           "head": {
             "method": "user.position"
           },
-          "param": {
-            "marketList": [],
-            "pageIndex": "0",//页码
-            "pageSize": "100"//每页数量
-          },
+          "param": {},
           power: [1],
           powerMsg: '个人持仓列表'
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getPosition, repayload))
+        const res = getRes(yield call(getPosition, {}))
         if (resOk(res)) {
-          const positionList = yield select(({ home: { positionList = [] } }) => positionList)
-          const result = _.get(res, 'data.positionList')
-          // 解决轮训问题
-          result.map((item = {}) => {
-            const exsit = positionList.filter((one = {}) => one.market === item.market)[0] || {}
-            if (exsit && exsit.inputValue) {
-              item.inputValue = exsit.inputValue
-            }
-          })
+          const result = _.get(res, 'data')
           if (result) {
+            const positionList = yield select(({ home: { positionList = [] } }) => positionList)
+            // 解决轮训问题
+            result.map((item = {}) => {
+              const exsit = positionList.filter((one = {}) => one.contractCode === item.contractCode)[0] || {}
+              if (exsit && exsit.inputValue) {
+                item.inputValue = exsit.inputValue
+              }
+            })
             yield put({
               type: 'changeState',
               payload: {
-                positionList: result
+                positionList: result.map((item = {}) => {
+                  const {
+                    contractCode, contractName, lastPrice, fairPrice, positionQuantity,
+                    entryPrice, positionMargin, maintMarginRate, maintMargin, liquidationPrice, unrealisedPnl, unrealisedPnlPcnt
+                  }
+                    = item
+                  return {
+                    ...item,
+                    market: contractCode,
+                    marketName: contractName,
+                    lastPriceShow: lastPrice,
+                    reasonablePriceShow: fairPrice,
+                    amount: positionQuantity,
+                    averagePriceShow: entryPrice,
+                    positionMoneyShow: positionMargin,
+                    keepMoneyShow: maintMargin,
+                    overPriceShow: liquidationPrice,
+                    floatProfitShow: unrealisedPnl,
+                    profitRate: unrealisedPnlPcnt
+                  }
+                })
               }
             })
             return result
@@ -726,22 +685,21 @@ export default joinModel(modelExtend, {
 
     // 计算持仓保证金
     * calculatePositionEnsureMoney({ payload = {} }, { call, put }) {
+      const { marginChange, market } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "user.append_position_margin_query"
-          },
-          "param": {
-            "marketList": [],
-            ...payload
-          },
+          "head": {},
+          "param": {},
           power: [1],
           powerMsg: '计算持仓保证金'
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(calculatePositionEnsureMoney, repayload))
+        const res = getRes(yield call(calculatePositionEnsureMoney, {
+          change: marginChange,
+          contractCode: market
+        }))
         if (resOk(res)) {
           const result = _.get(res, 'data')
           if (result) {
@@ -753,25 +711,21 @@ export default joinModel(modelExtend, {
 
     // 增加或减少持仓保证金
     * doUpdatePositionEnsureMoney({ payload = {} }, { call, put }) {
-      const { assetName, assetChange } = payload
+      const { assetName, assetChange, market } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "position_margin_update"
-          },
+          "head": {},
           "param": {
             assetName,
-            "businessType": "position",//持仓保证金充值,固定值
             assetChange,
-            businessId: _.uniqueId(),
-            detail: { desc: '增加或减少持仓保证金' }
           },
           power: [1],
           powerMsg: '增加或减少持仓保证金'
         }
       })))
       if (repayload) {
+        repayload.param.contractCode = market
         const res = getRes(yield call(doUpdatePositionEnsureMoney, repayload))
         if (resOk(res)) {
           const action = Number(assetChange) > 0 ? '增加' : '减少'
@@ -790,32 +744,37 @@ export default joinModel(modelExtend, {
           "head": {
             "method": "user.active_delegate"
           },
-          "param": {
-            marketList: [],
-            "pageIndex": String(pageIndex), //页码
-            "pageSize": String(pageSize) //每页数量
-          },
+          "param": {},
           power: [1],
           powerMsg: '个人合约列表'
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getPersonalEnsure, repayload))
+        const res = getRes(yield call(getPersonalEnsure, {}))
         if (resOk(res)) {
           const [result, pageIndex] = [_.get(res, 'data'), _.get(res, 'data.pageIndex')]
           const personalEnsures = yield select(({ home: { personalEnsures = [] } }) => personalEnsures)
           if (result) {
-            // 此处为解决轮询的问题
-            result.map((item = {}) => {
-              const exsit = personalEnsures.filter((one = {}) => one.orderId === item.orderId)[0] || {}
-              if (exsit && exsit.expand) {
-                item.expand = exsit.expand
-              }
-            })
             yield put({
               type: 'changeState',
               payload: {
-                personalEnsures: callback ? [...result, ...personalEnsures] : result,
+                personalEnsures: callback ? [...result, ...personalEnsures] : result.map((item = {}) => {
+                  const {
+                    contractName, contractCode, orderQuantity, orderPrice,
+                    fillQuantity, avgFillMoney, orderMargin, fee
+                  } = item
+                  return ({
+                    ...item,
+                    marketName: contractName,
+                    market: contractCode,
+                    amount: orderQuantity,
+                    price: orderPrice,
+                    dealAmount: fillQuantity,
+                    avgDealMoney: avgFillMoney,
+                    delegateMoney: orderMargin,
+                    dealFee: fee
+                  })
+                }),
                 personalEnsures_PageIndex: pageIndex
               }
             })
@@ -827,97 +786,34 @@ export default joinModel(modelExtend, {
 
     //撤销委托订单 order cancel(撤单)
     * doCancelPersonEnsure({ payload = {} }, { call, put }) {
+      const { market, orderId } = payload
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "order.cancel",
-          },
-          "param": {
-            ...payload
-          },
+          "head": {},
+          "param": {},
           power: [1],
           powerMsg: '撤销个人委托订单'
         }
       })))
-      if (repayload) {
-        const res = getRes(yield call(doCancelPersonEnsure, repayload))
+      if (repayload && market) {
+        const res = getRes(yield call(doCancelPersonEnsure, {
+          contractCode: market,
+          orderId
+        }))
         if (resOk(res)) {
-          // Message.error('ahhaah')
           Toast.tip('撤销成功')
+          return true
         }
       }
     },
 
     //查看订单明细
-    * getPersonEnsureDetail({ payload = {} }, { call, put, select }) {
-      const { orderId, type } = payload
-      const isCurrentOrder = (item = {}) => (item.orderId || item.id) === orderId
-      let ensures = null
-      let sort
-      if (type === '0') {
-        sort = 'personalEnsures'
-        ensures = yield select(({ home: { personalEnsures = [] } }) => deepClone(personalEnsures))
-      } else if (type === '1') {
-        sort = 'personalEnsureHistory'
-        ensures = yield select(({ home: { personalEnsureHistory = [] } }) => deepClone(personalEnsureHistory))
-      }
-      const filterOne = deepClone(ensures).filter((item = {}) => isCurrentOrder(item))[0] || {}
-      ensures.map((item = {}) => {
-        if (isCurrentOrder(item) && !item.expand) {
-          item.loading = true
-        } else {
-          delete item.loading
-        }
-        delete item.expand
-      })
-      yield put({
-        type: 'changeState',
-        payload: {
-          [sort]: ensures,
-        }
-      })
-      if (!_.get(filterOne, 'expand')) {
-        const repayload = yield (asyncPayload(yield put({
-          type: 'createRequestParams',
-          payload: {
-            "head": {
-              "method": "order.deals",
-            },
-            "param": {
-              ...payload,
-              pageIndex: '0',
-              pageSize: '100'
-            },
-            power: [1],
-            powerMsg: '查看订单明细'
-          }
-        })))
-        if (repayload) {
-          const res = getRes(yield call(getPersonEnsureDetail, repayload))
-          if (resOk(res)) {
-            const result = ensures.filter((item = {}) => isCurrentOrder(item))[0]
-            if (result) {
-              result.expand = _.get(res, 'data.records')
-              result.loading = false
-              yield put({
-                type: 'changeState',
-                payload: {
-                  [sort]: ensures,
-                }
-              })
-            }
-          }
-        }
-      }
-    },
     * getOrderDetail({ payload = {} }, { call, put, }) {
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "order.deals",
-          },
+          "head": {},
           "param": {
             ...payload,
             pageIndex: '0',
@@ -928,74 +824,98 @@ export default joinModel(modelExtend, {
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getPersonEnsureDetail, repayload))
+        const res = getRes(yield call(getPersonEnsureDetail, repayload.param))
         if (resOk(res)) {
-          const result = _.get(res, 'data.records')
+          const result = _.get(res, 'data')
           if (result) {
-            return result
+            return result.map((item = {}) => {
+              const { fillPrice: price, fillQuantity: amount } = item
+              return {
+                ...item,
+                price,
+                amount
+              }
+            })
           }
         }
       }
     },
 
-
     //最近10条委托历史
     * getHistory({ payload = {} }, { call, put, select }) {
-      const { type, page = '', pageSize = 10 } = payload
+      const { type, page, pageSize = 10 } = payload
       let prev
       let historyType
       let historyList
       switch (type) {
-        case '1': {
-          historyType = ["1", "2"] //限价单，市价单一起就是最近委托
-          historyList = 'personalEnsureHistory'
-          prev = yield select(({ home: { personalEnsureHistory = [] } }) => personalEnsureHistory)
-        }
-          break
-        case '3': {
-          historyType = ['3'] //交割单
+        case '5': {
+          historyType = ['5'] //交割单
           historyList = 'deliveryHistory'
           prev = yield select(({ home: { deliveryHistory = [] } }) => deliveryHistory)
         }
           break
-        case '4': {
-          historyType = ['4'] //强平单
+        case '6': {
+          historyType = ['6'] //强平单
           historyList = 'highlevelHistory'
           prev = yield select(({ home: { highlevelHistory = [] } }) => highlevelHistory)
         }
           break
-        case '5': {
-          historyType = ['5'] //自动减仓
+        case '7': {
+          historyType = ['7'] //自动减仓
           historyList = 'reduceHistory'
           prev = yield select(({ home: { reduceHistory = [] } }) => reduceHistory)
+        }
+          break
+        default: {
+          //默认为‘1
+          historyType = ["1", "2", '3', '4'] //1限价单，2市价单,"3": 限价全平单,"4":市价全平单一起就是最近委托
+          historyList = 'personalEnsureHistory'
+          prev = yield select(({ home: { personalEnsureHistory = [] } }) => personalEnsureHistory)
         }
       }
       const repayload = yield (asyncPayload(yield put({
         type: 'createRequestParams',
         payload: {
-          "head": {
-            "method": "user.order_history"
-          },
+          "head": {},
           "param": {
-            marketList: [],
+            contractCodeList: [],
             typeList: historyType,
             "side": "0",
             "startTime": "0",
             "endTime": "0",
-            "pageIndex": String(page),
-            "pageSize": String(pageSize)
           },
           power: [1],
           powerMsg: '最近十条'
         }
       })))
       if (repayload) {
-        const res = getRes(yield call(getPersonalEnsureHistory, repayload))
+        const res = getRes(yield call(getPersonalEnsureHistory, repayload, {
+          "page": page,
+          "limit": String(pageSize)
+        }))
         if (resOk(res)) {
-          const [result, total] = [_.get(res, 'data.records'), _.get(res, 'data.total')]
+          let [result, total] = [_.get(res, 'data.result'), _.get(res, 'data.totalCount')]
           if (result) {
+            result = result.map((item = {}) => {
+              const {
+                contractCode: market, contractName: marketName, orderQuantity: amount,
+                orderPrice: price, fillQuantity: dealAmount, avgFillMoney: avgDealMoney,
+                closePosPNL: unwindProfit, fee: dealFee
+              } = item
+              return {
+                ...item,
+                market,
+                marketName,
+                amount,
+                price,
+                dealAmount,
+                avgDealMoney,
+                unwindProfit,
+                dealFee
+              }
+            })
             // 区分有分页的和没有分页的两种
-            if (String(page)) {
+            if (page) {
               return {
                 result,
                 historyList,
@@ -1036,8 +956,8 @@ export default joinModel(modelExtend, {
           },
           "param": {
             "side": side,// 1:sell 2:buy
-            "amount": amount,//买卖数量
-            "price": priceAfter,//价格
+            "orderQuantity": amount,//买卖数量
+            "orderPrice": priceAfter,//价格
 
             "source": url === postLimitOrder ? `我是现价测试${side === 1 ? '卖' : '买'}单,数量${amount},价格${price}` : '我是市价测试单'//备注
           },
@@ -1050,10 +970,44 @@ export default joinModel(modelExtend, {
         _.set(repayload, 'param.source', `浏览器，${prev},用户id：${_.get(repayload, 'head.userId')},邮箱：${model.userInfo.email}`)
         const res = getRes(yield call(url, repayload))
         if (resOk(res)) {
+          yield put({
+            type: 'getPosition'
+          })
+          yield put({
+            type: 'getPersonalEnsure'
+          })
+          yield put({
+            type: 'getHistory'
+          })
           Toast.success('委托成功')
         }
       }
     },
+
+    // 全平
+    * doFullClose({ payload = {} }, { call, put, select }) {
+      const { market, price } = payload
+      const repayload = yield (asyncPayload(yield put({
+        type: 'createRequestParams',
+        payload: {
+          "head": {},
+          "param": {
+            "orderPrice": price,//价格
+          },
+          powerMsg: '全平',
+          power: [1]
+        }
+      })))
+      if (repayload) {
+        repayload.param.contractCode = market
+        const res = getRes(yield call(doFullClose, repayload))
+        if (resOk(res)) {
+          Toast.success('委托成功')
+          return true
+        }
+      }
+    },
+
   },
   reducers: {
     clearState(state, { payload }) {
@@ -1065,6 +1019,14 @@ export default joinModel(modelExtend, {
         maxPrice24h: null, // 24h最高
         minPrice24h: null, // 24最低
         indexPrice: null, // 现货价格指数
+        totalPrice24h: '',//z4小时交易总额
+        latestPrice: '', //最新交易价格,
+        latestPriceShown: '',//纯粹显示，去掉了加减号
+        latestPriceChangePercent: '',//最新价相比24小时前价格的涨跌幅
+        latestPriceChangePercentShown: '',//纯粹显示，去掉了加减号
+        dollarPrice: '',//换算成美元
+        latestPriceTrend: '',//1升，-1降
+        reasonablePrice: '',//合理价格，从market.deatl接口拉过来的
 
 
         minVaryPrice: '', //最小变动价位
@@ -1085,6 +1047,7 @@ export default joinModel(modelExtend, {
         ...state,
         marketName: filterOne.marketName,
         marketCode: filterOne.marketCode,
+        minPriceMovementPrecision: filterOne.minPriceMovementPrecision
       }
     }
   },

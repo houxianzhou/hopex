@@ -8,6 +8,9 @@ class MockServer {
     this.subScribes = []
     this.server = new Server(url)
     this.server.on('connection', socket => {
+      // setTimeout(() => {
+      //   socket.close()
+      // }, 5000)
       clearTimeout(this.interval)
       this.socket = socket
       if (this.onConnection) {
@@ -17,6 +20,7 @@ class MockServer {
         if (this.onMessage) this.onMessage(e)
       })
       socket.on('close', (e) => {
+        this.subScribes = []
         if (this.onClose) this.onClose()
       })
 
@@ -75,6 +79,8 @@ mockServer2.onMessage = (e) => {
               "price24Max": `${_.random(500, 600)}`,
               "price24Min": `${_.random(600, 700)}`,
               "amount24h": `${_.random(700, 800)}BTC`,
+              userAllowTrade: true,
+              allowTrade: true
             }
           }
         )
@@ -103,8 +109,8 @@ mockServer2.onMessage = (e) => {
     mockServer2.subScribe({
       name: 'orderbook.update',
       func: () => {
-        const value1 = _.random(0, 5)
-        const value2 = _.random(0, 5)
+        const value1 = _.random(1000, 15000)
+        const value2 = _.random(1000, 15000)
         mockServer2.sendJson(
           {
             "method": "orderbook.update",
@@ -113,7 +119,7 @@ mockServer2.onMessage = (e) => {
               "asks": [
                 {
                   "priceD": 0.0,
-                  "orderPrice": `${_.random(1, 3)}`,
+                  "orderPrice": `${_.random(10000, 10003)}`,
                   "orderQuantity": value1,
                   "orderQuantityShow": `${value1}`,
                   "exist": 0
@@ -121,7 +127,7 @@ mockServer2.onMessage = (e) => {
               ],
               "bids": [{
                 "priceD": 0.0,
-                "orderPrice": `${_.random(1, 3)}`,
+                "orderPrice": `${_.random(9000, 9003)}`,
                 "orderQuantity": value2,
                 "orderQuantityShow": `${value2}`,
                 "exist": 0
@@ -135,20 +141,45 @@ mockServer2.onMessage = (e) => {
     mockServer2.subScribe({
       name: 'market.update',
       func: () => {
+        const selectOne = ["BTCUSDT", "ETHBTC"][_.random(0, 1)]
         mockServer2.sendJson(
           {
             "method": "market.update",
             "timestamp": 1535020483778,
             "data": [{
-              "marketCode": "BTCUSDT",
-              "marketName": "BTCUSDT永续",
+              "contractCode": selectOne,
+              "contractName": selectOne,
               "priceLast": `${_.random(1, 100)}`,
               "dollarPrice": "$55.09",
               "totalPrice24h": "0BTC",
               "pause": false,
               "percent": `${_.random(1, 100)}%`,
-              "position": false
+              "position": true
             }]
+          }
+        )
+      }
+    })
+  } else if (method === 'kline.unsubscribe') {
+    mockServer2.sendJson({
+      "data": true,
+      "head": { "method": "kline.unsubscribe", "timestamps": 1536235920331 },
+      "ret": 0,
+      "errCode": "",
+      "errStr": ""
+    })
+  } else if (method === 'kline.subscribe') {
+    mockServer2.subScribe({
+      name: 'kline.update',
+      func: () => {
+
+        mockServer2.sendJson(
+          {
+            "method": "kline.update",
+            "timestamp": 1536247693121,
+            "data": [
+              [((new Date).getTime()) / 1000, _.random(100, 200), _.random(200, 300), _.random(400, 500), _.random(500, 600), 2438, 6, "BTCUSD永续"]
+            ]
           }
         )
       }

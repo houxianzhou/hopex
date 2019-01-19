@@ -69,6 +69,23 @@ export default class BuySell extends Component {
     })
   }
 
+  postSideOrder = (obj = {}) => {
+    const { side, price, amount } = obj
+    const { dispatch, modelName } = this.props
+    this.changeState({
+      side
+    })
+    dispatch({
+      type: `${modelName}/postSideOrder`,
+      payload: {
+        side,
+        method: this.isLimitPrice() ? 'order.put_limit' : 'order.put_market',
+        price: String(price),
+        amount: String(amount)
+      }
+    })
+  }
+
   state = {
     side: '',
     orderChannel: 0,// 限价还是市价
@@ -90,7 +107,7 @@ export default class BuySell extends Component {
 
   componentDidUpdate(prevProps) {
     const { model: { clickSelectOne: prevClickSelectOne } = {} } = prevProps
-    const { model: { clickSelectOne } = {} } = this.props
+    const { model: { clickSelectOne } = {}, dispatch, modelName } = this.props
     if (!isEqual(prevClickSelectOne, clickSelectOne) && clickSelectOne) {
       const { type, price, amount } = clickSelectOne
       if (type) {
@@ -102,6 +119,12 @@ export default class BuySell extends Component {
           buy: {
             ...this.state.buy,
             price,
+          }
+        })
+        dispatch({
+          type: `${modelName}/changeState`,
+          payload: {
+            clickSelectOne: ''
           }
         })
       }
@@ -214,15 +237,18 @@ export default class BuySell extends Component {
     } = config
     const { isLogin, routerGoLogin, routerGoRegister, model: { userAllowTrade, marketAllowTrade } } = this.props
     const { isLimitPrice } = this
+    const allowClick = () => {
+      return isLogin && (isLimitPrice() ? (Number(valuePrice) && Number(valueAmount)) : Number(valueAmount)) && userAllowTrade && marketAllowTrade
+    }
     return <Button
       loading={loading}
       className={classNames(
         styles.submit,
-        isLogin && (isLimitPrice() ? (Number(valuePrice) && Number(valueAmount)) : Number(valueAmount)) && userAllowTrade && marketAllowTrade ? styles.haslogin : styles.notlogin,
+        allowClick() ? styles.haslogin : styles.notlogin,
         className
       )}
       onClick={() => {
-        if (_.isFunction(onSubmit)) onSubmit()
+        if (_.isFunction(onSubmit) && allowClick()) onSubmit()
       }}
     >
       {
@@ -246,11 +272,11 @@ export default class BuySell extends Component {
           </>
         ) : (
           <>
-            <div >
+            <div className={styles.userentry} >
               {routerGoLogin('登录')}
             </div >
             <div className={styles.center} >或</div >
-            <div >
+            <div className={styles.userentry} >
               {routerGoRegister('注册')}
             </div >
           </>
@@ -280,7 +306,7 @@ export default class BuySell extends Component {
   }
 
   render() {
-    const { renderArea, changeState, isLimitPrice, getBuyDetail, getSellDetail } = this
+    const { renderArea, changeState, isLimitPrice, getBuyDetail, getSellDetail, postSideOrder } = this
     const {
       dispatch, loading, modelName, RG, model: {
         minVaryPrice = '', minPricePrecision = 0, minPriceMovementDisplay = '', minDealAmount = '',
@@ -325,7 +351,7 @@ export default class BuySell extends Component {
         changeState({
           buy: {
             ...buy,
-            amount: value
+            amount: value.slice(0, 10)
           }
         }, getBuyDetail)
       },
@@ -352,24 +378,17 @@ export default class BuySell extends Component {
             name: 'priceWarn',
             data: {
               side: 2,
-              price: maxLimitPrice
-            }
-          })
-        } else {
-          changeState({
-            side: '2'
-          })
-          dispatch({
-            type: `${modelName}/postSideOrder`,
-            payload: {
-              side: '2',
-              method: isLimitPrice() ? 'order.put_limit' : 'order.put_market',
-              price: String(buy.price),
+              price: maxLimitPrice,
               amount: String(buy.amount)
             }
           })
+        } else {
+          postSideOrder({
+            side: '2',
+            price: String(buy.price),
+            amount: String(buy.amount)
+          })
         }
-
       }
     }
     const configBuy = {
@@ -407,7 +426,7 @@ export default class BuySell extends Component {
             changeState({
               sell: {
                 ...sell,
-                amount: value
+                amount: value.slice(0, 10)
               }
             }, getSellDetail)
           }
@@ -432,21 +451,15 @@ export default class BuySell extends Component {
                 name: 'priceWarn',
                 data: {
                   side: 1,
-                  price: minLimitPrice
+                  price: minLimitPrice,
+                  amount: String(sell.amount)
                 }
               })
             } else {
-              changeState({
-                side: '1'
-              })
-              dispatch({
-                type: `${modelName}/postSideOrder`,
-                payload: {
-                  side: '1',
-                  method: isLimitPrice() ? 'order.put_limit' : 'order.put_market',
-                  price: String(sell.price),
-                  amount: String(sell.amount)
-                }
+              postSideOrder({
+                side: '1',
+                price: String(sell.price),
+                amount: String(sell.amount)
               })
             }
           }
@@ -502,7 +515,7 @@ export default class BuySell extends Component {
                   </li >
                 </ul >
                 <ul className={styles.right} >
-                  <li >计算器</li >
+                  {/*<li >计算器</li >*/}
                   {
                     isLogin ? (
                       <li onClick={
@@ -532,7 +545,7 @@ export default class BuySell extends Component {
           name === 'fee' ? (<RenderModal {...this.props} {...this.state}  />) : null
         }
         {
-          name === 'priceWarn' ? (<RenderModal2 {...this.props}  />) : null
+          name === 'priceWarn' ? (<RenderModal2 {...this.props} postSideOrder={postSideOrder} />) : null
         }
         {
           name === 'calculator' ? (<RenderModal3 {...this.props}  />) : null
@@ -565,7 +578,7 @@ class RenderModal extends Component {
   }
 
   render() {
-    const { model: { marketName } } = this.props
+    const { model: { marketName }, } = this.props
     const {
       fee: {
         makerFeeRateDisplay = '', takerFeeRateDisplay = '',
@@ -591,10 +604,6 @@ class RenderModal extends Component {
             <div >强平手续费率:</div >
             <div >{liquidationFeeRateDisplay}</div >
           </li >
-          {/*<li >*/}
-          {/*<div >交割手续费率:</div >*/}
-          {/*<div >{deliveryRateDisplay}</div >*/}
-          {/*</li >*/}
         </ul >
       </MainModal >
     )
@@ -606,7 +615,7 @@ class RenderModal2 extends Component {
     const props = {
       ...this.props
     }
-    const { closeModal, modal: { data: { side, price } = {} } } = this.props
+    const { closeModal, modal: { data: { side, price, amount } = {} }, postSideOrder } = this.props
     return (
       <MainModal {...props} className={styles.priceWarn_Modal} >
         <div >
@@ -615,7 +624,7 @@ class RenderModal2 extends Component {
             {
               String(side) === '2' ? '最高买入' : '最低卖出'
             }
-            价格{price}下单
+            价格<span className={styles.warnprice} >{price}</span >下单
           </div >
           <div className={styles.buttons} >
 
@@ -630,6 +639,11 @@ class RenderModal2 extends Component {
               className={styles.confirm}
               onClick={() => {
                 closeModal()
+                postSideOrder({
+                  side: String(side),
+                  price: price,
+                  amount: amount
+                })
               }}
             >
               <Button >

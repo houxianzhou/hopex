@@ -70,6 +70,7 @@ export default class LatestRecord extends Component {
             unsubscribe: () => {
             },
             restart: () => {
+              this.getLatestRecordFromWs()
             }
           })
         }
@@ -135,13 +136,13 @@ export default class LatestRecord extends Component {
     ]
     const dataSource = latest_records
     const tableProps = {
-      uKey:'id',
+      uKey: 'id',
       className: styles.tableContainer,
       columns,
       dataSource: _.merge((new Array(18)).fill(), dataSource),
       scroll: {
         mouseWheel: true,
-        scrollY: true
+        scrollY: true,
       },
     }
     return (

@@ -1,4 +1,5 @@
 @import '~@styles/variable.less';
+
 :global(.device) {
   height: 100%;
 }
@@ -16,6 +17,7 @@
 
   }
   .header {
+    font-size: 14px;
     display: flex;
     align-items: center;
     height: 70px;
@@ -29,34 +31,35 @@
       height: 100%;
       &.left {
         // background: red;
-        img {
+        svg {
           //height: 31px;
-          margin-right: 50px;
+          margin-right: 73px;
         }
         ul.nav {
           margin-bottom: 0;
           list-style: none;
           display: flex;
           align-items: center;
-          font-size: 16px;
           li.navli + li.navli {
             margin-left: 50px;
           }
           li.navli {
             position: relative;
-            .border{
+            .border {
               position: absolute;
-              width:100%;
-              bottom:-10px;
-              border: 2px solid @c_active_yellow;
+              width: 100%;
+              bottom: -10px;
+              border: 1px solid @c_active_yellow;
             }
             .dropdown {
+              box-shadow: 0 4px 8px 0 rgba(0,0,0,0.03);
               z-index: 10;
               position: absolute;
               display: none;
             }
-            &:hover{
+            &:hover {
               .dropdown {
+                width: 327px;
                 position: absolute;
                 z-index: 2;
                 display: block;
@@ -64,55 +67,59 @@
                 .dropdowncontent {
                   font-size: 13px;
                   padding: 20px 20px;
-                  min-width: 330px;
                   background: white;
                   border-radius: 4px;
-                  color: black;
+                  color: #333333;
                   .licontainer + .licontainer {
                     margin-top: 20px;
                   }
                   .licontainer {
-                    .liheader{
+                    .liheader {
                       font-size: 16px;
-                      color: black;
+                      color: @c_black;
                       font-weight: 600;
                     }
                     ul {
                       margin-top: 10px;
                       li {
                         // background: red;
-                        &:hover{
+                        &:hover {
                           background: #DAE0E4;
                           border-radius: 4px;
                         }
                         display: flex;
-                        justify-content: space-between;
-                        padding: 10px;
+                        padding: 9px 10px 8px;
                         > div {
                           display: flex;
                           align-items: center;
                           white-space: nowrap;
                           &.name {
-                            > div{
-                              margin-right: 5px;
-                              padding:3px 4px;
-                              background: #D8D8D8;
+
+                            > div {
+                              // margin-right: 4px;
+                              padding: 3px 4px;
+                              background: #ECECEC;
+                              font-size: 13px;
                               border-radius: 2px;
                               color: #666666;
                             }
                             display: flex;
+                            // background: blue;
                             // background: red;
-                            width: 33%;
-                            min-width: 120px;
+
+                            width: 130px;
                           }
                           &.price {
+                            // min-width: 50px;
+                            flex-grow: 1;
                             // background: red;
-                            width: 33%;
-                            min-width: 80px;
+                            // background: red;
+
                           }
-                          //&.percent {
-                          //  // width: 30%;
-                          //}
+                          &.percent {
+                            display: flex;
+                            justify-content: flex-end;
+                          }
                         }
                         div + div {
                           // margin-left: 10%;
@@ -136,85 +143,115 @@
       &.right {
         display: flex;
         justify-content: flex-end;
-        // background: blue;
-        ul {
-          // background: red;
+        > ul {
           display: flex;
           align-items: center;
           height: 100%;
           li + li {
-            border-left: 1px solid rgba(255, 255, 255, .2);
+            > div {
+              border-left: 1px solid rgba(255, 255, 255, .2);
+            }
           }
-          li {
-            cursor:pointer;
+          > li {
+            &.freeregister {
+              color: white;
+              background: @c_active_yellow;
+            }
+            > div {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 0 24px;
+              &.user {
+                &:hover {
+                  .accountContainer {
+                    display: block;
+                  }
+                }
+                position: relative;
+                z-index: 10;
+                .accountContainer {
+                  display: none;
+                  position: absolute;
+                  width: 220px;
+                  top: 13px;
+                  .title {
+                    display: flex;
+                    justify-content: center;
+                    color: #999999;
+                    margin-bottom: 30px;
+                  }
+                  .content {
+                    padding: 20px;
+                    padding-bottom: 0;
+                    margin-top: 20px;
+                    box-shadow: 0 4px 10px 0 rgba(85, 87, 97, 0.23);
+                    border-radius: 4px;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(255, 255, 255, 1);
+                    .themelist + .themelist {
+                      margin-top: 20px;
+                    }
+                    .themelist {
+                      display: flex;
+                      li {
+                        > div {
+                          margin-right: 10px;
+                          width: 15px;
+                          height: 15px;
+                          background: #FFFFFF;
+                          border: 1px solid #EBEBEB;
+                          &.active {
+                            background: unset;
+                            border: 5px solid @c_active_yellow;
+                          }
+
+                          border-radius: 10px;
+                        }
+                        display: flex;
+                        justify-content: flex-start;
+                        color: #333333;
+                        width: 100%;
+                        height: 100%;
+                        padding: unset
+                      }
+                    }
+                    .desc {
+                      cursor: pointer;
+                      border: 1px solid @c_active_yellow;
+                      height: 34px;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      margin: 30px 0 30px;
+                      color: @c_active_yellow;
+                    }
+                    .loginout {
+                      cursor: pointer;
+                      color: #5088EB;
+                      display: flex;
+                      justify-content: center;
+                      border-top: 1px solid #EBEBEB;
+                      padding: 13px 0;
+                    }
+                  }
+                }
+              }
+            }
+            height: 100%;
+            cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0 30px;
+            svg, img {
+              margin-right: 13px;
+            }
+
             span {
-              margin-left: 13px;
+              // margin-left: 13px;
             }
-            &.user {
-              &:hover {
-                .accountContainer {
-                  display: block;
-                }
-              }
-              position: relative;
-              .accountContainer {
-                display: none;
-                position: absolute;
-                width: 220px;
-                top: 13px;
-                z-index: 2;
-                .content {
-                  padding: 20px;
-                  padding-bottom: 0;
-                  margin-top: 20px;
-                  box-shadow: 0 4px 10px 0 rgba(85, 87, 97, 0.23);
-                  border-radius: 4px;
-                  width: 100%;
-                  height: 100%;
-                  background: rgba(255, 255, 255, 1);
-                  .themelist {
-                    display: flex;
-                    li {
-                      > div {
-                        margin-right: 5px;
-                        width: 15px;
-                        height: 15px;
-                        border: 5px solid @c_active_yellow;
-                        border-radius: 10px;
-                      }
-                      display: flex;
-                      justify-content: flex-start;
-                      color: #333333;
-                      width: 100%;
-                      height: 100%;
-                      padding: unset
-                    }
-                  }
-                  .desc {
-                    cursor: pointer;
-                    border: 1px solid @c_active_yellow;
-                    height: 34px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin: 30px 0 30px;
-                    color: @c_active_yellow;
-                  }
-                  .loginout {
-                    cursor: pointer;
-                    color: #5088EB;
-                    display: flex;
-                    justify-content: center;
-                    border-top: 1px solid #EBEBEB;
-                    padding: 13px 0;
-                  }
-                }
-              }
-            }
+
           }
         }
       }
@@ -241,7 +278,7 @@
       .left {
         .logo {
           font-size: 20px;
-          img {
+          svg {
             height: 50px;
             margin-right: 20px;
           }
@@ -257,14 +294,7 @@
 
           }
           li {
-            background: white;
-            width: 22px;
-            height: 22px;
-            border-radius: 22px;
-            img {
-              width: 100%;
-              height: 100%;
-            }
+
           }
         }
       }

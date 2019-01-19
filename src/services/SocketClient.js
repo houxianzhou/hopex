@@ -23,7 +23,7 @@ class Ws {
         const res = formatJson(e.data)
         this.listeners.forEach(item => item.subscribe && item.subscribe(e, res))
         this.sendJsonPromiseLists.forEach(([resolve, func], index) => {
-          const result = func(e)
+          const result = func(e, res)
           if (!!result) {
             resolve(result)
             this.sendJsonPromiseLists.splice(index, 1)
@@ -51,7 +51,7 @@ class Ws {
 
   repeatConnect = (e) => {
     if (e.type === 'close' || e.type === 'error') {
-      if (_.get(e, 'reason') === 'selfClose') return console.log('主动断开不再重新连接')
+      if (_.get(e, 'reason') === 'selfClose') return console.log('主动断开')
       if (this.suddenDead) this.suddenDead()
     }
   }
@@ -126,13 +126,21 @@ class Wss {
     const url = _.get(SOCKETURL, [name])
     if (url) {
       if (!_.get(this.sockets, [url])) {
-        const ws = new Ws(url)
+        let ws = new Ws(url)
         ws.suddenDead = () => {
+          const listeners = ws.listeners
           delete this.sockets[url]
           clearTimeout(this.interval)
           this.interval = setTimeout(() => {
-            this.getSocket(name)
+            // console.log(listeners.length, ws.listeners.length, 'websocket订阅长度---------------------')
+            ws = this.getSocket(name)
+            ws.listeners = listeners
             ws.listeners.forEach(item => item.restart && item.restart())
+
+            //错误做法
+            // this.getSocket(name)
+            // ws.listeners.forEach(item => item.restart && item.restart())
+
           }, this.reconnectInterval)
         }
         this.sockets[url] = ws
@@ -149,6 +157,7 @@ class Wss {
       const promiseAll = _.values(this.sockets)
       return new Promise((resolve) => {
         let i = 0
+        if (!promiseAll.length) return resolve(true)
         promiseAll.forEach((item = {}) => item.closePromise().then(
           (res) => {
             if (res) {

@@ -10,52 +10,79 @@ export default [
     name: '首页',
     path: PATH.dashboard,
     model: ['dashboard'],
-    route: 'DashBoard'
+    route: 'DashBoard',
+    show: false
   },
   {
     dest: 'trade',
     name: '合约交易',
     path: PATH.home,
-    model: ['home/index'],
+    model: ['home/index', 'asset/index'],
     route: 'Home'
   },
   {
-    name: '资金管理',
-    path: '/manage',
-    model: ['account'],
-    route: 'User/account'
+    name: '资产管理',
+    path: '/asset',
+    model: ['asset/index', 'history/index', 'home/index', 'account/index'],
+    route: 'Asset',
+    authority: [1]
   },
   {
     name: '历史',
     path: PATH.history,
     model: ['history/index', 'home/index'],
-    route: 'History'
+    route: 'History',
+    authority: [1]
   },
   {
     name: '解释说明',
     path: '/question',
-    model: ['account'],
-    route: 'Question'
+    model: ['question/index', 'home/index'],
+    route: 'Question',
+    show: false
+  },
+  {
+    name: 'App解释说明',
+    path: PATH.app_question,
+    model: [],
+    route: 'AppQuestion',
+    show: false
+  },
+  {
+    name: '关于',
+    path: '/about',
+    model: ['home/index'],
+    route: 'About',
+    show: false
+  },
+  {
+    name: 'App关于',
+    path: PATH.app_about,
+    model: [],
+    route: 'AppAbout',
+    show: false
   },
   {
     name: '登录',
     path: PATH.login,
-    route: 'User/Login'
+    route: 'Entry/Login'
   },
   {
     name: '注册',
     path: PATH.register,
-    route: 'User/Register'
+    route: 'Entry/Register'
   },
   {
     name: '忘记密码',
     path: PATH.forgetPassword,
-    route: 'User/ForgetPassword'
+    route: 'Entry/ForgetPassword',
   },
   {
     name: '我的账户',
-    model: ['account'],
+    model: ['account', 'home/index'],
     path: PATH.myaccount,
-    route: 'User/account'
+    route: 'User/index',
+    show: false,
+    authority: [1]
   },
 ]
